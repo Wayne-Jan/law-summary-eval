@@ -407,6 +407,174 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* ─── MOBILE DRAWER OVERLAY ─── */
+        .drawer-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.35);
+            z-index: 150;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .drawer-overlay.visible { opacity: 1; }
+
+        /* ─── TABLET (≤1024px): collapse citation by default, smaller panels ─── */
+        @media (max-width: 1024px) {
+            .toolbar { padding: 0 12px; gap: 8px; flex-wrap: wrap; height: auto; min-height: 52px; padding-top: 6px; padding-bottom: 6px; }
+            .toolbar h1 { font-size: 13px; }
+            .toolbar .case-name { max-width: 200px; font-size: 11px; }
+            .toolbar .condition-select { min-width: 140px; font-size: 11px; }
+            .toolbar .mode-select { font-size: 11px; }
+            .toolbar .condition-label { font-size: 11px; }
+            .nav-panel { width: 150px; }
+            .citation-panel { width: 300px; }
+            .content-panel { padding: 20px 24px; }
+            .main { margin-top: 52px; }
+        }
+
+        /* ─── MOBILE (≤768px): full drawer mode ─── */
+        @media (max-width: 768px) {
+            /* Toolbar: two-row compact */
+            .toolbar {
+                flex-wrap: wrap;
+                height: auto;
+                min-height: 48px;
+                padding: 8px 12px;
+                gap: 6px;
+            }
+            .toolbar h1 { font-size: 13px; white-space: nowrap; }
+            .toolbar .case-name { display: none; }
+            .toolbar .condition-label { display: none; }
+            .toolbar .gt-status { font-size: 10px; padding: 2px 8px; }
+            .toolbar .spacer { display: none; }
+            .toolbar a { font-size: 12px; }
+            .toolbar .condition-select,
+            .toolbar .mode-select {
+                font-size: 11px;
+                min-width: 0;
+                flex: 1;
+                max-width: 50%;
+            }
+            #groupSelect { max-width: 80px; flex: 0 0 auto; }
+
+            /* Main: single column, no side panels visible by default */
+            .main {
+                flex-direction: column;
+                margin-top: 80px;
+                height: auto;
+                min-height: calc(100vh - 80px);
+                margin-bottom: 0 !important;
+            }
+
+            /* Nav panel as slide-in drawer from left */
+            .nav-panel {
+                position: fixed;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                width: 260px;
+                z-index: 200;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                padding-top: 12px;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+            }
+            body.nav-open .nav-panel { transform: translateX(0); }
+            body.nav-collapsed .nav-panel { width: 260px; } /* override desktop collapse */
+            body.nav-collapsed .nav-item { font-size: 13px; padding: 10px 16px; text-align: left; }
+            body.nav-collapsed .nav-item .nav-icon { margin-right: 8px; }
+
+            /* Citation panel as slide-in drawer from right */
+            .citation-panel {
+                position: fixed;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 300px;
+                max-width: 85vw;
+                z-index: 200;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+            }
+            body.citation-open .citation-panel { transform: translateX(0); }
+            body.citation-collapsed .citation-panel { width: 300px; } /* override */
+            body.citation-collapsed .citation-panel-header,
+            body.citation-collapsed .citation-list { display: block; }
+
+            /* Hide desktop toggle buttons, use mobile FABs instead */
+            .panel-toggle { display: none; }
+
+            /* Content takes full width */
+            .content-panel {
+                flex: 1;
+                padding: 16px;
+                overflow-y: auto;
+            }
+
+            .section-title { font-size: 16px; margin-bottom: 12px; }
+            .section-content { font-size: 14px; line-height: 1.7; }
+
+            /* Compare mode stacks vertically */
+            body.compare-mode .compare-panel {
+                flex-direction: column;
+                gap: 12px;
+            }
+            .compare-column { min-height: 40vh; }
+
+            /* Footer stats */
+            .footer-stats {
+                position: relative;
+                height: auto;
+                padding: 8px 12px;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+            /* Mobile floating action buttons */
+            .mobile-fab {
+                display: flex;
+                position: fixed;
+                bottom: 16px;
+                width: 44px;
+                height: 44px;
+                border-radius: 50%;
+                background: #4f46e5;
+                color: #fff;
+                border: none;
+                font-size: 18px;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 4px 14px rgba(79,70,229,0.4);
+                z-index: 120;
+                cursor: pointer;
+                transition: transform 0.2s, box-shadow 0.2s;
+            }
+            .mobile-fab:active { transform: scale(0.92); }
+            .mobile-fab.fab-nav { left: 16px; }
+            .mobile-fab.fab-cite { right: 16px; }
+        }
+
+        /* Hide mobile FABs on desktop */
+        @media (min-width: 769px) {
+            .mobile-fab { display: none !important; }
+            .drawer-overlay { display: none !important; }
+        }
+
+        /* ─── SMALL PHONE (≤480px) ─── */
+        @media (max-width: 480px) {
+            .toolbar { padding: 6px 8px; gap: 4px; }
+            .toolbar h1 { font-size: 12px; }
+            .toolbar .condition-select,
+            .toolbar .mode-select { font-size: 10px; padding: 3px 6px; }
+            #groupSelect { max-width: 60px; }
+            .content-panel { padding: 12px 10px; }
+            .section-content { font-size: 13px; line-height: 1.65; }
+            .citation-card-body { font-size: 12px; }
+            .nav-panel { width: 240px; }
+        }
     </style>
 </head>
 <body>
@@ -461,6 +629,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Mobile: floating action buttons -->
+    <button class="mobile-fab fab-nav" id="fabNav" title="章節導航" onclick="toggleMobileNav()">&#9776;</button>
+    <button class="mobile-fab fab-cite" id="fabCite" title="引用來源" onclick="toggleMobileCite()">&#128196;</button>
+    <div class="drawer-overlay" id="drawerOverlay" onclick="closeAllDrawers()"></div>
 
     <div class="footer-stats">
         <div class="stat-item">
@@ -615,7 +788,7 @@
                 ${viewData.sections.map((section) => `
                     <div class="nav-item ${section.content ? 'has-content' : ''}"
                          data-section="${section.id}"
-                         onclick="selectSection('${section.id}')">
+                         onclick="window.selectSection('${section.id}')">
                         <span class="nav-icon"></span>
                         ${section.title}
                     </div>
@@ -864,9 +1037,50 @@
             return div.innerHTML;
         }
 
-        window.selectSection = selectSection;
+        // ─── Mobile Drawer Logic ───
+        function toggleMobileNav() {
+            const isOpen = document.body.classList.toggle('nav-open');
+            document.body.classList.remove('citation-open');
+            showOverlay(isOpen);
+        }
+
+        function toggleMobileCite() {
+            const isOpen = document.body.classList.toggle('citation-open');
+            document.body.classList.remove('nav-open');
+            showOverlay(isOpen);
+        }
+
+        function closeAllDrawers() {
+            document.body.classList.remove('nav-open', 'citation-open');
+            showOverlay(false);
+        }
+
+        function showOverlay(show) {
+            const overlay = document.getElementById('drawerOverlay');
+            if (show) {
+                overlay.style.display = 'block';
+                requestAnimationFrame(() => overlay.classList.add('visible'));
+            } else {
+                overlay.classList.remove('visible');
+                setTimeout(() => { overlay.style.display = 'none'; }, 250);
+            }
+        }
+
+        // Auto-close nav drawer after selecting a section on mobile
+        const origSelectSection = selectSection;
+        function mobileAwareSelectSection(sectionId) {
+            origSelectSection(sectionId);
+            if (window.innerWidth <= 768) {
+                closeAllDrawers();
+            }
+        }
+
+        window.selectSection = mobileAwareSelectSection;
         window.highlightCitation = highlightCitation;
         window.toggleExpand = toggleExpand;
+        window.toggleMobileNav = toggleMobileNav;
+        window.toggleMobileCite = toggleMobileCite;
+        window.closeAllDrawers = closeAllDrawers;
 
         (async () => {
             await loadCaseList();
