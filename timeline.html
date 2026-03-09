@@ -26,13 +26,6 @@
     .toolbar .spacer { flex: 1; }
     .toolbar a { color: #4f46e5; text-decoration: none; font-size: 13px; }
     .toolbar a:hover { text-decoration: underline; }
-    .toolbar .view-tabs { display: flex; gap: 2px; background: #e5e7eb; border-radius: 8px; padding: 2px; }
-    .toolbar .vtab {
-      padding: 4px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
-      color: #6b7280; cursor: pointer; border: none; background: none; transition: all 0.15s;
-    }
-    .toolbar .vtab:hover { color: #374151; }
-    .toolbar .vtab.active { background: #fff; color: #1f2937; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
     .badge {
       display: inline-flex; align-items: center; gap: 4px; font-size: 11px;
       padding: 3px 10px; border-radius: 999px; font-weight: 600;
@@ -128,25 +121,6 @@
     }
     .tl-decision-label { font-weight: 600; margin-bottom: 2px; }
 
-    /* ─── CAUSATION CHAIN ─── */
-    .causation { max-width: 700px; }
-    .cause-step {
-      display: flex; gap: 14px; align-items: flex-start;
-      margin-bottom: 8px; padding: 12px 16px;
-      background: white; border: 1px solid #e5e7eb; border-radius: 10px;
-      transition: border-color 0.15s;
-    }
-    .cause-step:hover { border-color: #4f46e5; }
-    .cause-num {
-      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
-      background: #4f46e5; color: white; font-size: 13px; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .cause-content { flex: 1; }
-    .cause-label { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 2px; }
-    .cause-desc { font-size: 12px; color: #6b7280; line-height: 1.5; }
-    .cause-arrow { text-align: center; color: #d1d5db; font-size: 18px; margin: 2px 0 2px 14px; }
-
     /* ─── EMPTY STATE ─── */
     .empty-state {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -224,11 +198,8 @@
 <body>
   <div class="toolbar">
     <h1>Timeline Viewer</h1>
-    <div class="view-tabs">
-      <button class="vtab active" data-view="events" onclick="switchView('events')">事件時間軸</button>
-      <button class="vtab" data-view="causal" onclick="switchView('causal')">因果關係鏈</button>
-    </div>
     <span class="spacer"></span>
+    <a id="summaryLink" href="view.html">摘要瀏覽</a>
     <a href="index.html">返回總覽</a>
   </div>
 
@@ -253,7 +224,6 @@
     let allCases = [];
     let caseSlugs = {};
     let currentCase = null;
-    let currentView = 'events'; // events | causal
     let timelineData = null;
 
     async function init() {
@@ -296,10 +266,12 @@
         el.classList.toggle('active', el.dataset.case === caseName);
       });
 
-      // Update URL
+      // Update URL and summary link
       const url = new URL(location.href);
       url.searchParams.set('case', caseName);
       history.replaceState({}, '', url.toString());
+      const summaryLink = document.getElementById('summaryLink');
+      if (summaryLink) summaryLink.href = `view.html?case=${encodeURIComponent(caseName)}`;
 
       // Close mobile drawer
       if (window.innerWidth <= 768) closeCasePanel();
@@ -312,21 +284,10 @@
         const res = await fetch(`./data/timeline/${slug}.json`);
         if (!res.ok) throw new Error('not found');
         timelineData = await res.json();
-        render();
+        renderEvents();
       } catch {
         contentArea.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div class="msg">此案例無時間軸資料</div></div>`;
       }
-    }
-
-    function switchView(view) {
-      currentView = view;
-      document.querySelectorAll('.vtab').forEach(el => el.classList.toggle('active', el.dataset.view === view));
-      if (timelineData) render();
-    }
-
-    function render() {
-      if (currentView === 'events') renderEvents();
-      else renderCausation();
     }
 
     function renderEvents() {
@@ -390,38 +351,6 @@
       });
       html += '</div>';
 
-      document.getElementById('contentArea').innerHTML = html;
-    }
-
-    function renderCausation() {
-      const chain = timelineData.causation_chain || [];
-      if (!chain.length) {
-        document.getElementById('contentArea').innerHTML = '<div class="empty-state"><div class="icon">🔗</div><div class="msg">此案例無因果關係鏈資料</div></div>';
-        return;
-      }
-
-      let html = '<div class="tl-summary"><div class="tl-summary-card"><div class="tl-summary-label">因果關係鏈</div><div class="tl-summary-value">' + chain.length + ' 步驟</div></div></div>';
-      html += '<div class="causation">';
-
-      chain.forEach((step, idx) => {
-        // Step can be string or object with step/description
-        const label = typeof step === 'string' ? `Step ${idx + 1}` : (step.step || `Step ${idx + 1}`);
-        const desc = typeof step === 'string' ? step : (step.description || JSON.stringify(step));
-
-        html += `<div class="cause-step">
-          <div class="cause-num">${idx + 1}</div>
-          <div class="cause-content">
-            <div class="cause-label">${esc(label)}</div>
-            <div class="cause-desc">${esc(desc)}</div>
-          </div>
-        </div>`;
-
-        if (idx < chain.length - 1) {
-          html += '<div class="cause-arrow">↓</div>';
-        }
-      });
-
-      html += '</div>';
       document.getElementById('contentArea').innerHTML = html;
     }
 

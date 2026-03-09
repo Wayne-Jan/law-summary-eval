@@ -594,7 +594,7 @@
         <span class="condition-label">版本</span>
         <select class="condition-select" id="conditionSelect"></select>
         <span class="spacer"></span>
-        <a href="timeline.html">時間軸</a>
+        <a id="timelineLink" href="timeline.html">時間軸</a>
         <a href="index.html">返回總覽</a>
     </div>
 
@@ -656,10 +656,10 @@
         const initialCaseName = urlParams0.get('case') || '';
         const urlParams = new URLSearchParams(window.location.search);
         const initialCondition = urlParams.get('condition') || 'claude_afg_v5.1';
-        const initialMode = urlParams.get('mode') === 'compare' ? 'compare' : 'single';
+        const initialMode = urlParams.get('mode') === 'single' ? 'single' : 'compare';
         const initialGroup = ['all', '商用模型', '開源模型'].includes(urlParams.get('group'))
             ? urlParams.get('group')
-            : 'all';
+            : '商用模型';
 
         let viewData = null;
         let gtData = null;
@@ -1024,12 +1024,18 @@
 
         function updateUrlState() {
             const url = new URL(window.location.href);
-            url.pathname = url.pathname;  // keep current path
+            url.pathname = url.pathname;
             url.searchParams.set('case', currentCaseName);
             url.searchParams.set('condition', currentCondition);
             url.searchParams.set('mode', currentMode);
             url.searchParams.set('group', currentGroup);
             window.history.replaceState({}, '', url.toString());
+
+            // Keep timeline link synced with current case
+            const tlLink = document.getElementById('timelineLink');
+            if (tlLink && currentCaseName) {
+                tlLink.href = `timeline.html?case=${encodeURIComponent(currentCaseName)}`;
+            }
         }
 
         function escapeHtml(text) {
