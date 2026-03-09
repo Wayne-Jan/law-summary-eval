@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal Summary Evaluation — 醫療糾紛判決書摘要評估平台</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --serif: 'Noto Serif TC', serif;
+      --sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --indigo: #4f46e5;
+      --slate-900: #0f172a;
+      --slate-700: #334155;
+      --slate-500: #64748b;
+      --slate-100: #f1f5f9;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: #fff; color: var(--slate-700); overflow-x: hidden; }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      display: flex; align-items: center; padding: 0 32px; gap: 20px;
+      z-index: 200;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-logo { font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--slate-900); }
+    .nav-spacer { flex: 1; }
+    .nav a { font-size: 13px; color: var(--slate-500); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav a:hover { color: var(--indigo); }
+    .nav-cta {
+      background: var(--indigo); color: #fff !important; padding: 7px 18px;
+      border-radius: 8px; font-size: 12px; font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,0.35); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1920&q=80') center/cover no-repeat;
+    }
+    .hero-img::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,41,59,0.85) 50%, rgba(49,46,129,0.88) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 780px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px; padding: 6px 18px;
+      font-size: 12px; color: rgba(255,255,255,0.65); font-weight: 500;
+      margin-bottom: 28px;
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: #10b981; animation: pulse 2s infinite; }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(34px, 5.5vw, 60px);
+      font-weight: 900; color: #fff; line-height: 1.2;
+      letter-spacing: -1px; margin-bottom: 20px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+    .hero h1 .accent { color: #a5b4fc; }
+
+    .hero-sub {
+      font-size: clamp(14px, 1.8vw, 17px);
+      color: rgba(255,255,255,0.5); line-height: 1.8;
+      max-width: 520px; margin: 0 auto 36px; font-weight: 300;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 12px;
+      font-size: 14px; font-weight: 600; text-decoration: none;
+      transition: all 0.2s; cursor: pointer; border: none;
+    }
+    .btn-primary { background: #fff; color: var(--slate-900); box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+    .btn-ghost { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.12); }
+    .btn-ghost:hover { background: rgba(255,255,255,0.14); }
+
+    .hero-stats {
+      display: flex; justify-content: center; gap: 48px; margin-top: 56px;
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+    .hero-stat-value { font-size: 34px; font-weight: 700; color: #fff; font-family: var(--serif); }
+    .hero-stat-label { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+
+    .scroll-hint {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.2); font-size: 11px; text-align: center;
+      animation: float 3s ease-in-out infinite;
+    }
+    .scroll-hint svg { display: block; margin: 3px auto 0; }
+
+    /* ─── SHARED SECTION ─── */
+    .section { padding: 96px 24px; }
+    .section-label {
+      font-size: 11px; font-weight: 700; color: var(--indigo);
+      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; text-align: center;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(24px, 3.5vw, 38px);
+      font-weight: 700; color: var(--slate-900); text-align: center;
+      letter-spacing: -0.5px; margin-bottom: 14px; line-height: 1.3;
+    }
+    .section-desc {
+      text-align: center; font-size: 15px; color: var(--slate-500);
+      max-width: 520px; margin: 0 auto 52px; line-height: 1.8;
+    }
+
+    /* ─── FEATURE CARDS (image + text side by side) ─── */
+    .features { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px; }
+
+    .feat {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    .feat.reverse { direction: rtl; }
+    .feat.reverse > * { direction: ltr; }
+
+    .feat-img {
+      border-radius: 16px; overflow: hidden; aspect-ratio: 4/3;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+    }
+    .feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .feat-text h3 {
+      font-family: var(--serif); font-size: 24px; font-weight: 700;
+      color: var(--slate-900); margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .feat-text p { font-size: 14px; color: var(--slate-500); line-height: 1.9; }
+    .feat-text .feat-tag {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      color: var(--indigo); background: #eef2ff; padding: 4px 12px;
+      border-radius: 6px; margin-bottom: 14px;
+    }
+
+    /* ─── NUMBERS ─── */
+    .section.dark {
+      background: var(--slate-900); padding: 80px 24px;
+    }
+    .section.dark .section-label { color: #818cf8; }
+    .section.dark .section-title { color: #fff; }
+
+    .numbers {
+      display: flex; gap: 0; max-width: 800px; margin: 0 auto;
+      background: rgba(255,255,255,0.04); border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08); overflow: hidden;
+    }
+    .num-item { flex: 1; text-align: center; padding: 36px 20px; position: relative; }
+    .num-item + .num-item::before {
+      content: ''; position: absolute; left: 0; top: 20%; height: 60%;
+      width: 1px; background: rgba(255,255,255,0.08);
+    }
+    .num-value { font-family: var(--serif); font-size: 40px; font-weight: 900; color: #fff; }
+    .num-value .u { font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.4); }
+    .num-label { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+
+    /* ─── CASE TABLE ─── */
+    .section.cases-section { background: var(--slate-100); }
+
+    .filter-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
+      max-width: 920px; margin-left: auto; margin-right: auto; margin-bottom: 12px;
+    }
+    .ftabs { display: flex; gap: 2px; background: #e5e7eb; border-radius: 8px; padding: 3px; }
+    .ftab {
+      padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 500;
+      color: #6b7280; cursor: pointer; border: none; background: none; transition: all 0.2s;
+    }
+    .ftab:hover { color: #374151; }
+    .ftab.active { background: #fff; color: #1f2937; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .sbox {
+      padding: 7px 12px 7px 32px; border: 1px solid #e5e7eb; border-radius: 8px;
+      font-size: 12px; width: 200px; outline: none; transition: border-color 0.2s;
+      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cline x1='9.5' y1='9.5' x2='13' y2='13'/%3E%3C/svg%3E") no-repeat 10px center;
+    }
+    .sbox:focus { border-color: var(--indigo); }
+    .rcount { font-size: 11px; color: #9ca3af; }
+
+    .ctable {
+      width: 100%; max-width: 920px; margin: 0 auto;
+      border-collapse: separate; border-spacing: 0;
+      background: #fff; border-radius: 12px; overflow: hidden;
+      border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .ctable th {
+      text-align: left; padding: 12px 16px;
+      font-size: 11px; color: #9ca3af; font-weight: 600; background: #fafafa;
+      border-bottom: 1px solid #e5e7eb; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .ctable td { padding: 11px 16px; font-size: 13px; color: #374151; border-bottom: 1px solid #f3f4f6; }
+    .ctable tbody tr { cursor: pointer; transition: background 0.12s; }
+    .ctable tbody tr:hover { background: #eef2ff; }
+    .ctable tbody tr:hover td:first-child { color: var(--indigo); }
+    .ctable tbody tr:last-child td { border-bottom: none; }
+    .ctable td:first-child { font-size: 12px; color: #9ca3af; font-weight: 500; text-align: center; width: 48px; }
+    .cn { max-width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+    .vb { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+    .vb.g { background: #fef2f2; color: #b91c1c; }
+    .vb.ng { background: #ecfdf5; color: #047857; }
+    .vb .d { width: 5px; height: 5px; border-radius: 50%; }
+    .vb.g .d { background: #b91c1c; }
+    .vb.ng .d { background: #047857; }
+    .cc { font-size: 12px; color: #6b7280; }
+    .ai { width: 16px; height: 16px; color: #d1d5db; transition: color 0.15s; }
+    .ctable tbody tr:hover .ai { color: var(--indigo); }
+    .empty-s { padding: 48px; text-align: center; color: #9ca3af; font-size: 14px; }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      padding: 28px 24px; text-align: center;
+      font-size: 12px; color: #c0c0c0; background: #fff;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; will-change: opacity, transform; }
+    .reveal.vis { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .nav { padding: 0 16px; gap: 12px; }
+      .nav a:not(.nav-cta) { display: none; }
+      .hero-stats { gap: 20px; flex-wrap: wrap; }
+      .hero-stat-value { font-size: 26px; }
+      .feat { grid-template-columns: 1fr; gap: 24px; }
+      .feat.reverse { direction: ltr; }
+      .numbers { flex-wrap: wrap; }
+      .num-item { min-width: 50%; }
+      .num-item + .num-item::before { display: none; }
+      .sbox { width: 100%; order: -1; }
+      .cn { max-width: 200px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">LegalSummary</span>
+  <span class="nav-spacer"></span>
+  <a href="#why">關於</a>
+  <a href="#data">資料</a>
+  <a href="#cases">案件</a>
+  <a href="view.html" class="nav-cta">開始瀏覽</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-img"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span>醫療糾紛 · 刑事判決書 · 自動摘要</div>
+    <h1>讓每一份判決書<br>都能被<span class="accent">準確理解</span></h1>
+    <p class="hero-sub">
+      醫療糾紛判決書動輒萬字，非法律專業者難以掌握關鍵事實。<br>
+      多模型自動摘要評估平台，為摘要品質提供客觀衡量。
+    </p>
+    <div class="hero-actions">
+      <a href="#cases" class="btn btn-primary">瀏覽案件</a>
+      <a href="#why" class="btn btn-ghost">了解更多</a>
+    </div>
+    <div class="hero-stats" id="heroStats"></div>
+  </div>
+  <div class="scroll-hint">
+    SCROLL
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 7l4 4 4-4"/></svg>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section" id="why">
+  <div class="reveal">
+    <div class="section-label">為什麼需要</div>
+    <div class="section-title">醫療判決書摘要的迫切需求</div>
+    <p class="section-desc">當醫學專業遇上法律論述，自動摘要成為讓資訊平權的關鍵技術。</p>
+  </div>
+  <div class="features">
+
+    <div class="feat reveal">
+      <div class="feat-img">
+        <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&q=80" alt="醫療場景">
+      </div>
+      <div class="feat-text">
+        <span class="feat-tag">問題</span>
+        <h3>萬字判決書，<br>醫療人員如何消化？</h3>
+        <p>一份醫療糾紛判決書通常超過一萬字，涵蓋公訴事實、被告答辯、鑑定意見、法院認定與判決理由。面對龐大文件量，非法律專業的醫師、護理師往往無從下手。</p>
+      </div>
+    </div>
+
+    <div class="feat reverse reveal">
+      <div class="feat-img">
+        <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&q=80" alt="法律文件">
+      </div>
+      <div class="feat-text">
+        <span class="feat-tag">挑戰</span>
+        <h3>醫學術語 × 法律概念<br>跨領域的理解門檻</h3>
+        <p>醫療常規、注意義務、相當因果關係——這些概念同時橫跨醫學與法律兩個高度專業的領域。正確的摘要需要準確理解雙方的專業語境，不容許任何事實上的偏差。</p>
+      </div>
+    </div>
+
+    <div class="feat reveal">
+      <div class="feat-img">
+        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="數據分析">
+      </div>
+      <div class="feat-text">
+        <span class="feat-tag">解決方案</span>
+        <h3>系統化評估，<br>客觀衡量摘要品質</h3>
+        <p>我們以老師撰寫的 Ground Truth 摘要為基準，從事實正確性、引用忠實度、寫作品質等多個維度，對比商用與開源語言模型的自動摘要結果，找出最適合的摘要方法。</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section class="section dark" id="data">
+  <div class="reveal">
+    <div class="section-label">資料規模</div>
+    <div class="section-title">大規模系統化比較</div>
+  </div>
+  <div class="numbers reveal" id="numbers"></div>
+</section>
+
+<!-- CASES -->
+<section class="section cases-section" id="cases">
+  <div class="reveal">
+    <div class="section-label">案件列表</div>
+    <div class="section-title">選擇案件開始閱讀</div>
+    <p class="section-desc">點選任一案件，比較各模型的摘要結果與老師摘要。</p>
+  </div>
+  <div class="reveal">
+    <div class="filter-row">
+      <div class="ftabs">
+        <button class="ftab active" onclick="fil('all',this)">全部</button>
+        <button class="ftab" onclick="fil('g',this)">有罪</button>
+        <button class="ftab" onclick="fil('ng',this)">無罪</button>
+      </div>
+      <span style="flex:1"></span>
+      <span class="rcount" id="rc"></span>
+      <input type="text" class="sbox" id="sb" placeholder="搜尋案件..." oninput="fil(cf)">
+    </div>
+    <table class="ctable">
+      <thead><tr><th>#</th><th>案件名稱</th><th>類型</th><th>Conditions</th><th style="width:36px"></th></tr></thead>
+      <tbody id="cb"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer class="footer">Legal Summary Evaluation Platform · 醫療糾紛判決書摘要品質評估</footer>
+
+<script>
+let ac=[], cf='all';
+
+async function init() {
+  const m = await (await fetch('./data/manifest.json')).json();
+  const cs = m.cases, co = m.conditions;
+  const tc = Object.keys(co).length;
+  const tf = Object.values(co).reduce((s,c)=>s+c.case_count,0);
+  const te = Object.values(co).reduce((s,c)=>s+c.eval_count,0);
+  const gc = cs.filter(n=>n.startsWith('有罪')).length;
+  const nc = cs.filter(n=>n.startsWith('無罪')).length;
+
+  document.getElementById('heroStats').innerHTML = `
+    <div><div class="hero-stat-value">${cs.length}</div><div class="hero-stat-label">案件</div></div>
+    <div><div class="hero-stat-value">${tc}</div><div class="hero-stat-label">模型條件</div></div>
+    <div><div class="hero-stat-value">${tf}</div><div class="hero-stat-label">摘要篇數</div></div>
+    <div><div class="hero-stat-value">${te}</div><div class="hero-stat-label">已評估</div></div>
+  `;
+
+  document.getElementById('numbers').innerHTML = `
+    <div class="num-item"><div class="num-value">${cs.length}<span class="u"> 件</span></div><div class="num-label">醫療糾紛案件</div></div>
+    <div class="num-item"><div class="num-value">${gc} <span class="u">/</span> ${nc}</div><div class="num-label">有罪 / 無罪</div></div>
+    <div class="num-item"><div class="num-value">${tc}</div><div class="num-label">模型 × 條件</div></div>
+    <div class="num-item"><div class="num-value">${tf}</div><div class="num-label">摘要產出</div></div>
+  `;
+
+  ac = cs.map((n,i)=>({i:i+1,n,g:n.startsWith('有罪'),c:tc}));
+  fil('all');
+
+  // Lightweight reveal observer
+  const obs = new IntersectionObserver(es => {
+    es.forEach(e => { if(e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }});
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+}
+
+function fil(f, btn) {
+  if(btn) { document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active')); btn.classList.add('active'); }
+  cf = f;
+  const q = (document.getElementById('sb')?.value||'').trim().toLowerCase();
+  let r = ac;
+  if(f==='g') r=r.filter(c=>c.g);
+  else if(f==='ng') r=r.filter(c=>!c.g);
+  if(q) r=r.filter(c=>c.n.toLowerCase().includes(q));
+  document.getElementById('rc').textContent = r.length===ac.length ? '' : r.length+' / '+ac.length;
+  const tb = document.getElementById('cb');
+  if(!r.length) { tb.innerHTML='<tr><td colspan="5"><div class="empty-s">沒有符合條件的案件</div></td></tr>'; return; }
+  tb.innerHTML = r.map(c=>`
+    <tr onclick="location.href='view.html?case=${encodeURIComponent(c.n)}'">
+      <td>${c.i}</td>
+      <td class="cn" title="${esc(c.n)}">${esc(c.n)}</td>
+      <td><span class="vb ${c.g?'g':'ng'}"><span class="d"></span>${c.g?'有罪':'無罪'}</span></td>
+      <td class="cc">${c.c}</td>
+      <td><svg class="ai" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg></td>
+    </tr>`).join('');
+}
+
+function esc(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }
+init();
+</script>
+</body>
+</html>
