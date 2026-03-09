@@ -58,10 +58,67 @@
     .case-item.active { background: #eef2ff; color: #4f46e5; border-left-color: #4f46e5; font-weight: 500; }
     .case-count { font-size: 11px; color: #9ca3af; padding: 4px 16px; }
 
-    /* ─── RIGHT: Content Area ─── */
+    /* ─── RIGHT: Content Area (dual-column wrapper) ─── */
     .content-area {
-      flex: 1; padding: 24px 32px; overflow-y: auto; background: #fafafa;
+      flex: 1; overflow-y: auto; background: #fafafa;
     }
+    .content-inner {
+      padding: 24px 32px;
+    }
+
+    /* ─── DUAL-COLUMN LAYOUT (desktop) ─── */
+    .tl-columns {
+      display: flex; gap: 24px; align-items: flex-start;
+    }
+    .tl-col-left {
+      flex: 55; min-width: 0;
+    }
+    .tl-col-right {
+      flex: 45; min-width: 0;
+      position: sticky; top: 0;
+      max-height: calc(100vh - 52px);
+      overflow-y: auto;
+    }
+
+    /* ─── SOURCE PANEL (right column) ─── */
+    .source-panel {
+      background: white; border: 1px solid #e5e7eb; border-radius: 10px;
+      padding: 20px; min-height: 200px;
+      transition: opacity 0.2s;
+    }
+    .source-panel-header {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+      padding-bottom: 12px; border-bottom: 1px solid #f3f4f6;
+    }
+    .source-panel-icon {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: #eef2ff; color: #4f46e5;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .source-panel-title {
+      font-size: 13px; font-weight: 600; color: #333;
+    }
+    .source-panel-subtitle {
+      font-size: 11px; color: #9ca3af; margin-top: 1px;
+    }
+    .source-panel-body {
+      font-size: 13px; color: #475569; line-height: 1.8;
+      border-left: 3px solid #4f46e5; padding-left: 14px;
+    }
+    .source-panel-empty {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 160px; color: #d1d5db; text-align: center;
+    }
+    .source-panel-empty svg { margin-bottom: 10px; opacity: 0.5; }
+    .source-panel-empty span { font-size: 13px; }
+    .source-panel-meta {
+      margin-top: 14px; padding-top: 12px; border-top: 1px solid #f3f4f6;
+      display: flex; gap: 16px; flex-wrap: wrap;
+    }
+    .source-panel-meta-item {
+      font-size: 11px; color: #9ca3af;
+    }
+    .source-panel-meta-item strong { color: #6b7280; font-weight: 500; }
 
     /* ─── SUMMARY BANNER ─── */
     .tl-summary {
@@ -86,7 +143,7 @@
     .tl-event {
       position: relative; margin-bottom: 16px;
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
-      padding: 14px 18px; transition: all 0.15s; cursor: default;
+      padding: 14px 18px; transition: all 0.15s; cursor: pointer;
     }
     .tl-event::before {
       content: ''; position: absolute; left: -22px; top: 18px;
@@ -95,8 +152,10 @@
       box-shadow: 0 0 0 2px #e5e7eb;
     }
     .tl-event:hover { border-color: #4f46e5; box-shadow: 0 2px 12px rgba(79,70,229,0.08); }
+    .tl-event.active-source { border-color: #4f46e5; box-shadow: 0 2px 12px rgba(79,70,229,0.12); }
     .tl-event.critical::before { background: #dc2626; box-shadow: 0 0 0 2px #fecaca; }
     .tl-event.critical { border-left: 3px solid #dc2626; }
+    .tl-event.critical.active-source { border-color: #dc2626; box-shadow: 0 2px 12px rgba(220,38,38,0.12); }
 
     .tl-event-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
     .tl-date { font-size: 13px; font-weight: 600; color: #4f46e5; }
@@ -121,8 +180,10 @@
     }
     .tl-decision-label { font-weight: 600; margin-bottom: 2px; }
 
+    /* ─── MOBILE: collapsible source (hidden on desktop) ─── */
     .tl-source-toggle {
-      display: inline-flex; align-items: center; gap: 4px;
+      display: none; /* hidden on desktop, shown on mobile */
+      align-items: center; gap: 4px;
       margin-top: 8px; padding: 0; border: none; background: none;
       font-size: 11px; color: #9ca3af; cursor: pointer; transition: color 0.15s;
     }
@@ -156,8 +217,11 @@
     /* ─── RESPONSIVE: TABLET ─── */
     @media (max-width: 1024px) {
       .case-panel { width: 200px; }
-      .content-area { padding: 20px; }
+      .content-inner { padding: 20px; }
       .tl-summary-card { min-width: 120px; padding: 10px 14px; }
+      .tl-columns { gap: 16px; }
+      .tl-col-left { flex: 50; }
+      .tl-col-right { flex: 50; }
     }
 
     /* ─── RESPONSIVE: MOBILE ─── */
@@ -176,13 +240,20 @@
       }
       body.case-panel-open .case-panel { transform: translateX(0); }
 
-      .content-area { padding: 16px 12px; flex: 1; }
+      .content-area { padding: 0; flex: 1; }
+      .content-inner { padding: 16px 12px; }
       .tl-summary { gap: 8px; }
       .tl-summary-card { min-width: 45%; padding: 10px 12px; }
       .tl-summary-value { font-size: 16px; }
-      .tl-event { padding: 12px 14px; }
+      .tl-event { padding: 12px 14px; cursor: default; }
       .tl-desc { font-size: 12px; }
       .tl-meta { gap: 8px; }
+
+      /* Hide right column, show inline collapsible */
+      .tl-columns { flex-direction: column; }
+      .tl-col-right { display: none; }
+      .tl-col-left { flex: 1; }
+      .tl-source-toggle { display: inline-flex; }
 
       .mobile-fab {
         display: flex; position: fixed; bottom: 16px; left: 16px;
@@ -207,7 +278,6 @@
 
     @media (max-width: 480px) {
       .tl-summary-card { min-width: 100%; }
-      .cause-step { padding: 10px 12px; gap: 10px; }
     }
   </style>
 </head>
@@ -241,6 +311,7 @@
     let caseSlugs = {};
     let currentCase = null;
     let timelineData = null;
+    let activeEventIdx = -1;
 
     async function init() {
       try {
@@ -278,6 +349,7 @@
     async function selectCase(caseName) {
       currentCase = caseName;
       timelineData = null;
+      activeEventIdx = -1;
       document.querySelectorAll('.case-item').forEach(el => {
         el.classList.toggle('active', el.dataset.case === caseName);
       });
@@ -313,7 +385,7 @@
       const span = summary.time_span || {};
       const criticalCount = events.filter(e => e.critical_decision).length;
 
-      let html = '';
+      let html = '<div class="content-inner">';
 
       // Summary banner
       html += '<div class="tl-summary">';
@@ -329,13 +401,18 @@
       }
       html += '</div>';
 
-      // Events
+      // Dual-column layout
+      html += '<div class="tl-columns">';
+
+      // Left column: timeline
+      html += '<div class="tl-col-left">';
       html += '<div class="timeline">';
       events.forEach((evt, idx) => {
         const isCritical = evt.critical_decision;
         const typeClass = isCritical ? 'critical_decision' : (evt.event_type || '');
+        const hasSource = !!evt.extraction_text;
 
-        html += `<div class="tl-event ${isCritical ? 'critical' : ''}">`;
+        html += `<div class="tl-event ${isCritical ? 'critical' : ''}" data-idx="${idx}" onclick="showSource(${idx})">`;
         html += '<div class="tl-event-header">';
         html += `<span class="tl-date">${esc(evt.timestamp || evt.timestamp_normalized || '日期不明')}</span>`;
         if (evt.event_type) {
@@ -363,9 +440,9 @@
           html += `<div class="tl-decision"><div class="tl-decision-label">決策內容</div>${esc(evt.decision_content)}</div>`;
         }
 
-        // Extraction text (collapsible source)
-        if (evt.extraction_text) {
-          html += `<button class="tl-source-toggle" onclick="toggleSource(${idx})">`;
+        // Mobile-only collapsible source
+        if (hasSource) {
+          html += `<button class="tl-source-toggle" onclick="event.stopPropagation(); toggleSource(${idx})">`;
           html += `<svg id="srcArrow${idx}" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 2.5L8 6L4.5 9.5"/></svg>`;
           html += `查看原文</button>`;
           html += `<div class="tl-source-text" id="srcText${idx}">${esc(evt.extraction_text)}</div>`;
@@ -373,9 +450,90 @@
 
         html += '</div>';
       });
+      html += '</div>'; // .timeline
+      html += '</div>'; // .tl-col-left
+
+      // Right column: source panel (sticky)
+      html += '<div class="tl-col-right">';
+      html += '<div class="source-panel" id="sourcePanel">';
+      html += renderSourceEmpty();
       html += '</div>';
+      html += '</div>'; // .tl-col-right
+
+      html += '</div>'; // .tl-columns
+      html += '</div>'; // .content-inner
 
       document.getElementById('contentArea').innerHTML = html;
+
+      // Auto-show first event's source
+      if (events.length > 0 && events[0].extraction_text) {
+        showSource(0);
+      }
+    }
+
+    function renderSourceEmpty() {
+      return `<div class="source-panel-empty">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+        <span>點擊左側事件以檢視判決書原文</span>
+      </div>`;
+    }
+
+    function showSource(idx) {
+      if (!timelineData) return;
+      const events = timelineData.events || [];
+      const evt = events[idx];
+      if (!evt) return;
+
+      activeEventIdx = idx;
+
+      // Highlight active event card
+      document.querySelectorAll('.tl-event').forEach(el => {
+        el.classList.toggle('active-source', parseInt(el.dataset.idx) === idx);
+      });
+
+      const panel = document.getElementById('sourcePanel');
+      if (!panel) return;
+
+      if (!evt.extraction_text) {
+        panel.innerHTML = `<div class="source-panel-empty">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+          </svg>
+          <span>此事件無原文引用</span>
+        </div>`;
+        return;
+      }
+
+      const isCritical = evt.critical_decision;
+      const borderColor = isCritical ? '#dc2626' : '#4f46e5';
+
+      let h = '';
+      h += '<div class="source-panel-header">';
+      h += `<div class="source-panel-icon" style="${isCritical ? 'background:#fef2f2;color:#dc2626' : ''}">`;
+      h += `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
+      h += '</div>';
+      h += '<div>';
+      h += `<div class="source-panel-title">事件 ${idx + 1} — 判決書原文</div>`;
+      h += `<div class="source-panel-subtitle">${esc(evt.timestamp || evt.timestamp_normalized || '')} · ${esc(formatEventType(evt.event_type || ''))}</div>`;
+      h += '</div></div>';
+
+      h += `<div class="source-panel-body" style="border-left-color:${borderColor}">${esc(evt.extraction_text)}</div>`;
+
+      // Meta section
+      const metaParts = [];
+      if (evt.actors && evt.actors.length) metaParts.push(`<span class="source-panel-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
+      if (evt.location) metaParts.push(`<span class="source-panel-meta-item"><strong>地點:</strong> ${esc(evt.location)}</span>`);
+      if (evt.char_start != null && evt.char_end != null) {
+        metaParts.push(`<span class="source-panel-meta-item"><strong>位置:</strong> 字元 ${evt.char_start}–${evt.char_end}</span>`);
+      }
+      if (metaParts.length) h += `<div class="source-panel-meta">${metaParts.join('')}</div>`;
+
+      panel.innerHTML = h;
     }
 
     function formatEventType(type) {
@@ -394,7 +552,7 @@
       return map[type] || type;
     }
 
-    // Toggle extraction text source
+    // Mobile: toggle inline extraction text
     function toggleSource(idx) {
       const btn = document.querySelector(`#srcArrow${idx}`).parentElement;
       const txt = document.getElementById(`srcText${idx}`);
