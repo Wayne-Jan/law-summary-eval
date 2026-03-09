@@ -420,8 +420,8 @@
         <span class="gt-status" id="gtStatus">GT -</span>
         <select class="mode-select" id="groupSelect">
             <option value="all">All</option>
-            <option value="proprietary">Proprietary</option>
-            <option value="opensource">OpenSource</option>
+            <option value="商用模型">商用模型</option>
+            <option value="開源模型">開源模型</option>
         </select>
         <span class="condition-label">版本</span>
         <select class="condition-select" id="conditionSelect"></select>
@@ -483,13 +483,14 @@
         const urlParams = new URLSearchParams(window.location.search);
         const initialCondition = urlParams.get('condition') || 'claude_afg_v5.1';
         const initialMode = urlParams.get('mode') === 'compare' ? 'compare' : 'single';
-        const initialGroup = ['all', 'proprietary', 'opensource'].includes(urlParams.get('group'))
+        const initialGroup = ['all', '商用模型', '開源模型'].includes(urlParams.get('group'))
             ? urlParams.get('group')
             : 'all';
 
         let viewData = null;
         let gtData = null;
         let allCases = [];
+        let caseSlugs = {};  // case_name -> slug mapping for ASCII filenames
         let currentCaseName = initialCaseName;
         let currentCondition = initialCondition;
         let currentMode = initialMode;
@@ -497,11 +498,15 @@
         let currentSection = null;
         let gtMissing = false;
 
+        function getSlug(caseName) {
+            return caseSlugs[caseName] || encodeURIComponent(caseName);
+        }
+
         async function loadCaseList() {
             try {
-                const response = await fetch('./data/cases.json');
-                if (!response.ok) throw new Error('案例列表載入失敗');
-                allCases = await response.json();
+                const manifest = await (await fetch('./data/manifest.json')).json();
+                allCases = manifest.cases || [];
+                caseSlugs = manifest.case_slugs || {};
             } catch {
                 allCases = currentCaseName ? [currentCaseName] : [];
             }
@@ -537,7 +542,7 @@
             renderCaseSelector();
 
             try {
-                const response = await fetch(`./data/${encodeURIComponent(currentCondition)}/${encodeURIComponent(currentCaseName)}.json`);
+                const response = await fetch(`./data/${encodeURIComponent(currentCondition)}/${getSlug(currentCaseName)}.json`);
                 if (!response.ok) throw new Error('載入生成摘要失敗');
                 viewData = await response.json();
                 currentCondition = viewData.condition || currentCondition;
@@ -574,7 +579,7 @@
 
         async function loadGtData() {
             try {
-                const response = await fetch(`./data/_gt/${encodeURIComponent(currentCaseName)}.json`);
+                const response = await fetch(`./data/_gt/${getSlug(currentCaseName)}.json`);
                 if (!response.ok) throw new Error('GT 載入失敗');
                 gtData = await response.json();
                 gtMissing = false;
