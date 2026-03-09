@@ -121,6 +121,22 @@
     }
     .tl-decision-label { font-weight: 600; margin-bottom: 2px; }
 
+    .tl-source-toggle {
+      display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 8px; padding: 0; border: none; background: none;
+      font-size: 11px; color: #9ca3af; cursor: pointer; transition: color 0.15s;
+    }
+    .tl-source-toggle:hover { color: #4f46e5; }
+    .tl-source-toggle svg { transition: transform 0.2s; }
+    .tl-source-toggle.open svg { transform: rotate(90deg); }
+    .tl-source-text {
+      display: none; margin-top: 6px; padding: 10px 12px;
+      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;
+      font-size: 12px; color: #475569; line-height: 1.7;
+      border-left: 3px solid #cbd5e1;
+    }
+    .tl-source-text.open { display: block; }
+
     /* ─── EMPTY STATE ─── */
     .empty-state {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -347,6 +363,14 @@
           html += `<div class="tl-decision"><div class="tl-decision-label">決策內容</div>${esc(evt.decision_content)}</div>`;
         }
 
+        // Extraction text (collapsible source)
+        if (evt.extraction_text) {
+          html += `<button class="tl-source-toggle" onclick="toggleSource(${idx})">`;
+          html += `<svg id="srcArrow${idx}" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 2.5L8 6L4.5 9.5"/></svg>`;
+          html += `查看原文</button>`;
+          html += `<div class="tl-source-text" id="srcText${idx}">${esc(evt.extraction_text)}</div>`;
+        }
+
         html += '</div>';
       });
       html += '</div>';
@@ -368,6 +392,14 @@
         consultation: '會診',
       };
       return map[type] || type;
+    }
+
+    // Toggle extraction text source
+    function toggleSource(idx) {
+      const btn = document.querySelector(`#srcArrow${idx}`).parentElement;
+      const txt = document.getElementById(`srcText${idx}`);
+      btn.classList.toggle('open');
+      txt.classList.toggle('open');
     }
 
     // Mobile drawer
