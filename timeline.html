@@ -19,10 +19,6 @@
       display: flex; align-items: center; padding: 0 20px; gap: 12px; z-index: 100;
     }
     .toolbar h1 { font-size: 15px; font-weight: 600; color: #333; white-space: nowrap; }
-    .toolbar select {
-      padding: 5px 10px; border: 1px solid #e5e7eb; border-radius: 10px;
-      font-size: 12px; background: #f3f4f6; color: #374151; min-width: 180px;
-    }
     .toolbar .spacer { flex: 1; }
     .toolbar a { color: #4f46e5; text-decoration: none; font-size: 13px; }
     .toolbar a:hover { text-decoration: underline; }
@@ -31,7 +27,6 @@
       padding: 3px 10px; border-radius: 999px; font-weight: 600;
     }
     .badge.critical { background: #fef2f2; color: #b91c1c; }
-    .badge.info { background: #eef2ff; color: #4f46e5; }
 
     /* ─── MAIN LAYOUT ─── */
     .main {
@@ -58,21 +53,15 @@
     .case-item.active { background: #eef2ff; color: #4f46e5; border-left-color: #4f46e5; font-weight: 500; }
     .case-count { font-size: 11px; color: #9ca3af; padding: 4px 16px; }
 
-    /* ─── RIGHT: Content Area (dual-column wrapper) ─── */
+    /* ─── RIGHT: Content Area ─── */
     .content-area {
       flex: 1; overflow-y: auto; background: #fafafa;
     }
-    .content-inner {
-      padding: 24px 32px;
-    }
+    .content-inner { padding: 24px 32px; }
 
-    /* ─── DUAL-COLUMN LAYOUT (desktop) ─── */
-    .tl-columns {
-      display: flex; gap: 24px; align-items: flex-start;
-    }
-    .tl-col-left {
-      flex: 55; min-width: 0;
-    }
+    /* ─── DUAL-COLUMN LAYOUT ─── */
+    .tl-columns { display: flex; gap: 24px; align-items: flex-start; }
+    .tl-col-left { flex: 55; min-width: 0; }
     .tl-col-right {
       flex: 45; min-width: 0;
       position: sticky; top: 0;
@@ -80,11 +69,10 @@
       overflow-y: auto;
     }
 
-    /* ─── SOURCE PANEL (right column) ─── */
+    /* ─── SOURCE PANEL ─── */
     .source-panel {
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
       padding: 20px; min-height: 200px;
-      transition: opacity 0.2s;
     }
     .source-panel-header {
       display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
@@ -95,15 +83,17 @@
       background: #eef2ff; color: #4f46e5;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .source-panel-title {
-      font-size: 13px; font-weight: 600; color: #333;
-    }
-    .source-panel-subtitle {
-      font-size: 11px; color: #9ca3af; margin-top: 1px;
-    }
+    .source-panel-title { font-size: 13px; font-weight: 600; color: #333; }
+    .source-panel-subtitle { font-size: 11px; color: #9ca3af; margin-top: 1px; }
     .source-panel-body {
-      font-size: 13px; color: #475569; line-height: 1.8;
+      font-size: 13px; color: #475569; line-height: 1.9;
       border-left: 3px solid #4f46e5; padding-left: 14px;
+      white-space: pre-wrap; word-break: break-all;
+    }
+    .source-panel-body mark {
+      background: #fef9c3; color: #475569;
+      padding: 1px 0; border-radius: 2px;
+      box-decoration-break: clone; -webkit-box-decoration-break: clone;
     }
     .source-panel-empty {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -115,15 +105,11 @@
       margin-top: 14px; padding-top: 12px; border-top: 1px solid #f3f4f6;
       display: flex; gap: 16px; flex-wrap: wrap;
     }
-    .source-panel-meta-item {
-      font-size: 11px; color: #9ca3af;
-    }
+    .source-panel-meta-item { font-size: 11px; color: #9ca3af; }
     .source-panel-meta-item strong { color: #6b7280; font-weight: 500; }
 
     /* ─── SUMMARY BANNER ─── */
-    .tl-summary {
-      display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;
-    }
+    .tl-summary { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
     .tl-summary-card {
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
       padding: 14px 18px; flex: 1; min-width: 140px;
@@ -133,9 +119,7 @@
     .tl-summary-value.small { font-size: 14px; font-weight: 500; }
 
     /* ─── TIMELINE ─── */
-    .timeline {
-      position: relative; padding-left: 28px;
-    }
+    .timeline { position: relative; padding-left: 28px; }
     .timeline::before {
       content: ''; position: absolute; left: 10px; top: 0; bottom: 0;
       width: 2px; background: #e5e7eb;
@@ -182,7 +166,7 @@
 
     /* ─── MOBILE: collapsible source (hidden on desktop) ─── */
     .tl-source-toggle {
-      display: none; /* hidden on desktop, shown on mobile */
+      display: none;
       align-items: center; gap: 4px;
       margin-top: 8px; padding: 0; border: none; background: none;
       font-size: 11px; color: #9ca3af; cursor: pointer; transition: color 0.15s;
@@ -194,19 +178,22 @@
       display: none; margin-top: 6px; padding: 10px 12px;
       background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;
       font-size: 12px; color: #475569; line-height: 1.7;
-      border-left: 3px solid #cbd5e1;
+      border-left: 3px solid #cbd5e1; white-space: pre-wrap; word-break: break-all;
     }
     .tl-source-text.open { display: block; }
+    .tl-source-text mark {
+      background: #fef9c3; color: #475569;
+      padding: 1px 0; border-radius: 2px;
+      box-decoration-break: clone; -webkit-box-decoration-break: clone;
+    }
 
-    /* ─── EMPTY STATE ─── */
+    /* ─── EMPTY/LOADING ─── */
     .empty-state {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       height: 60%; color: #9ca3af; text-align: center;
     }
     .empty-state .icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
     .empty-state .msg { font-size: 15px; }
-
-    /* ─── LOADING ─── */
     .loading { display: flex; align-items: center; justify-content: center; height: 100%; color: #999; }
     .loading::after {
       content: ''; width: 24px; height: 24px; border: 2px solid #e0e0e0;
@@ -228,18 +215,13 @@
     @media (max-width: 768px) {
       .toolbar { flex-wrap: wrap; height: auto; min-height: 48px; padding: 8px 12px; gap: 6px; }
       .toolbar h1 { font-size: 13px; }
-      .toolbar select { min-width: 0; flex: 1; font-size: 11px; display: none; }
-      .toolbar .view-tabs { order: 10; }
-
       .main { flex-direction: column; margin-top: 56px; height: auto; min-height: calc(100vh - 56px); }
-
       .case-panel {
         position: fixed; top: 0; left: 0; bottom: 0; width: 260px; z-index: 200;
         transform: translateX(-100%); transition: transform 0.3s ease;
         box-shadow: 4px 0 20px rgba(0,0,0,0.15);
       }
       body.case-panel-open .case-panel { transform: translateX(0); }
-
       .content-area { padding: 0; flex: 1; }
       .content-inner { padding: 16px 12px; }
       .tl-summary { gap: 8px; }
@@ -249,7 +231,6 @@
       .tl-desc { font-size: 12px; }
       .tl-meta { gap: 8px; }
 
-      /* Hide right column, show inline collapsible */
       .tl-columns { flex-direction: column; }
       .tl-col-right { display: none; }
       .tl-col-left { flex: 1; }
@@ -264,18 +245,15 @@
       }
       .mobile-fab:active { transform: scale(0.92); }
     }
-
     @media (min-width: 769px) {
       .mobile-fab { display: none !important; }
       .drawer-overlay { display: none !important; }
     }
-
     .drawer-overlay {
       display: none; position: fixed; inset: 0;
       background: rgba(0,0,0,0.35); z-index: 150; opacity: 0; transition: opacity 0.25s;
     }
     .drawer-overlay.visible { opacity: 1; }
-
     @media (max-width: 480px) {
       .tl-summary-card { min-width: 100%; }
     }
@@ -318,17 +296,11 @@
         const manifest = await (await fetch('./data/manifest.json')).json();
         allCases = manifest.cases || [];
         caseSlugs = manifest.case_slugs || {};
-      } catch {
-        allCases = [];
-      }
+      } catch { allCases = []; }
       renderCaseList(allCases);
-
-      // Auto-select from URL
       const params = new URLSearchParams(location.search);
       const caseParam = params.get('case');
-      if (caseParam && allCases.includes(caseParam)) {
-        selectCase(caseParam);
-      }
+      if (caseParam && allCases.includes(caseParam)) selectCase(caseParam);
     }
 
     function renderCaseList(cases) {
@@ -342,8 +314,7 @@
 
     function filterCases() {
       const q = document.getElementById('caseSearch').value.trim().toLowerCase();
-      const filtered = q ? allCases.filter(c => c.toLowerCase().includes(q)) : allCases;
-      renderCaseList(filtered);
+      renderCaseList(q ? allCases.filter(c => c.toLowerCase().includes(q)) : allCases);
     }
 
     async function selectCase(caseName) {
@@ -353,15 +324,11 @@
       document.querySelectorAll('.case-item').forEach(el => {
         el.classList.toggle('active', el.dataset.case === caseName);
       });
-
-      // Update URL and summary link
       const url = new URL(location.href);
       url.searchParams.set('case', caseName);
       history.replaceState({}, '', url.toString());
-      const summaryLink = document.getElementById('summaryLink');
-      if (summaryLink) summaryLink.href = `view.html?case=${encodeURIComponent(caseName)}`;
-
-      // Close mobile drawer
+      const sl = document.getElementById('summaryLink');
+      if (sl) sl.href = `view.html?case=${encodeURIComponent(caseName)}`;
       if (window.innerWidth <= 768) closeCasePanel();
 
       const contentArea = document.getElementById('contentArea');
@@ -378,6 +345,57 @@
       }
     }
 
+    // ─── Find the chunk that contains this event's char range ───
+    function findChunkForEvent(evt) {
+      const chunks = (timelineData && timelineData.chunks) || [];
+      const cs = evt.char_start;
+      const ce = evt.char_end;
+      if (cs == null || ce == null) return null;
+      // Find chunk whose range overlaps with the event range
+      for (const chunk of chunks) {
+        if (cs >= chunk.start_char && cs < chunk.end_char) return chunk;
+      }
+      // Fallback: find the chunk with most overlap
+      let best = null, bestOverlap = 0;
+      for (const chunk of chunks) {
+        const overlapStart = Math.max(cs, chunk.start_char);
+        const overlapEnd = Math.min(ce, chunk.end_char);
+        const overlap = overlapEnd - overlapStart;
+        if (overlap > bestOverlap) { bestOverlap = overlap; best = chunk; }
+      }
+      return best;
+    }
+
+    // ─── Highlight extraction_text within chunk content ───
+    function highlightInChunk(chunkContent, chunkStartChar, evt) {
+      const escaped = esc(chunkContent);
+      const extractionText = evt.extraction_text;
+      if (!extractionText) return escaped;
+
+      // Try direct substring match first
+      const escExtraction = esc(extractionText);
+      const idx = escaped.indexOf(escExtraction);
+      if (idx !== -1) {
+        return escaped.substring(0, idx)
+          + '<mark>' + escExtraction + '</mark>'
+          + escaped.substring(idx + escExtraction.length);
+      }
+
+      // Fallback: use char offsets relative to chunk
+      if (evt.char_start != null && evt.char_end != null) {
+        const relStart = evt.char_start - chunkStartChar;
+        const relEnd = evt.char_end - chunkStartChar;
+        if (relStart >= 0 && relEnd <= chunkContent.length) {
+          const before = esc(chunkContent.substring(0, relStart));
+          const mid = esc(chunkContent.substring(relStart, relEnd));
+          const after = esc(chunkContent.substring(relEnd));
+          return before + '<mark>' + mid + '</mark>' + after;
+        }
+      }
+
+      return escaped;
+    }
+
     function renderEvents() {
       const d = timelineData;
       const events = d.events || [];
@@ -392,83 +410,69 @@
       html += `<div class="tl-summary-card"><div class="tl-summary-label">事件數</div><div class="tl-summary-value">${events.length}</div></div>`;
       html += `<div class="tl-summary-card"><div class="tl-summary-label">關鍵決策</div><div class="tl-summary-value" style="color:#dc2626">${criticalCount}</div></div>`;
       if (span.start_date) {
-        html += `<div class="tl-summary-card"><div class="tl-summary-label">時間跨度</div><div class="tl-summary-value small">${esc(span.start_date || '')} ~ ${esc(span.end_date || '')}</div></div>`;
+        html += `<div class="tl-summary-card"><div class="tl-summary-label">時間跨度</div><div class="tl-summary-value small">${esc(span.start_date||'')} ~ ${esc(span.end_date||'')}</div></div>`;
       }
       if (span.duration_hours != null) {
-        const hours = span.duration_hours;
-        const display = hours >= 24 ? `${Math.round(hours / 24)} 天` : `${hours} 小時`;
-        html += `<div class="tl-summary-card"><div class="tl-summary-label">持續時間</div><div class="tl-summary-value">${display}</div></div>`;
+        const h = span.duration_hours;
+        html += `<div class="tl-summary-card"><div class="tl-summary-label">持續時間</div><div class="tl-summary-value">${h >= 24 ? Math.round(h/24)+' 天' : h+' 小時'}</div></div>`;
       }
       html += '</div>';
 
-      // Dual-column layout
+      // Dual-column
       html += '<div class="tl-columns">';
+      html += '<div class="tl-col-left"><div class="timeline">';
 
-      // Left column: timeline
-      html += '<div class="tl-col-left">';
-      html += '<div class="timeline">';
       events.forEach((evt, idx) => {
         const isCritical = evt.critical_decision;
         const typeClass = isCritical ? 'critical_decision' : (evt.event_type || '');
-        const hasSource = !!evt.extraction_text;
 
         html += `<div class="tl-event ${isCritical ? 'critical' : ''}" data-idx="${idx}" onclick="showSource(${idx})">`;
         html += '<div class="tl-event-header">';
         html += `<span class="tl-date">${esc(evt.timestamp || evt.timestamp_normalized || '日期不明')}</span>`;
-        if (evt.event_type) {
-          html += `<span class="tl-event-type ${esc(typeClass)}">${esc(formatEventType(evt.event_type))}</span>`;
-        }
-        if (isCritical) {
-          html += '<span class="badge critical">關鍵決策</span>';
-        }
+        if (evt.event_type) html += `<span class="tl-event-type ${esc(typeClass)}">${esc(formatEventType(evt.event_type))}</span>`;
+        if (isCritical) html += '<span class="badge critical">關鍵決策</span>';
         html += '</div>';
-
         html += `<div class="tl-desc">${esc(evt.description || '')}</div>`;
 
-        // Meta info
-        const metaParts = [];
-        if (evt.actors && evt.actors.length) metaParts.push(`<span class="tl-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
-        if (evt.location) metaParts.push(`<span class="tl-meta-item"><strong>地點:</strong> ${esc(evt.location)}</span>`);
+        const meta = [];
+        if (evt.actors && evt.actors.length) meta.push(`<span class="tl-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
+        if (evt.location) meta.push(`<span class="tl-meta-item"><strong>地點:</strong> ${esc(evt.location)}</span>`);
         if (evt.vital_signs && Object.keys(evt.vital_signs).length) {
-          const vs = Object.entries(evt.vital_signs).map(([k, v]) => `${k}: ${v}`).join(', ');
-          metaParts.push(`<span class="tl-meta-item"><strong>生命體徵:</strong> ${esc(vs)}</span>`);
+          const vs = Object.entries(evt.vital_signs).map(([k,v])=>`${k}: ${v}`).join(', ');
+          meta.push(`<span class="tl-meta-item"><strong>生命體徵:</strong> ${esc(vs)}</span>`);
         }
-        if (metaParts.length) html += `<div class="tl-meta">${metaParts.join('')}</div>`;
+        if (meta.length) html += `<div class="tl-meta">${meta.join('')}</div>`;
 
-        // Critical decision content
         if (isCritical && evt.decision_content) {
           html += `<div class="tl-decision"><div class="tl-decision-label">決策內容</div>${esc(evt.decision_content)}</div>`;
         }
 
-        // Mobile-only collapsible source
-        if (hasSource) {
+        // Mobile-only collapsible (shows chunk with highlight)
+        if (evt.extraction_text) {
+          const chunk = findChunkForEvent(evt);
+          const mobileContent = chunk
+            ? highlightInChunk(chunk.content, chunk.start_char, evt)
+            : '<mark>' + esc(evt.extraction_text) + '</mark>';
           html += `<button class="tl-source-toggle" onclick="event.stopPropagation(); toggleSource(${idx})">`;
           html += `<svg id="srcArrow${idx}" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 2.5L8 6L4.5 9.5"/></svg>`;
           html += `查看原文</button>`;
-          html += `<div class="tl-source-text" id="srcText${idx}">${esc(evt.extraction_text)}</div>`;
+          html += `<div class="tl-source-text" id="srcText${idx}">${mobileContent}</div>`;
         }
 
         html += '</div>';
       });
-      html += '</div>'; // .timeline
-      html += '</div>'; // .tl-col-left
 
-      // Right column: source panel (sticky)
-      html += '<div class="tl-col-right">';
-      html += '<div class="source-panel" id="sourcePanel">';
+      html += '</div></div>'; // .timeline .tl-col-left
+
+      // Right column
+      html += '<div class="tl-col-right"><div class="source-panel" id="sourcePanel">';
       html += renderSourceEmpty();
-      html += '</div>';
-      html += '</div>'; // .tl-col-right
+      html += '</div></div>';
 
-      html += '</div>'; // .tl-columns
-      html += '</div>'; // .content-inner
-
+      html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
 
-      // Auto-show first event's source
-      if (events.length > 0 && events[0].extraction_text) {
-        showSource(0);
-      }
+      if (events.length > 0) showSource(0);
     }
 
     function renderSourceEmpty() {
@@ -476,8 +480,7 @@
         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
           <polyline points="14 2 14 8 20 8"/>
-          <line x1="16" y1="13" x2="8" y2="13"/>
-          <line x1="16" y1="17" x2="8" y2="17"/>
+          <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
         </svg>
         <span>點擊左側事件以檢視判決書原文</span>
       </div>`;
@@ -488,10 +491,8 @@
       const events = timelineData.events || [];
       const evt = events[idx];
       if (!evt) return;
-
       activeEventIdx = idx;
 
-      // Highlight active event card
       document.querySelectorAll('.tl-event').forEach(el => {
         el.classList.toggle('active-source', parseInt(el.dataset.idx) === idx);
       });
@@ -499,16 +500,7 @@
       const panel = document.getElementById('sourcePanel');
       if (!panel) return;
 
-      if (!evt.extraction_text) {
-        panel.innerHTML = `<div class="source-panel-empty">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round">
-            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
-          </svg>
-          <span>此事件無原文引用</span>
-        </div>`;
-        return;
-      }
-
+      const chunk = findChunkForEvent(evt);
       const isCritical = evt.critical_decision;
       const borderColor = isCritical ? '#dc2626' : '#4f46e5';
 
@@ -516,43 +508,60 @@
       h += '<div class="source-panel-header">';
       h += `<div class="source-panel-icon" style="${isCritical ? 'background:#fef2f2;color:#dc2626' : ''}">`;
       h += `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
-      h += '</div>';
-      h += '<div>';
-      h += `<div class="source-panel-title">事件 ${idx + 1} — 判決書原文</div>`;
-      h += `<div class="source-panel-subtitle">${esc(evt.timestamp || evt.timestamp_normalized || '')} · ${esc(formatEventType(evt.event_type || ''))}</div>`;
+      h += '</div><div>';
+
+      if (chunk) {
+        h += `<div class="source-panel-title">${esc(chunk.title)}</div>`;
+        h += `<div class="source-panel-subtitle">事件 ${idx+1} · ${esc(evt.timestamp || evt.timestamp_normalized || '')} · ${esc(formatEventType(evt.event_type||''))}</div>`;
+      } else {
+        h += `<div class="source-panel-title">事件 ${idx+1} — 萃取原文</div>`;
+        h += `<div class="source-panel-subtitle">${esc(evt.timestamp || evt.timestamp_normalized || '')} · ${esc(formatEventType(evt.event_type||''))}</div>`;
+      }
       h += '</div></div>';
 
-      h += `<div class="source-panel-body" style="border-left-color:${borderColor}">${esc(evt.extraction_text)}</div>`;
+      // Body: chunk content with highlighted extraction_text, or just extraction_text
+      if (chunk) {
+        h += `<div class="source-panel-body" style="border-left-color:${borderColor}">`;
+        h += highlightInChunk(chunk.content, chunk.start_char, evt);
+        h += '</div>';
+      } else if (evt.extraction_text) {
+        h += `<div class="source-panel-body" style="border-left-color:${borderColor}">`;
+        h += '<mark>' + esc(evt.extraction_text) + '</mark>';
+        h += '</div>';
+      } else {
+        h += `<div class="source-panel-empty">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
+          </svg><span>此事件無原文引用</span></div>`;
+      }
 
-      // Meta section
+      // Meta
       const metaParts = [];
-      if (evt.actors && evt.actors.length) metaParts.push(`<span class="source-panel-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
-      if (evt.location) metaParts.push(`<span class="source-panel-meta-item"><strong>地點:</strong> ${esc(evt.location)}</span>`);
+      if (chunk) metaParts.push(`<span class="source-panel-meta-item"><strong>段落:</strong> ${esc(chunk.title)}</span>`);
       if (evt.char_start != null && evt.char_end != null) {
         metaParts.push(`<span class="source-panel-meta-item"><strong>位置:</strong> 字元 ${evt.char_start}–${evt.char_end}</span>`);
       }
+      if (evt.actors && evt.actors.length) metaParts.push(`<span class="source-panel-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
       if (metaParts.length) h += `<div class="source-panel-meta">${metaParts.join('')}</div>`;
 
       panel.innerHTML = h;
+
+      // Scroll to the highlighted mark in the panel
+      requestAnimationFrame(() => {
+        const mark = panel.querySelector('mark');
+        if (mark) mark.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
     }
 
     function formatEventType(type) {
       const map = {
-        initial_contact: '初始接觸',
-        diagnosis: '診斷',
-        treatment: '治療處置',
-        critical_decision: '關鍵決策',
-        transfer: '轉院',
-        deterioration: '病情惡化',
-        final_outcome: '最終結果',
-        surgery: '手術',
-        medication: '用藥',
-        consultation: '會診',
+        initial_contact: '初始接觸', diagnosis: '診斷', treatment: '治療處置',
+        critical_decision: '關鍵決策', transfer: '轉院', deterioration: '病情惡化',
+        final_outcome: '最終結果', surgery: '手術', medication: '用藥', consultation: '會診',
       };
       return map[type] || type;
     }
 
-    // Mobile: toggle inline extraction text
     function toggleSource(idx) {
       const btn = document.querySelector(`#srcArrow${idx}`).parentElement;
       const txt = document.getElementById(`srcText${idx}`);
@@ -560,7 +569,6 @@
       txt.classList.toggle('open');
     }
 
-    // Mobile drawer
     function toggleCasePanel() {
       const open = document.body.classList.toggle('case-panel-open');
       const overlay = document.getElementById('drawerOverlay');
