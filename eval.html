@@ -21,29 +21,32 @@
 
     /* ─── TOOLBAR ─── */
     .toolbar {
-      position: fixed; top: 0; left: 0; right: 0; height: 48px;
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
       background: white; border-bottom: 1px solid #e2e8f0;
-      display: flex; align-items: center; padding: 0 16px; gap: 8px; z-index: 100;
+      display: flex; align-items: center; padding: 0 20px; gap: 10px; z-index: 100;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
-    .toolbar h1 { font-size: 14px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
+    .toolbar h1 { font-size: 16px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
     .toolbar select, .toolbar input {
-      font-size: 11px; padding: 4px 8px; border: 1px solid var(--slate-300);
+      font-size: 14px; padding: 6px 10px; border: 1px solid var(--slate-300);
       border-radius: 6px; background: white; font-family: var(--sans);
     }
     .toolbar select { cursor: pointer; }
-    #caseSelect { max-width: 260px; }
+    #caseSelect { max-width: 300px; }
     .toolbar .spacer { flex: 1; }
-    .toolbar .sep { width: 1px; height: 20px; background: var(--slate-300); }
-    .toolbar label { font-size: 10px; color: var(--slate-500); white-space: nowrap; }
-    .btn { font-size: 11px; padding: 5px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-family: var(--sans); }
+    .toolbar .sep { width: 1px; height: 24px; background: var(--slate-300); }
+    .toolbar label { font-size: 13px; color: var(--slate-500); white-space: nowrap; }
+    .btn { font-size: 13px; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-family: var(--sans); }
     .btn-primary { background: var(--indigo); color: white; }
     .btn-primary:hover { background: #4338ca; }
+    .btn-success { background: var(--emerald); color: white; }
+    .btn-success:hover { background: #047857; }
     .btn-ghost { background: transparent; color: var(--slate-500); border: 1px solid var(--slate-300); }
     .btn-ghost:hover { background: var(--slate-100); }
+    .save-indicator { font-size: 12px; color: var(--emerald); white-space: nowrap; transition: opacity 0.5s; }
 
     /* ─── THREE-PANEL LAYOUT ─── */
-    .main { margin-top: 48px; display: flex; height: calc(100vh - 48px - 32px); }
+    .main { margin-top: 56px; display: flex; height: calc(100vh - 56px - 36px); }
 
     .panel { overflow-y: auto; }
     .panel-source { width: 30%; border-right: 1px solid #e2e8f0; background: white; }
@@ -62,11 +65,11 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
       font-size: 13px;
     }
-    .source-header-text { font-size: 12px; font-weight: 600; color: var(--slate-900); }
-    .source-header-sub { font-size: 10px; color: var(--slate-500); }
+    .source-header-text { font-size: 14px; font-weight: 600; color: var(--slate-900); }
+    .source-header-sub { font-size: 12px; color: var(--slate-500); }
 
     .source-body {
-      padding: 14px 18px; font-size: 13px; line-height: 2;
+      padding: 16px 20px; font-size: 15px; line-height: 2;
       color: var(--slate-700); white-space: pre-wrap; word-break: break-all;
     }
     /* Chunk regions: invisible by default, highlighted with marker pen effect */
@@ -81,9 +84,9 @@
       background: #fef9c3;
     }
     .chunk-label {
-      display: none; font-size: 9px; font-weight: 700; color: var(--amber);
-      background: #fef3c7; padding: 1px 5px; border-radius: 3px;
-      vertical-align: middle; margin-right: 3px; letter-spacing: 0.3px;
+      display: none; font-size: 11px; font-weight: 700; color: var(--amber);
+      background: #fef3c7; padding: 2px 6px; border-radius: 3px;
+      vertical-align: middle; margin-right: 4px; letter-spacing: 0.3px;
     }
     .chunk-region.active .chunk-label { display: inline; }
 
@@ -101,7 +104,7 @@
       display: flex; align-items: center; gap: 6px;
     }
     .summary-tab {
-      font-size: 11px; padding: 5px 14px; border: 1px solid var(--slate-300);
+      font-size: 14px; padding: 6px 16px; border: 1px solid var(--slate-300);
       border-radius: 6px; background: white; cursor: pointer; color: var(--slate-500);
       font-family: var(--sans); font-weight: 500; transition: all 0.15s;
     }
@@ -111,21 +114,21 @@
     .summary-body { padding: 14px 18px; }
     .section-block { margin-bottom: 18px; }
     .section-title {
-      font-size: 12px; font-weight: 700; color: var(--slate-900);
-      padding-bottom: 5px; margin-bottom: 8px;
+      font-size: 15px; font-weight: 700; color: var(--slate-900);
+      padding-bottom: 6px; margin-bottom: 10px;
     }
     .section-title-ai { border-bottom: 2px solid var(--purple-light); }
     .section-title-gt { border-bottom: 2px solid var(--emerald-light); }
     .section-body {
-      font-size: 13px; line-height: 2; white-space: pre-wrap; word-break: break-all;
+      font-size: 15px; line-height: 2; white-space: pre-wrap; word-break: break-all;
     }
 
     /* Citation tags in AI summary */
     .citation-tag {
       display: inline-block;
       background: #ede9fe; color: #6d28d9;
-      padding: 0px 5px; border-radius: 3px;
-      font-size: 10px; font-weight: 600;
+      padding: 1px 6px; border-radius: 3px;
+      font-size: 12px; font-weight: 600;
       cursor: pointer; vertical-align: middle;
       transition: all 0.2s; letter-spacing: 0.2px;
       line-height: 1.6;
@@ -137,7 +140,7 @@
       transform: translateY(-1px);
     }
 
-    .empty-text { color: var(--slate-300); font-style: italic; font-size: 12px; }
+    .empty-text { color: var(--slate-300); font-style: italic; font-size: 14px; }
 
     /* ─── EVAL FORM (right) ─── */
     .aspect-group {
@@ -145,17 +148,17 @@
       border: 1px solid #e5e7eb; background: white;
     }
     .aspect-header {
-      display: flex; align-items: center; gap: 8px; padding: 9px 12px;
-      cursor: pointer; user-select: none; font-weight: 700; font-size: 12px;
+      display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+      cursor: pointer; user-select: none; font-weight: 700; font-size: 15px;
     }
     .aspect-header .badge {
-      font-size: 9px; font-weight: 500; padding: 2px 6px; border-radius: 4px;
+      font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 4px;
     }
     .aspect-header .arrow {
-      margin-left: auto; transition: transform 0.2s; font-size: 10px; color: var(--slate-500);
+      margin-left: auto; transition: transform 0.2s; font-size: 12px; color: var(--slate-500);
     }
     .aspect-header.open .arrow { transform: rotate(90deg); }
-    .aspect-body { display: none; padding: 0 12px 12px; }
+    .aspect-body { display: none; padding: 0 14px 14px; }
     .aspect-body.open { display: block; }
 
     .aspect-a .aspect-header { color: var(--indigo); background: var(--indigo-light); }
@@ -169,59 +172,59 @@
     .aspect-e .aspect-header { color: var(--purple); background: var(--purple-light); }
     .aspect-e .badge { background: var(--purple); color: white; }
 
-    .dim-item { padding: 8px 0; border-bottom: 1px solid var(--slate-100); }
+    .dim-item { padding: 10px 0; border-bottom: 1px solid var(--slate-100); }
     .dim-item:last-child { border-bottom: none; }
-    .dim-title { font-size: 11px; font-weight: 600; color: var(--slate-900); margin-bottom: 2px; }
-    .dim-desc { font-size: 10px; color: var(--slate-500); line-height: 1.5; margin-bottom: 5px; }
+    .dim-title { font-size: 14px; font-weight: 600; color: var(--slate-900); margin-bottom: 3px; }
+    .dim-desc { font-size: 13px; color: var(--slate-500); line-height: 1.5; margin-bottom: 6px; }
 
     .dim-anchors {
-      font-size: 10px; color: var(--slate-500); margin-bottom: 5px;
-      display: none; line-height: 1.5;
+      font-size: 12px; color: var(--slate-500); margin-bottom: 6px;
+      display: none; line-height: 1.6;
     }
     .dim-anchors.show { display: block; }
     .dim-anchors table { width: 100%; border-collapse: collapse; }
-    .dim-anchors td { padding: 1px 5px; vertical-align: top; }
-    .dim-anchors td:first-child { width: 20px; font-weight: 600; color: var(--slate-700); }
+    .dim-anchors td { padding: 2px 6px; vertical-align: top; }
+    .dim-anchors td:first-child { width: 24px; font-weight: 600; color: var(--slate-700); }
     .toggle-anchors {
-      font-size: 9px; color: var(--indigo); cursor: pointer; border: none;
-      background: none; padding: 0; margin-bottom: 3px; font-family: var(--sans);
+      font-size: 12px; color: var(--indigo); cursor: pointer; border: none;
+      background: none; padding: 0; margin-bottom: 4px; font-family: var(--sans);
     }
     .toggle-anchors:hover { text-decoration: underline; }
 
-    .likert-row { display: flex; align-items: center; gap: 0; margin-bottom: 4px; }
+    .likert-row { display: flex; align-items: center; gap: 0; margin-bottom: 6px; }
     .likert-row label {
-      flex: 1; text-align: center; padding: 4px 0; font-size: 11px;
+      flex: 1; text-align: center; padding: 7px 0; font-size: 15px;
       cursor: pointer; border: 1px solid var(--slate-300); color: var(--slate-500);
       transition: all 0.15s;
     }
-    .likert-row label:first-child { border-radius: 5px 0 0 5px; }
-    .likert-row label:last-child { border-radius: 0 5px 5px 0; }
+    .likert-row label:first-child { border-radius: 6px 0 0 6px; }
+    .likert-row label:last-child { border-radius: 0 6px 6px 0; }
     .likert-row label:not(:first-child) { border-left: none; }
     .likert-row input[type="radio"] { display: none; }
     .likert-row input[type="radio"]:checked + span {
-      display: block; background: var(--indigo); color: white; margin: -4px 0;
-      padding: 4px 0; border-radius: 4px; font-weight: 600;
+      display: block; background: var(--indigo); color: white; margin: -7px 0;
+      padding: 7px 0; border-radius: 5px; font-weight: 600;
       box-shadow: 0 2px 6px rgba(79,70,229,0.25);
     }
     .likert-row .na-label input[type="radio"]:checked + span { background: var(--slate-500); }
 
     .dim-comment {
-      width: 100%; font-size: 10px; padding: 5px 8px; border: 1px solid var(--slate-300);
-      border-radius: 5px; resize: vertical; min-height: 28px; font-family: var(--sans);
-      color: var(--slate-700); line-height: 1.4;
+      width: 100%; font-size: 13px; padding: 6px 10px; border: 1px solid var(--slate-300);
+      border-radius: 5px; resize: vertical; min-height: 34px; font-family: var(--sans);
+      color: var(--slate-700); line-height: 1.5;
     }
     .dim-comment:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 2px rgba(79,70,229,0.1); }
     .dim-comment::placeholder { color: var(--slate-300); }
 
     /* ─── PROGRESS BAR ─── */
     .progress-bar {
-      position: fixed; bottom: 0; left: 0; right: 0; height: 32px;
+      position: fixed; bottom: 0; left: 0; right: 0; height: 36px;
       background: white; border-top: 1px solid #e2e8f0; display: flex;
-      align-items: center; padding: 0 16px; gap: 10px; z-index: 100;
+      align-items: center; padding: 0 20px; gap: 12px; z-index: 100;
     }
-    .progress-fill { flex: 1; height: 4px; background: var(--slate-100); border-radius: 3px; overflow: hidden; }
+    .progress-fill { flex: 1; height: 5px; background: var(--slate-100); border-radius: 3px; overflow: hidden; }
     .progress-fill-inner { height: 100%; background: var(--indigo); border-radius: 3px; transition: width 0.3s; }
-    .progress-text { font-size: 10px; color: var(--slate-500); white-space: nowrap; }
+    .progress-text { font-size: 13px; color: var(--slate-500); white-space: nowrap; }
 
     /* ─── SCROLLBAR ─── */
     .panel::-webkit-scrollbar { width: 5px; }
@@ -250,7 +253,7 @@
     @media (max-width: 768px) {
       .main { flex-direction: column; height: auto; }
       .panel { width: 100% !important; flex: none !important; display: none; }
-      .panel.mobile-active { display: block; height: calc(100vh - 48px - 40px - 32px); overflow-y: auto; }
+      .panel.mobile-active { display: block; height: calc(100vh - 56px - 40px - 36px); overflow-y: auto; }
       .resizer { display: none; }
 
       .mobile-tab-bar {
@@ -268,8 +271,8 @@
       .progress-bar { bottom: 0; }
 
       .toolbar { gap: 4px; padding: 0 8px; overflow-x: auto; }
-      .toolbar h1 { font-size: 12px; }
-      #caseSelect { max-width: 140px; }
+      .toolbar h1 { font-size: 14px; }
+      #caseSelect { max-width: 160px; }
     }
   </style>
 </head>
@@ -287,13 +290,22 @@
   </select>
   <select id="condSelect"><option>載入中...</option></select>
   <span class="spacer"></span>
-  <a id="viewLink" href="view.html" style="font-size:11px;color:var(--indigo);text-decoration:none">摘要瀏覽</a>
-  <a id="timelineLink" href="timeline.html" style="font-size:11px;color:var(--indigo);text-decoration:none">時間軸</a>
-  <a href="index.html" style="font-size:11px;color:var(--indigo);text-decoration:none">總覽</a>
+  <a id="viewLink" href="view.html" style="font-size:13px;color:var(--indigo);text-decoration:none">摘要瀏覽</a>
+  <a id="timelineLink" href="timeline.html" style="font-size:13px;color:var(--indigo);text-decoration:none">時間軸</a>
+  <a href="index.html" style="font-size:13px;color:var(--indigo);text-decoration:none">總覽</a>
   <div class="sep"></div>
   <label>評估者</label>
-  <input type="text" id="evaluatorName" placeholder="姓名/代號" style="width:80px">
-  <button class="btn btn-ghost" onclick="exportJSON()">匯出 JSON</button>
+  <select id="evaluatorName" style="width:100px">
+    <option value="">請選擇</option>
+    <option value="專家A">專家 A</option>
+    <option value="專家B">專家 B</option>
+    <option value="專家C">專家 C</option>
+    <option value="專家D">專家 D</option>
+    <option value="專家E">專家 E</option>
+  </select>
+  <span class="save-indicator" id="saveIndicator"></span>
+  <button class="btn btn-ghost" onclick="clearCurrentEval()">清除此筆</button>
+  <button class="btn btn-success" onclick="exportJSON()">匯出 JSON</button>
 </div>
 
 <!-- Main 3-panel layout -->
@@ -471,6 +483,16 @@ document.addEventListener('DOMContentLoaded', async () => {
   manifest = await resp.json();
   caseSlugs = manifest.case_slugs || {};
 
+  // Restore evaluator name
+  const savedName = localStorage.getItem('evalEvaluatorName') || '';
+  const evalNameEl = document.getElementById('evaluatorName');
+  if (savedName && [...evalNameEl.options].some(o => o.value === savedName)) {
+    evalNameEl.value = savedName;
+  }
+  evalNameEl.addEventListener('change', (e) => {
+    localStorage.setItem('evalEvaluatorName', e.target.value);
+  });
+
   // Read URL params
   const urlParams = new URLSearchParams(window.location.search);
   const initialCase = urlParams.get('case') || '';
@@ -483,12 +505,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   caseSelect.innerHTML = (manifest.cases || []).map(c =>
     `<option value="${esc(c)}">${esc(c)}</option>`
   ).join('');
-  caseSelect.addEventListener('change', () => { currentCase = caseSelect.value; loadCase(); updateLinks(); });
+  caseSelect.addEventListener('change', () => {
+    saveCurrentEval();
+    currentCase = caseSelect.value;
+    loadCase();
+    updateLinks();
+  });
 
   // Group selector
   const groupSelect = document.getElementById('groupSelect');
   groupSelect.value = currentGroup;
   groupSelect.addEventListener('change', () => {
+    saveCurrentEval();
     currentGroup = groupSelect.value;
     renderConditionSelector();
     loadCase();
@@ -496,6 +524,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Condition selector
   document.getElementById('condSelect').addEventListener('change', (e) => {
+    saveCurrentEval();
     currentCond = e.target.value;
     loadCase();
   });
@@ -535,6 +564,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (window.innerWidth <= 768) {
     document.getElementById('panelSource').classList.add('mobile-active');
   }
+
+  // Auto-save before leaving page
+  window.addEventListener('beforeunload', () => saveCurrentEval());
 });
 
 function updateLinks() {
@@ -612,6 +644,9 @@ async function loadCase() {
   activeChunk = null;
   renderSource();
   renderSummaries();
+  resetForm();
+  restoreEval();
+  updateLinks();
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -759,15 +794,15 @@ function renderEvalForm() {
   html += `<div class="aspect-header" style="background:var(--slate-100);color:var(--slate-900)" onclick="toggleAspect(this)">`;
   html += `<span>整體評語</span><span class="arrow">&#9654;</span></div>`;
   html += `<div class="aspect-body">`;
-  html += `<div style="margin-bottom:5px;font-size:10px;color:var(--slate-500)">該摘要最嚴重的問題（最多 3 項）：</div>`;
+  html += `<div style="margin-bottom:6px;font-size:13px;color:var(--slate-500)">該摘要最嚴重的問題（最多 3 項）：</div>`;
   html += `<textarea class="dim-comment" name="overall_issues" placeholder="1. ..." style="min-height:50px"></textarea>`;
-  html += `<div style="margin:8px 0 5px;font-size:10px;color:var(--slate-500)">該案核心法律爭點：</div>`;
+  html += `<div style="margin:10px 0 6px;font-size:13px;color:var(--slate-500)">該案核心法律爭點：</div>`;
   html += `<textarea class="dim-comment" name="overall_legal_issues" placeholder="例：因果關係標準、臨床裁量..." style="min-height:40px"></textarea>`;
-  html += `<div style="margin:8px 0 5px;font-size:10px;color:var(--slate-500)">案件議題分類：</div>`;
+  html += `<div style="margin:10px 0 6px;font-size:13px;color:var(--slate-500)">案件議題分類：</div>`;
   const topics = ['鑑定事實完整性','病歷證據使用','病患相對責任','非特異性症狀鑑別診斷','侵入性治療時機','罕見且快速惡化','從後果反推過程','因果關係標準不明','告知說明義務','專業分工/信賴原則','轉診義務'];
   html += `<div style="display:flex;flex-wrap:wrap;gap:5px">`;
   topics.forEach((t, i) => {
-    html += `<label style="font-size:10px;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" name="topic_${i}" value="${esc(t)}"> ${esc(t)}</label>`;
+    html += `<label style="font-size:13px;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" name="topic_${i}" value="${esc(t)}" style="width:16px;height:16px"> ${esc(t)}</label>`;
   });
   html += `</div></div></div>`;
 
@@ -796,31 +831,145 @@ function updateProgress() {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// AUTO-SAVE / RESTORE (localStorage)
+// ═══════════════════════════════════════════════════════════════
+
+function getStorageKey() {
+  if (!currentCase || !currentCond) return null;
+  return `eval_${currentCond}_${currentCase}`;
+}
+
+function collectFormData() {
+  const data = { scores: {}, comments: {}, overall: {}, topics: [] };
+  ASPECTS.forEach(a => a.dims.forEach(d => {
+    const checked = document.querySelector(`input[name="${d.id}"]:checked`);
+    if (checked) data.scores[d.id] = checked.value === 'NA' ? 'NA' : parseInt(checked.value);
+    const comment = document.querySelector(`textarea[name="${d.id}_comment"]`);
+    if (comment && comment.value.trim()) data.comments[d.id] = comment.value.trim();
+  }));
+  const issues = document.querySelector('textarea[name="overall_issues"]');
+  if (issues && issues.value.trim()) data.overall.issues = issues.value.trim();
+  const legal = document.querySelector('textarea[name="overall_legal_issues"]');
+  if (legal && legal.value.trim()) data.overall.legal_issues = legal.value.trim();
+  document.querySelectorAll('input[type="checkbox"][name^="topic_"]:checked').forEach(cb => data.topics.push(cb.value));
+  return data;
+}
+
+function hasAnyData(data) {
+  return Object.keys(data.scores).length > 0 || Object.keys(data.comments).length > 0
+    || Object.keys(data.overall).length > 0 || data.topics.length > 0;
+}
+
+function saveCurrentEval() {
+  const key = getStorageKey();
+  if (!key) return;
+  const data = collectFormData();
+  if (hasAnyData(data)) {
+    data._saved = new Date().toISOString();
+    localStorage.setItem(key, JSON.stringify(data));
+    showSaveIndicator();
+  }
+}
+
+function restoreEval() {
+  const key = getStorageKey();
+  if (!key) return;
+  const raw = localStorage.getItem(key);
+  if (!raw) return;
+  try {
+    const data = JSON.parse(raw);
+    // Restore scores
+    Object.entries(data.scores || {}).forEach(([id, val]) => {
+      const radio = document.querySelector(`input[name="${id}"][value="${val}"]`);
+      if (radio) radio.checked = true;
+    });
+    // Restore comments
+    Object.entries(data.comments || {}).forEach(([id, val]) => {
+      const ta = document.querySelector(`textarea[name="${id}_comment"]`);
+      if (ta) ta.value = val;
+    });
+    // Restore overall
+    if (data.overall) {
+      const issues = document.querySelector('textarea[name="overall_issues"]');
+      if (issues && data.overall.issues) issues.value = data.overall.issues;
+      const legal = document.querySelector('textarea[name="overall_legal_issues"]');
+      if (legal && data.overall.legal_issues) legal.value = data.overall.legal_issues;
+    }
+    // Restore topics
+    if (data.topics && data.topics.length > 0) {
+      document.querySelectorAll('input[type="checkbox"][name^="topic_"]').forEach(cb => {
+        cb.checked = data.topics.includes(cb.value);
+      });
+    }
+    updateProgress();
+  } catch {}
+}
+
+function resetForm() {
+  ASPECTS.forEach(a => a.dims.forEach(d => {
+    document.querySelectorAll(`input[name="${d.id}"]`).forEach(r => r.checked = false);
+    const ta = document.querySelector(`textarea[name="${d.id}_comment"]`);
+    if (ta) ta.value = '';
+  }));
+  const issues = document.querySelector('textarea[name="overall_issues"]');
+  if (issues) issues.value = '';
+  const legal = document.querySelector('textarea[name="overall_legal_issues"]');
+  if (legal) legal.value = '';
+  document.querySelectorAll('input[type="checkbox"][name^="topic_"]').forEach(cb => cb.checked = false);
+  updateProgress();
+}
+
+function clearCurrentEval() {
+  const key = getStorageKey();
+  if (!key) return;
+  if (!confirm('確定要清除此筆評估紀錄嗎？')) return;
+  localStorage.removeItem(key);
+  resetForm();
+}
+
+function showSaveIndicator() {
+  const el = document.getElementById('saveIndicator');
+  el.textContent = '已自動儲存';
+  el.style.opacity = '1';
+  setTimeout(() => { el.style.opacity = '0'; }, 2000);
+}
+
+// Debounced auto-save on any form change
+let autoSaveTimer = null;
+document.addEventListener('change', (e) => {
+  if (e.target.closest('.panel-eval')) {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => saveCurrentEval(), 500);
+    updateProgress();
+  }
+});
+document.addEventListener('input', (e) => {
+  if (e.target.classList.contains('dim-comment') || e.target.closest('.panel-eval textarea')) {
+    clearTimeout(autoSaveTimer);
+    autoSaveTimer = setTimeout(() => saveCurrentEval(), 1000);
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════
 // EXPORT
 // ═══════════════════════════════════════════════════════════════
 
 function exportJSON() {
+  saveCurrentEval();
   const evaluator = document.getElementById('evaluatorName').value.trim() || 'anonymous';
   const result = {
     meta: { evaluator, case_name: currentCase, condition: currentCond, timestamp: new Date().toISOString() },
-    scores: {}, comments: {}, overall: {}, topics: [],
+    ...collectFormData(),
   };
-  ASPECTS.forEach(a => a.dims.forEach(d => {
-    const checked = document.querySelector(`input[name="${d.id}"]:checked`);
-    result.scores[d.id] = checked ? (checked.value === 'NA' ? null : parseInt(checked.value)) : undefined;
-    const comment = document.querySelector(`textarea[name="${d.id}_comment"]`);
-    if (comment && comment.value.trim()) result.comments[d.id] = comment.value.trim();
-  }));
-  const issues = document.querySelector('textarea[name="overall_issues"]');
-  if (issues && issues.value.trim()) result.overall.issues = issues.value.trim();
-  const legal = document.querySelector('textarea[name="overall_legal_issues"]');
-  if (legal && legal.value.trim()) result.overall.legal_issues = legal.value.trim();
-  document.querySelectorAll('input[type="checkbox"][name^="topic_"]:checked').forEach(cb => result.topics.push(cb.value));
+  // Convert score values for export
+  Object.entries(result.scores).forEach(([k, v]) => {
+    if (v === 'NA') result.scores[k] = null;
+  });
 
   const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url;
-  a.download = `eval_${evaluator}_${Date.now()}.json`;
+  a.download = `eval_${evaluator}_${currentCase}_${currentCond}.json`;
   a.click(); URL.revokeObjectURL(url);
 }
 
