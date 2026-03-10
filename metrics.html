@@ -195,39 +195,35 @@
     .score-box-label { font-size: 11px; color: var(--slate-500); margin-bottom: 4px; font-weight: 500; white-space: nowrap; }
     .score-box-value { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
-    /* ─── BREAKDOWN PANELS (Tabs 2-5) ─── */
-    .breakdown-section {
-      background: white; border-radius: 12px; padding: 20px 24px;
+    /* ─── DIMENSION-CENTRIC BREAKDOWN (Tabs 2-5) ─── */
+    .dim-block {
+      background: white; border-radius: 12px; padding: 18px 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e5e7eb;
-      border-left: 3px solid var(--indigo); margin-bottom: 16px;
+      margin-bottom: 14px;
     }
-    .breakdown-section-title {
-      font-size: 16px; font-weight: 700; color: var(--slate-900);
-      margin-bottom: 16px; padding-bottom: 10px;
-      border-bottom: 1px solid var(--slate-100);
+    .dim-title {
+      font-size: 14px; font-weight: 700; color: var(--slate-900);
+      margin-bottom: 12px;
     }
-
-    /* ─── HORIZONTAL BAR CHARTS ─── */
-    .bar-row {
-      display: flex; align-items: center; gap: 10px; padding: 8px 0;
+    .dim-bar-row {
+      display: flex; align-items: center; gap: 10px; padding: 4px 0;
     }
-    .bar-label {
-      width: 150px; flex-shrink: 0; font-size: 13px; color: var(--slate-700);
+    .dim-bar-cond {
+      width: 140px; flex-shrink: 0; font-size: 12px; color: var(--slate-500);
       text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .bar-track {
-      flex: 1; height: 20px; background: var(--slate-100); border-radius: 6px;
-      overflow: hidden; position: relative;
+    .dim-bar-track {
+      flex: 1; height: 18px; background: var(--slate-100); border-radius: 5px;
+      overflow: hidden;
     }
-    .bar-fill {
-      height: 100%; border-radius: 6px; transition: width 0.4s ease;
-      min-width: 2px;
+    .dim-bar-fill {
+      height: 100%; border-radius: 5px; transition: width 0.4s ease; min-width: 2px;
     }
-    .bar-fill-high { background: var(--emerald); }
-    .bar-fill-mid { background: var(--amber); }
-    .bar-fill-low { background: var(--rose); }
-    .bar-value {
-      width: 50px; flex-shrink: 0; font-size: 13px; font-weight: 600;
+    .dim-bar-fill-high { background: var(--emerald); }
+    .dim-bar-fill-mid { background: var(--amber); }
+    .dim-bar-fill-low { background: var(--rose); }
+    .dim-bar-value {
+      width: 48px; flex-shrink: 0; font-size: 12px; font-weight: 600;
       font-variant-numeric: tabular-nums; color: var(--slate-700);
     }
 
@@ -247,7 +243,7 @@
       .content { padding: 16px 12px 40px; }
       .overview-cards-grid { grid-template-columns: 1fr; }
       .overview-card-scores { grid-template-columns: repeat(2, 1fr); }
-      .bar-label { width: 100px; font-size: 11px; }
+      .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
     }
@@ -740,64 +736,76 @@
     return html;
   }
 
-  // ─── Tabs 2-4: Breakdown (Rule-Based / Fact Recall / Quality) ───
+  // ─── Tabs 2-4: Dimension-centric breakdown ───
+  // Each dimension = one card, with all models as bars inside
   function buildBreakdownTab(matches, dataKey, labels, tips, scale) {
-    let html = '';
-    for (const { condKey, cond, caseData } of matches) {
+    // Collect all dimension keys across all conditions
+    const allKeys = new Set();
+    for (const { caseData } of matches) {
       const data = caseData[dataKey] || {};
-      const keys = Object.keys(data).filter(k => k !== 'avg');
-      if (keys.length === 0) continue;
+      Object.keys(data).filter(k => k !== 'avg').forEach(k => allKeys.add(k));
+    }
+    if (allKeys.size === 0) return '<div class="no-data-msg">此案例無此類指標資料。</div>';
 
-      html += `<div class="breakdown-section">
-        <div class="breakdown-section-title">${cond.label}</div>`;
+    // Use label order if available, otherwise insertion order
+    const orderedKeys = Object.keys(labels).filter(k => allKeys.has(k));
+    // Add any keys not in labels
+    for (const k of allKeys) { if (!orderedKeys.includes(k)) orderedKeys.push(k); }
 
-      for (const k of keys) {
+    let html = '';
+    for (const k of orderedKeys) {
+      const tip = tips[k] ? ` data-tip="${tips[k]}"` : '';
+      html += `<div class="dim-block">
+        <div class="dim-title"${tip}>${labels[k] || k}</div>`;
+
+      for (const { cond, caseData } of matches) {
+        const data = caseData[dataKey] || {};
         const v = data[k];
         if (v == null) continue;
         const pct = scale === '5' ? (v / 5 * 100) : (v * 100);
-        const cls = scale === '5' ? barClass5(v) : barClass01(v);
+        const cls = scale === '5' ? ('dim-bar-fill-' + (v >= 4.0 ? 'high' : v >= 3.0 ? 'mid' : 'low'))
+                                  : ('dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low'));
         const fmtVal = scale === '5' ? fmt(v, 1) : fmt(v);
-        const tip = tips[k] ? ` data-tip="${tips[k]}"` : '';
-        html += `<div class="bar-row">
-          <span class="bar-label"${tip}>${labels[k] || k}</span>
-          <div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div>
-          <span class="bar-value">${fmtVal}</span>
+        html += `<div class="dim-bar-row">
+          <span class="dim-bar-cond">${cond.label}</span>
+          <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
+          <span class="dim-bar-value">${fmtVal}</span>
         </div>`;
       }
 
       html += '</div>';
     }
-    return html || '<div class="no-data-msg">此案例無此類指標資料。</div>';
+    return html;
   }
 
-  // ─── Tab 5: ROUGE / BERTScore ───
+  // ─── Tab 5: ROUGE / BERTScore (dimension-centric) ───
   function buildRougeBertTab(matches) {
-    let html = '';
     const keys = ['rouge1', 'rouge2', 'rougeL', 'bertscore_p', 'bertscore_r', 'bertscore_f1'];
+    const hasAny = matches.some(m => m.caseData.rouge_bertscore);
+    if (!hasAny) return '<div class="no-data-msg">此案例無 ROUGE / BERTScore 資料。</div>';
 
-    for (const { condKey, cond, caseData } of matches) {
-      const rb = caseData.rouge_bertscore;
-      if (!rb) continue;
+    let html = '';
+    for (const k of keys) {
+      const tip = ROUGE_BERT_TIPS[k] ? ` data-tip="${ROUGE_BERT_TIPS[k]}"` : '';
+      html += `<div class="dim-block">
+        <div class="dim-title"${tip}>${ROUGE_BERT_LABELS[k] || k}</div>`;
 
-      html += `<div class="breakdown-section">
-        <div class="breakdown-section-title">${cond.label}</div>`;
-
-      for (const k of keys) {
+      for (const { cond, caseData } of matches) {
+        const rb = caseData.rouge_bertscore;
+        if (!rb || rb[k] == null) continue;
         const v = rb[k];
-        if (v == null) continue;
         const pct = v * 100;
-        const cls = barClass01(v);
-        const tip = ROUGE_BERT_TIPS[k] ? ` data-tip="${ROUGE_BERT_TIPS[k]}"` : '';
-        html += `<div class="bar-row">
-          <span class="bar-label"${tip}>${ROUGE_BERT_LABELS[k] || k}</span>
-          <div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div>
-          <span class="bar-value">${fmt(v)}</span>
+        const cls = 'dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low');
+        html += `<div class="dim-bar-row">
+          <span class="dim-bar-cond">${cond.label}</span>
+          <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
+          <span class="dim-bar-value">${fmt(v)}</span>
         </div>`;
       }
 
       html += '</div>';
     }
-    return html || '<div class="no-data-msg">此案例無 ROUGE / BERTScore 資料。</div>';
+    return html;
   }
 
   // ─── Load data ───
