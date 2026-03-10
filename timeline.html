@@ -552,7 +552,9 @@
           }
 
           html += `<div class="chunk-region" id="chunk_${esc(cid)}" data-chunk="${esc(cid)}">`;
-          html += `<span class="chunk-label">${esc(cid)}</span>`;
+          const chunkMatch = cid.match(/chunk[_\s]*(\d+)/i);
+          const shortLabel = chunkMatch ? `Chunk ${chunkMatch[1]}` : cid;
+          html += `<span class="chunk-label">${esc(shortLabel)}</span>`;
           html += chunkHtml;
           html += '</div>';
         });
