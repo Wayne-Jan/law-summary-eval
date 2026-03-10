@@ -46,7 +46,7 @@
     .save-indicator { font-size: 12px; color: var(--emerald); white-space: nowrap; transition: opacity 0.5s; }
 
     /* ─── THREE-PANEL LAYOUT ─── */
-    .main { margin-top: 56px; display: flex; height: calc(100vh - 56px - 36px); }
+    .main { margin-top: 56px; display: flex; height: calc(100vh - 56px - 36px); position: relative; }
 
     .panel { overflow-y: auto; }
     .panel-source { width: 30%; border-right: 1px solid #e2e8f0; background: white; }
@@ -247,32 +247,125 @@
       background: var(--indigo); height: 60px;
     }
 
+    /* ─── MOBILE-ONLY ELEMENTS (hidden on desktop) ─── */
+    .mobile-evaluator-badge, .mobile-menu-btn, .mobile-backdrop { display: none; }
+
+    /* ─── DESKTOP: toolbar-controls is transparent wrapper ─── */
+    .toolbar-controls { display: contents; }
+    .ctrl-label { display: none; }
+    .ctrl-row, .ctrl-row-half, .ctrl-row-nav, .ctrl-row-actions, .ctrl-row-evaluator { display: contents; }
+    .desktop-eval-label { font-size: 14px; color: var(--slate-500); white-space: nowrap; }
+
     /* ─── MOBILE TAB BAR ─── */
     .mobile-tab-bar { display: none; }
 
     @media (max-width: 768px) {
       .main { flex-direction: column; height: auto; }
       .panel { width: 100% !important; flex: none !important; display: none; }
-      .panel.mobile-active { display: block; height: calc(100vh - 56px - 40px - 36px); overflow-y: auto; }
+      .panel.mobile-active { display: block; height: calc(100vh - 50px - 44px - 36px); overflow-y: auto; }
       .resizer { display: none; }
 
       .mobile-tab-bar {
-        display: flex; position: fixed; bottom: 32px; left: 0; right: 0; height: 40px;
+        display: flex; position: fixed; bottom: 36px; left: 0; right: 0; height: 44px;
         background: white; border-top: 1px solid #e2e8f0; z-index: 100;
         align-items: center; justify-content: center; gap: 4px; padding: 0 8px;
       }
       .mobile-tab {
         flex: 1; border: none; background: var(--slate-100); color: var(--slate-500);
-        font-size: 12px; font-weight: 500; padding: 6px 0; border-radius: 6px;
+        font-size: 14px; font-weight: 500; padding: 8px 0; border-radius: 6px;
         cursor: pointer; font-family: var(--sans);
       }
       .mobile-tab.active { background: var(--indigo); color: white; }
 
       .progress-bar { bottom: 0; }
 
-      .toolbar { gap: 4px; padding: 0 8px; overflow-x: auto; }
-      .toolbar h1 { font-size: 14px; }
-      #caseSelect { max-width: 160px; }
+      /* ─── MOBILE TOOLBAR ─── */
+      .toolbar {
+        height: 50px; gap: 8px; padding: 0 12px;
+        overflow: visible; justify-content: space-between;
+      }
+      .toolbar h1 { font-size: 16px; flex-shrink: 0; }
+
+      .mobile-evaluator-badge {
+        display: flex; align-items: center;
+        font-size: 13px; font-weight: 600; color: var(--indigo);
+        background: var(--indigo-light); padding: 4px 10px; border-radius: 20px;
+        white-space: nowrap; cursor: pointer; flex-shrink: 1;
+        min-width: 0; overflow: hidden; text-overflow: ellipsis;
+      }
+
+      .mobile-menu-btn {
+        display: flex; align-items: center; justify-content: center;
+        width: 36px; height: 36px; border: 1px solid var(--slate-300);
+        border-radius: 8px; background: white; font-size: 20px;
+        cursor: pointer; color: var(--slate-700); flex-shrink: 0;
+      }
+      .mobile-menu-btn:hover { background: var(--slate-100); }
+
+      /* ─── MOBILE BACKDROP ─── */
+      .mobile-backdrop {
+        display: none; position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.25); z-index: 98;
+      }
+      .mobile-backdrop.open { display: block; }
+
+      /* ─── MOBILE DRAWER (toolbar-controls) ─── */
+      .toolbar-controls {
+        display: none !important; position: absolute; top: 50px; left: 0; right: 0;
+        background: white; padding: 16px; flex-direction: column; gap: 14px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 0 0 12px 12px;
+        z-index: 99;
+      }
+      .toolbar-controls.open { display: flex !important; }
+
+      /* Show labels in drawer */
+      .ctrl-label {
+        display: block; font-size: 12px; font-weight: 600; color: var(--slate-500);
+        margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;
+      }
+
+      /* Each ctrl-row is a column */
+      .ctrl-row { display: flex; flex-direction: column; }
+      .ctrl-row select { width: 100%; font-size: 15px; padding: 10px 12px; }
+
+      /* Half-width pair */
+      .ctrl-row-half { display: flex; flex-direction: row; gap: 12px; }
+      .ctrl-row-half > div { flex: 1; display: flex; flex-direction: column; }
+      .ctrl-row-half > div select { width: 100%; }
+
+      /* Nav links as pills */
+      .ctrl-row-nav {
+        display: flex; flex-direction: row; gap: 6px; justify-content: center;
+        padding-top: 4px; border-top: 1px solid var(--slate-100);
+      }
+      .ctrl-row-nav a {
+        flex: 1; text-align: center; padding: 8px 0; border-radius: 8px;
+        background: var(--indigo-light); color: var(--indigo) !important;
+        font-size: 14px !important; font-weight: 500; text-decoration: none !important;
+      }
+      .ctrl-row-nav a:hover { background: #ddd6fe; }
+
+      /* Action buttons side by side */
+      .ctrl-row-actions {
+        display: flex; flex-direction: row; gap: 8px;
+        padding-top: 4px; border-top: 1px solid var(--slate-100);
+      }
+      .ctrl-row-actions .btn { flex: 1; text-align: center; padding: 10px 0; font-size: 14px; }
+
+      /* Hide desktop-only separators and spacer */
+      .toolbar .desktop-sep { display: none; }
+      .toolbar .spacer { display: none; }
+
+      /* Save indicator in drawer */
+      .toolbar-controls .save-indicator { text-align: center; }
+
+      /* Evaluator row: reorder to top in mobile drawer */
+      .ctrl-row-evaluator { display: flex; flex-direction: column; order: -1; }
+      .ctrl-row-evaluator select { width: 100% !important; font-size: 15px; padding: 10px 12px; }
+      .desktop-eval-label { display: none; }
+
+      /* Adjust main margin for shorter toolbar */
+      .main { margin-top: 50px; }
     }
   </style>
 </head>
@@ -281,32 +374,56 @@
 <!-- Toolbar -->
 <div class="toolbar">
   <h1>專家評估</h1>
-  <div class="sep"></div>
-  <select id="caseSelect"><option>載入中...</option></select>
-  <select id="groupSelect">
-    <option value="商用模型">商用模型</option>
-    <option value="開源模型">開源模型</option>
-    <option value="all">全部</option>
-  </select>
-  <select id="condSelect"><option>載入中...</option></select>
-  <span class="spacer"></span>
-  <a id="viewLink" href="view.html" style="font-size:14px;color:var(--indigo);text-decoration:none">摘要瀏覽</a>
-  <a id="timelineLink" href="timeline.html" style="font-size:14px;color:var(--indigo);text-decoration:none">時間軸</a>
-  <a href="index.html" style="font-size:14px;color:var(--indigo);text-decoration:none">總覽</a>
-  <div class="sep"></div>
-  <label>評估者</label>
-  <select id="evaluatorName" style="width:100px">
-    <option value="">請選擇</option>
-    <option value="專家A">專家 A</option>
-    <option value="專家B">專家 B</option>
-    <option value="專家C">專家 C</option>
-    <option value="專家D">專家 D</option>
-    <option value="專家E">專家 E</option>
-  </select>
-  <span class="save-indicator" id="saveIndicator"></span>
-  <button class="btn btn-ghost" onclick="clearCurrentEval()">清除此筆</button>
-  <button class="btn btn-success" onclick="exportJSON()">匯出 JSON</button>
+  <span class="mobile-evaluator-badge" id="mobileEvalBadge" onclick="toggleMobileDrawer()">未選擇</span>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileDrawer()">&#9776;</button>
+
+  <div class="toolbar-controls" id="toolbarControls">
+    <div class="sep desktop-sep"></div>
+    <div class="ctrl-row">
+      <label class="ctrl-label">案例</label>
+      <select id="caseSelect"><option>載入中...</option></select>
+    </div>
+    <div class="ctrl-row ctrl-row-half">
+      <div>
+        <label class="ctrl-label">群組</label>
+        <select id="groupSelect">
+          <option value="商用模型">商用模型</option>
+          <option value="開源模型">開源模型</option>
+          <option value="all">全部</option>
+        </select>
+      </div>
+      <div>
+        <label class="ctrl-label">版本</label>
+        <select id="condSelect"><option>載入中...</option></select>
+      </div>
+    </div>
+    <span class="spacer"></span>
+    <div class="ctrl-row ctrl-row-nav">
+      <a id="viewLink" href="view.html" style="font-size:14px;color:var(--indigo);text-decoration:none">摘要瀏覽</a>
+      <a id="timelineLink" href="timeline.html" style="font-size:14px;color:var(--indigo);text-decoration:none">時間軸</a>
+      <a href="index.html" style="font-size:14px;color:var(--indigo);text-decoration:none">總覽</a>
+    </div>
+    <div class="sep desktop-sep"></div>
+    <div class="ctrl-row ctrl-row-evaluator">
+      <label class="ctrl-label">評估者</label>
+      <label class="desktop-eval-label">評估者</label>
+      <select id="evaluatorName" style="width:100px">
+        <option value="">請選擇</option>
+        <option value="專家A">專家 A</option>
+        <option value="專家B">專家 B</option>
+        <option value="專家C">專家 C</option>
+        <option value="專家D">專家 D</option>
+        <option value="專家E">專家 E</option>
+      </select>
+    </div>
+    <span class="save-indicator" id="saveIndicator"></span>
+    <div class="ctrl-row ctrl-row-actions">
+      <button class="btn btn-ghost" onclick="clearCurrentEval()">清除此筆</button>
+      <button class="btn btn-success" onclick="exportJSON()">匯出 JSON</button>
+    </div>
+  </div>
 </div>
+<div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
 
 <!-- Main 3-panel layout -->
 <div class="main">
@@ -505,7 +622,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Reset and restore for NEW evaluator
     resetForm();
     restoreEval();
+    updateMobileEvalBadge();
   });
+  // Init mobile evaluator badge
+  updateMobileEvalBadge();
 
   // Read URL params
   const urlParams = new URLSearchParams(window.location.search);
@@ -1070,6 +1190,33 @@ function switchMobilePanel(panelId, btn) {
   const panel = document.getElementById(panelId);
   if (panel) panel.classList.add('mobile-active');
   if (btn) btn.classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MOBILE DRAWER
+// ═══════════════════════════════════════════════════════════════
+
+function toggleMobileDrawer() {
+  const controls = document.getElementById('toolbarControls');
+  const backdrop = document.getElementById('mobileBackdrop');
+  const isOpen = controls.classList.contains('open');
+  if (isOpen) {
+    closeMobileDrawer();
+  } else {
+    controls.classList.add('open');
+    backdrop.classList.add('open');
+  }
+}
+
+function closeMobileDrawer() {
+  document.getElementById('toolbarControls').classList.remove('open');
+  document.getElementById('mobileBackdrop').classList.remove('open');
+}
+
+function updateMobileEvalBadge() {
+  const badge = document.getElementById('mobileEvalBadge');
+  const evalName = document.getElementById('evaluatorName').value;
+  badge.textContent = evalName || '未選擇';
 }
 </script>
 </body>
