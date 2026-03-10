@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 評估指標 — 醫療糾紛判決書摘要</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+      --indigo: #4f46e5; --indigo-light: #eef2ff;
+      --emerald: #059669; --emerald-light: #ecfdf5;
+      --amber: #d97706; --amber-light: #fffbeb;
+      --rose: #e11d48; --rose-light: #fff1f2;
+      --purple: #7c3aed; --purple-light: #f5f3ff;
+      --slate-900: #0f172a; --slate-700: #334155; --slate-500: #64748b;
+      --slate-300: #cbd5e1; --slate-100: #f1f5f9; --slate-50: #f8fafc;
+    }
+    body { font-family: var(--sans); background: var(--slate-50); color: var(--slate-700); }
+
+    /* ─── TOOLBAR ─── */
+    .toolbar {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      background: white; border-bottom: 1px solid #e2e8f0;
+      display: flex; align-items: center; padding: 0 20px; gap: 14px; z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    }
+    .toolbar h1 { font-size: 18px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
+    .toolbar .spacer { flex: 1; }
+
+    /* Nav links */
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-links a {
+      font-size: 13px; color: var(--slate-500); text-decoration: none; font-weight: 500;
+      padding: 6px 12px; border-radius: 6px; transition: all 0.15s;
+    }
+    .nav-links a:hover { background: var(--slate-100); color: var(--indigo); }
+    .nav-links a.active { background: var(--indigo); color: white; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none; background: none; border: none; cursor: pointer;
+      width: 36px; height: 36px; flex-shrink: 0;
+    }
+    .hamburger svg { width: 22px; height: 22px; stroke: var(--slate-700); }
+    .mobile-menu {
+      display: none; position: fixed; top: 56px; left: 0; right: 0;
+      background: white; border-bottom: 1px solid #e2e8f0;
+      padding: 8px 16px; z-index: 99; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu a {
+      display: block; padding: 10px 12px; font-size: 15px; color: var(--slate-700);
+      text-decoration: none; border-radius: 6px;
+    }
+    .mobile-menu a:hover { background: var(--slate-100); }
+    .mobile-menu a.active { background: var(--indigo-light); color: var(--indigo); font-weight: 600; }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; align-items: center; justify-content: center; }
+      .toolbar h1 { font-size: 15px; }
+    }
+
+    /* ─── CONTENT ─── */
+    .content { margin-top: 56px; padding: 24px 20px 60px; max-width: 1400px; margin-left: auto; margin-right: auto; }
+
+    /* ─── SECTION HEADERS ─── */
+    .section-header {
+      font-size: 20px; font-weight: 700; color: var(--slate-900);
+      margin: 32px 0 16px; padding-bottom: 8px;
+      border-bottom: 2px solid var(--indigo-light);
+    }
+    .section-header:first-child { margin-top: 0; }
+
+    /* ─── OVERVIEW TABLE ─── */
+    .overview-table-wrap { overflow-x: auto; margin-bottom: 24px; }
+    .overview-table {
+      width: 100%; border-collapse: collapse; font-size: 14px;
+      background: white; border-radius: 8px; overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .overview-table th {
+      text-align: left; padding: 12px 14px; font-weight: 600; font-size: 13px;
+      color: var(--slate-500); background: var(--slate-100);
+      border-bottom: 1px solid #e5e7eb; white-space: nowrap;
+    }
+    .overview-table td {
+      padding: 10px 14px; border-bottom: 1px solid var(--slate-100);
+      white-space: nowrap;
+    }
+    .overview-table tr:last-child td { border-bottom: none; }
+    .overview-table tr:hover td { background: #fafbfc; }
+    .overview-table .cond-name { font-weight: 600; color: var(--slate-900); }
+
+    .badge {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 4px;
+    }
+    .badge-commercial { background: var(--indigo-light); color: var(--indigo); }
+    .badge-opensource { background: var(--emerald-light); color: var(--emerald); }
+
+    .score-cell { font-weight: 600; font-variant-numeric: tabular-nums; }
+    .score-high { color: var(--emerald); }
+    .score-mid { color: var(--amber); }
+    .score-low { color: var(--rose); }
+
+    .sort-btn {
+      cursor: pointer; user-select: none; position: relative;
+    }
+    .sort-btn::after {
+      content: ' \25B2\25BC'; font-size: 9px; color: var(--slate-300);
+      position: relative; top: -1px; margin-left: 2px;
+    }
+    .sort-btn.asc::after { content: ' \25B2'; color: var(--indigo); }
+    .sort-btn.desc::after { content: ' \25BC'; color: var(--indigo); }
+
+    /* ─── CASE DETAIL ─── */
+    .case-selector {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .case-selector label { font-size: 15px; font-weight: 600; color: var(--slate-900); }
+    .case-selector select {
+      font-size: 14px; padding: 8px 12px; border: 1px solid var(--slate-300);
+      border-radius: 6px; background: white; font-family: var(--sans);
+      max-width: 420px; cursor: pointer;
+    }
+
+    .case-detail { display: none; }
+    .case-detail.active { display: block; }
+
+    .no-data-msg {
+      text-align: center; padding: 40px; color: var(--slate-500); font-size: 15px;
+    }
+
+    /* ─── COMPARISON CARDS ─── */
+    .comparison-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 16px; margin-bottom: 24px;
+    }
+    .cond-card {
+      background: white; border-radius: 10px; padding: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #e5e7eb;
+    }
+    .cond-card-header {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
+      padding-bottom: 10px; border-bottom: 1px solid var(--slate-100);
+    }
+    .cond-card-title { font-size: 16px; font-weight: 700; color: var(--slate-900); }
+    .cond-card-scores {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px;
+    }
+    .score-box {
+      padding: 8px 10px; border-radius: 6px; background: var(--slate-50);
+    }
+    .score-box-label { font-size: 11px; color: var(--slate-500); margin-bottom: 2px; }
+    .score-box-value { font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+    /* ─── HORIZONTAL BAR CHARTS ─── */
+    .bar-section-title {
+      font-size: 13px; font-weight: 600; color: var(--slate-500);
+      margin: 12px 0 6px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .bar-row {
+      display: flex; align-items: center; gap: 8px; margin-bottom: 5px;
+    }
+    .bar-label {
+      width: 130px; flex-shrink: 0; font-size: 12px; color: var(--slate-700);
+      text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .bar-track {
+      flex: 1; height: 16px; background: var(--slate-100); border-radius: 4px;
+      overflow: hidden; position: relative;
+    }
+    .bar-fill {
+      height: 100%; border-radius: 4px; transition: width 0.4s ease;
+      min-width: 2px;
+    }
+    .bar-fill-high { background: var(--emerald); }
+    .bar-fill-mid { background: var(--amber); }
+    .bar-fill-low { background: var(--rose); }
+    .bar-value {
+      width: 44px; flex-shrink: 0; font-size: 12px; font-weight: 600;
+      font-variant-numeric: tabular-nums; color: var(--slate-700);
+    }
+
+    /* ─── BREAKDOWN PANEL (collapsible) ─── */
+    .breakdown-toggle {
+      font-size: 13px; color: var(--indigo); cursor: pointer; border: none;
+      background: none; padding: 4px 0; font-family: var(--sans); font-weight: 500;
+    }
+    .breakdown-toggle:hover { text-decoration: underline; }
+    .breakdown-content { display: none; margin-top: 8px; }
+    .breakdown-content.open { display: block; }
+
+    /* ─── TOOLTIP ─── */
+    [data-tip] { position: relative; cursor: help; }
+    [data-tip]::after {
+      content: attr(data-tip);
+      position: absolute; bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%); white-space: normal;
+      width: max-content; max-width: 300px;
+      background: var(--slate-900); color: #fff; font-size: 12px; line-height: 1.5;
+      font-weight: 400; padding: 8px 12px; border-radius: 8px;
+      pointer-events: none; opacity: 0; transition: opacity 0.18s;
+      z-index: 200; box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+    }
+    [data-tip]::before {
+      content: ''; position: absolute; bottom: calc(100% + 2px); left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent; border-top-color: var(--slate-900);
+      pointer-events: none; opacity: 0; transition: opacity 0.18s; z-index: 201;
+    }
+    [data-tip]:hover::after, [data-tip]:hover::before { opacity: 1; }
+    /* Flip tooltip below when in table header (avoid clipping) */
+    th[data-tip]::after { bottom: auto; top: calc(100% + 8px); }
+    th[data-tip]::before { bottom: auto; top: calc(100% + 2px); border-top-color: transparent; border-bottom-color: var(--slate-900); }
+
+    @media (max-width: 768px) {
+      .content { padding: 16px 12px 40px; }
+      .comparison-grid { grid-template-columns: 1fr; }
+      .bar-label { width: 90px; font-size: 11px; }
+      [data-tip]::after { max-width: 220px; font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── TOOLBAR ─── -->
+<div class="toolbar">
+  <h1>AI 評估指標</h1>
+  <span class="spacer"></span>
+  <div class="nav-links">
+    <a href="index.html">首頁</a>
+    <a href="view.html">摘要瀏覽</a>
+    <a href="timeline.html">時間軸</a>
+    <a href="eval.html">專家評估</a>
+    <a href="metrics.html" class="active">AI 指標</a>
+  </div>
+  <button class="hamburger" id="hamburgerBtn" aria-label="選單">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+    </svg>
+  </button>
+</div>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">首頁</a>
+  <a href="view.html">摘要瀏覽</a>
+  <a href="timeline.html">時間軸</a>
+  <a href="eval.html">專家評估</a>
+  <a href="metrics.html" class="active">AI 指標</a>
+</div>
+
+<!-- ─── CONTENT ─── -->
+<div class="content">
+  <h2 class="section-header">各模型整體表現</h2>
+  <div class="overview-table-wrap">
+    <table class="overview-table" id="overviewTable">
+      <thead>
+        <tr>
+          <th>模型</th>
+          <th>分類</th>
+          <th class="sort-btn" data-col="rule" data-dir="" data-tip="規則式指標平均：引用率、日期/數字 F1、判決吻合、機構歸屬、幻覺率（反向），共 6 項自動計算">Rule-Based</th>
+          <th class="sort-btn" data-col="fact" data-dir="" data-tip="事實召回率：以結構化 Ground Truth（時間軸、實體、控訴、辯護、鑑定、推理、因果鏈、量刑）為基準，衡量摘要涵蓋了多少關鍵事實">Fact Recall</th>
+          <th class="sort-btn desc" data-col="quality" data-dir="desc" data-tip="寫作品質：由 LLM 以 14 個 Likert 維度（1-5 分）評分，涵蓋流暢度、精簡度、連貫性、涵蓋度、精確度、術語、結構等">Quality</th>
+          <th class="sort-btn" data-col="faith" data-dir="" data-tip="忠實度：逐句驗證 [CH_XX] 引用是否被原文支持。A=完全支持、B=部分支持、C=不支持、D=無法驗證">Faithfulness</th>
+          <th>案例數</th>
+        </tr>
+      </thead>
+      <tbody id="overviewBody"></tbody>
+    </table>
+  </div>
+
+  <h2 class="section-header">個案詳細比較</h2>
+  <div class="case-selector">
+    <label for="caseSelect">選擇案例：</label>
+    <select id="caseSelect"><option value="">載入中...</option></select>
+  </div>
+  <div id="caseDetail" class="case-detail">
+    <div class="comparison-grid" id="comparisonGrid"></div>
+  </div>
+  <div id="noDataMsg" class="no-data-msg" style="display:none">此案例尚無 AI 評估資料。</div>
+</div>
+
+<script>
+(function() {
+  // ─── Hamburger ───
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  document.addEventListener('click', (e) => {
+    if (!hamburgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+    }
+  });
+
+  // ─── Score color helpers ───
+  function scoreClass01(v) {
+    if (v == null) return '';
+    return v >= 0.8 ? 'score-high' : v >= 0.6 ? 'score-mid' : 'score-low';
+  }
+  function scoreClass5(v) {
+    if (v == null) return '';
+    return v >= 4.0 ? 'score-high' : v >= 3.0 ? 'score-mid' : 'score-low';
+  }
+  function barClass01(v) {
+    if (v == null) return 'bar-fill-mid';
+    return v >= 0.8 ? 'bar-fill-high' : v >= 0.6 ? 'bar-fill-mid' : 'bar-fill-low';
+  }
+  function barClass5(v) {
+    if (v == null) return 'bar-fill-mid';
+    return v >= 4.0 ? 'bar-fill-high' : v >= 3.0 ? 'bar-fill-mid' : 'bar-fill-low';
+  }
+  function fmt(v, digits) {
+    if (v == null) return '--';
+    return typeof v === 'number' ? v.toFixed(digits === undefined ? 3 : digits) : String(v);
+  }
+
+  // ─── Label maps for sub-metrics ───
+  const RULE_LABELS = {
+    citation_rate: '引用率',
+    date_f1: '日期 F1',
+    num_f1: '數字 F1',
+    verdict_match: '判決吻合',
+    institution_attr: '機構歸屬',
+    hallucination_rate_rule: '幻覺率(反)'
+  };
+  const RULE_TIPS = {
+    citation_rate: '摘要中有多少比例的陳述標註了 [CH_XX] 來源引用',
+    date_f1: '摘要中的日期與 Ground Truth 日期的 F1 分數',
+    num_f1: '摘要中的數字（金額、劑量等）與 Ground Truth 的 F1 分數',
+    verdict_match: '摘要的判決結果（有罪/無罪/刑度）是否與 Ground Truth 一致',
+    institution_attr: '醫療機構名稱是否正確匿名化且歸屬正確',
+    hallucination_rate_rule: '（反向指標）未被來源文本支持的事實陳述比例，越高越好'
+  };
+  const FACT_LABELS = {
+    timeline_recall: '時間軸',
+    entity_recall: '實體',
+    allegation_coverage: '控訴涵蓋',
+    defense_recall: '辯護',
+    expert_opinion_recall: '鑑定意見',
+    reasoning_coverage: '推理涵蓋',
+    causation_chain_recall: '因果鏈',
+    sentence_accuracy: '量刑準確'
+  };
+  const FACT_TIPS = {
+    timeline_recall: '關鍵時間事件（就診、手術、轉診、死亡等）的召回率',
+    entity_recall: '涉案人物、機構、藥物等實體的召回率',
+    allegation_coverage: '起訴書/自訴狀中控訴要點的涵蓋比例',
+    defense_recall: '被告答辯要點的涵蓋比例',
+    expert_opinion_recall: '鑑定報告結論與意見的涵蓋比例',
+    reasoning_coverage: '法院判決推理要點的涵蓋比例',
+    causation_chain_recall: '醫療行為→損害結果因果鏈的涵蓋比例',
+    sentence_accuracy: '量刑/無罪判決結果是否正確記載'
+  };
+  const QUALITY_LABELS = {
+    fluency: '流暢度',
+    redundancy: '精簡度',
+    coherence: '連貫性',
+    compliance: '格式合規',
+    coverage: '涵蓋度',
+    precision: '精確度',
+    terminology: '術語正確',
+    structure: '結構清晰',
+    scope: '範圍控制',
+    reasoning: '推理完整',
+    timeline_clarity: '時間線清晰',
+    reasoning_completeness: '推理充分',
+    accessibility: '可讀性',
+    uncertainty_calibration: '不確定校準'
+  };
+  const QUALITY_TIPS = {
+    fluency: '語句是否通順、語法正確、讀來自然',
+    redundancy: '是否避免重複贅述，資訊精簡不冗餘',
+    coherence: '段落間是否邏輯連貫、過渡自然',
+    compliance: '是否符合五段式結構、引用格式、匿名化等規範要求',
+    coverage: '是否涵蓋 Ground Truth 中的主要事實與論點',
+    precision: '日期、數字、專有名詞等細節是否正確',
+    terminology: '法律與醫療專業術語使用是否準確',
+    structure: '五段式結構是否清晰、段落分配是否合理',
+    scope: '各段內容是否只涵蓋該段應有的範圍，不越界',
+    reasoning: '法院推理的論證結構是否完整呈現',
+    timeline_clarity: '事件時間順序是否清楚標記、不跳躍',
+    reasoning_completeness: '注意義務→違反→因果→可預見性的推理鏈是否完整',
+    accessibility: '一般非法律專業讀者能否理解摘要內容',
+    uncertainty_calibration: '對於爭議事實，是否適當標記不確定性而非斷言'
+  };
+
+  let DATA = null;
+
+  // ─── Build overview table ───
+  function buildOverview() {
+    const tbody = document.getElementById('overviewBody');
+    tbody.innerHTML = '';
+    const entries = Object.entries(DATA.conditions);
+    // Default sort: quality desc
+    sortEntries(entries, 'quality', 'desc');
+    renderOverviewRows(entries);
+  }
+
+  function sortEntries(entries, col, dir) {
+    const key = { rule: 'rule_based_avg', fact: 'fact_recall_avg', quality: 'quality_avg', faith: 'faithfulness_avg' }[col];
+    if (!key) return;
+    entries.sort((a, b) => {
+      const va = a[1].averages[key] ?? -1;
+      const vb = b[1].averages[key] ?? -1;
+      return dir === 'asc' ? va - vb : vb - va;
+    });
+  }
+
+  function renderOverviewRows(entries) {
+    const tbody = document.getElementById('overviewBody');
+    tbody.innerHTML = '';
+    for (const [condKey, cond] of entries) {
+      const a = cond.averages;
+      const badgeClass = cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource';
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="cond-name">${cond.label}</td>
+        <td><span class="badge ${badgeClass}">${cond.group}</span></td>
+        <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg)}</td>
+        <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg)}</td>
+        <td class="score-cell ${scoreClass5(a.quality_avg)}">${fmt(a.quality_avg, 2)}</td>
+        <td class="score-cell ${scoreClass01(a.faithfulness_avg)}">${fmt(a.faithfulness_avg)}</td>
+        <td>${cond.eval_count}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+  }
+
+  // ─── Sort click handler ───
+  document.querySelectorAll('.sort-btn').forEach(th => {
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      // Toggle direction
+      let dir = th.dataset.dir;
+      dir = dir === 'desc' ? 'asc' : 'desc';
+      // Reset all
+      document.querySelectorAll('.sort-btn').forEach(b => {
+        b.dataset.dir = '';
+        b.classList.remove('asc', 'desc');
+      });
+      th.dataset.dir = dir;
+      th.classList.add(dir);
+      const entries = Object.entries(DATA.conditions);
+      sortEntries(entries, col, dir);
+      renderOverviewRows(entries);
+    });
+  });
+
+  // ─── Build case selector ───
+  function buildCaseSelector() {
+    const sel = document.getElementById('caseSelect');
+    sel.innerHTML = '<option value="">-- 請選擇案例 --</option>';
+    // Only show cases that have at least one condition with eval
+    const casesWithEval = new Set();
+    for (const cond of Object.values(DATA.conditions)) {
+      for (const c of Object.values(cond.cases)) {
+        casesWithEval.add(c.case_name);
+      }
+    }
+    const caseList = DATA.case_list.filter(c => casesWithEval.has(c));
+    for (const caseName of caseList) {
+      const slug = DATA.case_slugs[caseName];
+      const opt = document.createElement('option');
+      opt.value = slug;
+      opt.textContent = caseName;
+      sel.appendChild(opt);
+    }
+    sel.addEventListener('change', () => renderCaseDetail(sel.value));
+  }
+
+  // ─── Render case detail ───
+  function renderCaseDetail(slug) {
+    const detailEl = document.getElementById('caseDetail');
+    const noDataEl = document.getElementById('noDataMsg');
+    const grid = document.getElementById('comparisonGrid');
+    grid.innerHTML = '';
+
+    if (!slug) {
+      detailEl.classList.remove('active');
+      noDataEl.style.display = 'none';
+      return;
+    }
+
+    // Find which conditions have this case
+    const matches = [];
+    for (const [condKey, cond] of Object.entries(DATA.conditions)) {
+      if (cond.cases[slug]) {
+        matches.push({ condKey, cond, caseData: cond.cases[slug] });
+      }
+    }
+
+    if (matches.length === 0) {
+      detailEl.classList.remove('active');
+      noDataEl.style.display = '';
+      return;
+    }
+
+    noDataEl.style.display = 'none';
+    detailEl.classList.add('active');
+
+    for (const { condKey, cond, caseData } of matches) {
+      const card = document.createElement('div');
+      card.className = 'cond-card';
+
+      const badgeClass = cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource';
+
+      // Main scores
+      const rb = caseData.rule_based || {};
+      const fr = caseData.fact_recall || {};
+      const q = caseData.quality || {};
+      const faith = caseData.faithfulness;
+
+      const rbAvg = rb.avg;
+      const frAvg = fr.avg;
+      const qAvg = q.avg;
+
+      let html = `
+        <div class="cond-card-header">
+          <span class="cond-card-title">${cond.label}</span>
+          <span class="badge ${badgeClass}">${cond.group}</span>
+        </div>
+        <div class="cond-card-scores">
+          <div class="score-box" data-tip="規則式指標平均：引用率、日期/數字 F1、判決吻合、機構歸屬、幻覺率（反向），共 6 項自動計算">
+            <div class="score-box-label">Rule-Based</div>
+            <div class="score-box-value ${scoreClass01(rbAvg)}">${fmt(rbAvg)}</div>
+          </div>
+          <div class="score-box" data-tip="事實召回率：以結構化 Ground Truth 為基準，衡量摘要涵蓋了多少關鍵事實">
+            <div class="score-box-label">Fact Recall</div>
+            <div class="score-box-value ${scoreClass01(frAvg)}">${fmt(frAvg)}</div>
+          </div>
+          <div class="score-box" data-tip="寫作品質：14 個 Likert 維度（1-5 分）的平均，涵蓋流暢度、連貫性、涵蓋度、精確度等">
+            <div class="score-box-label">Quality</div>
+            <div class="score-box-value ${scoreClass5(qAvg)}">${fmt(qAvg, 2)}</div>
+          </div>
+          <div class="score-box" data-tip="忠實度：逐句驗證 [CH_XX] 引用是否被原文支持。A=完全支持、B=部分、C=不支持、D=無法驗證">
+            <div class="score-box-label">Faithfulness</div>
+            <div class="score-box-value ${scoreClass01(faith)}">${fmt(faith)}</div>
+          </div>
+        </div>
+      `;
+
+      // Rule-based breakdown
+      const rbKeys = Object.keys(rb).filter(k => k !== 'avg');
+      if (rbKeys.length > 0) {
+        const uid = 'rb_' + condKey.replace(/[^a-z0-9]/gi, '_');
+        html += `<button class="breakdown-toggle" onclick="toggleBreakdown('${uid}')">Rule-Based 細項</button>`;
+        html += `<div class="breakdown-content" id="${uid}">`;
+        for (const k of rbKeys) {
+          const v = rb[k];
+          const pct = (v != null ? v * 100 : 0);
+          const tip = RULE_TIPS[k] ? ` data-tip="${RULE_TIPS[k]}"` : '';
+          html += `<div class="bar-row">
+            <span class="bar-label"${tip}>${RULE_LABELS[k] || k}</span>
+            <div class="bar-track"><div class="bar-fill ${barClass01(v)}" style="width:${pct}%"></div></div>
+            <span class="bar-value">${fmt(v)}</span>
+          </div>`;
+        }
+        html += '</div>';
+      }
+
+      // Fact recall breakdown
+      const frKeys = Object.keys(fr).filter(k => k !== 'avg');
+      if (frKeys.length > 0) {
+        const uid = 'fr_' + condKey.replace(/[^a-z0-9]/gi, '_');
+        html += `<button class="breakdown-toggle" onclick="toggleBreakdown('${uid}')">Fact Recall 細項</button>`;
+        html += `<div class="breakdown-content" id="${uid}">`;
+        for (const k of frKeys) {
+          const v = fr[k];
+          const pct = (v != null ? v * 100 : 0);
+          const tip = FACT_TIPS[k] ? ` data-tip="${FACT_TIPS[k]}"` : '';
+          html += `<div class="bar-row">
+            <span class="bar-label"${tip}>${FACT_LABELS[k] || k}</span>
+            <div class="bar-track"><div class="bar-fill ${barClass01(v)}" style="width:${pct}%"></div></div>
+            <span class="bar-value">${fmt(v)}</span>
+          </div>`;
+        }
+        html += '</div>';
+      }
+
+      // Quality breakdown
+      const qKeys = Object.keys(q).filter(k => k !== 'avg');
+      if (qKeys.length > 0) {
+        const uid = 'q_' + condKey.replace(/[^a-z0-9]/gi, '_');
+        html += `<button class="breakdown-toggle" onclick="toggleBreakdown('${uid}')">Quality 14 維度</button>`;
+        html += `<div class="breakdown-content" id="${uid}">`;
+        for (const k of qKeys) {
+          const v = q[k];
+          const pct = (v != null ? v / 5 * 100 : 0);
+          const tip = QUALITY_TIPS[k] ? ` data-tip="${QUALITY_TIPS[k]}"` : '';
+          html += `<div class="bar-row">
+            <span class="bar-label"${tip}>${QUALITY_LABELS[k] || k}</span>
+            <div class="bar-track"><div class="bar-fill ${barClass5(v)}" style="width:${pct}%"></div></div>
+            <span class="bar-value">${fmt(v, 1)}</span>
+          </div>`;
+        }
+        html += '</div>';
+      }
+
+      card.innerHTML = html;
+      grid.appendChild(card);
+    }
+  }
+
+  // Global toggle function
+  window.toggleBreakdown = function(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('open');
+  };
+
+  // ─── Load data ───
+  fetch('data/eval_metrics.json')
+    .then(r => r.json())
+    .then(data => {
+      DATA = data;
+      buildOverview();
+      buildCaseSelector();
+    })
+    .catch(err => {
+      console.error('Failed to load eval_metrics.json:', err);
+      document.querySelector('.content').innerHTML =
+        '<div class="no-data-msg">無法載入評估資料，請確認 data/eval_metrics.json 是否存在。</div>';
+    });
+
+})();
+</script>
+</body>
+</html>
