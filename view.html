@@ -595,6 +595,7 @@
         <select class="condition-select" id="conditionSelect"></select>
         <span class="spacer"></span>
         <a id="timelineLink" href="timeline.html">時間軸</a>
+        <a id="evalLink" href="eval.html">專家評估</a>
         <a href="index.html">返回總覽</a>
     </div>
 
@@ -1031,10 +1032,14 @@
             url.searchParams.set('group', currentGroup);
             window.history.replaceState({}, '', url.toString());
 
-            // Keep timeline link synced with current case
+            // Keep timeline/eval links synced with current case
             const tlLink = document.getElementById('timelineLink');
             if (tlLink && currentCaseName) {
                 tlLink.href = `timeline.html?case=${encodeURIComponent(currentCaseName)}`;
+            }
+            const evLink = document.getElementById('evalLink');
+            if (evLink && currentCaseName) {
+                evLink.href = `eval.html?case=${encodeURIComponent(currentCaseName)}`;
             }
         }
 
