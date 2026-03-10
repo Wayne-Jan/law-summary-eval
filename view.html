@@ -583,7 +583,7 @@
         <select class="condition-select" id="caseSelect"></select>
         <select class="mode-select" id="viewModeSelect">
             <option value="single">單欄閱讀</option>
-            <option value="compare">對照模式（AI生成 vs 老師）</option>
+            <option value="compare">對照模式（AI生成 vs Ground Truth）</option>
         </select>
         <span class="gt-status" id="gtStatus">GT -</span>
         <select class="mode-select" id="groupSelect">
@@ -614,7 +614,7 @@
                     <div class="empty-content">載入中</div>
                 </div>
                 <div class="compare-column" id="gtComparePanel">
-                    <div class="compare-column-title">老師摘要（GT）</div>
+                    <div class="compare-column-title">老師摘要 (Ground Truth)</div>
                     <div class="empty-content">載入中</div>
                 </div>
             </div>
@@ -933,8 +933,8 @@
                 ? `<div class="section-title">${gtSection.title}</div><div class="section-content">${escapeHtml(gtSection.content)}</div>`
                 : `<div class="section-title">${generatedSection.title}</div><div class="empty-content">老師摘要目前無此章節</div>`;
 
-            genPanel.innerHTML = `<div class="compare-column-title">AI生成摘要（${escapeHtml(currentCondition)}）</div>${generatedContent}`;
-            gtPanel.innerHTML = `<div class="compare-column-title">老師摘要（GT）</div>${gtContent}`;
+            genPanel.innerHTML = `<div class="compare-column-title">AI生成摘要</div>${generatedContent}`;
+            gtPanel.innerHTML = `<div class="compare-column-title">老師摘要 (Ground Truth)</div>${gtContent}`;
         }
 
         function withCitationMarkup(content) {
