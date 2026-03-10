@@ -3,7 +3,7 @@
  "events": [
   {
    "event_id": 1,
-   "timestamp": "民國101年4月2日下午4時30分許",
+   "timestamp": "101年4月2日下午4時30分",
    "timestamp_normalized": "2012-04-02T16:30:00",
    "event_type": "initial_contact",
    "description": "高靜怡至恆美淨妍診所向陳俊光求診，要求施作非醫療目的之電波拉皮手術",
@@ -15,143 +15,102 @@
    "critical_decision": false,
    "decision_content": "",
    "vital_signs": {},
-   "extraction_text": "高靜怡於民國101年4月2日下午4時30分許，至該診所向陳俊光求診，要求施作非醫療目的之電波拉皮手術，並向陳俊光表明患有自體免疫疾病、長期服用類固醇等個人特殊體質情形",
+   "extraction_text": "高靜怡於民國101年4月2日下午4時30分許，至該診所向陳俊光求診",
    "char_start": 408,
-   "char_end": 491
+   "char_end": 441,
+   "alignment_method": "llm_verifier",
+   "alignment_confidence": 0.95,
+   "alignment_status": "MATCH_EXACT"
   },
   {
    "event_id": 2,
-   "timestamp": "手術前",
-   "timestamp_normalized": "2012-04-02T16:45:00",
-   "event_type": "critical_decision",
-   "description": "陳俊光決定開立麻醉藥物並進行手術，未進行正式麻醉術前評估",
+   "timestamp": "101年4月2日下午手術期間",
+   "timestamp_normalized": "2012-04-02T17:00:00",
+   "event_type": "treatment",
+   "description": "陳俊光施打麻醉藥物Propofol、Fentanyl、Midazolam",
    "actors": [
-    "陳俊光"
+    "陳俊光",
+    "林珮筠"
    ],
    "location": "恆美淨妍診所",
    "critical_decision": true,
-   "decision_content": "明知診所無足夠設備應付麻醉後緊急狀態處置，仍決定施打麻醉藥物進行手術",
+   "decision_content": "決定一次性給予麻醉藥物而非漸進式施打",
    "vital_signs": {},
-   "extraction_text": "陳俊光明知應予以麻醉術前評估及診所並無足夠設備應付麻醉後緊急狀態處置，竟仍圖新臺幣（下同）15萬元之醫美高額報酬，而未注意相關醫學麻醉等規範，貿然開立Fentanyl：25ug、Midazolam ：2.5mg 、Propofol：50mg等藥劑",
-   "char_start": 656,
-   "char_end": 779
+   "extraction_text": "貿然開立Fentanyl：25ug、Midazolam：2.5mg、Propofol：50mg等藥劑，交由領有護理師證書及麻醉訓練合格之護士林珮筠一次給予高靜怡施打",
+   "char_start": 727,
+   "char_end": 809,
+   "alignment_method": "llm_verifier",
+   "alignment_confidence": 0.95,
+   "alignment_status": "MATCH_EXACT"
   },
   {
    "event_id": 3,
-   "timestamp": "麻醉藥物施打後",
-   "timestamp_normalized": "2012-04-02T17:00:00",
-   "event_type": "treatment",
-   "description": "護士林珮筠一次給予高靜怡施打麻醉藥物，非漸進式施打",
+   "timestamp": "101年4月2日麻醉後立即",
+   "timestamp_normalized": "2012-04-02T17:30:00",
+   "event_type": "deterioration",
+   "description": "高靜怡產生收縮壓下降、血壓血氧無法量測及呼吸心跳異常等狀況",
    "actors": [
-    "林珮筠",
     "高靜怡"
    ],
    "location": "恆美淨妍診所",
-   "critical_decision": true,
-   "decision_content": "麻醉藥物一次性給予而非漸進式施打",
-   "vital_signs": {},
-   "extraction_text": "交由領有護理師證書及麻醉訓練合格之護士林珮筠一次給予高靜怡施打，而非漸進式施打",
-   "char_start": 781,
-   "char_end": 820
+   "critical_decision": false,
+   "decision_content": "",
+   "vital_signs": {
+    "血壓": "下降無法量測",
+    "血氧": "無法量測",
+    "呼吸": "異常",
+    "心跳": "異常"
+   },
+   "extraction_text": "高靜怡施打上述藥劑後，產生收縮壓下降、血壓血氧無法量測及呼吸心跳異常等狀況",
+   "char_start": 822,
+   "char_end": 859,
+   "alignment_method": "chunk:exact",
+   "alignment_confidence": 1.0,
+   "alignment_status": "MATCH_EXACT"
   },
   {
    "event_id": 4,
-   "timestamp": "麻醉藥物施打後",
-   "timestamp_normalized": "2012-04-02T17:05:00",
-   "event_type": "deterioration",
-   "description": "病患出現呼吸抑制狀況",
-   "actors": [
-    "高靜怡"
-   ],
-   "location": "",
-   "critical_decision": false,
-   "decision_content": "",
-   "vital_signs": {
-    "呼吸": "抑制",
-    "血壓": "收縮壓下降",
-    "血氧": "無法量測",
-    "心跳": "異常"
-   },
-   "extraction_text": "詎高靜怡施打上述藥劑後，產生收縮壓下降、血壓血氧無法量測及呼吸心跳異常等狀況",
-   "char_start": 821,
-   "char_end": 859
-  },
-  {
-   "event_id": 5,
-   "timestamp": "病患血氧降低時",
-   "timestamp_normalized": "2012-04-02T17:10:00",
-   "event_type": "deterioration",
-   "description": "出現血壓血氧下降至無法偵測",
-   "actors": [
-    "高靜怡"
-   ],
-   "location": "",
-   "critical_decision": false,
-   "decision_content": "",
-   "vital_signs": {
-    "血壓": "無法偵測",
-    "血氧": "無法偵測"
-   },
-   "extraction_text": "出現呼吸心跳異常狀況（血壓血氧下降至無法偵測）",
-   "char_start": 580,
-   "char_end": 620
-  },
-  {
-   "event_id": 6,
-   "timestamp": "急救過程",
-   "timestamp_normalized": "2012-04-02T17:15:00",
+   "timestamp": "101年4月2日急救期間",
+   "timestamp_normalized": "2012-04-02T18:00:00",
    "event_type": "treatment",
-   "description": "陳俊光僅給予Atropine 0.5mg及調高氧氣濃度等急救措施",
-   "actors": [
-    "陳俊光",
-    "高靜怡"
-   ],
-   "location": "恆美淨妍診所",
-   "critical_decision": true,
-   "decision_content": "未及時建立或維持良好呼吸道等基礎及高級心臟救命術之急救程序",
-   "vital_signs": {},
-   "extraction_text": "陳俊光僅給予高靜怡藥物Atropine：0.5mg及調高氧氣濃度等急救措施，而未及時建立或維持良好呼吸道等基礎及高級心臟救命術之急救程序",
-   "char_start": 860,
-   "char_end": 928
-  },
-  {
-   "event_id": 7,
-   "timestamp": "急救過程",
-   "timestamp_normalized": "2012-04-02T17:30:00",
-   "event_type": "critical_decision",
-   "description": "決定電請消防救護人員到場救護並將高靜怡送往馬偕醫院",
+   "description": "陳俊光僅給予高靜怡藥物Atropine：0.5mg及調高氧氣濃度等急救措施",
    "actors": [
     "陳俊光"
    ],
    "location": "恆美淨妍診所",
    "critical_decision": true,
-   "decision_content": "決定轉送醫院急救",
+   "decision_content": "未建立或維持良好呼吸道等基礎及高級心臟救命術之急救程序",
+   "vital_signs": {},
+   "extraction_text": "陳俊光僅給予高靜怡藥物Atropine：0.5mg及調高氧氣濃度等急救措施，而未及時建立或維持良好呼吸道等基礎及高級心臟救命術之急救程序",
+   "char_start": 860,
+   "char_end": 928,
+   "alignment_method": "chunk:exact",
+   "alignment_confidence": 1.0,
+   "alignment_status": "MATCH_EXACT"
+  },
+  {
+   "event_id": 5,
+   "timestamp": "101年4月2日晚間",
+   "timestamp_normalized": "2012-04-02T19:00:00",
+   "event_type": "transfer",
+   "description": "陳俊光電請消防救護人員到場救護並將高靜怡送往馬偕醫院急救",
+   "actors": [
+    "陳俊光",
+    "消防救護人員"
+   ],
+   "location": "從診所到馬偕醫院",
+   "critical_decision": false,
+   "decision_content": "",
    "vital_signs": {},
    "extraction_text": "陳俊光遂電請消防救護人員到場救護並將高靜怡送往馬偕醫院急救",
    "char_start": 943,
-   "char_end": 972
+   "char_end": 972,
+   "alignment_method": "chunk:exact",
+   "alignment_confidence": 1.0,
+   "alignment_status": "MATCH_EXACT"
   },
   {
-   "event_id": 8,
-   "timestamp": "手術麻醉過程",
-   "timestamp_normalized": "2012-04-02T17:00:00",
-   "event_type": "deterioration",
-   "description": "麻醉藥物施打導致呼吸抑制",
-   "actors": [
-    "高靜怡"
-   ],
-   "location": "",
-   "critical_decision": false,
-   "decision_content": "",
-   "vital_signs": {
-    "呼吸": "抑制"
-   },
-   "extraction_text": "麻醉藥物施打導致呼吸抑制",
-   "char_start": 750,
-   "char_end": 770
-  },
-  {
-   "event_id": 9,
+   "event_id": 6,
    "timestamp": "101年4月14日上午8時5分",
    "timestamp_normalized": "2012-04-14T08:05:00",
    "event_type": "final_outcome",
@@ -163,71 +122,43 @@
    "critical_decision": false,
    "decision_content": "",
    "vital_signs": {},
-   "extraction_text": "惟高靜怡仍於101年4月14日上午8時5分因急性缺氧致缺氧性腦症併發肺炎而多重器官衰竭死亡",
-   "char_start": 973,
-   "char_end": 1018
+   "extraction_text": "高靜怡仍於101年4月14日上午8時5分因急性缺氧致缺氧性腦症併發肺炎而多重器官衰竭死亡",
+   "char_start": 974,
+   "char_end": 1018,
+   "alignment_method": "llm_verifier",
+   "alignment_confidence": 0.95,
+   "alignment_status": "MATCH_EXACT"
   }
  ],
  "timeline_summary": {
-  "total_events": 9,
+  "total_events": 6,
   "time_span": {
    "start": "2012-04-02T16:30:00",
    "end": "2012-04-14T08:05:00",
-   "duration_hours": 279.58
+   "duration_hours": 279.5
   },
-  "critical_decisions_count": 4,
+  "critical_decisions_count": 2,
   "has_initial_contact": true,
   "has_deterioration": true,
   "has_final_outcome": true,
   "time_gaps": [
    {
-    "from_event_id": 7,
-    "to_event_id": 9,
-    "gap_hours": 278.58,
-    "explanation": "高靜怡在馬偕醫院急救期間"
+    "from_event_id": 5,
+    "to_event_id": 6,
+    "gap_hours": 277,
+    "explanation": "醫院治療期間"
    }
   ]
  },
  "time_gaps": [
   {
-   "from_event_id": 7,
-   "to_event_id": 9,
-   "gap_hours": 278.58,
-   "explanation": "高靜怡在馬偕醫院急救期間"
+   "from_event_id": 5,
+   "to_event_id": 6,
+   "gap_hours": 277,
+   "explanation": "醫院治療期間"
   }
  ],
- "causation_chain": [
-  {
-   "step": 1,
-   "event_id": 1,
-   "description": "高靜怡至診所求診電波拉皮手術，表明有自體免疫疾病及長期服用類固醇"
-  },
-  {
-   "step": 2,
-   "event_id": 2,
-   "description": "陳俊光未進行正式麻醉術前評估，決定施打麻醉藥物進行手術"
-  },
-  {
-   "step": 3,
-   "event_id": 3,
-   "description": "麻醉藥物一次性給予而非漸進式施打"
-  },
-  {
-   "step": 4,
-   "event_id": 4,
-   "description": "麻醉藥物過量引發呼吸抑制，導致血壓血氧下降"
-  },
-  {
-   "step": 5,
-   "event_id": 6,
-   "description": "急救措施不符合醫學專業要求與規範，未及時建立呼吸道及給予適當急救藥物"
-  },
-  {
-   "step": 6,
-   "event_id": 9,
-   "description": "急性缺氧致缺氧性腦症併發肺炎，最終多重器官衰竭死亡"
-  }
- ],
+ "causation_chain": [],
  "chunks": [
   {
    "chunk_id": "deepseek-v3_1_671b-cloud_chunk_01",

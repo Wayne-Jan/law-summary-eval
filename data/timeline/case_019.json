@@ -6,25 +6,28 @@
    "timestamp": "106年3月15日下午4時",
    "timestamp_normalized": "2017-03-15T16:00:00",
    "event_type": "treatment",
-   "description": "乙○○為熊○○進行臉部拉皮手術",
+   "description": "開始進行臉部拉皮手術",
    "actors": [
-    "乙○○",
+    "詹富盛",
     "熊○○"
    ],
    "location": "嘉義市○○街000號診所",
    "critical_decision": true,
-   "decision_content": "在診所尚未正式營運、設備不完善情況下貿然進行手術",
+   "decision_content": "在診所尚未正式營運、設備不完備情況下貿然施行手術",
    "vital_signs": {},
    "extraction_text": "乙○○竟貿然於106年3月15日下午4時許，在上開診所內，僅為熊○○測量血壓後，即進行臉部拉皮手術",
    "char_start": 2112,
-   "char_end": 2161
+   "char_end": 2161,
+   "alignment_method": "chunk:exact",
+   "alignment_confidence": 1.0,
+   "alignment_status": "MATCH_EXACT"
   },
   {
    "event_id": 2,
    "timestamp": "106年3月15日下午5時",
    "timestamp_normalized": "2017-03-15T17:00:00",
    "event_type": "deterioration",
-   "description": "熊○○出現心律不整",
+   "description": "被害人出現心律不整",
    "actors": [
     "熊○○"
    ],
@@ -36,14 +39,17 @@
    },
    "extraction_text": "手術至下午5時許熊○○出現心律不整",
    "char_start": 2162,
-   "char_end": 2179
+   "char_end": 2179,
+   "alignment_method": "chunk:exact",
+   "alignment_confidence": 1.0,
+   "alignment_status": "MATCH_EXACT"
   },
   {
    "event_id": 3,
    "timestamp": "106年3月15日下午6時4、50分",
-   "timestamp_normalized": "2017-03-15T18:04:00",
+   "timestamp_normalized": "2017-03-15T18:30:00",
    "event_type": "deterioration",
-   "description": "熊○○開始呈現血壓不穩、意識模糊",
+   "description": "被害人血壓不穩、意識模糊",
    "actors": [
     "熊○○"
    ],
@@ -56,32 +62,38 @@
    },
    "extraction_text": "於下午6時4、50分許，熊○○開始呈現血壓不穩、意識模糊",
    "char_start": 2180,
-   "char_end": 2208
+   "char_end": 2208,
+   "alignment_method": "chunk:exact",
+   "alignment_confidence": 1.0,
+   "alignment_status": "MATCH_EXACT"
   },
   {
    "event_id": 4,
    "timestamp": "106年3月15日下午6時50分後",
    "timestamp_normalized": "2017-03-15T18:50:00",
    "event_type": "treatment",
-   "description": "乙○○施以急救並緊急送醫",
+   "description": "被告施以急救並緊急送醫",
    "actors": [
-    "乙○○",
+    "詹富盛",
     "熊○○"
    ],
    "location": "診所至嘉基醫院",
    "critical_decision": true,
-   "decision_content": "決定將病人轉送至嘉義基督教醫院急救",
+   "decision_content": "決定緊急送醫救治",
    "vital_signs": {},
    "extraction_text": "乙○○隨即施以急救，並緊急送戴德森醫療財團法人嘉義基督教醫院救治",
-   "char_start": 1350,
-   "char_end": 1400
+   "char_start": 1660,
+   "char_end": 1720,
+   "alignment_status": "MATCH_EXACT",
+   "alignment_method": "llm_verifier",
+   "alignment_confidence": 0.95
   },
   {
    "event_id": 5,
    "timestamp": "106年4月9日上午9時26分",
    "timestamp_normalized": "2017-04-09T09:26:00",
    "event_type": "final_outcome",
-   "description": "熊○○因嚴重缺血/缺氧性腦病變致中樞神經性休克併多重器官衰竭死亡",
+   "description": "被害人因嚴重缺血/缺氧性腦病變致中樞神經性休克併多重器官衰竭死亡",
    "actors": [
     "熊○○"
    ],
@@ -91,7 +103,10 @@
    "vital_signs": {},
    "extraction_text": "熊○○於106年4月9日上午9時26分許，仍因嚴重缺血/缺氧性腦病變致中樞神經性休克併多重器官衰竭死亡",
    "char_start": 2250,
-   "char_end": 2301
+   "char_end": 2301,
+   "alignment_method": "chunk:exact",
+   "alignment_confidence": 1.0,
+   "alignment_status": "MATCH_EXACT"
   }
  ],
  "timeline_summary": {
@@ -110,7 +125,7 @@
     "from_event_id": 4,
     "to_event_id": 5,
     "gap_hours": 590.6,
-    "explanation": "熊○○在嘉基醫院住院治療期間，從急救到死亡共25天"
+    "explanation": "住院救治期間"
    }
   ]
  },
@@ -119,31 +134,10 @@
    "from_event_id": 4,
    "to_event_id": 5,
    "gap_hours": 590.6,
-   "explanation": "熊○○在嘉基醫院住院治療期間，從急救到死亡共25天"
+   "explanation": "住院救治期間"
   }
  ],
- "causation_chain": [
-  {
-   "step": 1,
-   "event_id": 1,
-   "description": "術前未充分評估病人狀況，在設備不完善診所進行臉部拉皮手術"
-  },
-  {
-   "step": 2,
-   "event_id": 2,
-   "description": "手術中出現心律不整併發症"
-  },
-  {
-   "step": 3,
-   "event_id": 3,
-   "description": "病情惡化出現血壓不穩、意識模糊等缺氧症狀"
-  },
-  {
-   "step": 4,
-   "event_id": 5,
-   "description": "嚴重缺血/缺氧性腦病變導致中樞神經性休克併多重器官衰竭死亡"
-  }
- ],
+ "causation_chain": [],
  "chunks": [
   {
    "chunk_id": "deepseek-v3_1_671b-cloud_chunk_01",
