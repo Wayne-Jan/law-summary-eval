@@ -231,28 +231,17 @@
       font-variant-numeric: tabular-nums; color: var(--slate-700);
     }
 
-    /* ─── TOOLTIP ─── */
-    [data-tip] { position: relative; cursor: help; }
-    [data-tip]::after {
-      content: attr(data-tip);
-      position: absolute; bottom: calc(100% + 8px); left: 50%;
-      transform: translateX(-50%); white-space: normal;
-      width: max-content; max-width: 300px;
+    /* ─── TOOLTIP (JS-positioned, appended to body) ─── */
+    [data-tip] { cursor: help; }
+    .tip-box {
+      position: fixed; z-index: 9999; pointer-events: none;
+      max-width: 320px; white-space: normal;
       background: var(--slate-900); color: #fff; font-size: 12px; line-height: 1.5;
       font-weight: 400; padding: 8px 12px; border-radius: 8px;
-      pointer-events: none; opacity: 0; transition: opacity 0.18s;
-      z-index: 200; box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+      opacity: 0; transition: opacity 0.15s;
     }
-    [data-tip]::before {
-      content: ''; position: absolute; bottom: calc(100% + 2px); left: 50%;
-      transform: translateX(-50%);
-      border: 6px solid transparent; border-top-color: var(--slate-900);
-      pointer-events: none; opacity: 0; transition: opacity 0.18s; z-index: 201;
-    }
-    [data-tip]:hover::after, [data-tip]:hover::before { opacity: 1; }
-    /* Flip tooltip below when in table header or score-box (avoid clipping) */
-    th[data-tip]::after, .score-box[data-tip]::after { bottom: auto; top: calc(100% + 8px); }
-    th[data-tip]::before, .score-box[data-tip]::before { bottom: auto; top: calc(100% + 2px); border-top-color: transparent; border-bottom-color: var(--slate-900); }
+    .tip-box.visible { opacity: 1; }
 
     @media (max-width: 768px) {
       .content { padding: 16px 12px 40px; }
@@ -343,6 +332,43 @@
 
 <script>
 (function() {
+  // ─── Tooltip (body-level, no overflow clipping) ───
+  const tipBox = document.createElement('div');
+  tipBox.className = 'tip-box';
+  document.body.appendChild(tipBox);
+  let tipTarget = null;
+
+  document.addEventListener('mouseover', (e) => {
+    const el = e.target.closest('[data-tip]');
+    if (!el || el === tipTarget) return;
+    tipTarget = el;
+    tipBox.textContent = el.dataset.tip;
+    tipBox.classList.add('visible');
+    positionTip(el);
+  });
+  document.addEventListener('mouseout', (e) => {
+    const el = e.target.closest('[data-tip]');
+    if (el === tipTarget) {
+      tipTarget = null;
+      tipBox.classList.remove('visible');
+    }
+  });
+
+  function positionTip(el) {
+    const r = el.getBoundingClientRect();
+    tipBox.style.left = '0'; tipBox.style.top = '0';
+    const tw = tipBox.offsetWidth, th = tipBox.offsetHeight;
+    let left = r.left + r.width / 2 - tw / 2;
+    let top = r.bottom + 8; // below by default
+    // If below would go off-screen, show above
+    if (top + th > window.innerHeight) top = r.top - th - 8;
+    // Clamp horizontal
+    if (left < 4) left = 4;
+    if (left + tw > window.innerWidth - 4) left = window.innerWidth - tw - 4;
+    tipBox.style.left = left + 'px';
+    tipBox.style.top = top + 'px';
+  }
+
   // ─── Hamburger ───
   const hamburgerBtn = document.getElementById('hamburgerBtn');
   const mobileMenu = document.getElementById('mobileMenu');
