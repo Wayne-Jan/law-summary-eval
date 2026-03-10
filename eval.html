@@ -489,8 +489,22 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (savedName && [...evalNameEl.options].some(o => o.value === savedName)) {
     evalNameEl.value = savedName;
   }
+  let prevEvaluator = savedName;
   evalNameEl.addEventListener('change', (e) => {
+    // Save current eval under OLD evaluator before switching
+    if (prevEvaluator && currentCase && currentCond) {
+      const oldKey = `eval_${prevEvaluator}_${currentCond}_${currentCase}`;
+      const data = collectFormData();
+      if (hasAnyData(data)) {
+        data._saved = new Date().toISOString();
+        localStorage.setItem(oldKey, JSON.stringify(data));
+      }
+    }
+    prevEvaluator = e.target.value;
     localStorage.setItem('evalEvaluatorName', e.target.value);
+    // Reset and restore for NEW evaluator
+    resetForm();
+    restoreEval();
   });
 
   // Read URL params
@@ -834,9 +848,14 @@ function updateProgress() {
 // AUTO-SAVE / RESTORE (localStorage)
 // ═══════════════════════════════════════════════════════════════
 
+function getEvaluator() {
+  return document.getElementById('evaluatorName').value || '';
+}
+
 function getStorageKey() {
-  if (!currentCase || !currentCond) return null;
-  return `eval_${currentCond}_${currentCase}`;
+  const ev = getEvaluator();
+  if (!currentCase || !currentCond || !ev) return null;
+  return `eval_${ev}_${currentCond}_${currentCase}`;
 }
 
 function collectFormData() {
@@ -862,7 +881,7 @@ function hasAnyData(data) {
 
 function saveCurrentEval() {
   const key = getStorageKey();
-  if (!key) return;
+  if (!key) return;  // no evaluator selected, skip
   const data = collectFormData();
   if (hasAnyData(data)) {
     data._saved = new Date().toISOString();
