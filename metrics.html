@@ -75,10 +75,10 @@
     .section-header:first-child { margin-top: 0; }
 
     /* ─── OVERVIEW TABLE ─── */
-    .overview-table-wrap { overflow-x: auto; margin-bottom: 24px; }
+    .overview-table-wrap { overflow-x: auto; overflow-y: visible; margin-bottom: 24px; }
     .overview-table {
       width: 100%; border-collapse: collapse; font-size: 14px;
-      background: white; border-radius: 8px; overflow: hidden;
+      background: white; border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
     }
     .overview-table th {
@@ -117,6 +117,19 @@
     .sort-btn.desc::after { content: ' \25BC'; color: var(--indigo); }
 
     .n-suffix { font-size: 11px; color: var(--slate-500); font-weight: 400; margin-left: 2px; }
+
+    /* ─── FILTER BAR ─── */
+    .filter-bar {
+      display: flex; gap: 8px; align-items: center; margin-bottom: 16px; flex-wrap: wrap;
+    }
+    .filter-bar-label { font-size: 13px; color: var(--slate-500); font-weight: 500; }
+    .filter-btn {
+      font-family: var(--sans); font-size: 13px; font-weight: 500;
+      padding: 6px 16px; border: 1px solid var(--slate-300); border-radius: 20px;
+      background: white; cursor: pointer; color: var(--slate-700); transition: all 0.15s;
+    }
+    .filter-btn:hover { border-color: var(--indigo); color: var(--indigo); }
+    .filter-btn.active { background: var(--indigo); color: white; border-color: var(--indigo); }
 
     /* ─── CASE DETAIL ─── */
     .case-selector {
@@ -285,6 +298,12 @@
 <!-- ─── CONTENT ─── -->
 <div class="content">
   <h2 class="section-header">各模型整體表現</h2>
+  <div class="filter-bar">
+    <span class="filter-bar-label">篩選：</span>
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">全部</button>
+    <button class="filter-btn" data-filter="商用模型" onclick="setFilter('商用模型')">商用模型</button>
+    <button class="filter-btn" data-filter="開源模型" onclick="setFilter('開源模型')">開源模型</button>
+  </div>
   <div class="overview-table-wrap">
     <table class="overview-table" id="overviewTable">
       <thead>
@@ -443,15 +462,36 @@
   };
 
   let DATA = null;
+  let currentFilter = 'all';
+
+  // ─── Filter ───
+  window.setFilter = function(filter) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+    rebuildTable();
+  };
+
+  function getFilteredEntries() {
+    const entries = Object.entries(DATA.conditions);
+    if (currentFilter === 'all') return entries;
+    return entries.filter(([, cond]) => cond.group === currentFilter);
+  }
+
+  function rebuildTable() {
+    const entries = getFilteredEntries();
+    // Re-apply current sort
+    const activeSort = document.querySelector('.sort-btn.asc, .sort-btn.desc');
+    if (activeSort) {
+      sortEntries(entries, activeSort.dataset.col, activeSort.dataset.dir);
+    } else {
+      sortEntries(entries, 'quality', 'desc');
+    }
+    renderOverviewRows(entries);
+  }
 
   // ─── Build overview table ───
   function buildOverview() {
-    const tbody = document.getElementById('overviewBody');
-    tbody.innerHTML = '';
-    const entries = Object.entries(DATA.conditions);
-    // Default sort: quality desc
-    sortEntries(entries, 'quality', 'desc');
-    renderOverviewRows(entries);
+    rebuildTable();
   }
 
   function sortEntries(entries, col, dir) {
@@ -520,7 +560,7 @@
       });
       th.dataset.dir = dir;
       th.classList.add(dir);
-      const entries = Object.entries(DATA.conditions);
+      const entries = getFilteredEntries();
       sortEntries(entries, col, dir);
       renderOverviewRows(entries);
     });
