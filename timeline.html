@@ -69,31 +69,52 @@
       overflow-y: auto;
     }
 
-    /* ─── SOURCE PANEL ─── */
+    /* ─── SOURCE PANEL (full text with highlighter) ─── */
     .source-panel {
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
-      padding: 20px; min-height: 200px;
+      min-height: 200px; display: flex; flex-direction: column;
     }
     .source-panel-header {
-      display: flex; align-items: center; gap: 8px; margin-bottom: 14px;
-      padding-bottom: 12px; border-bottom: 1px solid #f3f4f6;
+      display: flex; align-items: center; gap: 8px;
+      padding: 14px 18px 10px; border-bottom: 1px solid #f3f4f6;
+      position: sticky; top: 0; background: white; border-radius: 10px 10px 0 0; z-index: 2;
     }
     .source-panel-icon {
-      width: 28px; height: 28px; border-radius: 6px;
-      background: #eef2ff; color: #4f46e5;
+      width: 26px; height: 26px; border-radius: 6px;
+      background: #f5f5f4; color: #78716c;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 13px;
     }
     .source-panel-title { font-size: 13px; font-weight: 600; color: #333; }
-    .source-panel-subtitle { font-size: 11px; color: #9ca3af; margin-top: 1px; }
+    .source-panel-subtitle { font-size: 10px; color: #9ca3af; margin-top: 1px; }
     .source-panel-body {
       font-size: 13px; color: #475569; line-height: 1.9;
-      border-left: 3px solid #4f46e5; padding-left: 14px;
-      white-space: pre-wrap; word-break: break-all;
+      padding: 14px 18px; white-space: pre-wrap; word-break: break-all;
+      flex: 1; overflow-y: auto;
     }
-    .source-panel-body mark {
-      background: #fef9c3; color: #475569;
+    /* Chunk regions — invisible by default, highlighter pen on active */
+    .chunk-region { border-radius: 2px; transition: all 0.3s; }
+    .chunk-region mark {
+      background: transparent; color: inherit;
       padding: 1px 0; border-radius: 2px;
       box-decoration-break: clone; -webkit-box-decoration-break: clone;
+      transition: background 0.3s;
+    }
+    .chunk-region.active mark { background: #fef9c3; }
+    .chunk-region.active {
+      border-left: 3px solid #eab308; padding-left: 12px; margin-left: -15px;
+    }
+    .chunk-label {
+      display: none; font-size: 9px; font-weight: 700;
+      color: #d97706; background: #fef3c7;
+      padding: 1px 5px; border-radius: 3px;
+      vertical-align: middle; margin-right: 3px;
+    }
+    .chunk-region.active .chunk-label { display: inline; }
+    /* Precise event highlight within a chunk */
+    .evt-highlight { transition: background 0.3s; border-radius: 2px; }
+    .evt-highlight.active {
+      background: #fef9c3; box-shadow: 0 1px 0 #eab308;
     }
     .source-panel-empty {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -101,12 +122,6 @@
     }
     .source-panel-empty svg { margin-bottom: 10px; opacity: 0.5; }
     .source-panel-empty span { font-size: 13px; }
-    .source-panel-meta {
-      margin-top: 14px; padding-top: 12px; border-top: 1px solid #f3f4f6;
-      display: flex; gap: 16px; flex-wrap: wrap;
-    }
-    .source-panel-meta-item { font-size: 11px; color: #9ca3af; }
-    .source-panel-meta-item strong { color: #6b7280; font-weight: 500; }
 
     /* ─── SUMMARY BANNER ─── */
     .tl-summary { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
@@ -216,6 +231,7 @@
       .toolbar { flex-wrap: wrap; height: auto; min-height: 48px; padding: 8px 12px; gap: 6px; }
       .toolbar h1 { font-size: 13px; }
       .main { flex-direction: column; margin-top: 56px; height: auto; min-height: calc(100vh - 56px); }
+      .resizer { display: none; }
       .case-panel {
         position: fixed; top: 0; left: 0; bottom: 0; width: 260px; z-index: 200;
         transform: translateX(-100%); transition: transform 0.3s ease;
@@ -245,6 +261,21 @@
       }
       .mobile-fab:active { transform: scale(0.92); }
     }
+    /* ─── RESIZER ─── */
+    .resizer {
+      width: 6px; cursor: col-resize; background: transparent;
+      flex-shrink: 0; position: relative; z-index: 5;
+    }
+    .resizer::after {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2px; height: 40px; background: #cbd5e1; border-radius: 2px;
+      transition: background 0.2s, height 0.2s;
+    }
+    .resizer:hover::after, .resizer.active::after {
+      background: #4f46e5; height: 60px;
+    }
+
     @media (min-width: 769px) {
       .mobile-fab { display: none !important; }
       .drawer-overlay { display: none !important; }
@@ -274,6 +305,7 @@
       <div class="case-count" id="caseCount">-</div>
       <div id="caseList"><div class="loading">載入中</div></div>
     </div>
+    <div class="resizer"></div>
     <div class="content-area" id="contentArea">
       <div class="empty-state">
         <div class="icon">📅</div>
@@ -402,6 +434,7 @@
     function renderEvents() {
       const d = timelineData;
       const events = d.events || [];
+      const chunks = d.chunks || [];
       const summary = d.timeline_summary || {};
       const span = summary.time_span || {};
       const criticalCount = events.filter(e => e.critical_decision).length;
@@ -418,7 +451,6 @@
         const fmt = isoToMinguo(spanStart);
         const fmt2 = isoToMinguo(spanEnd, spanStart);
         let label = `${fmt} ~ ${fmt2}`;
-        // Compute duration from dates (LLM duration_hours unreliable)
         const d1 = new Date(spanStart), d2 = new Date(spanEnd);
         if (!isNaN(d1) && !isNaN(d2)) {
           const h = (d2 - d1) / 3600000;
@@ -474,26 +506,67 @@
 
       html += '</div></div>'; // .timeline .tl-col-left
 
-      // Right column
+      // Right column: render ALL chunks as continuous full text
       html += '<div class="tl-col-right"><div class="source-panel" id="sourcePanel">';
-      html += renderSourceEmpty();
-      html += '</div></div>';
+      html += '<div class="source-panel-header">';
+      html += '<div class="source-panel-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>';
+      html += `<div><div class="source-panel-title">原始判決書</div><div class="source-panel-subtitle">${chunks.length} 段落</div></div>`;
+      html += '</div>';
+      html += '<div class="source-panel-body" id="sourcePanelBody">';
+
+      if (chunks.length > 0) {
+        // Sort chunks by start_char
+        const sorted = [...chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
+        sorted.forEach(chunk => {
+          const cid = chunk.chunk_id || '';
+          // Pre-compute event highlights within this chunk
+          const evtSpans = [];
+          events.forEach((evt, evtIdx) => {
+            if (evt.char_start == null || evt.char_end == null) return;
+            const overlapStart = Math.max(evt.char_start, chunk.start_char);
+            const overlapEnd = Math.min(evt.char_end, chunk.end_char);
+            if (overlapEnd > overlapStart) {
+              evtSpans.push({
+                relStart: overlapStart - chunk.start_char,
+                relEnd: overlapEnd - chunk.start_char,
+                evtIdx: evtIdx
+              });
+            }
+          });
+          // Sort spans by start position
+          evtSpans.sort((a, b) => a.relStart - b.relStart);
+
+          // Build chunk HTML with event highlight spans
+          const content = chunk.content || '';
+          let chunkHtml = '';
+          let cursor = 0;
+          evtSpans.forEach(sp => {
+            if (sp.relStart > cursor) {
+              chunkHtml += esc(content.substring(cursor, sp.relStart));
+            }
+            chunkHtml += `<mark class="evt-highlight" data-evt="${sp.evtIdx}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
+            cursor = sp.relEnd;
+          });
+          if (cursor < content.length) {
+            chunkHtml += esc(content.substring(cursor));
+          }
+
+          html += `<div class="chunk-region" id="chunk_${esc(cid)}" data-chunk="${esc(cid)}">`;
+          html += `<span class="chunk-label">${esc(cid)}</span>`;
+          html += chunkHtml;
+          html += '</div>';
+        });
+      } else {
+        html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案例無段落資料</span></div>';
+      }
+
+      html += '</div>'; // .source-panel-body
+      html += '</div></div>'; // .source-panel .tl-col-right
 
       html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
 
       if (events.length > 0) showSource(0);
-    }
-
-    function renderSourceEmpty() {
-      return `<div class="source-panel-empty">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14 2 14 8 20 8"/>
-          <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-        </svg>
-        <span>點擊左側事件以檢視判決書原文</span>
-      </div>`;
     }
 
     function showSource(idx) {
@@ -503,64 +576,34 @@
       if (!evt) return;
       activeEventIdx = idx;
 
+      // Highlight active event card on the left
       document.querySelectorAll('.tl-event').forEach(el => {
         el.classList.toggle('active-source', parseInt(el.dataset.idx) === idx);
       });
 
-      const panel = document.getElementById('sourcePanel');
-      if (!panel) return;
+      // Clear all previous chunk/event highlights
+      document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.evt-highlight.active').forEach(el => el.classList.remove('active'));
 
+      // Find the chunk for this event and highlight it
       const chunk = findChunkForEvent(evt);
-      const isCritical = evt.critical_decision;
-      const borderColor = isCritical ? '#dc2626' : '#4f46e5';
-
-      let h = '';
-      h += '<div class="source-panel-header">';
-      h += `<div class="source-panel-icon" style="${isCritical ? 'background:#fef2f2;color:#dc2626' : ''}">`;
-      h += `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`;
-      h += '</div><div>';
-
       if (chunk) {
-        h += `<div class="source-panel-title">${esc(chunk.title)}</div>`;
-        h += `<div class="source-panel-subtitle">事件 ${idx+1} · ${esc(evt.timestamp || evt.timestamp_normalized || '')} · ${esc(formatEventType(evt.event_type||''))}</div>`;
-      } else {
-        h += `<div class="source-panel-title">事件 ${idx+1} — 萃取原文</div>`;
-        h += `<div class="source-panel-subtitle">${esc(evt.timestamp || evt.timestamp_normalized || '')} · ${esc(formatEventType(evt.event_type||''))}</div>`;
+        const cid = chunk.chunk_id || '';
+        const regionEl = document.getElementById('chunk_' + cid);
+        if (regionEl) {
+          regionEl.classList.add('active');
+
+          // Activate the specific event highlight within this chunk
+          const evtMarks = regionEl.querySelectorAll(`.evt-highlight[data-evt="${idx}"]`);
+          evtMarks.forEach(m => m.classList.add('active'));
+
+          // Smooth scroll to the highlight (or the chunk region)
+          const scrollTarget = evtMarks.length > 0 ? evtMarks[0] : regionEl;
+          requestAnimationFrame(() => {
+            scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          });
+        }
       }
-      h += '</div></div>';
-
-      // Body: chunk content with highlighted extraction_text, or just extraction_text
-      if (chunk) {
-        h += `<div class="source-panel-body" style="border-left-color:${borderColor}">`;
-        h += highlightInChunk(chunk.content, chunk.start_char, evt);
-        h += '</div>';
-      } else if (evt.extraction_text) {
-        h += `<div class="source-panel-body" style="border-left-color:${borderColor}">`;
-        h += '<mark>' + esc(evt.extraction_text) + '</mark>';
-        h += '</div>';
-      } else {
-        h += `<div class="source-panel-empty">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round">
-            <circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/>
-          </svg><span>此事件無原文引用</span></div>`;
-      }
-
-      // Meta
-      const metaParts = [];
-      if (chunk) metaParts.push(`<span class="source-panel-meta-item"><strong>段落:</strong> ${esc(chunk.title)}</span>`);
-      if (evt.char_start != null && evt.char_end != null) {
-        metaParts.push(`<span class="source-panel-meta-item"><strong>位置:</strong> 字元 ${evt.char_start}–${evt.char_end}</span>`);
-      }
-      if (evt.actors && evt.actors.length) metaParts.push(`<span class="source-panel-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
-      if (metaParts.length) h += `<div class="source-panel-meta">${metaParts.join('')}</div>`;
-
-      panel.innerHTML = h;
-
-      // Scroll to the highlighted mark in the panel
-      requestAnimationFrame(() => {
-        const mark = panel.querySelector('mark');
-        if (mark) mark.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
     }
 
     function isoToMinguo(iso, refIso) {
@@ -614,6 +657,54 @@
       div.textContent = text == null ? '' : String(text);
       return div.innerHTML;
     }
+
+    function initResizers() {
+      document.querySelectorAll('.resizer').forEach(resizer => {
+        const onPointerDown = (startEvt) => {
+          startEvt.preventDefault();
+          const leftEl = resizer.previousElementSibling;
+          const rightEl = resizer.nextElementSibling;
+          const startX = startEvt.clientX ?? startEvt.touches[0].clientX;
+          const startLeftW = leftEl.offsetWidth;
+          const startRightW = rightEl.offsetWidth;
+          resizer.classList.add('active');
+          document.body.style.cursor = 'col-resize';
+          document.body.style.userSelect = 'none';
+
+          const onMove = (e) => {
+            const x = e.clientX ?? e.touches[0].clientX;
+            const dx = x - startX;
+            leftEl.style.width = Math.max(100, startLeftW + dx) + 'px';
+            leftEl.style.flex = 'none';
+            rightEl.style.flex = '1';
+          };
+
+          const onUp = () => {
+            resizer.classList.remove('active');
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+            document.removeEventListener('mousemove', onMove);
+            document.removeEventListener('mouseup', onUp);
+            document.removeEventListener('touchmove', onMove);
+            document.removeEventListener('touchend', onUp);
+            try { localStorage.setItem('tlCasePanelW', leftEl.style.width); } catch {}
+          };
+
+          document.addEventListener('mousemove', onMove);
+          document.addEventListener('mouseup', onUp);
+          document.addEventListener('touchmove', onMove, { passive: false });
+          document.addEventListener('touchend', onUp);
+        };
+        resizer.addEventListener('mousedown', onPointerDown);
+        resizer.addEventListener('touchstart', onPointerDown, { passive: false });
+      });
+      // Restore saved width
+      try {
+        const w = localStorage.getItem('tlCasePanelW');
+        if (w) { const el = document.getElementById('casePanel'); if (el) { el.style.width = w; el.style.flex = 'none'; } }
+      } catch {}
+    }
+    initResizers();
 
     init();
   </script>

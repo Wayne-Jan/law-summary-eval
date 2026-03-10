@@ -228,6 +228,49 @@
     .panel::-webkit-scrollbar-track { background: transparent; }
     .panel::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 3px; }
     .panel::-webkit-scrollbar-thumb:hover { background: var(--slate-500); }
+
+    /* ─── RESIZER ─── */
+    .resizer {
+      width: 6px; cursor: col-resize; background: transparent;
+      flex-shrink: 0; position: relative; z-index: 5;
+    }
+    .resizer::after {
+      content: ''; position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2px; height: 40px; background: #cbd5e1; border-radius: 2px;
+      transition: background 0.2s, height 0.2s;
+    }
+    .resizer:hover::after, .resizer.active::after {
+      background: var(--indigo); height: 60px;
+    }
+
+    /* ─── MOBILE TAB BAR ─── */
+    .mobile-tab-bar { display: none; }
+
+    @media (max-width: 768px) {
+      .main { flex-direction: column; height: auto; }
+      .panel { width: 100% !important; flex: none !important; display: none; }
+      .panel.mobile-active { display: block; height: calc(100vh - 48px - 40px - 32px); overflow-y: auto; }
+      .resizer { display: none; }
+
+      .mobile-tab-bar {
+        display: flex; position: fixed; bottom: 32px; left: 0; right: 0; height: 40px;
+        background: white; border-top: 1px solid #e2e8f0; z-index: 100;
+        align-items: center; justify-content: center; gap: 4px; padding: 0 8px;
+      }
+      .mobile-tab {
+        flex: 1; border: none; background: var(--slate-100); color: var(--slate-500);
+        font-size: 12px; font-weight: 500; padding: 6px 0; border-radius: 6px;
+        cursor: pointer; font-family: var(--sans);
+      }
+      .mobile-tab.active { background: var(--indigo); color: white; }
+
+      .progress-bar { bottom: 0; }
+
+      .toolbar { gap: 4px; padding: 0 8px; overflow-x: auto; }
+      .toolbar h1 { font-size: 12px; }
+      #caseSelect { max-width: 140px; }
+    }
   </style>
 </head>
 <body>
@@ -269,6 +312,8 @@
     </div>
   </div>
 
+  <div class="resizer"></div>
+
   <!-- Middle: Summary -->
   <div class="panel panel-summary" id="panelSummary">
     <div class="summary-header">
@@ -279,8 +324,17 @@
     <div class="summary-body" id="summaryGT" style="display:none"></div>
   </div>
 
+  <div class="resizer"></div>
+
   <!-- Right: Evaluation -->
   <div class="panel panel-eval" id="panelEval"></div>
+</div>
+
+<!-- Mobile Tab Bar -->
+<div class="mobile-tab-bar" id="mobileTabBar">
+  <button class="mobile-tab active" data-panel="panelSource" onclick="switchMobilePanel('panelSource', this)">原文</button>
+  <button class="mobile-tab" data-panel="panelSummary" onclick="switchMobilePanel('panelSummary', this)">摘要</button>
+  <button class="mobile-tab" data-panel="panelEval" onclick="switchMobilePanel('panelEval', this)">評估</button>
 </div>
 
 <!-- Progress -->
@@ -456,6 +510,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderConditionSelector();
     loadCase();
     updateLinks();
+  }
+
+  // Init resizable panels (desktop)
+  initResizers();
+
+  // Init mobile: activate first panel
+  if (window.innerWidth <= 768) {
+    document.getElementById('panelSource').classList.add('mobile-active');
   }
 });
 
@@ -747,6 +809,77 @@ function exportJSON() {
 function esc(s) {
   if (!s) return '';
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RESIZABLE PANELS
+// ═══════════════════════════════════════════════════════════════
+
+function initResizers() {
+  document.querySelectorAll('.resizer').forEach(resizer => {
+    const onPointerDown = (startEvt) => {
+      startEvt.preventDefault();
+      const leftEl = resizer.previousElementSibling;
+      const rightEl = resizer.nextElementSibling;
+      const startX = startEvt.clientX ?? startEvt.touches[0].clientX;
+      const startLeftW = leftEl.offsetWidth;
+      const startRightW = rightEl.offsetWidth;
+      resizer.classList.add('active');
+      document.body.style.cursor = 'col-resize';
+      document.body.style.userSelect = 'none';
+
+      const onMove = (e) => {
+        const x = e.clientX ?? e.touches[0].clientX;
+        const dx = x - startX;
+        leftEl.style.width = Math.max(80, startLeftW + dx) + 'px';
+        leftEl.style.flex = 'none';
+        rightEl.style.width = Math.max(80, startRightW - dx) + 'px';
+        rightEl.style.flex = 'none';
+      };
+
+      const onUp = () => {
+        resizer.classList.remove('active');
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onUp);
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', onUp);
+        try {
+          const w = {};
+          document.querySelectorAll('.main > .panel').forEach(el => { if (el.id) w[el.id] = el.style.width; });
+          localStorage.setItem('evalPanelWidths', JSON.stringify(w));
+        } catch {}
+      };
+
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      document.addEventListener('touchmove', onMove, { passive: false });
+      document.addEventListener('touchend', onUp);
+    };
+    resizer.addEventListener('mousedown', onPointerDown);
+    resizer.addEventListener('touchstart', onPointerDown, { passive: false });
+  });
+  // Restore saved widths
+  try {
+    const saved = JSON.parse(localStorage.getItem('evalPanelWidths'));
+    if (saved) Object.entries(saved).forEach(([id, w]) => {
+      const el = document.getElementById(id);
+      if (el && w) { el.style.width = w; el.style.flex = 'none'; }
+    });
+  } catch {}
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MOBILE PANEL SWITCHING
+// ═══════════════════════════════════════════════════════════════
+
+function switchMobilePanel(panelId, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('mobile-active'));
+  document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById(panelId);
+  if (panel) panel.classList.add('mobile-active');
+  if (btn) btn.classList.add('active');
 }
 </script>
 </body>

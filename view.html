@@ -180,6 +180,23 @@
         body.source-collapsed .source-panel-header,
         body.source-collapsed .source-list { display: none; }
 
+        /* Resizer dividers */
+        .resizer {
+            width: 6px; cursor: col-resize; background: transparent;
+            flex-shrink: 0; position: relative; z-index: 5;
+        }
+        .resizer::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px; height: 40px; background: #cbd5e1; border-radius: 2px;
+            transition: background 0.2s, height 0.2s;
+        }
+        .resizer:hover::after, .resizer.active::after {
+            background: #4f46e5; height: 60px;
+        }
+        body.nav-collapsed #resizerLeft { display: none; }
+        body.source-collapsed #resizerRight { display: none; }
+
         /* Scrollbar */
         .source-list::-webkit-scrollbar { width: 5px; }
         .source-list::-webkit-scrollbar-track { background: transparent; }
@@ -225,6 +242,7 @@
         }
 
         @media (max-width: 768px) {
+            .resizer { display: none; }
             .toolbar { flex-wrap: wrap; height: auto; min-height: 48px; padding: 8px 12px; gap: 6px; }
             .toolbar h1 { font-size: 13px; white-space: nowrap; }
             .toolbar .condition-label { display: none; }
@@ -323,6 +341,7 @@
             <div class="loading">載入中</div>
         </div>
 
+        <div class="resizer" id="resizerLeft"></div>
         <div class="content-panel" id="contentPanel">
             <div class="single-panel" id="singlePanel">
                 <div class="loading">載入中</div>
@@ -339,6 +358,7 @@
             </div>
         </div>
 
+        <div class="resizer" id="resizerRight"></div>
         <div class="source-panel" id="sourcePanel">
             <button class="panel-toggle source-toggle" id="sourceToggle" title="收合原文">&#187;</button>
             <div class="source-panel-header">
@@ -706,10 +726,76 @@
         window.toggleMobileSource = toggleMobileSource;
         window.closeAllDrawers = closeAllDrawers;
 
-        // Init source panel toggle
+        // ─── Resizable panels ───
+        function initResizers() {
+            document.querySelectorAll('.resizer').forEach(resizer => {
+                const onPointerDown = (startEvt) => {
+                    startEvt.preventDefault();
+                    const leftEl = resizer.previousElementSibling;
+                    const rightEl = resizer.nextElementSibling;
+                    const startX = startEvt.clientX ?? startEvt.touches[0].clientX;
+                    const startLeftW = leftEl.offsetWidth;
+                    const startRightW = rightEl.offsetWidth;
+                    resizer.classList.add('active');
+                    document.body.style.cursor = 'col-resize';
+                    document.body.style.userSelect = 'none';
+
+                    const onMove = (e) => {
+                        const x = e.clientX ?? e.touches[0].clientX;
+                        const dx = x - startX;
+                        const newLeft = Math.max(60, startLeftW + dx);
+                        const newRight = Math.max(60, startRightW - dx);
+                        leftEl.style.width = newLeft + 'px';
+                        leftEl.style.flex = 'none';
+                        rightEl.style.width = newRight + 'px';
+                        rightEl.style.flex = 'none';
+                    };
+
+                    const onUp = () => {
+                        resizer.classList.remove('active');
+                        document.body.style.cursor = '';
+                        document.body.style.userSelect = '';
+                        document.removeEventListener('mousemove', onMove);
+                        document.removeEventListener('mouseup', onUp);
+                        document.removeEventListener('touchmove', onMove);
+                        document.removeEventListener('touchend', onUp);
+                        // Save widths to localStorage
+                        try {
+                            const widths = {};
+                            document.querySelectorAll('.main > *:not(.resizer)').forEach(el => {
+                                if (el.id) widths[el.id] = el.style.width;
+                            });
+                            localStorage.setItem('viewPanelWidths', JSON.stringify(widths));
+                        } catch {}
+                    };
+
+                    document.addEventListener('mousemove', onMove);
+                    document.addEventListener('mouseup', onUp);
+                    document.addEventListener('touchmove', onMove, { passive: false });
+                    document.addEventListener('touchend', onUp);
+                };
+
+                resizer.addEventListener('mousedown', onPointerDown);
+                resizer.addEventListener('touchstart', onPointerDown, { passive: false });
+            });
+
+            // Restore saved widths
+            try {
+                const saved = JSON.parse(localStorage.getItem('viewPanelWidths'));
+                if (saved) {
+                    Object.entries(saved).forEach(([id, w]) => {
+                        const el = document.getElementById(id);
+                        if (el && w) { el.style.width = w; el.style.flex = 'none'; }
+                    });
+                }
+            } catch {}
+        }
+
+        // Init source panel toggle + resizers
         document.addEventListener('DOMContentLoaded', () => {
             const stBtn = document.getElementById('sourceToggle');
             if (stBtn) stBtn.addEventListener('click', toggleSourcePanel);
+            initResizers();
         });
 
         (async () => { await loadCaseList(); await loadData(); })();
