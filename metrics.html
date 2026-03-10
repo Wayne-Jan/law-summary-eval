@@ -172,13 +172,13 @@
 
     /* ─── SCORE CARDS (Tab 1: Overview) ─── */
     .overview-cards-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
       gap: 20px; margin-bottom: 24px;
     }
     .overview-card {
       background: white; border-radius: 12px; padding: 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e5e7eb;
-      border-left: 3px solid var(--indigo);
+      border-left: 3px solid var(--indigo); overflow: visible;
     }
     .overview-card-header {
       display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
@@ -190,9 +190,9 @@
     }
     .score-box {
       padding: 12px 14px; border-radius: 8px; background: var(--slate-50);
-      text-align: center;
+      text-align: center; min-width: 110px;
     }
-    .score-box-label { font-size: 11px; color: var(--slate-500); margin-bottom: 4px; font-weight: 500; }
+    .score-box-label { font-size: 11px; color: var(--slate-500); margin-bottom: 4px; font-weight: 500; white-space: nowrap; }
     .score-box-value { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
     /* ─── BREAKDOWN PANELS (Tabs 2-5) ─── */
@@ -250,9 +250,9 @@
       pointer-events: none; opacity: 0; transition: opacity 0.18s; z-index: 201;
     }
     [data-tip]:hover::after, [data-tip]:hover::before { opacity: 1; }
-    /* Flip tooltip below when in table header (avoid clipping) */
-    th[data-tip]::after { bottom: auto; top: calc(100% + 8px); }
-    th[data-tip]::before { bottom: auto; top: calc(100% + 2px); border-top-color: transparent; border-bottom-color: var(--slate-900); }
+    /* Flip tooltip below when in table header or score-box (avoid clipping) */
+    th[data-tip]::after, .score-box[data-tip]::after { bottom: auto; top: calc(100% + 8px); }
+    th[data-tip]::before, .score-box[data-tip]::before { bottom: auto; top: calc(100% + 2px); border-top-color: transparent; border-bottom-color: var(--slate-900); }
 
     @media (max-width: 768px) {
       .content { padding: 16px 12px 40px; }
