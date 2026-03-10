@@ -687,10 +687,13 @@
             url.searchParams.set('group', currentGroup);
             window.history.replaceState({}, '', url.toString());
 
+            const enc = encodeURIComponent(currentCaseName);
+            const encCond = encodeURIComponent(currentCondition);
+            const encGroup = encodeURIComponent(currentGroup);
             const tlLink = document.getElementById('timelineLink');
-            if (tlLink && currentCaseName) tlLink.href = `timeline.html?case=${encodeURIComponent(currentCaseName)}`;
+            if (tlLink && currentCaseName) tlLink.href = `timeline.html?case=${enc}`;
             const evLink = document.getElementById('evalLink');
-            if (evLink && currentCaseName) evLink.href = `eval.html?case=${encodeURIComponent(currentCaseName)}`;
+            if (evLink && currentCaseName) evLink.href = `eval.html?case=${enc}&condition=${encCond}&group=${encGroup}`;
         }
 
         function escapeHtml(text) {

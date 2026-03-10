@@ -474,6 +474,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Read URL params
   const urlParams = new URLSearchParams(window.location.search);
   const initialCase = urlParams.get('case') || '';
+  const initialCond = urlParams.get('condition') || '';
+  const initialGroup = urlParams.get('group') || '';
+  if (['all', '商用模型', '開源模型'].includes(initialGroup)) currentGroup = initialGroup;
 
   // Case selector
   const caseSelect = document.getElementById('caseSelect');
@@ -507,7 +510,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Use URL param case if valid
     currentCase = (initialCase && manifest.cases.includes(initialCase)) ? initialCase : manifest.cases[0];
     caseSelect.value = currentCase;
+    // If URL specifies a condition, find its group and switch to it
+    if (initialCond) {
+      const groups = manifest.condition_groups || {};
+      const condGroup = groups[initialCond];
+      if (condGroup && condGroup !== currentGroup) {
+        currentGroup = condGroup;
+        groupSelect.value = currentGroup;
+      }
+    }
     renderConditionSelector();
+    if (initialCond && Object.keys(manifest.conditions || {}).includes(initialCond)) {
+      currentCond = initialCond;
+      document.getElementById('condSelect').value = currentCond;
+    }
     loadCase();
     updateLinks();
   }
@@ -523,13 +539,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 function updateLinks() {
   const enc = encodeURIComponent(currentCase);
+  const encCond = encodeURIComponent(currentCond);
+  const encGroup = encodeURIComponent(currentGroup);
   const vl = document.getElementById('viewLink');
-  if (vl) vl.href = `view.html?case=${enc}`;
+  if (vl) vl.href = `view.html?case=${enc}&condition=${encCond}&group=${encGroup}`;
   const tl = document.getElementById('timelineLink');
   if (tl) tl.href = `timeline.html?case=${enc}`;
   // Update browser URL
   const url = new URL(location.href);
   url.searchParams.set('case', currentCase);
+  url.searchParams.set('condition', currentCond);
+  url.searchParams.set('group', currentGroup);
   history.replaceState({}, '', url.toString());
 }
 
