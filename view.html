@@ -16,563 +16,281 @@
         /* Toolbar */
         .toolbar {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 52px;
-            background: white;
-            border-bottom: 1px solid #e0e0e0;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            gap: 12px;
-            z-index: 100;
+            top: 0; left: 0; right: 0; height: 52px;
+            background: white; border-bottom: 1px solid #e0e0e0;
+            display: flex; align-items: center;
+            padding: 0 20px; gap: 12px; z-index: 100;
         }
 
-        .toolbar h1 {
-            font-size: 15px;
-            font-weight: 600;
-            color: #333;
-        }
+        .toolbar h1 { font-size: 15px; font-weight: 600; color: #333; }
 
-        .toolbar .case-name {
-            font-size: 13px;
-            color: #666;
-            background: #f0f0f0;
-            padding: 4px 12px;
-            border-radius: 4px;
-            max-width: 400px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .toolbar .condition-label {
-            font-size: 12px;
-            color: #6b7280;
-        }
+        .toolbar .condition-label { font-size: 12px; color: #6b7280; }
 
         .toolbar .condition-select {
-            font-size: 12px;
-            color: #374151;
-            background: #f3f4f6;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            padding: 4px 10px;
-            min-width: 180px;
+            font-size: 12px; color: #374151; background: #f3f4f6;
+            border: 1px solid #e5e7eb; border-radius: 12px;
+            padding: 4px 10px; min-width: 180px;
         }
 
         .toolbar .spacer { flex: 1; }
-
-        .toolbar a {
-            color: #4f46e5;
-            text-decoration: none;
-            font-size: 13px;
-        }
+        .toolbar a { color: #4f46e5; text-decoration: none; font-size: 13px; }
         .toolbar a:hover { text-decoration: underline; }
 
         .toolbar .mode-select {
-            font-size: 12px;
-            color: #374151;
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            padding: 4px 8px;
+            font-size: 12px; color: #374151; background: #f9fafb;
+            border: 1px solid #e5e7eb; border-radius: 10px; padding: 4px 8px;
         }
 
         .toolbar .gt-status {
-            font-size: 12px;
-            padding: 4px 10px;
-            border-radius: 999px;
-            border: 1px solid #e5e7eb;
-            background: #f9fafb;
-            color: #6b7280;
+            font-size: 12px; padding: 4px 10px; border-radius: 999px;
+            border: 1px solid #e5e7eb; background: #f9fafb; color: #6b7280;
         }
-
-        .toolbar .gt-status.ok {
-            background: #ecfdf5;
-            border-color: #a7f3d0;
-            color: #047857;
-        }
-
-        .toolbar .gt-status.missing {
-            background: #fef2f2;
-            border-color: #fecaca;
-            color: #b91c1c;
-        }
+        .toolbar .gt-status.ok { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+        .toolbar .gt-status.missing { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
 
         /* Main layout */
-        .main {
-            display: flex;
-            margin-top: 52px;
-            height: calc(100vh - 52px);
-        }
+        .main { display: flex; margin-top: 52px; height: calc(100vh - 52px); }
 
-        body.nav-collapsed .nav-panel {
-            width: 42px;
-        }
-
-        body.nav-collapsed .nav-item {
-            padding: 10px 8px;
-            font-size: 0;
-            text-align: center;
-        }
-
-        body.nav-collapsed .nav-item .nav-icon {
-            margin-right: 0;
-        }
-
-        body.citation-collapsed .citation-panel {
-            width: 42px;
-        }
-
-        body.citation-collapsed .citation-panel-header,
-        body.citation-collapsed .citation-list {
-            display: none;
-        }
+        body.nav-collapsed .nav-panel { width: 42px; }
+        body.nav-collapsed .nav-item { padding: 10px 8px; font-size: 0; text-align: center; }
+        body.nav-collapsed .nav-item .nav-icon { margin-right: 0; }
 
         /* Left: Section navigation */
         .nav-panel {
-            width: 180px;
-            background: white;
-            border-right: 1px solid #e0e0e0;
-            padding: 16px 0;
-            overflow-y: auto;
-            transition: width 0.2s;
-            position: relative;
+            width: 180px; background: white; border-right: 1px solid #e0e0e0;
+            padding: 16px 0; overflow-y: auto; transition: width 0.2s; position: relative;
         }
 
         .panel-toggle {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            z-index: 5;
-            border: 1px solid #d1d5db;
-            background: #fff;
-            color: #374151;
-            border-radius: 6px;
-            font-size: 11px;
-            width: 22px;
-            height: 22px;
-            line-height: 20px;
-            cursor: pointer;
+            position: absolute; top: 8px; right: 8px; z-index: 5;
+            border: 1px solid #d1d5db; background: #fff; color: #374151;
+            border-radius: 6px; font-size: 11px;
+            width: 22px; height: 22px; line-height: 20px; cursor: pointer;
         }
 
         .nav-item {
-            padding: 10px 16px;
-            cursor: pointer;
-            font-size: 13px;
-            color: #555;
-            border-left: 3px solid transparent;
-            transition: all 0.15s;
+            padding: 10px 16px; cursor: pointer; font-size: 13px; color: #555;
+            border-left: 3px solid transparent; transition: all 0.15s;
         }
-
-        .nav-item:hover {
-            background: #f5f5f5;
-        }
-
-        .nav-item.active {
-            background: #eef2ff;
-            color: #4f46e5;
-            border-left-color: #4f46e5;
-            font-weight: 500;
-        }
-
-        .nav-item .nav-icon {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            margin-right: 8px;
-            background: #d1d5db;
-        }
-
+        .nav-item:hover { background: #f5f5f5; }
+        .nav-item.active { background: #eef2ff; color: #4f46e5; border-left-color: #4f46e5; font-weight: 500; }
+        .nav-item .nav-icon { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: #d1d5db; }
         .nav-item.active .nav-icon { background: #4f46e5; }
         .nav-item.has-content .nav-icon { background: #10b981; }
 
         /* Middle: Content panel */
-        .content-panel {
-            flex: 1;
-            padding: 24px 32px;
-            overflow-y: auto;
-            background: #fafafa;
-        }
-
-        .single-panel {
-            height: 100%;
-        }
-
-        .compare-panel {
-            display: none;
-            gap: 20px;
-            height: 100%;
-        }
-
-        body.compare-mode .single-panel {
-            display: none;
-        }
-
-        body.compare-mode .compare-panel {
-            display: flex;
-        }
+        .content-panel { flex: 1; padding: 24px 32px; overflow-y: auto; background: #fafafa; }
+        .single-panel { height: 100%; }
+        .compare-panel { display: none; gap: 20px; height: 100%; }
+        body.compare-mode .single-panel { display: none; }
+        body.compare-mode .compare-panel { display: flex; }
 
         .compare-column {
-            flex: 1;
-            min-width: 0;
-            overflow-y: auto;
-            background: #fff;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            padding: 16px 18px;
+            flex: 1; min-width: 0; overflow-y: auto; background: #fff;
+            border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 18px;
         }
 
         .compare-column-title {
-            font-size: 13px;
-            font-weight: 600;
-            color: #4b5563;
-            margin-bottom: 10px;
+            font-size: 13px; font-weight: 600; margin-bottom: 10px;
+            padding: 5px 12px; border-radius: 6px; display: inline-block;
         }
+        .compare-column-title.ai-title { background: #f5f3ff; color: #7c3aed; }
+        .compare-column-title.gt-title { background: #ecfdf5; color: #059669; }
 
         .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 16px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #4f46e5;
+            font-size: 18px; font-weight: 600; color: #333;
+            margin-bottom: 16px; padding-bottom: 12px;
         }
+        .section-title-ai { border-bottom: 2px solid #ede9fe; }
+        .section-title-gt { border-bottom: 2px solid #d1fae5; }
 
         .section-content {
-            font-size: 15px;
-            line-height: 1.8;
-            color: #333;
-            white-space: pre-wrap;
+            font-size: 15px; line-height: 1.8; color: #333; white-space: pre-wrap;
         }
 
+        /* Citation tags in content — now purple themed */
         .section-content .citation {
-            display: inline;
-            background: #fef3c7;
-            color: #92400e;
-            padding: 1px 6px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.15s;
-            margin: 0 2px;
+            display: inline; background: #ede9fe; color: #6d28d9;
+            padding: 1px 6px; border-radius: 3px; font-size: 12px; font-weight: 500;
+            cursor: pointer; transition: all 0.15s; margin: 0 2px;
         }
-
-        .section-content .citation:hover {
-            background: #fde68a;
-        }
-
+        .section-content .citation:hover { background: #ddd6fe; }
         .section-content .citation.active {
-            background: #4f46e5;
-            color: white;
+            background: #fef9c3; color: #92400e;
+            box-shadow: 0 0 0 2px #eab308;
         }
 
-        .empty-content {
-            color: #9ca3af;
-            font-style: italic;
-            padding: 40px;
-            text-align: center;
+        .empty-content { color: #9ca3af; font-style: italic; padding: 40px; text-align: center; }
+
+        /* ─── RIGHT: Source panel (replaces old citation cards) ─── */
+        .source-panel {
+            width: 380px; background: white; border-left: 1px solid #e0e0e0;
+            display: flex; flex-direction: column; transition: width 0.2s; position: relative;
         }
 
-        /* Right: Citation panel */
-        .citation-panel {
-            width: 380px;
-            background: white;
-            border-left: 1px solid #e0e0e0;
-            display: flex;
-            flex-direction: column;
-            transition: width 0.2s;
-            position: relative;
+        .source-toggle { left: 8px; right: auto; }
+
+        .source-panel-header {
+            padding: 12px 16px; border-bottom: 1px solid #e0e0e0;
+            font-size: 13px; font-weight: 600; color: #555; background: #fafafa;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .source-panel-header .icon {
+            font-size: 14px; width: 24px; height: 24px; border-radius: 5px;
+            background: #f5f5f4; display: flex; align-items: center; justify-content: center;
+        }
+        .source-panel-header .chunk-count {
+            font-size: 11px; color: #9ca3af; font-weight: 400; margin-left: auto;
         }
 
-        .citation-toggle {
-            left: 8px;
-            right: auto;
+        .source-list {
+            flex: 1; overflow-y: auto; padding: 14px 16px;
+            font-size: 13px; line-height: 1.9; color: #475569;
+            white-space: pre-wrap; word-break: break-all;
         }
 
-        .citation-panel-header {
-            padding: 12px 16px;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 13px;
-            font-weight: 600;
-            color: #555;
-            background: #fafafa;
+        /* Chunk regions — invisible boundaries, marker pen on activate */
+        .chunk-region {
+            border-radius: 2px;
+            transition: all 0.3s;
         }
+        .chunk-region mark {
+            background: transparent; color: inherit;
+            padding: 1px 0; border-radius: 2px;
+            box-decoration-break: clone; -webkit-box-decoration-break: clone;
+            transition: background 0.3s;
+        }
+        .chunk-region.active mark {
+            background: #fef9c3;
+        }
+        .chunk-region.active {
+            border-left: 3px solid #eab308;
+            padding-left: 12px;
+            margin-left: -15px;
+        }
+        .chunk-label {
+            display: none; font-size: 9px; font-weight: 700;
+            color: #d97706; background: #fef3c7;
+            padding: 1px 5px; border-radius: 3px;
+            vertical-align: middle; margin-right: 3px;
+        }
+        .chunk-region.active .chunk-label { display: inline; }
 
-        .citation-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 12px;
-        }
+        body.source-collapsed .source-panel { width: 42px; }
+        body.source-collapsed .source-panel-header,
+        body.source-collapsed .source-list { display: none; }
 
-        .citation-card {
-            background: #f9fafb;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            transition: all 0.15s;
-        }
-
-        .citation-card.highlight {
-            border-color: #4f46e5;
-            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
-        }
-
-        .citation-card-header {
-            padding: 8px 12px;
-            background: #f3f4f6;
-            font-size: 12px;
-            font-weight: 600;
-            color: #4f46e5;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .citation-card-body {
-            padding: 12px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #555;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .citation-card-body.expanded {
-            max-height: none;
-        }
-
-        .citation-expand {
-            padding: 6px 12px;
-            font-size: 12px;
-            color: #6b7280;
-            cursor: pointer;
-            text-align: center;
-            border-top: 1px solid #e5e7eb;
-        }
-        .citation-expand:hover {
-            background: #f3f4f6;
-            color: #4f46e5;
-        }
+        /* Scrollbar */
+        .source-list::-webkit-scrollbar { width: 5px; }
+        .source-list::-webkit-scrollbar-track { background: transparent; }
+        .source-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
         /* Footer stats */
         .footer-stats {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 36px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            gap: 24px;
-            font-size: 12px;
-            color: #666;
+            position: fixed; bottom: 0; left: 0; right: 0; height: 36px;
+            background: white; border-top: 1px solid #e0e0e0;
+            display: flex; align-items: center; padding: 0 20px; gap: 24px;
+            font-size: 12px; color: #666;
         }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
+        .stat-item { display: flex; align-items: center; gap: 6px; }
         .stat-label { color: #999; }
         .stat-value { font-weight: 500; color: #333; }
 
-        /* Loading state */
-        .loading {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: #999;
-        }
-
+        /* Loading */
+        .loading { display: flex; align-items: center; justify-content: center; height: 100%; color: #999; }
         .loading::after {
-            content: '';
-            width: 24px;
-            height: 24px;
-            border: 2px solid #e0e0e0;
-            border-top-color: #4f46e5;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-left: 12px;
+            content: ''; width: 24px; height: 24px;
+            border: 2px solid #e0e0e0; border-top-color: #4f46e5;
+            border-radius: 50%; animation: spin 0.8s linear infinite; margin-left: 12px;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* ─── MOBILE DRAWER OVERLAY ─── */
+        /* ─── MOBILE ─── */
         .drawer-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.35);
-            z-index: 150;
-            opacity: 0;
-            transition: opacity 0.25s;
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.35); z-index: 150; opacity: 0; transition: opacity 0.25s;
         }
         .drawer-overlay.visible { opacity: 1; }
 
-        /* ─── TABLET (≤1024px): collapse citation by default, smaller panels ─── */
         @media (max-width: 1024px) {
             .toolbar { padding: 0 12px; gap: 8px; flex-wrap: wrap; height: auto; min-height: 52px; padding-top: 6px; padding-bottom: 6px; }
             .toolbar h1 { font-size: 13px; }
-            .toolbar .case-name { max-width: 200px; font-size: 11px; }
             .toolbar .condition-select { min-width: 140px; font-size: 11px; }
             .toolbar .mode-select { font-size: 11px; }
             .toolbar .condition-label { font-size: 11px; }
             .nav-panel { width: 150px; }
-            .citation-panel { width: 300px; }
+            .source-panel { width: 300px; }
             .content-panel { padding: 20px 24px; }
             .main { margin-top: 52px; }
         }
 
-        /* ─── MOBILE (≤768px): full drawer mode ─── */
         @media (max-width: 768px) {
-            /* Toolbar: two-row compact */
-            .toolbar {
-                flex-wrap: wrap;
-                height: auto;
-                min-height: 48px;
-                padding: 8px 12px;
-                gap: 6px;
-            }
+            .toolbar { flex-wrap: wrap; height: auto; min-height: 48px; padding: 8px 12px; gap: 6px; }
             .toolbar h1 { font-size: 13px; white-space: nowrap; }
-            .toolbar .case-name { display: none; }
             .toolbar .condition-label { display: none; }
             .toolbar .gt-status { font-size: 10px; padding: 2px 8px; }
             .toolbar .spacer { display: none; }
             .toolbar a { font-size: 12px; }
-            .toolbar .condition-select,
-            .toolbar .mode-select {
-                font-size: 11px;
-                min-width: 0;
-                flex: 1;
-                max-width: 50%;
-            }
+            .toolbar .condition-select, .toolbar .mode-select { font-size: 11px; min-width: 0; flex: 1; max-width: 50%; }
             #groupSelect { max-width: 80px; flex: 0 0 auto; }
 
-            /* Main: single column, no side panels visible by default */
-            .main {
-                flex-direction: column;
-                margin-top: 80px;
-                height: auto;
-                min-height: calc(100vh - 80px);
-                margin-bottom: 0 !important;
-            }
+            .main { flex-direction: column; margin-top: 80px; height: auto; min-height: calc(100vh - 80px); margin-bottom: 0 !important; }
 
-            /* Nav panel as slide-in drawer from left */
             .nav-panel {
-                position: fixed;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                width: 260px;
-                z-index: 200;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                padding-top: 12px;
-                box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+                position: fixed; top: 0; left: 0; bottom: 0; width: 260px; z-index: 200;
+                transform: translateX(-100%); transition: transform 0.3s ease;
+                padding-top: 12px; box-shadow: 4px 0 20px rgba(0,0,0,0.15);
             }
             body.nav-open .nav-panel { transform: translateX(0); }
-            body.nav-collapsed .nav-panel { width: 260px; } /* override desktop collapse */
+            body.nav-collapsed .nav-panel { width: 260px; }
             body.nav-collapsed .nav-item { font-size: 13px; padding: 10px 16px; text-align: left; }
             body.nav-collapsed .nav-item .nav-icon { margin-right: 8px; }
 
-            /* Citation panel as slide-in drawer from right */
-            .citation-panel {
-                position: fixed;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                width: 300px;
-                max-width: 85vw;
-                z-index: 200;
-                transform: translateX(100%);
-                transition: transform 0.3s ease;
+            .source-panel {
+                position: fixed; top: 0; right: 0; bottom: 0; width: 300px; max-width: 85vw;
+                z-index: 200; transform: translateX(100%); transition: transform 0.3s ease;
                 box-shadow: -4px 0 20px rgba(0,0,0,0.15);
             }
-            body.citation-open .citation-panel { transform: translateX(0); }
-            body.citation-collapsed .citation-panel { width: 300px; } /* override */
-            body.citation-collapsed .citation-panel-header,
-            body.citation-collapsed .citation-list { display: block; }
+            body.source-open .source-panel { transform: translateX(0); }
+            body.source-collapsed .source-panel { width: 300px; }
+            body.source-collapsed .source-panel-header,
+            body.source-collapsed .source-list { display: block; }
 
-            /* Hide desktop toggle buttons, use mobile FABs instead */
             .panel-toggle { display: none; }
-
-            /* Content takes full width */
-            .content-panel {
-                flex: 1;
-                padding: 16px;
-                overflow-y: auto;
-            }
-
+            .content-panel { flex: 1; padding: 16px; overflow-y: auto; }
             .section-title { font-size: 16px; margin-bottom: 12px; }
             .section-content { font-size: 14px; line-height: 1.7; }
 
-            /* Compare mode stacks vertically */
-            body.compare-mode .compare-panel {
-                flex-direction: column;
-                gap: 12px;
-            }
+            body.compare-mode .compare-panel { flex-direction: column; gap: 12px; }
             .compare-column { min-height: 40vh; }
 
-            /* Footer stats */
-            .footer-stats {
-                position: relative;
-                height: auto;
-                padding: 8px 12px;
-                gap: 12px;
-                flex-wrap: wrap;
-            }
+            .footer-stats { position: relative; height: auto; padding: 8px 12px; gap: 12px; flex-wrap: wrap; }
 
-            /* Mobile floating action buttons */
             .mobile-fab {
-                display: flex;
-                position: fixed;
-                bottom: 16px;
-                width: 44px;
-                height: 44px;
-                border-radius: 50%;
-                background: #4f46e5;
-                color: #fff;
-                border: none;
-                font-size: 18px;
-                align-items: center;
-                justify-content: center;
+                display: flex; position: fixed; bottom: 16px;
+                width: 44px; height: 44px; border-radius: 50%;
+                background: #4f46e5; color: #fff; border: none; font-size: 18px;
+                align-items: center; justify-content: center;
                 box-shadow: 0 4px 14px rgba(79,70,229,0.4);
-                z-index: 120;
-                cursor: pointer;
-                transition: transform 0.2s, box-shadow 0.2s;
+                z-index: 120; cursor: pointer; transition: transform 0.2s;
             }
             .mobile-fab:active { transform: scale(0.92); }
             .mobile-fab.fab-nav { left: 16px; }
             .mobile-fab.fab-cite { right: 16px; }
         }
 
-        /* Hide mobile FABs on desktop */
         @media (min-width: 769px) {
             .mobile-fab { display: none !important; }
             .drawer-overlay { display: none !important; }
         }
 
-        /* ─── SMALL PHONE (≤480px) ─── */
         @media (max-width: 480px) {
             .toolbar { padding: 6px 8px; gap: 4px; }
             .toolbar h1 { font-size: 12px; }
-            .toolbar .condition-select,
-            .toolbar .mode-select { font-size: 10px; padding: 3px 6px; }
+            .toolbar .condition-select, .toolbar .mode-select { font-size: 10px; padding: 3px 6px; }
             #groupSelect { max-width: 60px; }
             .content-panel { padding: 12px 10px; }
             .section-content { font-size: 13px; line-height: 1.65; }
-            .citation-card-body { font-size: 12px; }
             .nav-panel { width: 240px; }
         }
     </style>
@@ -583,7 +301,7 @@
         <select class="condition-select" id="caseSelect"></select>
         <select class="mode-select" id="viewModeSelect">
             <option value="single">單欄閱讀</option>
-            <option value="compare">對照模式（AI生成 vs Ground Truth）</option>
+            <option value="compare">對照模式</option>
         </select>
         <span class="gt-status" id="gtStatus">GT -</span>
         <select class="mode-select" id="groupSelect">
@@ -601,7 +319,7 @@
 
     <div class="main" style="margin-bottom: 36px;">
         <div class="nav-panel" id="navPanel">
-            <button class="panel-toggle" id="navToggle" title="收合章節">«</button>
+            <button class="panel-toggle" id="navToggle" title="收合章節">&#171;</button>
             <div class="loading">載入中</div>
         </div>
 
@@ -611,83 +329,69 @@
             </div>
             <div class="compare-panel" id="comparePanel">
                 <div class="compare-column" id="genComparePanel">
-                    <div class="compare-column-title">AI生成摘要</div>
+                    <div class="compare-column-title ai-title">AI 生成摘要</div>
                     <div class="empty-content">載入中</div>
                 </div>
                 <div class="compare-column" id="gtComparePanel">
-                    <div class="compare-column-title">老師摘要 (Ground Truth)</div>
+                    <div class="compare-column-title gt-title">老師摘要</div>
                     <div class="empty-content">載入中</div>
                 </div>
             </div>
         </div>
 
-        <div class="citation-panel" id="citationPanel">
-            <button class="panel-toggle citation-toggle" id="citationToggle" title="收合引用">»</button>
-            <div class="citation-panel-header">
-                引用來源 <span id="citationCount">(0)</span>
+        <div class="source-panel" id="sourcePanel">
+            <button class="panel-toggle source-toggle" id="sourceToggle" title="收合原文">&#187;</button>
+            <div class="source-panel-header">
+                <div class="icon">&#128196;</div>
+                原始判決書
+                <span class="chunk-count" id="sourceChunkCount"></span>
             </div>
-            <div class="citation-list" id="citationList">
-                <div class="empty-content">選擇章節後顯示引用來源</div>
+            <div class="source-list" id="sourceList">
+                <div class="empty-content">選擇章節後顯示原文</div>
             </div>
         </div>
     </div>
 
-    <!-- Mobile: floating action buttons -->
+    <!-- Mobile FABs -->
     <button class="mobile-fab fab-nav" id="fabNav" title="章節導航" onclick="toggleMobileNav()">&#9776;</button>
-    <button class="mobile-fab fab-cite" id="fabCite" title="引用來源" onclick="toggleMobileCite()">&#128196;</button>
+    <button class="mobile-fab fab-cite" id="fabCite" title="原文" onclick="toggleMobileSource()">&#128196;</button>
     <div class="drawer-overlay" id="drawerOverlay" onclick="closeAllDrawers()"></div>
 
     <div class="footer-stats">
-        <div class="stat-item">
-            <span class="stat-label">複雜度:</span>
-            <span class="stat-value" id="statComplexity">-</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">章節數:</span>
-            <span class="stat-value" id="statSections">-</span>
-        </div>
-        <div class="stat-item">
-            <span class="stat-label">引用數:</span>
-            <span class="stat-value" id="statCitations">-</span>
-        </div>
+        <div class="stat-item"><span class="stat-label">複雜度:</span><span class="stat-value" id="statComplexity">-</span></div>
+        <div class="stat-item"><span class="stat-label">章節數:</span><span class="stat-value" id="statSections">-</span></div>
+        <div class="stat-item"><span class="stat-label">引用數:</span><span class="stat-value" id="statCitations">-</span></div>
     </div>
 
     <script>
-        const urlParams0 = new URLSearchParams(window.location.search);
-        const initialCaseName = urlParams0.get('case') || '';
         const urlParams = new URLSearchParams(window.location.search);
+        const initialCaseName = urlParams.get('case') || '';
         const initialCondition = urlParams.get('condition') || 'claude_afg_v5.1';
         const initialMode = urlParams.get('mode') === 'single' ? 'single' : 'compare';
         const initialGroup = ['all', '商用模型', '開源模型'].includes(urlParams.get('group'))
-            ? urlParams.get('group')
-            : '商用模型';
+            ? urlParams.get('group') : '商用模型';
 
         let viewData = null;
         let gtData = null;
         let allCases = [];
-        let caseSlugs = {};  // case_name -> slug mapping for ASCII filenames
+        let caseSlugs = {};
         let currentCaseName = initialCaseName;
         let currentCondition = initialCondition;
         let currentMode = initialMode;
         let currentGroup = initialGroup;
         let currentSection = null;
         let gtMissing = false;
+        let activeChunkAlias = null;
 
-        function getSlug(caseName) {
-            return caseSlugs[caseName] || encodeURIComponent(caseName);
-        }
+        function getSlug(caseName) { return caseSlugs[caseName] || encodeURIComponent(caseName); }
 
         async function loadCaseList() {
             try {
                 const manifest = await (await fetch('./data/manifest.json')).json();
                 allCases = manifest.cases || [];
                 caseSlugs = manifest.case_slugs || {};
-            } catch {
-                allCases = currentCaseName ? [currentCaseName] : [];
-            }
-            if (!currentCaseName && allCases.length > 0) {
-                currentCaseName = allCases[0];
-            }
+            } catch { allCases = currentCaseName ? [currentCaseName] : []; }
+            if (!currentCaseName && allCases.length > 0) currentCaseName = allCases[0];
             renderCaseSelector();
         }
 
@@ -697,12 +401,9 @@
                 const selected = name === currentCaseName ? 'selected' : '';
                 return `<option value="${escapeHtml(name)}" ${selected}>${escapeHtml(name)}</option>`;
             }).join('');
-
             if (!select.dataset.bound) {
                 select.addEventListener('change', async () => {
-                    currentCaseName = select.value;
-                    currentSection = null;
-                    gtData = null;
+                    currentCaseName = select.value; currentSection = null; gtData = null;
                     await loadData();
                 });
                 select.dataset.bound = '1';
@@ -710,12 +411,8 @@
         }
 
         async function loadData() {
-            if (!currentCaseName) {
-                alert('未指定案例名稱');
-                return;
-            }
+            if (!currentCaseName) { alert('未指定案例名稱'); return; }
             renderCaseSelector();
-
             try {
                 const response = await fetch(`./data/${encodeURIComponent(currentCondition)}/${getSlug(currentCaseName)}.json`);
                 if (!response.ok) throw new Error('載入生成摘要失敗');
@@ -724,25 +421,18 @@
 
                 const groups = viewData.condition_groups || {};
                 const available = viewData.available_conditions || [];
-                const groupOptions = available.filter((cond) => {
-                    if (currentGroup === 'all') return true;
-                    return groups[cond] === currentGroup;
-                });
+                const groupOptions = available.filter((cond) => currentGroup === 'all' || groups[cond] === currentGroup);
                 if (groupOptions.length > 0 && !groupOptions.includes(currentCondition)) {
-                    currentCondition = groupOptions[0];
-                    await loadData();
-                    return;
+                    currentCondition = groupOptions[0]; await loadData(); return;
                 }
-
-                if (currentMode === 'compare') {
-                    await loadGtData();
-                }
+                if (currentMode === 'compare') await loadGtData();
 
                 renderConditionSelector();
                 renderModeSelector();
                 renderGroupSelector();
                 renderNav();
                 renderStats();
+                renderSourcePanel();
                 updateUrlState();
 
                 const firstSection = viewData.sections.find((s) => s.content) || viewData.sections[0];
@@ -756,31 +446,17 @@
             try {
                 const response = await fetch(`./data/gt/${getSlug(currentCaseName)}.json`);
                 if (!response.ok) throw new Error('GT 載入失敗');
-                gtData = await response.json();
-                gtMissing = false;
-            } catch {
-                gtData = { sections: [] };
-                gtMissing = true;
-            }
+                gtData = await response.json(); gtMissing = false;
+            } catch { gtData = { sections: [] }; gtMissing = true; }
             renderGtStatus();
         }
 
         function renderGtStatus() {
             const el = document.getElementById('gtStatus');
             if (!el) return;
-            if (currentMode !== 'compare') {
-                el.textContent = 'GT -';
-                el.className = 'gt-status';
-                return;
-            }
-
-            if (gtMissing) {
-                el.textContent = 'GT 缺失';
-                el.className = 'gt-status missing';
-            } else {
-                el.textContent = 'GT 可用';
-                el.className = 'gt-status ok';
-            }
+            if (currentMode !== 'compare') { el.textContent = 'GT -'; el.className = 'gt-status'; return; }
+            if (gtMissing) { el.textContent = 'GT 缺失'; el.className = 'gt-status missing'; }
+            else { el.textContent = 'GT 可用'; el.className = 'gt-status ok'; }
         }
 
         function renderNav() {
@@ -804,29 +480,17 @@
             const available = viewData.available_conditions || [];
             const labels = viewData.condition_labels || {};
             const groups = viewData.condition_groups || {};
-
-            const filtered = available.filter((cond) => {
-                if (currentGroup === 'all') return true;
-                return groups[cond] === currentGroup;
-            });
-
+            const filtered = available.filter((cond) => currentGroup === 'all' || groups[cond] === currentGroup);
             const options = filtered.length > 0 ? filtered : available;
-            if (!options.includes(currentCondition) && options.length > 0) {
-                currentCondition = options[0];
-            }
-
+            if (!options.includes(currentCondition) && options.length > 0) currentCondition = options[0];
             select.innerHTML = options.map((cond) => {
                 const label = labels[cond] || cond;
                 const selected = cond === currentCondition ? 'selected' : '';
                 return `<option value="${escapeHtml(cond)}" ${selected}>${escapeHtml(label)}</option>`;
             }).join('');
-
             select.disabled = options.length <= 1;
             if (!select.dataset.bound) {
-                select.addEventListener('change', async () => {
-                    currentCondition = select.value;
-                    await loadData();
-                });
+                select.addEventListener('change', async () => { currentCondition = select.value; await loadData(); });
                 select.dataset.bound = '1';
             }
         }
@@ -838,15 +502,9 @@
                 select.addEventListener('change', async () => {
                     currentGroup = select.value;
                     const before = currentCondition;
-                    renderConditionSelector();
-                    updateUrlState();
-                    if (currentCondition !== before) {
-                        await loadData();
-                        return;
-                    }
-                    if (currentSection) {
-                        selectSection(currentSection);
-                    }
+                    renderConditionSelector(); updateUrlState();
+                    if (currentCondition !== before) { await loadData(); return; }
+                    if (currentSection) selectSection(currentSection);
                 });
                 select.dataset.bound = '1';
             }
@@ -857,18 +515,14 @@
             select.value = currentMode;
             document.body.classList.toggle('compare-mode', currentMode === 'compare');
             renderGtStatus();
-
             if (!select.dataset.bound) {
                 select.addEventListener('change', async () => {
                     currentMode = select.value;
                     document.body.classList.toggle('compare-mode', currentMode === 'compare');
-                    if (currentMode === 'compare' && !gtData) {
-                        await loadGtData();
-                    }
-                    renderGtStatus();
-                    updateUrlState();
-                    const fallbackSection = (viewData?.sections || []).find((s) => s.content) || (viewData?.sections || [])[0];
-                    selectSection(currentSection || fallbackSection?.id);
+                    if (currentMode === 'compare' && !gtData) await loadGtData();
+                    renderGtStatus(); updateUrlState();
+                    const fallback = (viewData?.sections || []).find((s) => s.content) || (viewData?.sections || [])[0];
+                    selectSection(currentSection || fallback?.id);
                 });
                 select.dataset.bound = '1';
             }
@@ -878,47 +532,59 @@
             document.getElementById('statComplexity').textContent = (viewData.complexity_score || 0).toFixed(1);
             document.getElementById('statSections').textContent = `${viewData.sections.filter((s) => s.content).length}/${viewData.sections.length}`;
             let totalCitations = 0;
-            viewData.sections.forEach((s) => {
-                const matches = s.content.match(/\[CH_\d+(?:,\s*CH_\d+)*\]/g) || [];
-                totalCitations += matches.length;
-            });
+            viewData.sections.forEach((s) => { totalCitations += (s.content.match(/\[CH_\d+(?:,\s*CH_\d+)*\]/g) || []).length; });
             document.getElementById('statCitations').textContent = totalCitations;
         }
 
+        // ─── SOURCE PANEL: Full text with chunk regions ───
+
+        function renderSourcePanel() {
+            const listEl = document.getElementById('sourceList');
+            const countEl = document.getElementById('sourceChunkCount');
+            const chunks = viewData.chunks || {};
+            const aliases = Object.keys(chunks).sort((a, b) =>
+                parseInt(a.replace('CH_', ''), 10) - parseInt(b.replace('CH_', ''), 10)
+            );
+
+            countEl.textContent = aliases.length > 0 ? `${aliases.length} 段` : '';
+            if (aliases.length === 0) {
+                listEl.innerHTML = '<div class="empty-content">無原文資料</div>';
+                return;
+            }
+
+            listEl.innerHTML = aliases.map(alias => {
+                const content = chunks[alias] || '';
+                return `<div class="chunk-region" id="src_${alias}" data-alias="${alias}">` +
+                    `<span class="chunk-label">${alias}</span>` +
+                    `<mark>${escapeHtml(content)}</mark>` +
+                    `</div>`;
+            }).join('');
+        }
+
+        // ─── SECTION RENDERING ───
+
         function selectSection(sectionId) {
             currentSection = sectionId;
+            activeChunkAlias = null;
             document.querySelectorAll('.nav-item').forEach((item) => {
                 item.classList.toggle('active', item.dataset.section === sectionId);
             });
-
             const section = viewData.sections.find((s) => s.id === sectionId);
             if (!section) return;
 
-            const usedAliases = Array.from(new Set(section.content.match(/CH_\d+/g) || [])).sort((a, b) => {
-                const numA = parseInt(a.replace('CH_', ''), 10);
-                const numB = parseInt(b.replace('CH_', ''), 10);
-                return numA - numB;
-            });
-
             renderSingleContent(section);
             renderCompareContent(sectionId, section);
-            renderCitations(usedAliases);
+            // Clear source highlights
+            document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
         }
 
         function renderSingleContent(section) {
             const singlePanel = document.getElementById('singlePanel');
             if (!section.content) {
-                singlePanel.innerHTML = `
-                    <div class="section-title">${section.title}</div>
-                    <div class="empty-content">本章節無內容</div>
-                `;
+                singlePanel.innerHTML = `<div class="section-title section-title-ai">${section.title}</div><div class="empty-content">本章節無內容</div>`;
                 return;
             }
-            const processed = withCitationMarkup(section.content);
-            singlePanel.innerHTML = `
-                <div class="section-title">${section.title}</div>
-                <div class="section-content">${processed}</div>
-            `;
+            singlePanel.innerHTML = `<div class="section-title section-title-ai">${section.title}</div><div class="section-content">${withCitationMarkup(section.content)}</div>`;
         }
 
         function renderCompareContent(sectionId, generatedSection) {
@@ -926,16 +592,16 @@
             const gtPanel = document.getElementById('gtComparePanel');
 
             const generatedContent = generatedSection.content
-                ? `<div class="section-title">${generatedSection.title}</div><div class="section-content">${withCitationMarkup(generatedSection.content)}</div>`
-                : `<div class="section-title">${generatedSection.title}</div><div class="empty-content">本章節無內容</div>`;
+                ? `<div class="section-title section-title-ai">${generatedSection.title}</div><div class="section-content">${withCitationMarkup(generatedSection.content)}</div>`
+                : `<div class="section-title section-title-ai">${generatedSection.title}</div><div class="empty-content">本章節無內容</div>`;
 
             const gtSection = (gtData?.sections || []).find((s) => s.id === sectionId);
             const gtContent = gtSection && gtSection.content
-                ? `<div class="section-title">${gtSection.title}</div><div class="section-content">${escapeHtml(gtSection.content)}</div>`
-                : `<div class="section-title">${generatedSection.title}</div><div class="empty-content">老師摘要目前無此章節</div>`;
+                ? `<div class="section-title section-title-gt">${gtSection.title}</div><div class="section-content">${escapeHtml(gtSection.content)}</div>`
+                : `<div class="section-title section-title-gt">${generatedSection.title}</div><div class="empty-content">老師摘要目前無此章節</div>`;
 
-            genPanel.innerHTML = `<div class="compare-column-title">AI生成摘要</div>${generatedContent}`;
-            gtPanel.innerHTML = `<div class="compare-column-title">老師摘要 (Ground Truth)</div>${gtContent}`;
+            genPanel.innerHTML = `<div class="compare-column-title ai-title">AI 生成摘要</div>${generatedContent}`;
+            gtPanel.innerHTML = `<div class="compare-column-title gt-title">老師摘要</div>${gtContent}`;
         }
 
         function withCitationMarkup(content) {
@@ -945,71 +611,35 @@
             });
         }
 
-        function renderCitations(aliases) {
-            const citationList = document.getElementById('citationList');
-            const citationCount = document.getElementById('citationCount');
-            const citationPanel = document.getElementById('citationPanel');
-            citationPanel.innerHTML = `
-                <button class="panel-toggle citation-toggle" id="citationToggle" title="收合引用">${document.body.classList.contains('citation-collapsed') ? '«' : '»'}</button>
-                <div class="citation-panel-header">引用來源 <span id="citationCount">(${aliases.length})</span></div>
-                <div class="citation-list" id="citationList"></div>
-            `;
-            document.getElementById('citationToggle').addEventListener('click', toggleCitationPanel);
-
-            const listEl = document.getElementById('citationList');
-            const countEl = document.getElementById('citationCount');
-            if (countEl) countEl.textContent = `(${aliases.length})`;
-
-            if (aliases.length === 0) {
-                listEl.innerHTML = '<div class="empty-content">本章節無引用</div>';
-                return;
-            }
-
-            listEl.innerHTML = aliases.map((alias) => {
-                const content = viewData.chunks[alias] || '(內容未找到)';
-                const truncated = content.length > 300;
-                const displayContent = truncated ? `${content.substring(0, 300)}...` : content;
-                return `
-                    <div class="citation-card" id="card-${alias}">
-                        <div class="citation-card-header">${alias}</div>
-                        <div class="citation-card-body" id="body-${alias}">${escapeHtml(displayContent)}</div>
-                        ${truncated ? `<div class="citation-expand" onclick="toggleExpand('${alias}')">展開全文</div>` : ''}
-                    </div>
-                `;
-            }).join('');
-        }
+        // ─── HIGHLIGHT: Click citation → scroll + marker pen in source panel ───
 
         function highlightCitation(element) {
             const aliases = element.dataset.aliases.split(',');
-            document.querySelectorAll('.citation.active').forEach((el) => el.classList.remove('active'));
-            document.querySelectorAll('.citation-card.highlight').forEach((el) => el.classList.remove('highlight'));
+
+            // Clear previous
+            document.querySelectorAll('.citation.active').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
+
+            // Toggle off if same
+            if (aliases.length === 1 && activeChunkAlias === aliases[0]) {
+                activeChunkAlias = null;
+                return;
+            }
+
             element.classList.add('active');
-            aliases.forEach((alias) => {
-                const card = document.getElementById(`card-${alias}`);
-                if (card) {
-                    card.classList.add('highlight');
-                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            activeChunkAlias = aliases[0];
+
+            // Highlight + scroll in source panel
+            aliases.forEach(alias => {
+                const srcEl = document.getElementById(`src_${alias}`);
+                if (srcEl) {
+                    srcEl.classList.add('active');
+                    srcEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             });
         }
 
-        function toggleExpand(alias) {
-            const body = document.getElementById(`body-${alias}`);
-            const card = document.getElementById(`card-${alias}`);
-            if (!body || !card) return;
-            const expandBtn = card.querySelector('.citation-expand');
-            if (!expandBtn) return;
-            if (body.classList.contains('expanded')) {
-                body.classList.remove('expanded');
-                const content = viewData.chunks[alias] || '';
-                body.textContent = `${content.substring(0, 300)}...`;
-                expandBtn.textContent = '展開全文';
-            } else {
-                body.classList.add('expanded');
-                body.textContent = viewData.chunks[alias] || '';
-                expandBtn.textContent = '收起';
-            }
-        }
+        // ─── PANEL TOGGLES ───
 
         function toggleNavPanel() {
             document.body.classList.toggle('nav-collapsed');
@@ -1017,30 +647,24 @@
             if (btn) btn.textContent = document.body.classList.contains('nav-collapsed') ? '»' : '«';
         }
 
-        function toggleCitationPanel() {
-            document.body.classList.toggle('citation-collapsed');
-            const btn = document.getElementById('citationToggle');
-            if (btn) btn.textContent = document.body.classList.contains('citation-collapsed') ? '«' : '»';
+        function toggleSourcePanel() {
+            document.body.classList.toggle('source-collapsed');
+            const btn = document.getElementById('sourceToggle');
+            if (btn) btn.textContent = document.body.classList.contains('source-collapsed') ? '«' : '»';
         }
 
         function updateUrlState() {
             const url = new URL(window.location.href);
-            url.pathname = url.pathname;
             url.searchParams.set('case', currentCaseName);
             url.searchParams.set('condition', currentCondition);
             url.searchParams.set('mode', currentMode);
             url.searchParams.set('group', currentGroup);
             window.history.replaceState({}, '', url.toString());
 
-            // Keep timeline/eval links synced with current case
             const tlLink = document.getElementById('timelineLink');
-            if (tlLink && currentCaseName) {
-                tlLink.href = `timeline.html?case=${encodeURIComponent(currentCaseName)}`;
-            }
+            if (tlLink && currentCaseName) tlLink.href = `timeline.html?case=${encodeURIComponent(currentCaseName)}`;
             const evLink = document.getElementById('evalLink');
-            if (evLink && currentCaseName) {
-                evLink.href = `eval.html?case=${encodeURIComponent(currentCaseName)}`;
-            }
+            if (evLink && currentCaseName) evLink.href = `eval.html?case=${encodeURIComponent(currentCaseName)}`;
         }
 
         function escapeHtml(text) {
@@ -1052,52 +676,43 @@
         // ─── Mobile Drawer Logic ───
         function toggleMobileNav() {
             const isOpen = document.body.classList.toggle('nav-open');
-            document.body.classList.remove('citation-open');
+            document.body.classList.remove('source-open');
             showOverlay(isOpen);
         }
-
-        function toggleMobileCite() {
-            const isOpen = document.body.classList.toggle('citation-open');
+        function toggleMobileSource() {
+            const isOpen = document.body.classList.toggle('source-open');
             document.body.classList.remove('nav-open');
             showOverlay(isOpen);
         }
-
         function closeAllDrawers() {
-            document.body.classList.remove('nav-open', 'citation-open');
+            document.body.classList.remove('nav-open', 'source-open');
             showOverlay(false);
         }
-
         function showOverlay(show) {
             const overlay = document.getElementById('drawerOverlay');
-            if (show) {
-                overlay.style.display = 'block';
-                requestAnimationFrame(() => overlay.classList.add('visible'));
-            } else {
-                overlay.classList.remove('visible');
-                setTimeout(() => { overlay.style.display = 'none'; }, 250);
-            }
+            if (show) { overlay.style.display = 'block'; requestAnimationFrame(() => overlay.classList.add('visible')); }
+            else { overlay.classList.remove('visible'); setTimeout(() => { overlay.style.display = 'none'; }, 250); }
         }
 
-        // Auto-close nav drawer after selecting a section on mobile
         const origSelectSection = selectSection;
         function mobileAwareSelectSection(sectionId) {
             origSelectSection(sectionId);
-            if (window.innerWidth <= 768) {
-                closeAllDrawers();
-            }
+            if (window.innerWidth <= 768) closeAllDrawers();
         }
 
         window.selectSection = mobileAwareSelectSection;
         window.highlightCitation = highlightCitation;
-        window.toggleExpand = toggleExpand;
         window.toggleMobileNav = toggleMobileNav;
-        window.toggleMobileCite = toggleMobileCite;
+        window.toggleMobileSource = toggleMobileSource;
         window.closeAllDrawers = closeAllDrawers;
 
-        (async () => {
-            await loadCaseList();
-            await loadData();
-        })();
+        // Init source panel toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const stBtn = document.getElementById('sourceToggle');
+            if (stBtn) stBtn.addEventListener('click', toggleSourcePanel);
+        });
+
+        (async () => { await loadCaseList(); await loadData(); })();
     </script>
 </body>
 </html>
