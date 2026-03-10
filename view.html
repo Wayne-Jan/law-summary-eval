@@ -750,26 +750,25 @@
 
         // ─── PANEL TOGGLES ───
 
+        function clearAllPanelInlineWidths() {
+            // Clear ALL inline widths so CSS flex layout takes over
+            document.querySelectorAll('.main > *:not(.resizer)').forEach(el => {
+                el.style.width = '';
+                el.style.flex = '';
+            });
+            try { localStorage.removeItem('viewPanelWidths'); } catch {}
+        }
+
         function toggleNavPanel() {
-            const nav = document.getElementById('navPanel');
             document.body.classList.toggle('nav-collapsed');
-            // Clear inline width from resizer so CSS collapse takes effect
-            if (document.body.classList.contains('nav-collapsed') && nav) {
-                nav.style.width = '';
-                nav.style.flex = '';
-            }
+            clearAllPanelInlineWidths();
             const btn = document.getElementById('navToggle');
             if (btn) btn.textContent = document.body.classList.contains('nav-collapsed') ? '»' : '«';
         }
 
         function toggleSourcePanel() {
-            const src = document.getElementById('sourcePanel');
             document.body.classList.toggle('source-collapsed');
-            // Clear inline width from resizer so CSS collapse takes effect
-            if (document.body.classList.contains('source-collapsed') && src) {
-                src.style.width = '';
-                src.style.flex = '';
-            }
+            clearAllPanelInlineWidths();
             const btn = document.getElementById('sourceToggle');
             if (btn) btn.textContent = document.body.classList.contains('source-collapsed') ? '«' : '»';
         }
