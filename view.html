@@ -624,10 +624,16 @@
             gtPanel.innerHTML = `<div class="compare-column-title gt-title">老師摘要</div>${gtContent}`;
         }
 
+        // Normalize CH_1 → CH_01 (pad to 2 digits to match chunk keys)
+        function normAlias(a) {
+            return a.replace(/CH_(\d+)/, (_, n) => 'CH_' + n.padStart(2, '0'));
+        }
+
         function withCitationMarkup(content) {
             return escapeHtml(content).replace(/\[CH_\d+(?:,\s*CH_\d+)*\]/g, (match) => {
                 const aliases = match.match(/CH_\d+/g) || [];
-                return `<span class="citation" data-aliases="${aliases.join(',')}" onclick="highlightCitation(this)">${match}</span>`;
+                const normalized = aliases.map(normAlias);
+                return `<span class="citation" data-aliases="${normalized.join(',')}" onclick="highlightCitation(this)">${match}</span>`;
             });
         }
 

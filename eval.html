@@ -662,10 +662,12 @@ function renderSummaries() {
   });
 }
 
+function normAlias(a) { return a.replace(/CH_(\d+)/, (_, n) => 'CH_' + n.padStart(2, '0')); }
+
 function renderCitations(text) {
   let html = esc(text);
   html = html.replace(/\[CH_(\d+(?:,\s*CH_\d+)*)\]/g, (match, inner) => {
-    const aliases = inner.split(/,\s*/).map(s => s.startsWith('CH_') ? s : 'CH_' + s);
+    const aliases = inner.split(/,\s*/).map(s => s.startsWith('CH_') ? s : 'CH_' + s).map(normAlias);
     return aliases.map(a =>
       `<span class="citation-tag" data-alias="${a}" title="點擊查看原文 ${a}">${a}</span>`
     ).join(' ');
