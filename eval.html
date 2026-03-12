@@ -191,7 +191,7 @@
     }
     .toggle-anchors:hover { text-decoration: underline; }
 
-    .likert-row { display: flex; align-items: center; gap: 0; margin-bottom: 6px; max-width: 320px; }
+    .likert-row { display: flex; align-items: center; gap: 0; margin-bottom: 6px; }
     .likert-row label {
       flex: 1; text-align: center; padding: 8px 0; font-size: 16px;
       cursor: pointer; border: 1px solid var(--slate-300); color: var(--slate-500);
@@ -1171,25 +1171,20 @@ function initResizers() {
     resizer.addEventListener('mousedown', onPointerDown);
     resizer.addEventListener('touchstart', onPointerDown, { passive: false });
   });
-  // Restore saved widths (with minimum width guard)
+  // Restore saved widths — last panel stays flex:1 to fill remaining space
   try {
     const saved = JSON.parse(localStorage.getItem('evalPanelWidths'));
     if (saved) {
-      const totalW = document.querySelector('.main').offsetWidth;
-      const minPanelW = Math.max(200, totalW * 0.15);
-      let valid = true;
-      // Validate all saved widths meet minimum before applying
-      for (const [id, w] of Object.entries(saved)) {
-        if (w && parseInt(w) < minPanelW) { valid = false; break; }
-      }
-      if (valid) {
-        Object.entries(saved).forEach(([id, w]) => {
-          const el = document.getElementById(id);
-          if (el && w) { el.style.width = w; el.style.flex = 'none'; }
-        });
-      } else {
-        localStorage.removeItem('evalPanelWidths');
-      }
+      const panels = [...document.querySelectorAll('.main > .panel')];
+      const lastPanel = panels[panels.length - 1];
+      Object.entries(saved).forEach(([id, w]) => {
+        const el = document.getElementById(id);
+        if (el && w) {
+          el.style.width = w;
+          // Last panel uses flex:1 to absorb remaining space
+          el.style.flex = (el === lastPanel) ? '1' : 'none';
+        }
+      });
     }
   } catch {}
 }
