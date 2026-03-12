@@ -586,8 +586,6 @@
       // LISS LI_F1
       const liss = a.liss || {};
       const liF1Val = liss.li_f1_mean != null ? fmt(liss.li_f1_mean) : null;
-      const lissN = liss.n_scored;
-      const lissNSuffix = (lissN != null && lissN !== evalN) ? `<span class="n-suffix">(n=${lissN})</span>` : '';
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
@@ -599,7 +597,7 @@
         <td class="score-cell ${scoreClass01(a.faithfulness_avg)}">${fmt(a.faithfulness_avg) || '--'}</td>
         <td class="score-cell ${scoreClass01(rb.rougeL)}">${rougeLVal || '--'}${rougeLVal ? nSuffix : ''}</td>
         <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${bertVal || '--'}${bertVal ? nSuffix : ''}</td>
-        <td class="score-cell ${scoreClass01(liss.li_f1_mean)}">${liF1Val || '--'}${liF1Val ? lissNSuffix : ''}</td>
+        <td class="score-cell ${scoreClass01(liss.li_f1_mean)}">${liF1Val || '--'}</td>
         <td>${evalN}</td>
       `;
       tbody.appendChild(tr);
