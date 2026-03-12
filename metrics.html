@@ -307,6 +307,8 @@
               data-tip="ROUGE-L F-score：以最長公共子序列衡量摘要與 Ground Truth 的文字重疊程度，字元級計算">ROUGE-L</th>
           <th class="sort-btn" data-col="bertscore" data-dir=""
               data-tip="BERTScore F1：使用 BERT 語意嵌入衡量摘要與 Ground Truth 的語意相似度">BERTScore F1</th>
+          <th class="sort-btn" data-col="lif1" data-dir=""
+              data-tip="Late Interaction F1：使用 Jina Embeddings v4 token-level MaxSim 計算的語義對齊分數（候選↔參考 F1）">LI_F1</th>
           <th>案例數</th>
         </tr>
       </thead>
@@ -404,7 +406,9 @@
     num_f1: '數字 F1',
     verdict_match: '判決吻合',
     institution_attr: '機構歸屬',
-    hallucination_rate_rule: '幻覺率(反)'
+    hallucination_rate_rule: '幻覺率(反)',
+    compression_ratio: '壓縮率',
+    gt_length_ratio: 'GT 長度比'
   };
   const RULE_TIPS = {
     citation_rate: '摘要中有多少比例的陳述標註了 [CH_XX] 來源引用',
@@ -412,7 +416,9 @@
     num_f1: '摘要中的數字（金額、劑量等）與 Ground Truth 的 F1 分數',
     verdict_match: '摘要的判決結果（有罪/無罪/刑度）是否與 Ground Truth 一致',
     institution_attr: '醫療機構名稱是否正確匿名化且歸屬正確',
-    hallucination_rate_rule: '（反向指標）未被來源文本支持的事實陳述比例，越高越好'
+    hallucination_rate_rule: '（反向指標）未被來源文本支持的事實陳述比例，越高越好',
+    compression_ratio: '摘要相對原文的壓縮程度 = 1 - (摘要字數 / 原文字數)，越高代表壓縮越多',
+    gt_length_ratio: '摘要字數與 Ground Truth 字數的比值，接近 1.0 代表長度相近'
   };
   const FACT_LABELS = {
     timeline_recall: '時間軸',
@@ -483,6 +489,26 @@
     bertscore_f1: 'BERTScore F1：使用 BERT 語意嵌入衡量摘要與 Ground Truth 的語意相似度'
   };
 
+  const LISS_LABELS = {
+    li_f1: 'LI F1',
+    li_c2r: 'C2R (候選→參考)',
+    li_r2c: 'R2C (參考→候選)',
+    dense_cosine: 'Dense Cosine'
+  };
+  const LISS_TIPS = {
+    li_f1: 'Late Interaction F1：token-level MaxSim 的對稱 F1 分數',
+    li_c2r: 'Candidate-to-Reference：候選摘要每個 token 在參考摘要中的最大相似度平均',
+    li_r2c: 'Reference-to-Candidate：參考摘要每個 token 在候選摘要中的最大相似度平均',
+    dense_cosine: 'Dense Cosine：傳統 single-vector 餘弦相似度（作為 baseline 對照）'
+  };
+  const LISS_SECTION_LABELS = {
+    facts: '公訴事實',
+    defense: '被告回應',
+    opinions: '鑑定意見',
+    verdict: '判決結果',
+    reasoning: '判決理由'
+  };
+
   let DATA = null;
   let currentFilter = 'all';
 
@@ -520,7 +546,7 @@
     const key = {
       rule: 'rule_based_avg', fact: 'fact_recall_avg',
       quality: 'quality_avg', faith: 'faithfulness_avg',
-      rougeL: '_rougeL', bertscore: '_bertscore'
+      rougeL: '_rougeL', bertscore: '_bertscore', lif1: '_lif1'
     }[col];
     if (!key) return;
     entries.sort((a, b) => {
@@ -531,6 +557,9 @@
       } else if (key === '_bertscore') {
         va = (a[1].averages.rouge_bertscore || {}).bertscore_f1 ?? -1;
         vb = (b[1].averages.rouge_bertscore || {}).bertscore_f1 ?? -1;
+      } else if (key === '_lif1') {
+        va = (a[1].averages.liss || {}).li_f1_mean ?? -1;
+        vb = (b[1].averages.liss || {}).li_f1_mean ?? -1;
       } else {
         va = a[1].averages[key] ?? -1;
         vb = b[1].averages[key] ?? -1;
@@ -554,6 +583,12 @@
       const bertVal = rb.bertscore_f1 != null ? fmt(rb.bertscore_f1) : null;
       const nSuffix = (rbN != null && rbN !== evalN) ? `<span class="n-suffix">(n=${rbN})</span>` : '';
 
+      // LISS LI_F1
+      const liss = a.liss || {};
+      const liF1Val = liss.li_f1_mean != null ? fmt(liss.li_f1_mean) : null;
+      const lissN = liss.n_scored;
+      const lissNSuffix = (lissN != null && lissN !== evalN) ? `<span class="n-suffix">(n=${lissN})</span>` : '';
+
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td class="cond-name">${cond.label}</td>
@@ -564,6 +599,7 @@
         <td class="score-cell ${scoreClass01(a.faithfulness_avg)}">${fmt(a.faithfulness_avg) || '--'}</td>
         <td class="score-cell ${scoreClass01(rb.rougeL)}">${rougeLVal || '--'}${rougeLVal ? nSuffix : ''}</td>
         <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${bertVal || '--'}${bertVal ? nSuffix : ''}</td>
+        <td class="score-cell ${scoreClass01(liss.li_f1_mean)}">${liF1Val || '--'}${liF1Val ? lissNSuffix : ''}</td>
         <td>${evalN}</td>
       `;
       tbody.appendChild(tr);
@@ -648,14 +684,18 @@
       { id: 'fact', label: 'Fact Recall' },
       { id: 'quality', label: 'Quality' },
       { id: 'rouge_bert', label: 'ROUGE / BERTScore' },
+      { id: 'liss', label: '語義相似度' },
     ];
 
     // Check if any match has rouge_bertscore data
     const hasRougeBert = matches.some(m => m.caseData.rouge_bertscore);
+    const hasLiss = matches.some(m => m.caseData.liss);
 
     for (const tab of tabs) {
       // Skip ROUGE/BERTScore tab if no data
       if (tab.id === 'rouge_bert' && !hasRougeBert) continue;
+      // Skip LISS tab if no data
+      if (tab.id === 'liss' && !hasLiss) continue;
 
       const btn = document.createElement('button');
       btn.className = 'tab-btn' + (tab.id === 'overview' ? ' active' : '');
@@ -678,6 +718,8 @@
         panel.innerHTML = buildBreakdownTab(matches, 'quality', QUALITY_LABELS, QUALITY_TIPS, '5');
       } else if (tab.id === 'rouge_bert') {
         panel.innerHTML = buildRougeBertTab(matches);
+      } else if (tab.id === 'liss') {
+        panel.innerHTML = buildLissTab(matches);
       }
 
       tabPanels.appendChild(panel);
@@ -698,6 +740,7 @@
       const q = caseData.quality || {};
       const faith = caseData.faithfulness;
       const rbt = caseData.rouge_bertscore || {};
+      const lissData = caseData.liss || {};
       const badgeClass = cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource';
 
       const scores = [
@@ -711,6 +754,9 @@
       }
       if (rbt.bertscore_f1 != null) {
         scores.push({ label: 'BERTScore F1', value: rbt.bertscore_f1, scale: '01', tip: 'BERTScore F1' });
+      }
+      if (lissData.avg_li_f1 != null) {
+        scores.push({ label: 'LI F1', value: lissData.avg_li_f1, scale: '01', tip: 'Late Interaction F1：token-level MaxSim 語義對齊' });
       }
 
       html += `<div class="overview-card">
@@ -738,6 +784,13 @@
 
   // ─── Tabs 2-4: Dimension-centric breakdown ───
   // Each dimension = one card, with all models as bars inside
+  // Special bar rendering for gt_length_ratio (centered around 1.0, range 0-2)
+  function gtLengthRatioColor(v) {
+    if (v >= 0.8 && v <= 1.2) return 'dim-bar-fill-high';
+    if ((v >= 0.6 && v < 0.8) || (v > 1.2 && v <= 1.5)) return 'dim-bar-fill-mid';
+    return 'dim-bar-fill-low';
+  }
+
   function buildBreakdownTab(matches, dataKey, labels, tips, scale) {
     // Collect all dimension keys across all conditions
     const allKeys = new Set();
@@ -762,10 +815,21 @@
         const data = caseData[dataKey] || {};
         const v = data[k];
         if (v == null) continue;
-        const pct = scale === '5' ? (v / 5 * 100) : (v * 100);
-        const cls = scale === '5' ? ('dim-bar-fill-' + (v >= 4.0 ? 'high' : v >= 3.0 ? 'mid' : 'low'))
-                                  : ('dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low'));
-        const fmtVal = scale === '5' ? fmt(v, 1) : fmt(v);
+        let pct, cls, fmtVal;
+        if (k === 'gt_length_ratio') {
+          // gt_length_ratio: 0-2 range, cap bar at 200%
+          pct = Math.min(v, 2) / 2 * 100;
+          cls = gtLengthRatioColor(v);
+          fmtVal = fmt(v, 2);
+        } else if (scale === '5') {
+          pct = v / 5 * 100;
+          cls = 'dim-bar-fill-' + (v >= 4.0 ? 'high' : v >= 3.0 ? 'mid' : 'low');
+          fmtVal = fmt(v, 1);
+        } else {
+          pct = v * 100;
+          cls = 'dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low');
+          fmtVal = fmt(v);
+        }
         html += `<div class="dim-bar-row">
           <span class="dim-bar-cond">${cond.label}</span>
           <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
@@ -805,6 +869,66 @@
 
       html += '</div>';
     }
+    return html;
+  }
+
+  // ─── Tab 6: LISS (Late Interaction Summary Similarity) ───
+  function buildLissTab(matches) {
+    const hasAny = matches.some(m => m.caseData.liss);
+    if (!hasAny) return '<div class="no-data-msg">此案例無語義相似度資料。</div>';
+
+    let html = '';
+
+    // Section 1: Case-level averages
+    html += '<h3 style="font-size:15px;font-weight:700;color:var(--slate-900);margin-bottom:14px;">案件平均</h3>';
+    const avgKeys = ['li_f1', 'li_c2r', 'li_r2c', 'dense_cosine'];
+    const avgKeyMap = { li_f1: 'avg_li_f1', li_c2r: 'avg_li_c2r', li_r2c: 'avg_li_r2c', dense_cosine: 'avg_dense_cosine' };
+
+    for (const k of avgKeys) {
+      const tip = LISS_TIPS[k] ? ` data-tip="${LISS_TIPS[k]}"` : '';
+      html += `<div class="dim-block">
+        <div class="dim-title"${tip}>${LISS_LABELS[k] || k}</div>`;
+
+      for (const { cond, caseData } of matches) {
+        const liss = caseData.liss;
+        if (!liss) continue;
+        const v = liss[avgKeyMap[k]];
+        if (v == null) continue;
+        const pct = v * 100;
+        const cls = 'dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low');
+        html += `<div class="dim-bar-row">
+          <span class="dim-bar-cond">${cond.label}</span>
+          <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
+          <span class="dim-bar-value">${fmt(v)}</span>
+        </div>`;
+      }
+      html += '</div>';
+    }
+
+    // Section 2: Per-section LI_F1 breakdown
+    html += '<h3 style="font-size:15px;font-weight:700;color:var(--slate-900);margin:24px 0 14px;">各章節 LI F1</h3>';
+    const sectionOrder = ['facts', 'defense', 'opinions', 'verdict', 'reasoning'];
+
+    for (const sec of sectionOrder) {
+      html += `<div class="dim-block">
+        <div class="dim-title">${LISS_SECTION_LABELS[sec] || sec}</div>`;
+
+      for (const { cond, caseData } of matches) {
+        const liss = caseData.liss;
+        if (!liss || !liss.sections || !liss.sections[sec]) continue;
+        const v = liss.sections[sec].li_f1;
+        if (v == null) continue;
+        const pct = v * 100;
+        const cls = 'dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low');
+        html += `<div class="dim-bar-row">
+          <span class="dim-bar-cond">${cond.label}</span>
+          <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
+          <span class="dim-bar-value">${fmt(v)}</span>
+        </div>`;
+      }
+      html += '</div>';
+    }
+
     return html;
   }
 
