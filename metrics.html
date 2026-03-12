@@ -239,6 +239,43 @@
     }
     .tip-box.visible { opacity: 1; }
 
+    /* ─── RADAR CHART ─── */
+    .radar-section {
+      background: white; border-radius: 12px; padding: 20px 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e5e7eb;
+      margin-bottom: 32px;
+    }
+    .radar-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .radar-header h3 { font-size: 16px; font-weight: 700; color: var(--slate-900); margin: 0; }
+    .radar-chips { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+    .radar-chip {
+      font-family: var(--sans); font-size: 12px; font-weight: 500;
+      padding: 4px 12px; border-radius: 14px; cursor: pointer;
+      border: 2px solid var(--slate-300); background: white; color: var(--slate-500);
+      transition: all 0.15s; white-space: nowrap;
+    }
+    .radar-chip:hover { border-color: var(--indigo); color: var(--indigo); }
+    .radar-chip.selected { color: white; }
+    .radar-canvas-wrap {
+      display: flex; justify-content: center; align-items: center;
+      min-height: 380px;
+    }
+    .radar-canvas-wrap canvas { max-width: 520px; max-height: 520px; }
+    .radar-legend {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      margin-top: 12px; font-size: 13px;
+    }
+    .radar-legend-item { display: flex; align-items: center; gap: 6px; }
+    .radar-legend-swatch {
+      width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0;
+    }
+    .radar-note {
+      text-align: center; font-size: 12px; color: var(--slate-500); margin-top: 8px;
+    }
+
     @media (max-width: 768px) {
       .content { padding: 16px 12px 40px; }
       .overview-cards-grid { grid-template-columns: 1fr; }
@@ -246,6 +283,8 @@
       .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
+      .radar-canvas-wrap { min-height: 280px; }
+      .radar-canvas-wrap canvas { max-width: 100%; }
     }
   </style>
 </head>
@@ -314,6 +353,19 @@
       </thead>
       <tbody id="overviewBody"></tbody>
     </table>
+  </div>
+
+  <!-- ─── RADAR CHART ─── -->
+  <div class="radar-section" id="radarSection">
+    <div class="radar-header">
+      <h3>雷達圖比較</h3>
+      <div class="radar-chips" id="radarChips"></div>
+    </div>
+    <div class="radar-canvas-wrap">
+      <canvas id="radarCanvas" width="520" height="520"></canvas>
+    </div>
+    <div class="radar-legend" id="radarLegend"></div>
+    <div class="radar-note">點擊上方標籤選擇 2-5 個模型進行比較（Quality 已正規化為 0-1）</div>
   </div>
 
   <h2 class="section-header">個案詳細比較</h2>
@@ -581,7 +633,6 @@
       // ROUGE-L and BERTScore cells
       const rougeLVal = rb.rougeL != null ? fmt(rb.rougeL) : null;
       const bertVal = rb.bertscore_f1 != null ? fmt(rb.bertscore_f1) : null;
-      const nSuffix = (rbN != null && rbN !== evalN) ? `<span class="n-suffix">(n=${rbN})</span>` : '';
 
       // LISS LI_F1
       const liss = a.liss || {};
@@ -595,8 +646,8 @@
         <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg) || '--'}</td>
         <td class="score-cell ${scoreClass5(a.quality_avg)}">${fmt(a.quality_avg, 2) || '--'}</td>
         <td class="score-cell ${scoreClass01(a.faithfulness_avg)}">${fmt(a.faithfulness_avg) || '--'}</td>
-        <td class="score-cell ${scoreClass01(rb.rougeL)}">${rougeLVal || '--'}${rougeLVal ? nSuffix : ''}</td>
-        <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${bertVal || '--'}${bertVal ? nSuffix : ''}</td>
+        <td class="score-cell ${scoreClass01(rb.rougeL)}">${rougeLVal || '--'}</td>
+        <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${bertVal || '--'}</td>
         <td class="score-cell ${scoreClass01(liss.li_f1_mean)}">${liF1Val || '--'}</td>
         <td>${evalN}</td>
       `;
@@ -621,6 +672,201 @@
       renderOverviewRows(entries);
     });
   });
+
+  // ─── Radar Chart ───
+  const RADAR_AXES = [
+    { key: 'rule', label: 'Rule-Based', get: a => a.rule_based_avg },
+    { key: 'fact', label: 'Fact Recall', get: a => a.fact_recall_avg },
+    { key: 'quality', label: 'Quality', get: a => a.quality_avg != null ? a.quality_avg / 5 : null },
+    { key: 'faith', label: 'Faithfulness', get: a => a.faithfulness_avg },
+    { key: 'rougeL', label: 'ROUGE-L', get: a => (a.rouge_bertscore || {}).rougeL },
+    { key: 'bert', label: 'BERTScore', get: a => (a.rouge_bertscore || {}).bertscore_f1 },
+    { key: 'lif1', label: 'LI_F1', get: a => (a.liss || {}).li_f1_mean },
+  ];
+  const RADAR_COLORS = [
+    '#4f46e5', '#059669', '#d97706', '#e11d48', '#7c3aed',
+    '#0891b2', '#65a30d', '#dc2626', '#6366f1',
+  ];
+  let radarSelected = new Set();
+
+  function buildRadarChips() {
+    const container = document.getElementById('radarChips');
+    container.innerHTML = '';
+    const entries = Object.entries(DATA.conditions);
+    // Default: select Claude-A, Claude-B, Claude-C
+    const defaults = ['claude_afg_v5.1', 'ablation_no_afg', 'ablation_no_react'];
+    if (radarSelected.size === 0) {
+      defaults.forEach(d => { if (DATA.conditions[d]) radarSelected.add(d); });
+    }
+    for (const [condKey, cond] of entries) {
+      const chip = document.createElement('button');
+      chip.className = 'radar-chip';
+      chip.textContent = cond.label;
+      chip.dataset.cond = condKey;
+      if (radarSelected.has(condKey)) {
+        chip.classList.add('selected');
+        const idx = [...radarSelected].indexOf(condKey) % RADAR_COLORS.length;
+        chip.style.background = RADAR_COLORS[idx];
+        chip.style.borderColor = RADAR_COLORS[idx];
+      }
+      chip.addEventListener('click', () => {
+        if (radarSelected.has(condKey)) {
+          radarSelected.delete(condKey);
+        } else if (radarSelected.size < 5) {
+          radarSelected.add(condKey);
+        }
+        updateRadarChipStyles();
+        drawRadar();
+      });
+      container.appendChild(chip);
+    }
+  }
+
+  function updateRadarChipStyles() {
+    const chips = document.querySelectorAll('.radar-chip');
+    const selArr = [...radarSelected];
+    chips.forEach(chip => {
+      const ck = chip.dataset.cond;
+      if (radarSelected.has(ck)) {
+        const idx = selArr.indexOf(ck) % RADAR_COLORS.length;
+        chip.classList.add('selected');
+        chip.style.background = RADAR_COLORS[idx];
+        chip.style.borderColor = RADAR_COLORS[idx];
+      } else {
+        chip.classList.remove('selected');
+        chip.style.background = '';
+        chip.style.borderColor = '';
+      }
+    });
+  }
+
+  function drawRadar() {
+    const canvas = document.getElementById('radarCanvas');
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    const size = 520;
+    canvas.width = size * dpr;
+    canvas.height = size * dpr;
+    canvas.style.width = size + 'px';
+    canvas.style.height = size + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const cx = size / 2, cy = size / 2;
+    const radius = 200;
+    const n = RADAR_AXES.length;
+    const angleStep = (2 * Math.PI) / n;
+    const startAngle = -Math.PI / 2; // top
+
+    // Clear
+    ctx.clearRect(0, 0, size, size);
+
+    // Draw grid rings (0.2, 0.4, 0.6, 0.8, 1.0)
+    for (let ring = 1; ring <= 5; ring++) {
+      const r = radius * ring / 5;
+      ctx.beginPath();
+      for (let i = 0; i <= n; i++) {
+        const angle = startAngle + i * angleStep;
+        const x = cx + r * Math.cos(angle);
+        const y = cy + r * Math.sin(angle);
+        i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = ring === 5 ? '#cbd5e1' : '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      // Ring label
+      if (ring < 5) {
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText((ring * 0.2).toFixed(1), cx + 2, cy - r + 12);
+      }
+    }
+
+    // Draw axis lines + labels
+    for (let i = 0; i < n; i++) {
+      const angle = startAngle + i * angleStep;
+      const ex = cx + radius * Math.cos(angle);
+      const ey = cy + radius * Math.sin(angle);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(ex, ey);
+      ctx.strokeStyle = '#e2e8f0';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      // Label
+      const lx = cx + (radius + 28) * Math.cos(angle);
+      const ly = cy + (radius + 28) * Math.sin(angle);
+      ctx.fillStyle = '#334155';
+      ctx.font = '13px "Noto Sans TC", sans-serif';
+      ctx.textAlign = Math.abs(Math.cos(angle)) < 0.1 ? 'center' : Math.cos(angle) > 0 ? 'left' : 'right';
+      ctx.textBaseline = Math.abs(Math.sin(angle)) < 0.1 ? 'middle' : Math.sin(angle) > 0 ? 'top' : 'bottom';
+      ctx.fillText(RADAR_AXES[i].label, lx, ly);
+    }
+
+    // Draw data polygons
+    const selArr = [...radarSelected];
+    for (let si = 0; si < selArr.length; si++) {
+      const condKey = selArr[si];
+      const cond = DATA.conditions[condKey];
+      if (!cond) continue;
+      const a = cond.averages;
+      const color = RADAR_COLORS[si % RADAR_COLORS.length];
+
+      const points = [];
+      for (let i = 0; i < n; i++) {
+        const v = RADAR_AXES[i].get(a);
+        const val = v != null ? Math.min(Math.max(v, 0), 1) : 0;
+        const angle = startAngle + i * angleStep;
+        points.push({
+          x: cx + radius * val * Math.cos(angle),
+          y: cy + radius * val * Math.sin(angle),
+          val: v
+        });
+      }
+
+      // Fill
+      ctx.beginPath();
+      points.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      ctx.fillStyle = color + '18'; // ~10% opacity
+      ctx.fill();
+
+      // Stroke
+      ctx.beginPath();
+      points.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+      ctx.closePath();
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+
+      // Dots
+      points.forEach(p => {
+        if (p.val == null) return;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4, 0, 2 * Math.PI);
+        ctx.fillStyle = color;
+        ctx.fill();
+        ctx.strokeStyle = 'white';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      });
+    }
+
+    // Legend
+    const legendEl = document.getElementById('radarLegend');
+    legendEl.innerHTML = '';
+    for (let si = 0; si < selArr.length; si++) {
+      const condKey = selArr[si];
+      const cond = DATA.conditions[condKey];
+      if (!cond) continue;
+      const color = RADAR_COLORS[si % RADAR_COLORS.length];
+      const item = document.createElement('span');
+      item.className = 'radar-legend-item';
+      item.innerHTML = `<span class="radar-legend-swatch" style="background:${color}"></span>${cond.label}`;
+      legendEl.appendChild(item);
+    }
+  }
 
   // ─── Build case selector ───
   function buildCaseSelector() {
@@ -936,6 +1182,8 @@
     .then(data => {
       DATA = data;
       buildOverview();
+      buildRadarChips();
+      drawRadar();
       buildCaseSelector();
     })
     .catch(err => {
