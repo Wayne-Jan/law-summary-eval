@@ -131,6 +131,7 @@
     }
     .p2-rev-dot:hover { background: var(--amber); color: white; }
     .p2-rev-dot.filled { background: var(--amber); color: white; font-weight: 700; }
+    .p2-rev-dot.disabled { opacity: 0.3; cursor: not-allowed; border-color: var(--slate-300); color: var(--slate-300); background: var(--slate-100); }
     /* Reason field */
     .p2-rev-reason { display: none; margin-top: 4px; }
     .p2-rev-reason.show { display: block; }
@@ -1281,7 +1282,8 @@ function renderPhase2Revisions() {
         html += `<span class="p2-rev-label">修正</span>`;
         html += `<div class="p2-rev-dots">`;
         for (let s = 1; s <= 5; s++) {
-          html += `<div class="p2-rev-dot" onclick="setRevisionScore('${dim.id}', ${s})">${s}</div>`;
+          const disabled = s === orig;
+          html += `<div class="p2-rev-dot${disabled ? ' disabled' : ''}" ${disabled ? '' : `onclick="setRevisionScore('${dim.id}', ${s})"`}>${s}</div>`;
         }
         html += `</div></div>`;
       } else {
@@ -1320,6 +1322,13 @@ function toggleRevision(dimId) {
 }
 
 function setRevisionScore(dimId, score) {
+  // Guard: revision score must differ from original
+  const p1Data = getPhaseData(currentCase, currentCondIdx, 1) || {};
+  const orig = (p1Data.scores || {})[dimId];
+  if (score === orig) {
+    showToast('修正分數與原始相同，請選擇不同分數或點「取消」', 'error');
+    return;
+  }
   const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
   if (!p2Data.revisions) p2Data.revisions = {};
   const existing = p2Data.revisions[dimId] || {};
