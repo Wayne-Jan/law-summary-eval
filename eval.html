@@ -100,27 +100,48 @@
     .phase2-source-panel.open { max-height: 300px; overflow-y: auto; }
     .phase2-gap-form {
       flex-shrink: 0; padding: 14px 20px; background: var(--slate-50);
-      border-top: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start;
+      border-top: 1px solid #e2e8f0; overflow-y: auto; max-height: 45vh;
     }
+    .p2-section { margin-bottom: 14px; }
+    .p2-section-title { font-size: 14px; font-weight: 600; color: var(--slate-900); margin-bottom: 8px; }
     .phase2-gap-form .gap-radio-group {
-      display: flex; gap: 12px; align-items: center;
+      display: flex; gap: 12px; align-items: center; margin-bottom: 8px;
     }
     .phase2-gap-form .gap-radio-group label {
       font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 4px;
     }
     .phase2-gap-form .gap-radio-group input[type="radio"] { width: 18px; height: 18px; }
     .phase2-gap-form textarea {
-      flex: 1; min-width: 300px; font-size: 14px; padding: 8px 12px;
+      width: 100%; font-size: 14px; padding: 8px 12px;
       border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
-      resize: vertical; min-height: 40px;
+      resize: vertical; min-height: 36px;
     }
-    .phase2-revision-note {
-      width: 100%; margin-top: 4px;
+    /* Phase 2 revision items */
+    .p2-rev-item {
+      display: flex; align-items: center; gap: 10px; padding: 5px 0;
+      border-bottom: 1px solid var(--slate-100); font-size: 13px;
     }
-    .phase2-revision-note textarea {
-      width: 100%; font-size: 13px; padding: 6px 10px;
-      border: 1px solid var(--amber); border-radius: 6px; font-family: var(--sans);
-      background: var(--amber-light); resize: vertical; min-height: 32px;
+    .p2-rev-item:last-child { border-bottom: none; }
+    .p2-rev-name { flex: 1; color: var(--slate-700); min-width: 0; }
+    .p2-rev-original { font-weight: 600; color: var(--indigo); width: 28px; text-align: center; flex-shrink: 0; }
+    .p2-rev-toggle {
+      font-size: 12px; padding: 3px 10px; border: 1px solid var(--slate-300);
+      border-radius: 4px; background: white; cursor: pointer; color: var(--slate-500);
+      font-family: var(--sans); flex-shrink: 0; transition: all 0.15s;
+    }
+    .p2-rev-toggle:hover { border-color: var(--amber); color: var(--amber); }
+    .p2-rev-toggle.active { background: var(--amber-light); border-color: var(--amber); color: var(--amber); font-weight: 600; }
+    .p2-rev-expand {
+      display: none; align-items: center; gap: 8px; flex-shrink: 0;
+    }
+    .p2-rev-expand.show { display: flex; }
+    .p2-rev-expand select {
+      font-size: 13px; padding: 3px 8px; border: 1px solid var(--amber);
+      border-radius: 4px; background: var(--amber-light); font-family: var(--sans);
+    }
+    .p2-rev-expand input {
+      font-size: 12px; padding: 3px 8px; border: 1px solid var(--slate-300);
+      border-radius: 4px; font-family: var(--sans); width: 140px;
     }
 
     /* ─── PHASE 3: Four-column ─── */
@@ -153,6 +174,62 @@
       flex-shrink: 0; padding: 16px 20px; background: var(--slate-50);
       border-top: 1px solid #e2e8f0;
     }
+    /* Sequential selection UI */
+    .p3-step-title {
+      font-size: 16px; font-weight: 600; color: var(--slate-900);
+      text-align: center; margin-bottom: 6px;
+    }
+    .p3-step-subtitle {
+      font-size: 13px; color: var(--slate-500); text-align: center; margin-bottom: 14px;
+    }
+    .p3-step-progress {
+      display: flex; gap: 6px; justify-content: center; margin-bottom: 14px;
+    }
+    .p3-step-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--slate-300); transition: background 0.2s;
+    }
+    .p3-step-dot.done { background: var(--emerald); }
+    .p3-step-dot.current { background: var(--indigo); box-shadow: 0 0 0 3px rgba(79,70,229,0.2); }
+    .p3-choices {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    }
+    .p3-choice-card {
+      width: 180px; border: 2px solid var(--slate-300); border-radius: 10px;
+      background: white; cursor: pointer; transition: all 0.2s; overflow: hidden;
+    }
+    .p3-choice-card:hover { border-color: var(--indigo); box-shadow: 0 4px 12px rgba(79,70,229,0.15); transform: translateY(-2px); }
+    .p3-choice-card.disabled { opacity: 0.35; pointer-events: none; cursor: default; }
+    .p3-choice-card.selected { border-color: var(--emerald); background: var(--emerald-light); }
+    .p3-choice-label {
+      padding: 10px; text-align: center; font-size: 15px; font-weight: 600;
+      color: var(--slate-900); border-bottom: 1px solid var(--slate-100);
+    }
+    .p3-choice-medal { font-size: 18px; margin-right: 4px; }
+    .p3-choice-preview {
+      padding: 8px 10px; font-size: 12px; line-height: 1.6; color: var(--slate-500);
+      max-height: 100px; overflow-y: auto;
+    }
+    .p3-choice-btn {
+      display: block; width: 100%; padding: 10px; border: none; background: var(--indigo-light);
+      color: var(--indigo); font-size: 14px; font-weight: 600; cursor: pointer;
+      font-family: var(--sans); transition: background 0.15s;
+    }
+    .p3-choice-btn:hover { background: var(--indigo); color: white; }
+    /* Summary */
+    .p3-summary-title {
+      font-size: 16px; font-weight: 600; color: var(--slate-900);
+      text-align: center; margin-bottom: 12px;
+    }
+    .p3-summary-list {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px;
+    }
+    .p3-summary-item {
+      display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+      border-radius: 8px; background: white; border: 1px solid var(--slate-300);
+      font-size: 14px; font-weight: 500;
+    }
+    .p3-summary-rank { font-size: 18px; }
     .ranking-slots { display: flex; gap: 12px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-bottom: 12px; }
     .ranking-slot {
       width: 160px; min-height: 60px; border: 2px dashed var(--slate-300);
@@ -438,17 +515,19 @@
       </div>
     </div>
     <div class="phase2-gap-form" id="p2GapForm">
-      <div>
-        <div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:6px;">有重大遺漏嗎？</div>
+      <!-- Omission marking -->
+      <div class="p2-section">
+        <div class="p2-section-title">重大遺漏標記</div>
         <div class="gap-radio-group">
           <label><input type="radio" name="p2omission" value="no" onchange="onPhase2Change()"> 無重大遺漏</label>
           <label><input type="radio" name="p2omission" value="yes" onchange="onPhase2Change()"> 有重大遺漏</label>
         </div>
+        <textarea id="p2OmissionDetail" placeholder="遺漏項目說明..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
       </div>
-      <textarea id="p2OmissionDetail" placeholder="遺漏項目說明..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
-      <div class="phase2-revision-note">
-        <label style="font-size:12px;color:var(--amber);">Phase 1 修正備註（看到 GT 後，若認為 Phase 1 某項應調整，在此記錄，不修改原始分數）</label>
-        <textarea id="p2RevisionNote" placeholder="例：看到 GT 後認為第 3 項應調高..." maxlength="200" onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
+      <!-- Structured revision: Phase 1 scores read-only + optional revise -->
+      <div class="p2-section">
+        <div class="p2-section-title">Phase 1 分數回顧 <span style="font-weight:400;color:var(--slate-500);">— 看到 GT 後，是否有項目想修正？</span></div>
+        <div id="p2RevisionItems"></div>
       </div>
       <div style="width:100%;display:flex;justify-content:flex-end;padding-top:6px;">
         <button class="btn btn-primary" id="p2CompleteBtn" onclick="completePhase2()">完成比對 &#x2192;</button>
@@ -466,14 +545,20 @@
     </div>
     <div class="phase3-columns" id="phase3Columns"></div>
     <div class="phase3-ranking-area" id="phase3RankingArea">
-      <div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:10px;text-align:center;">整體偏好排序（第 1 名 = 最佳）</div>
-      <div class="ranking-slots" id="rankingSlots"></div>
-      <div class="ranking-reason-area">
-        <label style="font-size:13px;color:var(--slate-500);">排序理由（選填，限 100 字）</label>
-        <textarea id="p3RankingReason" maxlength="100" placeholder="排序理由..." oninput="debounceSave()"></textarea>
-      </div>
-      <div style="text-align:center;margin-top:12px;">
-        <button class="btn btn-success" id="p3CompleteBtn" onclick="completePhase3()">完成此案 &#x2192;</button>
+      <!-- Sequential selection steps -->
+      <div id="p3SelectionUI"></div>
+      <!-- Final summary (shown after all 3 steps) -->
+      <div id="p3Summary" style="display:none;">
+        <div class="p3-summary-title">排序結果</div>
+        <div id="p3SummaryList" class="p3-summary-list"></div>
+        <div class="ranking-reason-area">
+          <label style="font-size:13px;color:var(--slate-500);">排序理由（選填，限 100 字）</label>
+          <textarea id="p3RankingReason" maxlength="100" placeholder="排序理由..." oninput="debounceSave()"></textarea>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
+          <button class="btn btn-ghost" onclick="resetPhase3Selection()">重新排序</button>
+          <button class="btn btn-success" id="p3CompleteBtn" onclick="completePhase3()">完成此案 &#x2192;</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1205,9 +1290,57 @@ function setupSyncScroll() {
   });
 }
 
+function renderPhase2Revisions() {
+  const container = document.getElementById('p2RevisionItems');
+  const p1Data = getPhaseData(currentCase, currentCondIdx, 1) || {};
+  const scores = p1Data.scores || {};
+  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  const revisions = p2Data.revisions || {};
+
+  let html = '';
+  DIMENSIONS.forEach(group => {
+    group.dims.forEach(dim => {
+      const orig = scores[dim.id];
+      const rev = revisions[dim.id];
+      const hasRevision = rev && rev.revised !== null && rev.revised !== undefined;
+      html += `<div class="p2-rev-item">`;
+      html += `<div class="p2-rev-name">${esc(dim.name)}</div>`;
+      html += `<div class="p2-rev-original">${orig !== undefined ? orig : '-'}</div>`;
+      html += `<button class="p2-rev-toggle ${hasRevision ? 'active' : ''}" onclick="toggleRevision(this, '${dim.id}')">${hasRevision ? '修正中' : '修正'}</button>`;
+      html += `<div class="p2-rev-expand ${hasRevision ? 'show' : ''}" id="p2rev_${dim.id}">`;
+      html += `<select onchange="onPhase2Change()" data-dim="${dim.id}">`;
+      html += `<option value="">—</option>`;
+      for (let s = 1; s <= 5; s++) {
+        html += `<option value="${s}" ${hasRevision && rev.revised === s ? 'selected' : ''}>${s}</option>`;
+      }
+      html += `</select>`;
+      html += `<input type="text" placeholder="理由" maxlength="60" data-dim="${dim.id}" value="${hasRevision && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
+      html += `</div>`;
+      html += `</div>`;
+    });
+  });
+  container.innerHTML = html;
+}
+
+function toggleRevision(btn, dimId) {
+  const expand = document.getElementById('p2rev_' + dimId);
+  const isActive = btn.classList.contains('active');
+  if (isActive) {
+    btn.classList.remove('active');
+    btn.textContent = '修正';
+    expand.classList.remove('show');
+    expand.querySelector('select').value = '';
+    expand.querySelector('input').value = '';
+  } else {
+    btn.classList.add('active');
+    btn.textContent = '修正中';
+    expand.classList.add('show');
+  }
+  onPhase2Change();
+}
+
 function restorePhase2() {
   const data = getPhaseData(currentCase, currentCondIdx, 2) || {};
-  // Omission radio
   if (data.has_major_omission === true) {
     const r = document.querySelector('input[name="p2omission"][value="yes"]');
     if (r) r.checked = true;
@@ -1218,19 +1351,32 @@ function restorePhase2() {
     document.querySelectorAll('input[name="p2omission"]').forEach(r => r.checked = false);
   }
   document.getElementById('p2OmissionDetail').value = data.omissions || '';
-  document.getElementById('p2RevisionNote').value = data.phase1_revision_note || '';
+  renderPhase2Revisions();
 }
 
 function collectPhase2Data() {
   const existing = getPhaseData(currentCase, currentCondIdx, 2) || {};
   const omissionRadio = document.querySelector('input[name="p2omission"]:checked');
+  // Collect structured revisions
+  const revisions = {};
+  const expands = document.querySelectorAll('.p2-rev-expand');
+  expands.forEach(expand => {
+    const sel = expand.querySelector('select');
+    const inp = expand.querySelector('input');
+    if (sel && sel.value) {
+      revisions[sel.dataset.dim] = {
+        revised: parseInt(sel.value),
+        reason: inp ? inp.value.trim() : ''
+      };
+    }
+  });
   return {
     ...existing,
     _entered: true,
     has_major_omission: omissionRadio ? omissionRadio.value === 'yes' : null,
     omissions: document.getElementById('p2OmissionDetail').value.trim(),
-    phase1_revision_note: document.getElementById('p2RevisionNote').value.trim(),
-    revision_count: existing.revision_count || 0
+    revisions,
+    revision_count: Object.keys(revisions).length
   };
 }
 
@@ -1320,106 +1466,182 @@ async function loadPhase3() {
   }
   colsEl.innerHTML = colsHtml;
 
-  // Render ranking
-  renderRankingArea();
+  // Sequential selection state
+  p3Ranking = [];
+  renderPhase3Selection();
 
   // Restore
   restorePhase3();
 
   const locked = isCaseLocked(currentCase);
-  document.getElementById('p3CompleteBtn').disabled = locked;
-  if (locked) document.getElementById('p3CompleteBtn').textContent = '此案已完成';
+  if (locked) {
+    document.getElementById('p3CompleteBtn').disabled = true;
+    document.getElementById('p3CompleteBtn').textContent = '此案已完成';
+  }
 }
 
-function renderRankingArea() {
-  const slotsEl = document.getElementById('rankingSlots');
+// ── Phase 3: Sequential Selection ──
+
+let p3Ranking = []; // array of condIdx in preference order
+const P3_STEPS = [
+  { question: '哪個版本最好？', subtitle: '從 4 個版本中選出整體品質最佳的' },
+  { question: '剩下的哪個次好？', subtitle: '從剩餘 3 個版本中選出第 2 名' },
+  { question: '最後兩個，哪個較好？', subtitle: '選出第 3 名，最後一個自動成為第 4 名' },
+];
+const P3_MEDALS = ['🥇', '🥈', '🥉', '4th'];
+
+function renderPhase3Selection() {
+  const ui = document.getElementById('p3SelectionUI');
+  const summary = document.getElementById('p3Summary');
+  const step = p3Ranking.length; // 0, 1, 2, or 3 (done)
+
+  if (step >= 3) {
+    // All selected → show summary
+    ui.style.display = 'none';
+    summary.style.display = 'block';
+    renderPhase3Summary();
+    return;
+  }
+
+  ui.style.display = 'block';
+  summary.style.display = 'none';
+
+  const stepInfo = P3_STEPS[step];
+  const condOrder = getConditionOrder(currentCase);
+  const remaining = [0, 1, 2, 3].filter(i => !p3Ranking.includes(i));
+
   let html = '';
-  for (let rank = 1; rank <= 4; rank++) {
-    html += `<div class="ranking-slot" data-rank="${rank}" ondragover="onDragOver(event)" ondrop="onDrop(event, ${rank})" ondragleave="onDragLeave(event)">`;
-    html += `<div class="rank-label">第 ${rank} 名</div>`;
-    html += `<select class="rank-select" data-rank="${rank}" onchange="onRankSelectChange()">`;
-    html += `<option value="">-- 選擇 --</option>`;
-    for (let i = 0; i < 4; i++) {
-      html += `<option value="${i}">${esc(getAnonLabel(i))}</option>`;
+  // Progress dots
+  html += '<div class="p3-step-progress">';
+  for (let s = 0; s < 3; s++) {
+    let cls = 'p3-step-dot';
+    if (s < step) cls += ' done';
+    else if (s === step) cls += ' current';
+    html += `<div class="${cls}"></div>`;
+  }
+  html += '</div>';
+
+  html += `<div class="p3-step-title">${stepInfo.question}</div>`;
+  html += `<div class="p3-step-subtitle">${stepInfo.subtitle}</div>`;
+
+  // Already selected
+  if (p3Ranking.length > 0) {
+    html += '<div style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;">';
+    p3Ranking.forEach((idx, rank) => {
+      html += `<span style="font-size:13px;padding:4px 10px;border-radius:6px;background:var(--emerald-light);color:var(--emerald);">${P3_MEDALS[rank]} ${esc(getAnonLabel(idx))}</span>`;
+    });
+    html += '</div>';
+  }
+
+  // Choice cards
+  html += '<div class="p3-choices">';
+  for (const i of [0, 1, 2, 3]) {
+    const isRemaining = remaining.includes(i);
+    const isSelected = p3Ranking.includes(i);
+    const label = getAnonLabel(i);
+    const cond = condOrder[i];
+    const aiData = aiDataCache[cond];
+
+    // Preview text: first 80 chars of facts section
+    let preview = '';
+    if (aiData && aiData.sections) {
+      const facts = aiData.sections.find(s => s.id === 'facts');
+      if (facts && facts.content) preview = facts.content.substring(0, 80) + '...';
     }
-    html += `</select>`;
+
+    const cardCls = isSelected ? 'p3-choice-card selected disabled' : (isRemaining ? 'p3-choice-card' : 'p3-choice-card disabled');
+    html += `<div class="${cardCls}" ${isRemaining ? `onclick="selectPhase3Choice(${i})"` : ''}>`;
+    html += `<div class="p3-choice-label">`;
+    if (isSelected) {
+      const rank = p3Ranking.indexOf(i);
+      html += `<span class="p3-choice-medal">${P3_MEDALS[rank]}</span>`;
+    }
+    html += `${esc(label)}</div>`;
+    html += `<div class="p3-choice-preview">${esc(preview)}</div>`;
+    if (isRemaining) {
+      html += `<button class="p3-choice-btn" onclick="event.stopPropagation();selectPhase3Choice(${i})">選擇</button>`;
+    }
     html += `</div>`;
   }
-  slotsEl.innerHTML = html;
+  html += '</div>';
 
-  // Add draggable items below slots
-  let dragHtml = '<div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;" id="rankingPool">';
-  for (let i = 0; i < 4; i++) {
-    dragHtml += `<div class="ranking-item" draggable="true" data-idx="${i}" ondragstart="onDragStart(event, ${i})">${esc(getAnonLabel(i))}</div>`;
-  }
-  dragHtml += '</div>';
-  slotsEl.insertAdjacentHTML('afterend', dragHtml);
-}
-
-// Drag and drop
-let dragIdx = null;
-
-function onDragStart(e, idx) {
-  dragIdx = idx;
-  e.dataTransfer.effectAllowed = 'move';
-  e.target.classList.add('dragging');
-}
-
-function onDragOver(e) {
-  e.preventDefault();
-  e.currentTarget.classList.add('drag-over');
-}
-
-function onDragLeave(e) {
-  e.currentTarget.classList.remove('drag-over');
-}
-
-function onDrop(e, rank) {
-  e.preventDefault();
-  e.currentTarget.classList.remove('drag-over');
-  if (dragIdx === null) return;
-
-  // Set the select
-  const sel = e.currentTarget.querySelector('.rank-select');
-  // Check if already placed elsewhere, swap
-  document.querySelectorAll('.rank-select').forEach(s => {
-    if (s !== sel && s.value === String(dragIdx)) s.value = '';
-  });
-  sel.value = String(dragIdx);
-
-  // Remove from pool
-  const pool = document.getElementById('rankingPool');
-  if (pool) {
-    const item = pool.querySelector(`[data-idx="${dragIdx}"]`);
-    if (item) item.style.opacity = '0.3';
+  // Undo button
+  if (p3Ranking.length > 0) {
+    html += '<div style="text-align:center;margin-top:12px;">';
+    html += '<button class="btn btn-ghost" onclick="undoPhase3Selection()">&#x21A9; 上一步</button>';
+    html += '</div>';
   }
 
-  dragIdx = null;
-  document.querySelectorAll('.ranking-item.dragging').forEach(el => el.classList.remove('dragging'));
-  debounceSave();
+  ui.innerHTML = html;
 }
 
-function onRankSelectChange() {
-  // Validate no duplicates
-  const selects = document.querySelectorAll('.rank-select');
-  const used = new Set();
-  selects.forEach(sel => {
-    if (sel.value && used.has(sel.value)) {
-      // Clear this one
-      sel.value = '';
+function selectPhase3Choice(idx) {
+  p3Ranking.push(idx);
+
+  // If 3 selected, auto-assign 4th
+  if (p3Ranking.length === 3) {
+    const last = [0, 1, 2, 3].find(i => !p3Ranking.includes(i));
+    p3Ranking.push(last);
+  }
+
+  renderPhase3Selection();
+  savePhase3State();
+
+  // Highlight the selected column
+  document.querySelectorAll('.phase3-col').forEach((col, i) => {
+    const rank = p3Ranking.indexOf(i);
+    if (rank >= 0) {
+      col.querySelector('.phase3-col-header').innerHTML = `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`;
     }
-    if (sel.value) used.add(sel.value);
   });
+}
 
-  // Update pool visibility
-  const pool = document.getElementById('rankingPool');
-  if (pool) {
-    pool.querySelectorAll('.ranking-item').forEach(item => {
-      const idx = item.dataset.idx;
-      item.style.opacity = used.has(idx) ? '0.3' : '1';
-    });
-  }
-  debounceSave();
+function undoPhase3Selection() {
+  if (p3Ranking.length === 4) p3Ranking.pop(); // Remove auto-assigned 4th
+  p3Ranking.pop();
+  renderPhase3Selection();
+  savePhase3State();
+
+  // Reset column headers
+  document.querySelectorAll('.phase3-col').forEach((col, i) => {
+    const rank = p3Ranking.indexOf(i);
+    col.querySelector('.phase3-col-header').innerHTML = rank >= 0
+      ? `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`
+      : esc(getAnonLabel(i));
+  });
+}
+
+function resetPhase3Selection() {
+  p3Ranking = [];
+  renderPhase3Selection();
+  savePhase3State();
+  document.querySelectorAll('.phase3-col').forEach((col, i) => {
+    col.querySelector('.phase3-col-header').innerHTML = esc(getAnonLabel(i));
+  });
+}
+
+function renderPhase3Summary() {
+  const list = document.getElementById('p3SummaryList');
+  let html = '';
+  p3Ranking.forEach((idx, rank) => {
+    html += `<div class="p3-summary-item">`;
+    html += `<span class="p3-summary-rank">${P3_MEDALS[rank]}</span>`;
+    html += `<span>${esc(getAnonLabel(idx))}</span>`;
+    html += `</div>`;
+  });
+  list.innerHTML = html;
+}
+
+function savePhase3State() {
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  let existing = {};
+  try { existing = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
+  const ranking = p3Ranking.map(idx => getAnonLabel(idx));
+  const reason = document.getElementById('p3RankingReason');
+  existing.ranking = ranking;
+  if (reason) existing.ranking_reason = reason.value.trim();
+  localStorage.setItem(key, JSON.stringify(existing));
 }
 
 function collectPhase3Data() {
@@ -1427,18 +1649,9 @@ function collectPhase3Data() {
   const key = `eval_v2_${ev}_${currentCase}_phase3`;
   let existing = {};
   try { existing = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
-
-  const ranking = [];
-  const selects = document.querySelectorAll('.rank-select');
-  selects.forEach(sel => {
-    if (sel.value !== '') {
-      ranking.push(getAnonLabel(parseInt(sel.value)));
-    }
-  });
-
   return {
     ...existing,
-    ranking,
+    ranking: p3Ranking.map(idx => getAnonLabel(idx)),
     ranking_reason: document.getElementById('p3RankingReason').value.trim(),
     revision_count: existing.revision_count || 0
   };
@@ -1449,42 +1662,41 @@ function restorePhase3() {
   const key = `eval_v2_${ev}_${currentCase}_phase3`;
   let data = null;
   try { data = JSON.parse(localStorage.getItem(key)); } catch {}
-  if (!data) return;
+  if (!data || !data.ranking || !Array.isArray(data.ranking)) return;
 
-  // Restore ranking selects
-  if (data.ranking && Array.isArray(data.ranking)) {
-    const selects = document.querySelectorAll('.rank-select');
-    data.ranking.forEach((label, rank) => {
-      const idx = ANON_LABELS.indexOf(label);
-      if (idx >= 0 && selects[rank]) {
-        selects[rank].value = String(idx);
-      }
-    });
-    onRankSelectChange(); // Update pool
-  }
+  // Convert labels back to indices
+  p3Ranking = [];
+  data.ranking.forEach(label => {
+    const idx = ANON_LABELS.indexOf(label);
+    if (idx >= 0) p3Ranking.push(idx);
+  });
 
   if (data.ranking_reason) {
     document.getElementById('p3RankingReason').value = data.ranking_reason;
   }
+
+  renderPhase3Selection();
+
+  // Update column headers
+  document.querySelectorAll('.phase3-col').forEach((col, i) => {
+    const rank = p3Ranking.indexOf(i);
+    if (rank >= 0) {
+      col.querySelector('.phase3-col-header').innerHTML = `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`;
+    }
+  });
 }
 
 function completePhase3() {
-  const data = collectPhase3Data();
-  if (!data.ranking || data.ranking.length !== 4) {
-    showToast('請為所有 4 個版本排序', 'error');
-    return;
-  }
-  // Check for duplicates
-  const unique = new Set(data.ranking);
-  if (unique.size !== 4) {
-    showToast('排序不可有重複', 'error');
+  if (p3Ranking.length !== 4) {
+    showToast('請完成所有排序步驟', 'error');
     return;
   }
 
+  const data = collectPhase3Data();
   data._complete = true;
+  data._saved = new Date().toISOString();
   const ev = getEvaluator();
   const key = `eval_v2_${ev}_${currentCase}_phase3`;
-  data._saved = new Date().toISOString();
   localStorage.setItem(key, JSON.stringify(data));
 
   showToast('此案評估完成！', 'success');
@@ -1657,8 +1869,7 @@ function exportJSON() {
       real_condition: cond,
       scores: p1 ? p1.scores || {} : {},
       overall_comment: p1 ? p1.overall_comment || '' : '',
-      revision_count: p1 ? p1.revision_count || 0 : 0,
-      phase1_revision_note: ''
+      revision_count: p1 ? p1.revision_count || 0 : 0
     };
 
     // Phase 2
@@ -1666,13 +1877,9 @@ function exportJSON() {
     result.phase2[label] = {
       has_major_omission: p2 ? p2.has_major_omission : null,
       omissions: p2 ? p2.omissions || '' : '',
+      revisions: p2 ? p2.revisions || {} : {},
       revision_count: p2 ? p2.revision_count || 0 : 0
     };
-
-    // Copy revision note from phase2 to phase1
-    if (p2 && p2.phase1_revision_note) {
-      result.phase1[label].phase1_revision_note = p2.phase1_revision_note;
-    }
   }
 
   // Phase 3
@@ -1714,16 +1921,15 @@ function buildCaseExportData(caseName) {
       real_condition: cond,
       scores: p1 ? p1.scores || {} : {},
       overall_comment: p1 ? p1.overall_comment || '' : '',
-      revision_count: p1 ? p1.revision_count || 0 : 0,
-      phase1_revision_note: ''
+      revision_count: p1 ? p1.revision_count || 0 : 0
     };
     const p2 = getPhaseData(caseName, i, 2);
     result.phase2[label] = {
       has_major_omission: p2 ? p2.has_major_omission : null,
       omissions: p2 ? p2.omissions || '' : '',
+      revisions: p2 ? p2.revisions || {} : {},
       revision_count: p2 ? p2.revision_count || 0 : 0
     };
-    if (p2 && p2.phase1_revision_note) result.phase1[label].phase1_revision_note = p2.phase1_revision_note;
   }
   try {
     const p3 = JSON.parse(localStorage.getItem(`eval_v2_${evaluator}_${caseName}_phase3`));
@@ -1798,10 +2004,11 @@ function importSingleCase(data) {
     if (data.phase2 && data.phase2[label]) {
       const key = `eval_v2_${evaluator}_${caseName}_${i}_phase2`;
       const p2 = data.phase2[label];
-      const stored = { has_major_omission: p2.has_major_omission, omissions: p2.omissions, revision_count: p2.revision_count, _entered: p2.has_major_omission !== null };
-      if (data.phase1 && data.phase1[label] && data.phase1[label].phase1_revision_note) {
-        stored.phase1_revision_note = data.phase1[label].phase1_revision_note;
-      }
+      const stored = {
+        has_major_omission: p2.has_major_omission, omissions: p2.omissions,
+        revisions: p2.revisions || {}, revision_count: p2.revision_count,
+        _entered: p2.has_major_omission !== null
+      };
       localStorage.setItem(key, JSON.stringify(stored));
     }
   }
