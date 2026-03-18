@@ -1246,8 +1246,8 @@ function renderPhase2Revisions() {
       num++;
       const orig = scores[dim.id];
       const rev = revisions[dim.id];
-      const hasRevision = rev && rev.revised !== null && rev.revised !== undefined;
-      const isRevising = hasRevision;
+      const isRevising = !!rev; // rev exists = user clicked "修"
+      const hasRevision = isRevising && rev.revised !== null && rev.revised !== undefined;
 
       html += `<div class="p2-eval-item" data-dim="${dim.id}">`;
       html += `<div class="p2-eval-row">`;
