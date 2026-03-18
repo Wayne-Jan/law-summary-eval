@@ -1249,33 +1249,51 @@ function renderPhase2Revisions() {
       const orig = scores[dim.id];
       const rev = revisions[dim.id];
       const isRevising = !!rev;
+      const hasSelected = isRevising && rev.revised !== null && rev.revised !== undefined;
 
       html += `<div class="p2-rev-item">`;
       // Header: number + name + toggle
       html += `<div class="p2-rev-header">`;
       html += `<span class="p2-rev-num">${num}.</span>`;
       html += `<span class="p2-rev-name">${esc(dim.name)}</span>`;
-      html += `<button class="p2-rev-toggle ${isRevising ? 'active' : ''}" onclick="toggleRevision('${dim.id}')">${isRevising ? '取消修正' : '修'}</button>`;
+      html += `<button class="p2-rev-toggle ${isRevising ? 'active' : ''}" onclick="toggleRevision('${dim.id}')">${isRevising ? '取消' : '修'}</button>`;
       html += `</div>`;
 
-      // Original score row (always visible)
-      html += `<div class="p2-orig-row">`;
-      html += `<span class="p2-orig-label">原始</span>`;
-      html += `<div class="p2-orig-dots">`;
-      for (let s = 1; s <= 5; s++) {
-        html += `<div class="p2-orig-dot ${s === orig ? 'filled' : ''}">${s}</div>`;
+      if (hasSelected) {
+        // Revision complete: only show amber row
+        html += `<div class="p2-rev-row show">`;
+        html += `<span class="p2-rev-label">修正</span>`;
+        html += `<div class="p2-rev-dots">`;
+        for (let s = 1; s <= 5; s++) {
+          html += `<div class="p2-rev-dot ${rev.revised === s ? 'filled' : ''}" onclick="setRevisionScore('${dim.id}', ${s})">${s}</div>`;
+        }
+        html += `</div></div>`;
+      } else if (isRevising) {
+        // Revising but not yet selected: show original + amber selectable
+        html += `<div class="p2-orig-row">`;
+        html += `<span class="p2-orig-label">原始</span>`;
+        html += `<div class="p2-orig-dots">`;
+        for (let s = 1; s <= 5; s++) {
+          html += `<div class="p2-orig-dot ${s === orig ? 'filled' : ''}">${s}</div>`;
+        }
+        html += `</div></div>`;
+        html += `<div class="p2-rev-row show">`;
+        html += `<span class="p2-rev-label">修正</span>`;
+        html += `<div class="p2-rev-dots">`;
+        for (let s = 1; s <= 5; s++) {
+          html += `<div class="p2-rev-dot" onclick="setRevisionScore('${dim.id}', ${s})">${s}</div>`;
+        }
+        html += `</div></div>`;
+      } else {
+        // Not revising: show original only
+        html += `<div class="p2-orig-row">`;
+        html += `<span class="p2-orig-label">原始</span>`;
+        html += `<div class="p2-orig-dots">`;
+        for (let s = 1; s <= 5; s++) {
+          html += `<div class="p2-orig-dot ${s === orig ? 'filled' : ''}">${s}</div>`;
+        }
+        html += `</div></div>`;
       }
-      html += `</div></div>`;
-
-      // Revision score row (only when revising)
-      html += `<div class="p2-rev-row ${isRevising ? 'show' : ''}">`;
-      html += `<span class="p2-rev-label">修正</span>`;
-      html += `<div class="p2-rev-dots">`;
-      for (let s = 1; s <= 5; s++) {
-        const isFilled = isRevising && rev.revised === s;
-        html += `<div class="p2-rev-dot ${isFilled ? 'filled' : ''}" onclick="setRevisionScore('${dim.id}', ${s})">${s}</div>`;
-      }
-      html += `</div></div>`;
 
       // Reason (only when revising)
       html += `<div class="p2-rev-reason ${isRevising ? 'show' : ''}">`;
