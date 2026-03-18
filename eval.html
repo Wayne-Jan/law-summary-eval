@@ -82,11 +82,12 @@
     .panel-summary { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; }
     .panel-eval { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
 
-    /* ─── PHASE 2: Two-panel + bottom ─── */
+    /* ─── PHASE 2: Three-column (AI | GT | Review) ─── */
     #phase2View { flex-direction: column; }
     .phase2-panels { display: flex; flex: 1; min-height: 0; }
-    .phase2-ai { flex: 1; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto; }
-    .phase2-gt { flex: 1; background: white; overflow-y: auto; }
+    .phase2-ai { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto; }
+    .phase2-gt { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto; }
+    .phase2-review { flex: 30 0 0; background: var(--slate-50); overflow-y: auto; padding: 14px 16px; }
     .phase2-source-toggle {
       padding: 6px 14px; background: var(--slate-100); border-bottom: 1px solid #e2e8f0;
       cursor: pointer; font-size: 13px; color: var(--slate-500); user-select: none;
@@ -98,20 +99,16 @@
       background: white; border-bottom: 1px solid #e2e8f0;
     }
     .phase2-source-panel.open { max-height: 300px; overflow-y: auto; }
-    .phase2-gap-form {
-      flex-shrink: 0; padding: 14px 20px; background: var(--slate-50);
-      border-top: 1px solid #e2e8f0; overflow-y: auto; max-height: 45vh;
-    }
     .p2-section { margin-bottom: 14px; }
     .p2-section-title { font-size: 14px; font-weight: 600; color: var(--slate-900); margin-bottom: 8px; }
-    .phase2-gap-form .gap-radio-group {
+    .phase2-review .gap-radio-group {
       display: flex; gap: 12px; align-items: center; margin-bottom: 8px;
     }
-    .phase2-gap-form .gap-radio-group label {
+    .phase2-review .gap-radio-group label {
       font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 4px;
     }
-    .phase2-gap-form .gap-radio-group input[type="radio"] { width: 18px; height: 18px; }
-    .phase2-gap-form textarea {
+    .phase2-review .gap-radio-group input[type="radio"] { width: 18px; height: 18px; }
+    .phase2-review textarea {
       width: 100%; font-size: 14px; padding: 8px 12px;
       border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
       resize: vertical; min-height: 36px;
@@ -195,27 +192,17 @@
       display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
     }
     .p3-choice-card {
-      width: 180px; border: 2px solid var(--slate-300); border-radius: 10px;
+      width: 220px; border: 2px solid var(--slate-300); border-radius: 10px;
       background: white; cursor: pointer; transition: all 0.2s; overflow: hidden;
     }
     .p3-choice-card:hover { border-color: var(--indigo); box-shadow: 0 4px 12px rgba(79,70,229,0.15); transform: translateY(-2px); }
     .p3-choice-card.disabled { opacity: 0.35; pointer-events: none; cursor: default; }
     .p3-choice-card.selected { border-color: var(--emerald); background: var(--emerald-light); }
     .p3-choice-label {
-      padding: 10px; text-align: center; font-size: 15px; font-weight: 600;
-      color: var(--slate-900); border-bottom: 1px solid var(--slate-100);
+      padding: 14px 10px; text-align: center; font-size: 16px; font-weight: 600;
+      color: var(--slate-900);
     }
-    .p3-choice-medal { font-size: 18px; margin-right: 4px; }
-    .p3-choice-preview {
-      padding: 8px 10px; font-size: 12px; line-height: 1.6; color: var(--slate-500);
-      max-height: 100px; overflow-y: auto;
-    }
-    .p3-choice-btn {
-      display: block; width: 100%; padding: 10px; border: none; background: var(--indigo-light);
-      color: var(--indigo); font-size: 14px; font-weight: 600; cursor: pointer;
-      font-family: var(--sans); transition: background 0.15s;
-    }
-    .p3-choice-btn:hover { background: var(--indigo); color: white; }
+    .p3-choice-medal { font-size: 20px; margin-right: 4px; }
     /* Summary */
     .p3-summary-title {
       font-size: 16px; font-weight: 600; color: var(--slate-900);
@@ -230,24 +217,6 @@
       font-size: 14px; font-weight: 500;
     }
     .p3-summary-rank { font-size: 18px; }
-    .ranking-slots { display: flex; gap: 12px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-bottom: 12px; }
-    .ranking-slot {
-      width: 160px; min-height: 60px; border: 2px dashed var(--slate-300);
-      border-radius: 8px; padding: 10px; text-align: center; background: white;
-      transition: border-color 0.15s, background 0.15s;
-    }
-    .ranking-slot.drag-over { border-color: var(--indigo); background: var(--indigo-light); }
-    .ranking-slot .rank-label { font-size: 12px; color: var(--slate-500); margin-bottom: 6px; }
-    .ranking-slot select {
-      width: 100%; font-size: 14px; padding: 4px 8px; border: 1px solid var(--slate-300);
-      border-radius: 4px; font-family: var(--sans);
-    }
-    .ranking-item {
-      display: inline-block; padding: 6px 14px; border-radius: 6px;
-      background: var(--indigo-light); color: var(--indigo); font-weight: 600;
-      font-size: 14px; cursor: grab; user-select: none; margin: 2px;
-    }
-    .ranking-item.dragging { opacity: 0.5; }
     .ranking-reason-area { text-align: center; }
     .ranking-reason-area textarea {
       width: 100%; max-width: 500px; font-size: 14px; padding: 8px 12px;
@@ -415,10 +384,10 @@
       #phase1View { flex-direction: column; }
       .panel-source, .panel-summary, .panel-eval { flex: none !important; width: 100% !important; height: auto; max-height: 40vh; }
       .phase2-panels { flex-direction: column; }
-      .phase2-ai, .phase2-gt { flex: none; max-height: 40vh; }
+      .phase2-ai, .phase2-gt, .phase2-review { flex: none !important; max-height: 40vh; }
       .phase3-columns { flex-direction: column; }
       .phase3-col { flex: none; max-height: 30vh; }
-      .ranking-slots { flex-direction: column; align-items: center; }
+      .p3-choices { flex-direction: column; align-items: center; }
     }
 
     /* ─── SECTION SYNC HIGHLIGHT (Phase 2) ─── */
@@ -513,24 +482,28 @@
         </div>
         <div id="p2GTBody" style="padding:12px 16px;"></div>
       </div>
-    </div>
-    <div class="phase2-gap-form" id="p2GapForm">
-      <!-- Omission marking -->
-      <div class="p2-section">
-        <div class="p2-section-title">重大遺漏標記</div>
-        <div class="gap-radio-group">
-          <label><input type="radio" name="p2omission" value="no" onchange="onPhase2Change()"> 無重大遺漏</label>
-          <label><input type="radio" name="p2omission" value="yes" onchange="onPhase2Change()"> 有重大遺漏</label>
+      <div class="phase2-review" id="p2Review">
+        <div class="panel-header" style="background:var(--slate-50);padding:10px 0;border-bottom:1px solid #e2e8f0;margin-bottom:10px;">
+          <div class="panel-header-icon" style="background:var(--amber-light);color:var(--amber);">&#x1F4DD;</div>
+          <span class="panel-header-text">比對審查</span>
         </div>
-        <textarea id="p2OmissionDetail" placeholder="遺漏項目說明..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
-      </div>
-      <!-- Structured revision: Phase 1 scores read-only + optional revise -->
-      <div class="p2-section">
-        <div class="p2-section-title">Phase 1 分數回顧 <span style="font-weight:400;color:var(--slate-500);">— 看到 GT 後，是否有項目想修正？</span></div>
-        <div id="p2RevisionItems"></div>
-      </div>
-      <div style="width:100%;display:flex;justify-content:flex-end;padding-top:6px;">
-        <button class="btn btn-primary" id="p2CompleteBtn" onclick="completePhase2()">完成比對 &#x2192;</button>
+        <!-- Omission marking -->
+        <div class="p2-section">
+          <div class="p2-section-title">重大遺漏標記</div>
+          <div class="gap-radio-group">
+            <label><input type="radio" name="p2omission" value="no" onchange="onPhase2Change()"> 無重大遺漏</label>
+            <label><input type="radio" name="p2omission" value="yes" onchange="onPhase2Change()"> 有重大遺漏</label>
+          </div>
+          <textarea id="p2OmissionDetail" placeholder="遺漏項目說明..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
+        </div>
+        <!-- Structured revision: Phase 1 scores read-only + optional revise -->
+        <div class="p2-section">
+          <div class="p2-section-title">Phase 1 分數回顧 <span style="font-weight:400;color:var(--slate-500);font-size:12px;">— 看到 GT 後，是否有項目想修正？</span></div>
+          <div id="p2RevisionItems"></div>
+        </div>
+        <div style="width:100%;display:flex;justify-content:flex-end;padding-top:6px;">
+          <button class="btn btn-primary" id="p2CompleteBtn" onclick="completePhase2()">完成比對 &#x2192;</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1299,7 +1272,7 @@ function renderPhase2Revisions() {
 
   let html = '';
   DIMENSIONS.forEach(group => {
-    group.dims.forEach(dim => {
+    group.items.forEach(dim => {
       const orig = scores[dim.id];
       const rev = revisions[dim.id];
       const hasRevision = rev && rev.revised !== null && rev.revised !== undefined;
@@ -1524,30 +1497,12 @@ function renderPhase3Selection() {
   html += `<div class="p3-step-title">${stepInfo.question}</div>`;
   html += `<div class="p3-step-subtitle">${stepInfo.subtitle}</div>`;
 
-  // Already selected
-  if (p3Ranking.length > 0) {
-    html += '<div style="display:flex;gap:6px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;">';
-    p3Ranking.forEach((idx, rank) => {
-      html += `<span style="font-size:13px;padding:4px 10px;border-radius:6px;background:var(--emerald-light);color:var(--emerald);">${P3_MEDALS[rank]} ${esc(getAnonLabel(idx))}</span>`;
-    });
-    html += '</div>';
-  }
-
-  // Choice cards
+  // Choice cards (all 4 shown, selected ones show medal, remaining are clickable)
   html += '<div class="p3-choices">';
   for (const i of [0, 1, 2, 3]) {
     const isRemaining = remaining.includes(i);
     const isSelected = p3Ranking.includes(i);
     const label = getAnonLabel(i);
-    const cond = condOrder[i];
-    const aiData = aiDataCache[cond];
-
-    // Preview text: first 80 chars of facts section
-    let preview = '';
-    if (aiData && aiData.sections) {
-      const facts = aiData.sections.find(s => s.id === 'facts');
-      if (facts && facts.content) preview = facts.content.substring(0, 80) + '...';
-    }
 
     const cardCls = isSelected ? 'p3-choice-card selected disabled' : (isRemaining ? 'p3-choice-card' : 'p3-choice-card disabled');
     html += `<div class="${cardCls}" ${isRemaining ? `onclick="selectPhase3Choice(${i})"` : ''}>`;
@@ -1557,10 +1512,6 @@ function renderPhase3Selection() {
       html += `<span class="p3-choice-medal">${P3_MEDALS[rank]}</span>`;
     }
     html += `${esc(label)}</div>`;
-    html += `<div class="p3-choice-preview">${esc(preview)}</div>`;
-    if (isRemaining) {
-      html += `<button class="p3-choice-btn" onclick="event.stopPropagation();selectPhase3Choice(${i})">選擇</button>`;
-    }
     html += `</div>`;
   }
   html += '</div>';
