@@ -911,25 +911,27 @@ function renderPhaseIndicators() {
 }
 
 function switchPhase(phase) {
-  if (isCaseLocked(currentCase) && phase !== 3) return;
-  if (phase === 1) {
-    if (isPhase1Frozen(currentCase, currentCondIdx)) {
-      showToast('Phase 1 已凍結（已看過 GT）', 'error');
-      return;
-    }
-  }
-  if (phase === 2) {
-    if (!isPhase1Complete(currentCase, currentCondIdx)) {
-      showToast('請先完成 Phase 1 全部 11 項評分', 'error');
-      return;
-    }
-  }
-  if (phase === 3) {
-    if (!areAllCondsComplete(currentCase)) {
-      showToast('請先完成所有 4 個版本的 Phase 1 + Phase 2', 'error');
-      return;
-    }
-  }
+  // TODO: re-enable locking before production deployment
+  // Phase locking temporarily disabled for preview/testing
+  // if (isCaseLocked(currentCase) && phase !== 3) return;
+  // if (phase === 1) {
+  //   if (isPhase1Frozen(currentCase, currentCondIdx)) {
+  //     showToast('Phase 1 已凍結（已看過 GT）', 'error');
+  //     return;
+  //   }
+  // }
+  // if (phase === 2) {
+  //   if (!isPhase1Complete(currentCase, currentCondIdx)) {
+  //     showToast('請先完成 Phase 1 全部 11 項評分', 'error');
+  //     return;
+  //   }
+  // }
+  // if (phase === 3) {
+  //   if (!areAllCondsComplete(currentCase)) {
+  //     showToast('請先完成所有 4 個版本的 Phase 1 + Phase 2', 'error');
+  //     return;
+  //   }
+  // }
   saveCurrentState();
   currentPhase = phase;
   renderPhaseIndicators();
@@ -980,8 +982,8 @@ async function loadPhase1() {
   document.getElementById('p1CondLabel').textContent = label;
   renderAISummary('p1SummaryBody', aiData);
 
-  // Frozen state
-  const frozen = isPhase1Frozen(currentCase, currentCondIdx);
+  // Frozen state (temporarily disabled for preview)
+  const frozen = false; // isPhase1Frozen(currentCase, currentCondIdx);
   const banner = document.getElementById('p1FrozenBanner');
   banner.classList.toggle('show', frozen);
   document.querySelectorAll('#p1EvalForm .eval-item').forEach(el => {
