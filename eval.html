@@ -96,44 +96,45 @@
       resize: vertical; min-height: 32px;
     }
 
-    /* Locked eval item (Phase 2 frozen score) */
-    .p2-eval-item {
-      padding: 6px 0; border-bottom: 1px solid var(--slate-100);
-    }
-    .p2-eval-item:last-child { border-bottom: none; }
-    .p2-eval-row {
-      display: flex; align-items: center; gap: 6px;
-    }
-    .p2-eval-num { font-size: 11px; color: var(--slate-500); width: 18px; flex-shrink: 0; }
-    .p2-eval-name { font-size: 12px; color: var(--slate-700); flex: 1; min-width: 0; }
-    .p2-eval-score {
-      display: flex; gap: 0; flex-shrink: 0;
-    }
-    .p2-score-dot {
-      width: 26px; height: 26px; border: 1px solid var(--slate-300); background: white;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; color: var(--slate-500);
-    }
-    .p2-score-dot:first-child { border-radius: 4px 0 0 4px; }
-    .p2-score-dot:last-child { border-radius: 0 4px 4px 0; }
-    .p2-score-dot:not(:first-child) { border-left: none; }
-    .p2-score-dot.original { background: var(--indigo); color: white; border-color: var(--indigo); font-weight: 700; }
-    .p2-score-dot.selectable { cursor: pointer; transition: all 0.1s; border-color: var(--amber); color: var(--amber); background: var(--amber-light); }
-    .p2-score-dot.selectable:hover { background: var(--amber); color: white; }
-    .p2-score-dot.selectable.original { background: var(--indigo-light); color: var(--indigo); border-color: var(--amber); }
-    .p2-score-dot.selectable.revised { background: var(--amber); color: white; border-color: var(--amber); font-weight: 700; }
-    .p2-revise-btn {
-      font-size: 11px; padding: 2px 8px; border: 1px solid var(--slate-300);
+    /* Phase 2 revision items */
+    .p2-rev-item { margin-bottom: 10px; padding: 8px 10px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
+    .p2-rev-header { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+    .p2-rev-num { font-size: 11px; color: var(--slate-500); }
+    .p2-rev-name { font-size: 12px; font-weight: 600; color: var(--slate-900); flex: 1; }
+    .p2-rev-toggle {
+      font-size: 11px; padding: 2px 10px; border: 1px solid var(--slate-300);
       border-radius: 4px; background: white; cursor: pointer; color: var(--slate-500);
-      font-family: var(--sans); flex-shrink: 0; margin-left: 4px;
+      font-family: var(--sans); transition: all 0.15s;
     }
-    .p2-revise-btn:hover { border-color: var(--amber); color: var(--amber); }
-    .p2-revise-btn.active { background: var(--amber-light); border-color: var(--amber); color: var(--amber); }
-    .p2-revise-reason {
-      display: none; margin-top: 4px; padding-left: 24px;
+    .p2-rev-toggle:hover { border-color: var(--amber); color: var(--amber); }
+    .p2-rev-toggle.active { background: var(--amber); border-color: var(--amber); color: white; font-weight: 600; }
+    /* Original score row (always visible) */
+    .p2-orig-row { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
+    .p2-orig-label { font-size: 11px; color: var(--slate-500); width: 50px; }
+    .p2-orig-dots { display: flex; gap: 3px; }
+    .p2-orig-dot {
+      width: 28px; height: 24px; border: 1px solid var(--slate-300); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--slate-300); background: white;
     }
-    .p2-revise-reason.show { display: block; }
-    .p2-revise-reason input {
+    .p2-orig-dot.filled { background: var(--indigo); color: white; border-color: var(--indigo); font-weight: 700; }
+    /* Revision score row (shown when revising) */
+    .p2-rev-row { display: none; align-items: center; gap: 4px; margin-top: 4px; }
+    .p2-rev-row.show { display: flex; }
+    .p2-rev-label { font-size: 11px; color: var(--amber); width: 50px; font-weight: 600; }
+    .p2-rev-dots { display: flex; gap: 3px; }
+    .p2-rev-dot {
+      width: 28px; height: 24px; border: 1px solid var(--amber); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--amber); background: var(--amber-light);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .p2-rev-dot:hover { background: var(--amber); color: white; }
+    .p2-rev-dot.filled { background: var(--amber); color: white; font-weight: 700; }
+    /* Reason field */
+    .p2-rev-reason { display: none; margin-top: 4px; }
+    .p2-rev-reason.show { display: block; }
+    .p2-rev-reason input {
       width: 100%; font-size: 11px; padding: 4px 8px; border: 1px solid var(--slate-300);
       border-radius: 4px; font-family: var(--sans);
     }
@@ -1247,42 +1248,41 @@ function renderPhase2Revisions() {
       num++;
       const orig = scores[dim.id];
       const rev = revisions[dim.id];
-      const isRevising = !!rev; // rev exists = user clicked "修"
-      const hasRevision = isRevising && rev.revised !== null && rev.revised !== undefined;
+      const isRevising = !!rev;
 
-      html += `<div class="p2-eval-item" data-dim="${dim.id}">`;
-      html += `<div class="p2-eval-row">`;
-      html += `<span class="p2-eval-num">${num}.</span>`;
-      html += `<span class="p2-eval-name">${esc(dim.name)}</span>`;
+      html += `<div class="p2-rev-item">`;
+      // Header: number + name + toggle
+      html += `<div class="p2-rev-header">`;
+      html += `<span class="p2-rev-num">${num}.</span>`;
+      html += `<span class="p2-rev-name">${esc(dim.name)}</span>`;
+      html += `<button class="p2-rev-toggle ${isRevising ? 'active' : ''}" onclick="toggleRevision('${dim.id}')">${isRevising ? '取消修正' : '修'}</button>`;
+      html += `</div>`;
 
-      // Score dots (1-5)
-      html += `<div class="p2-eval-score" id="p2dots_${dim.id}">`;
+      // Original score row (always visible)
+      html += `<div class="p2-orig-row">`;
+      html += `<span class="p2-orig-label">原始</span>`;
+      html += `<div class="p2-orig-dots">`;
       for (let s = 1; s <= 5; s++) {
-        let cls = 'p2-score-dot';
-        if (isRevising && rev.revised === s) {
-          cls += ' revised';
-        } else if (s === orig) {
-          cls += ' original';
-        }
-        if (isRevising) {
-          cls += ' selectable';
-          html += `<div class="${cls}" onclick="setRevisionScore('${dim.id}', ${s})">${s}</div>`;
-        } else {
-          html += `<div class="${cls}">${s}</div>`;
-        }
+        html += `<div class="p2-orig-dot ${s === orig ? 'filled' : ''}">${s}</div>`;
       }
+      html += `</div></div>`;
+
+      // Revision score row (only when revising)
+      html += `<div class="p2-rev-row ${isRevising ? 'show' : ''}">`;
+      html += `<span class="p2-rev-label">修正</span>`;
+      html += `<div class="p2-rev-dots">`;
+      for (let s = 1; s <= 5; s++) {
+        const isFilled = isRevising && rev.revised === s;
+        html += `<div class="p2-rev-dot ${isFilled ? 'filled' : ''}" onclick="setRevisionScore('${dim.id}', ${s})">${s}</div>`;
+      }
+      html += `</div></div>`;
+
+      // Reason (only when revising)
+      html += `<div class="p2-rev-reason ${isRevising ? 'show' : ''}">`;
+      html += `<input type="text" placeholder="修正理由（選填）" maxlength="60" data-dim="${dim.id}" value="${isRevising && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
       html += `</div>`;
 
-      // Revise toggle button
-      html += `<button class="p2-revise-btn ${isRevising ? 'active' : ''}" onclick="toggleRevision('${dim.id}')">修</button>`;
-      html += `</div>`; // end row
-
-      // Reason field (shown when revising)
-      html += `<div class="p2-revise-reason ${isRevising ? 'show' : ''}" id="p2reason_${dim.id}">`;
-      html += `<input type="text" placeholder="修正理由" maxlength="60" data-dim="${dim.id}" value="${isRevising && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
       html += `</div>`;
-
-      html += `</div>`; // end item
     });
   });
   container.innerHTML = html;
@@ -1290,22 +1290,14 @@ function renderPhase2Revisions() {
 
 function toggleRevision(dimId) {
   const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
-  const revisions = p2Data.revisions || {};
-  const isActive = !!revisions[dimId];
-
+  if (!p2Data.revisions) p2Data.revisions = {};
+  const isActive = !!p2Data.revisions[dimId];
   if (isActive) {
-    delete revisions[dimId];
-  }
-  // else: just mark as revising — user will click a score dot
-  // Re-render to update UI state
-  p2Data.revisions = revisions;
-  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
-
-  if (!isActive) {
-    // Start revising: need to re-render with selectable dots
+    delete p2Data.revisions[dimId];
+  } else {
     p2Data.revisions[dimId] = { revised: null, reason: '' };
-    setPhaseData(currentCase, currentCondIdx, 2, p2Data);
   }
+  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
   renderPhase2Revisions();
 }
 
