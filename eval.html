@@ -1271,24 +1271,34 @@ function renderPhase2Revisions() {
 
       // Revision score row (shown when revising)
       if (isRevising) {
+        const pendingScore = p2PendingRevisions[dim.id] != null ? p2PendingRevisions[dim.id] : rev.revised;
+        const isConfirmed = rev._confirmed;
         html += `<div class="p2-rev-row show">`;
         html += `<span class="p2-rev-label">修正</span>`;
         html += `<div class="p2-rev-dots">`;
         for (let s = 1; s <= 5; s++) {
-          const isFilled = rev.revised === s;
+          const isFilled = pendingScore === s;
           const isDisabled = s === orig;
           let cls = 'p2-rev-dot';
           if (isFilled) cls += ' filled';
           if (isDisabled) cls += ' disabled';
-          html += `<div class="${cls}" ${isDisabled ? '' : `onclick="setRevisionScore('${dim.id}', ${s})"`}>${s}</div>`;
+          html += `<div class="${cls}" ${isDisabled ? '' : `onclick="selectPendingRevision('${dim.id}', ${s})"`}>${s}</div>`;
         }
-        html += `</div></div>`;
-      }
+        html += `</div>`;
+        // Confirm/cancel buttons (show when pending and not yet confirmed)
+        if (pendingScore != null && !isConfirmed) {
+          html += `<button class="btn btn-success" style="font-size:11px;padding:2px 10px;margin-left:8px;" onclick="confirmRevision('${dim.id}')">確認</button>`;
+        }
+        if (isConfirmed) {
+          html += `<span style="font-size:11px;color:var(--emerald);margin-left:8px;">✓ 已確認</span>`;
+        }
+        html += `</div>`;
 
-      // Reason (only when revising)
-      html += `<div class="p2-rev-reason ${isRevising ? 'show' : ''}">`;
-      html += `<input type="text" placeholder="修正理由（選填）" maxlength="60" data-dim="${dim.id}" value="${isRevising && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
-      html += `</div>`;
+        // Reason (only when revising)
+        html += `<div class="p2-rev-reason show">`;
+        html += `<input type="text" placeholder="修正理由（選填）" maxlength="60" data-dim="${dim.id}" value="${isRevising && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
+        html += `</div>`;
+      }
 
       html += `</div>`;
     });
@@ -1296,12 +1306,15 @@ function renderPhase2Revisions() {
   container.innerHTML = html;
 }
 
+let p2PendingRevisions = {}; // { dimId: score } — not yet confirmed
+
 function toggleRevision(dimId) {
   const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
   if (!p2Data.revisions) p2Data.revisions = {};
   const isActive = !!p2Data.revisions[dimId];
   if (isActive) {
     delete p2Data.revisions[dimId];
+    delete p2PendingRevisions[dimId];
   } else {
     p2Data.revisions[dimId] = { revised: null, reason: '' };
   }
@@ -1309,20 +1322,22 @@ function toggleRevision(dimId) {
   renderPhase2Revisions();
 }
 
-function setRevisionScore(dimId, score) {
-  // Guard: revision score must differ from original
-  const p1Data = getPhaseData(currentCase, currentCondIdx, 1) || {};
-  const orig = (p1Data.scores || {})[dimId];
-  if (score === orig) {
-    showToast('修正分數與原始相同，請選擇不同分數或點「取消」', 'error');
-    return;
-  }
+function selectPendingRevision(dimId, score) {
+  p2PendingRevisions[dimId] = score;
+  renderPhase2Revisions();
+}
+
+function confirmRevision(dimId) {
+  const score = p2PendingRevisions[dimId];
+  if (score == null) return;
   const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
   if (!p2Data.revisions) p2Data.revisions = {};
   const existing = p2Data.revisions[dimId] || {};
-  p2Data.revisions[dimId] = { revised: score, reason: existing.reason || '' };
+  p2Data.revisions[dimId] = { revised: score, reason: existing.reason || '', _confirmed: true };
   setPhaseData(currentCase, currentCondIdx, 2, p2Data);
+  delete p2PendingRevisions[dimId];
   renderPhase2Revisions();
+  showToast('修正已確認', 'success');
 }
 
 function restorePhase2() {
