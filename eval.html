@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>人類專家評估 — 醫療糾紛判決書摘要</title>
+  <title>人類專家評估 v2 — 醫療糾紛判決書摘要</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,56 +23,181 @@
     .toolbar {
       position: fixed; top: 0; left: 0; right: 0; height: 56px;
       background: white; border-bottom: 1px solid #e2e8f0;
-      display: flex; align-items: center; padding: 0 20px; gap: 10px; z-index: 100;
+      display: flex; align-items: center; padding: 0 16px; gap: 8px; z-index: 100;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
-    .toolbar h1 { font-size: 18px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
-    .toolbar select, .toolbar input {
-      font-size: 15px; padding: 7px 12px; border: 1px solid var(--slate-300);
+    .toolbar h1 { font-size: 16px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
+    .toolbar select, .toolbar input[type="text"] {
+      font-size: 14px; padding: 6px 10px; border: 1px solid var(--slate-300);
       border-radius: 6px; background: white; font-family: var(--sans);
     }
     .toolbar select { cursor: pointer; }
-    #caseSelect { max-width: 320px; }
+    #caseSelect { max-width: 280px; }
     .toolbar .spacer { flex: 1; }
-    .toolbar .sep { width: 1px; height: 24px; background: var(--slate-300); }
-    .toolbar label { font-size: 14px; color: var(--slate-500); white-space: nowrap; }
-    .btn { font-size: 14px; padding: 7px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-family: var(--sans); }
+    .toolbar .sep { width: 1px; height: 24px; background: var(--slate-300); flex-shrink: 0; }
+    .toolbar label { font-size: 13px; color: var(--slate-500); white-space: nowrap; }
+    .btn { font-size: 13px; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-family: var(--sans); transition: background 0.15s; }
     .btn-primary { background: var(--indigo); color: white; }
     .btn-primary:hover { background: #4338ca; }
     .btn-success { background: var(--emerald); color: white; }
     .btn-success:hover { background: #047857; }
     .btn-ghost { background: transparent; color: var(--slate-500); border: 1px solid var(--slate-300); }
     .btn-ghost:hover { background: var(--slate-100); }
-    .save-indicator { font-size: 12px; color: var(--emerald); white-space: nowrap; transition: opacity 0.5s; }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .save-indicator { font-size: 12px; color: var(--emerald); white-space: nowrap; transition: opacity 0.5s; opacity: 0; }
 
-    /* ─── THREE-PANEL LAYOUT ─── */
-    .main { margin-top: 56px; display: flex; height: calc(100vh - 56px - 36px); position: relative; }
+    /* Condition progress pills */
+    .cond-pills { display: flex; gap: 4px; align-items: center; }
+    .cond-pill {
+      font-size: 12px; padding: 3px 8px; border-radius: 12px; cursor: pointer;
+      border: 1px solid var(--slate-300); background: white; color: var(--slate-500);
+      font-weight: 500; white-space: nowrap; transition: all 0.15s;
+    }
+    .cond-pill.active { border-color: var(--indigo); background: var(--indigo-light); color: var(--indigo); font-weight: 700; }
+    .cond-pill.done { border-color: var(--emerald); background: var(--emerald-light); color: var(--emerald); }
+    .cond-pill.locked { border-color: var(--slate-300); background: var(--slate-100); color: var(--slate-500); cursor: not-allowed; }
 
+    /* Phase indicators */
+    .phase-indicators { display: flex; gap: 4px; align-items: center; }
+    .phase-dot {
+      font-size: 12px; padding: 3px 10px; border-radius: 12px;
+      border: 1px solid var(--slate-300); background: white; color: var(--slate-500);
+      font-weight: 500; white-space: nowrap; cursor: pointer; transition: all 0.15s;
+    }
+    .phase-dot.active { border-color: var(--indigo); background: var(--indigo); color: white; }
+    .phase-dot.done { border-color: var(--emerald); background: var(--emerald-light); color: var(--emerald); }
+    .phase-dot.locked { opacity: 0.4; cursor: not-allowed; }
+
+    /* ─── MAIN CONTAINER ─── */
+    .main { margin-top: 56px; height: calc(100vh - 56px - 36px); position: relative; }
+
+    /* ─── VIEWS (Phase 1/2/3) ─── */
+    .view { display: none; height: 100%; }
+    .view.active { display: flex; }
+
+    /* ─── PHASE 1: Three-panel ─── */
+    #phase1View { flex-direction: row; }
     .panel { overflow-y: auto; min-width: 0; }
     .panel-source { flex: 30 0 0; border-right: 1px solid #e2e8f0; background: white; }
     .panel-summary { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; }
-    .panel-eval { flex: 35 0 0; background: var(--slate-50); padding: 14px; }
+    .panel-eval { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
 
-    /* ─── SOURCE PANEL (left) ─── */
-    .source-header {
+    /* ─── PHASE 2: Two-panel + bottom ─── */
+    #phase2View { flex-direction: column; }
+    .phase2-panels { display: flex; flex: 1; min-height: 0; }
+    .phase2-ai { flex: 1; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto; }
+    .phase2-gt { flex: 1; background: white; overflow-y: auto; }
+    .phase2-source-toggle {
+      padding: 6px 14px; background: var(--slate-100); border-bottom: 1px solid #e2e8f0;
+      cursor: pointer; font-size: 13px; color: var(--slate-500); user-select: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .phase2-source-toggle:hover { background: var(--slate-50); }
+    .phase2-source-panel {
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+      background: white; border-bottom: 1px solid #e2e8f0;
+    }
+    .phase2-source-panel.open { max-height: 300px; overflow-y: auto; }
+    .phase2-gap-form {
+      flex-shrink: 0; padding: 14px 20px; background: var(--slate-50);
+      border-top: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start;
+    }
+    .phase2-gap-form .gap-radio-group {
+      display: flex; gap: 12px; align-items: center;
+    }
+    .phase2-gap-form .gap-radio-group label {
+      font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 4px;
+    }
+    .phase2-gap-form .gap-radio-group input[type="radio"] { width: 18px; height: 18px; }
+    .phase2-gap-form textarea {
+      flex: 1; min-width: 300px; font-size: 14px; padding: 8px 12px;
+      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
+      resize: vertical; min-height: 40px;
+    }
+    .phase2-revision-note {
+      width: 100%; margin-top: 4px;
+    }
+    .phase2-revision-note textarea {
+      width: 100%; font-size: 13px; padding: 6px 10px;
+      border: 1px solid var(--amber); border-radius: 6px; font-family: var(--sans);
+      background: var(--amber-light); resize: vertical; min-height: 32px;
+    }
+
+    /* ─── PHASE 3: Four-column ─── */
+    #phase3View { flex-direction: column; }
+    .phase3-source-toggle {
+      padding: 6px 14px; background: var(--slate-100); border-bottom: 1px solid #e2e8f0;
+      cursor: pointer; font-size: 13px; color: var(--slate-500); user-select: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .phase3-source-toggle:hover { background: var(--slate-50); }
+    .phase3-source-panel {
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+      background: white; border-bottom: 1px solid #e2e8f0;
+    }
+    .phase3-source-panel.open { max-height: 250px; overflow-y: auto; }
+    .phase3-columns { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+    .phase3-col {
+      flex: 1; border-right: 1px solid #e2e8f0; overflow-y: auto; background: white;
+      display: flex; flex-direction: column;
+    }
+    .phase3-col:last-child { border-right: none; }
+    .phase3-col-header {
+      position: sticky; top: 0; z-index: 5; padding: 10px 14px;
+      background: var(--slate-50); border-bottom: 1px solid #e2e8f0;
+      font-size: 14px; font-weight: 600; color: var(--slate-900); text-align: center;
+    }
+    .phase3-col-body { padding: 12px 14px; font-size: 14px; line-height: 1.8; flex: 1; }
+
+    .phase3-ranking-area {
+      flex-shrink: 0; padding: 16px 20px; background: var(--slate-50);
+      border-top: 1px solid #e2e8f0;
+    }
+    .ranking-slots { display: flex; gap: 12px; justify-content: center; align-items: flex-start; flex-wrap: wrap; margin-bottom: 12px; }
+    .ranking-slot {
+      width: 160px; min-height: 60px; border: 2px dashed var(--slate-300);
+      border-radius: 8px; padding: 10px; text-align: center; background: white;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .ranking-slot.drag-over { border-color: var(--indigo); background: var(--indigo-light); }
+    .ranking-slot .rank-label { font-size: 12px; color: var(--slate-500); margin-bottom: 6px; }
+    .ranking-slot select {
+      width: 100%; font-size: 14px; padding: 4px 8px; border: 1px solid var(--slate-300);
+      border-radius: 4px; font-family: var(--sans);
+    }
+    .ranking-item {
+      display: inline-block; padding: 6px 14px; border-radius: 6px;
+      background: var(--indigo-light); color: var(--indigo); font-weight: 600;
+      font-size: 14px; cursor: grab; user-select: none; margin: 2px;
+    }
+    .ranking-item.dragging { opacity: 0.5; }
+    .ranking-reason-area { text-align: center; }
+    .ranking-reason-area textarea {
+      width: 100%; max-width: 500px; font-size: 14px; padding: 8px 12px;
+      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
+      resize: vertical; min-height: 36px;
+    }
+
+    /* ─── SHARED PANEL STYLES ─── */
+    .panel-header {
       position: sticky; top: 0; z-index: 10; background: white;
-      padding: 12px 18px 10px; border-bottom: 1px solid #f3f4f6;
+      padding: 10px 16px; border-bottom: 1px solid #f3f4f6;
       display: flex; align-items: center; gap: 8px;
     }
-    .source-icon {
-      width: 26px; height: 26px; border-radius: 6px;
-      background: #f5f5f4; color: #78716c;
+    .panel-header-icon {
+      width: 24px; height: 24px; border-radius: 6px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-      font-size: 13px;
+      font-size: 12px;
     }
-    .source-header-text { font-size: 16px; font-weight: 600; color: var(--slate-900); }
-    .source-header-sub { font-size: 13px; color: var(--slate-500); }
+    .panel-header-text { font-size: 15px; font-weight: 600; color: var(--slate-900); }
+    .panel-header-sub { font-size: 12px; color: var(--slate-500); margin-left: auto; }
 
-    .source-body {
-      padding: 16px 20px; font-size: 16px; line-height: 2;
+    .panel-body {
+      padding: 14px 18px; font-size: 15px; line-height: 1.9;
       color: var(--slate-700); white-space: pre-wrap; word-break: break-all;
     }
-    /* Chunk regions: invisible by default, highlighted with marker pen effect */
+
+    /* Chunk regions */
     .chunk-region { border-radius: 2px; transition: background 0.25s; }
     .chunk-region mark {
       background: transparent; color: inherit;
@@ -80,492 +205,308 @@
       box-decoration-break: clone; -webkit-box-decoration-break: clone;
       transition: background 0.3s;
     }
-    .chunk-region.active mark {
-      background: #fef9c3;
-    }
+    .chunk-region.active mark { background: #fef9c3; }
     .chunk-label {
       display: none; font-size: 11px; font-weight: 700; color: var(--amber);
       background: #fef3c7; padding: 2px 6px; border-radius: 3px;
       vertical-align: middle; margin-right: 4px; letter-spacing: 0.3px;
     }
     .chunk-region.active .chunk-label { display: inline; }
+    .chunk-region.active { border-left: 3px solid var(--amber); padding-left: 12px; margin-left: -15px; }
 
-    /* Subtle left-border indicator for active chunk */
-    .chunk-region.active {
-      border-left: 3px solid var(--amber);
-      padding-left: 12px;
-      margin-left: -15px;
-    }
-
-    /* ─── SUMMARY PANEL (middle) ─── */
-    .summary-header {
-      position: sticky; top: 0; z-index: 10; background: white;
-      padding: 10px 18px; border-bottom: 1px solid #f3f4f6;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .summary-tab {
-      font-size: 15px; padding: 7px 18px; border: 1px solid var(--slate-300);
-      border-radius: 6px; background: white; cursor: pointer; color: var(--slate-500);
-      font-family: var(--sans); font-weight: 500; transition: all 0.15s;
-    }
-    .summary-tab.active-ai { background: var(--purple); color: white; border-color: var(--purple); }
-    .summary-tab.active-gt { background: var(--emerald); color: white; border-color: var(--emerald); }
-
-    .summary-body { padding: 14px 18px; }
-    .section-block { margin-bottom: 18px; }
+    /* Section blocks */
+    .section-block { margin-bottom: 16px; }
     .section-title {
-      font-size: 17px; font-weight: 700; color: var(--slate-900);
-      padding-bottom: 6px; margin-bottom: 10px;
+      font-size: 14px; font-weight: 700; padding: 6px 10px; border-radius: 4px; margin-bottom: 6px;
     }
-    .section-title-ai { border-bottom: 2px solid var(--purple-light); }
-    .section-title-gt { border-bottom: 2px solid var(--emerald-light); }
-    .section-body {
-      font-size: 16px; line-height: 2; white-space: pre-wrap; word-break: break-all;
-    }
+    .section-title-ai { background: var(--purple-light); color: var(--purple); }
+    .section-title-gt { background: var(--emerald-light); color: var(--emerald); }
+    .section-body { font-size: 15px; line-height: 1.9; white-space: pre-wrap; word-break: break-all; }
 
-    /* Citation tags in AI summary */
+    /* Citation tags */
     .citation-tag {
-      display: inline-block;
-      background: #ede9fe; color: #6d28d9;
-      padding: 2px 7px; border-radius: 3px;
-      font-size: 13px; font-weight: 600;
-      cursor: pointer; vertical-align: middle;
-      transition: all 0.2s; letter-spacing: 0.2px;
-      line-height: 1.6;
+      display: inline; font-size: 12px; font-weight: 700;
+      color: var(--amber); background: #fef3c7;
+      padding: 1px 5px; border-radius: 3px; cursor: pointer;
+      transition: background 0.2s, color 0.2s; vertical-align: middle;
     }
-    .citation-tag:hover { background: #ddd6fe; transform: translateY(-1px); box-shadow: 0 2px 4px rgba(124,58,237,0.15); }
-    .citation-tag.active {
-      background: #fef9c3; color: #92400e;
-      box-shadow: 0 0 0 2px #eab308, 0 2px 8px rgba(234,179,8,0.25);
-      transform: translateY(-1px);
-    }
+    .citation-tag:hover { background: #fde68a; }
+    .citation-tag.active { background: var(--amber); color: white; }
 
-    .empty-text { color: var(--slate-300); font-style: italic; font-size: 15px; }
+    /* ─── EVAL FORM (Phase 1) ─── */
+    .eval-group-title {
+      font-size: 13px; font-weight: 700; color: var(--slate-500); text-transform: uppercase;
+      letter-spacing: 0.5px; padding: 8px 0 4px; border-bottom: 1px solid var(--slate-300); margin-bottom: 8px;
+    }
+    .eval-item { margin-bottom: 14px; padding: 10px 12px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
+    .eval-item.frozen { opacity: 0.7; pointer-events: none; }
+    .eval-item-title { font-size: 14px; font-weight: 600; color: var(--slate-900); margin-bottom: 4px; }
+    .eval-item-toggle {
+      font-size: 12px; color: var(--indigo); cursor: pointer; user-select: none;
+      margin-bottom: 4px; display: inline-block;
+    }
+    .eval-item-toggle:hover { text-decoration: underline; }
+    .eval-anchors {
+      display: none; font-size: 13px; color: var(--slate-500); margin-bottom: 6px;
+      padding: 6px 10px; background: var(--slate-50); border-radius: 4px;
+    }
+    .eval-anchors.show { display: block; }
+    .eval-anchors table { width: 100%; border-collapse: collapse; }
+    .eval-anchors td { padding: 2px 6px; vertical-align: top; }
+    .eval-anchors td:first-child { width: 24px; font-weight: 700; color: var(--indigo); }
+    .eval-sub-anchor { font-size: 12px; color: var(--slate-500); margin-top: 4px; padding: 4px 10px; border-left: 2px solid var(--indigo-light); }
 
-    /* ─── EVAL FORM (right) ─── */
-    .aspect-group {
-      margin-bottom: 10px; border-radius: 8px; overflow: hidden;
-      border: 1px solid #e5e7eb; background: white;
-    }
-    .aspect-header {
-      display: flex; align-items: center; gap: 8px; padding: 11px 14px;
-      cursor: pointer; user-select: none; font-weight: 700; font-size: 16px;
-    }
-    .aspect-header .badge {
-      font-size: 13px; font-weight: 500; padding: 3px 9px; border-radius: 4px;
-    }
-    .aspect-header .arrow {
-      margin-left: auto; transition: transform 0.2s; font-size: 13px; color: var(--slate-500);
-    }
-    .aspect-header.open .arrow { transform: rotate(90deg); }
-    .aspect-body { display: none; padding: 0 14px 14px; }
-    .aspect-body.open { display: block; }
-
-    .aspect-a .aspect-header { color: var(--indigo); background: var(--indigo-light); }
-    .aspect-a .badge { background: var(--indigo); color: white; }
-    .aspect-b .aspect-header { color: var(--emerald); background: var(--emerald-light); }
-    .aspect-b .badge { background: var(--emerald); color: white; }
-    .aspect-c .aspect-header { color: var(--amber); background: var(--amber-light); }
-    .aspect-c .badge { background: var(--amber); color: white; }
-    .aspect-d .aspect-header { color: var(--rose); background: var(--rose-light); }
-    .aspect-d .badge { background: var(--rose); color: white; }
-    .aspect-e .aspect-header { color: var(--purple); background: var(--purple-light); }
-    .aspect-e .badge { background: var(--purple); color: white; }
-
-    .dim-item { padding: 10px 0; border-bottom: 1px solid var(--slate-100); }
-    .dim-item:last-child { border-bottom: none; }
-    .dim-title { font-size: 15px; font-weight: 600; color: var(--slate-900); margin-bottom: 4px; }
-    .dim-desc { font-size: 14px; color: var(--slate-500); line-height: 1.5; margin-bottom: 6px; }
-
-    .dim-anchors {
-      font-size: 13px; color: var(--slate-500); margin-bottom: 6px;
-      display: none; line-height: 1.6;
-    }
-    .dim-anchors.show { display: block; }
-    .dim-anchors table { width: 100%; border-collapse: collapse; }
-    .dim-anchors td { padding: 2px 6px; vertical-align: top; }
-    .dim-anchors td:first-child { width: 24px; font-weight: 600; color: var(--slate-700); }
-    .toggle-anchors {
-      font-size: 13px; color: var(--indigo); cursor: pointer; border: none;
-      background: none; padding: 0; margin-bottom: 4px; font-family: var(--sans);
-    }
-    .toggle-anchors:hover { text-decoration: underline; }
-
-    .likert-row { display: flex; align-items: center; gap: 0; margin-bottom: 6px; }
+    .likert-row { display: flex; gap: 4px; margin-top: 6px; }
     .likert-row label {
-      flex: 1; text-align: center; padding: 8px 0; font-size: 16px;
-      cursor: pointer; border: 1px solid var(--slate-300); color: var(--slate-500);
-      transition: all 0.15s;
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 32px; border: 1px solid var(--slate-300); border-radius: 6px;
+      cursor: pointer; font-size: 14px; font-weight: 500; color: var(--slate-700);
+      transition: all 0.15s; background: white;
     }
-    .likert-row label:first-child { border-radius: 6px 0 0 6px; }
-    .likert-row label:last-child { border-radius: 0 6px 6px 0; }
-    .likert-row label:not(:first-child) { border-left: none; }
+    .likert-row label:hover { border-color: var(--indigo); background: var(--indigo-light); }
     .likert-row input[type="radio"] { display: none; }
     .likert-row input[type="radio"]:checked + span {
-      display: block; background: var(--indigo); color: white; margin: -8px 0;
-      padding: 8px 0; border-radius: 5px; font-weight: 600;
-      box-shadow: 0 2px 6px rgba(79,70,229,0.25);
+      background: var(--indigo); color: white; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%; margin: -1px;
     }
-    .likert-row .na-label input[type="radio"]:checked + span { background: var(--slate-500); }
-
-    .dim-comment {
-      width: 100%; font-size: 14px; padding: 7px 10px; border: 1px solid var(--slate-300);
-      border-radius: 5px; resize: vertical; min-height: 36px; font-family: var(--sans);
-      color: var(--slate-700); line-height: 1.5;
+    .eval-comment {
+      width: 100%; margin-top: 8px; font-size: 13px; padding: 6px 10px;
+      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
+      resize: vertical; min-height: 32px;
     }
-    .dim-comment:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 2px rgba(79,70,229,0.1); }
-    .dim-comment::placeholder { color: var(--slate-300); }
 
-    /* ─── PROGRESS BAR ─── */
-    .progress-bar {
+    /* Action buttons */
+    .action-bar {
+      padding: 12px 20px; background: var(--slate-50); border-top: 1px solid #e2e8f0;
+      display: flex; justify-content: flex-end; gap: 10px; align-items: center;
+      flex-shrink: 0;
+    }
+    .action-bar .btn { font-size: 14px; padding: 8px 20px; }
+
+    /* ─── FOOTER ─── */
+    .footer {
       position: fixed; bottom: 0; left: 0; right: 0; height: 36px;
-      background: white; border-top: 1px solid #e2e8f0; display: flex;
-      align-items: center; padding: 0 20px; gap: 12px; z-index: 100;
+      background: white; border-top: 1px solid #e2e8f0;
+      display: flex; align-items: center; padding: 0 20px; gap: 10px; z-index: 100;
     }
-    .progress-fill { flex: 1; height: 5px; background: var(--slate-100); border-radius: 3px; overflow: hidden; }
-    .progress-fill-inner { height: 100%; background: var(--indigo); border-radius: 3px; transition: width 0.3s; }
-    .progress-text { font-size: 14px; color: var(--slate-500); white-space: nowrap; }
-
-    /* ─── SCROLLBAR ─── */
-    .panel::-webkit-scrollbar { width: 5px; }
-    .panel::-webkit-scrollbar-track { background: transparent; }
-    .panel::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 3px; }
-    .panel::-webkit-scrollbar-thumb:hover { background: var(--slate-500); }
+    .footer-progress-bar {
+      flex: 1; height: 6px; background: var(--slate-100); border-radius: 3px; overflow: hidden;
+    }
+    .footer-progress-fill {
+      height: 100%; background: var(--emerald); border-radius: 3px; transition: width 0.3s;
+    }
+    .footer-text { font-size: 12px; color: var(--slate-500); white-space: nowrap; }
 
     /* ─── RESIZER ─── */
     .resizer {
-      width: 6px; cursor: col-resize; background: transparent;
+      width: 5px; cursor: col-resize; background: transparent;
       flex-shrink: 0; position: relative; z-index: 5;
+      transition: background 0.2s;
     }
-    .resizer::after {
-      content: ''; position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 2px; height: 40px; background: #cbd5e1; border-radius: 2px;
-      transition: background 0.2s, height 0.2s;
+    .resizer:hover, .resizer.active { background: var(--indigo-light); }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-text { color: var(--slate-500); font-style: italic; padding: 20px; }
+
+    /* ─── LOADING ─── */
+    .loading { text-align: center; padding: 40px; color: var(--slate-500); }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);
+      padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 500;
+      z-index: 200; opacity: 0; transition: opacity 0.3s; pointer-events: none;
     }
-    .resizer:hover::after, .resizer.active::after {
-      background: var(--indigo); height: 60px;
+    .toast.show { opacity: 1; }
+    .toast-success { background: var(--emerald); color: white; }
+    .toast-error { background: var(--rose); color: white; }
+    .toast-info { background: var(--indigo); color: white; }
+
+    /* ─── FROZEN BANNER ─── */
+    .frozen-banner {
+      padding: 8px 16px; background: var(--amber-light); color: var(--amber);
+      font-size: 13px; text-align: center; border-bottom: 1px solid #fde68a;
+      display: none;
+    }
+    .frozen-banner.show { display: block; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .toolbar { flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 6px; }
+      .cond-pills, .phase-indicators { flex-wrap: wrap; }
+      #phase1View { flex-direction: column; }
+      .panel-source, .panel-summary, .panel-eval { flex: none !important; width: 100% !important; height: auto; max-height: 40vh; }
+      .phase2-panels { flex-direction: column; }
+      .phase2-ai, .phase2-gt { flex: none; max-height: 40vh; }
+      .phase3-columns { flex-direction: column; }
+      .phase3-col { flex: none; max-height: 30vh; }
+      .ranking-slots { flex-direction: column; align-items: center; }
     }
 
-    /* ─── MOBILE-ONLY ELEMENTS (hidden on desktop) ─── */
-    .mobile-evaluator-badge, .mobile-menu-btn, .mobile-backdrop { display: none; }
-
-    /* ─── DESKTOP: toolbar-controls is transparent wrapper ─── */
-    .toolbar-controls { display: contents; }
-    .ctrl-label { display: none; }
-    .ctrl-row, .ctrl-row-half, .ctrl-row-nav, .ctrl-row-actions, .ctrl-row-evaluator { display: contents; }
-    .desktop-eval-label { font-size: 14px; color: var(--slate-500); white-space: nowrap; }
-
-    /* ─── MOBILE TAB BAR ─── */
-    .mobile-tab-bar { display: none; }
-
-    @media (max-width: 768px) {
-      .main { flex-direction: column; height: auto; }
-      .panel { width: 100% !important; flex: none !important; display: none; }
-      .panel.mobile-active { display: block; height: calc(100vh - 50px - 44px - 36px); overflow-y: auto; }
-      .resizer { display: none; }
-
-      .mobile-tab-bar {
-        display: flex; position: fixed; bottom: 36px; left: 0; right: 0; height: 44px;
-        background: white; border-top: 1px solid #e2e8f0; z-index: 100;
-        align-items: center; justify-content: center; gap: 4px; padding: 0 8px;
-      }
-      .mobile-tab {
-        flex: 1; border: none; background: var(--slate-100); color: var(--slate-500);
-        font-size: 14px; font-weight: 500; padding: 8px 0; border-radius: 6px;
-        cursor: pointer; font-family: var(--sans);
-      }
-      .mobile-tab.active { background: var(--indigo); color: white; }
-
-      .progress-bar { bottom: 0; }
-
-      /* ─── MOBILE TOOLBAR ─── */
-      .toolbar {
-        height: 50px; gap: 8px; padding: 0 12px;
-        overflow: visible; justify-content: space-between;
-      }
-      .toolbar h1 { font-size: 16px; flex-shrink: 0; }
-
-      .mobile-evaluator-badge {
-        display: flex; align-items: center;
-        font-size: 13px; font-weight: 600; color: var(--indigo);
-        background: var(--indigo-light); padding: 4px 10px; border-radius: 20px;
-        white-space: nowrap; cursor: pointer; flex-shrink: 1;
-        min-width: 0; overflow: hidden; text-overflow: ellipsis;
-      }
-
-      .mobile-menu-btn {
-        display: flex; align-items: center; justify-content: center;
-        width: 36px; height: 36px; border: 1px solid var(--slate-300);
-        border-radius: 8px; background: white; font-size: 20px;
-        cursor: pointer; color: var(--slate-700); flex-shrink: 0;
-      }
-      .mobile-menu-btn:hover { background: var(--slate-100); }
-
-      /* ─── MOBILE BACKDROP ─── */
-      .mobile-backdrop {
-        display: none; position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.25); z-index: 98;
-      }
-      .mobile-backdrop.open { display: block; }
-
-      /* ─── MOBILE DRAWER (toolbar-controls) ─── */
-      .toolbar-controls {
-        display: none !important; position: absolute; top: 50px; left: 0; right: 0;
-        background: white; padding: 16px; flex-direction: column; gap: 14px;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 0 0 12px 12px;
-        z-index: 99;
-      }
-      .toolbar-controls.open { display: flex !important; }
-
-      /* Show labels in drawer */
-      .ctrl-label {
-        display: block; font-size: 12px; font-weight: 600; color: var(--slate-500);
-        margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px;
-      }
-
-      /* Each ctrl-row is a column */
-      .ctrl-row { display: flex; flex-direction: column; }
-      .ctrl-row select { width: 100%; font-size: 15px; padding: 10px 12px; }
-
-      /* Half-width pair */
-      .ctrl-row-half { display: flex; flex-direction: row; gap: 12px; }
-      .ctrl-row-half > div { flex: 1; display: flex; flex-direction: column; }
-      .ctrl-row-half > div select { width: 100%; }
-
-      /* Nav links as pills */
-      .ctrl-row-nav {
-        display: flex; flex-direction: row; gap: 6px; justify-content: center;
-        padding-top: 4px; border-top: 1px solid var(--slate-100);
-      }
-      .ctrl-row-nav a {
-        flex: 1; text-align: center; padding: 8px 0; border-radius: 8px;
-        background: var(--indigo-light); color: var(--indigo) !important;
-        font-size: 14px !important; font-weight: 500; text-decoration: none !important;
-      }
-      .ctrl-row-nav a:hover { background: #ddd6fe; }
-
-      /* Action buttons side by side */
-      .ctrl-row-actions {
-        display: flex; flex-direction: row; gap: 8px;
-        padding-top: 4px; border-top: 1px solid var(--slate-100);
-      }
-      .ctrl-row-actions .btn { flex: 1; text-align: center; padding: 10px 0; font-size: 14px; }
-
-      /* Hide desktop-only separators and spacer */
-      .toolbar .desktop-sep { display: none; }
-      .toolbar .spacer { display: none; }
-
-      /* Save indicator in drawer */
-      .toolbar-controls .save-indicator { text-align: center; }
-
-      /* Evaluator row: reorder to top in mobile drawer */
-      .ctrl-row-evaluator { display: flex; flex-direction: column; order: -1; }
-      .ctrl-row-evaluator select { width: 100% !important; font-size: 15px; padding: 10px 12px; }
-      .desktop-eval-label { display: none; }
-
-      /* Adjust main margin for shorter toolbar */
-      .main { margin-top: 50px; }
-    }
+    /* ─── SECTION SYNC HIGHLIGHT (Phase 2) ─── */
+    .section-block.sync-active { background: var(--indigo-light); border-radius: 6px; }
   </style>
 </head>
 <body>
 
-<!-- Toolbar -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TOOLBAR                                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <div class="toolbar">
-  <h1>專家評估</h1>
-  <span class="mobile-evaluator-badge" id="mobileEvalBadge" onclick="toggleMobileDrawer()">未選擇</span>
-  <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileDrawer()">&#9776;</button>
-
-  <div class="toolbar-controls" id="toolbarControls">
-    <div class="sep desktop-sep"></div>
-    <div class="ctrl-row">
-      <label class="ctrl-label">案例</label>
-      <select id="caseSelect"><option>載入中...</option></select>
-    </div>
-    <div class="ctrl-row ctrl-row-half">
-      <div>
-        <label class="ctrl-label">群組</label>
-        <select id="groupSelect">
-          <option value="商用模型">商用模型</option>
-          <option value="開源模型">開源模型</option>
-          <option value="all">全部</option>
-        </select>
-      </div>
-      <div>
-        <label class="ctrl-label">版本</label>
-        <select id="condSelect"><option>載入中...</option></select>
-      </div>
-    </div>
-    <span class="spacer"></span>
-    <div class="ctrl-row ctrl-row-nav">
-      <a id="viewLink" href="view.html" style="font-size:14px;color:var(--indigo);text-decoration:none">摘要瀏覽</a>
-      <a id="timelineLink" href="timeline.html" style="font-size:14px;color:var(--indigo);text-decoration:none">時間軸</a>
-      <a href="metrics.html" style="font-size:14px;color:var(--indigo);text-decoration:none">AI 指標</a>
-      <a href="index.html" style="font-size:14px;color:var(--indigo);text-decoration:none">總覽</a>
-    </div>
-    <div class="sep desktop-sep"></div>
-    <div class="ctrl-row ctrl-row-evaluator">
-      <label class="ctrl-label">評估者</label>
-      <label class="desktop-eval-label">評估者</label>
-      <select id="evaluatorName" style="width:100px">
-        <option value="">請選擇</option>
-        <option value="專家A">專家 A</option>
-        <option value="專家B">專家 B</option>
-        <option value="專家C">專家 C</option>
-        <option value="專家D">專家 D</option>
-        <option value="專家E">專家 E</option>
-      </select>
-    </div>
-    <span class="save-indicator" id="saveIndicator"></span>
-    <div class="ctrl-row ctrl-row-actions">
-      <button class="btn btn-ghost" onclick="clearCurrentEval()">清除此筆</button>
-      <button class="btn btn-success" onclick="exportJSON()">匯出 JSON</button>
-    </div>
-  </div>
+  <h1>評估 v2</h1>
+  <select id="caseSelect" title="選擇案件"></select>
+  <div class="sep"></div>
+  <div class="cond-pills" id="condPills"></div>
+  <div class="sep"></div>
+  <div class="phase-indicators" id="phaseIndicators"></div>
+  <div class="spacer"></div>
+  <span class="save-indicator" id="saveIndicator"></span>
+  <label>評估者</label>
+  <input type="text" id="evaluatorName" placeholder="姓名" style="width:80px" />
+  <button class="btn btn-primary" onclick="exportJSON()">匯出此案</button>
+  <button class="btn btn-ghost" onclick="exportAllJSON()">匯出全部</button>
+  <button class="btn btn-ghost" onclick="importJSON()">匯入</button>
+  <div class="sep"></div>
+  <a href="view.html" class="btn btn-ghost" id="viewLink">檢視</a>
+  <a href="timeline.html" class="btn btn-ghost" id="timelineLink">時間軸</a>
+  <a href="index.html" class="btn btn-ghost">首頁</a>
 </div>
-<div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
 
-<!-- Main 3-panel layout -->
-<div class="main">
-  <!-- Left: Source text -->
-  <div class="panel panel-source" id="panelSource">
-    <div class="source-header">
-      <div class="source-icon">&#128196;</div>
-      <div>
-        <div class="source-header-text">原始判決書</div>
-        <div class="source-header-sub" id="sourceChunkCount"></div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="main" id="mainContainer">
+
+  <!-- ─── PHASE 1 VIEW ─── -->
+  <div class="view" id="phase1View">
+    <div class="panel panel-source" id="p1Source">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:#f5f5f4;color:#78716c;">&#x1F4C4;</div>
+        <span class="panel-header-text">原文</span>
+        <span class="panel-header-sub" id="p1ChunkCount"></span>
       </div>
+      <div class="panel-body" id="p1SourceBody"><span class="empty-text">載入中...</span></div>
     </div>
-    <div class="source-body" id="sourceBody">
-      <span class="empty-text">選擇案例以載入</span>
+    <div class="resizer"></div>
+    <div class="panel panel-summary" id="p1Summary">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
+        <span class="panel-header-text">AI 摘要</span>
+        <span class="panel-header-sub" id="p1CondLabel"></span>
+      </div>
+      <div id="p1SummaryBody" style="padding:12px 16px;"><span class="empty-text">載入中...</span></div>
+    </div>
+    <div class="resizer"></div>
+    <div class="panel panel-eval" id="p1Eval">
+      <div id="p1FrozenBanner" class="frozen-banner">Phase 1 已凍結（已進入 Phase 2，不可修改盲評分數）</div>
+      <div id="p1EvalForm"></div>
+      <div style="padding:8px 0;">
+        <label style="font-size:13px;color:var(--slate-500);">整體短評（選填，限 100 字）</label>
+        <textarea id="p1OverallComment" class="eval-comment" maxlength="100" placeholder="整體短評..."></textarea>
+      </div>
+      <div class="action-bar" style="border-top:none;padding:8px 0;">
+        <span style="font-size:13px;color:var(--slate-500);" id="p1ProgressText"></span>
+        <div class="spacer"></div>
+        <button class="btn btn-primary" id="p1CompleteBtn" onclick="completePhase1()">完成評分 &#x2192;</button>
+      </div>
     </div>
   </div>
 
-  <div class="resizer"></div>
-
-  <!-- Middle: Summary -->
-  <div class="panel panel-summary" id="panelSummary">
-    <div class="summary-header">
-      <button class="summary-tab active-ai" data-target="ai" id="tabAI">AI 生成摘要</button>
-      <button class="summary-tab" data-target="gt" id="tabGT">老師摘要</button>
+  <!-- ─── PHASE 2 VIEW ─── -->
+  <div class="view" id="phase2View">
+    <div class="phase2-source-toggle" onclick="togglePhase2Source()">
+      <span id="p2SourceArrow">&#x25B6;</span> 原文（點擊展開）
     </div>
-    <div class="summary-body" id="summaryAI"></div>
-    <div class="summary-body" id="summaryGT" style="display:none"></div>
+    <div class="phase2-source-panel" id="p2SourcePanel">
+      <div class="panel-body" id="p2SourceBody"></div>
+    </div>
+    <div class="phase2-panels" id="phase2Panels">
+      <div class="phase2-ai" id="p2AI">
+        <div class="panel-header">
+          <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
+          <span class="panel-header-text">AI 摘要</span>
+        </div>
+        <div id="p2AIBody" style="padding:12px 16px;"></div>
+      </div>
+      <div class="phase2-gt" id="p2GT">
+        <div class="panel-header">
+          <div class="panel-header-icon" style="background:var(--emerald-light);color:var(--emerald);">GT</div>
+          <span class="panel-header-text">專家摘要（GT）</span>
+        </div>
+        <div id="p2GTBody" style="padding:12px 16px;"></div>
+      </div>
+    </div>
+    <div class="phase2-gap-form" id="p2GapForm">
+      <div>
+        <div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:6px;">有重大遺漏嗎？</div>
+        <div class="gap-radio-group">
+          <label><input type="radio" name="p2omission" value="no" onchange="onPhase2Change()"> 無重大遺漏</label>
+          <label><input type="radio" name="p2omission" value="yes" onchange="onPhase2Change()"> 有重大遺漏</label>
+        </div>
+      </div>
+      <textarea id="p2OmissionDetail" placeholder="遺漏項目說明..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
+      <div class="phase2-revision-note">
+        <label style="font-size:12px;color:var(--amber);">Phase 1 修正備註（看到 GT 後，若認為 Phase 1 某項應調整，在此記錄，不修改原始分數）</label>
+        <textarea id="p2RevisionNote" placeholder="例：看到 GT 後認為第 3 項應調高..." maxlength="200" onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
+      </div>
+      <div style="width:100%;display:flex;justify-content:flex-end;padding-top:6px;">
+        <button class="btn btn-primary" id="p2CompleteBtn" onclick="completePhase2()">完成比對 &#x2192;</button>
+      </div>
+    </div>
   </div>
 
-  <div class="resizer"></div>
+  <!-- ─── PHASE 3 VIEW ─── -->
+  <div class="view" id="phase3View">
+    <div class="phase3-source-toggle" onclick="togglePhase3Source()">
+      <span id="p3SourceArrow">&#x25B6;</span> 原文（點擊展開）
+    </div>
+    <div class="phase3-source-panel" id="p3SourcePanel">
+      <div class="panel-body" id="p3SourceBody"></div>
+    </div>
+    <div class="phase3-columns" id="phase3Columns"></div>
+    <div class="phase3-ranking-area" id="phase3RankingArea">
+      <div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:10px;text-align:center;">整體偏好排序（第 1 名 = 最佳）</div>
+      <div class="ranking-slots" id="rankingSlots"></div>
+      <div class="ranking-reason-area">
+        <label style="font-size:13px;color:var(--slate-500);">排序理由（選填，限 100 字）</label>
+        <textarea id="p3RankingReason" maxlength="100" placeholder="排序理由..." oninput="debounceSave()"></textarea>
+      </div>
+      <div style="text-align:center;margin-top:12px;">
+        <button class="btn btn-success" id="p3CompleteBtn" onclick="completePhase3()">完成此案 &#x2192;</button>
+      </div>
+    </div>
+  </div>
 
-  <!-- Right: Evaluation -->
-  <div class="panel panel-eval" id="panelEval"></div>
 </div>
 
-<!-- Mobile Tab Bar -->
-<div class="mobile-tab-bar" id="mobileTabBar">
-  <button class="mobile-tab active" data-panel="panelSource" onclick="switchMobilePanel('panelSource', this)">原文</button>
-  <button class="mobile-tab" data-panel="panelSummary" onclick="switchMobilePanel('panelSummary', this)">摘要</button>
-  <button class="mobile-tab" data-panel="panelEval" onclick="switchMobilePanel('panelEval', this)">評估</button>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="footer">
+  <span class="footer-text" id="footerText">0 / 30 案完成</span>
+  <div class="footer-progress-bar">
+    <div class="footer-progress-fill" id="footerFill" style="width:0%"></div>
+  </div>
+  <span class="footer-text" id="footerPct">0%</span>
 </div>
 
-<!-- Progress -->
-<div class="progress-bar">
-  <div class="progress-text" id="progressText">0 / 30</div>
-  <div class="progress-fill"><div class="progress-fill-inner" id="progressFill" style="width:0%"></div></div>
-  <div class="progress-text" id="progressPct">0%</div>
-</div>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// DIMENSIONS
+// CONSTANTS
 // ═══════════════════════════════════════════════════════════════
 
-const ASPECTS = [
-  {
-    id: 'A', name: '事實正確性', color: 'a',
-    dims: [
-      { id: 'A1', name: '時間線完整性', desc: '摘要是否涵蓋判決中的關鍵時間事件？',
-        anchors: {5:'所有關鍵時間事件都被涵蓋',4:'遺漏 1 個次要時間事件',3:'遺漏 1 個重要事件或 2-3 個次要事件',2:'多個重要時間事件缺失',1:'時間線幾乎未呈現'}},
-      { id: 'A2', name: '人物機構辨識', desc: '被告、被害人、醫療機構是否都被正確提及？',
-        anchors: {5:'全部正確提及',4:'遺漏 1 個次要角色',3:'遺漏 1 個重要角色或機構',2:'多個關鍵角色缺失',1:'人物關係無法辨識'}},
-      { id: 'A3', name: '起訴指控涵蓋', desc: '檢察官的起訴指控要點是否被完整呈現？',
-        anchors: {5:'所有指控要點都涵蓋',4:'遺漏 1 個次要指控',3:'遺漏 1 個重要指控',2:'多項指控缺失',1:'起訴指控幾乎未呈現'}},
-      { id: 'A4', name: '辯護論點涵蓋', desc: '被告的辯護論點是否被完整呈現？',
-        anchors: {5:'所有辯護論點都涵蓋',4:'遺漏 1 個次要論點',3:'遺漏 1 個重要論點',2:'多項辯護缺失',1:'辯護論點幾乎未呈現'}},
-      { id: 'A5', name: '鑑定意見涵蓋', desc: '鑑定機構、核心結論、違規評估、因果評估是否被呈現？',
-        anchors: {5:'鑑定意見四子項全部涵蓋',4:'遺漏 1 個子項',3:'遺漏 2 個子項',2:'僅提及鑑定機構名稱',1:'鑑定意見完全缺失'}},
-      { id: 'A6', name: '判決理由涵蓋', desc: '法院的事實認定、法律分析、加重/減輕因素是否呈現？',
-        anchors: {5:'推理要素全部涵蓋',4:'遺漏 1 個次要要素',3:'遺漏 1 個重要推理環節',2:'多個推理環節缺失',1:'判決理由幾乎未呈現'}},
-      { id: 'A7', name: '因果鏈涵蓋', desc: '從醫療行為到損害結果的因果鏈條是否被保留？',
-        anchors: {5:'因果鏈每一環都呈現',4:'遺漏 1 個次要環節',3:'因果鏈部分斷裂',2:'因果鏈嚴重不完整',1:'完全無因果論述'}, na: true},
-      { id: 'A8', name: '判決結果正確', desc: '罪名、刑期、緩刑等判決結果是否正確？',
-        anchors: {5:'全部正確（罪名+刑期+緩刑）',4:'1 處細節偏差',3:'刑期或緩刑有誤',2:'多處錯誤',1:'判決結果完全錯誤'}},
-    ]
-  },
-  {
-    id: 'B', name: '寫作品質', color: 'b',
-    dims: [
-      { id: 'B1', name: '語句通順', desc: '繁體中文語法、用詞、法律文書語體是否正確自然？',
-        anchors: {5:'全部自然流暢',4:'偶有 1 處不自然',3:'2-3 處語法問題',2:'多處錯誤',1:'嚴重影響可讀性'}},
-      { id: 'B2', name: '資訊密度', desc: '是否有冗餘重複？每句是否有獨立資訊貢獻？',
-        anchors: {5:'零冗餘',4:'1 處輕微重複',3:'2-3 處重複',2:'明顯重複灌水',1:'大量重複'}},
-      { id: 'B3', name: '邏輯連貫', desc: '段落間邏輯是否清晰？時間線是否連貫？',
-        anchors: {5:'邏輯清晰順暢',4:'1 處過渡稍弱',3:'2-3 處邏輯跳躍',2:'邏輯混亂',1:'完全無結構'}},
-      { id: 'B4', name: '要點涵蓋率', desc: '與老師摘要比對，關鍵要點是否都被涵蓋？',
-        anchors: {5:'所有要點涵蓋',4:'遺漏 1 個次要要點',3:'遺漏 1 個重要要點',2:'多個要點缺失',1:'大部分缺失'}},
-      { id: 'B5', name: '資訊精確度', desc: '日期、數值、人物關係是否精確？有無幻覺？',
-        anchors: {5:'全部精確無誤',4:'1 處輕微偏差',3:'1-2 處事實偏差',2:'多處錯誤',1:'大量錯誤不可信'}},
-      { id: 'B6', name: '術語一致性', desc: '法律/醫學術語是否正確且前後一致？',
-        anchors: {5:'術語完全正確一致',4:'1 處差異但語意正確',3:'2-3 處不一致',2:'多處錯誤混用',1:'術語嚴重混亂'}},
-      { id: 'B7', name: '結構忠實度', desc: '段落劃分、子標題、編號方式是否合理？',
-        anchors: {5:'高度合理',4:'1 處分段不同',3:'有明顯組織差異',2:'結構差異大',1:'完全無結構'}},
-      { id: 'B8', name: '段落範疇合規', desc: '每個段落是否只包含該段應有的內容？',
-        anchors: {5:'無跨段落汙染',4:'1 處輕微放錯',3:'2 處跨範疇',2:'多處混亂',1:'段落劃分無意義'}},
-      { id: 'B9', name: '風格規範合規', desc: '引用格式、數字格式、用字是否合規？',
-        anchors: {5:'全部合規',4:'1 處不合規',3:'2-3 處不合規',2:'多處不合規',1:'嚴重違規'}},
-      { id: 'B10', name: '法律論證結構', desc: '法院推理的論點是否被完整保留？',
-        anchors: {5:'全部論點覆蓋',4:'遺漏 1 個次要論點',3:'遺漏 1 個重要論點',2:'多個重要遺漏',1:'大部分遺漏'}},
-      { id: 'B11', name: '時間軸清晰度', desc: '事件是否按時序排列？關鍵時間點是否有標記？',
-        anchors: {5:'完全按時序，標記完整',4:'基本清晰，1 處稍模糊',3:'2-3 處跳躍',2:'事件順序混亂',1:'無法重建時序'}},
-      { id: 'B12', name: '推理結構完整性', desc: '注意義務基準 → 違反行為 → 因果關係 → 歸責量刑，是否完整？',
-        anchors: {5:'四步驟完整',4:'三步驟',3:'二步驟',2:'一步驟',1:'完全缺失'}},
-      { id: 'B13', name: '可理解性', desc: '大學學歷一般民眾能否理解？術語是否堆砌？',
-        anchors: {5:'完全可理解',4:'1-2 處需查詢',3:'3-5 處構成障礙',2:'專業術語密集',1:'等同閱讀原始判決'}},
-      { id: 'B14', name: '不確定性標示', desc: '是否區分法院認定/鑑定意見/被告主張/可能性推論？',
-        anchors: {5:'四種來源清楚區分',4:'1 處混淆',3:'2-3 處混淆',2:'頻繁混淆',1:'完全不區分'}},
-    ]
-  },
-  {
-    id: 'C', name: '引用忠實度', color: 'c',
-    dims: [
-      { id: 'C1', name: '引用正確性', desc: '帶有引用標記的陳述，其引用的原文是否支持摘要內容？',
-        anchors: {5:'抽查全部正確支持',4:'1 句為弱支持',3:'2-3 句弱支持',2:'有不支持的引用',1:'多處引用不實'}},
-    ]
-  },
-  {
-    id: 'D', name: '數值與日期', color: 'd',
-    dims: [
-      { id: 'D1', name: '引用率合理性', desc: '引用標記的密度是否適當？太少缺乏根據，太多干擾閱讀。',
-        anchors: {5:'密度恰當',4:'略多或略少但可接受',3:'部分段落不足或過多',2:'分佈明顯不均',1:'幾乎無引用或引用氾濫'}},
-      { id: 'D2', name: '日期正確性', desc: '摘要中的日期是否與原文一致？',
-        anchors: {5:'全部日期正確',4:'1 個日期有誤',3:'2-3 個日期有誤',2:'多處日期錯誤',1:'日期大量錯誤'}},
-      { id: 'D3', name: '數值正確性', desc: '醫療數值、金額、刑期數字是否正確？',
-        anchors: {5:'全部數值正確',4:'1 個數值有誤',3:'2-3 個數值有誤',2:'多處數值錯誤',1:'數值大量錯誤'}},
-    ]
-  },
-  {
-    id: 'E', name: '法律專業判斷', color: 'e',
-    dims: [
-      { id: 'E1', name: '注意義務分析', desc: '摘要是否正確呈現法院認定的注意標準？是否區分「醫療常規」與「醫療水準」？',
-        anchors: {5:'準確呈現注意義務層次與來源',4:'有呈現但層次區分不夠清楚',3:'僅提及「有過失」但未說明標準',2:'注意義務分析有誤',1:'完全未呈現'}},
-      { id: 'E2', name: '因果關係推理', desc: '摘要是否正確呈現法院採用的因果理論？',
-        anchors: {5:'正確呈現因果理論與論證過程',4:'有論證但未明確指出理論類型',3:'僅有結論無論證',2:'因果推理有誤',1:'完全缺失'}},
-      { id: 'E3', name: '臨床裁量空間', desc: '摘要是否呈現醫師臨床裁量的合理性討論？',
-        anchors: {5:'完整呈現裁量討論',4:'有提及但簡略',3:'僅暗示有裁量空間',2:'遺漏重要裁量討論',1:'完全未呈現'}, na: true},
-      { id: 'E4', name: '鑑定意見忠實度', desc: '摘要是否正確呈現鑑定意見的結論與法院對其態度？',
-        anchors: {5:'結論與態度都正確呈現',4:'結論正確但態度不夠明確',3:'結論部分正確，態度未呈現',2:'歪曲鑑定結論',1:'完全缺失或嚴重錯誤'}},
-    ]
-  },
+const EVAL_CONDITIONS = [
+  'claude_afg_v5.1',
+  'ablation_no_afg',
+  'ablation_no_react',
+  'baseline_claude-haiku'
 ];
+
+const ANON_LABELS = ['版本 A', '版本 B', '版本 C', '版本 D'];
 
 const SECTION_NAMES = {
   facts: '（一）公訴事實與起訴意旨',
@@ -575,226 +516,1000 @@ const SECTION_NAMES = {
   reasoning: '（五）判決理由',
 };
 
+const DIMENSIONS = [
+  {
+    group: '內容完整性',
+    items: [
+      { id: 'content_completeness', name: '事實經過完整性', num: 1,
+        anchors: {
+          5: '所有關鍵時間事件和人物機構都被涵蓋',
+          4: '遺漏 1 個次要事件或角色',
+          3: '遺漏 1 個重要事件，或 2-3 個次要事件/角色',
+          2: '多個重要事件或角色缺失',
+          1: '事實經過幾乎未呈現'
+        }
+      },
+      { id: 'issues_coverage', name: '爭點涵蓋', num: 2,
+        anchors: {
+          5: '起訴指控和辯護論點都完整呈現',
+          4: '遺漏 1 個次要指控或辯護論點',
+          3: '遺漏 1 個重要指控或辯護論點',
+          2: '多項指控或辯護缺失',
+          1: '爭點幾乎未呈現'
+        }
+      },
+      { id: 'expert_opinion', name: '鑑定意見完整與忠實', num: 3,
+        anchors: {
+          5: '鑑定機構、核心結論、違規評估、因果評估全部涵蓋；法院對鑑定意見的態度正確反映',
+          4: '遺漏 1 個子項，或法院態度呈現不夠明確',
+          3: '遺漏 2 個子項',
+          2: '僅提及鑑定機構名稱',
+          1: '鑑定意見完全缺失'
+        }
+      },
+      { id: 'reasoning_causation', name: '判決理由與因果推理', num: 4,
+        anchors: {
+          5: '法院事實認定、法律分析、因果鏈每一環都呈現；注意義務標準清楚',
+          4: '遺漏 1 個次要環節，或注意義務標準不夠明確',
+          3: '因果鏈部分斷裂，或判決理由簡略',
+          2: '多個推理環節缺失',
+          1: '判決理由幾乎未呈現'
+        },
+        subAnchor: '注意義務：是否區分「醫療常規」與「醫療水準」？因果理論：條件理論／相當因果關係／客觀歸責'
+      },
+      { id: 'verdict_accuracy', name: '判決結果正確', num: 5,
+        anchors: {
+          5: '罪名、刑期、緩刑全部正確',
+          4: '1 處細節偏差',
+          3: '刑期或緩刑有誤',
+          2: '多處錯誤',
+          1: '判決結果完全錯誤'
+        }
+      }
+    ]
+  },
+  {
+    group: '寫作品質',
+    items: [
+      { id: 'language_quality', name: '語言品質與連貫', num: 6,
+        anchors: {
+          5: '語法正確、用詞精確、段落間邏輯順暢',
+          4: '偶有 1 處不自然或過渡稍弱',
+          3: '2-3 處語法問題或邏輯跳躍',
+          2: '多處語法錯誤或邏輯混亂',
+          1: '嚴重影響可讀性'
+        }
+      },
+      { id: 'info_density', name: '資訊密度', num: 7,
+        anchors: {
+          5: '零冗餘，每句都有獨立資訊貢獻',
+          4: '1 處輕微重複',
+          3: '2-3 處重複或冗餘表達',
+          2: '明顯重複，同一事實在不同段落反覆出現',
+          1: '大量重複'
+        }
+      },
+      { id: 'structure_scope', name: '結構與範疇', num: 8,
+        anchors: {
+          5: '段落劃分合理，每段只含該段應有的內容',
+          4: '1 處分段差異或內容輕微放錯段落',
+          3: '有明顯組織差異或 2 處跨範疇問題',
+          2: '結構差異大或多處內容混亂',
+          1: '完全無結構，內容隨意分佈'
+        }
+      },
+      { id: 'reasoning_completeness', name: '推理結構完整性', num: 9,
+        anchors: {
+          5: '注意義務基準→違反行為→因果關係→歸責量刑，四步驟完整呈現',
+          4: '三步驟完整',
+          3: '二步驟完整',
+          2: '一步驟完整',
+          1: '完全缺失'
+        }
+      },
+      { id: 'uncertainty_calibration', name: '不確定性標示', num: 10,
+        anchors: {
+          5: '清楚區分法院認定、鑑定意見、被告主張、可能性推論四種來源',
+          4: '大致區分，1 處來源混淆',
+          3: '2-3 處來源歸屬不清',
+          2: '頻繁混淆，多處不確定資訊被斷言為事實',
+          1: '完全不區分'
+        }
+      }
+    ]
+  },
+  {
+    group: '引用',
+    items: [
+      { id: 'citation_faithfulness', name: '引用忠實度', num: 11,
+        anchors: {
+          5: '抽查引用標記，全部正確支持摘要內容',
+          4: '1 處為弱支持',
+          3: '2-3 處弱支持',
+          2: '有不支持的引用',
+          1: '多處引用不實'
+        }
+      }
+    ]
+  }
+];
+
 // ═══════════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════════
 
 let manifest = null;
 let caseSlugs = {};
+let caseList = [];
 let currentCase = '';
-let currentCond = '';
-let currentGroup = '商用模型';
-let aiData = null;
-let gtData = null;
+let currentCondIdx = 0; // index into randomized condition order
+let currentPhase = 1;
+let aiDataCache = {}; // { conditionKey: data }
+let gtDataCache = null;
 let activeChunk = null;
-let showingAI = true;
-
-// Condition anonymous label map: real_cond -> "版本 A/B/C..."
-let condAnonMap = {};
+let autoSaveTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const resp = await fetch('./data/manifest.json');
-  manifest = await resp.json();
-  caseSlugs = manifest.case_slugs || {};
+  // Load manifest
+  try {
+    const resp = await fetch('./data/manifest.json');
+    manifest = await resp.json();
+    caseSlugs = manifest.case_slugs || {};
+    // Only include cases that have all 4 eval conditions
+    caseList = (manifest.cases || []).filter(c => {
+      const slug = getSlug(c);
+      return true; // We trust manifest; actual fetch will handle missing
+    });
+  } catch (e) {
+    document.getElementById('mainContainer').innerHTML = '<div class="loading">無法載入 manifest.json</div>';
+    return;
+  }
+
+  // Populate case selector
+  const sel = document.getElementById('caseSelect');
+  caseList.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
 
   // Restore evaluator name
-  const savedName = localStorage.getItem('evalEvaluatorName') || '';
-  const evalNameEl = document.getElementById('evaluatorName');
-  if (savedName && [...evalNameEl.options].some(o => o.value === savedName)) {
-    evalNameEl.value = savedName;
+  const savedName = localStorage.getItem('eval_v2_evaluator');
+  if (savedName) document.getElementById('evaluatorName').value = savedName;
+
+  document.getElementById('evaluatorName').addEventListener('change', () => {
+    localStorage.setItem('eval_v2_evaluator', document.getElementById('evaluatorName').value);
+  });
+
+  // URL params
+  const params = new URLSearchParams(location.search);
+  const urlCase = params.get('case');
+  if (urlCase && caseList.includes(urlCase)) {
+    sel.value = urlCase;
+    currentCase = urlCase;
+  } else if (caseList.length > 0) {
+    currentCase = caseList[0];
+    sel.value = currentCase;
   }
-  let prevEvaluator = savedName;
-  evalNameEl.addEventListener('change', (e) => {
-    // Save current eval under OLD evaluator before switching
-    if (prevEvaluator && currentCase && currentCond) {
-      const oldKey = `eval_${prevEvaluator}_${currentCond}_${currentCase}`;
-      const data = collectFormData();
-      if (hasAnyData(data)) {
-        data._saved = new Date().toISOString();
-        localStorage.setItem(oldKey, JSON.stringify(data));
-      }
-    }
-    prevEvaluator = e.target.value;
-    localStorage.setItem('evalEvaluatorName', e.target.value);
-    // Reset and restore for NEW evaluator
-    resetForm();
-    restoreEval();
-    updateMobileEvalBadge();
+
+  sel.addEventListener('change', () => {
+    currentCase = sel.value;
+    onCaseChange();
   });
-  // Init mobile evaluator badge
-  updateMobileEvalBadge();
-
-  // Read URL params
-  const urlParams = new URLSearchParams(window.location.search);
-  const initialCase = urlParams.get('case') || '';
-  const initialCond = urlParams.get('condition') || '';
-  const initialGroup = urlParams.get('group') || '';
-  if (['all', '商用模型', '開源模型'].includes(initialGroup)) currentGroup = initialGroup;
-
-  // Case selector
-  const caseSelect = document.getElementById('caseSelect');
-  caseSelect.innerHTML = (manifest.cases || []).map(c =>
-    `<option value="${esc(c)}">${esc(c)}</option>`
-  ).join('');
-  caseSelect.addEventListener('change', () => {
-    saveCurrentEval();
-    currentCase = caseSelect.value;
-    loadCase();
-    updateLinks();
-  });
-
-  // Group selector
-  const groupSelect = document.getElementById('groupSelect');
-  groupSelect.value = currentGroup;
-  groupSelect.addEventListener('change', () => {
-    saveCurrentEval();
-    currentGroup = groupSelect.value;
-    renderConditionSelector();
-    loadCase();
-  });
-
-  // Condition selector
-  document.getElementById('condSelect').addEventListener('change', (e) => {
-    saveCurrentEval();
-    currentCond = e.target.value;
-    loadCase();
-  });
-
-  // Summary toggle (AI / GT)
-  document.getElementById('tabAI').addEventListener('click', () => switchTab('ai'));
-  document.getElementById('tabGT').addEventListener('click', () => switchTab('gt'));
 
   renderEvalForm();
-
-  if (manifest.cases.length > 0) {
-    // Use URL param case if valid
-    currentCase = (initialCase && manifest.cases.includes(initialCase)) ? initialCase : manifest.cases[0];
-    caseSelect.value = currentCase;
-    // If URL specifies a condition, find its group and switch to it
-    if (initialCond) {
-      const groups = manifest.condition_groups || {};
-      const condGroup = groups[initialCond];
-      if (condGroup && condGroup !== currentGroup) {
-        currentGroup = condGroup;
-        groupSelect.value = currentGroup;
-      }
-    }
-    renderConditionSelector();
-    if (initialCond && Object.keys(manifest.conditions || {}).includes(initialCond)) {
-      currentCond = initialCond;
-      document.getElementById('condSelect').value = currentCond;
-    }
-    loadCase();
-    updateLinks();
-  }
-
-  // Init resizable panels (desktop)
+  onCaseChange();
   initResizers();
-
-  // Init mobile: activate first panel
-  if (window.innerWidth <= 768) {
-    document.getElementById('panelSource').classList.add('mobile-active');
-  }
-
-  // Auto-save before leaving page
-  window.addEventListener('beforeunload', () => saveCurrentEval());
 });
 
-function updateLinks() {
-  const enc = encodeURIComponent(currentCase);
-  const encCond = encodeURIComponent(currentCond);
-  const encGroup = encodeURIComponent(currentGroup);
-  const vl = document.getElementById('viewLink');
-  if (vl) vl.href = `view.html?case=${enc}&condition=${encCond}&group=${encGroup}`;
-  const tl = document.getElementById('timelineLink');
-  if (tl) tl.href = `timeline.html?case=${enc}`;
-  // Update browser URL
-  const url = new URL(location.href);
-  url.searchParams.set('case', currentCase);
-  url.searchParams.set('condition', currentCond);
-  url.searchParams.set('group', currentGroup);
-  history.replaceState({}, '', url.toString());
+// ═══════════════════════════════════════════════════════════════
+// CONDITION RANDOMIZATION
+// ═══════════════════════════════════════════════════════════════
+
+function getConditionOrder(caseName) {
+  const ev = getEvaluator();
+  const key = `eval_v2_condorder_${ev}_${caseName}`;
+  let order = null;
+  try {
+    const stored = localStorage.getItem(key);
+    if (stored) order = JSON.parse(stored);
+  } catch {}
+  if (!order || !Array.isArray(order) || order.length !== 4) {
+    // Generate random permutation
+    order = [...EVAL_CONDITIONS];
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    localStorage.setItem(key, JSON.stringify(order));
+  }
+  return order;
 }
 
-function switchTab(target) {
-  showingAI = target === 'ai';
-  document.getElementById('tabAI').className = 'summary-tab' + (showingAI ? ' active-ai' : '');
-  document.getElementById('tabGT').className = 'summary-tab' + (!showingAI ? ' active-gt' : '');
-  document.getElementById('summaryAI').style.display = showingAI ? '' : 'none';
-  document.getElementById('summaryGT').style.display = showingAI ? 'none' : '';
+function getAnonLabel(idx) { return ANON_LABELS[idx] || `版本 ${String.fromCharCode(65 + idx)}`; }
+
+function getRealCondition(caseName, anonIdx) {
+  return getConditionOrder(caseName)[anonIdx];
 }
 
 // ═══════════════════════════════════════════════════════════════
-// CONDITION SELECTOR (with group filter + anonymous labels)
+// STATE MACHINE: Per-condition phase status
 // ═══════════════════════════════════════════════════════════════
 
-function renderConditionSelector() {
-  const condSelect = document.getElementById('condSelect');
-  const groups = manifest.condition_groups || {};
-  const allConds = Object.keys(manifest.conditions || {});
+function stateKey(caseName, condIdx, phase) {
+  const ev = getEvaluator();
+  const cond = getRealCondition(caseName, condIdx);
+  return `eval_v2_${ev}_${caseName}_${cond}_phase${phase}`;
+}
 
-  const filtered = allConds.filter(c => {
-    if (currentGroup === 'all') return true;
-    return groups[c] === currentGroup;
+function getPhaseData(caseName, condIdx, phase) {
+  try {
+    const raw = localStorage.getItem(stateKey(caseName, condIdx, phase));
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function setPhaseData(caseName, condIdx, phase, data) {
+  data._saved = new Date().toISOString();
+  localStorage.setItem(stateKey(caseName, condIdx, phase), JSON.stringify(data));
+  showSaveIndicator();
+}
+
+function isPhase1Complete(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 1);
+  if (!d || !d.scores) return false;
+  return DIMENSIONS.every(g => g.items.every(item => d.scores[item.id] != null));
+}
+
+function isPhase1Frozen(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 2);
+  return d != null && d._entered === true;
+}
+
+function isPhase2Complete(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 2);
+  return d && d._complete === true;
+}
+
+function isCondComplete(caseName, condIdx) {
+  return isPhase1Complete(caseName, condIdx) && isPhase2Complete(caseName, condIdx);
+}
+
+function areAllCondsComplete(caseName) {
+  for (let i = 0; i < 4; i++) {
+    if (!isCondComplete(caseName, i)) return false;
+  }
+  return true;
+}
+
+function isPhase3Complete(caseName) {
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${caseName}_phase3`;
+  try {
+    const d = JSON.parse(localStorage.getItem(key));
+    return d && d._complete === true;
+  } catch { return false; }
+}
+
+function isCaseLocked(caseName) {
+  return isPhase3Complete(caseName);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CASE CHANGE
+// ═══════════════════════════════════════════════════════════════
+
+async function onCaseChange() {
+  if (!currentCase) return;
+  aiDataCache = {};
+  gtDataCache = null;
+  activeChunk = null;
+
+  // Determine initial condition index and phase
+  currentCondIdx = 0;
+  currentPhase = 1;
+
+  // Find first incomplete condition
+  if (isCaseLocked(currentCase)) {
+    currentPhase = 3;
+  } else if (areAllCondsComplete(currentCase)) {
+    currentPhase = 3;
+  } else {
+    for (let i = 0; i < 4; i++) {
+      if (!isCondComplete(currentCase, i)) {
+        currentCondIdx = i;
+        if (isPhase1Complete(currentCase, i)) {
+          currentPhase = 2;
+        } else {
+          currentPhase = 1;
+        }
+        break;
+      }
+    }
+  }
+
+  renderCondPills();
+  renderPhaseIndicators();
+  await loadCurrentView();
+  updateFooter();
+  updateURL();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TOOLBAR: Condition pills
+// ═══════════════════════════════════════════════════════════════
+
+function renderCondPills() {
+  const el = document.getElementById('condPills');
+  let html = '';
+  const locked = isCaseLocked(currentCase);
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    const done = isCondComplete(currentCase, i);
+    const isCurrent = (i === currentCondIdx && currentPhase < 3);
+    let cls = 'cond-pill';
+    let icon = '';
+    if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
+    else if (done) { cls += ' done'; icon = ' &#x2713;'; }
+    else if (isCurrent) { cls += ' active'; icon = ' &#x2192;'; }
+    html += `<span class="${cls}" onclick="switchCondition(${i})">${esc(label)}${icon}</span>`;
+  }
+  el.innerHTML = html;
+}
+
+function switchCondition(idx) {
+  if (isCaseLocked(currentCase)) return;
+  if (currentPhase === 3) return; // In phase 3, no condition switching
+  saveCurrentState();
+  currentCondIdx = idx;
+  // Determine phase for this condition
+  if (isPhase1Frozen(currentCase, idx)) {
+    currentPhase = 2;
+  } else if (isPhase1Complete(currentCase, idx) && !isPhase2Complete(currentCase, idx)) {
+    currentPhase = 2;
+  } else if (isCondComplete(currentCase, idx)) {
+    // Already done, show phase 2 (read-only effectively)
+    currentPhase = 2;
+  } else {
+    currentPhase = 1;
+  }
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TOOLBAR: Phase indicators
+// ═══════════════════════════════════════════════════════════════
+
+function renderPhaseIndicators() {
+  const el = document.getElementById('phaseIndicators');
+  const locked = isCaseLocked(currentCase);
+  const allDone = areAllCondsComplete(currentCase);
+
+  const phases = [
+    { num: 1, label: 'Phase 1' },
+    { num: 2, label: 'Phase 2' },
+    { num: 3, label: 'Phase 3' }
+  ];
+
+  let html = '';
+  phases.forEach(p => {
+    let cls = 'phase-dot';
+    if (p.num === currentPhase) cls += ' active';
+    else if (p.num === 3 && !allDone && !locked) cls += ' locked';
+    else if (p.num === 1 && isPhase1Frozen(currentCase, currentCondIdx)) cls += ' done';
+    else if (p.num === 2 && isPhase2Complete(currentCase, currentCondIdx)) cls += ' done';
+    else if (p.num === 3 && locked) cls += ' done';
+    html += `<span class="${cls}" onclick="switchPhase(${p.num})">${p.label}</span>`;
   });
+  el.innerHTML = html;
+}
 
-  // Build anonymous labels
-  condAnonMap = {};
-  filtered.forEach((c, i) => {
-    condAnonMap[c] = '版本 ' + String.fromCharCode(65 + i);
-  });
+function switchPhase(phase) {
+  if (isCaseLocked(currentCase) && phase !== 3) return;
+  if (phase === 1) {
+    if (isPhase1Frozen(currentCase, currentCondIdx)) {
+      showToast('Phase 1 已凍結（已看過 GT）', 'error');
+      return;
+    }
+  }
+  if (phase === 2) {
+    if (!isPhase1Complete(currentCase, currentCondIdx)) {
+      showToast('請先完成 Phase 1 全部 11 項評分', 'error');
+      return;
+    }
+  }
+  if (phase === 3) {
+    if (!areAllCondsComplete(currentCase)) {
+      showToast('請先完成所有 4 個版本的 Phase 1 + Phase 2', 'error');
+      return;
+    }
+  }
+  saveCurrentState();
+  currentPhase = phase;
+  renderPhaseIndicators();
+  loadCurrentView();
+}
 
-  condSelect.innerHTML = filtered.map(c =>
-    `<option value="${esc(c)}">${esc(condAnonMap[c])}</option>`
-  ).join('');
+// ═══════════════════════════════════════════════════════════════
+// VIEW SWITCHING
+// ═══════════════════════════════════════════════════════════════
 
-  // Reset to first in filtered list
-  if (filtered.length > 0) {
-    if (!filtered.includes(currentCond)) currentCond = filtered[0];
-    condSelect.value = currentCond;
+async function loadCurrentView() {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+
+  if (currentPhase === 1) {
+    document.getElementById('phase1View').classList.add('active');
+    await loadPhase1();
+  } else if (currentPhase === 2) {
+    document.getElementById('phase2View').classList.add('active');
+    await loadPhase2();
+  } else if (currentPhase === 3) {
+    document.getElementById('phase3View').classList.add('active');
+    await loadPhase3();
   }
 }
 
 // ═══════════════════════════════════════════════════════════════
-// DATA LOADING
+// PHASE 1: Blind Scoring
 // ═══════════════════════════════════════════════════════════════
 
-function getSlug(name) { return caseSlugs[name] || encodeURIComponent(name); }
-
-async function loadCase() {
-  if (!currentCase || !currentCond) return;
+async function loadPhase1() {
+  const cond = getRealCondition(currentCase, currentCondIdx);
   const slug = getSlug(currentCase);
 
-  const [aiResp, gtResp] = await Promise.all([
-    fetch(`./data/${currentCond}/${slug}.json`).catch(() => null),
-    fetch(`./data/gt/${slug}.json`).catch(() => null),
-  ]);
-  aiData = aiResp && aiResp.ok ? await aiResp.json() : null;
-  gtData = gtResp && gtResp.ok ? await gtResp.json() : null;
+  // Load AI data if not cached
+  if (!aiDataCache[cond]) {
+    try {
+      const resp = await fetch(`./data/${cond}/${slug}.json`);
+      if (resp.ok) aiDataCache[cond] = await resp.json();
+    } catch {}
+  }
+  const aiData = aiDataCache[cond];
 
-  activeChunk = null;
-  renderSource();
-  renderSummaries();
-  resetForm();
-  restoreEval();
-  updateLinks();
+  // Render source
+  renderSourcePanel('p1SourceBody', 'p1ChunkCount', aiData);
+
+  // Render AI summary
+  const label = getAnonLabel(currentCondIdx);
+  document.getElementById('p1CondLabel').textContent = label;
+  renderAISummary('p1SummaryBody', aiData);
+
+  // Frozen state
+  const frozen = isPhase1Frozen(currentCase, currentCondIdx);
+  const banner = document.getElementById('p1FrozenBanner');
+  banner.classList.toggle('show', frozen);
+  document.querySelectorAll('#p1EvalForm .eval-item').forEach(el => {
+    el.classList.toggle('frozen', frozen);
+  });
+  if (frozen) {
+    document.getElementById('p1CompleteBtn').disabled = true;
+    document.getElementById('p1CompleteBtn').textContent = '已凍結';
+    document.getElementById('p1OverallComment').disabled = true;
+  } else {
+    document.getElementById('p1CompleteBtn').disabled = false;
+    document.getElementById('p1CompleteBtn').textContent = '完成評分 \u2192';
+    document.getElementById('p1OverallComment').disabled = false;
+  }
+
+  // Restore saved data
+  restorePhase1();
+  updatePhase1Progress();
+}
+
+function renderEvalForm() {
+  const container = document.getElementById('p1EvalForm');
+  let html = '';
+
+  DIMENSIONS.forEach(group => {
+    html += `<div class="eval-group-title">${esc(group.group)}</div>`;
+    group.items.forEach(dim => {
+      html += `<div class="eval-item" data-dim="${dim.id}">`;
+      html += `<div class="eval-item-title">${dim.num}. ${esc(dim.name)}</div>`;
+      html += `<span class="eval-item-toggle" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#x25BE;</span>`;
+      html += `<div class="eval-anchors"><table>`;
+      for (let s = 5; s >= 1; s--) {
+        html += `<tr><td>${s}</td><td>${esc(dim.anchors[s] || '')}</td></tr>`;
+      }
+      html += `</table>`;
+      if (dim.subAnchor) {
+        html += `<div class="eval-sub-anchor">${esc(dim.subAnchor)}</div>`;
+      }
+      html += `</div>`;
+      html += `<div class="likert-row">`;
+      for (let s = 1; s <= 5; s++) {
+        html += `<label><input type="radio" name="p1_${dim.id}" value="${s}" onchange="onPhase1Change()"><span>${s}</span></label>`;
+      }
+      html += `</div>`;
+      html += `</div>`;
+    });
+  });
+
+  container.innerHTML = html;
+}
+
+function collectPhase1Data() {
+  const scores = {};
+  DIMENSIONS.forEach(g => g.items.forEach(dim => {
+    const checked = document.querySelector(`input[name="p1_${dim.id}"]:checked`);
+    if (checked) scores[dim.id] = parseInt(checked.value);
+  }));
+  const comment = document.getElementById('p1OverallComment').value.trim();
+  const existing = getPhaseData(currentCase, currentCondIdx, 1) || {};
+  return {
+    ...existing,
+    real_condition: getRealCondition(currentCase, currentCondIdx),
+    scores,
+    overall_comment: comment,
+    revision_count: (existing.revision_count || 0)
+  };
+}
+
+function restorePhase1() {
+  // Clear all first
+  DIMENSIONS.forEach(g => g.items.forEach(dim => {
+    document.querySelectorAll(`input[name="p1_${dim.id}"]`).forEach(r => r.checked = false);
+  }));
+  document.getElementById('p1OverallComment').value = '';
+
+  const data = getPhaseData(currentCase, currentCondIdx, 1);
+  if (!data) return;
+  if (data.scores) {
+    Object.entries(data.scores).forEach(([id, val]) => {
+      const radio = document.querySelector(`input[name="p1_${id}"][value="${val}"]`);
+      if (radio) radio.checked = true;
+    });
+  }
+  if (data.overall_comment) document.getElementById('p1OverallComment').value = data.overall_comment;
+}
+
+function onPhase1Change() {
+  if (isPhase1Frozen(currentCase, currentCondIdx)) return;
+  updatePhase1Progress();
+  debounceSave();
+}
+
+function updatePhase1Progress() {
+  let total = 0, filled = 0;
+  DIMENSIONS.forEach(g => g.items.forEach(dim => {
+    total++;
+    if (document.querySelector(`input[name="p1_${dim.id}"]:checked`)) filled++;
+  }));
+  document.getElementById('p1ProgressText').textContent = `${filled} / ${total}`;
+}
+
+function completePhase1() {
+  if (isPhase1Frozen(currentCase, currentCondIdx)) return;
+  // Validate all 11 items
+  const data = collectPhase1Data();
+  const filledCount = Object.keys(data.scores).length;
+  const totalCount = DIMENSIONS.reduce((sum, g) => sum + g.items.length, 0);
+  if (filledCount < totalCount) {
+    showToast(`尚有 ${totalCount - filledCount} 項未評分`, 'error');
+    return;
+  }
+  setPhaseData(currentCase, currentCondIdx, 1, data);
+  showToast('Phase 1 完成，進入 Phase 2', 'success');
+  currentPhase = 2;
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
 }
 
 // ═══════════════════════════════════════════════════════════════
-// RENDER: Source text (left panel) — continuous doc with hidden chunk boundaries
+// PHASE 2: Gap Marking
 // ═══════════════════════════════════════════════════════════════
 
-function renderSource() {
-  const body = document.getElementById('sourceBody');
-  const countEl = document.getElementById('sourceChunkCount');
+async function loadPhase2() {
+  const cond = getRealCondition(currentCase, currentCondIdx);
+  const slug = getSlug(currentCase);
+
+  // Mark Phase 2 as entered (freezes Phase 1)
+  let p2Data = getPhaseData(currentCase, currentCondIdx, 2);
+  if (!p2Data) p2Data = { _entered: true };
+  if (!p2Data._entered) p2Data._entered = true;
+  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
+
+  // Load AI data
+  if (!aiDataCache[cond]) {
+    try {
+      const resp = await fetch(`./data/${cond}/${slug}.json`);
+      if (resp.ok) aiDataCache[cond] = await resp.json();
+    } catch {}
+  }
+  const aiData = aiDataCache[cond];
+
+  // Load GT data (only now!)
+  if (!gtDataCache) {
+    try {
+      const resp = await fetch(`./data/gt/${slug}.json`);
+      if (resp.ok) gtDataCache = await resp.json();
+    } catch {}
+  }
+
+  // Render source (collapsible)
+  renderSourcePanel('p2SourceBody', null, aiData);
+
+  // Render AI summary (Phase 2)
+  renderSectionsSideBySide(aiData, gtDataCache);
+
+  // Setup synchronized scrolling
+  setupSyncScroll();
+
+  // Restore form
+  restorePhase2();
+
+  // Complete button state
+  const locked = isCaseLocked(currentCase);
+  document.getElementById('p2CompleteBtn').disabled = locked;
+}
+
+function renderSectionsSideBySide(aiData, gtData) {
+  const aiBody = document.getElementById('p2AIBody');
+  const gtBody = document.getElementById('p2GTBody');
+
+  const sectionIds = ['facts', 'defense', 'opinions', 'verdict', 'reasoning'];
+
+  if (aiData && aiData.sections) {
+    aiBody.innerHTML = sectionIds.map(sid => {
+      const sec = aiData.sections.find(s => s.id === sid);
+      if (!sec) return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-ai">${esc(SECTION_NAMES[sid])}</div><div class="section-body"><span class="empty-text">無此段落</span></div></div>`;
+      return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-ai">${esc(SECTION_NAMES[sid])}</div><div class="section-body">${renderCitations(sec.content || '')}</div></div>`;
+    }).join('');
+  } else {
+    aiBody.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
+  }
+
+  if (gtData && gtData.sections) {
+    gtBody.innerHTML = sectionIds.map(sid => {
+      const sec = gtData.sections.find(s => s.id === sid);
+      if (!sec) return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-gt">${esc(SECTION_NAMES[sid])}</div><div class="section-body"><span class="empty-text">無此段落</span></div></div>`;
+      return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-gt">${esc(SECTION_NAMES[sid])}</div><div class="section-body">${esc(sec.content || '')}</div></div>`;
+    }).join('');
+  } else {
+    gtBody.innerHTML = '<span class="empty-text">無法載入專家摘要</span>';
+  }
+
+  // Bind citation clicks in Phase 2
+  document.querySelectorAll('#p2AIBody .citation-tag').forEach(tag => {
+    tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, 'p2SourceBody'));
+  });
+}
+
+function setupSyncScroll() {
+  const aiPanel = document.getElementById('p2AI');
+  const gtPanel = document.getElementById('p2GT');
+  let syncing = false;
+
+  aiPanel.addEventListener('scroll', () => {
+    if (syncing) return;
+    syncing = true;
+    const ratio = aiPanel.scrollTop / (aiPanel.scrollHeight - aiPanel.clientHeight || 1);
+    gtPanel.scrollTop = ratio * (gtPanel.scrollHeight - gtPanel.clientHeight);
+    requestAnimationFrame(() => syncing = false);
+  });
+
+  gtPanel.addEventListener('scroll', () => {
+    if (syncing) return;
+    syncing = true;
+    const ratio = gtPanel.scrollTop / (gtPanel.scrollHeight - gtPanel.clientHeight || 1);
+    aiPanel.scrollTop = ratio * (aiPanel.scrollHeight - aiPanel.clientHeight);
+    requestAnimationFrame(() => syncing = false);
+  });
+}
+
+function restorePhase2() {
+  const data = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  // Omission radio
+  if (data.has_major_omission === true) {
+    const r = document.querySelector('input[name="p2omission"][value="yes"]');
+    if (r) r.checked = true;
+  } else if (data.has_major_omission === false) {
+    const r = document.querySelector('input[name="p2omission"][value="no"]');
+    if (r) r.checked = true;
+  } else {
+    document.querySelectorAll('input[name="p2omission"]').forEach(r => r.checked = false);
+  }
+  document.getElementById('p2OmissionDetail').value = data.omissions || '';
+  document.getElementById('p2RevisionNote').value = data.phase1_revision_note || '';
+}
+
+function collectPhase2Data() {
+  const existing = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  const omissionRadio = document.querySelector('input[name="p2omission"]:checked');
+  return {
+    ...existing,
+    _entered: true,
+    has_major_omission: omissionRadio ? omissionRadio.value === 'yes' : null,
+    omissions: document.getElementById('p2OmissionDetail').value.trim(),
+    phase1_revision_note: document.getElementById('p2RevisionNote').value.trim(),
+    revision_count: existing.revision_count || 0
+  };
+}
+
+function onPhase2Change() {
+  debounceSave();
+}
+
+function completePhase2() {
+  const data = collectPhase2Data();
+  const omissionRadio = document.querySelector('input[name="p2omission"]:checked');
+  if (!omissionRadio) {
+    showToast('請選擇「有重大遺漏」或「無重大遺漏」', 'error');
+    return;
+  }
+  data._complete = true;
+  setPhaseData(currentCase, currentCondIdx, 2, data);
+
+  // Check if all conditions done
+  if (areAllCondsComplete(currentCase)) {
+    showToast('所有版本已完成，進入 Phase 3 排序', 'success');
+    currentPhase = 3;
+  } else {
+    // Move to next incomplete condition
+    for (let i = 0; i < 4; i++) {
+      if (!isCondComplete(currentCase, i)) {
+        currentCondIdx = i;
+        currentPhase = 1;
+        showToast(`${getAnonLabel(currentCondIdx)} 完成，進入 ${getAnonLabel(i)}`, 'success');
+        break;
+      }
+    }
+  }
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
+  updateFooter();
+}
+
+function togglePhase2Source() {
+  const panel = document.getElementById('p2SourcePanel');
+  const arrow = document.getElementById('p2SourceArrow');
+  panel.classList.toggle('open');
+  arrow.innerHTML = panel.classList.contains('open') ? '&#x25BC;' : '&#x25B6;';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE 3: Preference Ranking
+// ═══════════════════════════════════════════════════════════════
+
+async function loadPhase3() {
+  const slug = getSlug(currentCase);
+  const condOrder = getConditionOrder(currentCase);
+
+  // Load all 4 conditions
+  for (let i = 0; i < 4; i++) {
+    const cond = condOrder[i];
+    if (!aiDataCache[cond]) {
+      try {
+        const resp = await fetch(`./data/${cond}/${slug}.json`);
+        if (resp.ok) aiDataCache[cond] = await resp.json();
+      } catch {}
+    }
+  }
+
+  // Render source (collapsible)
+  const firstAI = aiDataCache[condOrder[0]];
+  renderSourcePanel('p3SourceBody', null, firstAI);
+
+  // Render 4 columns
+  const colsEl = document.getElementById('phase3Columns');
+  let colsHtml = '';
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    const cond = condOrder[i];
+    const aiData = aiDataCache[cond];
+    colsHtml += `<div class="phase3-col">`;
+    colsHtml += `<div class="phase3-col-header">${esc(label)}</div>`;
+    colsHtml += `<div class="phase3-col-body">`;
+    if (aiData && aiData.sections) {
+      colsHtml += aiData.sections.map(s =>
+        `<div class="section-block"><div class="section-title section-title-ai" style="font-size:12px;padding:4px 8px;">${esc(SECTION_NAMES[s.id] || s.title)}</div><div class="section-body" style="font-size:13px;line-height:1.7;">${esc(s.content || '')}</div></div>`
+      ).join('');
+    } else {
+      colsHtml += '<span class="empty-text">無法載入</span>';
+    }
+    colsHtml += `</div></div>`;
+  }
+  colsEl.innerHTML = colsHtml;
+
+  // Render ranking
+  renderRankingArea();
+
+  // Restore
+  restorePhase3();
+
+  const locked = isCaseLocked(currentCase);
+  document.getElementById('p3CompleteBtn').disabled = locked;
+  if (locked) document.getElementById('p3CompleteBtn').textContent = '此案已完成';
+}
+
+function renderRankingArea() {
+  const slotsEl = document.getElementById('rankingSlots');
+  let html = '';
+  for (let rank = 1; rank <= 4; rank++) {
+    html += `<div class="ranking-slot" data-rank="${rank}" ondragover="onDragOver(event)" ondrop="onDrop(event, ${rank})" ondragleave="onDragLeave(event)">`;
+    html += `<div class="rank-label">第 ${rank} 名</div>`;
+    html += `<select class="rank-select" data-rank="${rank}" onchange="onRankSelectChange()">`;
+    html += `<option value="">-- 選擇 --</option>`;
+    for (let i = 0; i < 4; i++) {
+      html += `<option value="${i}">${esc(getAnonLabel(i))}</option>`;
+    }
+    html += `</select>`;
+    html += `</div>`;
+  }
+  slotsEl.innerHTML = html;
+
+  // Add draggable items below slots
+  let dragHtml = '<div style="display:flex;gap:8px;justify-content:center;margin-top:10px;flex-wrap:wrap;" id="rankingPool">';
+  for (let i = 0; i < 4; i++) {
+    dragHtml += `<div class="ranking-item" draggable="true" data-idx="${i}" ondragstart="onDragStart(event, ${i})">${esc(getAnonLabel(i))}</div>`;
+  }
+  dragHtml += '</div>';
+  slotsEl.insertAdjacentHTML('afterend', dragHtml);
+}
+
+// Drag and drop
+let dragIdx = null;
+
+function onDragStart(e, idx) {
+  dragIdx = idx;
+  e.dataTransfer.effectAllowed = 'move';
+  e.target.classList.add('dragging');
+}
+
+function onDragOver(e) {
+  e.preventDefault();
+  e.currentTarget.classList.add('drag-over');
+}
+
+function onDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+function onDrop(e, rank) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (dragIdx === null) return;
+
+  // Set the select
+  const sel = e.currentTarget.querySelector('.rank-select');
+  // Check if already placed elsewhere, swap
+  document.querySelectorAll('.rank-select').forEach(s => {
+    if (s !== sel && s.value === String(dragIdx)) s.value = '';
+  });
+  sel.value = String(dragIdx);
+
+  // Remove from pool
+  const pool = document.getElementById('rankingPool');
+  if (pool) {
+    const item = pool.querySelector(`[data-idx="${dragIdx}"]`);
+    if (item) item.style.opacity = '0.3';
+  }
+
+  dragIdx = null;
+  document.querySelectorAll('.ranking-item.dragging').forEach(el => el.classList.remove('dragging'));
+  debounceSave();
+}
+
+function onRankSelectChange() {
+  // Validate no duplicates
+  const selects = document.querySelectorAll('.rank-select');
+  const used = new Set();
+  selects.forEach(sel => {
+    if (sel.value && used.has(sel.value)) {
+      // Clear this one
+      sel.value = '';
+    }
+    if (sel.value) used.add(sel.value);
+  });
+
+  // Update pool visibility
+  const pool = document.getElementById('rankingPool');
+  if (pool) {
+    pool.querySelectorAll('.ranking-item').forEach(item => {
+      const idx = item.dataset.idx;
+      item.style.opacity = used.has(idx) ? '0.3' : '1';
+    });
+  }
+  debounceSave();
+}
+
+function collectPhase3Data() {
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  let existing = {};
+  try { existing = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
+
+  const ranking = [];
+  const selects = document.querySelectorAll('.rank-select');
+  selects.forEach(sel => {
+    if (sel.value !== '') {
+      ranking.push(getAnonLabel(parseInt(sel.value)));
+    }
+  });
+
+  return {
+    ...existing,
+    ranking,
+    ranking_reason: document.getElementById('p3RankingReason').value.trim(),
+    revision_count: existing.revision_count || 0
+  };
+}
+
+function restorePhase3() {
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem(key)); } catch {}
+  if (!data) return;
+
+  // Restore ranking selects
+  if (data.ranking && Array.isArray(data.ranking)) {
+    const selects = document.querySelectorAll('.rank-select');
+    data.ranking.forEach((label, rank) => {
+      const idx = ANON_LABELS.indexOf(label);
+      if (idx >= 0 && selects[rank]) {
+        selects[rank].value = String(idx);
+      }
+    });
+    onRankSelectChange(); // Update pool
+  }
+
+  if (data.ranking_reason) {
+    document.getElementById('p3RankingReason').value = data.ranking_reason;
+  }
+}
+
+function completePhase3() {
+  const data = collectPhase3Data();
+  if (!data.ranking || data.ranking.length !== 4) {
+    showToast('請為所有 4 個版本排序', 'error');
+    return;
+  }
+  // Check for duplicates
+  const unique = new Set(data.ranking);
+  if (unique.size !== 4) {
+    showToast('排序不可有重複', 'error');
+    return;
+  }
+
+  data._complete = true;
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  data._saved = new Date().toISOString();
+  localStorage.setItem(key, JSON.stringify(data));
+
+  showToast('此案評估完成！', 'success');
+  renderCondPills();
+  renderPhaseIndicators();
+  updateFooter();
+  document.getElementById('p3CompleteBtn').disabled = true;
+  document.getElementById('p3CompleteBtn').textContent = '此案已完成';
+}
+
+function togglePhase3Source() {
+  const panel = document.getElementById('p3SourcePanel');
+  const arrow = document.getElementById('p3SourceArrow');
+  panel.classList.toggle('open');
+  arrow.innerHTML = panel.classList.contains('open') ? '&#x25BC;' : '&#x25B6;';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SHARED RENDER FUNCTIONS
+// ═══════════════════════════════════════════════════════════════
+
+function renderSourcePanel(bodyId, countId, aiData) {
+  const body = document.getElementById(bodyId);
 
   if (!aiData || !aiData.chunks || Object.keys(aiData.chunks).length === 0) {
     body.innerHTML = '<span class="empty-text">無原文資料</span>';
-    countEl.textContent = '';
+    if (countId) document.getElementById(countId).textContent = '';
     return;
   }
 
@@ -802,57 +1517,36 @@ function renderSource() {
     return parseInt(a.replace('CH_', ''), 10) - parseInt(b.replace('CH_', ''), 10);
   });
 
-  countEl.textContent = `${chunkAliases.length} 段`;
+  if (countId) document.getElementById(countId).textContent = `${chunkAliases.length} 段`;
 
-  // Render as continuous text — each chunk wrapped in a region, entire content is <mark>
   let html = '';
   chunkAliases.forEach(alias => {
     const content = aiData.chunks[alias] || '';
-    html += `<div class="chunk-region" id="src_${alias}" data-alias="${alias}">`;
+    html += `<div class="chunk-region" id="${bodyId}_${alias}" data-alias="${alias}">`;
     html += `<span class="chunk-label">${alias}</span>`;
     html += `<mark>${esc(content)}</mark>`;
     html += `</div>`;
   });
-
   body.innerHTML = html;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER: Summaries (middle panel)
-// ═══════════════════════════════════════════════════════════════
-
-function renderSummaries() {
-  const aiEl = document.getElementById('summaryAI');
+function renderAISummary(bodyId, aiData) {
+  const el = document.getElementById(bodyId);
   if (aiData && aiData.sections) {
-    aiEl.innerHTML = aiData.sections.map(s =>
+    el.innerHTML = aiData.sections.map(s =>
       `<div class="section-block">` +
       `<div class="section-title section-title-ai">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
       `<div class="section-body">${renderCitations(s.content || '')}</div>` +
       `</div>`
     ).join('');
+    // Bind citation clicks
+    el.querySelectorAll('.citation-tag').forEach(tag => {
+      tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, 'p1SourceBody'));
+    });
   } else {
-    aiEl.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
+    el.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
   }
-
-  const gtEl = document.getElementById('summaryGT');
-  if (gtData && gtData.sections) {
-    gtEl.innerHTML = gtData.sections.map(s =>
-      `<div class="section-block">` +
-      `<div class="section-title section-title-gt">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
-      `<div class="section-body">${esc(s.content || '')}</div>` +
-      `</div>`
-    ).join('');
-  } else {
-    gtEl.innerHTML = '<span class="empty-text">無法載入老師摘要</span>';
-  }
-
-  // Bind citation clicks
-  document.querySelectorAll('.citation-tag').forEach(tag => {
-    tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, tag));
-  });
 }
-
-function normAlias(a) { return a.replace(/CH_(\d+)/, (_, n) => 'CH_' + n.padStart(2, '0')); }
 
 function renderCitations(text) {
   let html = esc(text);
@@ -865,252 +1559,271 @@ function renderCitations(text) {
   return html;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// HIGHLIGHT: Citation click → source scroll + marker pen effect
-// ═══════════════════════════════════════════════════════════════
+function normAlias(a) { return a.replace(/CH_(\d+)/, (_, n) => 'CH_' + n.padStart(2, '0')); }
 
-function highlightChunk(alias) {
-  // Clear all
+function highlightChunk(alias, sourceBodyId) {
+  // Clear all active in source
   document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.citation-tag.active').forEach(el => el.classList.remove('active'));
 
   if (activeChunk === alias) { activeChunk = null; return; }
   activeChunk = alias;
 
-  // Activate source region
-  const srcEl = document.getElementById('src_' + alias);
+  const srcEl = document.getElementById(`${sourceBodyId}_${alias}`);
   if (srcEl) {
     srcEl.classList.add('active');
-    // Smooth scroll within source panel
     srcEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  // Activate all citation tags
   document.querySelectorAll(`.citation-tag[data-alias="${alias}"]`).forEach(t => t.classList.add('active'));
 }
 
 // ═══════════════════════════════════════════════════════════════
-// RENDER: Eval form (right panel)
+// AUTO-SAVE
 // ═══════════════════════════════════════════════════════════════
 
-function renderEvalForm() {
-  const panel = document.getElementById('panelEval');
-  let html = '';
+function saveCurrentState() {
+  if (!currentCase || !getEvaluator()) return;
 
-  ASPECTS.forEach(aspect => {
-    html += `<div class="aspect-group aspect-${aspect.color}">`;
-    html += `<div class="aspect-header" onclick="toggleAspect(this)">`;
-    html += `<span>${aspect.id}. ${aspect.name}</span>`;
-    html += `<span class="badge">${aspect.dims.length}</span>`;
-    html += `<span class="arrow">&#9654;</span>`;
-    html += `</div><div class="aspect-body">`;
-
-    aspect.dims.forEach(dim => {
-      html += `<div class="dim-item">`;
-      html += `<div class="dim-title">${dim.id}. ${dim.name}</div>`;
-      html += `<div class="dim-desc">${dim.desc}</div>`;
-      html += `<button class="toggle-anchors" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#9662;</button>`;
-      html += `<div class="dim-anchors"><table>`;
-      for (let s = 5; s >= 1; s--) html += `<tr><td>${s}</td><td>${dim.anchors[s] || ''}</td></tr>`;
-      html += `</table></div>`;
-      html += `<div class="likert-row">`;
-      for (let s = 1; s <= 5; s++) html += `<label><input type="radio" name="${dim.id}" value="${s}" onchange="updateProgress()"><span>${s}</span></label>`;
-      if (dim.na) html += `<label class="na-label"><input type="radio" name="${dim.id}" value="NA" onchange="updateProgress()"><span>N/A</span></label>`;
-      html += `</div>`;
-      html += `<textarea class="dim-comment" name="${dim.id}_comment" placeholder="意見（選填）"></textarea>`;
-      html += `</div>`;
-    });
-
-    html += `</div></div>`;
-  });
-
-  // Overall
-  html += `<div class="aspect-group" style="border-color:var(--slate-300)">`;
-  html += `<div class="aspect-header" style="background:var(--slate-100);color:var(--slate-900)" onclick="toggleAspect(this)">`;
-  html += `<span>整體評語</span><span class="arrow">&#9654;</span></div>`;
-  html += `<div class="aspect-body">`;
-  html += `<div style="margin-bottom:6px;font-size:14px;color:var(--slate-500)">該摘要最嚴重的問題（最多 3 項）：</div>`;
-  html += `<textarea class="dim-comment" name="overall_issues" placeholder="1. ..." style="min-height:50px"></textarea>`;
-  html += `<div style="margin:10px 0 6px;font-size:14px;color:var(--slate-500)">該案核心法律爭點：</div>`;
-  html += `<textarea class="dim-comment" name="overall_legal_issues" placeholder="例：因果關係標準、臨床裁量..." style="min-height:40px"></textarea>`;
-  html += `<div style="margin:10px 0 6px;font-size:14px;color:var(--slate-500)">案件議題分類：</div>`;
-  const topics = ['鑑定事實完整性','病歷證據使用','病患相對責任','非特異性症狀鑑別診斷','侵入性治療時機','罕見且快速惡化','從後果反推過程','因果關係標準不明','告知說明義務','專業分工/信賴原則','轉診義務'];
-  html += `<div style="display:flex;flex-wrap:wrap;gap:5px">`;
-  topics.forEach((t, i) => {
-    html += `<label style="font-size:14px;display:flex;align-items:center;gap:4px;cursor:pointer"><input type="checkbox" name="topic_${i}" value="${esc(t)}" style="width:17px;height:17px"> ${esc(t)}</label>`;
-  });
-  html += `</div></div></div>`;
-
-  panel.innerHTML = html;
-}
-
-function toggleAspect(header) {
-  header.classList.toggle('open');
-  header.nextElementSibling.classList.toggle('open');
-}
-
-// ═══════════════════════════════════════════════════════════════
-// PROGRESS
-// ═══════════════════════════════════════════════════════════════
-
-function updateProgress() {
-  let total = 0, filled = 0;
-  ASPECTS.forEach(a => a.dims.forEach(d => {
-    total++;
-    if (document.querySelector(`input[name="${d.id}"]:checked`)) filled++;
-  }));
-  const pct = total > 0 ? Math.round(filled / total * 100) : 0;
-  document.getElementById('progressText').textContent = `${filled} / ${total}`;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressPct').textContent = pct + '%';
-}
-
-// ═══════════════════════════════════════════════════════════════
-// AUTO-SAVE / RESTORE (localStorage)
-// ═══════════════════════════════════════════════════════════════
-
-function getEvaluator() {
-  return document.getElementById('evaluatorName').value || '';
-}
-
-function getStorageKey() {
-  const ev = getEvaluator();
-  if (!currentCase || !currentCond || !ev) return null;
-  return `eval_${ev}_${currentCond}_${currentCase}`;
-}
-
-function collectFormData() {
-  const data = { scores: {}, comments: {}, overall: {}, topics: [] };
-  ASPECTS.forEach(a => a.dims.forEach(d => {
-    const checked = document.querySelector(`input[name="${d.id}"]:checked`);
-    if (checked) data.scores[d.id] = checked.value === 'NA' ? 'NA' : parseInt(checked.value);
-    const comment = document.querySelector(`textarea[name="${d.id}_comment"]`);
-    if (comment && comment.value.trim()) data.comments[d.id] = comment.value.trim();
-  }));
-  const issues = document.querySelector('textarea[name="overall_issues"]');
-  if (issues && issues.value.trim()) data.overall.issues = issues.value.trim();
-  const legal = document.querySelector('textarea[name="overall_legal_issues"]');
-  if (legal && legal.value.trim()) data.overall.legal_issues = legal.value.trim();
-  document.querySelectorAll('input[type="checkbox"][name^="topic_"]:checked').forEach(cb => data.topics.push(cb.value));
-  return data;
-}
-
-function hasAnyData(data) {
-  return Object.keys(data.scores).length > 0 || Object.keys(data.comments).length > 0
-    || Object.keys(data.overall).length > 0 || data.topics.length > 0;
-}
-
-function saveCurrentEval() {
-  const key = getStorageKey();
-  if (!key) return;  // no evaluator selected, skip
-  const data = collectFormData();
-  if (hasAnyData(data)) {
+  if (currentPhase === 1 && !isPhase1Frozen(currentCase, currentCondIdx)) {
+    const data = collectPhase1Data();
+    if (Object.keys(data.scores).length > 0 || data.overall_comment) {
+      setPhaseData(currentCase, currentCondIdx, 1, data);
+    }
+  } else if (currentPhase === 2) {
+    const data = collectPhase2Data();
+    setPhaseData(currentCase, currentCondIdx, 2, data);
+  } else if (currentPhase === 3) {
+    const data = collectPhase3Data();
+    const ev = getEvaluator();
+    const key = `eval_v2_${ev}_${currentCase}_phase3`;
     data._saved = new Date().toISOString();
     localStorage.setItem(key, JSON.stringify(data));
-    showSaveIndicator();
   }
 }
 
-function restoreEval() {
-  const key = getStorageKey();
-  if (!key) return;
-  const raw = localStorage.getItem(key);
-  if (!raw) return;
-  try {
-    const data = JSON.parse(raw);
-    // Restore scores
-    Object.entries(data.scores || {}).forEach(([id, val]) => {
-      const radio = document.querySelector(`input[name="${id}"][value="${val}"]`);
-      if (radio) radio.checked = true;
-    });
-    // Restore comments
-    Object.entries(data.comments || {}).forEach(([id, val]) => {
-      const ta = document.querySelector(`textarea[name="${id}_comment"]`);
-      if (ta) ta.value = val;
-    });
-    // Restore overall
-    if (data.overall) {
-      const issues = document.querySelector('textarea[name="overall_issues"]');
-      if (issues && data.overall.issues) issues.value = data.overall.issues;
-      const legal = document.querySelector('textarea[name="overall_legal_issues"]');
-      if (legal && data.overall.legal_issues) legal.value = data.overall.legal_issues;
-    }
-    // Restore topics
-    if (data.topics && data.topics.length > 0) {
-      document.querySelectorAll('input[type="checkbox"][name^="topic_"]').forEach(cb => {
-        cb.checked = data.topics.includes(cb.value);
-      });
-    }
-    updateProgress();
-  } catch {}
+function debounceSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => saveCurrentState(), 500);
 }
 
-function resetForm() {
-  ASPECTS.forEach(a => a.dims.forEach(d => {
-    document.querySelectorAll(`input[name="${d.id}"]`).forEach(r => r.checked = false);
-    const ta = document.querySelector(`textarea[name="${d.id}_comment"]`);
-    if (ta) ta.value = '';
-  }));
-  const issues = document.querySelector('textarea[name="overall_issues"]');
-  if (issues) issues.value = '';
-  const legal = document.querySelector('textarea[name="overall_legal_issues"]');
-  if (legal) legal.value = '';
-  document.querySelectorAll('input[type="checkbox"][name^="topic_"]').forEach(cb => cb.checked = false);
-  updateProgress();
-}
-
-function clearCurrentEval() {
-  const key = getStorageKey();
-  if (!key) return;
-  if (!confirm('確定要清除此筆評估紀錄嗎？')) return;
-  localStorage.removeItem(key);
-  resetForm();
-}
-
-function showSaveIndicator() {
-  const el = document.getElementById('saveIndicator');
-  el.textContent = '已自動儲存';
-  el.style.opacity = '1';
-  setTimeout(() => { el.style.opacity = '0'; }, 2000);
-}
-
-// Debounced auto-save on any form change
-let autoSaveTimer = null;
+// Listen for changes
 document.addEventListener('change', (e) => {
-  if (e.target.closest('.panel-eval')) {
-    clearTimeout(autoSaveTimer);
-    autoSaveTimer = setTimeout(() => saveCurrentEval(), 500);
-    updateProgress();
+  if (e.target.closest('#p1EvalForm') || e.target.id === 'p1OverallComment') {
+    onPhase1Change();
   }
 });
 document.addEventListener('input', (e) => {
-  if (e.target.classList.contains('dim-comment') || e.target.closest('.panel-eval textarea')) {
-    clearTimeout(autoSaveTimer);
-    autoSaveTimer = setTimeout(() => saveCurrentEval(), 1000);
+  if (e.target.id === 'p1OverallComment' || e.target.id === 'p2OmissionDetail' ||
+      e.target.id === 'p2RevisionNote' || e.target.id === 'p3RankingReason') {
+    debounceSave();
   }
 });
 
+window.addEventListener('beforeunload', () => saveCurrentState());
+
 // ═══════════════════════════════════════════════════════════════
-// EXPORT
+// EXPORT JSON
 // ═══════════════════════════════════════════════════════════════
 
 function exportJSON() {
-  saveCurrentEval();
-  const evaluator = document.getElementById('evaluatorName').value.trim() || 'anonymous';
+  saveCurrentState();
+  const evaluator = getEvaluator() || 'anonymous';
+  const condOrder = getConditionOrder(currentCase);
+
   const result = {
-    meta: { evaluator, case_name: currentCase, condition: currentCond, timestamp: new Date().toISOString() },
-    ...collectFormData(),
+    meta: {
+      evaluator,
+      case_name: currentCase,
+      timestamp: new Date().toISOString(),
+      condition_order: condOrder,
+      rubric_version: 'v2'
+    },
+    phase1: {},
+    phase2: {},
+    phase3: null
   };
-  // Convert score values for export
-  Object.entries(result.scores).forEach(([k, v]) => {
-    if (v === 'NA') result.scores[k] = null;
-  });
+
+  // Collect all 4 conditions
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    const cond = condOrder[i];
+
+    // Phase 1
+    const p1 = getPhaseData(currentCase, i, 1);
+    result.phase1[label] = {
+      real_condition: cond,
+      scores: p1 ? p1.scores || {} : {},
+      overall_comment: p1 ? p1.overall_comment || '' : '',
+      revision_count: p1 ? p1.revision_count || 0 : 0,
+      phase1_revision_note: ''
+    };
+
+    // Phase 2
+    const p2 = getPhaseData(currentCase, i, 2);
+    result.phase2[label] = {
+      has_major_omission: p2 ? p2.has_major_omission : null,
+      omissions: p2 ? p2.omissions || '' : '',
+      revision_count: p2 ? p2.revision_count || 0 : 0
+    };
+
+    // Copy revision note from phase2 to phase1
+    if (p2 && p2.phase1_revision_note) {
+      result.phase1[label].phase1_revision_note = p2.phase1_revision_note;
+    }
+  }
+
+  // Phase 3
+  const ev = evaluator;
+  const p3Key = `eval_v2_${ev}_${currentCase}_phase3`;
+  try {
+    const p3 = JSON.parse(localStorage.getItem(p3Key));
+    if (p3) {
+      result.phase3 = {
+        ranking: p3.ranking || [],
+        ranking_reason: p3.ranking_reason || '',
+        revision_count: p3.revision_count || 0
+      };
+    }
+  } catch {}
 
   const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url;
-  a.download = `eval_${evaluator}_${currentCase}_${currentCond}.json`;
-  a.click(); URL.revokeObjectURL(url);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `eval_v2_${evaluator}_${currentCase}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('已匯出此案 JSON', 'info');
+}
+
+function buildCaseExportData(caseName) {
+  const evaluator = getEvaluator() || 'anonymous';
+  const condOrder = getConditionOrder(caseName);
+  const result = {
+    meta: { evaluator, case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2' },
+    phase1: {}, phase2: {}, phase3: null
+  };
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    const cond = condOrder[i];
+    const p1 = getPhaseData(caseName, i, 1);
+    result.phase1[label] = {
+      real_condition: cond,
+      scores: p1 ? p1.scores || {} : {},
+      overall_comment: p1 ? p1.overall_comment || '' : '',
+      revision_count: p1 ? p1.revision_count || 0 : 0,
+      phase1_revision_note: ''
+    };
+    const p2 = getPhaseData(caseName, i, 2);
+    result.phase2[label] = {
+      has_major_omission: p2 ? p2.has_major_omission : null,
+      omissions: p2 ? p2.omissions || '' : '',
+      revision_count: p2 ? p2.revision_count || 0 : 0
+    };
+    if (p2 && p2.phase1_revision_note) result.phase1[label].phase1_revision_note = p2.phase1_revision_note;
+  }
+  try {
+    const p3 = JSON.parse(localStorage.getItem(`eval_v2_${evaluator}_${caseName}_phase3`));
+    if (p3) result.phase3 = { ranking: p3.ranking || [], ranking_reason: p3.ranking_reason || '', revision_count: p3.revision_count || 0 };
+  } catch {}
+  return result;
+}
+
+function exportAllJSON() {
+  saveCurrentState();
+  const evaluator = getEvaluator() || 'anonymous';
+  const allResults = {};
+  let count = 0;
+  caseList.forEach(c => {
+    const data = buildCaseExportData(c);
+    const hasAnyScore = Object.values(data.phase1).some(v => v.scores && Object.keys(v.scores).length > 0);
+    if (hasAnyScore) { allResults[c] = data; count++; }
+  });
+  if (count === 0) { showToast('尚無任何評估資料', 'error'); return; }
+  const blob = new Blob([JSON.stringify(allResults, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `eval_v2_${evaluator}_all_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`已匯出 ${count} 案`, 'info');
+}
+
+function importJSON() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      let imported = 0;
+      // Detect format: single case (has meta.case_name) or all cases (object of cases)
+      if (data.meta && data.meta.case_name) {
+        // Single case
+        importSingleCase(data);
+        imported = 1;
+      } else {
+        // Multiple cases
+        Object.values(data).forEach(caseData => {
+          if (caseData.meta && caseData.meta.case_name) { importSingleCase(caseData); imported++; }
+        });
+      }
+      showToast(`已匯入 ${imported} 案`, 'info');
+      onCaseChange();
+    } catch (err) { showToast('匯入失敗：' + err.message, 'error'); }
+  };
+  input.click();
+}
+
+function importSingleCase(data) {
+  const evaluator = data.meta.evaluator || getEvaluator() || 'anonymous';
+  const caseName = data.meta.case_name;
+  if (data.meta.condition_order) {
+    localStorage.setItem(`eval_v2_condorder_${evaluator}_${caseName}`, JSON.stringify(data.meta.condition_order));
+  }
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    if (data.phase1 && data.phase1[label]) {
+      const key = `eval_v2_${evaluator}_${caseName}_${i}_phase1`;
+      const p1 = data.phase1[label];
+      localStorage.setItem(key, JSON.stringify({ scores: p1.scores, overall_comment: p1.overall_comment, revision_count: p1.revision_count }));
+    }
+    if (data.phase2 && data.phase2[label]) {
+      const key = `eval_v2_${evaluator}_${caseName}_${i}_phase2`;
+      const p2 = data.phase2[label];
+      const stored = { has_major_omission: p2.has_major_omission, omissions: p2.omissions, revision_count: p2.revision_count, _entered: p2.has_major_omission !== null };
+      if (data.phase1 && data.phase1[label] && data.phase1[label].phase1_revision_note) {
+        stored.phase1_revision_note = data.phase1[label].phase1_revision_note;
+      }
+      localStorage.setItem(key, JSON.stringify(stored));
+    }
+  }
+  if (data.phase3) {
+    localStorage.setItem(`eval_v2_${evaluator}_${caseName}_phase3`, JSON.stringify(data.phase3));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FOOTER: Overall progress
+// ═══════════════════════════════════════════════════════════════
+
+function updateFooter() {
+  let completed = 0;
+  // Only count cases in the first 30
+  const evalCases = caseList.slice(0, 30);
+  evalCases.forEach(c => {
+    if (isPhase3Complete(c)) completed++;
+  });
+  const total = evalCases.length;
+  const pct = total > 0 ? Math.round(completed / total * 100) : 0;
+  document.getElementById('footerText').textContent = `${completed} / ${total} 案完成`;
+  document.getElementById('footerFill').style.width = pct + '%';
+  document.getElementById('footerPct').textContent = pct + '%';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1119,7 +1832,40 @@ function exportJSON() {
 
 function esc(s) {
   if (!s) return '';
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function getSlug(name) { return caseSlugs[name] || encodeURIComponent(name); }
+
+function getEvaluator() {
+  const el = document.getElementById('evaluatorName');
+  return el ? el.value.trim() || 'default' : 'default';
+}
+
+function updateURL() {
+  const url = new URL(location.href);
+  url.searchParams.set('case', currentCase);
+  history.replaceState({}, '', url.toString());
+
+  const enc = encodeURIComponent(currentCase);
+  const vl = document.getElementById('viewLink');
+  if (vl) vl.href = `view.html?case=${enc}`;
+  const tl = document.getElementById('timelineLink');
+  if (tl) tl.href = `timeline.html?case=${enc}`;
+}
+
+function showSaveIndicator() {
+  const el = document.getElementById('saveIndicator');
+  el.textContent = '已儲存';
+  el.style.opacity = '1';
+  setTimeout(() => el.style.opacity = '0', 2000);
+}
+
+function showToast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast toast-${type || 'info'} show`;
+  setTimeout(() => el.classList.remove('show'), 2500);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1132,7 +1878,8 @@ function initResizers() {
       startEvt.preventDefault();
       const leftEl = resizer.previousElementSibling;
       const rightEl = resizer.nextElementSibling;
-      const startX = startEvt.clientX ?? startEvt.touches[0].clientX;
+      if (!leftEl || !rightEl) return;
+      const startX = startEvt.clientX ?? (startEvt.touches && startEvt.touches[0].clientX);
       const startLeftW = leftEl.offsetWidth;
       const startRightW = rightEl.offsetWidth;
       resizer.classList.add('active');
@@ -1140,7 +1887,7 @@ function initResizers() {
       document.body.style.userSelect = 'none';
 
       const onMove = (e) => {
-        const x = e.clientX ?? e.touches[0].clientX;
+        const x = e.clientX ?? (e.touches && e.touches[0].clientX);
         const dx = x - startX;
         leftEl.style.width = Math.max(80, startLeftW + dx) + 'px';
         leftEl.style.flex = 'none';
@@ -1156,11 +1903,6 @@ function initResizers() {
         document.removeEventListener('mouseup', onUp);
         document.removeEventListener('touchmove', onMove);
         document.removeEventListener('touchend', onUp);
-        try {
-          const w = {};
-          document.querySelectorAll('.main > .panel').forEach(el => { if (el.id) w[el.id] = el.style.width; });
-          localStorage.setItem('evalPanelWidths', JSON.stringify(w));
-        } catch {}
       };
 
       document.addEventListener('mousemove', onMove);
@@ -1171,61 +1913,6 @@ function initResizers() {
     resizer.addEventListener('mousedown', onPointerDown);
     resizer.addEventListener('touchstart', onPointerDown, { passive: false });
   });
-  // Restore saved widths — last panel stays flex:1 to fill remaining space
-  try {
-    const saved = JSON.parse(localStorage.getItem('evalPanelWidths'));
-    if (saved) {
-      const panels = [...document.querySelectorAll('.main > .panel')];
-      const lastPanel = panels[panels.length - 1];
-      Object.entries(saved).forEach(([id, w]) => {
-        const el = document.getElementById(id);
-        if (el && w) {
-          el.style.width = w;
-          // Last panel uses flex:1 to absorb remaining space
-          el.style.flex = (el === lastPanel) ? '1' : 'none';
-        }
-      });
-    }
-  } catch {}
-}
-
-// ═══════════════════════════════════════════════════════════════
-// MOBILE PANEL SWITCHING
-// ═══════════════════════════════════════════════════════════════
-
-function switchMobilePanel(panelId, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('mobile-active'));
-  document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
-  const panel = document.getElementById(panelId);
-  if (panel) panel.classList.add('mobile-active');
-  if (btn) btn.classList.add('active');
-}
-
-// ═══════════════════════════════════════════════════════════════
-// MOBILE DRAWER
-// ═══════════════════════════════════════════════════════════════
-
-function toggleMobileDrawer() {
-  const controls = document.getElementById('toolbarControls');
-  const backdrop = document.getElementById('mobileBackdrop');
-  const isOpen = controls.classList.contains('open');
-  if (isOpen) {
-    closeMobileDrawer();
-  } else {
-    controls.classList.add('open');
-    backdrop.classList.add('open');
-  }
-}
-
-function closeMobileDrawer() {
-  document.getElementById('toolbarControls').classList.remove('open');
-  document.getElementById('mobileBackdrop').classList.remove('open');
-}
-
-function updateMobileEvalBadge() {
-  const badge = document.getElementById('mobileEvalBadge');
-  const evalName = document.getElementById('evaluatorName').value;
-  badge.textContent = evalName || '未選擇';
 }
 </script>
 </body>
