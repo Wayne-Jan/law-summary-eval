@@ -82,63 +82,59 @@
     .panel-summary { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; }
     .panel-eval { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
 
-    /* ─── PHASE 2: Three-column (AI | GT | Review) ─── */
-    #phase2View { flex-direction: column; }
-    .phase2-panels { display: flex; flex: 1; min-height: 0; }
-    .phase2-ai { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto; }
-    .phase2-gt { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto; }
-    .phase2-review { flex: 30 0 0; background: var(--slate-50); overflow-y: auto; padding: 14px 16px; }
-    .phase2-source-toggle {
-      padding: 6px 14px; background: var(--slate-100); border-bottom: 1px solid #e2e8f0;
-      cursor: pointer; font-size: 13px; color: var(--slate-500); user-select: none;
+    /* ─── PHASE 2: Same 3-panel as Phase 1 (AI 30% | GT 35% | Review 35%) ─── */
+    #phase2View { flex-direction: row; }
+    .panel-review { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
+    .p2-section { margin-bottom: 16px; }
+    .p2-section-title { font-size: 13px; font-weight: 600; color: var(--slate-900); margin-bottom: 8px; }
+    .p2-gap-radio { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+    .p2-gap-radio label { font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .p2-gap-radio input[type="radio"] { width: 16px; height: 16px; }
+    .p2-omission-text {
+      width: 100%; font-size: 13px; padding: 6px 10px;
+      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
+      resize: vertical; min-height: 32px;
+    }
+
+    /* Locked eval item (Phase 2 frozen score) */
+    .p2-eval-item {
+      padding: 6px 0; border-bottom: 1px solid var(--slate-100);
+    }
+    .p2-eval-item:last-child { border-bottom: none; }
+    .p2-eval-row {
       display: flex; align-items: center; gap: 6px;
     }
-    .phase2-source-toggle:hover { background: var(--slate-50); }
-    .phase2-source-panel {
-      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
-      background: white; border-bottom: 1px solid #e2e8f0;
+    .p2-eval-num { font-size: 11px; color: var(--slate-500); width: 18px; flex-shrink: 0; }
+    .p2-eval-name { font-size: 12px; color: var(--slate-700); flex: 1; min-width: 0; }
+    .p2-eval-score {
+      display: flex; gap: 0; flex-shrink: 0;
     }
-    .phase2-source-panel.open { max-height: 300px; overflow-y: auto; }
-    .p2-section { margin-bottom: 14px; }
-    .p2-section-title { font-size: 14px; font-weight: 600; color: var(--slate-900); margin-bottom: 8px; }
-    .phase2-review .gap-radio-group {
-      display: flex; gap: 12px; align-items: center; margin-bottom: 8px;
+    .p2-score-dot {
+      width: 26px; height: 26px; border: 1px solid var(--slate-300); background: white;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--slate-500);
     }
-    .phase2-review .gap-radio-group label {
-      font-size: 14px; cursor: pointer; display: flex; align-items: center; gap: 4px;
-    }
-    .phase2-review .gap-radio-group input[type="radio"] { width: 18px; height: 18px; }
-    .phase2-review textarea {
-      width: 100%; font-size: 14px; padding: 8px 12px;
-      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
-      resize: vertical; min-height: 36px;
-    }
-    /* Phase 2 revision items */
-    .p2-rev-item {
-      display: flex; align-items: center; gap: 10px; padding: 5px 0;
-      border-bottom: 1px solid var(--slate-100); font-size: 13px;
-    }
-    .p2-rev-item:last-child { border-bottom: none; }
-    .p2-rev-name { flex: 1; color: var(--slate-700); min-width: 0; }
-    .p2-rev-original { font-weight: 600; color: var(--indigo); width: 28px; text-align: center; flex-shrink: 0; }
-    .p2-rev-toggle {
-      font-size: 12px; padding: 3px 10px; border: 1px solid var(--slate-300);
+    .p2-score-dot:first-child { border-radius: 4px 0 0 4px; }
+    .p2-score-dot:last-child { border-radius: 0 4px 4px 0; }
+    .p2-score-dot:not(:first-child) { border-left: none; }
+    .p2-score-dot.original { background: var(--indigo); color: white; border-color: var(--indigo); font-weight: 700; }
+    .p2-score-dot.revised { background: var(--amber); color: white; border-color: var(--amber); font-weight: 700; cursor: pointer; }
+    .p2-score-dot.selectable { cursor: pointer; transition: all 0.1s; }
+    .p2-score-dot.selectable:hover { background: var(--amber-light); border-color: var(--amber); color: var(--amber); }
+    .p2-revise-btn {
+      font-size: 11px; padding: 2px 8px; border: 1px solid var(--slate-300);
       border-radius: 4px; background: white; cursor: pointer; color: var(--slate-500);
-      font-family: var(--sans); flex-shrink: 0; transition: all 0.15s;
+      font-family: var(--sans); flex-shrink: 0; margin-left: 4px;
     }
-    .p2-rev-toggle:hover { border-color: var(--amber); color: var(--amber); }
-    .p2-rev-toggle.active { background: var(--amber-light); border-color: var(--amber); color: var(--amber); font-weight: 600; }
-    .p2-rev-expand {
-      display: none; align-items: center; gap: 8px; flex-shrink: 0;
+    .p2-revise-btn:hover { border-color: var(--amber); color: var(--amber); }
+    .p2-revise-btn.active { background: var(--amber-light); border-color: var(--amber); color: var(--amber); }
+    .p2-revise-reason {
+      display: none; margin-top: 4px; padding-left: 24px;
     }
-    .p2-rev-expand.show { display: flex; }
-    .p2-rev-expand select {
-      font-size: 13px; padding: 3px 8px; border: 1px solid var(--amber);
-      border-radius: 4px; background: var(--amber-light); font-family: var(--sans);
-    }
-    .p2-rev-expand input {
-      font-size: 12px; padding: 3px 8px; border: 1px solid var(--slate-300);
-      border-radius: 4px; font-family: var(--sans); width: 140px;
+    .p2-revise-reason.show { display: block; }
+    .p2-revise-reason input {
+      width: 100%; font-size: 11px; padding: 4px 8px; border: 1px solid var(--slate-300);
+      border-radius: 4px; font-family: var(--sans);
     }
 
     /* ─── PHASE 3: Four-column ─── */
@@ -383,8 +379,8 @@
       .cond-pills, .phase-indicators { flex-wrap: wrap; }
       #phase1View { flex-direction: column; }
       .panel-source, .panel-summary, .panel-eval { flex: none !important; width: 100% !important; height: auto; max-height: 40vh; }
-      .phase2-panels { flex-direction: column; }
-      .phase2-ai, .phase2-gt, .phase2-review { flex: none !important; max-height: 40vh; }
+      #phase2View { flex-direction: column; }
+      #phase2View .panel { flex: none !important; max-height: 40vh; }
       .phase3-columns { flex-direction: column; }
       .phase3-col { flex: none; max-height: 30vh; }
       .p3-choices { flex-direction: column; align-items: center; }
@@ -459,51 +455,46 @@
     </div>
   </div>
 
-  <!-- ─── PHASE 2 VIEW ─── -->
+  <!-- ─── PHASE 2 VIEW (same 3-panel as Phase 1) ─── -->
   <div class="view" id="phase2View">
-    <div class="phase2-source-toggle" onclick="togglePhase2Source()">
-      <span id="p2SourceArrow">&#x25B6;</span> 原文（點擊展開）
-    </div>
-    <div class="phase2-source-panel" id="p2SourcePanel">
-      <div class="panel-body" id="p2SourceBody"></div>
-    </div>
-    <div class="phase2-panels" id="phase2Panels">
-      <div class="phase2-ai" id="p2AI">
-        <div class="panel-header">
-          <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
-          <span class="panel-header-text">AI 摘要</span>
-        </div>
-        <div id="p2AIBody" style="padding:12px 16px;"></div>
+    <!-- Left: AI Summary -->
+    <div class="panel panel-source" id="p2AI">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
+        <span class="panel-header-text">AI 摘要 <span id="p2CondLabel" style="color:var(--indigo);font-weight:700;"></span></span>
       </div>
-      <div class="phase2-gt" id="p2GT">
-        <div class="panel-header">
-          <div class="panel-header-icon" style="background:var(--emerald-light);color:var(--emerald);">GT</div>
-          <span class="panel-header-text">專家摘要（GT）</span>
-        </div>
-        <div id="p2GTBody" style="padding:12px 16px;"></div>
+      <div class="panel-body" id="p2AIBody" style="padding:12px 16px;"></div>
+    </div>
+    <!-- Middle: GT Summary -->
+    <div class="panel panel-summary" id="p2GT">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:var(--emerald-light);color:var(--emerald);">GT</div>
+        <span class="panel-header-text">專家摘要</span>
       </div>
-      <div class="phase2-review" id="p2Review">
-        <div class="panel-header" style="background:var(--slate-50);padding:10px 0;border-bottom:1px solid #e2e8f0;margin-bottom:10px;">
-          <div class="panel-header-icon" style="background:var(--amber-light);color:var(--amber);">&#x1F4DD;</div>
-          <span class="panel-header-text">比對審查</span>
+      <div class="panel-body" id="p2GTBody" style="padding:12px 16px;"></div>
+    </div>
+    <!-- Right: Review form (locked scores + omission + revise) -->
+    <div class="panel panel-review" id="p2Review">
+      <div class="panel-header" style="background:var(--slate-50);">
+        <div class="panel-header-icon" style="background:var(--amber-light);color:var(--amber);">&#x270E;</div>
+        <span class="panel-header-text">比對審查</span>
+      </div>
+      <!-- Omission -->
+      <div class="p2-section">
+        <div class="p2-section-title">重大遺漏</div>
+        <div class="p2-gap-radio">
+          <label><input type="radio" name="p2omission" value="no" onchange="onPhase2Change()"> 無</label>
+          <label><input type="radio" name="p2omission" value="yes" onchange="onPhase2Change()"> 有</label>
         </div>
-        <!-- Omission marking -->
-        <div class="p2-section">
-          <div class="p2-section-title">重大遺漏標記</div>
-          <div class="gap-radio-group">
-            <label><input type="radio" name="p2omission" value="no" onchange="onPhase2Change()"> 無重大遺漏</label>
-            <label><input type="radio" name="p2omission" value="yes" onchange="onPhase2Change()"> 有重大遺漏</label>
-          </div>
-          <textarea id="p2OmissionDetail" placeholder="遺漏項目說明..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
-        </div>
-        <!-- Structured revision: Phase 1 scores read-only + optional revise -->
-        <div class="p2-section">
-          <div class="p2-section-title">Phase 1 分數回顧 <span style="font-weight:400;color:var(--slate-500);font-size:12px;">— 看到 GT 後，是否有項目想修正？</span></div>
-          <div id="p2RevisionItems"></div>
-        </div>
-        <div style="width:100%;display:flex;justify-content:flex-end;padding-top:6px;">
-          <button class="btn btn-primary" id="p2CompleteBtn" onclick="completePhase2()">完成比對 &#x2192;</button>
-        </div>
+        <textarea class="p2-omission-text" id="p2OmissionDetail" placeholder="遺漏項目..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
+      </div>
+      <!-- Scores review -->
+      <div class="p2-section">
+        <div class="p2-section-title">Phase 1 評分 <span style="font-weight:400;color:var(--slate-500);font-size:11px;">點「修」解鎖修正</span></div>
+        <div id="p2RevisionItems"></div>
+      </div>
+      <div style="text-align:right;padding-top:8px;">
+        <button class="btn btn-primary" id="p2CompleteBtn" onclick="completePhase2()">完成比對 &#x2192;</button>
       </div>
     </div>
   </div>
@@ -1192,16 +1183,12 @@ async function loadPhase2() {
     } catch {}
   }
 
-  // Render source (collapsible)
-  renderSourcePanel('p2SourceBody', null, aiData);
-
-  // Render AI summary (Phase 2)
+  // Render AI summary (left panel)
+  const label = getAnonLabel(currentCondIdx);
+  document.getElementById('p2CondLabel').textContent = label;
   renderSectionsSideBySide(aiData, gtDataCache);
 
-  // Setup synchronized scrolling
-  setupSyncScroll();
-
-  // Restore form
+  // Restore form + render revision items
   restorePhase2();
 
   // Complete button state
@@ -1241,26 +1228,7 @@ function renderSectionsSideBySide(aiData, gtData) {
   });
 }
 
-function setupSyncScroll() {
-  const aiPanel = document.getElementById('p2AI');
-  const gtPanel = document.getElementById('p2GT');
-  let syncing = false;
-
-  aiPanel.addEventListener('scroll', () => {
-    if (syncing) return;
-    syncing = true;
-    const ratio = aiPanel.scrollTop / (aiPanel.scrollHeight - aiPanel.clientHeight || 1);
-    gtPanel.scrollTop = ratio * (gtPanel.scrollHeight - gtPanel.clientHeight);
-    requestAnimationFrame(() => syncing = false);
-  });
-
-  gtPanel.addEventListener('scroll', () => {
-    if (syncing) return;
-    syncing = true;
-    const ratio = gtPanel.scrollTop / (gtPanel.scrollHeight - gtPanel.clientHeight || 1);
-    aiPanel.scrollTop = ratio * (aiPanel.scrollHeight - aiPanel.clientHeight);
-    requestAnimationFrame(() => syncing = false);
-  });
+// Sync scroll removed — Phase 2 now uses independent panel scrolling like Phase 1
 }
 
 function renderPhase2Revisions() {
@@ -1271,45 +1239,81 @@ function renderPhase2Revisions() {
   const revisions = p2Data.revisions || {};
 
   let html = '';
+  let num = 0;
   DIMENSIONS.forEach(group => {
     group.items.forEach(dim => {
+      num++;
       const orig = scores[dim.id];
       const rev = revisions[dim.id];
       const hasRevision = rev && rev.revised !== null && rev.revised !== undefined;
-      html += `<div class="p2-rev-item">`;
-      html += `<div class="p2-rev-name">${esc(dim.name)}</div>`;
-      html += `<div class="p2-rev-original">${orig !== undefined ? orig : '-'}</div>`;
-      html += `<button class="p2-rev-toggle ${hasRevision ? 'active' : ''}" onclick="toggleRevision(this, '${dim.id}')">${hasRevision ? '修正中' : '修正'}</button>`;
-      html += `<div class="p2-rev-expand ${hasRevision ? 'show' : ''}" id="p2rev_${dim.id}">`;
-      html += `<select onchange="onPhase2Change()" data-dim="${dim.id}">`;
-      html += `<option value="">—</option>`;
+      const isRevising = hasRevision;
+
+      html += `<div class="p2-eval-item" data-dim="${dim.id}">`;
+      html += `<div class="p2-eval-row">`;
+      html += `<span class="p2-eval-num">${num}.</span>`;
+      html += `<span class="p2-eval-name">${esc(dim.name)}</span>`;
+
+      // Score dots (1-5)
+      html += `<div class="p2-eval-score" id="p2dots_${dim.id}">`;
       for (let s = 1; s <= 5; s++) {
-        html += `<option value="${s}" ${hasRevision && rev.revised === s ? 'selected' : ''}>${s}</option>`;
+        let cls = 'p2-score-dot';
+        if (isRevising && rev.revised === s) {
+          cls += ' revised';
+        } else if (s === orig) {
+          cls += ' original';
+        }
+        if (isRevising) {
+          cls += ' selectable';
+          html += `<div class="${cls}" onclick="setRevisionScore('${dim.id}', ${s})">${s}</div>`;
+        } else {
+          html += `<div class="${cls}">${s}</div>`;
+        }
       }
-      html += `</select>`;
-      html += `<input type="text" placeholder="理由" maxlength="60" data-dim="${dim.id}" value="${hasRevision && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
       html += `</div>`;
+
+      // Revise toggle button
+      html += `<button class="p2-revise-btn ${isRevising ? 'active' : ''}" onclick="toggleRevision('${dim.id}')">修</button>`;
+      html += `</div>`; // end row
+
+      // Reason field (shown when revising)
+      html += `<div class="p2-revise-reason ${isRevising ? 'show' : ''}" id="p2reason_${dim.id}">`;
+      html += `<input type="text" placeholder="修正理由" maxlength="60" data-dim="${dim.id}" value="${isRevising && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
       html += `</div>`;
+
+      html += `</div>`; // end item
     });
   });
   container.innerHTML = html;
 }
 
-function toggleRevision(btn, dimId) {
-  const expand = document.getElementById('p2rev_' + dimId);
-  const isActive = btn.classList.contains('active');
+function toggleRevision(dimId) {
+  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  const revisions = p2Data.revisions || {};
+  const isActive = !!revisions[dimId];
+
   if (isActive) {
-    btn.classList.remove('active');
-    btn.textContent = '修正';
-    expand.classList.remove('show');
-    expand.querySelector('select').value = '';
-    expand.querySelector('input').value = '';
-  } else {
-    btn.classList.add('active');
-    btn.textContent = '修正中';
-    expand.classList.add('show');
+    delete revisions[dimId];
   }
-  onPhase2Change();
+  // else: just mark as revising — user will click a score dot
+  // Re-render to update UI state
+  p2Data.revisions = revisions;
+  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
+
+  if (!isActive) {
+    // Start revising: need to re-render with selectable dots
+    p2Data.revisions[dimId] = { revised: null, reason: '' };
+    setPhaseData(currentCase, currentCondIdx, 2, p2Data);
+  }
+  renderPhase2Revisions();
+}
+
+function setRevisionScore(dimId, score) {
+  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  if (!p2Data.revisions) p2Data.revisions = {};
+  const existing = p2Data.revisions[dimId] || {};
+  p2Data.revisions[dimId] = { revised: score, reason: existing.reason || '' };
+  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
+  renderPhase2Revisions();
 }
 
 function restorePhase2() {
@@ -1330,17 +1334,12 @@ function restorePhase2() {
 function collectPhase2Data() {
   const existing = getPhaseData(currentCase, currentCondIdx, 2) || {};
   const omissionRadio = document.querySelector('input[name="p2omission"]:checked');
-  // Collect structured revisions
-  const revisions = {};
-  const expands = document.querySelectorAll('.p2-rev-expand');
-  expands.forEach(expand => {
-    const sel = expand.querySelector('select');
-    const inp = expand.querySelector('input');
-    if (sel && sel.value) {
-      revisions[sel.dataset.dim] = {
-        revised: parseInt(sel.value),
-        reason: inp ? inp.value.trim() : ''
-      };
+  // Collect revision reasons from DOM inputs
+  const revisions = existing.revisions || {};
+  document.querySelectorAll('.p2-revise-reason input[data-dim]').forEach(inp => {
+    const dimId = inp.dataset.dim;
+    if (revisions[dimId]) {
+      revisions[dimId].reason = inp.value.trim();
     }
   });
   return {
@@ -1349,7 +1348,7 @@ function collectPhase2Data() {
     has_major_omission: omissionRadio ? omissionRadio.value === 'yes' : null,
     omissions: document.getElementById('p2OmissionDetail').value.trim(),
     revisions,
-    revision_count: Object.keys(revisions).length
+    revision_count: Object.keys(revisions).filter(k => revisions[k] && revisions[k].revised !== null).length
   };
 }
 
@@ -1388,12 +1387,7 @@ function completePhase2() {
   updateFooter();
 }
 
-function togglePhase2Source() {
-  const panel = document.getElementById('p2SourcePanel');
-  const arrow = document.getElementById('p2SourceArrow');
-  panel.classList.toggle('open');
-  arrow.innerHTML = panel.classList.contains('open') ? '&#x25BC;' : '&#x25B6;';
-}
+// togglePhase2Source removed — Phase 2 now uses same 3-panel layout as Phase 1
 
 // ═══════════════════════════════════════════════════════════════
 // PHASE 3: Preference Ranking
