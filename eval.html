@@ -391,6 +391,84 @@
 
     /* ─── SECTION SYNC HIGHLIGHT (Phase 2) ─── */
     .section-block.sync-active { background: var(--indigo-light); border-radius: 6px; }
+
+    /* ─── PHASE TL: Timeline Evaluation (dual-column) ─── */
+    #phaseTLView { flex-direction: row; }
+    .panel-timeline {
+      flex: 40 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto;
+    }
+    .panel-tl-right {
+      flex: 60 0 0; background: var(--slate-50); overflow-y: auto;
+      display: flex; flex-direction: column;
+    }
+    .tl-right-summary {
+      flex: 1; overflow-y: auto; padding: 12px 16px; background: white;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .tl-right-eval {
+      flex-shrink: 0; padding: 14px 16px; background: var(--slate-50);
+      max-height: 50vh; overflow-y: auto;
+    }
+
+    /* Timeline event cards (compact version) */
+    .tl25-list { padding: 12px 16px 12px 32px; position: relative; }
+    .tl25-list::before {
+      content: ''; position: absolute; left: 22px; top: 0; bottom: 0;
+      width: 2px; background: #e5e7eb;
+    }
+    .tl25-event {
+      position: relative; margin-bottom: 10px;
+      background: white; border: 1px solid #e5e7eb; border-radius: 8px;
+      padding: 10px 14px; transition: all 0.15s;
+    }
+    .tl25-event::before {
+      content: ''; position: absolute; left: -18px; top: 14px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #d1d5db; border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #e5e7eb;
+    }
+    .tl25-event.critical { border-left: 3px solid var(--rose); }
+    .tl25-event.critical::before { background: var(--rose); box-shadow: 0 0 0 2px #fecaca; }
+    .tl25-date { font-size: 12px; font-weight: 600; color: var(--indigo); }
+    .tl25-event.critical .tl25-date { color: var(--rose); }
+    .tl25-type {
+      display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px;
+      background: #f3f4f6; color: #6b7280; font-weight: 500; margin-left: 6px;
+    }
+    .tl25-type.critical_decision { background: var(--rose-light); color: var(--rose); }
+    .tl25-type.initial_contact { background: var(--emerald-light); color: var(--emerald); }
+    .tl25-type.final_outcome { background: var(--amber-light); color: var(--amber); }
+    .tl25-type.deterioration { background: #fff7ed; color: #c2410c; }
+    .tl25-desc { font-size: 13px; color: var(--slate-900); line-height: 1.5; margin-top: 4px; }
+    .tl25-actors { font-size: 11px; color: var(--slate-500); margin-top: 3px; }
+    .tl25-decision {
+      margin-top: 6px; padding: 6px 10px; background: var(--rose-light); border-radius: 4px;
+      font-size: 12px; color: #991b1b; line-height: 1.4;
+    }
+    .tl25-summary-bar {
+      display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #e5e7eb;
+      flex-wrap: wrap; background: var(--slate-50);
+    }
+    .tl25-stat {
+      font-size: 12px; color: var(--slate-500);
+    }
+    .tl25-stat strong { color: var(--slate-900); font-weight: 700; font-size: 14px; }
+    .tl25-no-data {
+      display: flex; align-items: center; justify-content: center;
+      height: 200px; color: var(--slate-500); font-size: 14px;
+    }
+
+    /* TL eval items (reuse Phase 1 eval-item pattern) */
+    .tl-eval-group-title {
+      font-size: 13px; font-weight: 700; color: var(--purple);
+      padding: 6px 0 4px; border-bottom: 1px solid var(--purple-light); margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      #phaseTLView { flex-direction: column; }
+      .panel-timeline { flex: none !important; max-height: 40vh; }
+      .panel-tl-right { flex: none !important; }
+    }
   </style>
 </head>
 <body>
@@ -502,6 +580,45 @@
     </div>
   </div>
 
+  <!-- ─── PHASE TL: Timeline Evaluation ─── -->
+  <div class="view" id="phaseTLView">
+    <!-- Left: GT Timeline -->
+    <div class="panel panel-timeline" id="tlTimeline">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:#fef3c7;color:#d97706;">&#x1F4C5;</div>
+        <span class="panel-header-text">GT 時間軸</span>
+        <span class="panel-header-sub" id="tlEventCount"></span>
+      </div>
+      <div id="tlSummaryBar" class="tl25-summary-bar"></div>
+      <div id="tlEventList" class="tl25-list"></div>
+    </div>
+    <div class="resizer"></div>
+    <!-- Right: AI Summary + Eval -->
+    <div class="panel-tl-right">
+      <div class="tl-right-summary" id="tlSummaryPanel">
+        <div class="panel-header" style="position:sticky;top:0;z-index:10;background:white;margin:-12px -16px 8px;padding:10px 16px;border-bottom:1px solid #f3f4f6;">
+          <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
+          <span class="panel-header-text">AI 摘要</span>
+          <span class="panel-header-sub" id="tlCondLabel"></span>
+        </div>
+        <div id="tlSummaryBody"></div>
+      </div>
+      <div class="tl-right-eval" id="tlEvalPanel">
+        <div class="tl-eval-group-title">時間軸評估</div>
+        <div id="tlEvalForm"></div>
+        <div style="padding:8px 0;">
+          <label style="font-size:13px;color:var(--slate-500);">備註（選填，限 100 字）</label>
+          <textarea id="tlComment" class="eval-comment" maxlength="100" placeholder="時間軸相關備註..." oninput="debounceSave()"></textarea>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:4px 0;">
+          <span style="font-size:13px;color:var(--slate-500);" id="tlProgressText"></span>
+          <div class="spacer"></div>
+          <button class="btn btn-primary" id="tlCompleteBtn" onclick="completePhaseTL()">完成時間軸評估 &#x2192;</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ─── PHASE 3 VIEW ─── -->
   <div class="view" id="phase3View">
     <div class="phase3-source-toggle" onclick="togglePhase3Source()">
@@ -567,6 +684,63 @@ const SECTION_NAMES = {
   verdict: '（四）判決結果',
   reasoning: '（五）判決理由',
 };
+
+const EVENT_TYPE_LABELS = {
+  initial_contact: '初診', diagnosis: '診斷', treatment: '處置',
+  critical_decision: '關鍵決策', deterioration: '惡化', transfer: '轉院',
+  consultation: '會診', vital_signs: '生命徵象', final_outcome: '最終結果',
+};
+
+const TL_DIMENSIONS = [
+  {
+    id: 'process_traceability', name: '1. 醫療經過可追蹤性', num: 1,
+    guide: '讀完摘要後，能不能畫出「病人去了哪裡、誰做了什麼處置」的時間線？',
+    checks: [
+      '到院、轉院、出院/死亡等轉折點有沒有寫清楚',
+      '每個階段是哪個醫師在負責，責任歸屬能不能分清',
+      '時間順序讀起來是否自然，不需回頭重讀'
+    ],
+    anchors: {
+      5: '可直接從摘要畫出完整時間線，每階段的負責人和處置都清楚',
+      4: '大致清楚，但有 1 處需要推測（例如轉院時間沒明確寫）',
+      3: '主要經過能理解，但 2 處以上的銜接不清楚',
+      2: '只知道開頭和結尾，中間經過模糊',
+      1: '完全無法重建醫療經過'
+    }
+  },
+  {
+    id: 'decision_comprehensibility', name: '2. 關鍵決策可理解性', num: 2,
+    guide: '醫師在什麼情況下做了什麼判斷？非醫療背景的人能不能理解「為什麼這個決定有問題」？',
+    checks: [
+      '醫師做了哪些診斷或處置決定，有沒有寫出來',
+      '做決定時的臨床依據（症狀、檢查數值）有沒有交代',
+      '讀者能不能理解為什麼檢方認為這是疏失'
+    ],
+    anchors: {
+      5: '每個關鍵決策都寫了「當時狀況→醫師判斷→為什麼有問題」，非專業人也能理解',
+      4: '關鍵決策都有提到，但 1 處缺少臨床依據，需讀者自行推斷',
+      3: '提到了決策，但多半只寫結論（「醫師誤診」），缺少讓人理解的脈絡',
+      2: '關鍵決策遺漏 1 個以上',
+      1: '看不出醫師做了什麼決定、為什麼有問題'
+    }
+  },
+  {
+    id: 'outcome_attribution', name: '3. 結果歸因可追溯性', num: 3,
+    guide: '讀完後能不能理解「因為 A 沒做→導致 B 惡化→最終 C 結果」這條因果鏈？',
+    checks: [
+      '從疏失到結果之間的因果環節有沒有交代完整',
+      '有沒有時間空白讓人困惑（例如住院 3 天中間完全沒提）',
+      '最終結果跟前面的因果敘事能不能對得上'
+    ],
+    anchors: {
+      5: '因果鏈完整，從疏失到結果每一步都能理解，沒有不明空白',
+      4: '因果鏈大致完整，但 1 處時間空白未交代（不影響理解結論）',
+      3: '能理解最終結論，但中間有跳躍，需讀者自己腦補',
+      2: '因果鏈斷裂，不太確定疏失和結果之間的關聯',
+      1: '完全看不出為什麼疏失會導致這個結果'
+    }
+  }
+];
 
 const DIMENSIONS = [
   {
@@ -698,6 +872,7 @@ let currentCondIdx = 0; // index into randomized condition order
 let currentPhase = 1;
 let aiDataCache = {}; // { conditionKey: data }
 let gtDataCache = null;
+let tlDataCache = null; // timeline data for current case
 let activeChunk = null;
 let autoSaveTimer = null;
 
@@ -827,8 +1002,13 @@ function isPhase2Complete(caseName, condIdx) {
   return d && d._complete === true;
 }
 
+function isPhaseTLComplete(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 'TL');
+  return d && d._complete === true;
+}
+
 function isCondComplete(caseName, condIdx) {
-  return isPhase1Complete(caseName, condIdx) && isPhase2Complete(caseName, condIdx);
+  return isPhase1Complete(caseName, condIdx) && isPhase2Complete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
 }
 
 function areAllCondsComplete(caseName) {
@@ -859,6 +1039,7 @@ async function onCaseChange() {
   if (!currentCase) return;
   aiDataCache = {};
   gtDataCache = null;
+  tlDataCache = null;
   activeChunk = null;
 
   // Determine initial condition index and phase
@@ -874,10 +1055,12 @@ async function onCaseChange() {
     for (let i = 0; i < 4; i++) {
       if (!isCondComplete(currentCase, i)) {
         currentCondIdx = i;
-        if (isPhase1Complete(currentCase, i)) {
+        if (!isPhase1Complete(currentCase, i)) {
+          currentPhase = 1;
+        } else if (!isPhase2Complete(currentCase, i)) {
           currentPhase = 2;
         } else {
-          currentPhase = 1;
+          currentPhase = 'tl';
         }
         break;
       }
@@ -902,7 +1085,7 @@ function renderCondPills() {
   for (let i = 0; i < 4; i++) {
     const label = getAnonLabel(i);
     const done = isCondComplete(currentCase, i);
-    const isCurrent = (i === currentCondIdx && currentPhase < 3);
+    const isCurrent = (i === currentCondIdx && currentPhase !== 3);
     let cls = 'cond-pill';
     let icon = '';
     if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
@@ -919,15 +1102,15 @@ function switchCondition(idx) {
   saveCurrentState();
   currentCondIdx = idx;
   // Determine phase for this condition
-  if (isPhase1Frozen(currentCase, idx)) {
-    currentPhase = 2;
-  } else if (isPhase1Complete(currentCase, idx) && !isPhase2Complete(currentCase, idx)) {
-    currentPhase = 2;
-  } else if (isCondComplete(currentCase, idx)) {
-    // Already done, show phase 2 (read-only effectively)
-    currentPhase = 2;
-  } else {
+  if (!isPhase1Complete(currentCase, idx)) {
     currentPhase = 1;
+  } else if (!isPhase2Complete(currentCase, idx)) {
+    currentPhase = 2;
+  } else if (!isPhaseTLComplete(currentCase, idx)) {
+    currentPhase = 'tl';
+  } else {
+    // Already done, show timeline (read-only effectively)
+    currentPhase = 'tl';
   }
   renderCondPills();
   renderPhaseIndicators();
@@ -946,6 +1129,7 @@ function renderPhaseIndicators() {
   const phases = [
     { num: 1, label: 'Phase 1' },
     { num: 2, label: 'Phase 2' },
+    { num: 'tl', label: '時間軸' },
     { num: 3, label: 'Phase 3' }
   ];
 
@@ -956,8 +1140,10 @@ function renderPhaseIndicators() {
     else if (p.num === 3 && !allDone && !locked) cls += ' locked';
     else if (p.num === 1 && isPhase1Frozen(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 2 && isPhase2Complete(currentCase, currentCondIdx)) cls += ' done';
+    else if (p.num === 'tl' && isPhaseTLComplete(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 3 && locked) cls += ' done';
-    html += `<span class="${cls}" onclick="switchPhase(${p.num})">${p.label}</span>`;
+    const phaseArg = typeof p.num === 'string' ? `'${p.num}'` : p.num;
+    html += `<span class="${cls}" onclick="switchPhase(${phaseArg})">${p.label}</span>`;
   });
   el.innerHTML = html;
 }
@@ -965,25 +1151,6 @@ function renderPhaseIndicators() {
 function switchPhase(phase) {
   // TODO: re-enable locking before production deployment
   // Phase locking temporarily disabled for preview/testing
-  // if (isCaseLocked(currentCase) && phase !== 3) return;
-  // if (phase === 1) {
-  //   if (isPhase1Frozen(currentCase, currentCondIdx)) {
-  //     showToast('Phase 1 已凍結（已看過 GT）', 'error');
-  //     return;
-  //   }
-  // }
-  // if (phase === 2) {
-  //   if (!isPhase1Complete(currentCase, currentCondIdx)) {
-  //     showToast('請先完成 Phase 1 全部 11 項評分', 'error');
-  //     return;
-  //   }
-  // }
-  // if (phase === 3) {
-  //   if (!areAllCondsComplete(currentCase)) {
-  //     showToast('請先完成所有 4 個版本的 Phase 1 + Phase 2', 'error');
-  //     return;
-  //   }
-  // }
   saveCurrentState();
   currentPhase = phase;
   renderPhaseIndicators();
@@ -1003,6 +1170,9 @@ async function loadCurrentView() {
   } else if (currentPhase === 2) {
     document.getElementById('phase2View').classList.add('active');
     await loadPhase2();
+  } else if (currentPhase === 'tl') {
+    document.getElementById('phaseTLView').classList.add('active');
+    await loadPhaseTL();
   } else if (currentPhase === 3) {
     document.getElementById('phase3View').classList.add('active');
     await loadPhase3();
@@ -1390,6 +1560,211 @@ function completePhase2() {
   data._complete = true;
   setPhaseData(currentCase, currentCondIdx, 2, data);
 
+  // Move to Timeline evaluation for this condition
+  showToast('Phase 2 完成，進入時間軸評估', 'success');
+  currentPhase = 'tl';
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
+  updateFooter();
+}
+
+// togglePhase2Source removed — Phase 2 now uses same 3-panel layout as Phase 1
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE TL: Timeline Evaluation
+// ═══════════════════════════════════════════════════════════════
+
+async function loadPhaseTL() {
+  const cond = getRealCondition(currentCase, currentCondIdx);
+  const slug = getSlug(currentCase);
+  const label = getAnonLabel(currentCondIdx);
+
+  // Load AI summary
+  if (!aiDataCache[cond]) {
+    try {
+      const resp = await fetch(`./data/${cond}/${slug}.json`);
+      if (resp.ok) aiDataCache[cond] = await resp.json();
+    } catch {}
+  }
+
+  // Load timeline data
+  if (!tlDataCache) {
+    try {
+      const resp = await fetch(`./data/timeline/${slug}.json`);
+      if (resp.ok) tlDataCache = await resp.json();
+    } catch {}
+  }
+
+  // Render AI summary (right panel top)
+  document.getElementById('tlCondLabel').textContent = label;
+  const aiData = aiDataCache[cond];
+  const summaryBody = document.getElementById('tlSummaryBody');
+  if (aiData && aiData.sections) {
+    summaryBody.innerHTML = aiData.sections.map(s =>
+      `<div class="section-block">` +
+      `<div class="section-title section-title-ai">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
+      `<div class="section-body">${esc(s.content || '')}</div>` +
+      `</div>`
+    ).join('');
+  } else {
+    summaryBody.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
+  }
+
+  // Render timeline (left panel)
+  renderTimelinePanel();
+
+  // Render eval form (right panel bottom)
+  renderTLEvalForm();
+  restorePhaseTL();
+  updateTLProgress();
+
+  const locked = isCaseLocked(currentCase);
+  if (locked) {
+    document.getElementById('tlCompleteBtn').disabled = true;
+    document.getElementById('tlCompleteBtn').textContent = '已完成';
+  }
+
+  // Re-init resizers for this view
+  initResizers();
+}
+
+function renderTimelinePanel() {
+  const events = (tlDataCache && tlDataCache.events) || [];
+  const summary = (tlDataCache && tlDataCache.timeline_summary) || {};
+
+  // Event count
+  document.getElementById('tlEventCount').textContent = events.length ? `${events.length} 事件` : '';
+
+  // Summary bar
+  const barEl = document.getElementById('tlSummaryBar');
+  if (events.length === 0) {
+    barEl.innerHTML = '';
+    document.getElementById('tlEventList').innerHTML = '<div class="tl25-no-data">此案例無時間軸資料</div>';
+    return;
+  }
+
+  const critCount = events.filter(e => e.critical_decision).length;
+  const span = summary.time_span;
+  let spanText = '';
+  if (span) {
+    const hours = span.duration_hours;
+    spanText = hours >= 24 ? `${Math.round(hours / 24)} 天` : `${Math.round(hours)} 小時`;
+  }
+  barEl.innerHTML = `
+    <div class="tl25-stat"><strong>${events.length}</strong> 事件</div>
+    <div class="tl25-stat"><strong style="color:var(--rose);">${critCount}</strong> 關鍵決策</div>
+    ${spanText ? `<div class="tl25-stat">跨度 <strong>${spanText}</strong></div>` : ''}
+  `;
+
+  // Event cards
+  const listEl = document.getElementById('tlEventList');
+  listEl.innerHTML = events.map((evt, idx) => {
+    const isCritical = evt.critical_decision;
+    const typeCls = evt.event_type || '';
+    const typeLabel = EVENT_TYPE_LABELS[evt.event_type] || evt.event_type || '';
+    let html = `<div class="tl25-event ${isCritical ? 'critical' : ''}">`;
+    html += `<span class="tl25-date">${esc(evt.timestamp || '')}</span>`;
+    html += `<span class="tl25-type ${typeCls}">${esc(typeLabel)}</span>`;
+    html += `<div class="tl25-desc">${esc(evt.description || '')}</div>`;
+    if (evt.actors && evt.actors.length) {
+      html += `<div class="tl25-actors">${esc(evt.actors.join('、'))}</div>`;
+    }
+    if (isCritical && evt.decision_content) {
+      html += `<div class="tl25-decision"><strong>決策：</strong>${esc(evt.decision_content)}</div>`;
+    }
+    html += `</div>`;
+    return html;
+  }).join('');
+}
+
+function renderTLEvalForm() {
+  const container = document.getElementById('tlEvalForm');
+  let html = '';
+
+  TL_DIMENSIONS.forEach(dim => {
+    html += `<div class="eval-item" data-dim="${dim.id}">`;
+    html += `<div class="eval-item-title">${esc(dim.name)}</div>`;
+    html += `<div style="font-size:12px;color:var(--slate-500);margin-bottom:4px;">${esc(dim.guide)}</div>`;
+    html += `<span class="eval-item-toggle" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#x25BE;</span>`;
+    html += `<div class="eval-anchors"><table>`;
+    for (let s = 5; s >= 1; s--) {
+      html += `<tr><td>${s}</td><td>${esc(dim.anchors[s] || '')}</td></tr>`;
+    }
+    html += `</table>`;
+    html += `<div style="margin-top:6px;font-size:12px;color:var(--slate-500);">`;
+    html += `<strong>具體檢查：</strong><ul style="margin:4px 0 0 16px;">`;
+    dim.checks.forEach(c => { html += `<li>${esc(c)}</li>`; });
+    html += `</ul></div>`;
+    html += `</div>`;
+    html += `<div class="likert-row">`;
+    for (let s = 1; s <= 5; s++) {
+      html += `<label><input type="radio" name="tl_${dim.id}" value="${s}" onchange="onPhaseTLChange()"><span>${s}</span></label>`;
+    }
+    html += `</div>`;
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function collectPhaseTLData() {
+  const scores = {};
+  TL_DIMENSIONS.forEach(dim => {
+    const checked = document.querySelector(`input[name="tl_${dim.id}"]:checked`);
+    if (checked) scores[dim.id] = parseInt(checked.value);
+  });
+  const comment = document.getElementById('tlComment').value.trim();
+  const existing = getPhaseData(currentCase, currentCondIdx, 'TL') || {};
+  return {
+    ...existing,
+    real_condition: getRealCondition(currentCase, currentCondIdx),
+    scores,
+    comment,
+  };
+}
+
+function restorePhaseTL() {
+  // Clear all
+  TL_DIMENSIONS.forEach(dim => {
+    document.querySelectorAll(`input[name="tl_${dim.id}"]`).forEach(r => r.checked = false);
+  });
+  document.getElementById('tlComment').value = '';
+
+  const data = getPhaseData(currentCase, currentCondIdx, 'TL');
+  if (!data) return;
+  if (data.scores) {
+    Object.entries(data.scores).forEach(([id, val]) => {
+      const radio = document.querySelector(`input[name="tl_${id}"][value="${val}"]`);
+      if (radio) radio.checked = true;
+    });
+  }
+  if (data.comment) document.getElementById('tlComment').value = data.comment;
+}
+
+function onPhaseTLChange() {
+  updateTLProgress();
+  debounceSave();
+}
+
+function updateTLProgress() {
+  let filled = 0;
+  TL_DIMENSIONS.forEach(dim => {
+    if (document.querySelector(`input[name="tl_${dim.id}"]:checked`)) filled++;
+  });
+  document.getElementById('tlProgressText').textContent = `${filled} / ${TL_DIMENSIONS.length}`;
+}
+
+function completePhaseTL() {
+  const data = collectPhaseTLData();
+  const filledCount = Object.keys(data.scores).length;
+  if (filledCount < TL_DIMENSIONS.length) {
+    showToast(`尚有 ${TL_DIMENSIONS.length - filledCount} 項未評分`, 'error');
+    return;
+  }
+  data._complete = true;
+  setPhaseData(currentCase, currentCondIdx, 'TL', data);
+
   // Check if all conditions done
   if (areAllCondsComplete(currentCase)) {
     showToast('所有版本已完成，進入 Phase 3 排序', 'success');
@@ -1400,7 +1775,7 @@ function completePhase2() {
       if (!isCondComplete(currentCase, i)) {
         currentCondIdx = i;
         currentPhase = 1;
-        showToast(`${getAnonLabel(currentCondIdx)} 完成，進入 ${getAnonLabel(i)}`, 'success');
+        showToast(`進入 ${getAnonLabel(i)}`, 'success');
         break;
       }
     }
@@ -1410,8 +1785,6 @@ function completePhase2() {
   loadCurrentView();
   updateFooter();
 }
-
-// togglePhase2Source removed — Phase 2 now uses same 3-panel layout as Phase 1
 
 // ═══════════════════════════════════════════════════════════════
 // PHASE 3: Preference Ranking
@@ -1776,6 +2149,11 @@ function saveCurrentState() {
   } else if (currentPhase === 2) {
     const data = collectPhase2Data();
     setPhaseData(currentCase, currentCondIdx, 2, data);
+  } else if (currentPhase === 'tl') {
+    const data = collectPhaseTLData();
+    if (Object.keys(data.scores).length > 0 || data.comment) {
+      setPhaseData(currentCase, currentCondIdx, 'TL', data);
+    }
   } else if (currentPhase === 3) {
     const data = collectPhase3Data();
     const ev = getEvaluator();
@@ -1798,7 +2176,7 @@ document.addEventListener('change', (e) => {
 });
 document.addEventListener('input', (e) => {
   if (e.target.id === 'p1OverallComment' || e.target.id === 'p2OmissionDetail' ||
-      e.target.id === 'p2RevisionNote' || e.target.id === 'p3RankingReason') {
+      e.target.id === 'p2RevisionNote' || e.target.id === 'tlComment' || e.target.id === 'p3RankingReason') {
     debounceSave();
   }
 });
@@ -1820,10 +2198,11 @@ function exportJSON() {
       case_name: currentCase,
       timestamp: new Date().toISOString(),
       condition_order: condOrder,
-      rubric_version: 'v2'
+      rubric_version: 'v2.1'
     },
     phase1: {},
     phase2: {},
+    phaseTL: {},
     phase3: null
   };
 
@@ -1848,6 +2227,14 @@ function exportJSON() {
       omissions: p2 ? p2.omissions || '' : '',
       revisions: p2 ? p2.revisions || {} : {},
       revision_count: p2 ? p2.revision_count || 0 : 0
+    };
+
+    // Phase TL
+    const ptl = getPhaseData(currentCase, i, 'TL');
+    result.phaseTL[label] = {
+      real_condition: cond,
+      scores: ptl ? ptl.scores || {} : {},
+      comment: ptl ? ptl.comment || '' : ''
     };
   }
 
@@ -1879,8 +2266,8 @@ function buildCaseExportData(caseName) {
   const evaluator = getEvaluator() || 'anonymous';
   const condOrder = getConditionOrder(caseName);
   const result = {
-    meta: { evaluator, case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2' },
-    phase1: {}, phase2: {}, phase3: null
+    meta: { evaluator, case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2.1' },
+    phase1: {}, phase2: {}, phaseTL: {}, phase3: null
   };
   for (let i = 0; i < 4; i++) {
     const label = getAnonLabel(i);
@@ -1898,6 +2285,12 @@ function buildCaseExportData(caseName) {
       omissions: p2 ? p2.omissions || '' : '',
       revisions: p2 ? p2.revisions || {} : {},
       revision_count: p2 ? p2.revision_count || 0 : 0
+    };
+    const ptl = getPhaseData(caseName, i, 'TL');
+    result.phaseTL[label] = {
+      real_condition: cond,
+      scores: ptl ? ptl.scores || {} : {},
+      comment: ptl ? ptl.comment || '' : ''
     };
   }
   try {
@@ -1979,6 +2372,20 @@ function importSingleCase(data) {
         _entered: p2.has_major_omission !== null
       };
       localStorage.setItem(key, JSON.stringify(stored));
+    }
+  }
+  // Phase TL
+  if (data.phaseTL) {
+    for (let i = 0; i < 4; i++) {
+      const label = getAnonLabel(i);
+      if (data.phaseTL[label]) {
+        const cond = data.meta.condition_order[i];
+        const key = `eval_v2_${evaluator}_${caseName}_${cond}_phaseTL`;
+        const ptl = data.phaseTL[label];
+        const stored = { scores: ptl.scores || {}, comment: ptl.comment || '' };
+        if (Object.keys(stored.scores).length === TL_DIMENSIONS.length) stored._complete = true;
+        localStorage.setItem(key, JSON.stringify(stored));
+      }
     }
   }
   if (data.phase3) {
