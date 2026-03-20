@@ -609,7 +609,7 @@
     <div class="resizer"></div>
     <!-- Right: Eval -->
     <div class="panel panel-tl-eval" id="tlEvalPanel">
-      <div class="tl-eval-group-title">時間軸品質評估（1-2 一般 / 3-6 醫學專業）</div>
+      <div class="tl-eval-group-title">時間軸品質評估（1-3 一般 / 4-7 醫學專業）</div>
       <div id="tlEvalForm"></div>
       <div style="padding:8px 0;">
         <label style="font-size:13px;color:var(--slate-500);">備註（選填，限 100 字）</label>
@@ -729,9 +729,25 @@ const TL_DIMENSIONS = [
       1: '大部分事件無法對齊到原文'
     }
   },
+  {
+    id: 'overview_clarity', name: '3. 整體概覽性', num: 3,
+    guide: '只看時間軸（不看原文），能否快速掌握這個醫療事件的來龍去脈？',
+    checks: [
+      '讀完所有事件後，是否能理解病人為何就醫、接受了什麼處置、最終結果如何',
+      '事件之間的邏輯脈絡是否清晰（而非片段資訊的堆砌）',
+      '是否能在 2-3 分鐘內掌握案情全貌'
+    ],
+    anchors: {
+      5: '僅讀時間軸即可完整掌握醫療事件發展脈絡',
+      4: '大致能掌握全貌，但 1 處需回頭推敲才能理解前後關聯',
+      3: '能理解個別事件，但整體脈絡需要自行拼湊',
+      2: '事件片段零散，難以串連出完整故事',
+      1: '讀完後仍無法理解這個案件在說什麼'
+    }
+  },
   // ─── 醫學專業評估（需臨床判斷）───
   {
-    id: 'clinical_completeness', name: '3. 臨床事件完整性', num: 3,
+    id: 'clinical_completeness', name: '4. 臨床事件完整性', num: 4,
     guide: '從醫學角度看，判決書中臨床上重要的事件是否都被抽取出來？有無遺漏或多餘？',
     checks: [
       '到院、轉院、手術、重要用藥、病情變化等臨床轉折點是否都有對應事件',
@@ -747,7 +763,7 @@ const TL_DIMENSIONS = [
     }
   },
   {
-    id: 'clinical_accuracy', name: '4. 臨床描述準確性', num: 4,
+    id: 'clinical_accuracy', name: '5. 臨床描述準確性', num: 5,
     guide: '事件描述在醫學上是否正確？有無誤用術語、扭曲因果、或產生幻覺？',
     checks: [
       '醫學術語使用是否正確（疾病名、手術名、藥物名）',
@@ -763,7 +779,7 @@ const TL_DIMENSIONS = [
     }
   },
   {
-    id: 'critical_decision_marking', name: '5. 關鍵決策標記正確性', num: 5,
+    id: 'critical_decision_marking', name: '6. 關鍵決策標記正確性', num: 6,
     guide: '標為「關鍵決策」的事件是否確實是醫療過失認定的核心節點？有無漏標或誤標？',
     checks: [
       '標為關鍵決策的事件是否確實是法院認定過失的關鍵點',
@@ -779,7 +795,7 @@ const TL_DIMENSIONS = [
     }
   },
   {
-    id: 'granularity', name: '6. 事件粒度適當性', num: 6,
+    id: 'granularity', name: '7. 事件粒度適當性', num: 7,
     guide: '事件的拆分粒度在臨床上是否恰當？不會太粗（合併不同處置）或太細（拆出瑣碎步驟）。',
     checks: [
       '不同診次/不同日的事件是否有適當分開',
