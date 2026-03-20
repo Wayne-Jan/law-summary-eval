@@ -1762,24 +1762,16 @@ function showTLEventSource(idx) {
     el.classList.toggle('active', parseInt(el.dataset.idx) === idx);
   });
 
-  // Clear previous highlights
-  document.querySelectorAll('#tlSourceBody .chunk-region.active').forEach(el => el.classList.remove('active'));
+  // Clear previous highlights (only event marks, NOT chunk-region.active)
   document.querySelectorAll('#tlSourceBody .tl-evt-highlight.active').forEach(el => el.classList.remove('active'));
 
-  // Find chunk for this event
-  const chunk = findTLChunkForEvent(evt);
-  if (chunk) {
-    const cid = chunk.chunk_id || '';
-    const regionEl = document.getElementById('tl_chunk_' + cid);
-    if (regionEl) {
-      regionEl.classList.add('active');
-      const evtMarks = regionEl.querySelectorAll(`.tl-evt-highlight[data-evt="${idx}"]`);
-      evtMarks.forEach(m => m.classList.add('active'));
-      const scrollTarget = evtMarks.length > 0 ? evtMarks[0] : regionEl;
-      requestAnimationFrame(() => {
-        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-    }
+  // Highlight only the specific event's marks across all chunks
+  const evtMarks = document.querySelectorAll(`#tlSourceBody .tl-evt-highlight[data-evt="${idx}"]`);
+  evtMarks.forEach(m => m.classList.add('active'));
+  if (evtMarks.length > 0) {
+    requestAnimationFrame(() => {
+      evtMarks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
   }
 }
 
