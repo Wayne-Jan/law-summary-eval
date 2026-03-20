@@ -71,7 +71,7 @@
     /* ─── MAIN CONTAINER ─── */
     .main { margin-top: 56px; height: calc(100vh - 56px - 36px); position: relative; }
 
-    /* ─── VIEWS (Phase 1/2/3) ─── */
+    /* ─── VIEWS (Phase 1/TL/3) ─── */
     .view { display: none; height: 100%; }
     .view.active { display: flex; }
 
@@ -81,64 +81,6 @@
     .panel-source { flex: 30 0 0; border-right: 1px solid #e2e8f0; background: white; }
     .panel-summary { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; }
     .panel-eval { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
-
-    /* ─── PHASE 2: Same 3-panel as Phase 1 (AI 30% | GT 35% | Review 35%) ─── */
-    #phase2View { flex-direction: row; }
-    .panel-review { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
-    .p2-section { margin-bottom: 16px; }
-    .p2-section-title { font-size: 13px; font-weight: 600; color: var(--slate-900); margin-bottom: 8px; }
-    .p2-gap-radio { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
-    .p2-gap-radio label { font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
-    .p2-gap-radio input[type="radio"] { width: 16px; height: 16px; }
-    .p2-omission-text {
-      width: 100%; font-size: 13px; padding: 6px 10px;
-      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
-      resize: vertical; min-height: 32px;
-    }
-
-    /* Phase 2 revision items */
-    .p2-rev-item { margin-bottom: 10px; padding: 8px 10px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
-    .p2-rev-header { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
-    .p2-rev-num { font-size: 11px; color: var(--slate-500); }
-    .p2-rev-name { font-size: 12px; font-weight: 600; color: var(--slate-900); flex: 1; }
-    .p2-rev-toggle {
-      font-size: 11px; padding: 2px 10px; border: 1px solid var(--slate-300);
-      border-radius: 4px; background: white; cursor: pointer; color: var(--slate-500);
-      font-family: var(--sans); transition: all 0.15s;
-    }
-    .p2-rev-toggle:hover { border-color: var(--amber); color: var(--amber); }
-    .p2-rev-toggle.active { background: var(--amber); border-color: var(--amber); color: white; font-weight: 600; }
-    /* Original score row (always visible) */
-    .p2-orig-row { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
-    .p2-orig-label { font-size: 11px; color: var(--slate-500); width: 50px; }
-    .p2-orig-dots { display: flex; gap: 3px; }
-    .p2-orig-dot {
-      width: 28px; height: 24px; border: 1px solid var(--slate-300); border-radius: 5px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; color: var(--slate-300); background: white;
-    }
-    .p2-orig-dot.filled { background: var(--indigo); color: white; border-color: var(--indigo); font-weight: 700; }
-    /* Revision score row (shown when revising) */
-    .p2-rev-row { display: none; align-items: center; gap: 4px; margin-top: 4px; }
-    .p2-rev-row.show { display: flex; }
-    .p2-rev-label { font-size: 11px; color: var(--amber); width: 50px; font-weight: 600; }
-    .p2-rev-dots { display: flex; gap: 3px; }
-    .p2-rev-dot {
-      width: 28px; height: 24px; border: 1px solid var(--amber); border-radius: 5px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; color: var(--amber); background: var(--amber-light);
-      cursor: pointer; transition: all 0.15s;
-    }
-    .p2-rev-dot:hover { background: var(--amber); color: white; }
-    .p2-rev-dot.filled { background: var(--amber); color: white; font-weight: 700; }
-    .p2-rev-dot.disabled, .p2-rev-dot.disabled:hover { opacity: 0.3; cursor: not-allowed; border-color: var(--slate-300); color: var(--slate-300); background: var(--slate-100); }
-    /* Reason field */
-    .p2-rev-reason { display: none; margin-top: 4px; }
-    .p2-rev-reason.show { display: block; }
-    .p2-rev-reason input {
-      width: 100%; font-size: 11px; padding: 4px 8px; border: 1px solid var(--slate-300);
-      border-radius: 4px; font-family: var(--sans);
-    }
 
     /* ─── PHASE 3: Four-column ─── */
     #phase3View { flex-direction: column; }
@@ -382,15 +324,10 @@
       .cond-pills, .phase-indicators { flex-wrap: wrap; }
       #phase1View { flex-direction: column; }
       .panel-source, .panel-summary, .panel-eval { flex: none !important; width: 100% !important; height: auto; max-height: 40vh; }
-      #phase2View { flex-direction: column; }
-      #phase2View .panel { flex: none !important; max-height: 40vh; }
       .phase3-columns { flex-direction: column; }
       .phase3-col { flex: none; max-height: 30vh; }
       .p3-choices { flex-direction: column; align-items: center; }
     }
-
-    /* ─── SECTION SYNC HIGHLIGHT (Phase 2) ─── */
-    .section-block.sync-active { background: var(--indigo-light); border-radius: 6px; }
 
     /* ─── PHASE TL: Timeline Evaluation (three-column) ─── */
     #phaseTLView { flex-direction: row; }
@@ -526,7 +463,7 @@
     </div>
     <div class="resizer"></div>
     <div class="panel panel-eval" id="p1Eval">
-      <div id="p1FrozenBanner" class="frozen-banner">Phase 1 已凍結（已進入 Phase 2，不可修改盲評分數）</div>
+      <div id="p1FrozenBanner" class="frozen-banner">Phase 1 已凍結（已完成評分）</div>
       <div id="p1EvalForm"></div>
       <div style="padding:8px 0;">
         <label style="font-size:13px;color:var(--slate-500);">整體短評（選填，限 100 字）</label>
@@ -536,50 +473,6 @@
         <span style="font-size:13px;color:var(--slate-500);" id="p1ProgressText"></span>
         <div class="spacer"></div>
         <button class="btn btn-primary" id="p1CompleteBtn" onclick="completePhase1()">完成評分 &#x2192;</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ─── PHASE 2 VIEW (same 3-panel as Phase 1) ─── -->
-  <div class="view" id="phase2View">
-    <!-- Left: AI Summary -->
-    <div class="panel panel-source" id="p2AI">
-      <div class="panel-header">
-        <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
-        <span class="panel-header-text">AI 摘要 <span id="p2CondLabel" style="color:var(--indigo);font-weight:700;"></span></span>
-      </div>
-      <div class="panel-body" id="p2AIBody" style="padding:12px 16px;"></div>
-    </div>
-    <!-- Middle: GT Summary -->
-    <div class="panel panel-summary" id="p2GT">
-      <div class="panel-header">
-        <div class="panel-header-icon" style="background:var(--emerald-light);color:var(--emerald);">GT</div>
-        <span class="panel-header-text">專家摘要</span>
-      </div>
-      <div class="panel-body" id="p2GTBody" style="padding:12px 16px;"></div>
-    </div>
-    <!-- Right: Review form (locked scores + omission + revise) -->
-    <div class="panel panel-review" id="p2Review">
-      <div class="panel-header" style="background:var(--slate-50);">
-        <div class="panel-header-icon" style="background:var(--amber-light);color:var(--amber);">&#x270E;</div>
-        <span class="panel-header-text">比對審查</span>
-      </div>
-      <!-- Omission -->
-      <div class="p2-section">
-        <div class="p2-section-title">重大遺漏</div>
-        <div class="p2-gap-radio">
-          <label><input type="radio" name="p2omission" value="no" onchange="onPhase2Change()"> 無</label>
-          <label><input type="radio" name="p2omission" value="yes" onchange="onPhase2Change()"> 有</label>
-        </div>
-        <textarea class="p2-omission-text" id="p2OmissionDetail" placeholder="遺漏項目..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
-      </div>
-      <!-- Scores review -->
-      <div class="p2-section">
-        <div class="p2-section-title">Phase 1 評分 <span style="font-weight:400;color:var(--slate-500);font-size:11px;">點「修」解鎖修正</span></div>
-        <div id="p2RevisionItems"></div>
-      </div>
-      <div style="text-align:right;padding-top:8px;">
-        <button class="btn btn-primary" id="p2CompleteBtn" onclick="completePhase2()">完成比對 &#x2192;</button>
       </div>
     </div>
   </div>
@@ -1063,13 +956,7 @@ function isPhase1Complete(caseName, condIdx) {
 }
 
 function isPhase1Frozen(caseName, condIdx) {
-  const d = getPhaseData(caseName, condIdx, 2);
-  return d != null && d._entered === true;
-}
-
-function isPhase2Complete(caseName, condIdx) {
-  const d = getPhaseData(caseName, condIdx, 2);
-  return d && d._complete === true;
+  return isPhase1Complete(caseName, condIdx);
 }
 
 function isPhaseTLComplete(caseName, condIdx) {
@@ -1078,7 +965,7 @@ function isPhaseTLComplete(caseName, condIdx) {
 }
 
 function isCondComplete(caseName, condIdx) {
-  return isPhase1Complete(caseName, condIdx) && isPhase2Complete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
+  return isPhase1Complete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
 }
 
 function areAllCondsComplete(caseName) {
@@ -1127,8 +1014,6 @@ async function onCaseChange() {
         currentCondIdx = i;
         if (!isPhase1Complete(currentCase, i)) {
           currentPhase = 1;
-        } else if (!isPhase2Complete(currentCase, i)) {
-          currentPhase = 2;
         } else {
           currentPhase = 'tl';
         }
@@ -1190,7 +1075,6 @@ function renderPhaseIndicators() {
 
   const phases = [
     { num: 1, label: 'Phase 1' },
-    { num: 2, label: 'Phase 2' },
     { num: 'tl', label: '時間軸' },
     { num: 3, label: 'Phase 3' }
   ];
@@ -1201,7 +1085,6 @@ function renderPhaseIndicators() {
     if (p.num === currentPhase) cls += ' active';
     else if (p.num === 3 && !allDone && !locked) cls += ' locked';
     else if (p.num === 1 && isPhase1Frozen(currentCase, currentCondIdx)) cls += ' done';
-    else if (p.num === 2 && isPhase2Complete(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 'tl' && isPhaseTLComplete(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 3 && locked) cls += ' done';
     const phaseArg = typeof p.num === 'string' ? `'${p.num}'` : p.num;
@@ -1230,9 +1113,6 @@ async function loadCurrentView() {
   if (currentPhase === 1) {
     document.getElementById('phase1View').classList.add('active');
     await loadPhase1();
-  } else if (currentPhase === 2) {
-    document.getElementById('phase2View').classList.add('active');
-    await loadPhase2();
   } else if (currentPhase === 'tl') {
     document.getElementById('phaseTLView').classList.add('active');
     await loadPhaseTL();
@@ -1383,256 +1263,12 @@ function completePhase1() {
     return;
   }
   setPhaseData(currentCase, currentCondIdx, 1, data);
-  showToast('Phase 1 完成，進入 Phase 2', 'success');
-  currentPhase = 2;
-  renderCondPills();
-  renderPhaseIndicators();
-  loadCurrentView();
-}
-
-// ═══════════════════════════════════════════════════════════════
-// PHASE 2: Gap Marking
-// ═══════════════════════════════════════════════════════════════
-
-async function loadPhase2() {
-  const cond = getRealCondition(currentCase, currentCondIdx);
-  const slug = getSlug(currentCase);
-
-  // Mark Phase 2 as entered (freezes Phase 1)
-  let p2Data = getPhaseData(currentCase, currentCondIdx, 2);
-  if (!p2Data) p2Data = { _entered: true };
-  if (!p2Data._entered) p2Data._entered = true;
-  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
-
-  // Load AI data
-  if (!aiDataCache[cond]) {
-    try {
-      const resp = await fetch(`./data/${cond}/${slug}.json`);
-      if (resp.ok) aiDataCache[cond] = await resp.json();
-    } catch {}
-  }
-  const aiData = aiDataCache[cond];
-
-  // Load GT data (only now!)
-  if (!gtDataCache) {
-    try {
-      const resp = await fetch(`./data/gt/${slug}.json`);
-      if (resp.ok) gtDataCache = await resp.json();
-    } catch {}
-  }
-
-  // Render AI summary (left panel)
-  const label = getAnonLabel(currentCondIdx);
-  document.getElementById('p2CondLabel').textContent = label;
-  renderSectionsSideBySide(aiData, gtDataCache);
-
-  // Restore form + render revision items
-  restorePhase2();
-
-  // Complete button state
-  const locked = isCaseLocked(currentCase);
-  document.getElementById('p2CompleteBtn').disabled = locked;
-}
-
-function renderSectionsSideBySide(aiData, gtData) {
-  const aiBody = document.getElementById('p2AIBody');
-  const gtBody = document.getElementById('p2GTBody');
-
-  const sectionIds = ['facts', 'defense', 'opinions', 'verdict', 'reasoning'];
-
-  if (aiData && aiData.sections) {
-    aiBody.innerHTML = sectionIds.map(sid => {
-      const sec = aiData.sections.find(s => s.id === sid);
-      if (!sec) return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-ai">${esc(SECTION_NAMES[sid])}</div><div class="section-body"><span class="empty-text">無此段落</span></div></div>`;
-      return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-ai">${esc(SECTION_NAMES[sid])}</div><div class="section-body">${renderCitations(sec.content || '')}</div></div>`;
-    }).join('');
-  } else {
-    aiBody.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
-  }
-
-  if (gtData && gtData.sections) {
-    gtBody.innerHTML = sectionIds.map(sid => {
-      const sec = gtData.sections.find(s => s.id === sid);
-      if (!sec) return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-gt">${esc(SECTION_NAMES[sid])}</div><div class="section-body"><span class="empty-text">無此段落</span></div></div>`;
-      return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-gt">${esc(SECTION_NAMES[sid])}</div><div class="section-body">${esc(sec.content || '')}</div></div>`;
-    }).join('');
-  } else {
-    gtBody.innerHTML = '<span class="empty-text">無法載入專家摘要</span>';
-  }
-
-  // Bind citation clicks in Phase 2
-  document.querySelectorAll('#p2AIBody .citation-tag').forEach(tag => {
-    tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, 'p2SourceBody'));
-  });
-}
-
-// Sync scroll removed — Phase 2 now uses independent panel scrolling like Phase 1
-
-function renderPhase2Revisions() {
-  const container = document.getElementById('p2RevisionItems');
-  const p1Data = getPhaseData(currentCase, currentCondIdx, 1) || {};
-  const scores = p1Data.scores || {};
-  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
-  const revisions = p2Data.revisions || {};
-
-  let html = '';
-  let num = 0;
-  DIMENSIONS.forEach(group => {
-    group.items.forEach(dim => {
-      num++;
-      const orig = scores[dim.id];
-      const rev = revisions[dim.id];
-      const isRevising = !!rev;
-      const hasSelected = isRevising && rev.revised !== null && rev.revised !== undefined;
-
-      html += `<div class="p2-rev-item">`;
-      // Header: number + name + toggle
-      html += `<div class="p2-rev-header">`;
-      html += `<span class="p2-rev-num">${num}.</span>`;
-      html += `<span class="p2-rev-name">${esc(dim.name)}</span>`;
-      html += `<button class="p2-rev-toggle ${isRevising ? 'active' : ''}" onclick="toggleRevision('${dim.id}')">${isRevising ? '取消' : '修'}</button>`;
-      html += `</div>`;
-
-      // Original score row (always visible)
-      html += `<div class="p2-orig-row">`;
-      html += `<span class="p2-orig-label">原始</span>`;
-      html += `<div class="p2-orig-dots">`;
-      for (let s = 1; s <= 5; s++) {
-        html += `<div class="p2-orig-dot ${s === orig ? 'filled' : ''}">${s}</div>`;
-      }
-      html += `</div></div>`;
-
-      // Revision score row (shown when revising)
-      if (isRevising) {
-        const pendingScore = p2PendingRevisions[dim.id] != null ? p2PendingRevisions[dim.id] : rev.revised;
-        const isConfirmed = rev._confirmed;
-        html += `<div class="p2-rev-row show">`;
-        html += `<span class="p2-rev-label">修正</span>`;
-        html += `<div class="p2-rev-dots">`;
-        for (let s = 1; s <= 5; s++) {
-          const isFilled = pendingScore === s;
-          const isDisabled = s === orig;
-          let cls = 'p2-rev-dot';
-          if (isFilled) cls += ' filled';
-          if (isDisabled) cls += ' disabled';
-          html += `<div class="${cls}" ${isDisabled ? '' : `onclick="selectPendingRevision('${dim.id}', ${s})"`}>${s}</div>`;
-        }
-        html += `</div>`;
-        // Confirm/cancel buttons (show when pending and not yet confirmed)
-        if (pendingScore != null && !isConfirmed) {
-          html += `<button class="btn btn-success" style="font-size:11px;padding:2px 10px;margin-left:8px;" onclick="confirmRevision('${dim.id}')">確認</button>`;
-        }
-        if (isConfirmed) {
-          html += `<span style="font-size:11px;color:var(--emerald);margin-left:8px;">✓ 已確認</span>`;
-        }
-        html += `</div>`;
-
-        // Reason (only when revising)
-        html += `<div class="p2-rev-reason show">`;
-        html += `<input type="text" placeholder="修正理由（選填）" maxlength="60" data-dim="${dim.id}" value="${isRevising && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
-        html += `</div>`;
-      }
-
-      html += `</div>`;
-    });
-  });
-  container.innerHTML = html;
-}
-
-let p2PendingRevisions = {}; // { dimId: score } — not yet confirmed
-
-function toggleRevision(dimId) {
-  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
-  if (!p2Data.revisions) p2Data.revisions = {};
-  const isActive = !!p2Data.revisions[dimId];
-  if (isActive) {
-    delete p2Data.revisions[dimId];
-    delete p2PendingRevisions[dimId];
-  } else {
-    p2Data.revisions[dimId] = { revised: null, reason: '' };
-  }
-  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
-  renderPhase2Revisions();
-}
-
-function selectPendingRevision(dimId, score) {
-  p2PendingRevisions[dimId] = score;
-  renderPhase2Revisions();
-}
-
-function confirmRevision(dimId) {
-  const score = p2PendingRevisions[dimId];
-  if (score == null) return;
-  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
-  if (!p2Data.revisions) p2Data.revisions = {};
-  const existing = p2Data.revisions[dimId] || {};
-  p2Data.revisions[dimId] = { revised: score, reason: existing.reason || '', _confirmed: true };
-  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
-  delete p2PendingRevisions[dimId];
-  renderPhase2Revisions();
-  showToast('修正已確認', 'success');
-}
-
-function restorePhase2() {
-  const data = getPhaseData(currentCase, currentCondIdx, 2) || {};
-  if (data.has_major_omission === true) {
-    const r = document.querySelector('input[name="p2omission"][value="yes"]');
-    if (r) r.checked = true;
-  } else if (data.has_major_omission === false) {
-    const r = document.querySelector('input[name="p2omission"][value="no"]');
-    if (r) r.checked = true;
-  } else {
-    document.querySelectorAll('input[name="p2omission"]').forEach(r => r.checked = false);
-  }
-  document.getElementById('p2OmissionDetail').value = data.omissions || '';
-  renderPhase2Revisions();
-}
-
-function collectPhase2Data() {
-  const existing = getPhaseData(currentCase, currentCondIdx, 2) || {};
-  const omissionRadio = document.querySelector('input[name="p2omission"]:checked');
-  // Collect revision reasons from DOM inputs
-  const revisions = existing.revisions || {};
-  document.querySelectorAll('.p2-revise-reason input[data-dim]').forEach(inp => {
-    const dimId = inp.dataset.dim;
-    if (revisions[dimId]) {
-      revisions[dimId].reason = inp.value.trim();
-    }
-  });
-  return {
-    ...existing,
-    _entered: true,
-    has_major_omission: omissionRadio ? omissionRadio.value === 'yes' : null,
-    omissions: document.getElementById('p2OmissionDetail').value.trim(),
-    revisions,
-    revision_count: Object.keys(revisions).filter(k => revisions[k] && revisions[k].revised !== null).length
-  };
-}
-
-function onPhase2Change() {
-  debounceSave();
-}
-
-function completePhase2() {
-  const data = collectPhase2Data();
-  const omissionRadio = document.querySelector('input[name="p2omission"]:checked');
-  if (!omissionRadio) {
-    showToast('請選擇「有重大遺漏」或「無重大遺漏」', 'error');
-    return;
-  }
-  data._complete = true;
-  setPhaseData(currentCase, currentCondIdx, 2, data);
-
-  // Move to Timeline evaluation for this condition
-  showToast('Phase 2 完成，進入時間軸評估', 'success');
+  showToast('Phase 1 完成，進入時間軸評估', 'success');
   currentPhase = 'tl';
   renderCondPills();
   renderPhaseIndicators();
   loadCurrentView();
-  updateFooter();
 }
-
-// togglePhase2Source removed — Phase 2 now uses same 3-panel layout as Phase 1
 
 // ═══════════════════════════════════════════════════════════════
 // PHASE TL: Timeline Evaluation
@@ -2290,9 +1926,6 @@ function saveCurrentState() {
     if (Object.keys(data.scores).length > 0 || data.overall_comment) {
       setPhaseData(currentCase, currentCondIdx, 1, data);
     }
-  } else if (currentPhase === 2) {
-    const data = collectPhase2Data();
-    setPhaseData(currentCase, currentCondIdx, 2, data);
   } else if (currentPhase === 'tl') {
     const data = collectPhaseTLData();
     if (Object.keys(data.scores).length > 0 || data.comment) {
@@ -2319,8 +1952,7 @@ document.addEventListener('change', (e) => {
   }
 });
 document.addEventListener('input', (e) => {
-  if (e.target.id === 'p1OverallComment' || e.target.id === 'p2OmissionDetail' ||
-      e.target.id === 'p2RevisionNote' || e.target.id === 'tlComment' || e.target.id === 'p3RankingReason') {
+  if (e.target.id === 'p1OverallComment' || e.target.id === 'tlComment' || e.target.id === 'p3RankingReason') {
     debounceSave();
   }
 });
@@ -2345,7 +1977,6 @@ function exportJSON() {
       rubric_version: 'v2.1'
     },
     phase1: {},
-    phase2: {},
     phaseTL: {},
     phase3: null
   };
@@ -2362,15 +1993,6 @@ function exportJSON() {
       scores: p1 ? p1.scores || {} : {},
       overall_comment: p1 ? p1.overall_comment || '' : '',
       revision_count: p1 ? p1.revision_count || 0 : 0
-    };
-
-    // Phase 2
-    const p2 = getPhaseData(currentCase, i, 2);
-    result.phase2[label] = {
-      has_major_omission: p2 ? p2.has_major_omission : null,
-      omissions: p2 ? p2.omissions || '' : '',
-      revisions: p2 ? p2.revisions || {} : {},
-      revision_count: p2 ? p2.revision_count || 0 : 0
     };
 
     // Phase TL
@@ -2411,7 +2033,7 @@ function buildCaseExportData(caseName) {
   const condOrder = getConditionOrder(caseName);
   const result = {
     meta: { evaluator, case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2.1' },
-    phase1: {}, phase2: {}, phaseTL: {}, phase3: null
+    phase1: {}, phaseTL: {}, phase3: null
   };
   for (let i = 0; i < 4; i++) {
     const label = getAnonLabel(i);
@@ -2422,13 +2044,6 @@ function buildCaseExportData(caseName) {
       scores: p1 ? p1.scores || {} : {},
       overall_comment: p1 ? p1.overall_comment || '' : '',
       revision_count: p1 ? p1.revision_count || 0 : 0
-    };
-    const p2 = getPhaseData(caseName, i, 2);
-    result.phase2[label] = {
-      has_major_omission: p2 ? p2.has_major_omission : null,
-      omissions: p2 ? p2.omissions || '' : '',
-      revisions: p2 ? p2.revisions || {} : {},
-      revision_count: p2 ? p2.revision_count || 0 : 0
     };
     const ptl = getPhaseData(caseName, i, 'TL');
     result.phaseTL[label] = {
@@ -2507,16 +2122,7 @@ function importSingleCase(data) {
       const p1 = data.phase1[label];
       localStorage.setItem(key, JSON.stringify({ scores: p1.scores, overall_comment: p1.overall_comment, revision_count: p1.revision_count }));
     }
-    if (data.phase2 && data.phase2[label]) {
-      const key = `eval_v2_${evaluator}_${caseName}_${i}_phase2`;
-      const p2 = data.phase2[label];
-      const stored = {
-        has_major_omission: p2.has_major_omission, omissions: p2.omissions,
-        revisions: p2.revisions || {}, revision_count: p2.revision_count,
-        _entered: p2.has_major_omission !== null
-      };
-      localStorage.setItem(key, JSON.stringify(stored));
-    }
+    // phase2 data ignored (Phase 2 removed)
   }
   // Phase TL
   if (data.phaseTL) {
