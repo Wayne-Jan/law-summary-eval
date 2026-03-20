@@ -23,7 +23,6 @@ from modules.extraction_v3_8.alignment_engine import smart_align
 PREDICTIONS = os.path.join(PROJECT_ROOT, "data", "predictions")
 CHUNKS_DIR = os.path.join(PROJECT_ROOT, "data", "chunks_20260105")
 EXTRACTIONS_DIR_V39 = os.path.join(PROJECT_ROOT, "data", "extractions_v3.9")
-EXTRACTIONS_DIR_V36 = os.path.join(PROJECT_ROOT, "data", "extractions_v3.6")
 SOURCE_TEXT_DIR = os.path.join(PROJECT_ROOT, "原始判決書")
 GT_SUMMARY_DIR = os.path.join(PROJECT_ROOT, "摘要 (ground_truth)")
 SITE_DATA = os.path.join(PROJECT_ROOT, "site", "data")
@@ -452,88 +451,82 @@ def build():
             gt_count += 1
         print(f"  {'_gt (teacher summaries)':45s}  {gt_count:2d} cases")
 
-    # Build timeline data (prefer extraction v3.9, fallback to v3.6)
+    # Build timeline data (extraction v3.9 only)
     tl_out_dir = os.path.join(SITE_DATA, "timeline")
     os.makedirs(tl_out_dir, exist_ok=True)
     tl_count = 0
     tl_realign_count = 0
-    extraction_roots = []
-    if os.path.isdir(EXTRACTIONS_DIR_V39):
-        extraction_roots.append(("v3.9", EXTRACTIONS_DIR_V39))
-    if os.path.isdir(EXTRACTIONS_DIR_V36):
-        extraction_roots.append(("v3.6", EXTRACTIONS_DIR_V36))
+    extraction_dir = EXTRACTIONS_DIR_V39
+    if not os.path.isdir(extraction_dir):
+        print("  WARNING: extraction v3.9 directory not found, skipping timeline")
+        extraction_dir = None
 
-    seen_timeline_cases = set()
-    for extraction_label, extraction_dir in extraction_roots:
-        for case_name in sorted(os.listdir(extraction_dir)):
-            if case_name in seen_timeline_cases:
-                continue
-            master_path = os.path.join(extraction_dir, case_name, "master.json")
-            if not os.path.exists(master_path):
-                continue
-            master = read_json(master_path)
-            if not isinstance(master, dict):
-                continue
-            tl_result = master.get("timeline", master.get("timeline_result", {}))
-            events = tl_result.get("timeline", tl_result.get("events", []))
-            if not events:
-                continue
-            # Load chunks for this case (used by timeline source panel)
-            chunk_path = os.path.join(CHUNKS_DIR, case_name + ".json")
-            chunks_data = []
-            if os.path.exists(chunk_path):
-                raw_chunks = read_json(chunk_path)
-                if isinstance(raw_chunks, list):
-                    chunks_data = [
-                        {
-                            "chunk_id": c.get("chunk_id", ""),
-                            "title": c.get("title", ""),
-                            "content": c.get("content", ""),
-                            "start_char": c.get("start_char", 0),
-                            "end_char": c.get("end_char", 0),
-                        }
-                        for c in raw_chunks
-                    ]
-            # Realign char_start/char_end using smart_align against source text
-            source_path = os.path.join(SOURCE_TEXT_DIR, case_name + ".txt")
-            if os.path.exists(source_path):
-                source_text = open(source_path, encoding="utf-8").read()
-                realigned = 0
-                for evt in events:
-                    txt = (evt.get("extraction_text") or "").strip()
-                    if not txt:
-                        continue
-                    hit = smart_align(source_text, txt)
-                    if hit:
-                        evt["char_start"] = hit.start
-                        evt["char_end"] = hit.end
-                        realigned += 1
-                if realigned:
-                    tl_realign_count = tl_realign_count + realigned
+    for case_name in sorted(os.listdir(extraction_dir)) if extraction_dir else []:
+        master_path = os.path.join(extraction_dir, case_name, "master.json")
+        if not os.path.exists(master_path):
+            continue
+        master = read_json(master_path)
+        if not isinstance(master, dict):
+            continue
+        tl_result = master.get("timeline", master.get("timeline_result", {}))
+        events = tl_result.get("timeline", tl_result.get("events", []))
+        if not events:
+            continue
+        # Load chunks for this case (used by timeline source panel)
+        chunk_path = os.path.join(CHUNKS_DIR, case_name + ".json")
+        chunks_data = []
+        if os.path.exists(chunk_path):
+            raw_chunks = read_json(chunk_path)
+            if isinstance(raw_chunks, list):
+                chunks_data = [
+                    {
+                        "chunk_id": c.get("chunk_id", ""),
+                        "title": c.get("title", ""),
+                        "content": c.get("content", ""),
+                        "start_char": c.get("start_char", 0),
+                        "end_char": c.get("end_char", 0),
+                    }
+                    for c in raw_chunks
+                ]
+        # Realign char_start/char_end using smart_align against source text
+        source_path = os.path.join(SOURCE_TEXT_DIR, case_name + ".txt")
+        if os.path.exists(source_path):
+            source_text = open(source_path, encoding="utf-8").read()
+            realigned = 0
+            for evt in events:
+                txt = (evt.get("extraction_text") or "").strip()
+                if not txt:
+                    continue
+                hit = smart_align(source_text, txt)
+                if hit:
+                    evt["char_start"] = hit.start
+                    evt["char_end"] = hit.end
+                    realigned += 1
+            if realigned:
+                tl_realign_count = tl_realign_count + realigned
 
-            # Collect time_gaps (v3.9: top-level or inside timeline_summary)
-            tl_summary = tl_result.get("timeline_summary", {})
-            time_gaps = tl_result.get("time_gaps", tl_summary.get("time_gaps", []))
-            tl_data = {
-                "case_name": case_name,
-                "events": events,
-                "timeline_summary": tl_summary,
-                "time_gaps": time_gaps,
-                "causation_chain": tl_result.get("causation_chain", []),
-                "chunks": chunks_data,
-            }
-            slug = case_slugs.get(case_name)
-            if not slug:
-                slug = f"case_{next_idx:03d}"
-                case_slugs[case_name] = slug
-                next_idx += 1
-            with open(
-                os.path.join(tl_out_dir, slug + ".json"), "w", encoding="utf-8"
-            ) as f:
-                json.dump(tl_data, f, ensure_ascii=False, indent=1)
-            tl_count += 1
-            seen_timeline_cases.add(case_name)
-    print(f"  {'timeline (extraction v3.9 preferred)':45s}  {tl_count:2d} cases  ({tl_realign_count} spans realigned)")
+        # Collect time_gaps (v3.9: top-level or inside timeline_summary)
+        tl_summary = tl_result.get("timeline_summary", {})
+        time_gaps = tl_result.get("time_gaps", tl_summary.get("time_gaps", []))
+        tl_data = {
+            "case_name": case_name,
+            "events": events,
+            "timeline_summary": tl_summary,
+            "time_gaps": time_gaps,
+            "causation_chain": tl_result.get("causation_chain", []),
+            "chunks": chunks_data,
+        }
+        slug = case_slugs.get(case_name)
+        if not slug:
+            slug = f"case_{next_idx:03d}"
+            case_slugs[case_name] = slug
+            next_idx += 1
+        with open(
+            os.path.join(tl_out_dir, slug + ".json"), "w", encoding="utf-8"
+        ) as f:
+            json.dump(tl_data, f, ensure_ascii=False, indent=1)
+        tl_count += 1
+    print(f"  {'timeline (extraction v3.9 only)':45s}  {tl_count:2d} cases  ({tl_realign_count} spans realigned)")
 
     # Build manifest (includes slug mapping for frontend)
     manifest = {
