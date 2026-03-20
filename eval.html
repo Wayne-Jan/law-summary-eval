@@ -392,22 +392,16 @@
     /* ─── SECTION SYNC HIGHLIGHT (Phase 2) ─── */
     .section-block.sync-active { background: var(--indigo-light); border-radius: 6px; }
 
-    /* ─── PHASE TL: Timeline Evaluation (dual-column) ─── */
+    /* ─── PHASE TL: Timeline Evaluation (three-column) ─── */
     #phaseTLView { flex-direction: row; }
     .panel-timeline {
-      flex: 40 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto;
+      flex: 30 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto;
     }
-    .panel-tl-right {
-      flex: 60 0 0; background: var(--slate-50); overflow-y: auto;
-      display: flex; flex-direction: column;
+    .panel-tl-source {
+      flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto;
     }
-    .tl-right-summary {
-      flex: 1; overflow-y: auto; padding: 12px 16px; background: white;
-      border-bottom: 1px solid #e2e8f0;
-    }
-    .tl-right-eval {
-      flex-shrink: 0; padding: 14px 16px; background: var(--slate-50);
-      max-height: 50vh; overflow-y: auto;
+    .panel-tl-eval {
+      flex: 35 0 0; background: var(--slate-50); overflow-y: auto; padding: 14px 16px;
     }
 
     /* Timeline event cards (compact version) */
@@ -458,6 +452,12 @@
       height: 200px; color: var(--slate-500); font-size: 14px;
     }
 
+    /* Event highlight in source panel (timeline mode) */
+    .tl-evt-highlight { transition: background 0.3s; border-radius: 2px; }
+    .tl-evt-highlight.active { background: #fef9c3; box-shadow: 0 1px 0 #eab308; }
+    .tl25-event.active { border-color: var(--indigo); box-shadow: 0 2px 10px rgba(79,70,229,0.12); }
+    .tl25-event { cursor: pointer; }
+
     /* TL eval items (reuse Phase 1 eval-item pattern) */
     .tl-eval-group-title {
       font-size: 13px; font-weight: 700; color: var(--purple);
@@ -466,8 +466,9 @@
 
     @media (max-width: 900px) {
       #phaseTLView { flex-direction: column; }
-      .panel-timeline { flex: none !important; max-height: 40vh; }
-      .panel-tl-right { flex: none !important; }
+      .panel-timeline { flex: none !important; max-height: 35vh; }
+      .panel-tl-source { flex: none !important; max-height: 35vh; }
+      .panel-tl-eval { flex: none !important; }
     }
   </style>
 </head>
@@ -582,39 +583,39 @@
 
   <!-- ─── PHASE TL: Timeline Evaluation ─── -->
   <div class="view" id="phaseTLView">
-    <!-- Left: GT Timeline -->
+    <!-- Left: Timeline Events -->
     <div class="panel panel-timeline" id="tlTimeline">
       <div class="panel-header">
         <div class="panel-header-icon" style="background:#fef3c7;color:#d97706;">&#x1F4C5;</div>
-        <span class="panel-header-text">GT 時間軸</span>
+        <span class="panel-header-text">時間軸事件</span>
         <span class="panel-header-sub" id="tlEventCount"></span>
       </div>
       <div id="tlSummaryBar" class="tl25-summary-bar"></div>
       <div id="tlEventList" class="tl25-list"></div>
     </div>
     <div class="resizer"></div>
-    <!-- Right: AI Summary + Eval -->
-    <div class="panel-tl-right">
-      <div class="tl-right-summary" id="tlSummaryPanel">
-        <div class="panel-header" style="position:sticky;top:0;z-index:10;background:white;margin:-12px -16px 8px;padding:10px 16px;border-bottom:1px solid #f3f4f6;">
-          <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
-          <span class="panel-header-text">AI 摘要</span>
-          <span class="panel-header-sub" id="tlCondLabel"></span>
-        </div>
-        <div id="tlSummaryBody"></div>
+    <!-- Middle: Source Full Text -->
+    <div class="panel panel-tl-source" id="tlSourcePanel">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:#f5f5f4;color:#78716c;">&#x1F4C4;</div>
+        <span class="panel-header-text">原始判決書</span>
+        <span class="panel-header-sub" id="tlChunkCount"></span>
       </div>
-      <div class="tl-right-eval" id="tlEvalPanel">
-        <div class="tl-eval-group-title">時間軸評估</div>
-        <div id="tlEvalForm"></div>
-        <div style="padding:8px 0;">
-          <label style="font-size:13px;color:var(--slate-500);">備註（選填，限 100 字）</label>
-          <textarea id="tlComment" class="eval-comment" maxlength="100" placeholder="時間軸相關備註..." oninput="debounceSave()"></textarea>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;padding:4px 0;">
-          <span style="font-size:13px;color:var(--slate-500);" id="tlProgressText"></span>
-          <div class="spacer"></div>
-          <button class="btn btn-primary" id="tlCompleteBtn" onclick="completePhaseTL()">完成時間軸評估 &#x2192;</button>
-        </div>
+      <div class="panel-body" id="tlSourceBody"><span class="empty-text">載入中...</span></div>
+    </div>
+    <div class="resizer"></div>
+    <!-- Right: Eval -->
+    <div class="panel panel-tl-eval" id="tlEvalPanel">
+      <div class="tl-eval-group-title">時間軸評估</div>
+      <div id="tlEvalForm"></div>
+      <div style="padding:8px 0;">
+        <label style="font-size:13px;color:var(--slate-500);">備註（選填，限 100 字）</label>
+        <textarea id="tlComment" class="eval-comment" maxlength="100" placeholder="時間軸相關備註..." oninput="debounceSave()"></textarea>
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;padding:4px 0;">
+        <span style="font-size:13px;color:var(--slate-500);" id="tlProgressText"></span>
+        <div class="spacer"></div>
+        <button class="btn btn-primary" id="tlCompleteBtn" onclick="completePhaseTL()">完成時間軸評估 &#x2192;</button>
       </div>
     </div>
   </div>
@@ -1596,20 +1597,8 @@ async function loadPhaseTL() {
     } catch {}
   }
 
-  // Render AI summary (right panel top)
-  document.getElementById('tlCondLabel').textContent = label;
-  const aiData = aiDataCache[cond];
-  const summaryBody = document.getElementById('tlSummaryBody');
-  if (aiData && aiData.sections) {
-    summaryBody.innerHTML = aiData.sections.map(s =>
-      `<div class="section-block">` +
-      `<div class="section-title section-title-ai">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
-      `<div class="section-body">${esc(s.content || '')}</div>` +
-      `</div>`
-    ).join('');
-  } else {
-    summaryBody.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
-  }
+  // Render source text (middle panel)
+  renderTLSourcePanel();
 
   // Render timeline (left panel)
   renderTimelinePanel();
@@ -1663,7 +1652,7 @@ function renderTimelinePanel() {
     const isCritical = evt.critical_decision;
     const typeCls = evt.event_type || '';
     const typeLabel = EVENT_TYPE_LABELS[evt.event_type] || evt.event_type || '';
-    let html = `<div class="tl25-event ${isCritical ? 'critical' : ''}">`;
+    let html = `<div class="tl25-event ${isCritical ? 'critical' : ''}" data-idx="${idx}" onclick="showTLEventSource(${idx})">`;
     html += `<span class="tl25-date">${esc(evt.timestamp || '')}</span>`;
     html += `<span class="tl25-type ${typeCls}">${esc(typeLabel)}</span>`;
     html += `<div class="tl25-desc">${esc(evt.description || '')}</div>`;
@@ -1706,6 +1695,107 @@ function renderTLEvalForm() {
   });
 
   container.innerHTML = html;
+}
+
+function renderTLSourcePanel() {
+  const body = document.getElementById('tlSourceBody');
+  const countEl = document.getElementById('tlChunkCount');
+
+  if (!tlDataCache || !tlDataCache.chunks || tlDataCache.chunks.length === 0) {
+    body.innerHTML = '<span class="empty-text">無原文段落資料</span>';
+    countEl.textContent = '';
+    return;
+  }
+
+  const chunks = [...tlDataCache.chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
+  const events = tlDataCache.events || [];
+  countEl.textContent = `${chunks.length} 段`;
+
+  let html = '';
+  chunks.forEach(chunk => {
+    const cid = chunk.chunk_id || '';
+    // Pre-compute event highlight spans within this chunk
+    const evtSpans = [];
+    events.forEach((evt, evtIdx) => {
+      if (evt.char_start == null || evt.char_end == null) return;
+      const overlapStart = Math.max(evt.char_start, chunk.start_char);
+      const overlapEnd = Math.min(evt.char_end, chunk.end_char);
+      if (overlapEnd > overlapStart) {
+        evtSpans.push({ relStart: overlapStart - chunk.start_char, relEnd: overlapEnd - chunk.start_char, evtIdx });
+      }
+    });
+    evtSpans.sort((a, b) => a.relStart - b.relStart);
+
+    const content = chunk.content || '';
+    let chunkHtml = '';
+    let cursor = 0;
+    evtSpans.forEach(sp => {
+      if (sp.relStart > cursor) chunkHtml += esc(content.substring(cursor, sp.relStart));
+      chunkHtml += `<mark class="tl-evt-highlight" data-evt="${sp.evtIdx}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
+      cursor = sp.relEnd;
+    });
+    if (cursor < content.length) chunkHtml += esc(content.substring(cursor));
+
+    const chunkMatch = cid.match(/chunk[_\s]*(\d+)/i);
+    const shortLabel = chunkMatch ? `Chunk ${chunkMatch[1]}` : cid;
+
+    html += `<div class="chunk-region" id="tl_chunk_${esc(cid)}" data-chunk="${esc(cid)}">`;
+    html += `<span class="chunk-label">${esc(shortLabel)}</span>`;
+    html += chunkHtml;
+    html += '</div>';
+  });
+
+  body.innerHTML = html;
+}
+
+function showTLEventSource(idx) {
+  if (!tlDataCache) return;
+  const events = tlDataCache.events || [];
+  const evt = events[idx];
+  if (!evt) return;
+
+  // Highlight active event card
+  document.querySelectorAll('.tl25-event').forEach(el => {
+    el.classList.toggle('active', parseInt(el.dataset.idx) === idx);
+  });
+
+  // Clear previous highlights
+  document.querySelectorAll('#tlSourceBody .chunk-region.active').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('#tlSourceBody .tl-evt-highlight.active').forEach(el => el.classList.remove('active'));
+
+  // Find chunk for this event
+  const chunk = findTLChunkForEvent(evt);
+  if (chunk) {
+    const cid = chunk.chunk_id || '';
+    const regionEl = document.getElementById('tl_chunk_' + cid);
+    if (regionEl) {
+      regionEl.classList.add('active');
+      const evtMarks = regionEl.querySelectorAll(`.tl-evt-highlight[data-evt="${idx}"]`);
+      evtMarks.forEach(m => m.classList.add('active'));
+      const scrollTarget = evtMarks.length > 0 ? evtMarks[0] : regionEl;
+      requestAnimationFrame(() => {
+        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    }
+  }
+}
+
+function findTLChunkForEvent(evt) {
+  const chunks = (tlDataCache && tlDataCache.chunks) || [];
+  const cs = evt.char_start;
+  const ce = evt.char_end;
+  if (cs == null || ce == null) return null;
+  for (const chunk of chunks) {
+    if (cs >= chunk.start_char && cs < chunk.end_char) return chunk;
+  }
+  let best = null, bestOverlap = 0;
+  for (const chunk of chunks) {
+    const overlapStart = Math.max(cs, chunk.start_char);
+    const overlapEnd = Math.min(ce, chunk.end_char);
+    const overlap = overlapEnd - overlapStart;
+    if (overlap > bestOverlap) { bestOverlap = overlap; best = chunk; }
+  }
+  return best;
 }
 
 function collectPhaseTLData() {
