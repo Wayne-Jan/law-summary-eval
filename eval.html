@@ -1142,7 +1142,8 @@ function renderCondPills() {
     const isCurrent = (i === currentCondIdx && currentPhase !== 3);
     let cls = 'cond-pill';
     let icon = '';
-    if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
+    if (currentPhase === 'tl') { cls += ' locked'; }
+    else if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
     else if (done) { cls += ' done'; icon = ' &#x2713;'; }
     else if (isCurrent) { cls += ' active'; icon = ' &#x2192;'; }
     html += `<span class="${cls}" onclick="switchCondition(${i})">${esc(label)}${icon}</span>`;
@@ -1153,6 +1154,7 @@ function renderCondPills() {
 function switchCondition(idx) {
   if (isCaseLocked(currentCase)) return;
   if (currentPhase === 3) return; // In phase 3, no condition switching
+  if (currentPhase === 'tl') return; // Timeline is per-case, not per-condition
   saveCurrentState();
   currentCondIdx = idx;
   // Stay on the current phase — don't auto-jump
