@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>人類專家評估 — 醫療糾紛判決書摘要</title>
+  <title>人類專家評估 v2 — 醫療糾紛判決書摘要</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,55 +21,228 @@
 
     /* ─── TOOLBAR ─── */
     .toolbar {
-      position: fixed; top: 0; left: 0; right: 0; height: 48px;
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
       background: white; border-bottom: 1px solid #e2e8f0;
       display: flex; align-items: center; padding: 0 16px; gap: 8px; z-index: 100;
       box-shadow: 0 1px 3px rgba(0,0,0,0.04);
     }
-    .toolbar h1 { font-size: 14px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
-    .toolbar select, .toolbar input {
-      font-size: 11px; padding: 4px 8px; border: 1px solid var(--slate-300);
+    .toolbar h1 { font-size: 16px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
+    .toolbar select, .toolbar input[type="text"] {
+      font-size: 14px; padding: 6px 10px; border: 1px solid var(--slate-300);
       border-radius: 6px; background: white; font-family: var(--sans);
     }
     .toolbar select { cursor: pointer; }
-    #caseSelect { max-width: 260px; }
+    #caseSelect { max-width: 280px; }
     .toolbar .spacer { flex: 1; }
-    .toolbar .sep { width: 1px; height: 20px; background: var(--slate-300); }
-    .toolbar label { font-size: 10px; color: var(--slate-500); white-space: nowrap; }
-    .btn { font-size: 11px; padding: 5px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-family: var(--sans); }
+    .toolbar .sep { width: 1px; height: 24px; background: var(--slate-300); flex-shrink: 0; }
+    .toolbar label { font-size: 13px; color: var(--slate-500); white-space: nowrap; }
+    .btn { font-size: 13px; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: 500; font-family: var(--sans); transition: background 0.15s; }
     .btn-primary { background: var(--indigo); color: white; }
     .btn-primary:hover { background: #4338ca; }
+    .btn-success { background: var(--emerald); color: white; }
+    .btn-success:hover { background: #047857; }
     .btn-ghost { background: transparent; color: var(--slate-500); border: 1px solid var(--slate-300); }
     .btn-ghost:hover { background: var(--slate-100); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .save-indicator { font-size: 12px; color: var(--emerald); white-space: nowrap; transition: opacity 0.5s; opacity: 0; }
 
-    /* ─── THREE-PANEL LAYOUT ─── */
-    .main { margin-top: 48px; display: flex; height: calc(100vh - 48px - 32px); }
+    /* Condition progress pills */
+    .cond-pills { display: flex; gap: 4px; align-items: center; }
+    .cond-pill {
+      font-size: 12px; padding: 3px 8px; border-radius: 12px; cursor: pointer;
+      border: 1px solid var(--slate-300); background: white; color: var(--slate-500);
+      font-weight: 500; white-space: nowrap; transition: all 0.15s;
+    }
+    .cond-pill.active { border-color: var(--indigo); background: var(--indigo-light); color: var(--indigo); font-weight: 700; }
+    .cond-pill.done { border-color: var(--emerald); background: var(--emerald-light); color: var(--emerald); }
+    .cond-pill.locked { border-color: var(--slate-300); background: var(--slate-100); color: var(--slate-500); cursor: not-allowed; }
 
-    .panel { overflow-y: auto; }
-    .panel-source { width: 30%; border-right: 1px solid #e2e8f0; background: white; }
-    .panel-summary { width: 35%; border-right: 1px solid #e2e8f0; background: white; }
-    .panel-eval { width: 35%; background: var(--slate-50); padding: 14px; }
+    /* Phase indicators */
+    .phase-indicators { display: flex; gap: 4px; align-items: center; }
+    .phase-dot {
+      font-size: 12px; padding: 3px 10px; border-radius: 12px;
+      border: 1px solid var(--slate-300); background: white; color: var(--slate-500);
+      font-weight: 500; white-space: nowrap; cursor: pointer; transition: all 0.15s;
+    }
+    .phase-dot.active { border-color: var(--indigo); background: var(--indigo); color: white; }
+    .phase-dot.done { border-color: var(--emerald); background: var(--emerald-light); color: var(--emerald); }
+    .phase-dot.locked { opacity: 0.4; cursor: not-allowed; }
 
-    /* ─── SOURCE PANEL (left) ─── */
-    .source-header {
+    /* ─── MAIN CONTAINER ─── */
+    .main { margin-top: 56px; height: calc(100vh - 56px - 36px); position: relative; }
+
+    /* ─── VIEWS (Phase 1/2/3) ─── */
+    .view { display: none; height: 100%; }
+    .view.active { display: flex; }
+
+    /* ─── PHASE 1: Three-panel ─── */
+    #phase1View { flex-direction: row; }
+    .panel { overflow-y: auto; min-width: 0; }
+    .panel-source { flex: 30 0 0; border-right: 1px solid #e2e8f0; background: white; }
+    .panel-summary { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; }
+    .panel-eval { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
+
+    /* ─── PHASE 2: Same 3-panel as Phase 1 (AI 30% | GT 35% | Review 35%) ─── */
+    #phase2View { flex-direction: row; }
+    .panel-review { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
+    .p2-section { margin-bottom: 16px; }
+    .p2-section-title { font-size: 13px; font-weight: 600; color: var(--slate-900); margin-bottom: 8px; }
+    .p2-gap-radio { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+    .p2-gap-radio label { font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .p2-gap-radio input[type="radio"] { width: 16px; height: 16px; }
+    .p2-omission-text {
+      width: 100%; font-size: 13px; padding: 6px 10px;
+      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
+      resize: vertical; min-height: 32px;
+    }
+
+    /* Phase 2 revision items */
+    .p2-rev-item { margin-bottom: 10px; padding: 8px 10px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
+    .p2-rev-header { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+    .p2-rev-num { font-size: 11px; color: var(--slate-500); }
+    .p2-rev-name { font-size: 12px; font-weight: 600; color: var(--slate-900); flex: 1; }
+    .p2-rev-toggle {
+      font-size: 11px; padding: 2px 10px; border: 1px solid var(--slate-300);
+      border-radius: 4px; background: white; cursor: pointer; color: var(--slate-500);
+      font-family: var(--sans); transition: all 0.15s;
+    }
+    .p2-rev-toggle:hover { border-color: var(--amber); color: var(--amber); }
+    .p2-rev-toggle.active { background: var(--amber); border-color: var(--amber); color: white; font-weight: 600; }
+    /* Original score row (always visible) */
+    .p2-orig-row { display: flex; align-items: center; gap: 4px; margin-bottom: 2px; }
+    .p2-orig-label { font-size: 11px; color: var(--slate-500); width: 50px; }
+    .p2-orig-dots { display: flex; gap: 3px; }
+    .p2-orig-dot {
+      width: 28px; height: 24px; border: 1px solid var(--slate-300); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--slate-300); background: white;
+    }
+    .p2-orig-dot.filled { background: var(--indigo); color: white; border-color: var(--indigo); font-weight: 700; }
+    /* Revision score row (shown when revising) */
+    .p2-rev-row { display: none; align-items: center; gap: 4px; margin-top: 4px; }
+    .p2-rev-row.show { display: flex; }
+    .p2-rev-label { font-size: 11px; color: var(--amber); width: 50px; font-weight: 600; }
+    .p2-rev-dots { display: flex; gap: 3px; }
+    .p2-rev-dot {
+      width: 28px; height: 24px; border: 1px solid var(--amber); border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--amber); background: var(--amber-light);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .p2-rev-dot:hover { background: var(--amber); color: white; }
+    .p2-rev-dot.filled { background: var(--amber); color: white; font-weight: 700; }
+    .p2-rev-dot.disabled, .p2-rev-dot.disabled:hover { opacity: 0.3; cursor: not-allowed; border-color: var(--slate-300); color: var(--slate-300); background: var(--slate-100); }
+    /* Reason field */
+    .p2-rev-reason { display: none; margin-top: 4px; }
+    .p2-rev-reason.show { display: block; }
+    .p2-rev-reason input {
+      width: 100%; font-size: 11px; padding: 4px 8px; border: 1px solid var(--slate-300);
+      border-radius: 4px; font-family: var(--sans);
+    }
+
+    /* ─── PHASE 3: Four-column ─── */
+    #phase3View { flex-direction: column; }
+    .phase3-source-toggle {
+      padding: 6px 14px; background: var(--slate-100); border-bottom: 1px solid #e2e8f0;
+      cursor: pointer; font-size: 13px; color: var(--slate-500); user-select: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .phase3-source-toggle:hover { background: var(--slate-50); }
+    .phase3-source-panel {
+      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
+      background: white; border-bottom: 1px solid #e2e8f0;
+    }
+    .phase3-source-panel.open { max-height: 250px; overflow-y: auto; }
+    .phase3-columns { display: flex; flex: 1; min-height: 0; overflow: hidden; }
+    .phase3-col {
+      flex: 1; border-right: 1px solid #e2e8f0; overflow-y: auto; background: white;
+      display: flex; flex-direction: column;
+    }
+    .phase3-col:last-child { border-right: none; }
+    .phase3-col-header {
+      position: sticky; top: 0; z-index: 5; padding: 10px 14px;
+      background: var(--slate-50); border-bottom: 1px solid #e2e8f0;
+      font-size: 14px; font-weight: 600; color: var(--slate-900); text-align: center;
+    }
+    .phase3-col-body { padding: 12px 14px; font-size: 14px; line-height: 1.8; flex: 1; }
+
+    .phase3-ranking-area {
+      flex-shrink: 0; padding: 16px 20px; background: var(--slate-50);
+      border-top: 1px solid #e2e8f0;
+    }
+    /* Sequential selection UI */
+    .p3-step-title {
+      font-size: 16px; font-weight: 600; color: var(--slate-900);
+      text-align: center; margin-bottom: 6px;
+    }
+    .p3-step-subtitle {
+      font-size: 13px; color: var(--slate-500); text-align: center; margin-bottom: 14px;
+    }
+    .p3-step-progress {
+      display: flex; gap: 6px; justify-content: center; margin-bottom: 14px;
+    }
+    .p3-step-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--slate-300); transition: background 0.2s;
+    }
+    .p3-step-dot.done { background: var(--emerald); }
+    .p3-step-dot.current { background: var(--indigo); box-shadow: 0 0 0 3px rgba(79,70,229,0.2); }
+    .p3-choices {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+    }
+    .p3-choice-card {
+      width: 220px; border: 2px solid var(--slate-300); border-radius: 10px;
+      background: white; cursor: pointer; transition: all 0.2s; overflow: hidden;
+    }
+    .p3-choice-card:hover { border-color: var(--indigo); box-shadow: 0 4px 12px rgba(79,70,229,0.15); transform: translateY(-2px); }
+    .p3-choice-card.disabled { opacity: 0.35; pointer-events: none; cursor: default; }
+    .p3-choice-card.selected { border-color: var(--emerald); background: var(--emerald-light); }
+    .p3-choice-label {
+      padding: 14px 10px; text-align: center; font-size: 16px; font-weight: 600;
+      color: var(--slate-900);
+    }
+    .p3-choice-medal { font-size: 20px; margin-right: 4px; }
+    /* Summary */
+    .p3-summary-title {
+      font-size: 16px; font-weight: 600; color: var(--slate-900);
+      text-align: center; margin-bottom: 12px;
+    }
+    .p3-summary-list {
+      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px;
+    }
+    .p3-summary-item {
+      display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+      border-radius: 8px; background: white; border: 1px solid var(--slate-300);
+      font-size: 14px; font-weight: 500;
+    }
+    .p3-summary-rank { font-size: 18px; }
+    .ranking-reason-area { text-align: center; }
+    .ranking-reason-area textarea {
+      width: 100%; max-width: 500px; font-size: 14px; padding: 8px 12px;
+      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
+      resize: vertical; min-height: 36px;
+    }
+
+    /* ─── SHARED PANEL STYLES ─── */
+    .panel-header {
       position: sticky; top: 0; z-index: 10; background: white;
-      padding: 12px 18px 10px; border-bottom: 1px solid #f3f4f6;
+      padding: 10px 16px; border-bottom: 1px solid #f3f4f6;
       display: flex; align-items: center; gap: 8px;
     }
-    .source-icon {
-      width: 26px; height: 26px; border-radius: 6px;
-      background: #f5f5f4; color: #78716c;
+    .panel-header-icon {
+      width: 24px; height: 24px; border-radius: 6px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-      font-size: 13px;
+      font-size: 12px;
     }
-    .source-header-text { font-size: 12px; font-weight: 600; color: var(--slate-900); }
-    .source-header-sub { font-size: 10px; color: var(--slate-500); }
+    .panel-header-text { font-size: 15px; font-weight: 600; color: var(--slate-900); }
+    .panel-header-sub { font-size: 12px; color: var(--slate-500); margin-left: auto; }
 
-    .source-body {
-      padding: 14px 18px; font-size: 13px; line-height: 2;
+    .panel-body {
+      padding: 14px 18px; font-size: 15px; line-height: 1.9;
       color: var(--slate-700); white-space: pre-wrap; word-break: break-all;
     }
-    /* Chunk regions: invisible by default, highlighted with marker pen effect */
+
+    /* Chunk regions */
     .chunk-region { border-radius: 2px; transition: background 0.25s; }
     .chunk-region mark {
       background: transparent; color: inherit;
@@ -77,425 +250,432 @@
       box-decoration-break: clone; -webkit-box-decoration-break: clone;
       transition: background 0.3s;
     }
-    .chunk-region.active mark {
-      background: #fef9c3;
-    }
+    .chunk-region.active mark { background: #fef9c3; }
     .chunk-label {
-      display: none; font-size: 9px; font-weight: 700; color: var(--amber);
-      background: #fef3c7; padding: 1px 5px; border-radius: 3px;
-      vertical-align: middle; margin-right: 3px; letter-spacing: 0.3px;
+      display: none; font-size: 11px; font-weight: 700; color: var(--amber);
+      background: #fef3c7; padding: 2px 6px; border-radius: 3px;
+      vertical-align: middle; margin-right: 4px; letter-spacing: 0.3px;
     }
     .chunk-region.active .chunk-label { display: inline; }
+    .chunk-region.active { border-left: 3px solid var(--amber); padding-left: 12px; margin-left: -15px; }
 
-    /* Subtle left-border indicator for active chunk */
-    .chunk-region.active {
-      border-left: 3px solid var(--amber);
-      padding-left: 12px;
-      margin-left: -15px;
-    }
-
-    /* ─── SUMMARY PANEL (middle) ─── */
-    .summary-header {
-      position: sticky; top: 0; z-index: 10; background: white;
-      padding: 10px 18px; border-bottom: 1px solid #f3f4f6;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .summary-tab {
-      font-size: 11px; padding: 5px 14px; border: 1px solid var(--slate-300);
-      border-radius: 6px; background: white; cursor: pointer; color: var(--slate-500);
-      font-family: var(--sans); font-weight: 500; transition: all 0.15s;
-    }
-    .summary-tab.active-ai { background: var(--purple); color: white; border-color: var(--purple); }
-    .summary-tab.active-gt { background: var(--emerald); color: white; border-color: var(--emerald); }
-    .summary-tab.active-tl { background: var(--indigo); color: white; border-color: var(--indigo); }
-
-    /* ─── TIMELINE EVENTS (left panel in timeline mode) ─── */
-    .tl-event-list { padding: 12px 14px; }
-    .tl-summary-bar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; }
-    .tl-summary-chip {
-      font-size: 11px; padding: 4px 10px; border-radius: 6px;
-      background: var(--slate-100); color: var(--slate-700); font-weight: 500;
-    }
-    .tl-summary-chip.critical { background: var(--rose-light); color: var(--rose); }
-    .tl-evt {
-      position: relative; margin-bottom: 10px; padding: 10px 14px;
-      background: white; border: 1px solid #e5e7eb; border-radius: 8px;
-      cursor: pointer; transition: all 0.15s; margin-left: 20px;
-    }
-    .tl-evt::before {
-      content: ''; position: absolute; left: -16px; top: 14px;
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--slate-300); border: 2px solid white;
-      box-shadow: 0 0 0 1px #e5e7eb;
-    }
-    .tl-evt:hover { border-color: var(--indigo); box-shadow: 0 1px 8px rgba(79,70,229,0.08); }
-    .tl-evt.active { border-color: var(--indigo); box-shadow: 0 2px 10px rgba(79,70,229,0.12); }
-    .tl-evt.critical { border-left: 3px solid var(--rose); }
-    .tl-evt.critical::before { background: var(--rose); box-shadow: 0 0 0 1px #fecaca; }
-    .tl-evt-header { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap; }
-    .tl-evt-date { font-size: 12px; font-weight: 600; color: var(--indigo); }
-    .tl-evt.critical .tl-evt-date { color: var(--rose); }
-    .tl-evt-type {
-      font-size: 9px; padding: 1px 6px; border-radius: 3px;
-      background: var(--slate-100); color: var(--slate-500); font-weight: 500;
-    }
-    .tl-evt-type.critical_decision { background: var(--rose-light); color: var(--rose); }
-    .tl-evt-type.initial_contact { background: var(--emerald-light); color: var(--emerald); }
-    .tl-evt-type.final_outcome { background: var(--amber-light); color: var(--amber); }
-    .tl-evt-type.deterioration { background: #fff7ed; color: #c2410c; }
-    .tl-evt-badge {
-      font-size: 9px; padding: 1px 6px; border-radius: 3px;
-      background: var(--rose-light); color: var(--rose); font-weight: 600;
-    }
-    .tl-evt-desc { font-size: 12px; color: var(--slate-700); line-height: 1.6; }
-    .tl-evt-meta { display: flex; gap: 12px; margin-top: 5px; flex-wrap: wrap; }
-    .tl-evt-meta-item { font-size: 10px; color: var(--slate-500); }
-    .tl-evt-meta-item strong { color: var(--slate-700); font-weight: 500; }
-    .tl-evt-decision {
-      margin-top: 6px; padding: 6px 10px; background: var(--rose-light); border-radius: 5px;
-      font-size: 11px; color: #991b1b; line-height: 1.5;
-    }
-    .tl-evt-decision-label { font-weight: 600; margin-bottom: 2px; }
-    .tl-timeline-line {
-      position: absolute; left: 17px; top: 0; bottom: 0;
-      width: 2px; background: #e5e7eb; z-index: -1;
-    }
-    .tl-event-list-inner { position: relative; padding-left: 4px; }
-
-    /* Event highlight in source panel (timeline mode) */
-    .evt-highlight { transition: background 0.3s; border-radius: 2px; }
-    .evt-highlight.active { background: #fef9c3; box-shadow: 0 1px 0 #eab308; }
-
-    .summary-body { padding: 14px 18px; }
-    .section-block { margin-bottom: 18px; }
+    /* Section blocks */
+    .section-block { margin-bottom: 16px; }
     .section-title {
-      font-size: 12px; font-weight: 700; color: var(--slate-900);
-      padding-bottom: 5px; margin-bottom: 8px;
+      font-size: 14px; font-weight: 700; padding: 6px 10px; border-radius: 4px; margin-bottom: 6px;
     }
-    .section-title-ai { border-bottom: 2px solid var(--purple-light); }
-    .section-title-gt { border-bottom: 2px solid var(--emerald-light); }
-    .section-body {
-      font-size: 13px; line-height: 2; white-space: pre-wrap; word-break: break-all;
-    }
+    .section-title-ai { background: var(--purple-light); color: var(--purple); }
+    .section-title-gt { background: var(--emerald-light); color: var(--emerald); }
+    .section-body { font-size: 15px; line-height: 1.9; white-space: pre-wrap; word-break: break-all; }
 
-    /* Citation tags in AI summary */
+    /* Citation tags */
     .citation-tag {
-      display: inline-block;
-      background: #ede9fe; color: #6d28d9;
-      padding: 0px 5px; border-radius: 3px;
-      font-size: 10px; font-weight: 600;
-      cursor: pointer; vertical-align: middle;
-      transition: all 0.2s; letter-spacing: 0.2px;
-      line-height: 1.6;
+      display: inline; font-size: 12px; font-weight: 700;
+      color: var(--amber); background: #fef3c7;
+      padding: 1px 5px; border-radius: 3px; cursor: pointer;
+      transition: background 0.2s, color 0.2s; vertical-align: middle;
     }
-    .citation-tag:hover { background: #ddd6fe; transform: translateY(-1px); box-shadow: 0 2px 4px rgba(124,58,237,0.15); }
-    .citation-tag.active {
-      background: #fef9c3; color: #92400e;
-      box-shadow: 0 0 0 2px #eab308, 0 2px 8px rgba(234,179,8,0.25);
-      transform: translateY(-1px);
-    }
+    .citation-tag:hover { background: #fde68a; }
+    .citation-tag.active { background: var(--amber); color: white; }
 
-    .empty-text { color: var(--slate-300); font-style: italic; font-size: 12px; }
+    /* ─── EVAL FORM (Phase 1) ─── */
+    .eval-group-title {
+      font-size: 13px; font-weight: 700; color: var(--slate-500); text-transform: uppercase;
+      letter-spacing: 0.5px; padding: 8px 0 4px; border-bottom: 1px solid var(--slate-300); margin-bottom: 8px;
+    }
+    .eval-item { margin-bottom: 14px; padding: 10px 12px; background: white; border-radius: 8px; border: 1px solid #e2e8f0; }
+    .eval-item.frozen { opacity: 0.7; pointer-events: none; }
+    .eval-item-title { font-size: 14px; font-weight: 600; color: var(--slate-900); margin-bottom: 4px; }
+    .eval-item-toggle {
+      font-size: 12px; color: var(--indigo); cursor: pointer; user-select: none;
+      margin-bottom: 4px; display: inline-block;
+    }
+    .eval-item-toggle:hover { text-decoration: underline; }
+    .eval-anchors {
+      display: none; font-size: 13px; color: var(--slate-500); margin-bottom: 6px;
+      padding: 6px 10px; background: var(--slate-50); border-radius: 4px;
+    }
+    .eval-anchors.show { display: block; }
+    .eval-anchors table { width: 100%; border-collapse: collapse; }
+    .eval-anchors td { padding: 2px 6px; vertical-align: top; }
+    .eval-anchors td:first-child { width: 24px; font-weight: 700; color: var(--indigo); }
+    .eval-sub-anchor { font-size: 12px; color: var(--slate-500); margin-top: 4px; padding: 4px 10px; border-left: 2px solid var(--indigo-light); }
 
-    /* ─── EVAL FORM (right) ─── */
-    .aspect-group {
-      margin-bottom: 10px; border-radius: 8px; overflow: hidden;
-      border: 1px solid #e5e7eb; background: white;
-    }
-    .aspect-header {
-      display: flex; align-items: center; gap: 8px; padding: 9px 12px;
-      cursor: pointer; user-select: none; font-weight: 700; font-size: 12px;
-    }
-    .aspect-header .badge {
-      font-size: 9px; font-weight: 500; padding: 2px 6px; border-radius: 4px;
-    }
-    .aspect-header .arrow {
-      margin-left: auto; transition: transform 0.2s; font-size: 10px; color: var(--slate-500);
-    }
-    .aspect-header.open .arrow { transform: rotate(90deg); }
-    .aspect-body { display: none; padding: 0 12px 12px; }
-    .aspect-body.open { display: block; }
-
-    .aspect-a .aspect-header { color: var(--indigo); background: var(--indigo-light); }
-    .aspect-a .badge { background: var(--indigo); color: white; }
-    .aspect-b .aspect-header { color: var(--emerald); background: var(--emerald-light); }
-    .aspect-b .badge { background: var(--emerald); color: white; }
-    .aspect-c .aspect-header { color: var(--amber); background: var(--amber-light); }
-    .aspect-c .badge { background: var(--amber); color: white; }
-    .aspect-d .aspect-header { color: var(--rose); background: var(--rose-light); }
-    .aspect-d .badge { background: var(--rose); color: white; }
-    .aspect-e .aspect-header { color: var(--purple); background: var(--purple-light); }
-    .aspect-e .badge { background: var(--purple); color: white; }
-
-    .dim-item { padding: 8px 0; border-bottom: 1px solid var(--slate-100); }
-    .dim-item:last-child { border-bottom: none; }
-    .dim-title { font-size: 11px; font-weight: 600; color: var(--slate-900); margin-bottom: 2px; }
-    .dim-desc { font-size: 10px; color: var(--slate-500); line-height: 1.5; margin-bottom: 5px; }
-
-    .dim-anchors {
-      font-size: 10px; color: var(--slate-500); margin-bottom: 5px;
-      display: none; line-height: 1.5;
-    }
-    .dim-anchors.show { display: block; }
-    .dim-anchors table { width: 100%; border-collapse: collapse; }
-    .dim-anchors td { padding: 1px 5px; vertical-align: top; }
-    .dim-anchors td:first-child { width: 20px; font-weight: 600; color: var(--slate-700); }
-    .toggle-anchors {
-      font-size: 9px; color: var(--indigo); cursor: pointer; border: none;
-      background: none; padding: 0; margin-bottom: 3px; font-family: var(--sans);
-    }
-    .toggle-anchors:hover { text-decoration: underline; }
-
-    .likert-row { display: flex; align-items: center; gap: 0; margin-bottom: 4px; }
+    .likert-row { display: flex; gap: 4px; margin-top: 6px; }
     .likert-row label {
-      flex: 1; text-align: center; padding: 4px 0; font-size: 11px;
-      cursor: pointer; border: 1px solid var(--slate-300); color: var(--slate-500);
-      transition: all 0.15s;
+      display: flex; align-items: center; justify-content: center;
+      width: 36px; height: 32px; border: 1px solid var(--slate-300); border-radius: 6px;
+      cursor: pointer; font-size: 14px; font-weight: 500; color: var(--slate-700);
+      transition: all 0.15s; background: white;
     }
-    .likert-row label:first-child { border-radius: 5px 0 0 5px; }
-    .likert-row label:last-child { border-radius: 0 5px 5px 0; }
-    .likert-row label:not(:first-child) { border-left: none; }
+    .likert-row label:hover { border-color: var(--indigo); background: var(--indigo-light); }
     .likert-row input[type="radio"] { display: none; }
     .likert-row input[type="radio"]:checked + span {
-      display: block; background: var(--indigo); color: white; margin: -4px 0;
-      padding: 4px 0; border-radius: 4px; font-weight: 600;
-      box-shadow: 0 2px 6px rgba(79,70,229,0.25);
+      background: var(--indigo); color: white; border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%; margin: -1px;
     }
-    .likert-row .na-label input[type="radio"]:checked + span { background: var(--slate-500); }
-
-    .dim-comment {
-      width: 100%; font-size: 10px; padding: 5px 8px; border: 1px solid var(--slate-300);
-      border-radius: 5px; resize: vertical; min-height: 28px; font-family: var(--sans);
-      color: var(--slate-700); line-height: 1.4;
+    .eval-comment {
+      width: 100%; margin-top: 8px; font-size: 13px; padding: 6px 10px;
+      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
+      resize: vertical; min-height: 32px;
     }
-    .dim-comment:focus { outline: none; border-color: var(--indigo); box-shadow: 0 0 0 2px rgba(79,70,229,0.1); }
-    .dim-comment::placeholder { color: var(--slate-300); }
 
-    /* ─── PROGRESS BAR ─── */
-    .progress-bar {
-      position: fixed; bottom: 0; left: 0; right: 0; height: 32px;
-      background: white; border-top: 1px solid #e2e8f0; display: flex;
-      align-items: center; padding: 0 16px; gap: 10px; z-index: 100;
+    /* Action buttons */
+    .action-bar {
+      padding: 12px 20px; background: var(--slate-50); border-top: 1px solid #e2e8f0;
+      display: flex; justify-content: flex-end; gap: 10px; align-items: center;
+      flex-shrink: 0;
     }
-    .progress-fill { flex: 1; height: 4px; background: var(--slate-100); border-radius: 3px; overflow: hidden; }
-    .progress-fill-inner { height: 100%; background: var(--indigo); border-radius: 3px; transition: width 0.3s; }
-    .progress-text { font-size: 10px; color: var(--slate-500); white-space: nowrap; }
+    .action-bar .btn { font-size: 14px; padding: 8px 20px; }
 
-    /* ─── SCROLLBAR ─── */
-    .panel::-webkit-scrollbar { width: 5px; }
-    .panel::-webkit-scrollbar-track { background: transparent; }
-    .panel::-webkit-scrollbar-thumb { background: var(--slate-300); border-radius: 3px; }
-    .panel::-webkit-scrollbar-thumb:hover { background: var(--slate-500); }
+    /* ─── FOOTER ─── */
+    .footer {
+      position: fixed; bottom: 0; left: 0; right: 0; height: 36px;
+      background: white; border-top: 1px solid #e2e8f0;
+      display: flex; align-items: center; padding: 0 20px; gap: 10px; z-index: 100;
+    }
+    .footer-progress-bar {
+      flex: 1; height: 6px; background: var(--slate-100); border-radius: 3px; overflow: hidden;
+    }
+    .footer-progress-fill {
+      height: 100%; background: var(--emerald); border-radius: 3px; transition: width 0.3s;
+    }
+    .footer-text { font-size: 12px; color: var(--slate-500); white-space: nowrap; }
 
     /* ─── RESIZER ─── */
     .resizer {
-      width: 6px; cursor: col-resize; background: transparent;
+      width: 5px; cursor: col-resize; background: transparent;
       flex-shrink: 0; position: relative; z-index: 5;
+      transition: background 0.2s;
     }
-    .resizer::after {
-      content: ''; position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 2px; height: 40px; background: #cbd5e1; border-radius: 2px;
-      transition: background 0.2s, height 0.2s;
+    .resizer:hover, .resizer.active { background: var(--indigo-light); }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-text { color: var(--slate-500); font-style: italic; padding: 20px; }
+
+    /* ─── LOADING ─── */
+    .loading { text-align: center; padding: 40px; color: var(--slate-500); }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);
+      padding: 10px 24px; border-radius: 8px; font-size: 14px; font-weight: 500;
+      z-index: 200; opacity: 0; transition: opacity 0.3s; pointer-events: none;
     }
-    .resizer:hover::after, .resizer.active::after {
-      background: var(--indigo); height: 60px;
+    .toast.show { opacity: 1; }
+    .toast-success { background: var(--emerald); color: white; }
+    .toast-error { background: var(--rose); color: white; }
+    .toast-info { background: var(--indigo); color: white; }
+
+    /* ─── FROZEN BANNER ─── */
+    .frozen-banner {
+      padding: 8px 16px; background: var(--amber-light); color: var(--amber);
+      font-size: 13px; text-align: center; border-bottom: 1px solid #fde68a;
+      display: none;
+    }
+    .frozen-banner.show { display: block; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .toolbar { flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 6px; }
+      .cond-pills, .phase-indicators { flex-wrap: wrap; }
+      #phase1View { flex-direction: column; }
+      .panel-source, .panel-summary, .panel-eval { flex: none !important; width: 100% !important; height: auto; max-height: 40vh; }
+      #phase2View { flex-direction: column; }
+      #phase2View .panel { flex: none !important; max-height: 40vh; }
+      .phase3-columns { flex-direction: column; }
+      .phase3-col { flex: none; max-height: 30vh; }
+      .p3-choices { flex-direction: column; align-items: center; }
     }
 
-    /* ─── MOBILE TAB BAR ─── */
-    .mobile-tab-bar { display: none; }
+    /* ─── SECTION SYNC HIGHLIGHT (Phase 2) ─── */
+    .section-block.sync-active { background: var(--indigo-light); border-radius: 6px; }
 
-    @media (max-width: 768px) {
-      .main { flex-direction: column; height: auto; }
-      .panel { width: 100% !important; flex: none !important; display: none; }
-      .panel.mobile-active { display: block; height: calc(100vh - 48px - 40px - 32px); overflow-y: auto; }
-      .resizer { display: none; }
+    /* ─── PHASE TL: Timeline Evaluation (dual-column) ─── */
+    #phaseTLView { flex-direction: row; }
+    .panel-timeline {
+      flex: 40 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto;
+    }
+    .panel-tl-right {
+      flex: 60 0 0; background: var(--slate-50); overflow-y: auto;
+      display: flex; flex-direction: column;
+    }
+    .tl-right-summary {
+      flex: 1; overflow-y: auto; padding: 12px 16px; background: white;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .tl-right-eval {
+      flex-shrink: 0; padding: 14px 16px; background: var(--slate-50);
+      max-height: 50vh; overflow-y: auto;
+    }
 
-      .mobile-tab-bar {
-        display: flex; position: fixed; bottom: 32px; left: 0; right: 0; height: 40px;
-        background: white; border-top: 1px solid #e2e8f0; z-index: 100;
-        align-items: center; justify-content: center; gap: 4px; padding: 0 8px;
-      }
-      .mobile-tab {
-        flex: 1; border: none; background: var(--slate-100); color: var(--slate-500);
-        font-size: 12px; font-weight: 500; padding: 6px 0; border-radius: 6px;
-        cursor: pointer; font-family: var(--sans);
-      }
-      .mobile-tab.active { background: var(--indigo); color: white; }
+    /* Timeline event cards (compact version) */
+    .tl25-list { padding: 12px 16px 12px 32px; position: relative; }
+    .tl25-list::before {
+      content: ''; position: absolute; left: 22px; top: 0; bottom: 0;
+      width: 2px; background: #e5e7eb;
+    }
+    .tl25-event {
+      position: relative; margin-bottom: 10px;
+      background: white; border: 1px solid #e5e7eb; border-radius: 8px;
+      padding: 10px 14px; transition: all 0.15s;
+    }
+    .tl25-event::before {
+      content: ''; position: absolute; left: -18px; top: 14px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #d1d5db; border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #e5e7eb;
+    }
+    .tl25-event.critical { border-left: 3px solid var(--rose); }
+    .tl25-event.critical::before { background: var(--rose); box-shadow: 0 0 0 2px #fecaca; }
+    .tl25-date { font-size: 12px; font-weight: 600; color: var(--indigo); }
+    .tl25-event.critical .tl25-date { color: var(--rose); }
+    .tl25-type {
+      display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px;
+      background: #f3f4f6; color: #6b7280; font-weight: 500; margin-left: 6px;
+    }
+    .tl25-type.critical_decision { background: var(--rose-light); color: var(--rose); }
+    .tl25-type.initial_contact { background: var(--emerald-light); color: var(--emerald); }
+    .tl25-type.final_outcome { background: var(--amber-light); color: var(--amber); }
+    .tl25-type.deterioration { background: #fff7ed; color: #c2410c; }
+    .tl25-desc { font-size: 13px; color: var(--slate-900); line-height: 1.5; margin-top: 4px; }
+    .tl25-actors { font-size: 11px; color: var(--slate-500); margin-top: 3px; }
+    .tl25-decision {
+      margin-top: 6px; padding: 6px 10px; background: var(--rose-light); border-radius: 4px;
+      font-size: 12px; color: #991b1b; line-height: 1.4;
+    }
+    .tl25-summary-bar {
+      display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid #e5e7eb;
+      flex-wrap: wrap; background: var(--slate-50);
+    }
+    .tl25-stat {
+      font-size: 12px; color: var(--slate-500);
+    }
+    .tl25-stat strong { color: var(--slate-900); font-weight: 700; font-size: 14px; }
+    .tl25-no-data {
+      display: flex; align-items: center; justify-content: center;
+      height: 200px; color: var(--slate-500); font-size: 14px;
+    }
 
-      .progress-bar { bottom: 0; }
+    /* TL eval items (reuse Phase 1 eval-item pattern) */
+    .tl-eval-group-title {
+      font-size: 13px; font-weight: 700; color: var(--purple);
+      padding: 6px 0 4px; border-bottom: 1px solid var(--purple-light); margin-bottom: 8px;
+    }
 
-      .toolbar { gap: 4px; padding: 0 8px; overflow-x: auto; }
-      .toolbar h1 { font-size: 12px; }
-      #caseSelect { max-width: 140px; }
+    @media (max-width: 900px) {
+      #phaseTLView { flex-direction: column; }
+      .panel-timeline { flex: none !important; max-height: 40vh; }
+      .panel-tl-right { flex: none !important; }
     }
   </style>
 </head>
 <body>
 
-<!-- Toolbar -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- TOOLBAR                                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <div class="toolbar">
-  <h1>專家評估</h1>
+  <h1>評估 v2</h1>
+  <select id="caseSelect" title="選擇案件"></select>
   <div class="sep"></div>
-  <select id="caseSelect"><option>載入中...</option></select>
-  <select id="groupSelect">
-    <option value="商用模型">商用模型</option>
-    <option value="開源模型">開源模型</option>
-    <option value="all">全部</option>
-  </select>
-  <select id="condSelect"><option>載入中...</option></select>
-  <span class="spacer"></span>
-  <a id="viewLink" href="view.html" style="font-size:11px;color:var(--indigo);text-decoration:none">摘要瀏覽</a>
-  <a id="timelineLink" href="timeline.html" style="font-size:11px;color:var(--indigo);text-decoration:none">時間軸</a>
-  <a href="index.html" style="font-size:11px;color:var(--indigo);text-decoration:none">總覽</a>
+  <div class="cond-pills" id="condPills"></div>
   <div class="sep"></div>
+  <div class="phase-indicators" id="phaseIndicators"></div>
+  <div class="spacer"></div>
+  <span class="save-indicator" id="saveIndicator"></span>
   <label>評估者</label>
-  <input type="text" id="evaluatorName" placeholder="姓名/代號" style="width:80px">
-  <button class="btn btn-ghost" onclick="exportJSON()">匯出 JSON</button>
+  <input type="text" id="evaluatorName" placeholder="姓名" style="width:80px" />
+  <button class="btn btn-primary" onclick="exportJSON()">匯出此案</button>
+  <button class="btn btn-ghost" onclick="exportAllJSON()">匯出全部</button>
+  <button class="btn btn-ghost" onclick="importJSON()">匯入</button>
+  <div class="sep"></div>
+  <a href="view.html" class="btn btn-ghost" id="viewLink">檢視</a>
+  <a href="timeline.html" class="btn btn-ghost" id="timelineLink">時間軸</a>
+  <a href="index.html" class="btn btn-ghost">首頁</a>
 </div>
 
-<!-- Main 3-panel layout -->
-<div class="main">
-  <!-- Left: Source text -->
-  <div class="panel panel-source" id="panelSource">
-    <div class="source-header">
-      <div class="source-icon">&#128196;</div>
-      <div>
-        <div class="source-header-text">原始判決書</div>
-        <div class="source-header-sub" id="sourceChunkCount"></div>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="main" id="mainContainer">
+
+  <!-- ─── PHASE 1 VIEW ─── -->
+  <div class="view" id="phase1View">
+    <div class="panel panel-source" id="p1Source">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:#f5f5f4;color:#78716c;">&#x1F4C4;</div>
+        <span class="panel-header-text">原文</span>
+        <span class="panel-header-sub" id="p1ChunkCount"></span>
+      </div>
+      <div class="panel-body" id="p1SourceBody"><span class="empty-text">載入中...</span></div>
+    </div>
+    <div class="resizer"></div>
+    <div class="panel panel-summary" id="p1Summary">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
+        <span class="panel-header-text">AI 摘要</span>
+        <span class="panel-header-sub" id="p1CondLabel"></span>
+      </div>
+      <div id="p1SummaryBody" style="padding:12px 16px;"><span class="empty-text">載入中...</span></div>
+    </div>
+    <div class="resizer"></div>
+    <div class="panel panel-eval" id="p1Eval">
+      <div id="p1FrozenBanner" class="frozen-banner">Phase 1 已凍結（已進入 Phase 2，不可修改盲評分數）</div>
+      <div id="p1EvalForm"></div>
+      <div style="padding:8px 0;">
+        <label style="font-size:13px;color:var(--slate-500);">整體短評（選填，限 100 字）</label>
+        <textarea id="p1OverallComment" class="eval-comment" maxlength="100" placeholder="整體短評..."></textarea>
+      </div>
+      <div class="action-bar" style="border-top:none;padding:8px 0;">
+        <span style="font-size:13px;color:var(--slate-500);" id="p1ProgressText"></span>
+        <div class="spacer"></div>
+        <button class="btn btn-primary" id="p1CompleteBtn" onclick="completePhase1()">完成評分 &#x2192;</button>
       </div>
     </div>
-    <div class="source-body" id="sourceBody">
-      <span class="empty-text">選擇案例以載入</span>
+  </div>
+
+  <!-- ─── PHASE 2 VIEW (same 3-panel as Phase 1) ─── -->
+  <div class="view" id="phase2View">
+    <!-- Left: AI Summary -->
+    <div class="panel panel-source" id="p2AI">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
+        <span class="panel-header-text">AI 摘要 <span id="p2CondLabel" style="color:var(--indigo);font-weight:700;"></span></span>
+      </div>
+      <div class="panel-body" id="p2AIBody" style="padding:12px 16px;"></div>
+    </div>
+    <!-- Middle: GT Summary -->
+    <div class="panel panel-summary" id="p2GT">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:var(--emerald-light);color:var(--emerald);">GT</div>
+        <span class="panel-header-text">專家摘要</span>
+      </div>
+      <div class="panel-body" id="p2GTBody" style="padding:12px 16px;"></div>
+    </div>
+    <!-- Right: Review form (locked scores + omission + revise) -->
+    <div class="panel panel-review" id="p2Review">
+      <div class="panel-header" style="background:var(--slate-50);">
+        <div class="panel-header-icon" style="background:var(--amber-light);color:var(--amber);">&#x270E;</div>
+        <span class="panel-header-text">比對審查</span>
+      </div>
+      <!-- Omission -->
+      <div class="p2-section">
+        <div class="p2-section-title">重大遺漏</div>
+        <div class="p2-gap-radio">
+          <label><input type="radio" name="p2omission" value="no" onchange="onPhase2Change()"> 無</label>
+          <label><input type="radio" name="p2omission" value="yes" onchange="onPhase2Change()"> 有</label>
+        </div>
+        <textarea class="p2-omission-text" id="p2OmissionDetail" placeholder="遺漏項目..." onchange="onPhase2Change()" oninput="debounceSave()"></textarea>
+      </div>
+      <!-- Scores review -->
+      <div class="p2-section">
+        <div class="p2-section-title">Phase 1 評分 <span style="font-weight:400;color:var(--slate-500);font-size:11px;">點「修」解鎖修正</span></div>
+        <div id="p2RevisionItems"></div>
+      </div>
+      <div style="text-align:right;padding-top:8px;">
+        <button class="btn btn-primary" id="p2CompleteBtn" onclick="completePhase2()">完成比對 &#x2192;</button>
+      </div>
     </div>
   </div>
 
-  <div class="resizer"></div>
-
-  <!-- Middle: Summary -->
-  <div class="panel panel-summary" id="panelSummary">
-    <div class="summary-header">
-      <button class="summary-tab active-ai" data-target="ai" id="tabAI">AI 生成摘要</button>
-      <button class="summary-tab" data-target="gt" id="tabGT">老師摘要</button>
-      <button class="summary-tab" data-target="tl" id="tabTL">時間軸</button>
+  <!-- ─── PHASE TL: Timeline Evaluation ─── -->
+  <div class="view" id="phaseTLView">
+    <!-- Left: GT Timeline -->
+    <div class="panel panel-timeline" id="tlTimeline">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:#fef3c7;color:#d97706;">&#x1F4C5;</div>
+        <span class="panel-header-text">GT 時間軸</span>
+        <span class="panel-header-sub" id="tlEventCount"></span>
+      </div>
+      <div id="tlSummaryBar" class="tl25-summary-bar"></div>
+      <div id="tlEventList" class="tl25-list"></div>
     </div>
-    <div class="summary-body" id="summaryAI"></div>
-    <div class="summary-body" id="summaryGT" style="display:none"></div>
+    <div class="resizer"></div>
+    <!-- Right: AI Summary + Eval -->
+    <div class="panel-tl-right">
+      <div class="tl-right-summary" id="tlSummaryPanel">
+        <div class="panel-header" style="position:sticky;top:0;z-index:10;background:white;margin:-12px -16px 8px;padding:10px 16px;border-bottom:1px solid #f3f4f6;">
+          <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
+          <span class="panel-header-text">AI 摘要</span>
+          <span class="panel-header-sub" id="tlCondLabel"></span>
+        </div>
+        <div id="tlSummaryBody"></div>
+      </div>
+      <div class="tl-right-eval" id="tlEvalPanel">
+        <div class="tl-eval-group-title">時間軸評估</div>
+        <div id="tlEvalForm"></div>
+        <div style="padding:8px 0;">
+          <label style="font-size:13px;color:var(--slate-500);">備註（選填，限 100 字）</label>
+          <textarea id="tlComment" class="eval-comment" maxlength="100" placeholder="時間軸相關備註..." oninput="debounceSave()"></textarea>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:4px 0;">
+          <span style="font-size:13px;color:var(--slate-500);" id="tlProgressText"></span>
+          <div class="spacer"></div>
+          <button class="btn btn-primary" id="tlCompleteBtn" onclick="completePhaseTL()">完成時間軸評估 &#x2192;</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="resizer"></div>
+  <!-- ─── PHASE 3 VIEW ─── -->
+  <div class="view" id="phase3View">
+    <div class="phase3-source-toggle" onclick="togglePhase3Source()">
+      <span id="p3SourceArrow">&#x25B6;</span> 原文（點擊展開）
+    </div>
+    <div class="phase3-source-panel" id="p3SourcePanel">
+      <div class="panel-body" id="p3SourceBody"></div>
+    </div>
+    <div class="phase3-columns" id="phase3Columns"></div>
+    <div class="phase3-ranking-area" id="phase3RankingArea">
+      <!-- Sequential selection steps -->
+      <div id="p3SelectionUI"></div>
+      <!-- Final summary (shown after all 3 steps) -->
+      <div id="p3Summary" style="display:none;">
+        <div class="p3-summary-title">排序結果</div>
+        <div id="p3SummaryList" class="p3-summary-list"></div>
+        <div class="ranking-reason-area">
+          <label style="font-size:13px;color:var(--slate-500);">排序理由（選填，限 100 字）</label>
+          <textarea id="p3RankingReason" maxlength="100" placeholder="排序理由..." oninput="debounceSave()"></textarea>
+        </div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
+          <button class="btn btn-ghost" onclick="resetPhase3Selection()">重新排序</button>
+          <button class="btn btn-success" id="p3CompleteBtn" onclick="completePhase3()">完成此案 &#x2192;</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <!-- Right: Evaluation -->
-  <div class="panel panel-eval" id="panelEval"></div>
 </div>
 
-<!-- Mobile Tab Bar -->
-<div class="mobile-tab-bar" id="mobileTabBar">
-  <button class="mobile-tab active" data-panel="panelSource" onclick="switchMobilePanel('panelSource', this)">原文</button>
-  <button class="mobile-tab" data-panel="panelSummary" onclick="switchMobilePanel('panelSummary', this)">摘要</button>
-  <button class="mobile-tab" data-panel="panelEval" onclick="switchMobilePanel('panelEval', this)">評估</button>
-  <button class="mobile-tab" data-panel="panelSource" onclick="switchToTimeline()">時間軸</button>
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- FOOTER                                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="footer">
+  <span class="footer-text" id="footerText">0 / 30 案完成</span>
+  <div class="footer-progress-bar">
+    <div class="footer-progress-fill" id="footerFill" style="width:0%"></div>
+  </div>
+  <span class="footer-text" id="footerPct">0%</span>
 </div>
 
-<!-- Progress -->
-<div class="progress-bar">
-  <div class="progress-text" id="progressText">0 / 30</div>
-  <div class="progress-fill"><div class="progress-fill-inner" id="progressFill" style="width:0%"></div></div>
-  <div class="progress-text" id="progressPct">0%</div>
-</div>
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
 <script>
 // ═══════════════════════════════════════════════════════════════
-// DIMENSIONS
+// CONSTANTS
 // ═══════════════════════════════════════════════════════════════
 
-const ASPECTS = [
-  {
-    id: 'A', name: '事實正確性', color: 'a',
-    dims: [
-      { id: 'A1', name: '時間線完整性', desc: '摘要是否涵蓋判決中的關鍵時間事件？',
-        anchors: {5:'所有關鍵時間事件都被涵蓋',4:'遺漏 1 個次要時間事件',3:'遺漏 1 個重要事件或 2-3 個次要事件',2:'多個重要時間事件缺失',1:'時間線幾乎未呈現'}},
-      { id: 'A2', name: '人物機構辨識', desc: '被告、被害人、醫療機構是否都被正確提及？',
-        anchors: {5:'全部正確提及',4:'遺漏 1 個次要角色',3:'遺漏 1 個重要角色或機構',2:'多個關鍵角色缺失',1:'人物關係無法辨識'}},
-      { id: 'A3', name: '起訴指控涵蓋', desc: '檢察官的起訴指控要點是否被完整呈現？',
-        anchors: {5:'所有指控要點都涵蓋',4:'遺漏 1 個次要指控',3:'遺漏 1 個重要指控',2:'多項指控缺失',1:'起訴指控幾乎未呈現'}},
-      { id: 'A4', name: '辯護論點涵蓋', desc: '被告的辯護論點是否被完整呈現？',
-        anchors: {5:'所有辯護論點都涵蓋',4:'遺漏 1 個次要論點',3:'遺漏 1 個重要論點',2:'多項辯護缺失',1:'辯護論點幾乎未呈現'}},
-      { id: 'A5', name: '鑑定意見涵蓋', desc: '鑑定機構、核心結論、違規評估、因果評估是否被呈現？',
-        anchors: {5:'鑑定意見四子項全部涵蓋',4:'遺漏 1 個子項',3:'遺漏 2 個子項',2:'僅提及鑑定機構名稱',1:'鑑定意見完全缺失'}},
-      { id: 'A6', name: '判決理由涵蓋', desc: '法院的事實認定、法律分析、加重/減輕因素是否呈現？',
-        anchors: {5:'推理要素全部涵蓋',4:'遺漏 1 個次要要素',3:'遺漏 1 個重要推理環節',2:'多個推理環節缺失',1:'判決理由幾乎未呈現'}},
-      { id: 'A7', name: '因果鏈涵蓋', desc: '從醫療行為到損害結果的因果鏈條是否被保留？',
-        anchors: {5:'因果鏈每一環都呈現',4:'遺漏 1 個次要環節',3:'因果鏈部分斷裂',2:'因果鏈嚴重不完整',1:'完全無因果論述'}, na: true},
-      { id: 'A8', name: '判決結果正確', desc: '罪名、刑期、緩刑等判決結果是否正確？',
-        anchors: {5:'全部正確（罪名+刑期+緩刑）',4:'1 處細節偏差',3:'刑期或緩刑有誤',2:'多處錯誤',1:'判決結果完全錯誤'}},
-    ]
-  },
-  {
-    id: 'B', name: '寫作品質', color: 'b',
-    dims: [
-      { id: 'B1', name: '語句通順', desc: '繁體中文語法、用詞、法律文書語體是否正確自然？',
-        anchors: {5:'全部自然流暢',4:'偶有 1 處不自然',3:'2-3 處語法問題',2:'多處錯誤',1:'嚴重影響可讀性'}},
-      { id: 'B2', name: '資訊密度', desc: '是否有冗餘重複？每句是否有獨立資訊貢獻？',
-        anchors: {5:'零冗餘',4:'1 處輕微重複',3:'2-3 處重複',2:'明顯重複灌水',1:'大量重複'}},
-      { id: 'B3', name: '邏輯連貫', desc: '段落間邏輯是否清晰？時間線是否連貫？',
-        anchors: {5:'邏輯清晰順暢',4:'1 處過渡稍弱',3:'2-3 處邏輯跳躍',2:'邏輯混亂',1:'完全無結構'}},
-      { id: 'B4', name: '要點涵蓋率', desc: '與老師摘要比對，關鍵要點是否都被涵蓋？',
-        anchors: {5:'所有要點涵蓋',4:'遺漏 1 個次要要點',3:'遺漏 1 個重要要點',2:'多個要點缺失',1:'大部分缺失'}},
-      { id: 'B5', name: '資訊精確度', desc: '日期、數值、人物關係是否精確？有無幻覺？',
-        anchors: {5:'全部精確無誤',4:'1 處輕微偏差',3:'1-2 處事實偏差',2:'多處錯誤',1:'大量錯誤不可信'}},
-      { id: 'B6', name: '術語一致性', desc: '法律/醫學術語是否正確且前後一致？',
-        anchors: {5:'術語完全正確一致',4:'1 處差異但語意正確',3:'2-3 處不一致',2:'多處錯誤混用',1:'術語嚴重混亂'}},
-      { id: 'B7', name: '結構忠實度', desc: '段落劃分、子標題、編號方式是否合理？',
-        anchors: {5:'高度合理',4:'1 處分段不同',3:'有明顯組織差異',2:'結構差異大',1:'完全無結構'}},
-      { id: 'B8', name: '段落範疇合規', desc: '每個段落是否只包含該段應有的內容？',
-        anchors: {5:'無跨段落汙染',4:'1 處輕微放錯',3:'2 處跨範疇',2:'多處混亂',1:'段落劃分無意義'}},
-      { id: 'B9', name: '風格規範合規', desc: '引用格式、數字格式、用字是否合規？',
-        anchors: {5:'全部合規',4:'1 處不合規',3:'2-3 處不合規',2:'多處不合規',1:'嚴重違規'}},
-      { id: 'B10', name: '法律論證結構', desc: '法院推理的論點是否被完整保留？',
-        anchors: {5:'全部論點覆蓋',4:'遺漏 1 個次要論點',3:'遺漏 1 個重要論點',2:'多個重要遺漏',1:'大部分遺漏'}},
-      { id: 'B11', name: '時間軸清晰度', desc: '事件是否按時序排列？關鍵時間點是否有標記？',
-        anchors: {5:'完全按時序，標記完整',4:'基本清晰，1 處稍模糊',3:'2-3 處跳躍',2:'事件順序混亂',1:'無法重建時序'}},
-      { id: 'B12', name: '推理結構完整性', desc: '注意義務基準 → 違反行為 → 因果關係 → 歸責量刑，是否完整？',
-        anchors: {5:'四步驟完整',4:'三步驟',3:'二步驟',2:'一步驟',1:'完全缺失'}},
-      { id: 'B13', name: '可理解性', desc: '大學學歷一般民眾能否理解？術語是否堆砌？',
-        anchors: {5:'完全可理解',4:'1-2 處需查詢',3:'3-5 處構成障礙',2:'專業術語密集',1:'等同閱讀原始判決'}},
-      { id: 'B14', name: '不確定性標示', desc: '是否區分法院認定/鑑定意見/被告主張/可能性推論？',
-        anchors: {5:'四種來源清楚區分',4:'1 處混淆',3:'2-3 處混淆',2:'頻繁混淆',1:'完全不區分'}},
-    ]
-  },
-  {
-    id: 'C', name: '引用忠實度', color: 'c',
-    dims: [
-      { id: 'C1', name: '引用正確性', desc: '帶有引用標記的陳述，其引用的原文是否支持摘要內容？',
-        anchors: {5:'抽查全部正確支持',4:'1 句為弱支持',3:'2-3 句弱支持',2:'有不支持的引用',1:'多處引用不實'}},
-    ]
-  },
-  {
-    id: 'D', name: '數值與日期', color: 'd',
-    dims: [
-      { id: 'D1', name: '引用率合理性', desc: '引用標記的密度是否適當？太少缺乏根據，太多干擾閱讀。',
-        anchors: {5:'密度恰當',4:'略多或略少但可接受',3:'部分段落不足或過多',2:'分佈明顯不均',1:'幾乎無引用或引用氾濫'}},
-      { id: 'D2', name: '日期正確性', desc: '摘要中的日期是否與原文一致？',
-        anchors: {5:'全部日期正確',4:'1 個日期有誤',3:'2-3 個日期有誤',2:'多處日期錯誤',1:'日期大量錯誤'}},
-      { id: 'D3', name: '數值正確性', desc: '醫療數值、金額、刑期數字是否正確？',
-        anchors: {5:'全部數值正確',4:'1 個數值有誤',3:'2-3 個數值有誤',2:'多處數值錯誤',1:'數值大量錯誤'}},
-    ]
-  },
-  {
-    id: 'E', name: '法律專業判斷', color: 'e',
-    dims: [
-      { id: 'E1', name: '注意義務分析', desc: '摘要是否正確呈現法院認定的注意標準？是否區分「醫療常規」與「醫療水準」？',
-        anchors: {5:'準確呈現注意義務層次與來源',4:'有呈現但層次區分不夠清楚',3:'僅提及「有過失」但未說明標準',2:'注意義務分析有誤',1:'完全未呈現'}},
-      { id: 'E2', name: '因果關係推理', desc: '摘要是否正確呈現法院採用的因果理論？',
-        anchors: {5:'正確呈現因果理論與論證過程',4:'有論證但未明確指出理論類型',3:'僅有結論無論證',2:'因果推理有誤',1:'完全缺失'}},
-      { id: 'E3', name: '臨床裁量空間', desc: '摘要是否呈現醫師臨床裁量的合理性討論？',
-        anchors: {5:'完整呈現裁量討論',4:'有提及但簡略',3:'僅暗示有裁量空間',2:'遺漏重要裁量討論',1:'完全未呈現'}, na: true},
-      { id: 'E4', name: '鑑定意見忠實度', desc: '摘要是否正確呈現鑑定意見的結論與法院對其態度？',
-        anchors: {5:'結論與態度都正確呈現',4:'結論正確但態度不夠明確',3:'結論部分正確，態度未呈現',2:'歪曲鑑定結論',1:'完全缺失或嚴重錯誤'}},
-    ]
-  },
+const EVAL_CONDITIONS = [
+  'claude_afg_v5.1',
+  'ablation_no_afg',
+  'ablation_no_react',
+  'baseline_claude-haiku'
 ];
+
+const ANON_LABELS = ['版本 A', '版本 B', '版本 C', '版本 D'];
 
 const SECTION_NAMES = {
   facts: '（一）公訴事實與起訴意旨',
@@ -505,434 +685,1387 @@ const SECTION_NAMES = {
   reasoning: '（五）判決理由',
 };
 
+const EVENT_TYPE_LABELS = {
+  initial_contact: '初診', diagnosis: '診斷', treatment: '處置',
+  critical_decision: '關鍵決策', deterioration: '惡化', transfer: '轉院',
+  consultation: '會診', vital_signs: '生命徵象', final_outcome: '最終結果',
+};
+
+const TL_DIMENSIONS = [
+  {
+    id: 'process_traceability', name: '1. 醫療經過可追蹤性', num: 1,
+    guide: '讀完摘要後，能不能畫出「病人去了哪裡、誰做了什麼處置」的時間線？',
+    checks: [
+      '到院、轉院、出院/死亡等轉折點有沒有寫清楚',
+      '每個階段是哪個醫師在負責，責任歸屬能不能分清',
+      '時間順序讀起來是否自然，不需回頭重讀'
+    ],
+    anchors: {
+      5: '可直接從摘要畫出完整時間線，每階段的負責人和處置都清楚',
+      4: '大致清楚，但有 1 處需要推測（例如轉院時間沒明確寫）',
+      3: '主要經過能理解，但 2 處以上的銜接不清楚',
+      2: '只知道開頭和結尾，中間經過模糊',
+      1: '完全無法重建醫療經過'
+    }
+  },
+  {
+    id: 'decision_comprehensibility', name: '2. 關鍵決策可理解性', num: 2,
+    guide: '醫師在什麼情況下做了什麼判斷？非醫療背景的人能不能理解「為什麼這個決定有問題」？',
+    checks: [
+      '醫師做了哪些診斷或處置決定，有沒有寫出來',
+      '做決定時的臨床依據（症狀、檢查數值）有沒有交代',
+      '讀者能不能理解為什麼檢方認為這是疏失'
+    ],
+    anchors: {
+      5: '每個關鍵決策都寫了「當時狀況→醫師判斷→為什麼有問題」，非專業人也能理解',
+      4: '關鍵決策都有提到，但 1 處缺少臨床依據，需讀者自行推斷',
+      3: '提到了決策，但多半只寫結論（「醫師誤診」），缺少讓人理解的脈絡',
+      2: '關鍵決策遺漏 1 個以上',
+      1: '看不出醫師做了什麼決定、為什麼有問題'
+    }
+  },
+  {
+    id: 'outcome_attribution', name: '3. 結果歸因可追溯性', num: 3,
+    guide: '讀完後能不能理解「因為 A 沒做→導致 B 惡化→最終 C 結果」這條因果鏈？',
+    checks: [
+      '從疏失到結果之間的因果環節有沒有交代完整',
+      '有沒有時間空白讓人困惑（例如住院 3 天中間完全沒提）',
+      '最終結果跟前面的因果敘事能不能對得上'
+    ],
+    anchors: {
+      5: '因果鏈完整，從疏失到結果每一步都能理解，沒有不明空白',
+      4: '因果鏈大致完整，但 1 處時間空白未交代（不影響理解結論）',
+      3: '能理解最終結論，但中間有跳躍，需讀者自己腦補',
+      2: '因果鏈斷裂，不太確定疏失和結果之間的關聯',
+      1: '完全看不出為什麼疏失會導致這個結果'
+    }
+  }
+];
+
+const DIMENSIONS = [
+  {
+    group: '內容完整性',
+    items: [
+      { id: 'content_completeness', name: '事實經過完整性', num: 1,
+        anchors: {
+          5: '所有關鍵時間事件和人物機構都被涵蓋',
+          4: '遺漏 1 個次要事件或角色',
+          3: '遺漏 1 個重要事件，或 2-3 個次要事件/角色',
+          2: '多個重要事件或角色缺失',
+          1: '事實經過幾乎未呈現'
+        }
+      },
+      { id: 'issues_coverage', name: '爭點涵蓋', num: 2,
+        anchors: {
+          5: '起訴指控和辯護論點都完整呈現',
+          4: '遺漏 1 個次要指控或辯護論點',
+          3: '遺漏 1 個重要指控或辯護論點',
+          2: '多項指控或辯護缺失',
+          1: '爭點幾乎未呈現'
+        }
+      },
+      { id: 'expert_opinion', name: '鑑定意見完整與忠實', num: 3,
+        anchors: {
+          5: '鑑定機構、核心結論、違規評估、因果評估全部涵蓋；法院對鑑定意見的態度正確反映',
+          4: '遺漏 1 個子項，或法院態度呈現不夠明確',
+          3: '遺漏 2 個子項',
+          2: '僅提及鑑定機構名稱',
+          1: '鑑定意見完全缺失'
+        }
+      },
+      { id: 'reasoning_causation', name: '判決理由與因果推理', num: 4,
+        anchors: {
+          5: '法院事實認定、法律分析、因果鏈每一環都呈現；注意義務標準清楚',
+          4: '遺漏 1 個次要環節，或注意義務標準不夠明確',
+          3: '因果鏈部分斷裂，或判決理由簡略',
+          2: '多個推理環節缺失',
+          1: '判決理由幾乎未呈現'
+        },
+        subAnchor: '注意義務：是否區分「醫療常規」與「醫療水準」？因果理論：條件理論／相當因果關係／客觀歸責'
+      },
+      { id: 'verdict_accuracy', name: '判決結果正確', num: 5,
+        anchors: {
+          5: '罪名、刑期、緩刑全部正確',
+          4: '1 處細節偏差',
+          3: '刑期或緩刑有誤',
+          2: '多處錯誤',
+          1: '判決結果完全錯誤'
+        }
+      }
+    ]
+  },
+  {
+    group: '寫作品質',
+    items: [
+      { id: 'language_quality', name: '語言品質與連貫', num: 6,
+        anchors: {
+          5: '語法正確、用詞精確、段落間邏輯順暢',
+          4: '偶有 1 處不自然或過渡稍弱',
+          3: '2-3 處語法問題或邏輯跳躍',
+          2: '多處語法錯誤或邏輯混亂',
+          1: '嚴重影響可讀性'
+        }
+      },
+      { id: 'info_density', name: '資訊密度', num: 7,
+        anchors: {
+          5: '零冗餘，每句都有獨立資訊貢獻',
+          4: '1 處輕微重複',
+          3: '2-3 處重複或冗餘表達',
+          2: '明顯重複，同一事實在不同段落反覆出現',
+          1: '大量重複'
+        }
+      },
+      { id: 'structure_scope', name: '結構與範疇', num: 8,
+        anchors: {
+          5: '段落劃分合理，每段只含該段應有的內容',
+          4: '1 處分段差異或內容輕微放錯段落',
+          3: '有明顯組織差異或 2 處跨範疇問題',
+          2: '結構差異大或多處內容混亂',
+          1: '完全無結構，內容隨意分佈'
+        }
+      },
+      { id: 'reasoning_completeness', name: '推理結構完整性', num: 9,
+        anchors: {
+          5: '注意義務基準→違反行為→因果關係→歸責量刑，四步驟完整呈現',
+          4: '三步驟完整',
+          3: '二步驟完整',
+          2: '一步驟完整',
+          1: '完全缺失'
+        }
+      },
+      { id: 'uncertainty_calibration', name: '不確定性標示', num: 10,
+        anchors: {
+          5: '清楚區分法院認定、鑑定意見、被告主張、可能性推論四種來源',
+          4: '大致區分，1 處來源混淆',
+          3: '2-3 處來源歸屬不清',
+          2: '頻繁混淆，多處不確定資訊被斷言為事實',
+          1: '完全不區分'
+        }
+      }
+    ]
+  },
+  {
+    group: '引用',
+    items: [
+      { id: 'citation_faithfulness', name: '引用忠實度', num: 11,
+        anchors: {
+          5: '抽查引用標記，全部正確支持摘要內容',
+          4: '1 處為弱支持',
+          3: '2-3 處弱支持',
+          2: '有不支持的引用',
+          1: '多處引用不實'
+        }
+      }
+    ]
+  }
+];
+
 // ═══════════════════════════════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════════════════════════════
 
 let manifest = null;
 let caseSlugs = {};
+let caseList = [];
 let currentCase = '';
-let currentCond = '';
-let currentGroup = '商用模型';
-let aiData = null;
-let gtData = null;
+let currentCondIdx = 0; // index into randomized condition order
+let currentPhase = 1;
+let aiDataCache = {}; // { conditionKey: data }
+let gtDataCache = null;
+let tlDataCache = null; // timeline data for current case
 let activeChunk = null;
-let showingAI = true;
-let timelineMode = false;
-let timelineData = null;
-let activeEventIdx = -1;
-
-// Condition anonymous label map: real_cond -> "版本 A/B/C..."
-let condAnonMap = {};
+let autoSaveTimer = null;
 
 // ═══════════════════════════════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const resp = await fetch('./data/manifest.json');
-  manifest = await resp.json();
-  caseSlugs = manifest.case_slugs || {};
+  // Load manifest
+  try {
+    const resp = await fetch('./data/manifest.json');
+    manifest = await resp.json();
+    caseSlugs = manifest.case_slugs || {};
+    // Only include cases that have all 4 eval conditions
+    caseList = (manifest.cases || []).filter(c => {
+      const slug = getSlug(c);
+      return true; // We trust manifest; actual fetch will handle missing
+    });
+  } catch (e) {
+    document.getElementById('mainContainer').innerHTML = '<div class="loading">無法載入 manifest.json</div>';
+    return;
+  }
 
-  // Read URL params
-  const urlParams = new URLSearchParams(window.location.search);
-  const initialCase = urlParams.get('case') || '';
-  const initialCond = urlParams.get('condition') || '';
-  const initialGroup = urlParams.get('group') || '';
-  if (['all', '商用模型', '開源模型'].includes(initialGroup)) currentGroup = initialGroup;
-
-  // Case selector
-  const caseSelect = document.getElementById('caseSelect');
-  caseSelect.innerHTML = (manifest.cases || []).map(c =>
-    `<option value="${esc(c)}">${esc(c)}</option>`
-  ).join('');
-  caseSelect.addEventListener('change', () => { currentCase = caseSelect.value; loadCase(); updateLinks(); });
-
-  // Group selector
-  const groupSelect = document.getElementById('groupSelect');
-  groupSelect.value = currentGroup;
-  groupSelect.addEventListener('change', () => {
-    currentGroup = groupSelect.value;
-    renderConditionSelector();
-    loadCase();
+  // Populate case selector
+  const sel = document.getElementById('caseSelect');
+  caseList.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
   });
 
-  // Condition selector
-  document.getElementById('condSelect').addEventListener('change', (e) => {
-    currentCond = e.target.value;
-    loadCase();
+  // Restore evaluator name
+  const savedName = localStorage.getItem('eval_v2_evaluator');
+  if (savedName) document.getElementById('evaluatorName').value = savedName;
+
+  document.getElementById('evaluatorName').addEventListener('change', () => {
+    localStorage.setItem('eval_v2_evaluator', document.getElementById('evaluatorName').value);
   });
 
-  // Summary toggle (AI / GT / Timeline)
-  document.getElementById('tabAI').addEventListener('click', () => switchTab('ai'));
-  document.getElementById('tabGT').addEventListener('click', () => switchTab('gt'));
-  document.getElementById('tabTL').addEventListener('click', () => switchTab('tl'));
+  // URL params
+  const params = new URLSearchParams(location.search);
+  const urlCase = params.get('case');
+  if (urlCase && caseList.includes(urlCase)) {
+    sel.value = urlCase;
+    currentCase = urlCase;
+  } else if (caseList.length > 0) {
+    currentCase = caseList[0];
+    sel.value = currentCase;
+  }
+
+  sel.addEventListener('change', () => {
+    currentCase = sel.value;
+    onCaseChange();
+  });
 
   renderEvalForm();
-
-  if (manifest.cases.length > 0) {
-    // Use URL param case if valid
-    currentCase = (initialCase && manifest.cases.includes(initialCase)) ? initialCase : manifest.cases[0];
-    caseSelect.value = currentCase;
-    // If URL specifies a condition, find its group and switch to it
-    if (initialCond) {
-      const groups = manifest.condition_groups || {};
-      const condGroup = groups[initialCond];
-      if (condGroup && condGroup !== currentGroup) {
-        currentGroup = condGroup;
-        groupSelect.value = currentGroup;
-      }
-    }
-    renderConditionSelector();
-    if (initialCond && Object.keys(manifest.conditions || {}).includes(initialCond)) {
-      currentCond = initialCond;
-      document.getElementById('condSelect').value = currentCond;
-    }
-    loadCase();
-    updateLinks();
-  }
-
-  // Init resizable panels (desktop)
+  onCaseChange();
   initResizers();
-
-  // Init mobile: activate first panel
-  if (window.innerWidth <= 768) {
-    document.getElementById('panelSource').classList.add('mobile-active');
-  }
 });
 
-function updateLinks() {
-  const enc = encodeURIComponent(currentCase);
-  const encCond = encodeURIComponent(currentCond);
-  const encGroup = encodeURIComponent(currentGroup);
-  const vl = document.getElementById('viewLink');
-  if (vl) vl.href = `view.html?case=${enc}&condition=${encCond}&group=${encGroup}`;
-  const tl = document.getElementById('timelineLink');
-  if (tl) tl.href = `timeline.html?case=${enc}`;
-  // Update browser URL
-  const url = new URL(location.href);
-  url.searchParams.set('case', currentCase);
-  url.searchParams.set('condition', currentCond);
-  url.searchParams.set('group', currentGroup);
-  history.replaceState({}, '', url.toString());
+// ═══════════════════════════════════════════════════════════════
+// CONDITION RANDOMIZATION
+// ═══════════════════════════════════════════════════════════════
+
+function getConditionOrder(caseName) {
+  const ev = getEvaluator();
+  const key = `eval_v2_condorder_${ev}_${caseName}`;
+  let order = null;
+  try {
+    const stored = localStorage.getItem(key);
+    if (stored) order = JSON.parse(stored);
+  } catch {}
+  if (!order || !Array.isArray(order) || order.length !== 4) {
+    // Generate random permutation
+    order = [...EVAL_CONDITIONS];
+    for (let i = order.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [order[i], order[j]] = [order[j], order[i]];
+    }
+    localStorage.setItem(key, JSON.stringify(order));
+  }
+  return order;
 }
 
-function switchTab(target) {
-  const wasTimeline = timelineMode;
-  timelineMode = target === 'tl';
-  showingAI = target === 'ai';
+function getAnonLabel(idx) { return ANON_LABELS[idx] || `版本 ${String.fromCharCode(65 + idx)}`; }
 
-  // Update tab styles
-  document.getElementById('tabAI').className = 'summary-tab' + (target === 'ai' ? ' active-ai' : '');
-  document.getElementById('tabGT').className = 'summary-tab' + (target === 'gt' ? ' active-gt' : '');
-  document.getElementById('tabTL').className = 'summary-tab' + (target === 'tl' ? ' active-tl' : '');
+function getRealCondition(caseName, anonIdx) {
+  return getConditionOrder(caseName)[anonIdx];
+}
 
-  if (timelineMode) {
-    // Timeline mode: left=events, middle=source
-    document.getElementById('summaryAI').style.display = 'none';
-    document.getElementById('summaryGT').style.display = 'none';
-    enterTimelineMode();
+// ═══════════════════════════════════════════════════════════════
+// STATE MACHINE: Per-condition phase status
+// ═══════════════════════════════════════════════════════════════
+
+function stateKey(caseName, condIdx, phase) {
+  const ev = getEvaluator();
+  const cond = getRealCondition(caseName, condIdx);
+  return `eval_v2_${ev}_${caseName}_${cond}_phase${phase}`;
+}
+
+function getPhaseData(caseName, condIdx, phase) {
+  try {
+    const raw = localStorage.getItem(stateKey(caseName, condIdx, phase));
+    return raw ? JSON.parse(raw) : null;
+  } catch { return null; }
+}
+
+function setPhaseData(caseName, condIdx, phase, data) {
+  data._saved = new Date().toISOString();
+  localStorage.setItem(stateKey(caseName, condIdx, phase), JSON.stringify(data));
+  showSaveIndicator();
+}
+
+function isPhase1Complete(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 1);
+  if (!d || !d.scores) return false;
+  return DIMENSIONS.every(g => g.items.every(item => d.scores[item.id] != null));
+}
+
+function isPhase1Frozen(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 2);
+  return d != null && d._entered === true;
+}
+
+function isPhase2Complete(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 2);
+  return d && d._complete === true;
+}
+
+function isPhaseTLComplete(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 'TL');
+  return d && d._complete === true;
+}
+
+function isCondComplete(caseName, condIdx) {
+  return isPhase1Complete(caseName, condIdx) && isPhase2Complete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
+}
+
+function areAllCondsComplete(caseName) {
+  for (let i = 0; i < 4; i++) {
+    if (!isCondComplete(caseName, i)) return false;
+  }
+  return true;
+}
+
+function isPhase3Complete(caseName) {
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${caseName}_phase3`;
+  try {
+    const d = JSON.parse(localStorage.getItem(key));
+    return d && d._complete === true;
+  } catch { return false; }
+}
+
+function isCaseLocked(caseName) {
+  return isPhase3Complete(caseName);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CASE CHANGE
+// ═══════════════════════════════════════════════════════════════
+
+async function onCaseChange() {
+  if (!currentCase) return;
+  aiDataCache = {};
+  gtDataCache = null;
+  tlDataCache = null;
+  activeChunk = null;
+
+  // Determine initial condition index and phase
+  currentCondIdx = 0;
+  currentPhase = 1;
+
+  // Find first incomplete condition
+  if (isCaseLocked(currentCase)) {
+    currentPhase = 3;
+  } else if (areAllCondsComplete(currentCase)) {
+    currentPhase = 3;
   } else {
-    // Normal mode: restore left=source, middle=summary
-    document.getElementById('summaryAI').style.display = target === 'ai' ? '' : 'none';
-    document.getElementById('summaryGT').style.display = target === 'gt' ? '' : 'none';
-    if (wasTimeline) exitTimelineMode();
-  }
-}
-
-// ═══════════════════════════════════════════════════════════════
-// TIMELINE MODE
-// ═══════════════════════════════════════════════════════════════
-
-async function enterTimelineMode() {
-  const sourceHeader = document.querySelector('.source-header-text');
-  const panelSummary = document.getElementById('panelSummary');
-
-  // Load timeline data if needed
-  const slug = getSlug(currentCase);
-  if (!timelineData || timelineData._case !== currentCase) {
-    try {
-      const res = await fetch(`./data/timeline/${slug}.json`);
-      if (!res.ok) throw new Error('not found');
-      timelineData = await res.json();
-      timelineData._case = currentCase;
-    } catch {
-      timelineData = null;
-    }
-  }
-
-  // Left panel → timeline events
-  sourceHeader.textContent = '時間軸事件';
-  renderTimelineEvents();
-
-  // Middle panel → source full text (show in a new div)
-  let tlSource = document.getElementById('summaryTL');
-  if (!tlSource) {
-    tlSource = document.createElement('div');
-    tlSource.id = 'summaryTL';
-    tlSource.className = 'summary-body';
-    panelSummary.querySelector('.summary-header').after(tlSource);
-  }
-  tlSource.style.display = '';
-  renderTimelineSource(tlSource);
-}
-
-function exitTimelineMode() {
-  // Restore left panel to source text
-  const sourceHeader = document.querySelector('.source-header-text');
-  sourceHeader.textContent = '原始判決書';
-  activeEventIdx = -1;
-  renderSource();
-
-  // Hide timeline source in middle panel
-  const tlSource = document.getElementById('summaryTL');
-  if (tlSource) tlSource.style.display = 'none';
-}
-
-function renderTimelineEvents() {
-  const body = document.getElementById('sourceBody');
-  const countEl = document.getElementById('sourceChunkCount');
-
-  if (!timelineData || !timelineData.events || timelineData.events.length === 0) {
-    body.innerHTML = '<span class="empty-text">此案例無時間軸資料</span>';
-    countEl.textContent = '';
-    return;
-  }
-
-  const events = timelineData.events;
-  const criticalCount = events.filter(e => e.critical_decision).length;
-  countEl.textContent = `${events.length} 事件`;
-
-  let html = '<div class="tl-event-list">';
-  html += '<div class="tl-summary-bar">';
-  html += `<span class="tl-summary-chip">${events.length} 事件</span>`;
-  if (criticalCount > 0) html += `<span class="tl-summary-chip critical">${criticalCount} 關鍵決策</span>`;
-
-  const summary = timelineData.timeline_summary || {};
-  const span = summary.time_span || {};
-  const spanStart = span.start_date || span.start || '';
-  const spanEnd = span.end_date || span.end || '';
-  if (spanStart) {
-    html += `<span class="tl-summary-chip">${esc(spanStart)} ~ ${esc(spanEnd)}</span>`;
-  }
-  html += '</div>';
-
-  html += '<div class="tl-event-list-inner">';
-  html += '<div class="tl-timeline-line"></div>';
-
-  events.forEach((evt, idx) => {
-    const isCritical = evt.critical_decision;
-    const typeClass = isCritical ? 'critical_decision' : (evt.event_type || '');
-
-    html += `<div class="tl-evt ${isCritical ? 'critical' : ''}" data-idx="${idx}" onclick="showTimelineSource(${idx})">`;
-    html += '<div class="tl-evt-header">';
-    html += `<span class="tl-evt-date">${esc(evt.timestamp || evt.timestamp_normalized || '日期不明')}</span>`;
-    if (evt.event_type) html += `<span class="tl-evt-type ${esc(typeClass)}">${esc(formatEvtType(evt.event_type))}</span>`;
-    if (isCritical) html += '<span class="tl-evt-badge">關鍵決策</span>';
-    html += '</div>';
-    html += `<div class="tl-evt-desc">${esc(evt.description || '')}</div>`;
-
-    const meta = [];
-    if (evt.actors && evt.actors.length) meta.push(`<span class="tl-evt-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
-    if (evt.location) meta.push(`<span class="tl-evt-meta-item"><strong>地點:</strong> ${esc(evt.location)}</span>`);
-    if (meta.length) html += `<div class="tl-evt-meta">${meta.join('')}</div>`;
-
-    if (isCritical && evt.decision_content) {
-      html += `<div class="tl-evt-decision"><div class="tl-evt-decision-label">決策內容</div>${esc(evt.decision_content)}</div>`;
-    }
-    html += '</div>';
-  });
-
-  html += '</div></div>';
-  body.innerHTML = html;
-}
-
-function renderTimelineSource(container) {
-  if (!timelineData || !timelineData.chunks || timelineData.chunks.length === 0) {
-    container.innerHTML = '<div style="padding:14px 18px"><span class="empty-text">無原文段落資料</span></div>';
-    return;
-  }
-
-  const chunks = [...timelineData.chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
-  const events = timelineData.events || [];
-
-  let html = '<div style="font-size:13px;line-height:2;color:var(--slate-700);white-space:pre-wrap;word-break:break-all;padding:14px 18px">';
-
-  chunks.forEach(chunk => {
-    const cid = chunk.chunk_id || '';
-    // Pre-compute event highlight spans
-    const evtSpans = [];
-    events.forEach((evt, evtIdx) => {
-      if (evt.char_start == null || evt.char_end == null) return;
-      const overlapStart = Math.max(evt.char_start, chunk.start_char);
-      const overlapEnd = Math.min(evt.char_end, chunk.end_char);
-      if (overlapEnd > overlapStart) {
-        evtSpans.push({ relStart: overlapStart - chunk.start_char, relEnd: overlapEnd - chunk.start_char, evtIdx });
+    for (let i = 0; i < 4; i++) {
+      if (!isCondComplete(currentCase, i)) {
+        currentCondIdx = i;
+        if (!isPhase1Complete(currentCase, i)) {
+          currentPhase = 1;
+        } else if (!isPhase2Complete(currentCase, i)) {
+          currentPhase = 2;
+        } else {
+          currentPhase = 'tl';
+        }
+        break;
       }
+    }
+  }
+
+  renderCondPills();
+  renderPhaseIndicators();
+  await loadCurrentView();
+  updateFooter();
+  updateURL();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TOOLBAR: Condition pills
+// ═══════════════════════════════════════════════════════════════
+
+function renderCondPills() {
+  const el = document.getElementById('condPills');
+  let html = '';
+  const locked = isCaseLocked(currentCase);
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    const done = isCondComplete(currentCase, i);
+    const isCurrent = (i === currentCondIdx && currentPhase !== 3);
+    let cls = 'cond-pill';
+    let icon = '';
+    if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
+    else if (done) { cls += ' done'; icon = ' &#x2713;'; }
+    else if (isCurrent) { cls += ' active'; icon = ' &#x2192;'; }
+    html += `<span class="${cls}" onclick="switchCondition(${i})">${esc(label)}${icon}</span>`;
+  }
+  el.innerHTML = html;
+}
+
+function switchCondition(idx) {
+  if (isCaseLocked(currentCase)) return;
+  if (currentPhase === 3) return; // In phase 3, no condition switching
+  saveCurrentState();
+  currentCondIdx = idx;
+  // Determine phase for this condition
+  if (!isPhase1Complete(currentCase, idx)) {
+    currentPhase = 1;
+  } else if (!isPhase2Complete(currentCase, idx)) {
+    currentPhase = 2;
+  } else if (!isPhaseTLComplete(currentCase, idx)) {
+    currentPhase = 'tl';
+  } else {
+    // Already done, show timeline (read-only effectively)
+    currentPhase = 'tl';
+  }
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// TOOLBAR: Phase indicators
+// ═══════════════════════════════════════════════════════════════
+
+function renderPhaseIndicators() {
+  const el = document.getElementById('phaseIndicators');
+  const locked = isCaseLocked(currentCase);
+  const allDone = areAllCondsComplete(currentCase);
+
+  const phases = [
+    { num: 1, label: 'Phase 1' },
+    { num: 2, label: 'Phase 2' },
+    { num: 'tl', label: '時間軸' },
+    { num: 3, label: 'Phase 3' }
+  ];
+
+  let html = '';
+  phases.forEach(p => {
+    let cls = 'phase-dot';
+    if (p.num === currentPhase) cls += ' active';
+    else if (p.num === 3 && !allDone && !locked) cls += ' locked';
+    else if (p.num === 1 && isPhase1Frozen(currentCase, currentCondIdx)) cls += ' done';
+    else if (p.num === 2 && isPhase2Complete(currentCase, currentCondIdx)) cls += ' done';
+    else if (p.num === 'tl' && isPhaseTLComplete(currentCase, currentCondIdx)) cls += ' done';
+    else if (p.num === 3 && locked) cls += ' done';
+    const phaseArg = typeof p.num === 'string' ? `'${p.num}'` : p.num;
+    html += `<span class="${cls}" onclick="switchPhase(${phaseArg})">${p.label}</span>`;
+  });
+  el.innerHTML = html;
+}
+
+function switchPhase(phase) {
+  // TODO: re-enable locking before production deployment
+  // Phase locking temporarily disabled for preview/testing
+  saveCurrentState();
+  currentPhase = phase;
+  renderPhaseIndicators();
+  loadCurrentView();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// VIEW SWITCHING
+// ═══════════════════════════════════════════════════════════════
+
+async function loadCurrentView() {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+
+  if (currentPhase === 1) {
+    document.getElementById('phase1View').classList.add('active');
+    await loadPhase1();
+  } else if (currentPhase === 2) {
+    document.getElementById('phase2View').classList.add('active');
+    await loadPhase2();
+  } else if (currentPhase === 'tl') {
+    document.getElementById('phaseTLView').classList.add('active');
+    await loadPhaseTL();
+  } else if (currentPhase === 3) {
+    document.getElementById('phase3View').classList.add('active');
+    await loadPhase3();
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE 1: Blind Scoring
+// ═══════════════════════════════════════════════════════════════
+
+async function loadPhase1() {
+  const cond = getRealCondition(currentCase, currentCondIdx);
+  const slug = getSlug(currentCase);
+
+  // Load AI data if not cached
+  if (!aiDataCache[cond]) {
+    try {
+      const resp = await fetch(`./data/${cond}/${slug}.json`);
+      if (resp.ok) aiDataCache[cond] = await resp.json();
+    } catch {}
+  }
+  const aiData = aiDataCache[cond];
+
+  // Render source
+  renderSourcePanel('p1SourceBody', 'p1ChunkCount', aiData);
+
+  // Render AI summary
+  const label = getAnonLabel(currentCondIdx);
+  document.getElementById('p1CondLabel').textContent = label;
+  renderAISummary('p1SummaryBody', aiData);
+
+  // Frozen state (temporarily disabled for preview)
+  const frozen = false; // isPhase1Frozen(currentCase, currentCondIdx);
+  const banner = document.getElementById('p1FrozenBanner');
+  banner.classList.toggle('show', frozen);
+  document.querySelectorAll('#p1EvalForm .eval-item').forEach(el => {
+    el.classList.toggle('frozen', frozen);
+  });
+  if (frozen) {
+    document.getElementById('p1CompleteBtn').disabled = true;
+    document.getElementById('p1CompleteBtn').textContent = '已凍結';
+    document.getElementById('p1OverallComment').disabled = true;
+  } else {
+    document.getElementById('p1CompleteBtn').disabled = false;
+    document.getElementById('p1CompleteBtn').textContent = '完成評分 \u2192';
+    document.getElementById('p1OverallComment').disabled = false;
+  }
+
+  // Restore saved data
+  restorePhase1();
+  updatePhase1Progress();
+}
+
+function renderEvalForm() {
+  const container = document.getElementById('p1EvalForm');
+  let html = '';
+
+  DIMENSIONS.forEach(group => {
+    html += `<div class="eval-group-title">${esc(group.group)}</div>`;
+    group.items.forEach(dim => {
+      html += `<div class="eval-item" data-dim="${dim.id}">`;
+      html += `<div class="eval-item-title">${dim.num}. ${esc(dim.name)}</div>`;
+      html += `<span class="eval-item-toggle" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#x25BE;</span>`;
+      html += `<div class="eval-anchors"><table>`;
+      for (let s = 5; s >= 1; s--) {
+        html += `<tr><td>${s}</td><td>${esc(dim.anchors[s] || '')}</td></tr>`;
+      }
+      html += `</table>`;
+      if (dim.subAnchor) {
+        html += `<div class="eval-sub-anchor">${esc(dim.subAnchor)}</div>`;
+      }
+      html += `</div>`;
+      html += `<div class="likert-row">`;
+      for (let s = 1; s <= 5; s++) {
+        html += `<label><input type="radio" name="p1_${dim.id}" value="${s}" onchange="onPhase1Change()"><span>${s}</span></label>`;
+      }
+      html += `</div>`;
+      html += `</div>`;
     });
-    evtSpans.sort((a, b) => a.relStart - b.relStart);
-
-    const content = chunk.content || '';
-    let chunkHtml = '';
-    let cursor = 0;
-    evtSpans.forEach(sp => {
-      if (sp.relStart > cursor) chunkHtml += esc(content.substring(cursor, sp.relStart));
-      chunkHtml += `<mark class="evt-highlight" data-evt="${sp.evtIdx}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
-      cursor = sp.relEnd;
-    });
-    if (cursor < content.length) chunkHtml += esc(content.substring(cursor));
-
-    const chunkMatch = cid.match(/chunk[_\s]*(\d+)/i);
-    const shortLabel = chunkMatch ? `Chunk ${chunkMatch[1]}` : cid;
-
-    html += `<div class="chunk-region" id="tl_chunk_${esc(cid)}" data-chunk="${esc(cid)}">`;
-    html += `<span class="chunk-label">${esc(shortLabel)}</span>`;
-    html += `<mark>${chunkHtml}</mark>`;
-    html += '</div>';
   });
 
-  html += '</div>';
   container.innerHTML = html;
 }
 
-function showTimelineSource(idx) {
-  if (!timelineData) return;
-  const events = timelineData.events || [];
-  const evt = events[idx];
-  if (!evt) return;
-  activeEventIdx = idx;
-
-  // Highlight active event card
-  document.querySelectorAll('.tl-evt').forEach(el => {
-    el.classList.toggle('active', parseInt(el.dataset.idx) === idx);
-  });
-
-  // Clear previous highlights
-  document.querySelectorAll('#summaryTL .chunk-region.active').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('#summaryTL .evt-highlight.active').forEach(el => el.classList.remove('active'));
-
-  // Find chunk for this event
-  const chunk = findChunkForEvent(evt);
-  if (chunk) {
-    const cid = chunk.chunk_id || '';
-    const regionEl = document.getElementById('tl_chunk_' + cid);
-    if (regionEl) {
-      regionEl.classList.add('active');
-      const evtMarks = regionEl.querySelectorAll(`.evt-highlight[data-evt="${idx}"]`);
-      evtMarks.forEach(m => m.classList.add('active'));
-      const scrollTarget = evtMarks.length > 0 ? evtMarks[0] : regionEl;
-      requestAnimationFrame(() => {
-        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-    }
-  }
-}
-
-function findChunkForEvent(evt) {
-  const chunks = (timelineData && timelineData.chunks) || [];
-  const cs = evt.char_start;
-  const ce = evt.char_end;
-  if (cs == null || ce == null) return null;
-  for (const chunk of chunks) {
-    if (cs >= chunk.start_char && cs < chunk.end_char) return chunk;
-  }
-  let best = null, bestOverlap = 0;
-  for (const chunk of chunks) {
-    const overlapStart = Math.max(cs, chunk.start_char);
-    const overlapEnd = Math.min(ce, chunk.end_char);
-    const overlap = overlapEnd - overlapStart;
-    if (overlap > bestOverlap) { bestOverlap = overlap; best = chunk; }
-  }
-  return best;
-}
-
-function formatEvtType(type) {
-  const map = {
-    initial_contact: '初始接觸', diagnosis: '診斷', treatment: '治療處置',
-    critical_decision: '關鍵決策', transfer: '轉院', deterioration: '病情惡化',
-    final_outcome: '最終結果', surgery: '手術', medication: '用藥', consultation: '會診',
+function collectPhase1Data() {
+  const scores = {};
+  DIMENSIONS.forEach(g => g.items.forEach(dim => {
+    const checked = document.querySelector(`input[name="p1_${dim.id}"]:checked`);
+    if (checked) scores[dim.id] = parseInt(checked.value);
+  }));
+  const comment = document.getElementById('p1OverallComment').value.trim();
+  const existing = getPhaseData(currentCase, currentCondIdx, 1) || {};
+  return {
+    ...existing,
+    real_condition: getRealCondition(currentCase, currentCondIdx),
+    scores,
+    overall_comment: comment,
+    revision_count: (existing.revision_count || 0)
   };
-  return map[type] || type;
 }
 
-function switchToTimeline() {
-  switchTab('tl');
-  // Also switch mobile panel to source (which now shows timeline source)
-  switchMobilePanel('panelSummary', document.querySelector('.mobile-tab:last-child'));
-}
+function restorePhase1() {
+  // Clear all first
+  DIMENSIONS.forEach(g => g.items.forEach(dim => {
+    document.querySelectorAll(`input[name="p1_${dim.id}"]`).forEach(r => r.checked = false);
+  }));
+  document.getElementById('p1OverallComment').value = '';
 
-// ═══════════════════════════════════════════════════════════════
-// CONDITION SELECTOR (with group filter + anonymous labels)
-// ═══════════════════════════════════════════════════════════════
-
-function renderConditionSelector() {
-  const condSelect = document.getElementById('condSelect');
-  const groups = manifest.condition_groups || {};
-  const allConds = Object.keys(manifest.conditions || {});
-
-  const filtered = allConds.filter(c => {
-    if (currentGroup === 'all') return true;
-    return groups[c] === currentGroup;
-  });
-
-  // Build anonymous labels
-  condAnonMap = {};
-  filtered.forEach((c, i) => {
-    condAnonMap[c] = '版本 ' + String.fromCharCode(65 + i);
-  });
-
-  condSelect.innerHTML = filtered.map(c =>
-    `<option value="${esc(c)}">${esc(condAnonMap[c])}</option>`
-  ).join('');
-
-  // Reset to first in filtered list
-  if (filtered.length > 0) {
-    if (!filtered.includes(currentCond)) currentCond = filtered[0];
-    condSelect.value = currentCond;
+  const data = getPhaseData(currentCase, currentCondIdx, 1);
+  if (!data) return;
+  if (data.scores) {
+    Object.entries(data.scores).forEach(([id, val]) => {
+      const radio = document.querySelector(`input[name="p1_${id}"][value="${val}"]`);
+      if (radio) radio.checked = true;
+    });
   }
+  if (data.overall_comment) document.getElementById('p1OverallComment').value = data.overall_comment;
+}
+
+function onPhase1Change() {
+  // TODO: re-enable freeze check before production
+  // if (isPhase1Frozen(currentCase, currentCondIdx)) return;
+  updatePhase1Progress();
+  debounceSave();
+}
+
+function updatePhase1Progress() {
+  let total = 0, filled = 0;
+  DIMENSIONS.forEach(g => g.items.forEach(dim => {
+    total++;
+    if (document.querySelector(`input[name="p1_${dim.id}"]:checked`)) filled++;
+  }));
+  document.getElementById('p1ProgressText').textContent = `${filled} / ${total}`;
+}
+
+function completePhase1() {
+  // TODO: re-enable freeze check before production
+  // if (isPhase1Frozen(currentCase, currentCondIdx)) return;
+  // Validate all 11 items
+  const data = collectPhase1Data();
+  const filledCount = Object.keys(data.scores).length;
+  const totalCount = DIMENSIONS.reduce((sum, g) => sum + g.items.length, 0);
+  if (filledCount < totalCount) {
+    showToast(`尚有 ${totalCount - filledCount} 項未評分`, 'error');
+    return;
+  }
+  setPhaseData(currentCase, currentCondIdx, 1, data);
+  showToast('Phase 1 完成，進入 Phase 2', 'success');
+  currentPhase = 2;
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
 }
 
 // ═══════════════════════════════════════════════════════════════
-// DATA LOADING
+// PHASE 2: Gap Marking
 // ═══════════════════════════════════════════════════════════════
 
-function getSlug(name) { return caseSlugs[name] || encodeURIComponent(name); }
-
-async function loadCase() {
-  if (!currentCase || !currentCond) return;
+async function loadPhase2() {
+  const cond = getRealCondition(currentCase, currentCondIdx);
   const slug = getSlug(currentCase);
 
-  const [aiResp, gtResp] = await Promise.all([
-    fetch(`./data/${currentCond}/${slug}.json`).catch(() => null),
-    fetch(`./data/gt/${slug}.json`).catch(() => null),
-  ]);
-  aiData = aiResp && aiResp.ok ? await aiResp.json() : null;
-  gtData = gtResp && gtResp.ok ? await gtResp.json() : null;
+  // Mark Phase 2 as entered (freezes Phase 1)
+  let p2Data = getPhaseData(currentCase, currentCondIdx, 2);
+  if (!p2Data) p2Data = { _entered: true };
+  if (!p2Data._entered) p2Data._entered = true;
+  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
 
-  activeChunk = null;
-  activeEventIdx = -1;
-  timelineData = null;
-
-  if (timelineMode) {
-    enterTimelineMode();
-    renderSummaries();
-  } else {
-    renderSource();
-    renderSummaries();
+  // Load AI data
+  if (!aiDataCache[cond]) {
+    try {
+      const resp = await fetch(`./data/${cond}/${slug}.json`);
+      if (resp.ok) aiDataCache[cond] = await resp.json();
+    } catch {}
   }
+  const aiData = aiDataCache[cond];
+
+  // Load GT data (only now!)
+  if (!gtDataCache) {
+    try {
+      const resp = await fetch(`./data/gt/${slug}.json`);
+      if (resp.ok) gtDataCache = await resp.json();
+    } catch {}
+  }
+
+  // Render AI summary (left panel)
+  const label = getAnonLabel(currentCondIdx);
+  document.getElementById('p2CondLabel').textContent = label;
+  renderSectionsSideBySide(aiData, gtDataCache);
+
+  // Restore form + render revision items
+  restorePhase2();
+
+  // Complete button state
+  const locked = isCaseLocked(currentCase);
+  document.getElementById('p2CompleteBtn').disabled = locked;
+}
+
+function renderSectionsSideBySide(aiData, gtData) {
+  const aiBody = document.getElementById('p2AIBody');
+  const gtBody = document.getElementById('p2GTBody');
+
+  const sectionIds = ['facts', 'defense', 'opinions', 'verdict', 'reasoning'];
+
+  if (aiData && aiData.sections) {
+    aiBody.innerHTML = sectionIds.map(sid => {
+      const sec = aiData.sections.find(s => s.id === sid);
+      if (!sec) return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-ai">${esc(SECTION_NAMES[sid])}</div><div class="section-body"><span class="empty-text">無此段落</span></div></div>`;
+      return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-ai">${esc(SECTION_NAMES[sid])}</div><div class="section-body">${renderCitations(sec.content || '')}</div></div>`;
+    }).join('');
+  } else {
+    aiBody.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
+  }
+
+  if (gtData && gtData.sections) {
+    gtBody.innerHTML = sectionIds.map(sid => {
+      const sec = gtData.sections.find(s => s.id === sid);
+      if (!sec) return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-gt">${esc(SECTION_NAMES[sid])}</div><div class="section-body"><span class="empty-text">無此段落</span></div></div>`;
+      return `<div class="section-block" data-section="${sid}"><div class="section-title section-title-gt">${esc(SECTION_NAMES[sid])}</div><div class="section-body">${esc(sec.content || '')}</div></div>`;
+    }).join('');
+  } else {
+    gtBody.innerHTML = '<span class="empty-text">無法載入專家摘要</span>';
+  }
+
+  // Bind citation clicks in Phase 2
+  document.querySelectorAll('#p2AIBody .citation-tag').forEach(tag => {
+    tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, 'p2SourceBody'));
+  });
+}
+
+// Sync scroll removed — Phase 2 now uses independent panel scrolling like Phase 1
+
+function renderPhase2Revisions() {
+  const container = document.getElementById('p2RevisionItems');
+  const p1Data = getPhaseData(currentCase, currentCondIdx, 1) || {};
+  const scores = p1Data.scores || {};
+  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  const revisions = p2Data.revisions || {};
+
+  let html = '';
+  let num = 0;
+  DIMENSIONS.forEach(group => {
+    group.items.forEach(dim => {
+      num++;
+      const orig = scores[dim.id];
+      const rev = revisions[dim.id];
+      const isRevising = !!rev;
+      const hasSelected = isRevising && rev.revised !== null && rev.revised !== undefined;
+
+      html += `<div class="p2-rev-item">`;
+      // Header: number + name + toggle
+      html += `<div class="p2-rev-header">`;
+      html += `<span class="p2-rev-num">${num}.</span>`;
+      html += `<span class="p2-rev-name">${esc(dim.name)}</span>`;
+      html += `<button class="p2-rev-toggle ${isRevising ? 'active' : ''}" onclick="toggleRevision('${dim.id}')">${isRevising ? '取消' : '修'}</button>`;
+      html += `</div>`;
+
+      // Original score row (always visible)
+      html += `<div class="p2-orig-row">`;
+      html += `<span class="p2-orig-label">原始</span>`;
+      html += `<div class="p2-orig-dots">`;
+      for (let s = 1; s <= 5; s++) {
+        html += `<div class="p2-orig-dot ${s === orig ? 'filled' : ''}">${s}</div>`;
+      }
+      html += `</div></div>`;
+
+      // Revision score row (shown when revising)
+      if (isRevising) {
+        const pendingScore = p2PendingRevisions[dim.id] != null ? p2PendingRevisions[dim.id] : rev.revised;
+        const isConfirmed = rev._confirmed;
+        html += `<div class="p2-rev-row show">`;
+        html += `<span class="p2-rev-label">修正</span>`;
+        html += `<div class="p2-rev-dots">`;
+        for (let s = 1; s <= 5; s++) {
+          const isFilled = pendingScore === s;
+          const isDisabled = s === orig;
+          let cls = 'p2-rev-dot';
+          if (isFilled) cls += ' filled';
+          if (isDisabled) cls += ' disabled';
+          html += `<div class="${cls}" ${isDisabled ? '' : `onclick="selectPendingRevision('${dim.id}', ${s})"`}>${s}</div>`;
+        }
+        html += `</div>`;
+        // Confirm/cancel buttons (show when pending and not yet confirmed)
+        if (pendingScore != null && !isConfirmed) {
+          html += `<button class="btn btn-success" style="font-size:11px;padding:2px 10px;margin-left:8px;" onclick="confirmRevision('${dim.id}')">確認</button>`;
+        }
+        if (isConfirmed) {
+          html += `<span style="font-size:11px;color:var(--emerald);margin-left:8px;">✓ 已確認</span>`;
+        }
+        html += `</div>`;
+
+        // Reason (only when revising)
+        html += `<div class="p2-rev-reason show">`;
+        html += `<input type="text" placeholder="修正理由（選填）" maxlength="60" data-dim="${dim.id}" value="${isRevising && rev.reason ? esc(rev.reason) : ''}" oninput="onPhase2Change()" />`;
+        html += `</div>`;
+      }
+
+      html += `</div>`;
+    });
+  });
+  container.innerHTML = html;
+}
+
+let p2PendingRevisions = {}; // { dimId: score } — not yet confirmed
+
+function toggleRevision(dimId) {
+  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  if (!p2Data.revisions) p2Data.revisions = {};
+  const isActive = !!p2Data.revisions[dimId];
+  if (isActive) {
+    delete p2Data.revisions[dimId];
+    delete p2PendingRevisions[dimId];
+  } else {
+    p2Data.revisions[dimId] = { revised: null, reason: '' };
+  }
+  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
+  renderPhase2Revisions();
+}
+
+function selectPendingRevision(dimId, score) {
+  p2PendingRevisions[dimId] = score;
+  renderPhase2Revisions();
+}
+
+function confirmRevision(dimId) {
+  const score = p2PendingRevisions[dimId];
+  if (score == null) return;
+  const p2Data = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  if (!p2Data.revisions) p2Data.revisions = {};
+  const existing = p2Data.revisions[dimId] || {};
+  p2Data.revisions[dimId] = { revised: score, reason: existing.reason || '', _confirmed: true };
+  setPhaseData(currentCase, currentCondIdx, 2, p2Data);
+  delete p2PendingRevisions[dimId];
+  renderPhase2Revisions();
+  showToast('修正已確認', 'success');
+}
+
+function restorePhase2() {
+  const data = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  if (data.has_major_omission === true) {
+    const r = document.querySelector('input[name="p2omission"][value="yes"]');
+    if (r) r.checked = true;
+  } else if (data.has_major_omission === false) {
+    const r = document.querySelector('input[name="p2omission"][value="no"]');
+    if (r) r.checked = true;
+  } else {
+    document.querySelectorAll('input[name="p2omission"]').forEach(r => r.checked = false);
+  }
+  document.getElementById('p2OmissionDetail').value = data.omissions || '';
+  renderPhase2Revisions();
+}
+
+function collectPhase2Data() {
+  const existing = getPhaseData(currentCase, currentCondIdx, 2) || {};
+  const omissionRadio = document.querySelector('input[name="p2omission"]:checked');
+  // Collect revision reasons from DOM inputs
+  const revisions = existing.revisions || {};
+  document.querySelectorAll('.p2-revise-reason input[data-dim]').forEach(inp => {
+    const dimId = inp.dataset.dim;
+    if (revisions[dimId]) {
+      revisions[dimId].reason = inp.value.trim();
+    }
+  });
+  return {
+    ...existing,
+    _entered: true,
+    has_major_omission: omissionRadio ? omissionRadio.value === 'yes' : null,
+    omissions: document.getElementById('p2OmissionDetail').value.trim(),
+    revisions,
+    revision_count: Object.keys(revisions).filter(k => revisions[k] && revisions[k].revised !== null).length
+  };
+}
+
+function onPhase2Change() {
+  debounceSave();
+}
+
+function completePhase2() {
+  const data = collectPhase2Data();
+  const omissionRadio = document.querySelector('input[name="p2omission"]:checked');
+  if (!omissionRadio) {
+    showToast('請選擇「有重大遺漏」或「無重大遺漏」', 'error');
+    return;
+  }
+  data._complete = true;
+  setPhaseData(currentCase, currentCondIdx, 2, data);
+
+  // Move to Timeline evaluation for this condition
+  showToast('Phase 2 完成，進入時間軸評估', 'success');
+  currentPhase = 'tl';
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
+  updateFooter();
+}
+
+// togglePhase2Source removed — Phase 2 now uses same 3-panel layout as Phase 1
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE TL: Timeline Evaluation
+// ═══════════════════════════════════════════════════════════════
+
+async function loadPhaseTL() {
+  const cond = getRealCondition(currentCase, currentCondIdx);
+  const slug = getSlug(currentCase);
+  const label = getAnonLabel(currentCondIdx);
+
+  // Load AI summary
+  if (!aiDataCache[cond]) {
+    try {
+      const resp = await fetch(`./data/${cond}/${slug}.json`);
+      if (resp.ok) aiDataCache[cond] = await resp.json();
+    } catch {}
+  }
+
+  // Load timeline data
+  if (!tlDataCache) {
+    try {
+      const resp = await fetch(`./data/timeline/${slug}.json`);
+      if (resp.ok) tlDataCache = await resp.json();
+    } catch {}
+  }
+
+  // Render AI summary (right panel top)
+  document.getElementById('tlCondLabel').textContent = label;
+  const aiData = aiDataCache[cond];
+  const summaryBody = document.getElementById('tlSummaryBody');
+  if (aiData && aiData.sections) {
+    summaryBody.innerHTML = aiData.sections.map(s =>
+      `<div class="section-block">` +
+      `<div class="section-title section-title-ai">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
+      `<div class="section-body">${esc(s.content || '')}</div>` +
+      `</div>`
+    ).join('');
+  } else {
+    summaryBody.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
+  }
+
+  // Render timeline (left panel)
+  renderTimelinePanel();
+
+  // Render eval form (right panel bottom)
+  renderTLEvalForm();
+  restorePhaseTL();
+  updateTLProgress();
+
+  const locked = isCaseLocked(currentCase);
+  if (locked) {
+    document.getElementById('tlCompleteBtn').disabled = true;
+    document.getElementById('tlCompleteBtn').textContent = '已完成';
+  }
+
+  // Re-init resizers for this view
+  initResizers();
+}
+
+function renderTimelinePanel() {
+  const events = (tlDataCache && tlDataCache.events) || [];
+  const summary = (tlDataCache && tlDataCache.timeline_summary) || {};
+
+  // Event count
+  document.getElementById('tlEventCount').textContent = events.length ? `${events.length} 事件` : '';
+
+  // Summary bar
+  const barEl = document.getElementById('tlSummaryBar');
+  if (events.length === 0) {
+    barEl.innerHTML = '';
+    document.getElementById('tlEventList').innerHTML = '<div class="tl25-no-data">此案例無時間軸資料</div>';
+    return;
+  }
+
+  const critCount = events.filter(e => e.critical_decision).length;
+  const span = summary.time_span;
+  let spanText = '';
+  if (span) {
+    const hours = span.duration_hours;
+    spanText = hours >= 24 ? `${Math.round(hours / 24)} 天` : `${Math.round(hours)} 小時`;
+  }
+  barEl.innerHTML = `
+    <div class="tl25-stat"><strong>${events.length}</strong> 事件</div>
+    <div class="tl25-stat"><strong style="color:var(--rose);">${critCount}</strong> 關鍵決策</div>
+    ${spanText ? `<div class="tl25-stat">跨度 <strong>${spanText}</strong></div>` : ''}
+  `;
+
+  // Event cards
+  const listEl = document.getElementById('tlEventList');
+  listEl.innerHTML = events.map((evt, idx) => {
+    const isCritical = evt.critical_decision;
+    const typeCls = evt.event_type || '';
+    const typeLabel = EVENT_TYPE_LABELS[evt.event_type] || evt.event_type || '';
+    let html = `<div class="tl25-event ${isCritical ? 'critical' : ''}">`;
+    html += `<span class="tl25-date">${esc(evt.timestamp || '')}</span>`;
+    html += `<span class="tl25-type ${typeCls}">${esc(typeLabel)}</span>`;
+    html += `<div class="tl25-desc">${esc(evt.description || '')}</div>`;
+    if (evt.actors && evt.actors.length) {
+      html += `<div class="tl25-actors">${esc(evt.actors.join('、'))}</div>`;
+    }
+    if (isCritical && evt.decision_content) {
+      html += `<div class="tl25-decision"><strong>決策：</strong>${esc(evt.decision_content)}</div>`;
+    }
+    html += `</div>`;
+    return html;
+  }).join('');
+}
+
+function renderTLEvalForm() {
+  const container = document.getElementById('tlEvalForm');
+  let html = '';
+
+  TL_DIMENSIONS.forEach(dim => {
+    html += `<div class="eval-item" data-dim="${dim.id}">`;
+    html += `<div class="eval-item-title">${esc(dim.name)}</div>`;
+    html += `<div style="font-size:12px;color:var(--slate-500);margin-bottom:4px;">${esc(dim.guide)}</div>`;
+    html += `<span class="eval-item-toggle" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#x25BE;</span>`;
+    html += `<div class="eval-anchors"><table>`;
+    for (let s = 5; s >= 1; s--) {
+      html += `<tr><td>${s}</td><td>${esc(dim.anchors[s] || '')}</td></tr>`;
+    }
+    html += `</table>`;
+    html += `<div style="margin-top:6px;font-size:12px;color:var(--slate-500);">`;
+    html += `<strong>具體檢查：</strong><ul style="margin:4px 0 0 16px;">`;
+    dim.checks.forEach(c => { html += `<li>${esc(c)}</li>`; });
+    html += `</ul></div>`;
+    html += `</div>`;
+    html += `<div class="likert-row">`;
+    for (let s = 1; s <= 5; s++) {
+      html += `<label><input type="radio" name="tl_${dim.id}" value="${s}" onchange="onPhaseTLChange()"><span>${s}</span></label>`;
+    }
+    html += `</div>`;
+    html += `</div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function collectPhaseTLData() {
+  const scores = {};
+  TL_DIMENSIONS.forEach(dim => {
+    const checked = document.querySelector(`input[name="tl_${dim.id}"]:checked`);
+    if (checked) scores[dim.id] = parseInt(checked.value);
+  });
+  const comment = document.getElementById('tlComment').value.trim();
+  const existing = getPhaseData(currentCase, currentCondIdx, 'TL') || {};
+  return {
+    ...existing,
+    real_condition: getRealCondition(currentCase, currentCondIdx),
+    scores,
+    comment,
+  };
+}
+
+function restorePhaseTL() {
+  // Clear all
+  TL_DIMENSIONS.forEach(dim => {
+    document.querySelectorAll(`input[name="tl_${dim.id}"]`).forEach(r => r.checked = false);
+  });
+  document.getElementById('tlComment').value = '';
+
+  const data = getPhaseData(currentCase, currentCondIdx, 'TL');
+  if (!data) return;
+  if (data.scores) {
+    Object.entries(data.scores).forEach(([id, val]) => {
+      const radio = document.querySelector(`input[name="tl_${id}"][value="${val}"]`);
+      if (radio) radio.checked = true;
+    });
+  }
+  if (data.comment) document.getElementById('tlComment').value = data.comment;
+}
+
+function onPhaseTLChange() {
+  updateTLProgress();
+  debounceSave();
+}
+
+function updateTLProgress() {
+  let filled = 0;
+  TL_DIMENSIONS.forEach(dim => {
+    if (document.querySelector(`input[name="tl_${dim.id}"]:checked`)) filled++;
+  });
+  document.getElementById('tlProgressText').textContent = `${filled} / ${TL_DIMENSIONS.length}`;
+}
+
+function completePhaseTL() {
+  const data = collectPhaseTLData();
+  const filledCount = Object.keys(data.scores).length;
+  if (filledCount < TL_DIMENSIONS.length) {
+    showToast(`尚有 ${TL_DIMENSIONS.length - filledCount} 項未評分`, 'error');
+    return;
+  }
+  data._complete = true;
+  setPhaseData(currentCase, currentCondIdx, 'TL', data);
+
+  // Check if all conditions done
+  if (areAllCondsComplete(currentCase)) {
+    showToast('所有版本已完成，進入 Phase 3 排序', 'success');
+    currentPhase = 3;
+  } else {
+    // Move to next incomplete condition
+    for (let i = 0; i < 4; i++) {
+      if (!isCondComplete(currentCase, i)) {
+        currentCondIdx = i;
+        currentPhase = 1;
+        showToast(`進入 ${getAnonLabel(i)}`, 'success');
+        break;
+      }
+    }
+  }
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
+  updateFooter();
 }
 
 // ═══════════════════════════════════════════════════════════════
-// RENDER: Source text (left panel) — continuous doc with hidden chunk boundaries
+// PHASE 3: Preference Ranking
 // ═══════════════════════════════════════════════════════════════
 
-function renderSource() {
-  const body = document.getElementById('sourceBody');
-  const countEl = document.getElementById('sourceChunkCount');
+async function loadPhase3() {
+  const slug = getSlug(currentCase);
+  const condOrder = getConditionOrder(currentCase);
+
+  // Load all 4 conditions
+  for (let i = 0; i < 4; i++) {
+    const cond = condOrder[i];
+    if (!aiDataCache[cond]) {
+      try {
+        const resp = await fetch(`./data/${cond}/${slug}.json`);
+        if (resp.ok) aiDataCache[cond] = await resp.json();
+      } catch {}
+    }
+  }
+
+  // Render source (collapsible)
+  const firstAI = aiDataCache[condOrder[0]];
+  renderSourcePanel('p3SourceBody', null, firstAI);
+
+  // Render 4 columns
+  const colsEl = document.getElementById('phase3Columns');
+  let colsHtml = '';
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    const cond = condOrder[i];
+    const aiData = aiDataCache[cond];
+    colsHtml += `<div class="phase3-col">`;
+    colsHtml += `<div class="phase3-col-header">${esc(label)}</div>`;
+    colsHtml += `<div class="phase3-col-body">`;
+    if (aiData && aiData.sections) {
+      colsHtml += aiData.sections.map(s =>
+        `<div class="section-block"><div class="section-title section-title-ai" style="font-size:12px;padding:4px 8px;">${esc(SECTION_NAMES[s.id] || s.title)}</div><div class="section-body" style="font-size:13px;line-height:1.7;">${esc(s.content || '')}</div></div>`
+      ).join('');
+    } else {
+      colsHtml += '<span class="empty-text">無法載入</span>';
+    }
+    colsHtml += `</div></div>`;
+  }
+  colsEl.innerHTML = colsHtml;
+
+  // Sequential selection state
+  p3Ranking = [];
+  renderPhase3Selection();
+
+  // Restore
+  restorePhase3();
+
+  const locked = isCaseLocked(currentCase);
+  if (locked) {
+    document.getElementById('p3CompleteBtn').disabled = true;
+    document.getElementById('p3CompleteBtn').textContent = '此案已完成';
+  }
+}
+
+// ── Phase 3: Sequential Selection ──
+
+let p3Ranking = []; // array of condIdx in preference order
+const P3_STEPS = [
+  { question: '哪個版本最好？', subtitle: '從 4 個版本中選出整體品質最佳的' },
+  { question: '剩下的哪個次好？', subtitle: '從剩餘 3 個版本中選出第 2 名' },
+  { question: '最後兩個，哪個較好？', subtitle: '選出第 3 名，最後一個自動成為第 4 名' },
+];
+const P3_MEDALS = ['🥇', '🥈', '🥉', '🎖️'];
+
+function renderPhase3Selection() {
+  const ui = document.getElementById('p3SelectionUI');
+  const summary = document.getElementById('p3Summary');
+  const step = p3Ranking.length; // 0, 1, 2, or 3 (done)
+
+  if (step >= 3) {
+    // All selected → show summary
+    ui.style.display = 'none';
+    summary.style.display = 'block';
+    renderPhase3Summary();
+    return;
+  }
+
+  ui.style.display = 'block';
+  summary.style.display = 'none';
+
+  const stepInfo = P3_STEPS[step];
+  const condOrder = getConditionOrder(currentCase);
+  const remaining = [0, 1, 2, 3].filter(i => !p3Ranking.includes(i));
+
+  let html = '';
+  // Progress dots
+  html += '<div class="p3-step-progress">';
+  for (let s = 0; s < 3; s++) {
+    let cls = 'p3-step-dot';
+    if (s < step) cls += ' done';
+    else if (s === step) cls += ' current';
+    html += `<div class="${cls}"></div>`;
+  }
+  html += '</div>';
+
+  html += `<div class="p3-step-title">${stepInfo.question}</div>`;
+  html += `<div class="p3-step-subtitle">${stepInfo.subtitle}</div>`;
+
+  // Choice cards (all 4 shown, selected ones show medal, remaining are clickable)
+  html += '<div class="p3-choices">';
+  for (const i of [0, 1, 2, 3]) {
+    const isRemaining = remaining.includes(i);
+    const isSelected = p3Ranking.includes(i);
+    const label = getAnonLabel(i);
+
+    const cardCls = isSelected ? 'p3-choice-card selected disabled' : (isRemaining ? 'p3-choice-card' : 'p3-choice-card disabled');
+    html += `<div class="${cardCls}" ${isRemaining ? `onclick="selectPhase3Choice(${i})"` : ''}>`;
+    html += `<div class="p3-choice-label">`;
+    if (isSelected) {
+      const rank = p3Ranking.indexOf(i);
+      html += `<span class="p3-choice-medal">${P3_MEDALS[rank]}</span>`;
+    }
+    html += `${esc(label)}</div>`;
+    html += `</div>`;
+  }
+  html += '</div>';
+
+  // Undo button
+  if (p3Ranking.length > 0) {
+    html += '<div style="text-align:center;margin-top:12px;">';
+    html += '<button class="btn btn-ghost" onclick="undoPhase3Selection()">&#x21A9; 上一步</button>';
+    html += '</div>';
+  }
+
+  ui.innerHTML = html;
+}
+
+function selectPhase3Choice(idx) {
+  p3Ranking.push(idx);
+
+  // If 3 selected, auto-assign 4th
+  if (p3Ranking.length === 3) {
+    const last = [0, 1, 2, 3].find(i => !p3Ranking.includes(i));
+    p3Ranking.push(last);
+  }
+
+  renderPhase3Selection();
+  savePhase3State();
+
+  // Highlight the selected column
+  document.querySelectorAll('.phase3-col').forEach((col, i) => {
+    const rank = p3Ranking.indexOf(i);
+    if (rank >= 0) {
+      col.querySelector('.phase3-col-header').innerHTML = `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`;
+    }
+  });
+}
+
+function undoPhase3Selection() {
+  if (p3Ranking.length === 4) p3Ranking.pop(); // Remove auto-assigned 4th
+  p3Ranking.pop();
+  renderPhase3Selection();
+  savePhase3State();
+
+  // Reset column headers
+  document.querySelectorAll('.phase3-col').forEach((col, i) => {
+    const rank = p3Ranking.indexOf(i);
+    col.querySelector('.phase3-col-header').innerHTML = rank >= 0
+      ? `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`
+      : esc(getAnonLabel(i));
+  });
+}
+
+function resetPhase3Selection() {
+  p3Ranking = [];
+  renderPhase3Selection();
+  savePhase3State();
+  document.querySelectorAll('.phase3-col').forEach((col, i) => {
+    col.querySelector('.phase3-col-header').innerHTML = esc(getAnonLabel(i));
+  });
+}
+
+function renderPhase3Summary() {
+  const list = document.getElementById('p3SummaryList');
+  let html = '';
+  p3Ranking.forEach((idx, rank) => {
+    html += `<div class="p3-summary-item">`;
+    html += `<span class="p3-summary-rank">${P3_MEDALS[rank]}</span>`;
+    html += `<span>${esc(getAnonLabel(idx))}</span>`;
+    html += `</div>`;
+  });
+  list.innerHTML = html;
+}
+
+function savePhase3State() {
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  let existing = {};
+  try { existing = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
+  const ranking = p3Ranking.map(idx => getAnonLabel(idx));
+  const reason = document.getElementById('p3RankingReason');
+  existing.ranking = ranking;
+  if (reason) existing.ranking_reason = reason.value.trim();
+  localStorage.setItem(key, JSON.stringify(existing));
+}
+
+function collectPhase3Data() {
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  let existing = {};
+  try { existing = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
+  return {
+    ...existing,
+    ranking: p3Ranking.map(idx => getAnonLabel(idx)),
+    ranking_reason: document.getElementById('p3RankingReason').value.trim(),
+    revision_count: existing.revision_count || 0
+  };
+}
+
+function restorePhase3() {
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem(key)); } catch {}
+  if (!data || !data.ranking || !Array.isArray(data.ranking)) return;
+
+  // Convert labels back to indices
+  p3Ranking = [];
+  data.ranking.forEach(label => {
+    const idx = ANON_LABELS.indexOf(label);
+    if (idx >= 0) p3Ranking.push(idx);
+  });
+
+  if (data.ranking_reason) {
+    document.getElementById('p3RankingReason').value = data.ranking_reason;
+  }
+
+  renderPhase3Selection();
+
+  // Update column headers
+  document.querySelectorAll('.phase3-col').forEach((col, i) => {
+    const rank = p3Ranking.indexOf(i);
+    if (rank >= 0) {
+      col.querySelector('.phase3-col-header').innerHTML = `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`;
+    }
+  });
+}
+
+function completePhase3() {
+  if (p3Ranking.length !== 4) {
+    showToast('請完成所有排序步驟', 'error');
+    return;
+  }
+
+  const data = collectPhase3Data();
+  data._complete = true;
+  data._saved = new Date().toISOString();
+  const ev = getEvaluator();
+  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  localStorage.setItem(key, JSON.stringify(data));
+
+  showToast('此案評估完成！', 'success');
+  renderCondPills();
+  renderPhaseIndicators();
+  updateFooter();
+  document.getElementById('p3CompleteBtn').disabled = true;
+  document.getElementById('p3CompleteBtn').textContent = '此案已完成';
+}
+
+function togglePhase3Source() {
+  const panel = document.getElementById('p3SourcePanel');
+  const arrow = document.getElementById('p3SourceArrow');
+  panel.classList.toggle('open');
+  arrow.innerHTML = panel.classList.contains('open') ? '&#x25BC;' : '&#x25B6;';
+}
+
+// ═══════════════════════════════════════════════════════════════
+// SHARED RENDER FUNCTIONS
+// ═══════════════════════════════════════════════════════════════
+
+function renderSourcePanel(bodyId, countId, aiData) {
+  const body = document.getElementById(bodyId);
 
   if (!aiData || !aiData.chunks || Object.keys(aiData.chunks).length === 0) {
     body.innerHTML = '<span class="empty-text">無原文資料</span>';
-    countEl.textContent = '';
+    if (countId) document.getElementById(countId).textContent = '';
     return;
   }
 
@@ -940,67 +2073,36 @@ function renderSource() {
     return parseInt(a.replace('CH_', ''), 10) - parseInt(b.replace('CH_', ''), 10);
   });
 
-  countEl.textContent = `${chunkAliases.length} 段`;
+  if (countId) document.getElementById(countId).textContent = `${chunkAliases.length} 段`;
 
-  // Render as continuous text — each chunk wrapped in a region, entire content is <mark>
   let html = '';
   chunkAliases.forEach(alias => {
     const content = aiData.chunks[alias] || '';
-    html += `<div class="chunk-region" id="src_${alias}" data-alias="${alias}">`;
+    html += `<div class="chunk-region" id="${bodyId}_${alias}" data-alias="${alias}">`;
     html += `<span class="chunk-label">${alias}</span>`;
     html += `<mark>${esc(content)}</mark>`;
     html += `</div>`;
   });
-
   body.innerHTML = html;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// RENDER: Summaries (middle panel)
-// ═══════════════════════════════════════════════════════════════
-
-function renderSummaries() {
-  const aiEl = document.getElementById('summaryAI');
+function renderAISummary(bodyId, aiData) {
+  const el = document.getElementById(bodyId);
   if (aiData && aiData.sections) {
-    aiEl.innerHTML = aiData.sections.map(s =>
+    el.innerHTML = aiData.sections.map(s =>
       `<div class="section-block">` +
       `<div class="section-title section-title-ai">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
       `<div class="section-body">${renderCitations(s.content || '')}</div>` +
       `</div>`
     ).join('');
+    // Bind citation clicks
+    el.querySelectorAll('.citation-tag').forEach(tag => {
+      tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, 'p1SourceBody'));
+    });
   } else {
-    aiEl.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
-  }
-
-  const gtEl = document.getElementById('summaryGT');
-  if (gtData && gtData.sections) {
-    gtEl.innerHTML = gtData.sections.map(s =>
-      `<div class="section-block">` +
-      `<div class="section-title section-title-gt">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
-      `<div class="section-body">${esc(s.content || '')}</div>` +
-      `</div>`
-    ).join('');
-  } else {
-    gtEl.innerHTML = '<span class="empty-text">無法載入老師摘要</span>';
-  }
-
-  // Bind citation clicks
-  document.querySelectorAll('.citation-tag').forEach(tag => {
-    tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, tag));
-  });
-
-  // Ensure summaryTL visibility matches current mode
-  const tlEl = document.getElementById('summaryTL');
-  if (tlEl) tlEl.style.display = timelineMode ? '' : 'none';
-
-  // In timeline mode, hide AI/GT summaries
-  if (timelineMode) {
-    aiEl.style.display = 'none';
-    gtEl.style.display = 'none';
+    el.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
   }
 }
-
-function normAlias(a) { return a.replace(/CH_(\d+)/, (_, n) => 'CH_' + n.padStart(2, '0')); }
 
 function renderCitations(text) {
   let html = esc(text);
@@ -1013,133 +2115,300 @@ function renderCitations(text) {
   return html;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// HIGHLIGHT: Citation click → source scroll + marker pen effect
-// ═══════════════════════════════════════════════════════════════
+function normAlias(a) { return a.replace(/CH_(\d+)/, (_, n) => 'CH_' + n.padStart(2, '0')); }
 
-function highlightChunk(alias) {
-  // Clear all
+function highlightChunk(alias, sourceBodyId) {
+  // Clear all active in source
   document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('.citation-tag.active').forEach(el => el.classList.remove('active'));
 
   if (activeChunk === alias) { activeChunk = null; return; }
   activeChunk = alias;
 
-  // Activate source region
-  const srcEl = document.getElementById('src_' + alias);
+  const srcEl = document.getElementById(`${sourceBodyId}_${alias}`);
   if (srcEl) {
     srcEl.classList.add('active');
-    // Smooth scroll within source panel
     srcEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
-  // Activate all citation tags
   document.querySelectorAll(`.citation-tag[data-alias="${alias}"]`).forEach(t => t.classList.add('active'));
 }
 
 // ═══════════════════════════════════════════════════════════════
-// RENDER: Eval form (right panel)
+// AUTO-SAVE
 // ═══════════════════════════════════════════════════════════════
 
-function renderEvalForm() {
-  const panel = document.getElementById('panelEval');
-  let html = '';
+function saveCurrentState() {
+  if (!currentCase || !getEvaluator()) return;
 
-  ASPECTS.forEach(aspect => {
-    html += `<div class="aspect-group aspect-${aspect.color}">`;
-    html += `<div class="aspect-header" onclick="toggleAspect(this)">`;
-    html += `<span>${aspect.id}. ${aspect.name}</span>`;
-    html += `<span class="badge">${aspect.dims.length}</span>`;
-    html += `<span class="arrow">&#9654;</span>`;
-    html += `</div><div class="aspect-body">`;
-
-    aspect.dims.forEach(dim => {
-      html += `<div class="dim-item">`;
-      html += `<div class="dim-title">${dim.id}. ${dim.name}</div>`;
-      html += `<div class="dim-desc">${dim.desc}</div>`;
-      html += `<button class="toggle-anchors" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#9662;</button>`;
-      html += `<div class="dim-anchors"><table>`;
-      for (let s = 5; s >= 1; s--) html += `<tr><td>${s}</td><td>${dim.anchors[s] || ''}</td></tr>`;
-      html += `</table></div>`;
-      html += `<div class="likert-row">`;
-      for (let s = 1; s <= 5; s++) html += `<label><input type="radio" name="${dim.id}" value="${s}" onchange="updateProgress()"><span>${s}</span></label>`;
-      if (dim.na) html += `<label class="na-label"><input type="radio" name="${dim.id}" value="NA" onchange="updateProgress()"><span>N/A</span></label>`;
-      html += `</div>`;
-      html += `<textarea class="dim-comment" name="${dim.id}_comment" placeholder="意見（選填）"></textarea>`;
-      html += `</div>`;
-    });
-
-    html += `</div></div>`;
-  });
-
-  // Overall
-  html += `<div class="aspect-group" style="border-color:var(--slate-300)">`;
-  html += `<div class="aspect-header" style="background:var(--slate-100);color:var(--slate-900)" onclick="toggleAspect(this)">`;
-  html += `<span>整體評語</span><span class="arrow">&#9654;</span></div>`;
-  html += `<div class="aspect-body">`;
-  html += `<div style="margin-bottom:5px;font-size:10px;color:var(--slate-500)">該摘要最嚴重的問題（最多 3 項）：</div>`;
-  html += `<textarea class="dim-comment" name="overall_issues" placeholder="1. ..." style="min-height:50px"></textarea>`;
-  html += `<div style="margin:8px 0 5px;font-size:10px;color:var(--slate-500)">該案核心法律爭點：</div>`;
-  html += `<textarea class="dim-comment" name="overall_legal_issues" placeholder="例：因果關係標準、臨床裁量..." style="min-height:40px"></textarea>`;
-  html += `<div style="margin:8px 0 5px;font-size:10px;color:var(--slate-500)">案件議題分類：</div>`;
-  const topics = ['鑑定事實完整性','病歷證據使用','病患相對責任','非特異性症狀鑑別診斷','侵入性治療時機','罕見且快速惡化','從後果反推過程','因果關係標準不明','告知說明義務','專業分工/信賴原則','轉診義務'];
-  html += `<div style="display:flex;flex-wrap:wrap;gap:5px">`;
-  topics.forEach((t, i) => {
-    html += `<label style="font-size:10px;display:flex;align-items:center;gap:3px;cursor:pointer"><input type="checkbox" name="topic_${i}" value="${esc(t)}"> ${esc(t)}</label>`;
-  });
-  html += `</div></div></div>`;
-
-  panel.innerHTML = html;
+  if (currentPhase === 1 && !isPhase1Frozen(currentCase, currentCondIdx)) {
+    const data = collectPhase1Data();
+    if (Object.keys(data.scores).length > 0 || data.overall_comment) {
+      setPhaseData(currentCase, currentCondIdx, 1, data);
+    }
+  } else if (currentPhase === 2) {
+    const data = collectPhase2Data();
+    setPhaseData(currentCase, currentCondIdx, 2, data);
+  } else if (currentPhase === 'tl') {
+    const data = collectPhaseTLData();
+    if (Object.keys(data.scores).length > 0 || data.comment) {
+      setPhaseData(currentCase, currentCondIdx, 'TL', data);
+    }
+  } else if (currentPhase === 3) {
+    const data = collectPhase3Data();
+    const ev = getEvaluator();
+    const key = `eval_v2_${ev}_${currentCase}_phase3`;
+    data._saved = new Date().toISOString();
+    localStorage.setItem(key, JSON.stringify(data));
+  }
 }
 
-function toggleAspect(header) {
-  header.classList.toggle('open');
-  header.nextElementSibling.classList.toggle('open');
+function debounceSave() {
+  clearTimeout(autoSaveTimer);
+  autoSaveTimer = setTimeout(() => saveCurrentState(), 500);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// PROGRESS
-// ═══════════════════════════════════════════════════════════════
+// Listen for changes
+document.addEventListener('change', (e) => {
+  if (e.target.closest('#p1EvalForm') || e.target.id === 'p1OverallComment') {
+    onPhase1Change();
+  }
+});
+document.addEventListener('input', (e) => {
+  if (e.target.id === 'p1OverallComment' || e.target.id === 'p2OmissionDetail' ||
+      e.target.id === 'p2RevisionNote' || e.target.id === 'tlComment' || e.target.id === 'p3RankingReason') {
+    debounceSave();
+  }
+});
 
-function updateProgress() {
-  let total = 0, filled = 0;
-  ASPECTS.forEach(a => a.dims.forEach(d => {
-    total++;
-    if (document.querySelector(`input[name="${d.id}"]:checked`)) filled++;
-  }));
-  const pct = total > 0 ? Math.round(filled / total * 100) : 0;
-  document.getElementById('progressText').textContent = `${filled} / ${total}`;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressPct').textContent = pct + '%';
-}
+window.addEventListener('beforeunload', () => saveCurrentState());
 
 // ═══════════════════════════════════════════════════════════════
-// EXPORT
+// EXPORT JSON
 // ═══════════════════════════════════════════════════════════════
 
 function exportJSON() {
-  const evaluator = document.getElementById('evaluatorName').value.trim() || 'anonymous';
+  saveCurrentState();
+  const evaluator = getEvaluator() || 'anonymous';
+  const condOrder = getConditionOrder(currentCase);
+
   const result = {
-    meta: { evaluator, case_name: currentCase, condition: currentCond, timestamp: new Date().toISOString() },
-    scores: {}, comments: {}, overall: {}, topics: [],
+    meta: {
+      evaluator,
+      case_name: currentCase,
+      timestamp: new Date().toISOString(),
+      condition_order: condOrder,
+      rubric_version: 'v2.1'
+    },
+    phase1: {},
+    phase2: {},
+    phaseTL: {},
+    phase3: null
   };
-  ASPECTS.forEach(a => a.dims.forEach(d => {
-    const checked = document.querySelector(`input[name="${d.id}"]:checked`);
-    result.scores[d.id] = checked ? (checked.value === 'NA' ? null : parseInt(checked.value)) : undefined;
-    const comment = document.querySelector(`textarea[name="${d.id}_comment"]`);
-    if (comment && comment.value.trim()) result.comments[d.id] = comment.value.trim();
-  }));
-  const issues = document.querySelector('textarea[name="overall_issues"]');
-  if (issues && issues.value.trim()) result.overall.issues = issues.value.trim();
-  const legal = document.querySelector('textarea[name="overall_legal_issues"]');
-  if (legal && legal.value.trim()) result.overall.legal_issues = legal.value.trim();
-  document.querySelectorAll('input[type="checkbox"][name^="topic_"]:checked').forEach(cb => result.topics.push(cb.value));
+
+  // Collect all 4 conditions
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    const cond = condOrder[i];
+
+    // Phase 1
+    const p1 = getPhaseData(currentCase, i, 1);
+    result.phase1[label] = {
+      real_condition: cond,
+      scores: p1 ? p1.scores || {} : {},
+      overall_comment: p1 ? p1.overall_comment || '' : '',
+      revision_count: p1 ? p1.revision_count || 0 : 0
+    };
+
+    // Phase 2
+    const p2 = getPhaseData(currentCase, i, 2);
+    result.phase2[label] = {
+      has_major_omission: p2 ? p2.has_major_omission : null,
+      omissions: p2 ? p2.omissions || '' : '',
+      revisions: p2 ? p2.revisions || {} : {},
+      revision_count: p2 ? p2.revision_count || 0 : 0
+    };
+
+    // Phase TL
+    const ptl = getPhaseData(currentCase, i, 'TL');
+    result.phaseTL[label] = {
+      real_condition: cond,
+      scores: ptl ? ptl.scores || {} : {},
+      comment: ptl ? ptl.comment || '' : ''
+    };
+  }
+
+  // Phase 3
+  const ev = evaluator;
+  const p3Key = `eval_v2_${ev}_${currentCase}_phase3`;
+  try {
+    const p3 = JSON.parse(localStorage.getItem(p3Key));
+    if (p3) {
+      result.phase3 = {
+        ranking: p3.ranking || [],
+        ranking_reason: p3.ranking_reason || '',
+        revision_count: p3.revision_count || 0
+      };
+    }
+  } catch {}
 
   const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a'); a.href = url;
-  a.download = `eval_${evaluator}_${Date.now()}.json`;
-  a.click(); URL.revokeObjectURL(url);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `eval_v2_${evaluator}_${currentCase}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('已匯出此案 JSON', 'info');
+}
+
+function buildCaseExportData(caseName) {
+  const evaluator = getEvaluator() || 'anonymous';
+  const condOrder = getConditionOrder(caseName);
+  const result = {
+    meta: { evaluator, case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2.1' },
+    phase1: {}, phase2: {}, phaseTL: {}, phase3: null
+  };
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    const cond = condOrder[i];
+    const p1 = getPhaseData(caseName, i, 1);
+    result.phase1[label] = {
+      real_condition: cond,
+      scores: p1 ? p1.scores || {} : {},
+      overall_comment: p1 ? p1.overall_comment || '' : '',
+      revision_count: p1 ? p1.revision_count || 0 : 0
+    };
+    const p2 = getPhaseData(caseName, i, 2);
+    result.phase2[label] = {
+      has_major_omission: p2 ? p2.has_major_omission : null,
+      omissions: p2 ? p2.omissions || '' : '',
+      revisions: p2 ? p2.revisions || {} : {},
+      revision_count: p2 ? p2.revision_count || 0 : 0
+    };
+    const ptl = getPhaseData(caseName, i, 'TL');
+    result.phaseTL[label] = {
+      real_condition: cond,
+      scores: ptl ? ptl.scores || {} : {},
+      comment: ptl ? ptl.comment || '' : ''
+    };
+  }
+  try {
+    const p3 = JSON.parse(localStorage.getItem(`eval_v2_${evaluator}_${caseName}_phase3`));
+    if (p3) result.phase3 = { ranking: p3.ranking || [], ranking_reason: p3.ranking_reason || '', revision_count: p3.revision_count || 0 };
+  } catch {}
+  return result;
+}
+
+function exportAllJSON() {
+  saveCurrentState();
+  const evaluator = getEvaluator() || 'anonymous';
+  const allResults = {};
+  let count = 0;
+  caseList.forEach(c => {
+    const data = buildCaseExportData(c);
+    const hasAnyScore = Object.values(data.phase1).some(v => v.scores && Object.keys(v.scores).length > 0);
+    if (hasAnyScore) { allResults[c] = data; count++; }
+  });
+  if (count === 0) { showToast('尚無任何評估資料', 'error'); return; }
+  const blob = new Blob([JSON.stringify(allResults, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `eval_v2_${evaluator}_all_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`已匯出 ${count} 案`, 'info');
+}
+
+function importJSON() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      let imported = 0;
+      // Detect format: single case (has meta.case_name) or all cases (object of cases)
+      if (data.meta && data.meta.case_name) {
+        // Single case
+        importSingleCase(data);
+        imported = 1;
+      } else {
+        // Multiple cases
+        Object.values(data).forEach(caseData => {
+          if (caseData.meta && caseData.meta.case_name) { importSingleCase(caseData); imported++; }
+        });
+      }
+      showToast(`已匯入 ${imported} 案`, 'info');
+      onCaseChange();
+    } catch (err) { showToast('匯入失敗：' + err.message, 'error'); }
+  };
+  input.click();
+}
+
+function importSingleCase(data) {
+  const evaluator = data.meta.evaluator || getEvaluator() || 'anonymous';
+  const caseName = data.meta.case_name;
+  if (data.meta.condition_order) {
+    localStorage.setItem(`eval_v2_condorder_${evaluator}_${caseName}`, JSON.stringify(data.meta.condition_order));
+  }
+  for (let i = 0; i < 4; i++) {
+    const label = getAnonLabel(i);
+    if (data.phase1 && data.phase1[label]) {
+      const key = `eval_v2_${evaluator}_${caseName}_${i}_phase1`;
+      const p1 = data.phase1[label];
+      localStorage.setItem(key, JSON.stringify({ scores: p1.scores, overall_comment: p1.overall_comment, revision_count: p1.revision_count }));
+    }
+    if (data.phase2 && data.phase2[label]) {
+      const key = `eval_v2_${evaluator}_${caseName}_${i}_phase2`;
+      const p2 = data.phase2[label];
+      const stored = {
+        has_major_omission: p2.has_major_omission, omissions: p2.omissions,
+        revisions: p2.revisions || {}, revision_count: p2.revision_count,
+        _entered: p2.has_major_omission !== null
+      };
+      localStorage.setItem(key, JSON.stringify(stored));
+    }
+  }
+  // Phase TL
+  if (data.phaseTL) {
+    for (let i = 0; i < 4; i++) {
+      const label = getAnonLabel(i);
+      if (data.phaseTL[label]) {
+        const cond = data.meta.condition_order[i];
+        const key = `eval_v2_${evaluator}_${caseName}_${cond}_phaseTL`;
+        const ptl = data.phaseTL[label];
+        const stored = { scores: ptl.scores || {}, comment: ptl.comment || '' };
+        if (Object.keys(stored.scores).length === TL_DIMENSIONS.length) stored._complete = true;
+        localStorage.setItem(key, JSON.stringify(stored));
+      }
+    }
+  }
+  if (data.phase3) {
+    localStorage.setItem(`eval_v2_${evaluator}_${caseName}_phase3`, JSON.stringify(data.phase3));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// FOOTER: Overall progress
+// ═══════════════════════════════════════════════════════════════
+
+function updateFooter() {
+  let completed = 0;
+  // Only count cases in the first 30
+  const evalCases = caseList.slice(0, 30);
+  evalCases.forEach(c => {
+    if (isPhase3Complete(c)) completed++;
+  });
+  const total = evalCases.length;
+  const pct = total > 0 ? Math.round(completed / total * 100) : 0;
+  document.getElementById('footerText').textContent = `${completed} / ${total} 案完成`;
+  document.getElementById('footerFill').style.width = pct + '%';
+  document.getElementById('footerPct').textContent = pct + '%';
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1148,7 +2417,40 @@ function exportJSON() {
 
 function esc(s) {
   if (!s) return '';
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function getSlug(name) { return caseSlugs[name] || encodeURIComponent(name); }
+
+function getEvaluator() {
+  const el = document.getElementById('evaluatorName');
+  return el ? el.value.trim() || 'default' : 'default';
+}
+
+function updateURL() {
+  const url = new URL(location.href);
+  url.searchParams.set('case', currentCase);
+  history.replaceState({}, '', url.toString());
+
+  const enc = encodeURIComponent(currentCase);
+  const vl = document.getElementById('viewLink');
+  if (vl) vl.href = `view.html?case=${enc}`;
+  const tl = document.getElementById('timelineLink');
+  if (tl) tl.href = `timeline.html?case=${enc}`;
+}
+
+function showSaveIndicator() {
+  const el = document.getElementById('saveIndicator');
+  el.textContent = '已儲存';
+  el.style.opacity = '1';
+  setTimeout(() => el.style.opacity = '0', 2000);
+}
+
+function showToast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast toast-${type || 'info'} show`;
+  setTimeout(() => el.classList.remove('show'), 2500);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1161,7 +2463,8 @@ function initResizers() {
       startEvt.preventDefault();
       const leftEl = resizer.previousElementSibling;
       const rightEl = resizer.nextElementSibling;
-      const startX = startEvt.clientX ?? startEvt.touches[0].clientX;
+      if (!leftEl || !rightEl) return;
+      const startX = startEvt.clientX ?? (startEvt.touches && startEvt.touches[0].clientX);
       const startLeftW = leftEl.offsetWidth;
       const startRightW = rightEl.offsetWidth;
       resizer.classList.add('active');
@@ -1169,7 +2472,7 @@ function initResizers() {
       document.body.style.userSelect = 'none';
 
       const onMove = (e) => {
-        const x = e.clientX ?? e.touches[0].clientX;
+        const x = e.clientX ?? (e.touches && e.touches[0].clientX);
         const dx = x - startX;
         leftEl.style.width = Math.max(80, startLeftW + dx) + 'px';
         leftEl.style.flex = 'none';
@@ -1185,11 +2488,6 @@ function initResizers() {
         document.removeEventListener('mouseup', onUp);
         document.removeEventListener('touchmove', onMove);
         document.removeEventListener('touchend', onUp);
-        try {
-          const w = {};
-          document.querySelectorAll('.main > .panel').forEach(el => { if (el.id) w[el.id] = el.style.width; });
-          localStorage.setItem('evalPanelWidths', JSON.stringify(w));
-        } catch {}
       };
 
       document.addEventListener('mousemove', onMove);
@@ -1200,26 +2498,6 @@ function initResizers() {
     resizer.addEventListener('mousedown', onPointerDown);
     resizer.addEventListener('touchstart', onPointerDown, { passive: false });
   });
-  // Restore saved widths
-  try {
-    const saved = JSON.parse(localStorage.getItem('evalPanelWidths'));
-    if (saved) Object.entries(saved).forEach(([id, w]) => {
-      const el = document.getElementById(id);
-      if (el && w) { el.style.width = w; el.style.flex = 'none'; }
-    });
-  } catch {}
-}
-
-// ═══════════════════════════════════════════════════════════════
-// MOBILE PANEL SWITCHING
-// ═══════════════════════════════════════════════════════════════
-
-function switchMobilePanel(panelId, btn) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('mobile-active'));
-  document.querySelectorAll('.mobile-tab').forEach(t => t.classList.remove('active'));
-  const panel = document.getElementById(panelId);
-  if (panel) panel.classList.add('mobile-active');
-  if (btn) btn.classList.add('active');
 }
 </script>
 </body>
