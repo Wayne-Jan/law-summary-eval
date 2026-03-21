@@ -323,7 +323,11 @@
 <div class="content">
   <h2 class="section-header">各模型整體表現</h2>
   <div class="filter-bar">
-    <span class="filter-bar-label">篩選：</span>
+    <span class="filter-bar-label">冊別：</span>
+    <button class="filter-btn active" data-volume="上冊" onclick="setVolume('上冊')">上冊</button>
+    <button class="filter-btn" data-volume="中冊" onclick="setVolume('中冊')">中冊</button>
+    <button class="filter-btn" data-volume="下冊" onclick="setVolume('下冊')">下冊</button>
+    <span class="filter-bar-label" style="margin-left:12px;">篩選：</span>
     <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">全部</button>
     <button class="filter-btn" data-filter="商用模型" onclick="setFilter('商用模型')">商用模型</button>
     <button class="filter-btn" data-filter="開源模型" onclick="setFilter('開源模型')">開源模型</button>
@@ -563,12 +567,25 @@
 
   let DATA = null;
   let currentFilter = 'all';
+  let currentVolume = '上冊';
+  const VOLUME_DATA_FILES = {
+    '上冊': 'data/eval_metrics_upper.json',
+    '中冊': 'data/eval_metrics_middle.json',
+    '下冊': 'data/eval_metrics_lower.json',
+  };
 
   // ─── Filter ───
   window.setFilter = function(filter) {
     currentFilter = filter;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+    document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
     rebuildTable();
+  };
+
+  window.setVolume = function(volume) {
+    if (currentVolume === volume) return;
+    currentVolume = volume;
+    document.querySelectorAll('.filter-btn[data-volume]').forEach(b => b.classList.toggle('active', b.dataset.volume === volume));
+    loadVolumeData(volume);
   };
 
   function getFilteredEntries() {
@@ -886,7 +903,7 @@
       opt.textContent = caseName;
       sel.appendChild(opt);
     }
-    sel.addEventListener('change', () => renderCaseDetail(sel.value));
+    sel.onchange = () => renderCaseDetail(sel.value);
   }
 
   // ─── Render case detail (tabbed) ───
@@ -1176,21 +1193,44 @@
     return html;
   }
 
+  function resetCaseDetail() {
+    const sel = document.getElementById('caseSelect');
+    const detailEl = document.getElementById('caseDetail');
+    const noDataEl = document.getElementById('noDataMsg');
+    const tabBar = document.getElementById('tabBar');
+    const tabPanels = document.getElementById('tabPanels');
+    sel.value = '';
+    detailEl.classList.remove('active');
+    noDataEl.style.display = 'none';
+    tabBar.innerHTML = '';
+    tabPanels.innerHTML = '';
+  }
+
+  function loadVolumeData(volume) {
+    const path = VOLUME_DATA_FILES[volume] || VOLUME_DATA_FILES['上冊'];
+    fetch(path)
+      .then(r => {
+        if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+        return r.json();
+      })
+      .then(data => {
+        DATA = data;
+        radarSelected = new Set();
+        buildOverview();
+        buildRadarChips();
+        drawRadar();
+        buildCaseSelector();
+        resetCaseDetail();
+      })
+      .catch(err => {
+        console.error(`Failed to load ${path}:`, err);
+        document.querySelector('.content').innerHTML =
+          `<div class="no-data-msg">無法載入評估資料，請確認 ${path} 是否存在。</div>`;
+      });
+  }
+
   // ─── Load data ───
-  fetch('data/eval_metrics.json')
-    .then(r => r.json())
-    .then(data => {
-      DATA = data;
-      buildOverview();
-      buildRadarChips();
-      drawRadar();
-      buildCaseSelector();
-    })
-    .catch(err => {
-      console.error('Failed to load eval_metrics.json:', err);
-      document.querySelector('.content').innerHTML =
-        '<div class="no-data-msg">無法載入評估資料，請確認 data/eval_metrics.json 是否存在。</div>';
-    });
+  loadVolumeData(currentVolume);
 
 })();
 </script>
