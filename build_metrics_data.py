@@ -179,19 +179,19 @@ def load_rouge_by_case(cond: str, volume: str):
     averages = None
     if summary:
         averages = {
-            "rouge1": safe_float(summary.get("rouge1_f")),
-            "rouge2": safe_float(summary.get("rouge2_f")),
-            "rougeL": safe_float(summary.get("rougeL_f")),
-            "bertscore_p": safe_float(summary.get("bertscore_p")),
-            "bertscore_r": safe_float(summary.get("bertscore_r")),
-            "bertscore_f1": safe_float(summary.get("bertscore_f1")),
+            "rouge1": safe_float(summary.get("rouge1_f_mean")),
+            "rouge2": safe_float(summary.get("rouge2_f_mean")),
+            "rougeL": safe_float(summary.get("rougeL_f_mean")),
+            "bertscore_p": safe_float(summary.get("bertscore_p_mean")),
+            "bertscore_r": safe_float(summary.get("bertscore_r_mean")),
+            "bertscore_f1": safe_float(summary.get("bertscore_f1_mean")),
         }
     elif per_case:
         keys = ("rouge1", "rouge2", "rougeL", "bertscore_p", "bertscore_r", "bertscore_f1")
         averages = {k: mean_or_none(v.get(k) for v in per_case.values()) for k in keys}
     n = None
     if summary:
-        n = summary.get("n_ok")
+        n = summary.get("n_cases_ok")
     elif per_case:
         n = len(per_case)
     return per_case, averages, n
