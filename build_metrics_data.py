@@ -6,17 +6,17 @@ This keeps the existing frontend schema intact and emits:
   - data/eval_metrics_middle.json
   - data/eval_metrics_lower.json
 
-Upper volume is copied from the current checked-in data to avoid
-regressing the already-published results. Middle / lower volumes are
-built from the source evaluation artifacts in Law_extraction_refactor.
+Upper volume is rebuilt from the current checked-in data after stripping
+LI/LISS fields. Middle / lower volumes are built from the source
+evaluation artifacts in Law_extraction_refactor.
 """
 
 from __future__ import annotations
 
 import csv
 import json
-import shutil
-from collections import OrderedDict, defaultdict
+import sys
+from collections import OrderedDict
 from pathlib import Path
 from statistics import mean
 
@@ -27,16 +27,19 @@ CURRENT_METRICS = DATA_DIR / "eval_metrics.json"
 SOURCE_ROOT = Path("/mnt/d/Law_extraction_refactor")
 PREDICTIONS_ROOT = SOURCE_ROOT / "data" / "predictions"
 METRIC_EVAL_ROOT = SOURCE_ROOT / "experiments" / "metric_eval_pilot" / "outputs"
-LISS_ROOT = (
-    SOURCE_ROOT / "experiments" / "late_interaction_summary_similarity" / "outputs"
-)
 VOLUMES = ("上冊", "中冊", "下冊")
-LISS_RUN_ID = "official_tm_allcases_v3_globalcache_section_only"
 VOLUME_TO_FILE = {
     "上冊": "eval_metrics_upper.json",
     "中冊": "eval_metrics_middle.json",
     "下冊": "eval_metrics_lower.json",
 }
+EXTRA_CONDITIONS = OrderedDict(
+    [
+        ("opensource_afg_v11_5", {"label": "OpenAFG v11.5", "group": "開源模型"}),
+        ("opensource_afg_v11_5_no_afg", {"label": "OpenAFG v11.5 (No AFG)", "group": "開源模型"}),
+        ("opensource_afg_v11_5_no_react", {"label": "OpenAFG v11.5 (No ReAct)", "group": "開源模型"}),
+    ]
+)
 
 RULE_MAP = OrderedDict(
     [
@@ -85,8 +88,12 @@ QUALITY_KEYS = OrderedDict(
 def read_json(path: Path):
     if not path.exists():
         return None
-    with path.open(encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with path.open(encoding="utf-8") as f:
+            return json.load(f)
+    except json.JSONDecodeError as exc:
+        print(f"[warn] skip invalid json: {path} ({exc})", file=sys.stderr)
+        return None
 
 
 def read_csv_rows(path: Path):
@@ -111,8 +118,19 @@ def load_existing_template():
     data = read_json(CURRENT_METRICS)
     if not data:
         raise FileNotFoundError(f"Missing template metrics file: {CURRENT_METRICS}")
-    conditions = list(data["conditions"].items())
-    return data, conditions
+    conditions = OrderedDict((key, {"label": value["label"], "group": value["group"]}) for key, value in data["conditions"].items())
+    for key, value in EXTRA_CONDITIONS.items():
+        conditions.setdefault(key, value)
+    return data, list(conditions.items())
+
+
+def strip_liss_from_metrics(data):
+    cloned = json.loads(json.dumps(data))
+    for cond in cloned.get("conditions", {}).values():
+        cond.get("averages", {}).pop("liss", None)
+        for case in cond.get("cases", {}).values():
+            case.pop("liss", None)
+    return cloned
 
 
 def extract_rule(rule_path: Path):
@@ -197,66 +215,12 @@ def load_rouge_by_case(cond: str, volume: str):
     return per_case, averages, n
 
 
-def load_liss_by_case(cond: str, volume: str):
-    run_dir = LISS_ROOT / cond / volume / LISS_RUN_ID
-    rows = read_csv_rows(run_dir / "per_case_section.csv")
-    by_case = defaultdict(dict)
-    section_rows = defaultdict(list)
-    for row in rows:
-        if row.get("unit_type") != "section":
-            continue
-        case_name = row.get("case")
-        section = row.get("unit_id")
-        if not case_name or not section:
-            continue
-        section_payload = {
-            "li_c2r": safe_float(row.get("li_c2r")),
-            "li_r2c": safe_float(row.get("li_r2c")),
-            "li_f1": safe_float(row.get("li_f1")),
-            "dense_cosine": safe_float(row.get("dense_cosine")),
-        }
-        by_case[case_name][section] = section_payload
-        section_rows[case_name].append(section_payload)
-
-    per_case = {}
-    for case_name, sections in by_case.items():
-        rows_for_case = section_rows[case_name]
-        per_case[case_name] = {
-            "avg_li_f1": mean_or_none(r["li_f1"] for r in rows_for_case),
-            "avg_li_c2r": mean_or_none(r["li_c2r"] for r in rows_for_case),
-            "avg_li_r2c": mean_or_none(r["li_r2c"] for r in rows_for_case),
-            "avg_dense_cosine": mean_or_none(r["dense_cosine"] for r in rows_for_case),
-            "sections": dict(sorted(sections.items())),
-        }
-
-    summary = read_json(run_dir / "liss_summary.json")
-    averages = None
-    if summary:
-        averages = {
-            "li_f1_mean": safe_float(summary.get("li_f1_mean")),
-            "li_c2r_mean": safe_float(summary.get("li_c2r_mean")),
-            "li_r2c_mean": safe_float(summary.get("li_r2c_mean")),
-            "dense_cosine_mean": safe_float(summary.get("dense_cosine_mean")),
-            "n_scored": summary.get("n_scored"),
-        }
-    elif per_case:
-        averages = {
-            "li_f1_mean": mean_or_none(v["avg_li_f1"] for v in per_case.values()),
-            "li_c2r_mean": mean_or_none(v["avg_li_c2r"] for v in per_case.values()),
-            "li_r2c_mean": mean_or_none(v["avg_li_r2c"] for v in per_case.values()),
-            "dense_cosine_mean": mean_or_none(v["avg_dense_cosine"] for v in per_case.values()),
-            "n_scored": len(per_case) * 5,
-        }
-    return per_case, averages
-
-
 def build_condition_volume(cond: str, label: str, group: str, volume: str):
     pred_dir = PREDICTIONS_ROOT / cond / volume
     if not pred_dir.exists():
         return None
 
     rouge_cases, rouge_avg, rouge_n = load_rouge_by_case(cond, volume)
-    liss_cases, liss_avg = load_liss_by_case(cond, volume)
 
     raw_cases = []
     for case_dir in sorted(p for p in pred_dir.iterdir() if p.is_dir()):
@@ -267,9 +231,8 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
         quality = extract_quality(eval_dir / "quality.json")
         faithfulness = extract_faithfulness(eval_dir / "faithfulness.json")
         rouge = rouge_cases.get(case_name)
-        liss = liss_cases.get(case_name)
 
-        if not any([rule, fact, quality, faithfulness is not None, rouge, liss]):
+        if not any([rule, fact, quality, faithfulness is not None, rouge]):
             continue
 
         case_payload = OrderedDict()
@@ -280,11 +243,9 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
         case_payload["faithfulness"] = faithfulness
         if rouge:
             case_payload["rouge_bertscore"] = rouge
-        if liss:
-            case_payload["liss"] = liss
         raw_cases.append((case_name, case_payload))
 
-    if not raw_cases and not rouge_avg and not liss_avg:
+    if not raw_cases and not rouge_avg:
         return None
 
     avg_rule = mean_or_none(case["rule_based"].get("avg") for _, case in raw_cases if case["rule_based"])
@@ -307,8 +268,6 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
     if rouge_avg:
         payload["averages"]["rouge_bertscore"] = rouge_avg
         payload["averages"]["rouge_bertscore_n"] = rouge_n
-    if liss_avg:
-        payload["averages"]["liss"] = liss_avg
     payload["eval_count"] = len(raw_cases)
     return payload
 
@@ -363,8 +322,8 @@ def main():
     existing, condition_templates = load_existing_template()
 
     upper_out = DATA_DIR / VOLUME_TO_FILE["上冊"]
-    shutil.copyfile(CURRENT_METRICS, upper_out)
-    print(f"copied  {upper_out}")
+    write_json(upper_out, strip_liss_from_metrics(existing))
+    print(f"built   {upper_out}  (sanitized upper volume, LI removed)")
 
     for volume in ("中冊", "下冊"):
         built = build_volume_json(volume, condition_templates)
