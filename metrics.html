@@ -276,10 +276,62 @@
       text-align: center; font-size: 12px; color: var(--slate-500); margin-top: 8px;
     }
 
+    /* ─── MODEL CARDS ─── */
+    .model-card-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 18px; margin-bottom: 28px;
+    }
+    .model-card {
+      background: white; border-radius: 14px; padding: 18px 18px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e5e7eb;
+      border-top: 3px solid var(--indigo); overflow: hidden;
+    }
+    .model-card.opensource { border-top-color: var(--emerald); }
+    .model-card-head {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 10px;
+      margin-bottom: 12px;
+    }
+    .model-card-title {
+      font-size: 17px; font-weight: 700; color: var(--slate-900); line-height: 1.25;
+    }
+    .model-card-sub {
+      margin-top: 4px; font-size: 12px; color: var(--slate-500);
+    }
+    .model-card-radar-wrap {
+      display: flex; justify-content: center; align-items: center;
+      margin: 8px 0 14px;
+    }
+    .model-card-radar {
+      width: 220px; height: 220px; display: block;
+    }
+    .model-card-summary {
+      font-size: 13px; line-height: 1.6; color: var(--slate-700);
+      background: var(--slate-50); border-radius: 10px; padding: 10px 12px;
+      margin-bottom: 12px;
+    }
+    .model-card-metrics {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .model-card-metric {
+      background: var(--slate-50); border-radius: 10px; padding: 10px 10px 9px;
+      min-width: 0;
+    }
+    .model-card-metric-label {
+      font-size: 11px; color: var(--slate-500); margin-bottom: 4px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .model-card-metric-value {
+      font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums;
+    }
+
     @media (max-width: 768px) {
       .content { padding: 16px 12px 40px; }
       .overview-cards-grid { grid-template-columns: 1fr; }
       .overview-card-scores { grid-template-columns: repeat(2, 1fr); }
+      .model-card-grid { grid-template-columns: 1fr; }
+      .model-card-radar { width: 200px; height: 200px; }
+      .model-card-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
@@ -356,6 +408,9 @@
       <tbody id="overviewBody"></tbody>
     </table>
   </div>
+
+  <h2 class="section-header">模型卡</h2>
+  <div id="modelCardGrid" class="model-card-grid"></div>
 
   <!-- ─── RADAR CHART ─── -->
   <div class="radar-section" id="radarSection">
@@ -542,6 +597,14 @@
     bertscore_r: 'BERTScore Recall：Ground Truth 中多少語意內容被摘要涵蓋',
     bertscore_f1: 'BERTScore F1：使用 BERT 語意嵌入衡量摘要與 Ground Truth 的語意相似度'
   };
+  const MODEL_CARD_AXES = [
+    { key: 'rule', label: 'Rule-Based', short: 'Rule', get: a => a.rule_based_avg },
+    { key: 'fact', label: 'Fact Recall', short: 'Fact', get: a => a.fact_recall_avg },
+    { key: 'quality', label: 'Quality', short: 'Quality', get: a => a.quality_avg != null ? a.quality_avg / 5 : null },
+    { key: 'faith', label: 'Faithfulness', short: 'Faith', get: a => a.faithfulness_avg },
+    { key: 'rougeL', label: 'ROUGE-L', short: 'ROUGE-L', get: a => (a.rouge_bertscore || {}).rougeL },
+    { key: 'bert', label: 'BERTScore F1', short: 'BERT', get: a => (a.rouge_bertscore || {}).bertscore_f1 },
+  ];
 
   let DATA = null;
   let currentFilter = 'all';
@@ -582,6 +645,127 @@
       sortEntries(entries, 'quality', 'desc');
     }
     renderOverviewRows(entries);
+    buildModelCards(entries);
+  }
+
+  function modelCardSummary(cond, averages) {
+    const ranked = MODEL_CARD_AXES
+      .map(axis => ({ label: axis.label, value: axis.get(averages) }))
+      .filter(x => x.value != null)
+      .sort((a, b) => b.value - a.value);
+    const top = ranked.slice(0, 2).map(x => x.label);
+    const evalCount = cond.eval_count != null ? `${cond.eval_count} 案` : '案例數未知';
+    const volumeNote = currentVolume ? `${currentVolume}` : '當前冊別';
+    if (top.length >= 2) {
+      return `${volumeNote}表現以 ${top[0]}、${top[1]} 相對突出，本站收錄 ${evalCount}。`;
+    }
+    if (top.length === 1) {
+      return `${volumeNote}表現以 ${top[0]} 相對突出，本站收錄 ${evalCount}。`;
+    }
+    return `${volumeNote}目前僅有部分指標可供比較，本站收錄 ${evalCount}。`;
+  }
+
+  function buildModelCardRadar(cond, color) {
+    const averages = cond.averages || {};
+    const size = 220;
+    const cx = size / 2;
+    const cy = size / 2;
+    const radius = 72;
+    const labelRadius = 96;
+    const n = MODEL_CARD_AXES.length;
+    const startAngle = -Math.PI / 2;
+    const angleStep = (2 * Math.PI) / n;
+    const point = (r, angle) => [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+
+    let rings = '';
+    for (let ring = 1; ring <= 4; ring++) {
+      const r = radius * ring / 4;
+      let d = '';
+      for (let i = 0; i < n; i++) {
+        const angle = startAngle + i * angleStep;
+        const [x, y] = point(r, angle);
+        d += `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)} `;
+      }
+      d += 'Z';
+      rings += `<path d="${d}" fill="none" stroke="#e2e8f0" stroke-width="${ring === 4 ? 1.2 : 1}" />`;
+    }
+
+    let axes = '';
+    let labels = '';
+    let poly = '';
+    for (let i = 0; i < n; i++) {
+      const axis = MODEL_CARD_AXES[i];
+      const angle = startAngle + i * angleStep;
+      const [ex, ey] = point(radius, angle);
+      axes += `<line x1="${cx}" y1="${cy}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />`;
+      const [lx, ly] = point(labelRadius, angle);
+      labels += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#64748b">${axis.short}</text>`;
+      const raw = axis.get(averages);
+      const value = raw != null ? Math.max(0, Math.min(1, raw)) : 0;
+      const [px, py] = point(radius * value, angle);
+      poly += `${px.toFixed(1)},${py.toFixed(1)} `;
+    }
+
+    const cardClass = cond.group === '開源模型' ? 'opensource' : '';
+    return `
+      <svg class="model-card-radar" viewBox="0 0 ${size} ${size}" aria-hidden="true">
+        ${rings}
+        ${axes}
+        <polygon points="${poly.trim()}" fill="${color}22" stroke="${color}" stroke-width="2.5"></polygon>
+        ${poly.trim().split(' ').map(pair => {
+          const [x, y] = pair.split(',');
+          return `<circle cx="${x}" cy="${y}" r="3.5" fill="${color}" stroke="#fff" stroke-width="1.5"></circle>`;
+        }).join('')}
+        ${labels}
+      </svg>
+    `;
+  }
+
+  function buildModelCards(entries) {
+    const container = document.getElementById('modelCardGrid');
+    if (!container) return;
+    container.innerHTML = '';
+    const sorted = [...entries];
+    if (sorted.length === 0) {
+      container.innerHTML = '<div class="no-data-msg" style="grid-column:1/-1;padding:24px 0;">此篩選下沒有可顯示的模型。</div>';
+      return;
+    }
+    sorted.forEach(([, cond], idx) => {
+      const color = RADAR_COLORS[idx % RADAR_COLORS.length];
+      const card = document.createElement('div');
+      card.className = `model-card ${cond.group === '開源模型' ? 'opensource' : ''}`;
+      const a = cond.averages || {};
+      const metrics = [
+        { label: 'Rule-Based', value: a.rule_based_avg, scale: '01' },
+        { label: 'Fact Recall', value: a.fact_recall_avg, scale: '01' },
+        { label: 'Quality', value: a.quality_avg, scale: '5' },
+        { label: 'Faithfulness', value: a.faithfulness_avg, scale: '01' },
+        { label: 'ROUGE-L', value: (a.rouge_bertscore || {}).rougeL, scale: '01' },
+        { label: 'BERTScore F1', value: (a.rouge_bertscore || {}).bertscore_f1, scale: '01' },
+      ];
+      card.innerHTML = `
+        <div class="model-card-head">
+          <div>
+            <div class="model-card-title">${cond.label}</div>
+            <div class="model-card-sub">${currentVolume} · ${cond.eval_count ?? '--'} 案</div>
+          </div>
+          <span class="badge ${cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource'}">${cond.group}</span>
+        </div>
+        <div class="model-card-radar-wrap">${buildModelCardRadar(cond, color)}</div>
+        <div class="model-card-summary">${modelCardSummary(cond, a)}</div>
+        <div class="model-card-metrics">
+          ${metrics.map(m => {
+            const cls = m.scale === '5' ? scoreClass5(m.value) : scoreClass01(m.value);
+            const value = m.value != null ? (m.scale === '5' ? fmt(m.value, 2) : fmt(m.value)) : '--';
+            return `<div class="model-card-metric">
+              <div class="model-card-metric-label">${m.label}</div>
+              <div class="model-card-metric-value ${cls}">${value}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      `;
+      container.appendChild(card);
+    });
   }
 
   // ─── Build overview table ───
