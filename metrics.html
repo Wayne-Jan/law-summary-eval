@@ -353,9 +353,58 @@
       border-radius: 999px; padding: 8px 12px; cursor: pointer; font-size: 12px; font-weight: 600;
     }
     .detail-close-btn:hover { background: var(--slate-300); }
+    .model-detail-summary {
+      font-size: 14px; line-height: 1.7; color: var(--slate-700);
+      background: linear-gradient(135deg, rgba(79,70,229,0.08), rgba(79,70,229,0.03));
+      border: 1px solid rgba(79,70,229,0.12); border-radius: 14px;
+      padding: 14px 16px; margin-bottom: 16px;
+    }
+    .capability-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px; margin-bottom: 18px;
+    }
+    .capability-card {
+      background: var(--slate-50); border: 1px solid #e5e7eb; border-radius: 14px;
+      padding: 14px 14px 12px;
+    }
+    .capability-label {
+      font-size: 12px; font-weight: 700; color: var(--slate-500);
+      letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .capability-score {
+      font-size: 28px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums;
+      color: var(--slate-900); margin-bottom: 6px;
+    }
+    .capability-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 700; border-radius: 999px;
+      padding: 4px 8px; margin-bottom: 8px;
+    }
+    .capability-chip.high { color: #065f46; background: rgba(16,185,129,0.12); }
+    .capability-chip.mid { color: #92400e; background: rgba(245,158,11,0.14); }
+    .capability-chip.low { color: #9f1239; background: rgba(244,63,94,0.12); }
+    .capability-note {
+      font-size: 13px; line-height: 1.6; color: var(--slate-600);
+    }
     .model-detail-grid {
       display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px;
     }
+    .metric-detail-block {
+      background: white; border: 1px solid #e5e7eb; border-radius: 14px;
+      margin-top: 12px; overflow: hidden;
+    }
+    .metric-detail-block summary {
+      list-style: none; cursor: pointer; padding: 14px 16px;
+      font-size: 14px; font-weight: 700; color: var(--slate-900);
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      background: var(--slate-50);
+    }
+    .metric-detail-block summary::-webkit-details-marker { display: none; }
+    .metric-detail-block summary::after {
+      content: '展開'; font-size: 12px; font-weight: 600; color: var(--slate-500);
+    }
+    .metric-detail-block[open] summary::after { content: '收起'; }
+    .metric-detail-body { padding: 14px 16px 16px; }
     .model-detail-section {
       background: var(--slate-50); border-radius: 14px; padding: 16px 16px 14px;
       border: 1px solid #e5e7eb;
@@ -389,6 +438,7 @@
       .model-card-grid { grid-template-columns: 1fr; }
       .model-card-radar { width: 200px; height: 200px; }
       .model-card-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .capability-grid { grid-template-columns: 1fr; }
       .model-detail-grid { grid-template-columns: 1fr; }
       .model-detail-row { grid-template-columns: 88px minmax(0,1fr) 42px; gap: 8px; }
       .model-detail-label { text-align: left; }
@@ -894,6 +944,96 @@
     }).join('');
   }
 
+  function capabilityTone(value, scale) {
+    if (value == null) return 'mid';
+    if (scale === '5') return value >= 4.0 ? 'high' : value >= 3.0 ? 'mid' : 'low';
+    return value >= 0.8 ? 'high' : value >= 0.6 ? 'mid' : 'low';
+  }
+
+  function capabilityBadge(value, scale) {
+    const tone = capabilityTone(value, scale);
+    return tone === 'high' ? '突出' : tone === 'mid' ? '穩定' : '待補';
+  }
+
+  function capabilityCopy(key, tone) {
+    const copy = {
+      rule: {
+        high: '格式、引用與規範遵循度高，輸出較穩。',
+        mid: '規範面整體可用，但仍有局部鬆動。',
+        low: '格式與引用控制較弱，容易出現不一致。'
+      },
+      fact: {
+        high: '對事實、時間線與論點的覆蓋度較完整。',
+        mid: '主要事實能抓住，但細節召回仍有落差。',
+        low: '事實召回偏弱，容易漏掉重要資訊。'
+      },
+      quality: {
+        high: '整體可讀性、結構與表達品質成熟。',
+        mid: '整體可讀，但品質尚未全面穩定。',
+        low: '寫作品質波動較大，閱讀負擔較高。'
+      },
+      faith: {
+        high: '內容與來源一致性高，較少偏離原文。',
+        mid: '整體忠實，但局部仍可能有偏移。',
+        low: '內容偏離來源的風險較高。'
+      },
+      rougeL: {
+        high: '與參考摘要的文字對齊程度強。',
+        mid: '文字對齊中等，保留一定重寫自由度。',
+        low: '文字重疊偏弱，較依賴自由改寫。'
+      },
+      bert: {
+        high: '語義對齊穩，與參考摘要語意接近。',
+        mid: '語義相似度可接受，但不算穩定領先。',
+        low: '語義貼近度偏弱，摘要偏離較明顯。'
+      }
+    };
+    return copy[key]?.[tone] || '';
+  }
+
+  function buildCapabilityCards(cond) {
+    const a = cond.averages || {};
+    const items = [
+      { key: 'rule', label: '規則遵循', value: a.rule_based_avg, scale: '01', display: fmt(a.rule_based_avg) || '--' },
+      { key: 'fact', label: '事實涵蓋', value: a.fact_recall_avg, scale: '01', display: fmt(a.fact_recall_avg) || '--' },
+      { key: 'quality', label: '寫作品質', value: a.quality_avg, scale: '5', display: fmt(a.quality_avg, 2) || '--' },
+      { key: 'faith', label: '忠實性', value: a.faithfulness_avg, scale: '01', display: fmt(a.faithfulness_avg) || '--' },
+      { key: 'rougeL', label: '文字貼合', value: (a.rouge_bertscore || {}).rougeL, scale: '01', display: fmt((a.rouge_bertscore || {}).rougeL) || '--' },
+      { key: 'bert', label: '語義對齊', value: (a.rouge_bertscore || {}).bertscore_f1, scale: '01', display: fmt((a.rouge_bertscore || {}).bertscore_f1) || '--' },
+    ];
+    return items.map(item => {
+      const tone = capabilityTone(item.value, item.scale);
+      return `
+        <div class="capability-card">
+          <div class="capability-label">${item.label}</div>
+          <div class="capability-score ${item.scale === '5' ? scoreClass5(item.value) : scoreClass01(item.value)}">${item.display}</div>
+          <div class="capability-chip ${tone}">${capabilityBadge(item.value, item.scale)}</div>
+          <div class="capability-note">${capabilityCopy(item.key, tone)}</div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function modelCapabilitySummary(cond) {
+    const a = cond.averages || {};
+    const traits = [
+      { label: '規則遵循', value: a.rule_based_avg, scale: '01' },
+      { label: '事實涵蓋', value: a.fact_recall_avg, scale: '01' },
+      { label: '寫作品質', value: a.quality_avg, scale: '5' },
+      { label: '忠實性', value: a.faithfulness_avg, scale: '01' },
+      { label: '文字貼合', value: (a.rouge_bertscore || {}).rougeL, scale: '01' },
+      { label: '語義對齊', value: (a.rouge_bertscore || {}).bertscore_f1, scale: '01' },
+    ].filter(x => x.value != null);
+    if (!traits.length) return `${currentVolume} 目前只有部分可用指標，適合先當參考卡看整體輪廓。`;
+    const sorted = [...traits].sort((x, y) => y.value - x.value);
+    const strongest = sorted[0]?.label;
+    const weakest = sorted[sorted.length - 1]?.label;
+    if (strongest && weakest && strongest !== weakest) {
+      return `這個模型在 ${currentVolume} 的第一眼輪廓，是以 ${strongest} 相對突出、${weakest} 相對偏弱。先看下面六個能力面向，再視需要展開細項。`;
+    }
+    return `這個模型在 ${currentVolume} 的表現較平均，建議先看六個能力面向，再展開細項確認差異。`;
+  }
+
   function renderModelDetail(entries) {
     const panel = document.getElementById('modelDetailPanel');
     if (!panel) return;
@@ -924,28 +1064,28 @@
       <div class="model-detail-head">
         <div>
           <div class="model-detail-title">${cond.label} 能力檔案</div>
-          <div class="model-detail-desc">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 點開後直接看各面向細項平均</div>
+          <div class="model-detail-desc">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 先看能力輪廓，再展開細項</div>
         </div>
         <button class="detail-close-btn" type="button" onclick="closeModelDetail()">收起</button>
       </div>
-      <div class="model-detail-grid">
-        <div class="model-detail-section">
-          <h4>Rule-Based 細項</h4>
-          ${detailRows(cond, ruleItems, 'rule_based', '01')}
-        </div>
-        <div class="model-detail-section">
-          <h4>Fact Recall 細項</h4>
-          ${detailRows(cond, factItems, 'fact_recall', '01')}
-        </div>
-        <div class="model-detail-section full-width">
-          <h4>Quality 細項</h4>
-          ${detailRows(cond, qualityItems, 'quality', '5')}
-        </div>
-        <div class="model-detail-section full-width">
-          <h4>ROUGE / BERTScore 細項</h4>
-          ${detailRows(cond, rougeItems, 'rouge_bertscore', '01')}
-        </div>
-      </div>
+      <div class="model-detail-summary">${modelCapabilitySummary(cond)}</div>
+      <div class="capability-grid">${buildCapabilityCards(cond)}</div>
+      <details class="metric-detail-block">
+        <summary>Rule-Based 細項</summary>
+        <div class="metric-detail-body"><div class="model-detail-grid"><div class="model-detail-section full-width">${detailRows(cond, ruleItems, 'rule_based', '01')}</div></div></div>
+      </details>
+      <details class="metric-detail-block">
+        <summary>Fact Recall 細項</summary>
+        <div class="metric-detail-body"><div class="model-detail-grid"><div class="model-detail-section full-width">${detailRows(cond, factItems, 'fact_recall', '01')}</div></div></div>
+      </details>
+      <details class="metric-detail-block">
+        <summary>Quality 細項</summary>
+        <div class="metric-detail-body"><div class="model-detail-grid"><div class="model-detail-section full-width">${detailRows(cond, qualityItems, 'quality', '5')}</div></div></div>
+      </details>
+      <details class="metric-detail-block">
+        <summary>ROUGE / BERTScore 細項</summary>
+        <div class="metric-detail-body"><div class="model-detail-grid"><div class="model-detail-section full-width">${detailRows(cond, rougeItems, 'rouge_bertscore', '01')}</div></div></div>
+      </details>
     `;
     panel.classList.add('active');
   }
