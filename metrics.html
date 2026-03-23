@@ -785,6 +785,25 @@
     renderModelDetail(entries);
   }
 
+  function sortModelCardEntries(entries) {
+    const priority = {
+      'claude_afg_v5.1': 0,
+      'ablation_no_afg': 1,
+      'ablation_no_react': 2,
+    };
+    return [...entries].sort((a, b) => {
+      const [keyA, condA] = a;
+      const [keyB, condB] = b;
+      const pa = priority[keyA] ?? 999;
+      const pb = priority[keyB] ?? 999;
+      if (pa !== pb) return pa - pb;
+      const groupA = condA.group === '商用模型' ? 0 : 1;
+      const groupB = condB.group === '商用模型' ? 0 : 1;
+      if (groupA !== groupB) return groupA - groupB;
+      return condA.label.localeCompare(condB.label, 'zh-Hant');
+    });
+  }
+
   function buildModelCardRadar(cond, color) {
     const averages = cond.averages || {};
     const size = 240;
@@ -854,7 +873,7 @@
     const container = document.getElementById('modelCardGrid');
     if (!container) return;
     container.innerHTML = '';
-    const sorted = [...entries];
+    const sorted = sortModelCardEntries(entries);
     if (sorted.length === 0) {
       container.innerHTML = '<div class="no-data-msg" style="grid-column:1/-1;padding:24px 0;">此篩選下沒有可顯示的模型。</div>';
       return;
