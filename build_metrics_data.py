@@ -6,9 +6,8 @@ This keeps the existing frontend schema intact and emits:
   - data/eval_metrics_middle.json
   - data/eval_metrics_lower.json
 
-Upper volume is rebuilt from the current checked-in data after stripping
-LI/LISS fields. Middle / lower volumes are built from the source
-evaluation artifacts in Law_extraction_refactor.
+All three volumes are rebuilt from the source evaluation artifacts in
+Law_extraction_refactor.
 """
 
 from __future__ import annotations
@@ -124,22 +123,13 @@ def load_existing_template():
     return data, list(conditions.items())
 
 
-def strip_liss_from_metrics(data):
-    cloned = json.loads(json.dumps(data))
-    for cond in cloned.get("conditions", {}).values():
-        cond.get("averages", {}).pop("liss", None)
-        for case in cond.get("cases", {}).values():
-            case.pop("liss", None)
-    return cloned
-
-
 def extract_rule(rule_path: Path):
     obj = read_json(rule_path)
     if not obj:
         return None
     result = OrderedDict()
     for out_key, (src_key, field_key) in RULE_MAP.items():
-        src = obj.get(src_key, {})
+        src = obj.get(src_key) or {}
         result[out_key] = safe_float(src.get(field_key))
     result["avg"] = safe_float(obj.get("_summary", {}).get("rule_based_avg"))
     return result
@@ -319,13 +309,9 @@ def write_json(path: Path, obj):
 
 
 def main():
-    existing, condition_templates = load_existing_template()
+    _, condition_templates = load_existing_template()
 
-    upper_out = DATA_DIR / VOLUME_TO_FILE["上冊"]
-    write_json(upper_out, strip_liss_from_metrics(existing))
-    print(f"built   {upper_out}  (sanitized upper volume, LI removed)")
-
-    for volume in ("中冊", "下冊"):
+    for volume in VOLUMES:
         built = build_volume_json(volume, condition_templates)
         if not built:
             raise RuntimeError(f"No data built for {volume}")
