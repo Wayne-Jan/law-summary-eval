@@ -312,11 +312,6 @@
     .model-card-radar {
       width: 220px; height: 220px; display: block;
     }
-    .model-card-summary {
-      font-size: 13px; line-height: 1.6; color: var(--slate-700);
-      background: var(--slate-50); border-radius: 10px; padding: 10px 12px;
-      margin-bottom: 12px;
-    }
     .model-card-metrics {
       display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 10px;
@@ -790,23 +785,6 @@
     renderModelDetail(entries);
   }
 
-  function modelCardSummary(cond, averages) {
-    const ranked = MODEL_CARD_AXES
-      .map(axis => ({ label: axis.label, value: axis.get(averages) }))
-      .filter(x => x.value != null)
-      .sort((a, b) => b.value - a.value);
-    const top = ranked.slice(0, 2).map(x => x.label);
-    const evalCount = cond.eval_count != null ? `${cond.eval_count} 案` : '案例數未知';
-    const volumeNote = currentVolume ? `${currentVolume}` : '當前冊別';
-    if (top.length >= 2) {
-      return `${volumeNote}表現以 ${top[0]}、${top[1]} 相對突出，本站收錄 ${evalCount}。`;
-    }
-    if (top.length === 1) {
-      return `${volumeNote}表現以 ${top[0]} 相對突出，本站收錄 ${evalCount}。`;
-    }
-    return `${volumeNote}目前僅有部分指標可供比較，本站收錄 ${evalCount}。`;
-  }
-
   function buildModelCardRadar(cond, color) {
     const averages = cond.averages || {};
     const size = 220;
@@ -834,6 +812,7 @@
 
     let axes = '';
     let labels = '';
+    let annotations = '';
     let poly = '';
     for (let i = 0; i < n; i++) {
       const axis = MODEL_CARD_AXES[i];
@@ -846,9 +825,15 @@
       const value = raw != null ? Math.max(0, Math.min(1, raw)) : 0;
       const [px, py] = point(radius * value, angle);
       poly += `${px.toFixed(1)},${py.toFixed(1)} `;
+      const display = raw != null ? (axis.key === 'quality' ? fmt(raw, 2) : fmt(raw)) : '--';
+      const [tx, ty] = point(Math.min(radius + 16, radius * value + 14), angle);
+      let anchor = 'middle';
+      const cos = Math.cos(angle);
+      if (cos > 0.28) anchor = 'start';
+      else if (cos < -0.28) anchor = 'end';
+      annotations += `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="${color}">${display}</text>`;
     }
 
-    const cardClass = cond.group === '開源模型' ? 'opensource' : '';
     return `
       <svg class="model-card-radar" viewBox="0 0 ${size} ${size}" aria-hidden="true">
         ${rings}
@@ -859,6 +844,7 @@
           return `<circle cx="${x}" cy="${y}" r="3.5" fill="${color}" stroke="#fff" stroke-width="1.5"></circle>`;
         }).join('')}
         ${labels}
+        ${annotations}
       </svg>
     `;
   }
@@ -896,7 +882,6 @@
           <span class="badge ${cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource'}">${cond.group}</span>
         </div>
         <div class="model-card-radar-wrap">${buildModelCardRadar(cond, color)}</div>
-        <div class="model-card-summary">${modelCardSummary(cond, a)}</div>
         <div class="model-card-metrics">
           ${metrics.map(m => {
             const cls = m.scale === '5' ? scoreClass5(m.value) : scoreClass01(m.value);
