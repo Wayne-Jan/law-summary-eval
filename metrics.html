@@ -493,6 +493,7 @@
   <div class="page-tab-bar">
     <button class="page-tab-btn active" data-main-tab="overview" onclick="setMainTab('overview')">總覽</button>
     <button class="page-tab-btn" data-main-tab="cards" onclick="setMainTab('cards')">模型卡</button>
+    <button class="page-tab-btn" data-main-tab="relative" onclick="setMainTab('relative')">相對卡</button>
     <button class="page-tab-btn" data-main-tab="cases" onclick="setMainTab('cases')">個案比較</button>
   </div>
 
@@ -536,6 +537,15 @@
     </div>
     <div id="modelCardGrid" class="model-card-grid"></div>
     <div id="modelDetailPanel" class="model-detail-panel"></div>
+  </div>
+
+  <div id="pagePanel_relative" class="page-panel">
+    <div class="panel-hero">
+      <div class="panel-kicker">Relative Cards</div>
+      <div class="panel-title">把不同量級的指標改看相對位置</div>
+      <div class="panel-desc">這個試驗分頁不改原始分數，只把雷達圖改成「同冊內相對百分位」視覺化。圖上數字顯示相對百分位，卡片下方仍保留原始分數，方便比較兩種呈現方式。</div>
+    </div>
+    <div id="relativeCardGrid" class="model-card-grid"></div>
   </div>
 
   <div id="pagePanel_cases" class="page-panel">
@@ -779,6 +789,7 @@
     }
     renderOverviewRows(entries);
     buildModelCards(entries);
+    buildRelativeModelCards(entries);
     if (currentModelDetail && !entries.some(([key]) => key === currentModelDetail)) {
       currentModelDetail = null;
     }
@@ -875,6 +886,83 @@
     `;
   }
 
+  function percentileRank(values, target) {
+    const valid = values.filter(v => v != null).sort((a, b) => a - b);
+    if (!valid.length || target == null) return null;
+    if (valid.length === 1) return 1;
+    let first = valid.findIndex(v => v === target);
+    let last = valid.length - 1 - [...valid].reverse().findIndex(v => v === target);
+    if (first < 0 || last < 0) return null;
+    const avgRank = (first + last) / 2;
+    return avgRank / (valid.length - 1);
+  }
+
+  function buildRelativeCardRadar(condKey, entries, color) {
+    const size = 240;
+    const cx = size / 2;
+    const cy = size / 2;
+    const radius = 72;
+    const valueRadius = 86;
+    const labelRadius = 110;
+    const n = MODEL_CARD_AXES.length;
+    const startAngle = -Math.PI / 2;
+    const angleStep = (2 * Math.PI) / n;
+    const point = (r, angle) => [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+
+    let rings = '';
+    for (let ring = 1; ring <= 4; ring++) {
+      const r = radius * ring / 4;
+      let d = '';
+      for (let i = 0; i < n; i++) {
+        const angle = startAngle + i * angleStep;
+        const [x, y] = point(r, angle);
+        d += `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)} `;
+      }
+      d += 'Z';
+      rings += `<path d="${d}" fill="none" stroke="#e2e8f0" stroke-width="${ring === 4 ? 1.2 : 1}" />`;
+    }
+
+    let axes = '';
+    let labels = '';
+    let annotations = '';
+    let poly = '';
+    for (let i = 0; i < n; i++) {
+      const axis = MODEL_CARD_AXES[i];
+      const angle = startAngle + i * angleStep;
+      const [ex, ey] = point(radius, angle);
+      axes += `<line x1="${cx}" y1="${cy}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />`;
+      const [lx, ly] = point(labelRadius, angle);
+      labels += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="600" fill="#64748b">${axis.short}</text>`;
+      const values = entries.map(([, entryCond]) => axis.get(entryCond.averages || {}));
+      const raw = axis.get((entries.find(([key]) => key === condKey) || [null, { averages: {} }])[1].averages || {});
+      const pct = percentileRank(values, raw);
+      const value = pct != null ? pct : 0;
+      const [px, py] = point(radius * value, angle);
+      poly += `${px.toFixed(1)},${py.toFixed(1)} `;
+      const display = pct != null ? `P${Math.round(pct * 100)}` : '--';
+      const [tx, ty] = point(valueRadius, angle);
+      let anchor = 'middle';
+      const cos = Math.cos(angle);
+      if (cos > 0.28) anchor = 'start';
+      else if (cos < -0.28) anchor = 'end';
+      annotations += `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle" font-size="10" font-weight="700" fill="${color}">${display}</text>`;
+    }
+
+    return `
+      <svg class="model-card-radar" viewBox="0 0 ${size} ${size}" aria-hidden="true">
+        ${rings}
+        ${axes}
+        <polygon points="${poly.trim()}" fill="${color}22" stroke="${color}" stroke-width="2.5"></polygon>
+        ${poly.trim().split(' ').map(pair => {
+          const [x, y] = pair.split(',');
+          return `<circle cx="${x}" cy="${y}" r="3.5" fill="${color}" stroke="#fff" stroke-width="1.5"></circle>`;
+        }).join('')}
+        ${labels}
+        ${annotations}
+      </svg>
+    `;
+  }
+
   function buildModelCards(entries) {
     const container = document.getElementById('modelCardGrid');
     if (!container) return;
@@ -926,6 +1014,53 @@
         const panel = document.getElementById('modelDetailPanel');
         if (currentModelDetail && panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
+      container.appendChild(card);
+    });
+  }
+
+  function buildRelativeModelCards(entries) {
+    const container = document.getElementById('relativeCardGrid');
+    if (!container) return;
+    container.innerHTML = '';
+    const sorted = sortModelCardEntries(entries);
+    if (sorted.length === 0) {
+      container.innerHTML = '<div class="no-data-msg" style="grid-column:1/-1;padding:24px 0;">此篩選下沒有可顯示的模型。</div>';
+      return;
+    }
+    sorted.forEach(([, cond], idx) => {
+      const condKey = sorted[idx][0];
+      const color = MODEL_COLORS[idx % MODEL_COLORS.length];
+      const card = document.createElement('div');
+      card.className = `model-card ${cond.group === '開源模型' ? 'opensource' : ''}`;
+      const a = cond.averages || {};
+      const metrics = [
+        { label: 'Rule-Based', value: a.rule_based_avg, scale: '01' },
+        { label: 'Fact Recall', value: a.fact_recall_avg, scale: '01' },
+        { label: 'Quality', value: a.quality_avg, scale: '5' },
+        { label: 'Faithfulness', value: a.faithfulness_avg, scale: '01' },
+        { label: 'ROUGE-L', value: (a.rouge_bertscore || {}).rougeL, scale: '01' },
+        { label: 'BERTScore F1', value: (a.rouge_bertscore || {}).bertscore_f1, scale: '01' },
+      ];
+      card.innerHTML = `
+        <div class="model-card-head">
+          <div>
+            <div class="model-card-title">${cond.label}</div>
+            <div class="model-card-sub">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 相對百分位雷達圖</div>
+          </div>
+          <span class="badge ${cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource'}">${cond.group}</span>
+        </div>
+        <div class="model-card-radar-wrap">${buildRelativeCardRadar(condKey, sorted, color)}</div>
+        <div class="model-card-metrics">
+          ${metrics.map(m => {
+            const cls = m.scale === '5' ? scoreClass5(m.value) : scoreClass01(m.value);
+            const value = m.value != null ? (m.scale === '5' ? fmt(m.value, 2) : fmt(m.value)) : '--';
+            return `<div class="model-card-metric">
+              <div class="model-card-metric-label">${m.label}</div>
+              <div class="model-card-metric-value ${cls}">${value}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      `;
       container.appendChild(card);
     });
   }
@@ -1175,6 +1310,7 @@
       sortEntries(entries, col, dir);
       renderOverviewRows(entries);
       buildModelCards(entries);
+      buildRelativeModelCards(entries);
       renderModelDetail(entries);
     });
   });
