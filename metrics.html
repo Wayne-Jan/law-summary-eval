@@ -543,7 +543,7 @@
     <div class="panel-hero">
       <div class="panel-kicker">Relative Cards</div>
       <div class="panel-title">把不同量級的指標改看相對位置</div>
-      <div class="panel-desc">這個試驗分頁不改原始分數，只把雷達圖改成「同冊內相對百分位」視覺化。圖上數字顯示相對百分位，卡片下方仍保留原始分數，方便比較兩種呈現方式。</div>
+      <div class="panel-desc">這個試驗分頁不改原始分數，只把雷達圖改成「同冊內相對位置」視覺化。圖上直接標示高、中、低，卡片下方仍保留原始分數，方便比較兩種呈現方式。</div>
     </div>
     <div id="relativeCardGrid" class="model-card-grid"></div>
   </div>
@@ -897,6 +897,13 @@
     return avgRank / (valid.length - 1);
   }
 
+  function relativeBand(pct) {
+    if (pct == null) return '--';
+    if (pct >= 2 / 3) return '高';
+    if (pct >= 1 / 3) return '中';
+    return '低';
+  }
+
   function buildRelativeCardRadar(condKey, entries, color) {
     const size = 240;
     const cx = size / 2;
@@ -939,7 +946,7 @@
       const value = pct != null ? pct : 0;
       const [px, py] = point(radius * value, angle);
       poly += `${px.toFixed(1)},${py.toFixed(1)} `;
-      const display = pct != null ? `P${Math.round(pct * 100)}` : '--';
+      const display = relativeBand(pct);
       const [tx, ty] = point(valueRadius, angle);
       let anchor = 'middle';
       const cos = Math.cos(angle);
@@ -1045,7 +1052,7 @@
         <div class="model-card-head">
           <div>
             <div class="model-card-title">${cond.label}</div>
-            <div class="model-card-sub">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 相對百分位雷達圖</div>
+            <div class="model-card-sub">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 相對位置雷達圖</div>
           </div>
           <span class="badge ${cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource'}">${cond.group}</span>
         </div>
