@@ -791,7 +791,8 @@
     const cx = size / 2;
     const cy = size / 2;
     const radius = 72;
-    const labelRadius = 96;
+    const valueRadius = 86;
+    const labelRadius = 110;
     const n = MODEL_CARD_AXES.length;
     const startAngle = -Math.PI / 2;
     const angleStep = (2 * Math.PI) / n;
@@ -820,18 +821,18 @@
       const [ex, ey] = point(radius, angle);
       axes += `<line x1="${cx}" y1="${cy}" x2="${ex.toFixed(1)}" y2="${ey.toFixed(1)}" stroke="#e2e8f0" stroke-width="1" />`;
       const [lx, ly] = point(labelRadius, angle);
-      labels += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="11" fill="#64748b">${axis.short}</text>`;
+      labels += `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="10.5" font-weight="600" fill="#64748b">${axis.short}</text>`;
       const raw = axis.get(averages);
       const value = raw != null ? Math.max(0, Math.min(1, raw)) : 0;
       const [px, py] = point(radius * value, angle);
       poly += `${px.toFixed(1)},${py.toFixed(1)} `;
       const display = raw != null ? (axis.key === 'quality' ? fmt(raw, 2) : fmt(raw)) : '--';
-      const [tx, ty] = point(Math.min(radius + 16, radius * value + 14), angle);
+      const [tx, ty] = point(valueRadius, angle);
       let anchor = 'middle';
       const cos = Math.cos(angle);
       if (cos > 0.28) anchor = 'start';
       else if (cos < -0.28) anchor = 'end';
-      annotations += `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle" font-size="10.5" font-weight="700" fill="${color}">${display}</text>`;
+      annotations += `<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle" font-size="10" font-weight="700" fill="${color}">${display}</text>`;
     }
 
     return `
