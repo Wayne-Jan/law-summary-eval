@@ -492,8 +492,7 @@
   </div>
   <div class="page-tab-bar">
     <button class="page-tab-btn active" data-main-tab="overview" onclick="setMainTab('overview')">總覽</button>
-    <button class="page-tab-btn" data-main-tab="cards" onclick="setMainTab('cards')">模型卡</button>
-    <button class="page-tab-btn" data-main-tab="relative" onclick="setMainTab('relative')">相對卡</button>
+    <button class="page-tab-btn" data-main-tab="relative" onclick="setMainTab('relative')">模型卡</button>
     <button class="page-tab-btn" data-main-tab="cases" onclick="setMainTab('cases')">個案比較</button>
   </div>
 
@@ -529,7 +528,7 @@
     </div>
   </div>
 
-  <div id="pagePanel_cards" class="page-panel">
+  <div id="pagePanel_cards" class="page-panel" style="display:none">
     <div class="panel-hero">
       <div class="panel-kicker">Model Cards</div>
       <div class="panel-title">用單模型卡片看各自的能力輪廓</div>
@@ -541,9 +540,9 @@
 
   <div id="pagePanel_relative" class="page-panel">
     <div class="panel-hero">
-      <div class="panel-kicker">Relative Cards</div>
-      <div class="panel-title">把不同量級的指標改看相對位置</div>
-      <div class="panel-desc">這個試驗分頁不改原始分數，只把雷達圖改成「同冊內相對位置」視覺化。圖上直接標示高、中、低，卡片下方仍保留原始分數，方便比較兩種呈現方式。</div>
+      <div class="panel-kicker">Model Cards</div>
+      <div class="panel-title">用相對位置看各模型的能力輪廓</div>
+      <div class="panel-desc">這裡保留原始分數卡片，但雷達圖改成同冊內的相對位置視覺化。圖上標示 P0 到 P100，方便比較不同量級指標在目前冊別中的相對強弱。</div>
     </div>
     <div id="relativeCardGrid" class="model-card-grid"></div>
   </div>
@@ -897,13 +896,6 @@
     return avgRank / (valid.length - 1);
   }
 
-  function relativeBand(pct) {
-    if (pct == null) return '--';
-    if (pct >= 2 / 3) return '高';
-    if (pct >= 1 / 3) return '中';
-    return '低';
-  }
-
   function buildRelativeCardRadar(condKey, entries, color) {
     const size = 240;
     const cx = size / 2;
@@ -946,7 +938,7 @@
       const value = pct != null ? pct : 0;
       const [px, py] = point(radius * value, angle);
       poly += `${px.toFixed(1)},${py.toFixed(1)} `;
-      const display = relativeBand(pct);
+      const display = pct != null ? `P${Math.round(pct * 100)}` : '--';
       const [tx, ty] = point(valueRadius, angle);
       let anchor = 'middle';
       const cos = Math.cos(angle);
