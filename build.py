@@ -426,6 +426,13 @@ def build():
         case_slugs[case] = f"case_{idx:03d}"
 
     # Also build slug mapping for ALL GT cases (may include cases not in predictions)
+    # GT names may differ from prediction names:
+    #   prediction: "原始判決書_04_第四案 車禍未做神經學檢查案"
+    #   GT:         "04_第四案 車禍未做神經學檢查案"
+    # Build a lookup: for each prediction case, strip "原始判決書_" to find its GT name.
+    pred_to_gt = {}   # prediction_name -> gt_name (for cases with prefix mismatch)
+    gt_to_pred = {}   # gt_name -> prediction_name
+
     gt_case_names = []
     gt_case_volume = {}  # gt_case -> volume
     if os.path.isdir(GT_SUMMARY_DIR):
@@ -441,10 +448,30 @@ def build():
                     if gt_case not in case_volumes:
                         case_volumes[gt_case] = vol
 
-    # Add GT-only cases to slug map
+    # Match GT names to prediction names via prefix stripping
+    gt_name_set = set(gt_case_names)
+    for pred_case in all_cases:
+        if pred_case in gt_name_set:
+            # Exact match (上冊 cases)
+            pred_to_gt[pred_case] = pred_case
+            gt_to_pred[pred_case] = pred_case
+        elif pred_case.startswith("原始判決書_"):
+            stripped = pred_case[len("原始判決書_"):]
+            if stripped in gt_name_set:
+                pred_to_gt[pred_case] = stripped
+                gt_to_pred[stripped] = pred_case
+
+    # Add GT-only cases to slug map; GT cases that map to a prediction use its slug
     next_idx = len(all_cases) + 1
     for gt_case in gt_case_names:
-        if gt_case not in case_slugs:
+        if gt_case in case_slugs:
+            # Already has a slug (exact match with prediction)
+            continue
+        if gt_case in gt_to_pred and gt_to_pred[gt_case] in case_slugs:
+            # Map GT to same slug as its prediction case
+            case_slugs[gt_case] = case_slugs[gt_to_pred[gt_case]]
+        else:
+            # GT-only case, no matching prediction
             case_slugs[gt_case] = f"case_{next_idx:03d}"
             next_idx += 1
 
