@@ -386,15 +386,19 @@
   <script>
     let allCases = [];
     let caseSlugs = {};
+    let caseInfo = {};
     let currentCase = null;
     let timelineData = null;
     let activeEventIdx = -1;
+
+    function getCaseDisplay(name) { return (caseInfo[name] || {}).display || name; }
 
     async function init() {
       try {
         const manifest = await (await fetch('./data/manifest.json')).json();
         allCases = manifest.cases || [];
         caseSlugs = manifest.case_slugs || {};
+        caseInfo = manifest.case_info || {};
       } catch { allCases = []; }
       renderCaseList(allCases);
       const params = new URLSearchParams(location.search);
@@ -406,15 +410,29 @@
     function renderCaseList(cases) {
       const el = document.getElementById('caseList');
       document.getElementById('caseCount').textContent = `${cases.length} 案例`;
-      el.innerHTML = cases.map(c => {
-        const isActive = c === currentCase ? 'active' : '';
-        return `<div class="case-item ${isActive}" data-case="${esc(c)}" onclick="selectCase('${esc(c)}')" title="${esc(c)}">${esc(c)}</div>`;
-      }).join('');
+      // Group by volume
+      const volumes = ['上冊', '中冊', '下冊'];
+      const byVol = {};
+      volumes.forEach(v => { byVol[v] = []; });
+      cases.forEach(c => {
+        const vol = (caseInfo[c] || {}).volume || '';
+        if (byVol[vol]) byVol[vol].push(c);
+      });
+      let html = '';
+      volumes.forEach(vol => {
+        if (!byVol[vol] || !byVol[vol].length) return;
+        html += `<div class="case-count" style="font-weight:600;color:#4f46e5;margin-top:8px">${esc(vol)}</div>`;
+        byVol[vol].forEach(c => {
+          const isActive = c === currentCase ? 'active' : '';
+          html += `<div class="case-item ${isActive}" data-case="${esc(c)}" onclick="selectCase('${esc(c)}')" title="${esc(c)}">${esc(getCaseDisplay(c))}</div>`;
+        });
+      });
+      el.innerHTML = html;
     }
 
     function filterCases() {
       const q = document.getElementById('caseSearch').value.trim().toLowerCase();
-      renderCaseList(q ? allCases.filter(c => c.toLowerCase().includes(q)) : allCases);
+      renderCaseList(q ? allCases.filter(c => getCaseDisplay(c).toLowerCase().includes(q) || c.toLowerCase().includes(q)) : allCases);
     }
 
     async function selectCase(caseName) {
@@ -744,9 +762,9 @@
     function updateMobileCaseBadge() {
       const badge = document.getElementById('mobileCaseBadge');
       const btn = document.getElementById('drawerCaseBtn');
-      const text = currentCase || '選擇案例';
-      if (badge) badge.textContent = text;
-      if (btn) btn.textContent = currentCase ? '目前：' + currentCase : '選擇案例...';
+      const display = currentCase ? getCaseDisplay(currentCase) : '選擇案例';
+      if (badge) badge.textContent = display;
+      if (btn) btn.textContent = currentCase ? '目前：' + display : '選擇案例...';
     }
 
     function initResizers() {

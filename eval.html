@@ -859,12 +859,27 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // Populate case selector
+  // Populate case selector with volume optgroups
   const sel = document.getElementById('caseSelect');
+  const ci = manifest.case_info || {};
+  const volumes = ['上冊', '中冊', '下冊'];
+  const byVol = {};
+  volumes.forEach(v => { byVol[v] = []; });
   caseList.forEach(c => {
-    const opt = document.createElement('option');
-    opt.value = c; opt.textContent = c;
-    sel.appendChild(opt);
+    const vol = (ci[c] || {}).volume || '';
+    if (byVol[vol]) byVol[vol].push(c);
+  });
+  volumes.forEach(vol => {
+    if (!byVol[vol] || !byVol[vol].length) return;
+    const og = document.createElement('optgroup');
+    og.label = vol;
+    byVol[vol].forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c;
+      opt.textContent = (ci[c] || {}).display || c;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
   });
 
   // Restore evaluator name

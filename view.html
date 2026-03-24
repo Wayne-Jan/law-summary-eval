@@ -475,6 +475,8 @@
         let gtData = null;
         let allCases = [];
         let caseSlugs = {};
+        let caseInfo = {};
+        let caseVolumes = {};
         let currentCaseName = initialCaseName;
         let currentCondition = initialCondition;
         let currentMode = initialMode;
@@ -490,17 +492,38 @@
                 const manifest = await (await fetch('./data/manifest.json')).json();
                 allCases = manifest.cases || [];
                 caseSlugs = manifest.case_slugs || {};
+                caseInfo = manifest.case_info || {};
+                caseVolumes = manifest.case_volumes || {};
             } catch { allCases = currentCaseName ? [currentCaseName] : []; }
             if (!currentCaseName && allCases.length > 0) currentCaseName = allCases[0];
             renderCaseSelector();
         }
 
+        function getCaseDisplay(name) {
+            return (caseInfo[name] || {}).display || name;
+        }
+
         function renderCaseSelector() {
             const select = document.getElementById('caseSelect');
-            select.innerHTML = allCases.map((name) => {
-                const selected = name === currentCaseName ? 'selected' : '';
-                return `<option value="${escapeHtml(name)}" ${selected}>${escapeHtml(name)}</option>`;
-            }).join('');
+            const volumes = ['上冊', '中冊', '下冊'];
+            const byVol = {};
+            volumes.forEach(v => { byVol[v] = []; });
+            allCases.forEach(name => {
+                const vol = (caseInfo[name] || {}).volume || caseVolumes[name] || '';
+                if (byVol[vol]) byVol[vol].push(name);
+                else { byVol[vol] = byVol[vol] || []; byVol[vol].push(name); }
+            });
+            let html = '';
+            volumes.forEach(vol => {
+                if (!byVol[vol] || !byVol[vol].length) return;
+                html += `<optgroup label="${escapeHtml(vol)}">`;
+                byVol[vol].forEach(name => {
+                    const sel = name === currentCaseName ? 'selected' : '';
+                    html += `<option value="${escapeHtml(name)}" ${sel}>${escapeHtml(getCaseDisplay(name))}</option>`;
+                });
+                html += '</optgroup>';
+            });
+            select.innerHTML = html;
             updateMobileCaseBadge();
             if (!select.dataset.bound) {
                 select.addEventListener('change', async () => {
@@ -813,7 +836,7 @@
         }
         function updateMobileCaseBadge() {
             const badge = document.getElementById('mobileCaseBadge');
-            if (badge) badge.textContent = currentCaseName || '選擇案例';
+            if (badge) badge.textContent = getCaseDisplay(currentCaseName) || '選擇案例';
         }
 
         // ─── Mobile Nav/Source Drawer Logic ───

@@ -8,8 +8,11 @@ minimal changes (only swap fetch URLs to static paths).
 All output filenames use ASCII slugs (case_001, case_002, ...) to avoid
 GitHub Pages issues with non-ASCII filenames.
 
+Volume-aware: scans predictions/{cond}/{volume}/{case}/ where volume
+is one of 上冊, 中冊, 下冊.
+
 Usage:
-    python site/build.py
+    python build.py
 """
 
 import json
@@ -17,15 +20,19 @@ import os
 import re
 import sys
 
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, PROJECT_ROOT)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+SOURCE_PROJECT = os.environ.get("LAW_PROJECT_ROOT", "/mnt/d/Law_extraction_refactor")
+sys.path.insert(0, SOURCE_PROJECT)
 from modules.extraction_v3_8.alignment_engine import smart_align
-PREDICTIONS = os.path.join(PROJECT_ROOT, "data", "predictions")
-CHUNKS_DIR = os.path.join(PROJECT_ROOT, "data", "chunks_20260105")
-EXTRACTIONS_DIR_V39 = os.path.join(PROJECT_ROOT, "data", "extractions_v3.9")
-SOURCE_TEXT_DIR = os.path.join(PROJECT_ROOT, "原始判決書")
-GT_SUMMARY_DIR = os.path.join(PROJECT_ROOT, "摘要 (ground_truth)")
-SITE_DATA = os.path.join(PROJECT_ROOT, "site", "data")
+
+PREDICTIONS = os.path.join(SOURCE_PROJECT, "data", "predictions")
+CHUNKS_DIR = os.path.join(SOURCE_PROJECT, "data", "chunks_20260105")
+EXTRACTIONS_DIR_V39 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.9")
+SOURCE_TEXT_DIR = os.path.join(SOURCE_PROJECT, "原始判決書")
+GT_SUMMARY_DIR = os.path.join(SOURCE_PROJECT, "摘要 (ground_truth)")
+SITE_DATA = os.path.join(SCRIPT_DIR, "data")
+
+VOLUMES = ["上冊", "中冊", "下冊"]
 
 # Must match server.py VIEWER_CONDITION_LABELS / VIEWER_CONDITION_GROUPS
 CONDITION_LABELS = {
@@ -121,10 +128,68 @@ def read_json(path):
         return json.load(f)
 
 
+def find_in_volumes(base_dir, relative_path):
+    """Search for a file across all volume subdirectories."""
+    for vol in VOLUMES:
+        full = os.path.join(base_dir, vol, relative_path)
+        if os.path.exists(full):
+            return full, vol
+    return None, None
+
+
+# ─── Case display name extraction ───
+
+# 上冊: "有罪1.臺灣苗栗地方法院88年訴字第68號刑事判決"
+_UPPER_RE = re.compile(r"^(有罪|無罪)(\d+)\.(.+?)(?:\d+年度?\S+字\S+號|$)")
+# 中冊/下冊: "原始判決書_04_第四案 車禍未做神經學檢查案"
+_MIDDLE_LOWER_RE = re.compile(r"^原始判決書[_*](\d+)[_*]第.+?案\s*(.+)$")
+
+
+def extract_case_info(case_name):
+    """Extract structured display info from a case directory name.
+
+    Returns dict with keys: number (str), display (str), verdict (str|None).
+
+    上冊: "有罪01 — 臺灣苗栗地方法院"  (保留有罪/無罪前綴)
+    中冊/下冊: "04 — 車禍未做神經學檢查案"
+    """
+    m = _UPPER_RE.match(case_name)
+    if m:
+        verdict = m.group(1)  # "有罪" or "無罪"
+        num = int(m.group(2))
+        # Extract court name (up to 地方法院/高等法院)
+        after_dot = case_name.split(".", 1)[1] if "." in case_name else ""
+        short_court = re.match(r"^(.+?(?:地方法院|高等法院))", after_dot)
+        court = short_court.group(1) if short_court else after_dot
+        number = f"{num:02d}"
+        return {
+            "number": number,
+            "display": f"{verdict}{number} — {court}",
+            "verdict": verdict,
+        }
+
+    m = _MIDDLE_LOWER_RE.match(case_name)
+    if m:
+        num = int(m.group(1))
+        short_desc = m.group(2).strip()
+        number = f"{num:02d}"
+        return {
+            "number": number,
+            "display": f"{number} — {short_desc}",
+            "verdict": None,
+        }
+
+    # Fallback: use full name
+    return {
+        "number": "00",
+        "display": case_name,
+        "verdict": None,
+    }
+
+
 def load_sections(case_dir):
     """Load sections in the same format as /api/view/{case} returns."""
     sections = []
-    # Try workspace/sections first, then root
     section_dir = os.path.join(case_dir, "workspace", "sections")
     if not os.path.isdir(section_dir):
         section_dir = case_dir
@@ -134,7 +199,6 @@ def load_sections(case_dir):
         if os.path.exists(file_path):
             raw = read_text(file_path).strip()
             body = raw
-            # Strip section title from first line if present (same as server.py)
             first_line, _, remainder = raw.partition("\n")
             if first_line.strip().startswith("（") and "）" in first_line:
                 body = remainder.strip()
@@ -145,7 +209,7 @@ def load_sections(case_dir):
     return sections
 
 
-def load_chunks_for_case(case_name, case_dir):
+def load_chunks_for_case(case_name, case_dir, volume):
     """Build CH_XX -> content mapping, same logic as server.py."""
     chunks = {}
 
@@ -172,7 +236,6 @@ def load_chunks_for_case(case_name, case_dir):
         citations_map = cit_json.get("alias_to_chunk_id", {})
 
     if not citations_map:
-        # Try chunk_alias_mapping.json
         mapping = read_json(
             os.path.join(case_dir, "workspace", "chunk_alias_mapping.json")
         )
@@ -183,8 +246,8 @@ def load_chunks_for_case(case_name, case_dir):
                 else:
                     citations_map[alias] = val
 
-    # 3. Fallback: positional mapping from chunks JSON
-    chunks_json_path = os.path.join(CHUNKS_DIR, f"{case_name}.json")
+    # 3. Fallback: positional mapping from chunks JSON (volume-aware)
+    chunks_json_path = os.path.join(CHUNKS_DIR, volume, f"{case_name}.json")
     if not citations_map and os.path.exists(chunks_json_path):
         raw = read_json(chunks_json_path)
         chunk_list = raw if isinstance(raw, list) else raw.get("chunks", [])
@@ -322,27 +385,37 @@ def parse_gt_sections(raw_text):
 def build():
     os.makedirs(SITE_DATA, exist_ok=True)
 
-    # Collect all conditions and cases
-    all_conditions = {}  # cond -> {case -> case_dir}
+    # Collect all conditions and cases (volume-aware)
+    # all_conditions: cond -> {case_name -> {"dir": case_dir, "volume": vol}}
+    all_conditions = {}
     all_cases = set()
+    case_volumes = {}  # case_name -> volume
 
     for cond in sorted(os.listdir(PREDICTIONS)):
         cond_dir = os.path.join(PREDICTIONS, cond)
         if not os.path.isdir(cond_dir) or cond.startswith(".") or cond in ("Old",):
             continue
         cases = {}
-        for case in sorted(os.listdir(cond_dir)):
-            case_dir = os.path.join(cond_dir, case)
-            if not os.path.isdir(case_dir):
+        for vol in VOLUMES:
+            vol_dir = os.path.join(cond_dir, vol)
+            if not os.path.isdir(vol_dir):
                 continue
-            if not os.path.exists(os.path.join(case_dir, "summary_clean.txt")):
-                continue
-            cases[case] = case_dir
-            all_cases.add(case)
+            for case in sorted(os.listdir(vol_dir)):
+                case_dir = os.path.join(vol_dir, case)
+                if not os.path.isdir(case_dir):
+                    continue
+                if not os.path.exists(os.path.join(case_dir, "summary_clean.txt")):
+                    continue
+                cases[case] = {"dir": case_dir, "volume": vol}
+                all_cases.add(case)
+                case_volumes[case] = vol
         if cases:
             all_conditions[cond] = cases
 
-    all_cases = sorted(all_cases)
+    # Sort cases: by volume order, then by name
+    vol_order = {v: i for i, v in enumerate(VOLUMES)}
+    all_cases = sorted(all_cases, key=lambda c: (vol_order.get(case_volumes.get(c, ""), 99), c))
+
     # Sort conditions by CONDITION_ORDER, then alphabetically for unlisted ones
     order_map = {c: i for i, c in enumerate(CONDITION_ORDER)}
     cond_list = sorted(all_conditions.keys(), key=lambda c: (order_map.get(c, 999), c))
@@ -354,10 +427,20 @@ def build():
 
     # Also build slug mapping for ALL GT cases (may include cases not in predictions)
     gt_case_names = []
+    gt_case_volume = {}  # gt_case -> volume
     if os.path.isdir(GT_SUMMARY_DIR):
-        for fname in sorted(os.listdir(GT_SUMMARY_DIR)):
-            if fname.startswith("摘要_") and fname.endswith(".txt"):
-                gt_case_names.append(fname[len("摘要_") : -len(".txt")])
+        for vol in VOLUMES:
+            vol_dir = os.path.join(GT_SUMMARY_DIR, vol)
+            if not os.path.isdir(vol_dir):
+                continue
+            for fname in sorted(os.listdir(vol_dir)):
+                if fname.startswith("摘要_") and fname.endswith(".txt"):
+                    gt_case = fname[len("摘要_"):-len(".txt")]
+                    gt_case_names.append(gt_case)
+                    gt_case_volume[gt_case] = vol
+                    if gt_case not in case_volumes:
+                        case_volumes[gt_case] = vol
+
     # Add GT-only cases to slug map
     next_idx = len(all_cases) + 1
     for gt_case in gt_case_names:
@@ -383,9 +466,11 @@ def build():
         cond_out_dir = os.path.join(SITE_DATA, cond)
         os.makedirs(cond_out_dir, exist_ok=True)
 
-        for case, case_dir in cases.items():
+        for case, info in cases.items():
+            case_dir = info["dir"]
+            volume = info["volume"]
             sections = load_sections(case_dir)
-            chunks, citations_map = load_chunks_for_case(case, case_dir)
+            chunks, citations_map = load_chunks_for_case(case, case_dir, volume)
             metadata = load_metadata(case_dir)
 
             eval_dir = os.path.join(case_dir, "eval")
@@ -395,9 +480,9 @@ def build():
             if eval_scores:
                 eval_count += 1
 
-            # Build response in EXACT /api/view/{case} format
             view_data = {
                 "case_name": case,
+                "volume": volume,
                 "condition": cond,
                 "available_conditions": case_to_conditions.get(case, []),
                 "condition_labels": CONDITION_LABELS,
@@ -421,7 +506,7 @@ def build():
             "case_count": len(cases),
             "eval_count": eval_count,
         }
-        print(f"  {cond:45s}  {len(cases):2d} cases  {eval_count:2d} evals")
+        print(f"  {cond:45s}  {len(cases):3d} cases  {eval_count:3d} evals")
 
     # Build cases list (same as /api/view-cases)
     cases_json_path = os.path.join(SITE_DATA, "cases.json")
@@ -434,10 +519,14 @@ def build():
         os.makedirs(gt_out_dir, exist_ok=True)
         gt_count = 0
         for gt_case in gt_case_names:
-            raw = read_text(os.path.join(GT_SUMMARY_DIR, f"摘要_{gt_case}.txt"))
+            vol = gt_case_volume.get(gt_case, "")
+            raw = read_text(os.path.join(GT_SUMMARY_DIR, vol, f"摘要_{gt_case}.txt"))
+            if not raw:
+                continue
             parsed = parse_gt_sections(raw)
             gt_data = {
                 "case_name": gt_case,
+                "volume": vol,
                 "sections": [
                     {"id": sid, "title": title, "content": parsed.get(sid, "")}
                     for sid, _, title in SECTION_FILES
@@ -449,9 +538,9 @@ def build():
             ) as f:
                 json.dump(gt_data, f, ensure_ascii=False, indent=1)
             gt_count += 1
-        print(f"  {'_gt (teacher summaries)':45s}  {gt_count:2d} cases")
+        print(f"  {'_gt (teacher summaries)':45s}  {gt_count:3d} cases")
 
-    # Build timeline data (extraction v3.9 only)
+    # Build timeline data (extraction v3.9 only, volume-aware)
     tl_out_dir = os.path.join(SITE_DATA, "timeline")
     os.makedirs(tl_out_dir, exist_ok=True)
     tl_count = 0
@@ -461,87 +550,109 @@ def build():
         print("  WARNING: extraction v3.9 directory not found, skipping timeline")
         extraction_dir = None
 
-    for case_name in sorted(os.listdir(extraction_dir)) if extraction_dir else []:
-        master_path = os.path.join(extraction_dir, case_name, "master.json")
-        if not os.path.exists(master_path):
-            continue
-        master = read_json(master_path)
-        if not isinstance(master, dict):
-            continue
-        tl_result = master.get("timeline", master.get("timeline_result", {}))
-        events = tl_result.get("timeline", tl_result.get("events", []))
-        if not events:
-            continue
-        # Load chunks for this case (used by timeline source panel)
-        chunk_path = os.path.join(CHUNKS_DIR, case_name + ".json")
-        chunks_data = []
-        if os.path.exists(chunk_path):
-            raw_chunks = read_json(chunk_path)
-            if isinstance(raw_chunks, list):
-                chunks_data = [
-                    {
-                        "chunk_id": c.get("chunk_id", ""),
-                        "title": c.get("title", ""),
-                        "content": c.get("content", ""),
-                        "start_char": c.get("start_char", 0),
-                        "end_char": c.get("end_char", 0),
-                    }
-                    for c in raw_chunks
-                ]
-        # Realign char_start/char_end using smart_align against source text
-        source_path = os.path.join(SOURCE_TEXT_DIR, case_name + ".txt")
-        if os.path.exists(source_path):
-            source_text = open(source_path, encoding="utf-8").read()
-            realigned = 0
-            for evt in events:
-                txt = (evt.get("extraction_text") or "").strip()
-                if not txt:
+    if extraction_dir:
+        for vol in VOLUMES:
+            vol_dir = os.path.join(extraction_dir, vol)
+            if not os.path.isdir(vol_dir):
+                continue
+            for case_name in sorted(os.listdir(vol_dir)):
+                master_path = os.path.join(vol_dir, case_name, "master.json")
+                if not os.path.exists(master_path):
                     continue
-                hit = smart_align(source_text, txt)
-                if hit:
-                    evt["char_start"] = hit.start
-                    evt["char_end"] = hit.end
-                    realigned += 1
-            if realigned:
-                tl_realign_count = tl_realign_count + realigned
+                master = read_json(master_path)
+                if not isinstance(master, dict):
+                    continue
+                tl_result = master.get("timeline", master.get("timeline_result", {}))
+                events = tl_result.get("timeline", tl_result.get("events", []))
+                if not events:
+                    continue
+                # Load chunks for this case (volume-aware)
+                chunk_path = os.path.join(CHUNKS_DIR, vol, case_name + ".json")
+                chunks_data = []
+                if os.path.exists(chunk_path):
+                    raw_chunks = read_json(chunk_path)
+                    if isinstance(raw_chunks, list):
+                        chunks_data = [
+                            {
+                                "chunk_id": c.get("chunk_id", ""),
+                                "title": c.get("title", ""),
+                                "content": c.get("content", ""),
+                                "start_char": c.get("start_char", 0),
+                                "end_char": c.get("end_char", 0),
+                            }
+                            for c in raw_chunks
+                        ]
+                # Realign char_start/char_end using smart_align (volume-aware)
+                source_path = os.path.join(SOURCE_TEXT_DIR, vol, case_name + ".txt")
+                if os.path.exists(source_path):
+                    source_text = open(source_path, encoding="utf-8").read()
+                    realigned = 0
+                    for evt in events:
+                        txt = (evt.get("extraction_text") or "").strip()
+                        if not txt:
+                            continue
+                        hit = smart_align(source_text, txt)
+                        if hit:
+                            evt["char_start"] = hit.start
+                            evt["char_end"] = hit.end
+                            realigned += 1
+                    if realigned:
+                        tl_realign_count = tl_realign_count + realigned
 
-        # Collect time_gaps (v3.9: top-level or inside timeline_summary)
-        tl_summary = tl_result.get("timeline_summary", {})
-        time_gaps = tl_result.get("time_gaps", tl_summary.get("time_gaps", []))
-        tl_data = {
-            "case_name": case_name,
-            "events": events,
-            "timeline_summary": tl_summary,
-            "time_gaps": time_gaps,
-            "causation_chain": tl_result.get("causation_chain", []),
-            "chunks": chunks_data,
-        }
-        slug = case_slugs.get(case_name)
-        if not slug:
-            slug = f"case_{next_idx:03d}"
-            case_slugs[case_name] = slug
-            next_idx += 1
-        with open(
-            os.path.join(tl_out_dir, slug + ".json"), "w", encoding="utf-8"
-        ) as f:
-            json.dump(tl_data, f, ensure_ascii=False, indent=1)
-        tl_count += 1
-    print(f"  {'timeline (extraction v3.9 only)':45s}  {tl_count:2d} cases  ({tl_realign_count} spans realigned)")
+                tl_summary = tl_result.get("timeline_summary", {})
+                time_gaps = tl_result.get("time_gaps", tl_summary.get("time_gaps", []))
+                tl_data = {
+                    "case_name": case_name,
+                    "volume": vol,
+                    "events": events,
+                    "timeline_summary": tl_summary,
+                    "time_gaps": time_gaps,
+                    "causation_chain": tl_result.get("causation_chain", []),
+                    "chunks": chunks_data,
+                }
+                slug = case_slugs.get(case_name)
+                if not slug:
+                    slug = f"case_{next_idx:03d}"
+                    case_slugs[case_name] = slug
+                    next_idx += 1
+                    case_volumes[case_name] = vol
+                with open(
+                    os.path.join(tl_out_dir, slug + ".json"), "w", encoding="utf-8"
+                ) as f:
+                    json.dump(tl_data, f, ensure_ascii=False, indent=1)
+                tl_count += 1
 
-    # Build manifest (includes slug mapping for frontend)
+    print(f"  {'timeline (extraction v3.9 only)':45s}  {tl_count:3d} cases  ({tl_realign_count} spans realigned)")
+
+    # Build case_info for display names
+    case_info = {}
+    for case in all_cases:
+        info = extract_case_info(case)
+        info["volume"] = case_volumes.get(case, "")
+        case_info[case] = info
+
+    # Build manifest (includes slug mapping and volume info for frontend)
     manifest = {
         "conditions": manifest_conditions,
         "condition_labels": CONDITION_LABELS,
         "condition_groups": CONDITION_GROUPS,
         "cases": all_cases,
         "case_slugs": case_slugs,
+        "case_volumes": case_volumes,
+        "case_info": case_info,
+        "volumes": VOLUMES,
     }
     with open(os.path.join(SITE_DATA, "manifest.json"), "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=1)
 
     total = sum(c["case_count"] for c in manifest_conditions.values())
+    vol_counts = {}
+    for c in all_cases:
+        v = case_volumes.get(c, "")
+        vol_counts[v] = vol_counts.get(v, 0) + 1
+    vol_summary = ", ".join(f"{v}:{vol_counts.get(v, 0)}" for v in VOLUMES)
     print(
-        f"\n  Total: {len(manifest_conditions)} conditions, {len(all_cases)} cases, {total} data files"
+        f"\n  Total: {len(manifest_conditions)} conditions, {len(all_cases)} cases ({vol_summary}), {total} data files"
     )
 
 

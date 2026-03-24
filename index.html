@@ -416,17 +416,18 @@
   </div>
   <div class="reveal">
     <div class="filter-row">
-      <div class="ftabs">
+      <div class="ftabs" id="volTabs">
         <button class="ftab active" onclick="fil('all',this)">全部</button>
-        <button class="ftab" onclick="fil('g',this)">有罪</button>
-        <button class="ftab" onclick="fil('ng',this)">無罪</button>
+        <button class="ftab" onclick="fil('上冊',this)">上冊</button>
+        <button class="ftab" onclick="fil('中冊',this)">中冊</button>
+        <button class="ftab" onclick="fil('下冊',this)">下冊</button>
       </div>
       <span style="flex:1"></span>
       <span class="rcount" id="rc"></span>
       <input type="text" class="sbox" id="sb" placeholder="搜尋案件..." oninput="fil(cf)">
     </div>
     <table class="ctable">
-      <thead><tr><th>#</th><th>案件名稱</th><th>類型</th><th>Conditions</th><th style="width:36px"></th></tr></thead>
+      <thead><tr><th style="width:48px">#</th><th>案件</th><th>冊別</th><th>Conditions</th><th style="width:36px"></th></tr></thead>
       <tbody id="cb"></tbody>
     </table>
   </div>
@@ -439,12 +440,12 @@ let ac=[], cf='all';
 
 async function init() {
   const m = await (await fetch('./data/manifest.json')).json();
-  const cs = m.cases, co = m.conditions;
+  const cs = m.cases, co = m.conditions, ci = m.case_info || {};
   const tc = Object.keys(co).length;
   const tf = Object.values(co).reduce((s,c)=>s+c.case_count,0);
   const te = Object.values(co).reduce((s,c)=>s+c.eval_count,0);
-  const gc = cs.filter(n=>n.startsWith('有罪')).length;
-  const nc = cs.filter(n=>n.startsWith('無罪')).length;
+  const volCounts = {};
+  cs.forEach(n => { const v = (ci[n]||{}).volume||''; volCounts[v] = (volCounts[v]||0)+1; });
 
   document.getElementById('heroStats').innerHTML = `
     <div><div class="hero-stat-value">${cs.length}</div><div class="hero-stat-label">案件</div></div>
@@ -455,15 +456,17 @@ async function init() {
 
   document.getElementById('numbers').innerHTML = `
     <div class="num-item"><div class="num-value">${cs.length}<span class="u"> 件</span></div><div class="num-label">醫療糾紛案件</div></div>
-    <div class="num-item"><div class="num-value">${gc} <span class="u">/</span> ${nc}</div><div class="num-label">有罪 / 無罪</div></div>
+    <div class="num-item"><div class="num-value">${volCounts['上冊']||0} <span class="u">/</span> ${volCounts['中冊']||0} <span class="u">/</span> ${volCounts['下冊']||0}</div><div class="num-label">上冊 / 中冊 / 下冊</div></div>
     <div class="num-item"><div class="num-value">${tc}</div><div class="num-label">模型 × 條件</div></div>
     <div class="num-item"><div class="num-value">${tf}</div><div class="num-label">摘要產出</div></div>
   `;
 
-  ac = cs.map((n,i)=>({i:i+1,n,g:n.startsWith('有罪'),c:tc}));
+  ac = cs.map((n,i) => {
+    const info = ci[n] || {};
+    return { i:i+1, n, display: info.display||n, vol: info.volume||'', c:tc };
+  });
   fil('all');
 
-  // Lightweight reveal observer
   const obs = new IntersectionObserver(es => {
     es.forEach(e => { if(e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }});
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
@@ -475,17 +478,16 @@ function fil(f, btn) {
   cf = f;
   const q = (document.getElementById('sb')?.value||'').trim().toLowerCase();
   let r = ac;
-  if(f==='g') r=r.filter(c=>c.g);
-  else if(f==='ng') r=r.filter(c=>!c.g);
-  if(q) r=r.filter(c=>c.n.toLowerCase().includes(q));
+  if(f!=='all') r=r.filter(c=>c.vol===f);
+  if(q) r=r.filter(c=>c.display.toLowerCase().includes(q) || c.n.toLowerCase().includes(q));
   document.getElementById('rc').textContent = r.length===ac.length ? '' : r.length+' / '+ac.length;
   const tb = document.getElementById('cb');
   if(!r.length) { tb.innerHTML='<tr><td colspan="5"><div class="empty-s">沒有符合條件的案件</div></td></tr>'; return; }
   tb.innerHTML = r.map(c=>`
     <tr onclick="location.href='view.html?case=${encodeURIComponent(c.n)}'">
       <td>${c.i}</td>
-      <td class="cn" title="${esc(c.n)}">${esc(c.n)}</td>
-      <td><span class="vb ${c.g?'g':'ng'}"><span class="d"></span>${c.g?'有罪':'無罪'}</span></td>
+      <td class="cn" title="${esc(c.n)}">${esc(c.display)}</td>
+      <td class="cc">${esc(c.vol)}</td>
       <td class="cc">${c.c}</td>
       <td><svg class="ai" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg></td>
     </tr>`).join('');
