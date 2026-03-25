@@ -55,8 +55,15 @@ CONDITION_LABELS = {
     "baseline_ollama_gpt-oss-120b-cloud": "Baseline-GPT-OSS",
     "baseline_ollama_kimi-k2.5-cloud": "Baseline-Kimi K2.5",
     "baseline_ollama_mistral-large-3-675b-cloud": "Baseline-Mistral Large 3",
+    "baseline_ollama_nemotron-3-super-cloud": "Baseline-Nemotron 3 Super",
     "baseline_ollama_qwen3-next-80b-cloud": "Baseline-Qwen3 Next",
     "baseline_ollama_qwen3.5-397b-cloud": "Baseline-Qwen3.5",
+    "opensource_afg_v11_5": "OpenAFG v11.5",
+    "opensource_afg_v11_5_no_afg": "OpenAFG v11.5 (No AFG)",
+    "opensource_afg_v11_5_no_react": "OpenAFG v11.5 (No ReAct)",
+    "opensource_afg_v11_5_writer_nemotron_super": "OpenAFG v11.5 (Nemo-Super Writer)",
+    "opensource_afg_v11_5_no_react_writer_nemotron_super": "OpenAFG v11.5 (No ReAct, Nemo-Super Writer)",
+    "opensource_afg_v11_5_no_afg_writer_nemotron_super": "OpenAFG v11.5 (No AFG, Nemo-Super Writer)",
 }
 
 # Display order: Claude → OpenSource → Baselines
@@ -79,8 +86,15 @@ CONDITION_ORDER = [
     "baseline_ollama_gpt-oss-120b-cloud",
     "baseline_ollama_kimi-k2.5-cloud",
     "baseline_ollama_mistral-large-3-675b-cloud",
+    "baseline_ollama_nemotron-3-super-cloud",
     "baseline_ollama_qwen3-next-80b-cloud",
     "baseline_ollama_qwen3.5-397b-cloud",
+    "opensource_afg_v11_5",
+    "opensource_afg_v11_5_no_afg",
+    "opensource_afg_v11_5_no_react",
+    "opensource_afg_v11_5_writer_nemotron_super",
+    "opensource_afg_v11_5_no_react_writer_nemotron_super",
+    "opensource_afg_v11_5_no_afg_writer_nemotron_super",
 ]
 
 CONDITION_GROUPS = {
@@ -99,11 +113,18 @@ CONDITION_GROUPS = {
     "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
     "baseline_ollama_kimi-k2.5-cloud": "開源模型",
     "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+    "baseline_ollama_nemotron-3-super-cloud": "開源模型",
     "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
     "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
     "opensource_afg_v11": "開源模型",
     "opensource_afg_v11_no_afg": "開源模型",
     "opensource_afg_v11_no_react": "開源模型",
+    "opensource_afg_v11_5": "開源模型",
+    "opensource_afg_v11_5_no_afg": "開源模型",
+    "opensource_afg_v11_5_no_react": "開源模型",
+    "opensource_afg_v11_5_writer_nemotron_super": "開源模型",
+    "opensource_afg_v11_5_no_react_writer_nemotron_super": "開源模型",
+    "opensource_afg_v11_5_no_afg_writer_nemotron_super": "開源模型",
 }
 
 SECTION_FILES = [
