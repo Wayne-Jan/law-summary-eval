@@ -412,9 +412,14 @@ def build():
         if cases:
             all_conditions[cond] = cases
 
-    # Sort cases: by volume order, then by name
+    # Sort cases: by volume order, then verdict group (有罪 first, 無罪 second), then by numeric case number
     vol_order = {v: i for i, v in enumerate(VOLUMES)}
-    all_cases = sorted(all_cases, key=lambda c: (vol_order.get(case_volumes.get(c, ""), 99), c))
+    verdict_order = {"有罪": 0, "無罪": 1}
+    all_cases = sorted(all_cases, key=lambda c: (
+        vol_order.get(case_volumes.get(c, ""), 99),
+        verdict_order.get(extract_case_info(c)["verdict"], 0),
+        int(extract_case_info(c)["number"]),
+    ))
 
     # Sort conditions by CONDITION_ORDER, then alphabetically for unlisted ones
     order_map = {c: i for i, c in enumerate(CONDITION_ORDER)}
