@@ -473,6 +473,9 @@
     <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()" />
     <div class="login-error" id="loginError"></div>
     <button class="btn btn-primary" onclick="doLogin()">登入</button>
+    <div style="margin-top:20px;text-align:center">
+      <a href="#" id="adminLoginLink" style="font-size:12px;color:var(--slate-300);text-decoration:none" onclick="event.preventDefault();toggleAdminLogin()">系統管理者</a>
+    </div>
   </div>
 </div>
 
@@ -650,7 +653,7 @@ const USERS = {
   '李惠宗': { role: 'legal', hash: 'cc399d73903f06ee694032ab0538f05634ff7e1ce5e8e50ac330a871484f34cf' },
   '丁鴻志': { role: 'medical', hash: '216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad' },
   '施朝仁': { role: 'medical', hash: 'e11d8cb94b54e0a2fd0e780f93dd51837fd39bf0c9b86f21e760d02a8550ddf7' },
-  'admin':  { role: 'admin', hash: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918' },
+  'admin':  { role: 'admin', hash: '50d68d52e62a95017f3edcdfbe6b8aaae5a504b44dc81e83fa0b7dac015d73a1' },
 };
 
 async function sha256(str) {
@@ -666,7 +669,7 @@ async function doLogin() {
   const password = passInput.value;
 
   errorEl.textContent = '';
-  if (!username) { errorEl.textContent = '請選擇評估者'; return; }
+  if (!username) { errorEl.textContent = _adminLoginMode ? '請輸入管理者密碼' : '請選擇評估者'; return; }
   if (!password) { errorEl.textContent = '請輸入密碼'; return; }
 
   const user = USERS[username];
@@ -704,17 +707,38 @@ function logout() {
 function showLoginOverlay() {
   const overlay = document.getElementById('loginOverlay');
   overlay.classList.remove('hidden');
-  // Populate user select
+  // Populate user select (exclude admin — admin uses separate entry)
   const sel = document.getElementById('loginUser');
   if (sel.options.length <= 1) {
-    Object.keys(USERS).forEach(name => {
+    Object.keys(USERS).filter(n => n !== 'admin').forEach(name => {
       const opt = document.createElement('option');
       opt.value = name;
       opt.textContent = name;
       sel.appendChild(opt);
     });
   }
+  sel.style.display = '';
   document.getElementById('loginPassword').value = '';
+  document.getElementById('loginError').textContent = '';
+  document.getElementById('adminLoginLink').style.display = '';
+}
+
+let _adminLoginMode = false;
+function toggleAdminLogin() {
+  _adminLoginMode = !_adminLoginMode;
+  const sel = document.getElementById('loginUser');
+  const link = document.getElementById('adminLoginLink');
+  if (_adminLoginMode) {
+    sel.style.display = 'none';
+    sel.value = 'admin';
+    link.textContent = '返回評估者登入';
+    document.getElementById('loginPassword').placeholder = '管理者密碼';
+  } else {
+    sel.style.display = '';
+    sel.value = '';
+    link.textContent = '系統管理者';
+    document.getElementById('loginPassword').placeholder = '密碼';
+  }
   document.getElementById('loginError').textContent = '';
 }
 
