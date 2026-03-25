@@ -13,14 +13,19 @@
       --serif: 'Noto Serif TC', serif;
       --sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --indigo: #4f46e5;
+      --indigo-soft: #818cf8;
       --slate-900: #0f172a;
       --slate-700: #334155;
       --slate-500: #64748b;
       --slate-100: #f1f5f9;
+      --slate-50: #f8fafc;
+      --panel: rgba(255,255,255,0.06);
+      --panel-line: rgba(255,255,255,0.1);
     }
 
     html { scroll-behavior: smooth; }
     body { font-family: var(--sans); background: #fff; color: var(--slate-700); overflow-x: hidden; }
+    .container { width: min(1120px, calc(100vw - 48px)); margin: 0 auto; }
 
     /* ─── NAV ─── */
     .nav {
@@ -47,17 +52,28 @@
       position: relative; min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(99,102,241,0.2), transparent 30%),
+        radial-gradient(circle at 78% 18%, rgba(45,212,191,0.16), transparent 26%),
+        linear-gradient(140deg, #0f172a 0%, #172036 45%, #1f2454 100%);
     }
-    .hero-img {
-      position: absolute; inset: 0;
-      background: url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1920&q=80') center/cover no-repeat;
-    }
-    .hero-img::after {
+    .hero::before {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(30,41,59,0.85) 50%, rgba(49,46,129,0.88) 100%);
+      background:
+        linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.25));
+      pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: auto 0 0 0; height: 180px;
+      background: linear-gradient(to bottom, rgba(15,23,42,0), rgba(15,23,42,0.55));
+      pointer-events: none;
     }
     .hero-content {
-      position: relative; z-index: 2; text-align: center; padding: 0 24px; max-width: 780px;
+      position: relative; z-index: 2; text-align: center; width: min(980px, calc(100vw - 48px));
+      padding: 112px 0 72px;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 6px;
@@ -80,8 +96,8 @@
 
     .hero-sub {
       font-size: clamp(14px, 1.8vw, 17px);
-      color: rgba(255,255,255,0.5); line-height: 1.8;
-      max-width: 520px; margin: 0 auto 36px; font-weight: 300;
+      color: rgba(255,255,255,0.68); line-height: 1.9;
+      max-width: 720px; margin: 0 auto 36px; font-weight: 300;
       animation: fadeUp 0.7s ease 0.2s both;
     }
 
@@ -101,11 +117,19 @@
     .btn-ghost:hover { background: rgba(255,255,255,0.14); }
 
     .hero-stats {
-      display: flex; justify-content: center; gap: 48px; margin-top: 56px;
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 56px auto 0;
+      max-width: 880px; border-radius: 20px; overflow: hidden;
+      background: var(--panel); border: 1px solid var(--panel-line);
+      box-shadow: 0 18px 60px rgba(15,23,42,0.22);
       animation: fadeUp 0.7s ease 0.4s both;
     }
+    .hero-stat {
+      padding: 26px 18px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-stat:last-child { border-right: none; }
     .hero-stat-value { font-size: 34px; font-weight: 700; color: #fff; font-family: var(--serif); }
-    .hero-stat-label { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+    .hero-stat-label { font-size: 12px; color: rgba(255,255,255,0.48); margin-top: 8px; letter-spacing: 0.3px; }
 
     .scroll-hint {
       position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
@@ -118,7 +142,7 @@
     .section { padding: 96px 24px; }
     .section-label {
       font-size: 11px; font-weight: 700; color: var(--indigo);
-      text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; text-align: center;
+      letter-spacing: 2px; margin-bottom: 12px; text-align: center;
     }
     .section-title {
       font-family: var(--serif);
@@ -165,21 +189,22 @@
     .section.dark .section-title { color: #fff; }
 
     .numbers {
-      display: flex; gap: 0; max-width: 800px; margin: 0 auto;
-      background: rgba(255,255,255,0.04); border-radius: 16px;
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; max-width: 960px; margin: 0 auto;
+      background: rgba(255,255,255,0.04); border-radius: 20px;
       border: 1px solid rgba(255,255,255,0.08); overflow: hidden;
+      box-shadow: 0 18px 60px rgba(2,6,23,0.22);
     }
     .num-item { flex: 1; text-align: center; padding: 36px 20px; position: relative; }
     .num-item + .num-item::before {
       content: ''; position: absolute; left: 0; top: 20%; height: 60%;
       width: 1px; background: rgba(255,255,255,0.08);
     }
-    .num-value { font-family: var(--serif); font-size: 40px; font-weight: 900; color: #fff; }
+    .num-value { font-family: var(--serif); font-size: 40px; font-weight: 900; color: #fff; line-height: 1.2; }
     .num-value .u { font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.4); }
-    .num-label { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; }
+    .num-label { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 8px; line-height: 1.6; }
 
     /* ─── CASE TABLE ─── */
-    .section.cases-section { background: var(--slate-100); }
+    .section.cases-section { background: var(--slate-50); }
 
     .filter-row {
       display: flex; align-items: center; gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
@@ -198,7 +223,7 @@
       background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cline x1='9.5' y1='9.5' x2='13' y2='13'/%3E%3C/svg%3E") no-repeat 10px center;
     }
     .sbox:focus { border-color: var(--indigo); }
-    .rcount { font-size: 11px; color: #9ca3af; }
+    .rcount { font-size: 11px; color: #9ca3af; min-width: 56px; text-align: right; }
 
     .ctable {
       width: 100%; max-width: 920px; margin: 0 auto;
@@ -232,8 +257,8 @@
     /* ─── FOOTER ─── */
     .footer {
       padding: 28px 24px; text-align: center;
-      font-size: 12px; color: #c0c0c0; background: #fff;
-      border-top: 1px solid #f3f4f6;
+      font-size: 12px; color: #94a3b8; background: #fff;
+      border-top: 1px solid #e2e8f0;
     }
 
     /* ─── ANIMATIONS ─── */
@@ -241,8 +266,9 @@
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
     @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
 
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; will-change: opacity, transform; }
-    .reveal.vis { opacity: 1; transform: translateY(0); }
+    .reveal { opacity: 1; transform: translateY(0); }
+    body.js-ready .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; will-change: opacity, transform; }
+    body.js-ready .reveal.vis { opacity: 1; transform: translateY(0); }
 
     /* ─── TABLET (≤1024px) ─── */
     @media (max-width: 1024px) {
@@ -270,7 +296,10 @@
       .hero-actions { gap: 8px; }
       .btn { padding: 12px 20px; font-size: 13px; }
 
-      .hero-stats { gap: 16px; flex-wrap: wrap; justify-content: center; }
+      .hero-content { padding: 96px 0 56px; }
+      .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .hero-stat { padding: 22px 16px; }
+      .hero-stat:nth-child(2n) { border-right: none; }
       .hero-stat-value { font-size: 24px; }
       .hero-stat-label { font-size: 10px; }
 
@@ -286,6 +315,7 @@
 
       .section.dark { padding: 48px 16px; }
       .numbers { flex-wrap: wrap; border-radius: 12px; }
+      .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .num-item { min-width: 50%; padding: 24px 12px; }
       .num-item + .num-item::before { display: none; }
       .num-value { font-size: 32px; }
@@ -310,6 +340,9 @@
       .hero-stats { gap: 12px; margin-top: 36px; }
       .hero-stat-value { font-size: 20px; }
 
+      .hero-stats, .numbers { grid-template-columns: 1fr; }
+      .hero-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .hero-stat:last-child { border-bottom: none; }
       .num-item { min-width: 100%; }
       .cn { max-width: 140px; }
       .ctable td:nth-child(4) { display: none; } /* hide conditions count on very small */
@@ -320,35 +353,34 @@
 <body>
 
 <nav class="nav">
-  <span class="nav-logo">LegalSummary</span>
+  <span class="nav-logo">LegalSummary Eval</span>
   <span class="nav-spacer"></span>
-  <a href="#why">關於</a>
-  <a href="#data">資料</a>
-  <a href="#cases">案件</a>
-  <a href="timeline.html">時間軸</a>
+  <a href="#why">平台說明</a>
+  <a href="#data">資料規模</a>
+  <a href="#cases">案件列表</a>
+  <a href="timeline.html">時間軸檢視</a>
   <a href="eval.html">專家評估</a>
   <a href="metrics.html">AI 指標</a>
-  <a href="view.html" class="nav-cta">開始瀏覽</a>
+  <a href="view.html" class="nav-cta">開始查看</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-img"></div>
   <div class="hero-content">
     <div class="hero-badge"><span class="dot"></span>醫療糾紛 · 刑事判決書 · 自動摘要</div>
     <h1>讓每一份判決書<br>都能被<span class="accent">準確理解</span></h1>
     <p class="hero-sub">
-      醫療糾紛判決書動輒萬字，非法律專業者難以掌握關鍵事實。<br>
-      多模型自動摘要評估平台，為摘要品質提供客觀衡量。
+      從案件原文、教師參考摘要、多模型輸出，到引用支撐、時間軸與專家評估，
+      這個平台把醫療糾紛判決摘要的產生、比較與驗證放在同一個一致的工作流裡。
     </p>
     <div class="hero-actions">
       <a href="#cases" class="btn btn-primary">瀏覽案件</a>
-      <a href="#why" class="btn btn-ghost">了解更多</a>
+      <a href="eval.html" class="btn btn-ghost">進入評估</a>
     </div>
     <div class="hero-stats" id="heroStats"></div>
   </div>
   <div class="scroll-hint">
-    SCROLL
+    往下瀏覽
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 7l4 4 4-4"/></svg>
   </div>
 </section>
@@ -427,50 +459,56 @@
       <input type="text" class="sbox" id="sb" placeholder="搜尋案件..." oninput="fil(cf)">
     </div>
     <table class="ctable">
-      <thead><tr><th style="width:48px">#</th><th>案件</th><th>冊別</th><th>Conditions</th><th style="width:36px"></th></tr></thead>
+      <thead><tr><th style="width:48px">#</th><th>案件</th><th>冊別</th><th>模型條件</th><th style="width:36px"></th></tr></thead>
       <tbody id="cb"></tbody>
     </table>
   </div>
 </section>
 
-<footer class="footer">Legal Summary Evaluation Platform · 醫療糾紛判決書摘要品質評估</footer>
+<footer class="footer">Legal Summary Evaluation Platform · 醫療糾紛刑事判決摘要比較與評估</footer>
 
 <script>
 let ac=[], cf='all';
 
 async function init() {
-  const m = await (await fetch('./data/manifest.json')).json();
-  const cs = m.cases, co = m.conditions, ci = m.case_info || {};
-  const tc = Object.keys(co).length;
-  const tf = Object.values(co).reduce((s,c)=>s+c.case_count,0);
-  const te = Object.values(co).reduce((s,c)=>s+c.eval_count,0);
-  const volCounts = {};
-  cs.forEach(n => { const v = (ci[n]||{}).volume||''; volCounts[v] = (volCounts[v]||0)+1; });
+  try {
+    document.body.classList.add('js-ready');
+    const m = await (await fetch('./data/manifest.json')).json();
+    const cs = m.cases, co = m.conditions, ci = m.case_info || {};
+    const tc = Object.keys(co).length;
+    const tf = Object.values(co).reduce((s,c)=>s+c.case_count,0);
+    const te = Object.values(co).reduce((s,c)=>s+c.eval_count,0);
+    const volCounts = {};
+    cs.forEach(n => { const v = (ci[n]||{}).volume||''; volCounts[v] = (volCounts[v]||0)+1; });
 
-  document.getElementById('heroStats').innerHTML = `
-    <div><div class="hero-stat-value">${cs.length}</div><div class="hero-stat-label">案件</div></div>
-    <div><div class="hero-stat-value">${tc}</div><div class="hero-stat-label">模型條件</div></div>
-    <div><div class="hero-stat-value">${tf}</div><div class="hero-stat-label">摘要篇數</div></div>
-    <div><div class="hero-stat-value">${te}</div><div class="hero-stat-label">已評估</div></div>
-  `;
+    document.getElementById('heroStats').innerHTML = `
+      <div class="hero-stat"><div class="hero-stat-value">${cs.length}</div><div class="hero-stat-label">案件總數</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">${tc}</div><div class="hero-stat-label">模型條件</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">${tf}</div><div class="hero-stat-label">摘要產出</div></div>
+      <div class="hero-stat"><div class="hero-stat-value">${te}</div><div class="hero-stat-label">評估紀錄</div></div>
+    `;
 
-  document.getElementById('numbers').innerHTML = `
-    <div class="num-item"><div class="num-value">${cs.length}<span class="u"> 件</span></div><div class="num-label">醫療糾紛案件</div></div>
-    <div class="num-item"><div class="num-value">${volCounts['上冊']||0} <span class="u">/</span> ${volCounts['中冊']||0} <span class="u">/</span> ${volCounts['下冊']||0}</div><div class="num-label">上冊 / 中冊 / 下冊</div></div>
-    <div class="num-item"><div class="num-value">${tc}</div><div class="num-label">模型 × 條件</div></div>
-    <div class="num-item"><div class="num-value">${tf}</div><div class="num-label">摘要產出</div></div>
-  `;
+    document.getElementById('numbers').innerHTML = `
+      <div class="num-item"><div class="num-value">${cs.length}<span class="u"> 件</span></div><div class="num-label">醫療糾紛刑事案件</div></div>
+      <div class="num-item"><div class="num-value">${volCounts['上冊']||0} <span class="u">/</span> ${volCounts['中冊']||0} <span class="u">/</span> ${volCounts['下冊']||0}</div><div class="num-label">上冊 / 中冊 / 下冊冊別分布</div></div>
+      <div class="num-item"><div class="num-value">${tc}</div><div class="num-label">模型與條件組合</div></div>
+      <div class="num-item"><div class="num-value">${te}</div><div class="num-label">已完成評估紀錄</div></div>
+    `;
 
-  ac = cs.map((n,i) => {
-    const info = ci[n] || {};
-    return { i:i+1, n, display: info.display||n, vol: info.volume||'', c:tc };
-  });
-  fil('all');
+    ac = cs.map((n,i) => {
+      const info = ci[n] || {};
+      return { i:i+1, n, display: info.display||n, vol: info.volume||'', c:tc };
+    });
+    fil('all');
 
-  const obs = new IntersectionObserver(es => {
-    es.forEach(e => { if(e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }});
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    const obs = new IntersectionObserver(es => {
+      es.forEach(e => { if(e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); }});
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  } catch (err) {
+    console.error('Homepage init failed:', err);
+    document.body.classList.remove('js-ready');
+  }
 }
 
 function fil(f, btn) {
