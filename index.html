@@ -52,17 +52,25 @@
       position: relative; min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
+      background: #0f172a;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
       background:
-        radial-gradient(circle at 20% 20%, rgba(99,102,241,0.2), transparent 30%),
-        radial-gradient(circle at 78% 18%, rgba(45,212,191,0.16), transparent 26%),
-        linear-gradient(140deg, #0f172a 0%, #172036 45%, #1f2454 100%);
+        linear-gradient(140deg, rgba(15,23,42,0.58) 0%, rgba(23,32,54,0.42) 45%, rgba(31,36,84,0.56) 100%),
+        url('https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1920&q=80') center/cover no-repeat;
+      filter: saturate(0.82) contrast(1.04);
+      transform: scale(1.03);
     }
     .hero::before {
       content: ''; position: absolute; inset: 0;
       background:
+        radial-gradient(circle at 20% 20%, rgba(99,102,241,0.22), transparent 30%),
+        radial-gradient(circle at 78% 18%, rgba(45,212,191,0.15), transparent 26%),
         linear-gradient(rgba(148,163,184,0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px);
-      background-size: 56px 56px;
+        linear-gradient(90deg, rgba(148,163,184,0.08) 1px, transparent 1px),
+        linear-gradient(140deg, rgba(15,23,42,0.52) 0%, rgba(17,24,39,0.28) 45%, rgba(30,41,59,0.48) 100%);
+      background-size: auto, auto, 56px 56px, 56px 56px, auto;
       mask-image: linear-gradient(to bottom, rgba(0,0,0,0.9), rgba(0,0,0,0.25));
       pointer-events: none;
     }
@@ -194,22 +202,34 @@
       border: 1px solid rgba(255,255,255,0.08); overflow: hidden;
       box-shadow: 0 18px 60px rgba(2,6,23,0.22);
     }
-    .num-item { flex: 1; text-align: center; padding: 36px 20px; position: relative; }
+    .num-item {
+      min-height: 168px;
+      text-align: center;
+      padding: 28px 20px 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
     .num-item + .num-item::before {
       content: ''; position: absolute; left: 0; top: 20%; height: 60%;
       width: 1px; background: rgba(255,255,255,0.08);
     }
     .num-value {
       font-family: var(--serif);
-      font-size: clamp(28px, 3.6vw, 40px);
+      font-size: clamp(26px, 3.2vw, 38px);
       font-weight: 900;
       color: #fff;
-      line-height: 1.15;
+      line-height: 1.28;
       word-break: keep-all;
       overflow-wrap: anywhere;
+      text-wrap: balance;
     }
+    .num-value.tight { font-size: clamp(24px, 2.7vw, 33px); }
     .num-value .u { font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.4); }
-    .num-label { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 8px; line-height: 1.6; }
+    .num-label { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; max-width: 16ch; margin: 0 auto; }
 
     /* ─── CASE TABLE ─── */
     .section.cases-section { background: var(--slate-50); }
@@ -322,11 +342,11 @@
       .feat-text p { font-size: 13px; }
 
       .section.dark { padding: 48px 16px; }
-      .numbers { flex-wrap: wrap; border-radius: 12px; }
-      .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .num-item { min-width: 50%; padding: 24px 12px; }
+      .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 12px; }
+      .num-item { min-height: 144px; padding: 22px 12px 18px; }
       .num-item + .num-item::before { display: none; }
-      .num-value { font-size: clamp(26px, 5vw, 32px); }
+      .num-value { font-size: clamp(24px, 5vw, 30px); }
+      .num-value.tight { font-size: clamp(22px, 4.4vw, 28px); }
 
       .filter-row { gap: 8px; }
       .sbox { width: 100%; order: -1; }
@@ -351,7 +371,7 @@
       .hero-stats, .numbers { grid-template-columns: 1fr; }
       .hero-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
       .hero-stat:last-child { border-bottom: none; }
-      .num-item { min-width: 100%; }
+      .num-item { min-height: 128px; }
       .cn { max-width: 140px; }
       .ctable td:nth-child(4) { display: none; } /* hide conditions count on very small */
       .ctable th:nth-child(4) { display: none; }
@@ -374,6 +394,7 @@
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-img"></div>
   <div class="hero-content">
     <div class="hero-badge"><span class="dot"></span>醫療糾紛 · 刑事判決書 · 自動摘要</div>
     <h1>讓每一份判決書<br>都能被<span class="accent">準確理解</span></h1>
@@ -498,7 +519,7 @@ async function init() {
 
     document.getElementById('numbers').innerHTML = `
       <div class="num-item"><div class="num-value">${cs.length}<span class="u"> 件</span></div><div class="num-label">醫療糾紛刑事案件</div></div>
-      <div class="num-item"><div class="num-value">${volCounts['上冊']||0}<span class="u"> / </span>${volCounts['中冊']||0}<span class="u"> / </span>${volCounts['下冊']||0}</div><div class="num-label">上冊 / 中冊 / 下冊冊別分布</div></div>
+      <div class="num-item"><div class="num-value tight">${volCounts['上冊']||0}<span class="u"> / </span>${volCounts['中冊']||0}<span class="u"> / </span>${volCounts['下冊']||0}</div><div class="num-label">上冊 / 中冊 / 下冊冊別分布</div></div>
       <div class="num-item"><div class="num-value">${tc}</div><div class="num-label">模型與條件組合</div></div>
       <div class="num-item"><div class="num-value">${te}</div><div class="num-label">已完成評估紀錄</div></div>
     `;
