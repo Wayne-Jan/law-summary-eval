@@ -3,7 +3,17 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /evals/{evaluator}/records/{recordId} {
-      allow read, write: if isSignedInAllowedUser() && evaluator == request.auth.uid && isValidRecord();
+      allow read: if canAccessEvaluator(evaluator);
+      allow create, update: if canAccessEvaluator(evaluator) && isValidRecord();
+      allow delete: if canAccessEvaluator(evaluator);
+    }
+
+    match /eval_users/{uid} {
+      allow read: if isSignedInAllowedUser();
+      allow create, update: if isSignedInAllowedUser()
+        && (uid == request.auth.uid || isAdmin())
+        && isValidUserIndex();
+      allow delete: if isAdmin();
     }
 
     match /{document=**} {
@@ -21,6 +31,16 @@ service cloud.firestore {
         ];
     }
 
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'admin@law-eval.local';
+    }
+
+    function canAccessEvaluator(evaluator) {
+      return isSignedInAllowedUser()
+        && (evaluator == request.auth.uid || isAdmin());
+    }
+
     function isValidRecord() {
       return request.resource != null
         && request.resource.data.keys().hasOnly(['key', 'data', 'updated'])
@@ -29,6 +49,15 @@ service cloud.firestore {
         && request.resource.data.key.size() <= 1500
         && request.resource.data.key.matches('^(eval_v2_|eval_v2_condorder_).+')
         && request.resource.data.data != null;
+    }
+
+    function isValidUserIndex() {
+      return request.resource != null
+        && request.resource.data.keys().hasOnly(['uid', 'email', 'name', 'role', 'updated'])
+        && request.resource.data.uid is string
+        && request.resource.data.email is string
+        && request.resource.data.name is string
+        && request.resource.data.role is string;
     }
   }
 }

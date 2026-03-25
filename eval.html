@@ -603,6 +603,47 @@
     .admin-panel .status-done { color: var(--emerald); font-weight: 700; }
     .admin-panel .status-partial { color: var(--amber); }
     .admin-panel .status-empty { color: var(--slate-300); }
+    .admin-panel .jump-link {
+      display: inline-block;
+      color: inherit;
+      text-decoration: none;
+      border-radius: 8px;
+      padding: 4px 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .admin-panel .jump-link:hover {
+      background: var(--indigo-light);
+      color: var(--indigo);
+    }
+    .admin-panel .admin-cell { display:flex; flex-direction:column; align-items:flex-start; gap:8px; }
+    .admin-panel .admin-cell-actions { display:flex; gap:6px; flex-wrap:wrap; }
+    .admin-panel .admin-mini-btn {
+      border: 1px solid var(--slate-300);
+      background: white;
+      color: var(--slate-700);
+      border-radius: 999px;
+      padding: 3px 9px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .admin-panel .admin-mini-btn:hover {
+      border-color: var(--indigo);
+      color: var(--indigo);
+      background: var(--indigo-light);
+    }
+    .admin-panel .admin-mini-btn.danger {
+      border-color: #fecaca;
+      color: #b91c1c;
+      background: #fff;
+    }
+    .admin-panel .admin-mini-btn.danger:hover {
+      background: #fef2f2;
+      border-color: #fca5a5;
+      color: #991b1b;
+    }
   </style>
   <!-- Firebase compat (works with regular scripts, no bundler needed) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -970,6 +1011,7 @@ const USER_BY_EMAIL = Object.fromEntries(
   Object.entries(USERS).map(([name, info]) => [info.email, { name, role: info.role, email: info.email }])
 );
 let cloudStatusTimer = null;
+let adminUserIndexCache = new Map();
 
 function setLocalSessionProfile(name, role) {
   localStorage.setItem('eval_v2_auth_user', name);
@@ -979,6 +1021,28 @@ function setLocalSessionProfile(name, role) {
 function clearLocalSessionProfile() {
   localStorage.removeItem('eval_v2_auth_user');
   localStorage.removeItem('eval_v2_auth_role');
+}
+
+function syncAdminUserIndex(user, profile) {
+  if (!user || !profile) return Promise.resolve();
+  return db.collection('eval_users').doc(user.uid).set({
+    uid: user.uid,
+    email: user.email || '',
+    name: profile.name,
+    role: profile.role,
+    updated: firebase.firestore.FieldValue.serverTimestamp()
+  }, { merge: true }).catch((err) => {
+    console.warn('Failed to sync admin user index:', err);
+  });
+}
+
+async function lookupEvaluatorCloudUidByName(name) {
+  if (adminUserIndexCache.has(name)) return adminUserIndexCache.get(name);
+  const snapshot = await db.collection('eval_users').where('name', '==', name).limit(1).get();
+  if (snapshot.empty) return '';
+  const uid = snapshot.docs[0].id;
+  adminUserIndexCache.set(name, uid);
+  return uid;
 }
 
 function getAuthProfile(user = auth.currentUser) {
@@ -1045,6 +1109,7 @@ function handleAuthStateChanged(user) {
   }
 
   setLocalSessionProfile(profile.name, profile.role);
+  syncAdminUserIndex(user, profile);
   hideLoginOverlay();
   applyAuth();
   if (!window.__evalAppInitialized) {
@@ -3327,7 +3392,8 @@ function renderAdminContent() {
     return;
   }
 
-  let html = '<div style="overflow-x:auto;"><table>';
+  let html = '<div style="margin-bottom:14px;font-size:13px;color:var(--slate-500);line-height:1.6;">點案件名稱可直接跳到摘要檢視；各評估者欄位可直接檢視或刪除該案件資料。</div>';
+  html += '<div style="overflow-x:auto;"><table>';
   html += '<thead><tr><th style="text-align:left;">案件</th>';
   evaluators.forEach(ev => {
     const role = USERS[ev].role;
@@ -3339,8 +3405,8 @@ function renderAdminContent() {
 
   cases.forEach(c => {
     const display = getCaseDisplayName(c);
-    const caseStatus = evaluators.some(ev => getEvaluatorCaseStatus(ev, c) !== 'empty');
-    html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;">${esc(display)}</td>`;
+    const caseHref = `view.html?case=${encodeURIComponent(c)}`;
+    html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;"><a class="jump-link" href="${caseHref}">${esc(display)}</a></td>`;
     evaluators.forEach(ev => {
       const overall = getEvaluatorCaseStatus(ev, c);
       let cellStyle = '';
@@ -3365,7 +3431,11 @@ function renderAdminContent() {
       try { const p3 = JSON.parse(localStorage.getItem(p3Key)); p3done = !!(p3 && p3._complete); } catch {}
       if (p3done) pills += `<span style="font-size:11px;font-weight:700;color:var(--indigo);margin-left:2px;">★</span>`;
 
-      html += `<td style="padding:4px 8px;${cellStyle}">${pills}</td>`;
+      const statusHtml = pills || `<span style="font-size:11px;color:var(--slate-400);">尚無資料</span>`;
+      const deleteBtn = overall !== 'empty'
+        ? `<button class="admin-mini-btn danger" onclick='adminDeleteCaseData(${JSON.stringify(ev)}, ${JSON.stringify(c)})'>刪除</button>`
+        : '';
+      html += `<td style="padding:6px 8px;${cellStyle}"><div class="admin-cell">${statusHtml}<div class="admin-cell-actions"><a class="admin-mini-btn jump-link" href="${caseHref}">檢視</a>${deleteBtn}</div></div></td>`;
     });
     html += '</tr>';
   });
@@ -3427,6 +3497,54 @@ function getEvaluatorCaseStatus(evaluator, caseName) {
     if (getEvaluatorCondStatus(evaluator, caseName, i) !== 'empty') return 'partial';
   }
   return 'empty';
+}
+
+function getEvaluatorCaseKeys(evaluator, caseName) {
+  const prefix = `eval_v2_${evaluator}_${caseName}_`;
+  const condOrderKey = `eval_v2_condorder_${evaluator}_${caseName}`;
+  const keys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key === condOrderKey || key.startsWith(prefix)) keys.push(key);
+  }
+  return keys;
+}
+
+async function adminDeleteCaseData(evaluator, caseName) {
+  const display = getCaseDisplayName(caseName);
+  const keys = getEvaluatorCaseKeys(evaluator, caseName);
+  if (!keys.length) {
+    showToast(`${evaluator} 在此案目前沒有可刪除資料`, 'error');
+    return;
+  }
+  const confirmed = confirm(`刪除 ${evaluator} 的「${display}」全部評估資料？\n這會移除本機資料，並嘗試同步刪除雲端資料。`);
+  if (!confirmed) return;
+
+  keys.forEach(key => localStorage.removeItem(key));
+
+  let cloudDeleted = false;
+  let cloudWarning = '';
+  try {
+    const uid = await lookupEvaluatorCloudUidByName(evaluator);
+    if (uid) {
+      const batch = db.batch();
+      keys.forEach(key => batch.delete(cloudRecordRef(uid, key)));
+      await batch.commit();
+      cloudDeleted = true;
+    } else {
+      cloudWarning = '該評估者尚未建立雲端索引，雲端資料未刪除。請對方先重新登入一次。';
+    }
+  } catch (err) {
+    console.error('Admin cloud delete failed:', err);
+    cloudWarning = '雲端刪除失敗，本機資料已刪除。';
+  }
+
+  renderAdminContent();
+  updateFooter();
+  if (currentCase === caseName) onCaseChange();
+
+  if (cloudDeleted) showToast(`已刪除 ${evaluator} 的案件資料`, 'success');
+  else if (cloudWarning) showToast(cloudWarning, 'error');
 }
 
 function adminExportAll() {
