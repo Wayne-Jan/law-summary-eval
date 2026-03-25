@@ -1237,6 +1237,38 @@ async function initApp() {
   renderEvalForm();
   onCaseChange();
   initResizers();
+  autoRestoreFromGist(); // silently pull cloud data on login
+}
+
+async function autoRestoreFromGist() {
+  const ev = getEvaluator();
+  if (!ev || ev === 'default') return;
+  if (!getGistToken()) return;
+  try {
+    const resp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+      headers: { 'Authorization': `token ${getGistToken()}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!resp.ok) return;
+    const gist = await resp.json();
+    const content = gist.files[GIST_FILE] && gist.files[GIST_FILE].content;
+    if (!content) return;
+    const gistData = JSON.parse(content);
+    const evData = gistData[ev] && gistData[ev].data;
+    if (!evData) return;
+    // Only write keys that don't exist locally (never overwrite newer local data)
+    let merged = 0;
+    Object.entries(evData).forEach(([key, val]) => {
+      if (!localStorage.getItem(key)) {
+        localStorage.setItem(key, JSON.stringify(val));
+        merged++;
+      }
+    });
+    if (merged > 0) {
+      showToast(`已從雲端同步 ${merged} 筆資料`, 'success');
+      onCaseChange();
+      updateFooter();
+    }
+  } catch (e) { /* silently ignore */ }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1986,6 +2018,7 @@ function completePhaseTL() {
   }
   data._complete = true;
   setPhaseData(currentCase, currentCondIdx, 'TL', data);
+  syncToGist(); // auto-backup when a condition is fully complete
 
   // Check if all conditions done
   if (areAllCondsComplete(currentCase)) {
@@ -2627,10 +2660,7 @@ function collectAllEvalData(evaluator) {
 async function syncToGist() {
   const ev = getEvaluator();
   if (!ev || ev === 'default') return;
-  if (!getGistToken()) {
-    showToast('請先由管理員在管理面板設定 Gist Token', 'error');
-    return;
-  }
+  if (!getGistToken()) return; // silently skip if no token configured
   const syncBtn = document.getElementById('gistSyncBtn');
   if (syncBtn) { syncBtn.disabled = true; syncBtn.textContent = '同步中...'; }
 
