@@ -622,6 +622,7 @@
       <div class="toolbar-shortcut-line">↑ / ↓：切換目前評分題目</div>
       <div class="toolbar-shortcut-line">1-5：給目前題目打分</div>
       <div class="toolbar-shortcut-line">Tab / Shift+Tab：切換版本</div>
+      <div class="toolbar-shortcut-line">S：完成目前階段</div>
       <div class="toolbar-shortcut-line">在輸入文字時快捷鍵會暫停</div>
     </div>
   </div>
@@ -2693,6 +2694,15 @@ document.addEventListener('click', (e) => {
 document.addEventListener('keydown', (e) => {
   if (document.getElementById('loginOverlay') && !document.getElementById('loginOverlay').classList.contains('hidden')) return;
   if (isTextEntryTarget(e.target)) return;
+
+  if (e.key === 's' || e.key === 'S') {
+    e.preventDefault();
+    if (currentPhase === 1) completePhase1();
+    else if (currentPhase === 'fb') completePhaseFB();
+    else if (currentPhase === 'tl') completePhaseTL();
+    else if (currentPhase === 3) completePhase3();
+    return;
+  }
 
   if (e.key === 'Tab') {
     e.preventDefault();
