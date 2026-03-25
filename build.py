@@ -19,6 +19,7 @@ import json
 import os
 import re
 import sys
+from pathlib import Path
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SOURCE_PROJECT = os.environ.get("LAW_PROJECT_ROOT", "/mnt/d/Law_extraction_refactor")
@@ -143,6 +144,31 @@ def find_in_volumes(base_dir, relative_path):
 _UPPER_RE = re.compile(r"^(有罪|無罪)(\d+)\.(.+?)(?:\d+年度?\S+字\S+號|$)")
 # 中冊/下冊: "原始判決書_04_第四案 車禍未做神經學檢查案"
 _MIDDLE_LOWER_RE = re.compile(r"^原始判決書[_*](\d+)[_*]第.+?案\s*(.+)$")
+_LEADING_CASE_ORDINAL_RE = re.compile(r"^第[一二三四五六七八九十百千零〇兩\d]+案[\s\u3000]*")
+
+
+def normalize_case_title(title):
+    if not title:
+        return ""
+    title = title.strip().replace("\u3000", " ")
+    title = _LEADING_CASE_ORDINAL_RE.sub("", title).strip()
+    return re.sub(r"\s+", " ", title)
+
+
+def extract_case_title(case_name, volume):
+    """Return concise UI title without verdict / court name noise."""
+    m = _MIDDLE_LOWER_RE.match(case_name)
+    if m:
+        return normalize_case_title(m.group(2))
+
+    gt_path = Path(GT_SUMMARY_DIR) / volume / f"摘要_{case_name}.txt"
+    if gt_path.exists():
+        for line in gt_path.read_text(encoding="utf-8").splitlines():
+            line = line.strip()
+            if line:
+                return normalize_case_title(line)
+
+    return normalize_case_title(case_name)
 
 
 def extract_case_info(case_name):
@@ -150,7 +176,7 @@ def extract_case_info(case_name):
 
     Returns dict with keys: number (str), display (str), verdict (str|None).
 
-    上冊: "有罪01 — 臺灣苗栗地方法院"  (保留有罪/無罪前綴)
+    上冊: "有罪01 — 臺灣苗栗地方法院"
     中冊/下冊: "04 — 車禍未做神經學檢查案"
     """
     m = _UPPER_RE.match(case_name)
@@ -675,20 +701,10 @@ def build():
         info = extract_case_info(case)
         vol = case_volumes.get(case, "")
         info["volume"] = vol
-        # Override display with unified format if in eval whitelist
-        ec_entry = eval_case_set.get(case)
-        if ec_entry and ec_entry["short_name"]:
-            short = ec_entry["short_name"]
-            num = info["number"]
-            verdict = info.get("verdict")
-            if verdict:
-                # 上冊: 有罪/無罪 + 編號
-                info["display"] = f"{vol}-{verdict}{num}-{short}"
-            else:
-                info["display"] = f"{vol}-{num}-{short}"
-        elif not ec_entry and vol == "上冊":
-            # 上冊 non-eval cases: keep existing format (court name)
-            pass
+        short = extract_case_title(case, vol)
+        info["short_title"] = short
+        vol_mark = vol[:1] if vol else ""
+        info["display"] = f"{vol_mark}{info['number']}・{short}" if short else case
         case_info[case] = info
 
     # Build eval_cases list (30 cases, ordered by volume then by manifest order)
