@@ -665,11 +665,11 @@ async function doLogin() {
   const userSel = document.getElementById('loginUser');
   const passInput = document.getElementById('loginPassword');
   const errorEl = document.getElementById('loginError');
-  const username = userSel.value;
+  const username = _adminLoginMode ? 'admin' : userSel.value;
   const password = passInput.value;
 
   errorEl.textContent = '';
-  if (!username) { errorEl.textContent = _adminLoginMode ? '請輸入管理者密碼' : '請選擇評估者'; return; }
+  if (!username) { errorEl.textContent = '請選擇評估者'; return; }
   if (!password) { errorEl.textContent = '請輸入密碼'; return; }
 
   const user = USERS[username];
