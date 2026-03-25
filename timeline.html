@@ -95,8 +95,9 @@
 
     /* ─── DUAL-COLUMN LAYOUT ─── */
     .tl-columns { display: flex; gap: 24px; align-items: flex-start; }
-    .tl-col-left { flex: 44; min-width: 0; position: sticky; top: 24px; max-height: calc(100vh - 120px); }
-    .tl-col-center { flex: 56; min-width: 0; }
+    .tl-col-left { flex: 33; min-width: 0; position: sticky; top: 24px; max-height: calc(100vh - 120px); }
+    .tl-col-center { flex: 31; min-width: 0; }
+    .tl-col-right { flex: 36; min-width: 0; position: sticky; top: 24px; max-height: calc(100vh - 120px); }
 
     /* ─── SOURCE PANEL (full text with highlighter) ─── */
     .source-panel {
@@ -188,6 +189,24 @@
     .tl-meta { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
     .tl-meta-item { font-size: 11px; color: #9ca3af; }
     .tl-meta-item strong { color: #6b7280; font-weight: 500; }
+    .tl-empty-detail {
+      color: #9ca3af; text-align: center; padding: 48px 24px; font-size: 13px;
+    }
+    .tl-detail-body { padding: 18px 20px 22px; }
+    .tl-detail-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .tl-detail-date { font-size: 15px; font-weight: 700; color: #4f46e5; }
+    .tl-detail-title { font-size: 18px; font-weight: 700; color: #111827; margin-bottom: 10px; line-height: 1.45; }
+    .tl-detail-desc { font-size: 14px; line-height: 1.75; color: #374151; margin-bottom: 14px; }
+    .tl-detail-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 14px; }
+    .tl-detail-item {
+      background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 10px 12px;
+    }
+    .tl-detail-label { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #64748b; margin-bottom: 4px; }
+    .tl-detail-value { font-size: 13px; color: #334155; line-height: 1.65; }
+    .tl-detail-source {
+      margin-top: 10px; border-top: 1px solid #e5e7eb; padding-top: 12px;
+      font-size: 12px; color: #6b7280; line-height: 1.6;
+    }
 
     .tl-decision {
       margin-top: 8px; padding: 8px 12px; background: #fef2f2; border-radius: 6px;
@@ -237,8 +256,9 @@
       .content-inner { padding: 20px; }
       .tl-summary-card { min-width: 120px; padding: 10px 14px; }
       .tl-columns { gap: 16px; }
-      .tl-col-left { flex: 45; }
-      .tl-col-center { flex: 55; }
+      .tl-col-left { flex: 34; }
+      .tl-col-center { flex: 30; }
+      .tl-col-right { flex: 36; }
     }
 
     /* ─── RESPONSIVE: MOBILE ─── */
@@ -303,6 +323,7 @@
       .tl-columns { flex-direction: column; }
       .tl-col-left { flex: 1; position: static; max-height: none; width: 100%; }
       .tl-col-center { flex: 1; width: 100%; }
+      .tl-col-right { flex: 1; position: static; max-height: none; width: 100%; }
       .tl-source-toggle { display: inline-flex; }
     }
     @media (min-width: 769px) {
@@ -365,6 +386,7 @@
     let currentCase = null;
     let timelineData = null;
     let activeEventIdx = -1;
+    let lastScrolledEventIdx = -1;
 
     function getCaseDisplay(name) {
       const info = caseInfo[name] || {};
@@ -614,6 +636,19 @@
       html += '<div class="tl-col-center">';
       html += '<div class="panel-card">';
       html += '<div class="panel-head">';
+      html += '<div class="panel-kicker">DETAIL</div>';
+      html += '<div class="panel-title">事件詳情</div>';
+      html += '<div class="panel-meta" id="detailMeta">選擇事件後顯示完整資訊</div>';
+      html += '</div>';
+      html += '<div id="eventDetailPanel" class="tl-detail-body">';
+      html += '<div class="tl-empty-detail">點擊事件卡片後，這裡會顯示時間、人物、地點與抽取片段。</div>';
+      html += '</div>';
+      html += '</div>';
+      html += '</div>';
+
+      html += '<div class="tl-col-right">';
+      html += '<div class="panel-card">';
+      html += '<div class="panel-head">';
       html += '<div class="panel-kicker">TIMELINE</div>';
       html += '<div class="panel-title">事件時間軸</div>';
       html += `<div class="panel-meta">${events.length} 個事件，點擊事件可定位原文</div>`;
@@ -662,22 +697,73 @@
       });
 
       html += '</div></div></div>'; // .timeline / .panel-card / padding
+      html += '</div></div>'; // tl-col-right .panel-card
       html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
+      renderEventDetail(activeEventIdx);
+      if (events.length > 0) showSource(activeEventIdx >= 0 ? activeEventIdx : 0, false);
 
     }
 
-    function showSource(idx) {
+    function renderEventDetail(idx) {
+      const panel = document.getElementById('eventDetailPanel');
+      const meta = document.getElementById('detailMeta');
+      if (!panel || !timelineData) return;
+      const events = timelineData.events || [];
+      const evt = events[idx];
+      if (!evt) {
+        if (meta) meta.textContent = '選擇事件後顯示完整資訊';
+        panel.innerHTML = '<div class="tl-empty-detail">點擊事件卡片後，這裡會顯示時間、人物、地點與抽取片段。</div>';
+        return;
+      }
+      if (meta) meta.textContent = `第 ${idx + 1} / ${events.length} 個事件`;
+      const parts = [];
+      if (evt.actors && evt.actors.length) {
+        parts.push(`<div class="tl-detail-item"><div class="tl-detail-label">相關人員</div><div class="tl-detail-value">${esc(evt.actors.join('、'))}</div></div>`);
+      }
+      if (evt.location) {
+        parts.push(`<div class="tl-detail-item"><div class="tl-detail-label">地點</div><div class="tl-detail-value">${esc(evt.location)}</div></div>`);
+      }
+      if (evt.vital_signs && Object.keys(evt.vital_signs).length) {
+        const vs = Object.entries(evt.vital_signs).map(([k, v]) => `${k}: ${v}`).join('<br>');
+        parts.push(`<div class="tl-detail-item"><div class="tl-detail-label">生命體徵</div><div class="tl-detail-value">${vs}</div></div>`);
+      }
+      if (evt.decision_content) {
+        parts.push(`<div class="tl-detail-item"><div class="tl-detail-label">決策內容</div><div class="tl-detail-value">${esc(evt.decision_content)}</div></div>`);
+      }
+      if (evt.extraction_text) {
+        parts.push(`<div class="tl-detail-item"><div class="tl-detail-label">抽取片段</div><div class="tl-detail-value">${esc(evt.extraction_text)}</div></div>`);
+      }
+      panel.innerHTML = `
+        <div class="tl-detail-top">
+          <span class="tl-detail-date">${esc(evt.timestamp || evt.timestamp_normalized || '日期不明')}</span>
+          ${evt.event_type ? `<span class="tl-event-type ${esc(evt.critical_decision ? 'critical_decision' : evt.event_type)}">${esc(formatEventType(evt.event_type))}</span>` : ''}
+          ${evt.critical_decision ? '<span class="badge critical">關鍵決策</span>' : ''}
+        </div>
+        <div class="tl-detail-title">${esc(evt.description || '未提供描述')}</div>
+        <div class="tl-detail-desc">${esc(evt.extraction_text || evt.description || '')}</div>
+        <div class="tl-detail-grid">${parts.join('') || '<div class="tl-detail-item"><div class="tl-detail-label">補充資訊</div><div class="tl-detail-value">此事件沒有額外欄位。</div></div>'}</div>
+        <div class="tl-detail-source">點擊事件後，左側原文會同步定位並標示相對應的片段。</div>
+      `;
+    }
+
+    function showSource(idx, scrollEvent = true) {
       if (!timelineData) return;
       const events = timelineData.events || [];
       const evt = events[idx];
       if (!evt) return;
       activeEventIdx = idx;
+      renderEventDetail(idx);
 
       // Highlight active event card on the left
       document.querySelectorAll('.tl-event').forEach(el => {
         el.classList.toggle('active-source', parseInt(el.dataset.idx) === idx);
       });
+      const activeCard = document.querySelector(`.tl-event[data-idx="${idx}"]`);
+      if (scrollEvent && activeCard && lastScrolledEventIdx !== idx) {
+        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+      lastScrolledEventIdx = idx;
 
       // Clear all previous chunk/event highlights
       document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));

@@ -93,13 +93,13 @@
 
         /* Left: Section navigation */
         .nav-panel {
-            width: 220px; background: white; border-left: 1px solid #e0e0e0;
+            width: 220px; background: white; border-right: 1px solid #e0e0e0;
             overflow-y: auto; transition: width 0.2s; position: relative;
         }
         .nav-panel-body { padding: 8px 0 18px; }
 
         .panel-toggle {
-            position: absolute; top: 8px; left: 8px; z-index: 5;
+            position: absolute; top: 8px; right: 8px; z-index: 5;
             border: 1px solid #d1d5db; background: #fff; color: #374151;
             border-radius: 6px; font-size: 11px;
             width: 22px; height: 22px; line-height: 20px; cursor: pointer;
@@ -113,10 +113,10 @@
 
         .nav-item {
             padding: 10px 16px; cursor: pointer; font-size: 13px; color: #555;
-            border-right: 3px solid transparent; transition: all 0.15s;
+            border-left: 3px solid transparent; transition: all 0.15s;
         }
         .nav-item:hover { background: #f5f5f5; }
-        .nav-item.active { background: #eef2ff; color: #4f46e5; border-right-color: #4f46e5; font-weight: 500; }
+        .nav-item.active { background: #eef2ff; color: #4f46e5; border-left-color: #4f46e5; font-weight: 500; }
         .nav-item .nav-icon { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: #d1d5db; }
         .nav-item.active .nav-icon { background: #4f46e5; }
         .nav-item.has-content .nav-icon { background: #10b981; }
@@ -151,11 +151,11 @@
 
         /* ─── RIGHT: Source panel (replaces old citation cards) ─── */
         .source-panel {
-            width: 380px; background: white; border-right: 1px solid #e0e0e0;
+            width: 380px; background: white; border-left: 1px solid #e0e0e0;
             display: flex; flex-direction: column; transition: width 0.2s; position: relative;
         }
 
-        .source-toggle { left: auto; right: 8px; }
+        .source-toggle { left: 8px; right: auto; }
 
         .source-panel-header {
             padding: 12px 16px; border-bottom: 1px solid #e0e0e0;
@@ -221,8 +221,8 @@
         .resizer:hover::after, .resizer.active::after {
             background: #4f46e5; height: 60px;
         }
-        body.source-collapsed #resizerLeft { display: none; }
-        body.nav-collapsed #resizerRight { display: none; }
+        body.nav-collapsed #resizerLeft { display: none; }
+        body.source-collapsed #resizerRight { display: none; }
 
         /* Scrollbar */
         .source-list::-webkit-scrollbar { width: 5px; }
@@ -329,8 +329,8 @@
             .main { flex-direction: column; margin-top: calc(var(--toolbar-h) + var(--subbar-h)); height: auto; min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); margin-bottom: 0 !important; }
 
             .nav-panel {
-                position: fixed; top: 0; right: 0; bottom: 0; width: 260px; z-index: 200;
-                transform: translateX(100%); transition: transform 0.3s ease;
+                position: fixed; top: 0; left: 0; bottom: 0; width: 260px; z-index: 200;
+                transform: translateX(-100%); transition: transform 0.3s ease;
                 padding-top: 12px; box-shadow: 4px 0 20px rgba(0,0,0,0.15);
             }
             body.nav-open .nav-panel { transform: translateX(0); }
@@ -339,8 +339,8 @@
             body.nav-collapsed .nav-item .nav-icon { margin-right: 8px; }
 
             .source-panel {
-                position: fixed; top: 0; left: 0; bottom: 0; width: 300px; max-width: 85vw;
-                z-index: 200; transform: translateX(-100%); transition: transform 0.3s ease;
+                position: fixed; top: 0; right: 0; bottom: 0; width: 300px; max-width: 85vw;
+                z-index: 200; transform: translateX(100%); transition: transform 0.3s ease;
                 box-shadow: -4px 0 20px rgba(0,0,0,0.15);
             }
             body.source-open .source-panel { transform: translateX(0); }
@@ -436,15 +436,15 @@
     </div>
 
     <div class="main" style="margin-bottom: 36px;">
-        <div class="source-panel" id="sourcePanel">
-            <button class="panel-toggle source-toggle" id="sourceToggle" title="收合原文">&#187;</button>
-            <div class="source-panel-header">
-                <div class="icon">&#128196;</div>
-                原始判決書
-                <span class="chunk-count" id="sourceChunkCount"></span>
+        <div class="nav-panel" id="navPanel">
+            <button class="panel-toggle" id="navToggle" title="收合章節">&#171;</button>
+            <div class="panel-head">
+                <div class="panel-kicker">導覽</div>
+                <div class="panel-title">章節導航</div>
+                <div class="panel-meta" id="navMeta">-</div>
             </div>
-            <div class="source-list" id="sourceList">
-                <div class="empty-content">選擇章節後顯示原文</div>
+            <div class="nav-panel-body" id="navList">
+                <div class="loading">載入中</div>
             </div>
         </div>
         <div class="resizer" id="resizerLeft"></div>
@@ -461,15 +461,15 @@
             </div>
         </div>
         <div class="resizer" id="resizerRight"></div>
-        <div class="nav-panel" id="navPanel">
-            <button class="panel-toggle" id="navToggle" title="收合章節">&#171;</button>
-            <div class="panel-head">
-                <div class="panel-kicker">導覽</div>
-                <div class="panel-title">章節導航</div>
-                <div class="panel-meta" id="navMeta">-</div>
+        <div class="source-panel" id="sourcePanel">
+            <button class="panel-toggle source-toggle" id="sourceToggle" title="收合原文">&#187;</button>
+            <div class="source-panel-header">
+                <div class="icon">&#128196;</div>
+                原始判決書
+                <span class="chunk-count" id="sourceChunkCount"></span>
             </div>
-            <div class="nav-panel-body" id="navList">
-                <div class="loading">載入中</div>
+            <div class="source-list" id="sourceList">
+                <div class="empty-content">選擇章節後顯示原文</div>
             </div>
         </div>
     </div>
