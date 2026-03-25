@@ -6,7 +6,7 @@
     <title>摘要檢視</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --toolbar-h: 52px; --subbar-h: 30px; }
+        :root { --toolbar-h: 52px; --subbar-h: 42px; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -62,15 +62,17 @@
         .progress-subbar {
             position: fixed; top: var(--toolbar-h); left: 0; right: 0; height: var(--subbar-h);
             background: white; border-bottom: 1px solid #e2e8f0;
-            display: flex; align-items: center; padding: 0 16px; gap: 16px; z-index: 99;
-            font-size: 12px; color: #64748b;
+            display: flex; align-items: center; padding: 0 16px; gap: 8px; z-index: 99;
         }
-        .progress-subbar .vol-block { display: flex; align-items: center; gap: 6px; cursor: pointer; border-radius: 6px; padding: 2px 6px; transition: background .15s; }
-        .progress-subbar .vol-block:hover { background: #f1f5f9; }
-        .progress-subbar .vol-label { font-weight: 600; color: #334155; }
-        .progress-subbar .sep-dot { color: #cbd5e1; }
-        .vol-mini-bar { width: 48px; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
-        .vol-mini-fill { height: 100%; background: #10b981; border-radius: 3px; transition: width 0.3s; }
+        .subbar-label { font-size: 13px; color: #64748b; font-weight: 500; }
+        .volume-pill {
+            font-family: inherit; font-size: 13px; font-weight: 500;
+            padding: 6px 16px; border: 1px solid #cbd5e1; border-radius: 20px;
+            background: white; cursor: pointer; color: #334155; transition: all 0.15s;
+        }
+        .volume-pill:hover { border-color: #4f46e5; color: #4f46e5; }
+        .volume-pill.active { background: #4f46e5; color: white; border-color: #4f46e5; }
+        .volume-pill-count { font-size: 11px; opacity: 0.75; margin-left: 4px; }
 
         #volModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:9000; align-items:center; justify-content:center; }
         #volModal.show { display:flex; }
@@ -442,7 +444,7 @@
                 </div>
             </div>
             <span class="spacer"></span>
-            <div class="ctrl-row-nav">
+                <div class="ctrl-row-nav">
                 <a id="viewNavLink" class="nav-link active" href="view.html">摘要檢視</a>
                 <a id="timelineLink" class="nav-link" href="timeline.html">時間軸檢視</a>
                 <a id="evalLink" class="nav-link" href="eval.html">專家評估</a>
@@ -452,23 +454,10 @@
         </div>
     </div>
     <div class="progress-subbar" id="progressSubbar">
-        <div class="vol-block" onclick="openVolModal(0)">
-            <span class="vol-label">上冊</span>
-            <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill0" style="width:0%"></div></div>
-            <span id="volText0">0</span>
-        </div>
-        <span class="sep-dot">·</span>
-        <div class="vol-block" onclick="openVolModal(1)">
-            <span class="vol-label">中冊</span>
-            <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill1" style="width:0%"></div></div>
-            <span id="volText1">0</span>
-        </div>
-        <span class="sep-dot">·</span>
-        <div class="vol-block" onclick="openVolModal(2)">
-            <span class="vol-label">下冊</span>
-            <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill2" style="width:0%"></div></div>
-            <span id="volText2">0</span>
-        </div>
+        <span class="subbar-label">冊別：</span>
+        <button class="volume-pill" id="volBtn0" onclick="openVolModal('上冊')">上冊<span class="volume-pill-count" id="volText0"></span></button>
+        <button class="volume-pill" id="volBtn1" onclick="openVolModal('中冊')">中冊<span class="volume-pill-count" id="volText1"></span></button>
+        <button class="volume-pill" id="volBtn2" onclick="openVolModal('下冊')">下冊<span class="volume-pill-count" id="volText2"></span></button>
     </div>
     <div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
     <div id="volModal" onclick="if(event.target===this)closeVolModal()">
@@ -605,18 +594,17 @@
 
         function updateVolumeProgress() {
             const volumes = ['上冊', '中冊', '下冊'];
+            const currentVolume = currentCaseName ? ((caseInfo[currentCaseName] || {}).volume || caseVolumes[currentCaseName] || '') : '';
             volumes.forEach((vol, idx) => {
                 const total = allCases.filter(name => ((caseInfo[name] || {}).volume || caseVolumes[name] || '') === vol).length;
                 const textEl = document.getElementById(`volText${idx}`);
-                const fillEl = document.getElementById(`volFill${idx}`);
-                if (textEl) textEl.textContent = `${total}`;
-                if (fillEl) fillEl.style.width = total ? '100%' : '0%';
+                const btnEl = document.getElementById(`volBtn${idx}`);
+                if (textEl) textEl.textContent = ` ${total}案`;
+                if (btnEl) btnEl.classList.toggle('active', vol === currentVolume);
             });
         }
 
-        function openVolModal(volIdx) {
-            const volNames = ['上冊', '中冊', '下冊'];
-            const volName = volNames[volIdx];
+        function openVolModal(volName) {
             const cases = allCases.filter(name => ((caseInfo[name] || {}).volume || caseVolumes[name] || '') === volName);
             document.getElementById('volModalLabel').textContent = `${volName}（${cases.length} 案）`;
             document.getElementById('volModalList').innerHTML = cases.map(name => {
