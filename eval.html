@@ -159,7 +159,15 @@
     }
     .vol-modal-row:last-child { border-bottom:none; }
     .vol-modal-pills { display:flex; gap:4px; }
-    .vol-modal-pill { font-size:11px; padding:1px 5px; border-radius:4px; font-weight:600; }
+    .vol-modal-pill {
+      font-size:11px; padding:2px 6px; border-radius:6px; font-weight:700;
+      border:none; cursor:pointer; font-family:var(--sans);
+    }
+    .vol-modal-name {
+      border: none; background: transparent; text-align: left; cursor: pointer;
+      font-size: 13px; font-family: var(--sans); color: inherit; padding: 0;
+    }
+    .vol-modal-name:hover { text-decoration: underline; }
     .vol-mini-bar { width: 48px; height: 6px; background: var(--slate-200); border-radius: 3px; overflow: hidden; }
     .vol-mini-fill { height: 100%; background: var(--emerald); border-radius: 3px; transition: width 0.3s; }
     .progress-subbar .sep-dot { color: var(--slate-300); }
@@ -3049,7 +3057,6 @@ function openVolModal(volIdx) {
   cases.forEach(c => {
     const shortName = (manifest.case_info[c] && manifest.case_info[c].display) || c;
     const done = isPhase3Complete(c);
-    const condOrder = getEvCondOrderFor(ev, c);
     const rowCls = c === currentCase ? 'vol-modal-row current' : 'vol-modal-row';
     let pills = '';
     for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
@@ -3057,11 +3064,11 @@ function openVolModal(volIdx) {
       let bg = '#e2e8f0'; let color = '#64748b'; let sym = '–';
       if (cs === 'done')    { bg = '#d1fae5'; color = '#065f46'; sym = '✓'; }
       else if (cs === 'partial') { bg = '#fef3c7'; color = '#92400e'; sym = '·'; }
-      pills += `<span class="vol-modal-pill" style="background:${bg};color:${color};">${condLetters[i]}${sym}</span>`;
+      pills += `<button class="vol-modal-pill" style="background:${bg};color:${color};" onclick='event.stopPropagation();jumpToCaseConditionFromVolModal(${JSON.stringify(c)}, ${i})'>${condLetters[i]}${sym}</button>`;
     }
     const rowStyle = done ? 'color:#065f46;font-weight:600;' : '';
     html += `<div class="${rowCls}" onclick='jumpToCaseFromVolModal(${JSON.stringify(c)})'>
-      <span style="${rowStyle}">${esc(shortName)}</span>
+      <button class="vol-modal-name" style="${rowStyle}" onclick='event.stopPropagation();jumpToCaseFromVolModal(${JSON.stringify(c)})'>${esc(shortName)}</button>
       <div class="vol-modal-pills">${pills}</div>
     </div>`;
   });
@@ -3082,6 +3089,29 @@ async function jumpToCaseFromVolModal(caseName) {
   currentCase = caseName;
   if (sel) sel.value = caseName;
   await onCaseChange();
+}
+
+function getDefaultPhaseForCondition(caseName, condIdx) {
+  if (!isPhase1Complete(caseName, condIdx)) return 1;
+  if (!isPhaseFBComplete(caseName, condIdx)) return 'fb';
+  if (!isPhaseTLComplete(caseName, condIdx)) return 'tl';
+  return 1;
+}
+
+async function jumpToCaseConditionFromVolModal(caseName, condIdx) {
+  closeVolModal();
+  if (!caseName) return;
+  saveCurrentState();
+  const sel = document.getElementById('caseSelect');
+  currentCase = caseName;
+  currentCondIdx = condIdx;
+  currentPhase = getDefaultPhaseForCondition(caseName, condIdx);
+  if (sel) sel.value = caseName;
+  renderCondPills();
+  renderPhaseIndicators();
+  await loadCurrentView();
+  updateFooter();
+  updateURL();
 }
 
 // ═══════════════════════════════════════════════════════════════
