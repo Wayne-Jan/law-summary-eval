@@ -1077,8 +1077,9 @@ async function initApp() {
     const resp = await fetch('./data/manifest.json');
     manifest = await resp.json();
     caseSlugs = manifest.case_slugs || {};
-    // Only include cases that have all 4 eval conditions
-    caseList = (manifest.cases || []).filter(c => {
+    // Use eval whitelist (30 cases) if available, otherwise fall back to all cases
+    const evalCaseSet = new Set(manifest.eval_cases || []);
+    caseList = (evalCaseSet.size > 0 ? manifest.eval_cases : manifest.cases || []).filter(c => {
       const slug = getSlug(c);
       return true; // We trust manifest; actual fetch will handle missing
     });

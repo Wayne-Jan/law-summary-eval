@@ -656,12 +656,45 @@ def build():
 
     print(f"  {'timeline (extraction v3.9 only)':45s}  {tl_count:3d} cases  ({tl_realign_count} spans realigned)")
 
+    # Load human eval 30-case whitelist
+    eval_candidates_path = os.path.join(SOURCE_PROJECT, "data", "human_eval_30_candidates.json")
+    eval_case_set = {}   # case_name -> {"volume": vol, "short_name": str}
+    if os.path.exists(eval_candidates_path):
+        with open(eval_candidates_path, encoding="utf-8") as f:
+            ec = json.load(f)
+        for vol in VOLUMES:
+            for entry in ec.get(vol, []):
+                eval_case_set[entry["case"]] = {
+                    "volume": vol,
+                    "short_name": entry.get("short_name", ""),
+                }
+
     # Build case_info for display names
     case_info = {}
     for case in all_cases:
         info = extract_case_info(case)
-        info["volume"] = case_volumes.get(case, "")
+        vol = case_volumes.get(case, "")
+        info["volume"] = vol
+        # Override display with unified format if in eval whitelist
+        ec_entry = eval_case_set.get(case)
+        if ec_entry and ec_entry["short_name"]:
+            short = ec_entry["short_name"]
+            num = info["number"]
+            verdict = info.get("verdict")
+            if verdict:
+                # 上冊: 有罪/無罪 + 編號
+                info["display"] = f"{vol}-{verdict}{num}-{short}"
+            else:
+                info["display"] = f"{vol}-{num}-{short}"
+        elif not ec_entry and vol == "上冊":
+            # 上冊 non-eval cases: keep existing format (court name)
+            pass
         case_info[case] = info
+
+    # Build eval_cases list (30 cases, ordered by volume then by manifest order)
+    eval_cases = [c for c in all_cases if c in eval_case_set]
+    eval_slugs = [case_slugs[c] for c in eval_cases if c in case_slugs]
+    print(f"  {'eval whitelist':45s}  {len(eval_cases):3d} cases")
 
     # Build manifest (includes slug mapping and volume info for frontend)
     manifest = {
@@ -669,6 +702,8 @@ def build():
         "condition_labels": CONDITION_LABELS,
         "condition_groups": CONDITION_GROUPS,
         "cases": all_cases,
+        "eval_cases": eval_cases,
+        "eval_slugs": eval_slugs,
         "case_slugs": case_slugs,
         "case_volumes": case_volumes,
         "case_info": case_info,
