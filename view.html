@@ -46,13 +46,6 @@
             border: 1px solid #e5e7eb; border-radius: 10px; padding: 4px 8px;
         }
 
-        .toolbar .gt-status {
-            font-size: 12px; padding: 4px 10px; border-radius: 999px;
-            border: 1px solid #e5e7eb; background: #f9fafb; color: #6b7280;
-        }
-        .toolbar .gt-status.ok { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
-        .toolbar .gt-status.missing { background: #fef2f2; border-color: #fecaca; color: #b91c1c; }
-
         /* Mobile toolbar elements — hidden on desktop */
         .mobile-case-badge, .mobile-menu-btn, .mobile-backdrop { display: none; }
         .toolbar-controls { display: contents; }
@@ -100,53 +93,44 @@
 
         /* Left: Section navigation */
         .nav-panel {
-            width: 180px; background: white; border-right: 1px solid #e0e0e0;
-            padding: 16px 0; overflow-y: auto; transition: width 0.2s; position: relative;
+            width: 220px; background: white; border-left: 1px solid #e0e0e0;
+            overflow-y: auto; transition: width 0.2s; position: relative;
         }
+        .nav-panel-body { padding: 8px 0 18px; }
 
         .panel-toggle {
-            position: absolute; top: 8px; right: 8px; z-index: 5;
+            position: absolute; top: 8px; left: 8px; z-index: 5;
             border: 1px solid #d1d5db; background: #fff; color: #374151;
             border-radius: 6px; font-size: 11px;
             width: 22px; height: 22px; line-height: 20px; cursor: pointer;
         }
+        .panel-head {
+            padding: 14px 16px 12px; border-bottom: 1px solid #e5e7eb; background: #fafafa;
+        }
+        .panel-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8b5cf6; margin-bottom: 6px; }
+        .panel-title { font-size: 18px; font-weight: 700; color: #111827; }
+        .panel-meta { font-size: 12px; color: #6b7280; margin-top: 4px; }
 
         .nav-item {
             padding: 10px 16px; cursor: pointer; font-size: 13px; color: #555;
-            border-left: 3px solid transparent; transition: all 0.15s;
+            border-right: 3px solid transparent; transition: all 0.15s;
         }
         .nav-item:hover { background: #f5f5f5; }
-        .nav-item.active { background: #eef2ff; color: #4f46e5; border-left-color: #4f46e5; font-weight: 500; }
+        .nav-item.active { background: #eef2ff; color: #4f46e5; border-right-color: #4f46e5; font-weight: 500; }
         .nav-item .nav-icon { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 8px; background: #d1d5db; }
         .nav-item.active .nav-icon { background: #4f46e5; }
         .nav-item.has-content .nav-icon { background: #10b981; }
 
         /* Middle: Content panel */
-        .content-panel { flex: 1; padding: 24px 32px; overflow-y: auto; background: #fafafa; }
-        .single-panel { height: 100%; }
-        .compare-panel { display: none; gap: 20px; height: 100%; }
-        body.compare-mode .single-panel { display: none; }
-        body.compare-mode .compare-panel { display: flex; }
-
-        .compare-column {
-            flex: 1; min-width: 0; overflow-y: auto; background: #fff;
-            border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 18px;
-        }
-
-        .compare-column-title {
-            font-size: 13px; font-weight: 600; margin-bottom: 10px;
-            padding: 5px 12px; border-radius: 6px; display: inline-block;
-        }
-        .compare-column-title.ai-title { background: #f5f3ff; color: #7c3aed; }
-        .compare-column-title.gt-title { background: #ecfdf5; color: #059669; }
+        .content-panel { flex: 1; padding: 0; overflow-y: auto; background: #fafafa; }
+        .single-panel { height: 100%; display: flex; flex-direction: column; }
+        .content-panel-body { padding: 24px 28px; }
 
         .section-title {
             font-size: 18px; font-weight: 600; color: #333;
             margin-bottom: 16px; padding-bottom: 12px;
         }
         .section-title-ai { border-bottom: 2px solid #ede9fe; }
-        .section-title-gt { border-bottom: 2px solid #d1fae5; }
-
         .section-content {
             font-size: 15px; line-height: 1.8; color: #333; white-space: pre-wrap;
         }
@@ -167,11 +151,11 @@
 
         /* ─── RIGHT: Source panel (replaces old citation cards) ─── */
         .source-panel {
-            width: 380px; background: white; border-left: 1px solid #e0e0e0;
+            width: 380px; background: white; border-right: 1px solid #e0e0e0;
             display: flex; flex-direction: column; transition: width 0.2s; position: relative;
         }
 
-        .source-toggle { left: 8px; right: auto; }
+        .source-toggle { left: auto; right: 8px; }
 
         .source-panel-header {
             padding: 12px 16px; border-bottom: 1px solid #e0e0e0;
@@ -237,8 +221,8 @@
         .resizer:hover::after, .resizer.active::after {
             background: #4f46e5; height: 60px;
         }
-        body.nav-collapsed #resizerLeft { display: none; }
-        body.source-collapsed #resizerRight { display: none; }
+        body.source-collapsed #resizerLeft { display: none; }
+        body.nav-collapsed #resizerRight { display: none; }
 
         /* Scrollbar */
         .source-list::-webkit-scrollbar { width: 5px; }
@@ -276,11 +260,9 @@
             .toolbar { padding: 0 12px; gap: 8px; }
             .toolbar h1 { font-size: 15px; }
             .toolbar .condition-select { min-width: 140px; font-size: 13px; }
-            .toolbar .mode-select { font-size: 13px; }
             .toolbar .condition-label { font-size: 13px; }
-            .nav-panel { width: 150px; }
+            .nav-panel { width: 190px; }
             .source-panel { width: 300px; }
-            .content-panel { padding: 20px 24px; }
         }
 
         @media (max-width: 768px) {
@@ -329,7 +311,6 @@
             .ctrl-row-half { display: flex; flex-direction: row; gap: 12px; }
             .ctrl-row-half > div { flex: 1; display: flex; flex-direction: column; }
             .ctrl-row-half select { width: 100%; font-size: 15px; padding: 10px 12px; }
-            .ctrl-row-half .gt-status { text-align: center; padding: 10px 12px; font-size: 14px; }
             .ctrl-row-nav {
                 display: flex; flex-direction: row; gap: 6px; justify-content: center;
                 padding-top: 4px; border-top: 1px solid #f1f5f9;
@@ -348,8 +329,8 @@
             .main { flex-direction: column; margin-top: calc(var(--toolbar-h) + var(--subbar-h)); height: auto; min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); margin-bottom: 0 !important; }
 
             .nav-panel {
-                position: fixed; top: 0; left: 0; bottom: 0; width: 260px; z-index: 200;
-                transform: translateX(-100%); transition: transform 0.3s ease;
+                position: fixed; top: 0; right: 0; bottom: 0; width: 260px; z-index: 200;
+                transform: translateX(100%); transition: transform 0.3s ease;
                 padding-top: 12px; box-shadow: 4px 0 20px rgba(0,0,0,0.15);
             }
             body.nav-open .nav-panel { transform: translateX(0); }
@@ -358,8 +339,8 @@
             body.nav-collapsed .nav-item .nav-icon { margin-right: 8px; }
 
             .source-panel {
-                position: fixed; top: 0; right: 0; bottom: 0; width: 300px; max-width: 85vw;
-                z-index: 200; transform: translateX(100%); transition: transform 0.3s ease;
+                position: fixed; top: 0; left: 0; bottom: 0; width: 300px; max-width: 85vw;
+                z-index: 200; transform: translateX(-100%); transition: transform 0.3s ease;
                 box-shadow: -4px 0 20px rgba(0,0,0,0.15);
             }
             body.source-open .source-panel { transform: translateX(0); }
@@ -371,9 +352,6 @@
             .content-panel { flex: 1; padding: 16px; overflow-y: auto; }
             .section-title { font-size: 16px; margin-bottom: 12px; }
             .section-content { font-size: 14px; line-height: 1.7; }
-
-            body.compare-mode .compare-panel { flex-direction: column; gap: 12px; }
-            .compare-column { min-height: 40vh; }
 
             .footer-stats { position: relative; height: auto; padding: 8px 12px; gap: 12px; flex-wrap: wrap; }
 
@@ -414,19 +392,6 @@
             <div class="ctrl-row">
                 <label class="ctrl-label">案件</label>
                 <select class="condition-select" id="caseSelect"></select>
-            </div>
-            <div class="ctrl-row-half">
-                <div>
-                    <label class="ctrl-label">閱讀模式</label>
-                    <select class="mode-select" id="viewModeSelect">
-                        <option value="single">單欄閱讀</option>
-                        <option value="compare">對照模式</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="ctrl-label">GT 狀態</label>
-                    <span class="gt-status" id="gtStatus">GT -</span>
-                </div>
             </div>
             <div class="ctrl-row-half">
                 <div>
@@ -471,29 +436,6 @@
     </div>
 
     <div class="main" style="margin-bottom: 36px;">
-        <div class="nav-panel" id="navPanel">
-            <button class="panel-toggle" id="navToggle" title="收合章節">&#171;</button>
-            <div class="loading">載入中</div>
-        </div>
-
-        <div class="resizer" id="resizerLeft"></div>
-        <div class="content-panel" id="contentPanel">
-            <div class="single-panel" id="singlePanel">
-                <div class="loading">載入中</div>
-            </div>
-            <div class="compare-panel" id="comparePanel">
-                <div class="compare-column" id="genComparePanel">
-                    <div class="compare-column-title ai-title">AI 生成摘要</div>
-                    <div class="empty-content">載入中</div>
-                </div>
-                <div class="compare-column" id="gtComparePanel">
-                    <div class="compare-column-title gt-title">老師摘要</div>
-                    <div class="empty-content">載入中</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="resizer" id="resizerRight"></div>
         <div class="source-panel" id="sourcePanel">
             <button class="panel-toggle source-toggle" id="sourceToggle" title="收合原文">&#187;</button>
             <div class="source-panel-header">
@@ -503,6 +445,31 @@
             </div>
             <div class="source-list" id="sourceList">
                 <div class="empty-content">選擇章節後顯示原文</div>
+            </div>
+        </div>
+        <div class="resizer" id="resizerLeft"></div>
+        <div class="content-panel" id="contentPanel">
+            <div class="single-panel" id="singlePanel">
+                <div class="panel-head">
+                    <div class="panel-kicker">AI</div>
+                    <div class="panel-title">AI 摘要</div>
+                    <div class="panel-meta" id="summaryMeta">選擇章節後顯示摘要內容</div>
+                </div>
+                <div class="content-panel-body" id="contentPanelBody">
+                    <div class="loading">載入中</div>
+                </div>
+            </div>
+        </div>
+        <div class="resizer" id="resizerRight"></div>
+        <div class="nav-panel" id="navPanel">
+            <button class="panel-toggle" id="navToggle" title="收合章節">&#171;</button>
+            <div class="panel-head">
+                <div class="panel-kicker">導覽</div>
+                <div class="panel-title">章節導航</div>
+                <div class="panel-meta" id="navMeta">-</div>
+            </div>
+            <div class="nav-panel-body" id="navList">
+                <div class="loading">載入中</div>
             </div>
         </div>
     </div>
@@ -522,22 +489,18 @@
         const urlParams = new URLSearchParams(window.location.search);
         const initialCaseName = urlParams.get('case') || '';
         const initialCondition = urlParams.get('condition') || 'claude_afg_v5.1';
-        const initialMode = urlParams.get('mode') === 'single' ? 'single' : 'compare';
         const initialGroup = ['all', '商用模型', '開源模型'].includes(urlParams.get('group'))
             ? urlParams.get('group') : '商用模型';
 
         let viewData = null;
-        let gtData = null;
         let allCases = [];
         let caseSlugs = {};
         let caseInfo = {};
         let caseVolumes = {};
         let currentCaseName = initialCaseName;
         let currentCondition = initialCondition;
-        let currentMode = initialMode;
         let currentGroup = initialGroup;
         let currentSection = null;
-        let gtMissing = false;
         let activeChunkAlias = null;
 
         function getSlug(caseName) { return caseSlugs[caseName] || encodeURIComponent(caseName); }
@@ -584,7 +547,7 @@
             updateMobileCaseBadge();
             if (!select.dataset.bound) {
                 select.addEventListener('change', async () => {
-                    currentCaseName = select.value; currentSection = null; gtData = null;
+                    currentCaseName = select.value; currentSection = null;
                     closeMobileDrawer();
                     await loadData();
                 });
@@ -626,7 +589,6 @@
             if (!caseName || caseName === currentCaseName) return;
             currentCaseName = caseName;
             currentSection = null;
-            gtData = null;
             renderCaseSelector();
             await loadData();
         }
@@ -646,11 +608,8 @@
                 if (groupOptions.length > 0 && !groupOptions.includes(currentCondition)) {
                     currentCondition = groupOptions[0]; await loadData(); return;
                 }
-                if (currentMode === 'compare') await loadGtData();
-
                 updateMobileCaseBadge();
                 renderConditionSelector();
-                renderModeSelector();
                 renderGroupSelector();
                 renderNav();
                 renderStats();
@@ -660,41 +619,22 @@
                 const firstSection = viewData.sections.find((s) => s.content) || viewData.sections[0];
                 if (firstSection) selectSection(firstSection.id);
             } catch (err) {
-                document.getElementById('singlePanel').innerHTML = `<div class="empty-content">載入失敗: ${escapeHtml(err.message || '未知錯誤')}</div>`;
+                document.getElementById('contentPanelBody').innerHTML = `<div class="empty-content">載入失敗: ${escapeHtml(err.message || '未知錯誤')}</div>`;
             }
         }
 
-        async function loadGtData() {
-            try {
-                const response = await fetch(`./data/gt/${getSlug(currentCaseName)}.json`);
-                if (!response.ok) throw new Error('GT 載入失敗');
-                gtData = await response.json(); gtMissing = false;
-            } catch { gtData = { sections: [] }; gtMissing = true; }
-            renderGtStatus();
-        }
-
-        function renderGtStatus() {
-            const el = document.getElementById('gtStatus');
-            if (!el) return;
-            if (currentMode !== 'compare') { el.textContent = 'GT -'; el.className = 'gt-status'; return; }
-            if (gtMissing) { el.textContent = 'GT 缺失'; el.className = 'gt-status missing'; }
-            else { el.textContent = 'GT 可用'; el.className = 'gt-status ok'; }
-        }
-
         function renderNav() {
-            const navPanel = document.getElementById('navPanel');
-            navPanel.innerHTML = `
-                <button class="panel-toggle" id="navToggle" title="收合章節">${document.body.classList.contains('nav-collapsed') ? '»' : '«'}</button>
-                ${viewData.sections.map((section) => `
+            const navList = document.getElementById('navList');
+            const navMeta = document.getElementById('navMeta');
+            navMeta.textContent = `${viewData.sections.filter((section) => section.content).length} / ${viewData.sections.length} 章節可讀`;
+            navList.innerHTML = viewData.sections.map((section) => `
                     <div class="nav-item ${section.content ? 'has-content' : ''}"
                          data-section="${section.id}"
                          onclick="window.selectSection('${section.id}')">
                         <span class="nav-icon"></span>
                         ${section.title}
                     </div>
-                `).join('')}
-            `;
-            document.getElementById('navToggle').addEventListener('click', toggleNavPanel);
+                `).join('');
         }
 
         function renderConditionSelector() {
@@ -727,24 +667,6 @@
                     renderConditionSelector(); updateUrlState();
                     if (currentCondition !== before) { await loadData(); return; }
                     if (currentSection) selectSection(currentSection);
-                });
-                select.dataset.bound = '1';
-            }
-        }
-
-        function renderModeSelector() {
-            const select = document.getElementById('viewModeSelect');
-            select.value = currentMode;
-            document.body.classList.toggle('compare-mode', currentMode === 'compare');
-            renderGtStatus();
-            if (!select.dataset.bound) {
-                select.addEventListener('change', async () => {
-                    currentMode = select.value;
-                    document.body.classList.toggle('compare-mode', currentMode === 'compare');
-                    if (currentMode === 'compare' && !gtData) await loadGtData();
-                    renderGtStatus(); updateUrlState();
-                    const fallback = (viewData?.sections || []).find((s) => s.content) || (viewData?.sections || [])[0];
-                    selectSection(currentSection || fallback?.id);
                 });
                 select.dataset.bound = '1';
             }
@@ -795,35 +717,19 @@
             if (!section) return;
 
             renderSingleContent(section);
-            renderCompareContent(sectionId, section);
             // Clear source highlights
             document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
         }
 
         function renderSingleContent(section) {
-            const singlePanel = document.getElementById('singlePanel');
+            const singlePanel = document.getElementById('contentPanelBody');
+            const summaryMeta = document.getElementById('summaryMeta');
+            if (summaryMeta) summaryMeta.textContent = section.content ? `目前章節：${section.title}` : `目前章節：${section.title}（無內容）`;
             if (!section.content) {
                 singlePanel.innerHTML = `<div class="section-title section-title-ai">${section.title}</div><div class="empty-content">本章節無內容</div>`;
                 return;
             }
             singlePanel.innerHTML = `<div class="section-title section-title-ai">${section.title}</div><div class="section-content">${withCitationMarkup(section.content)}</div>`;
-        }
-
-        function renderCompareContent(sectionId, generatedSection) {
-            const genPanel = document.getElementById('genComparePanel');
-            const gtPanel = document.getElementById('gtComparePanel');
-
-            const generatedContent = generatedSection.content
-                ? `<div class="section-title section-title-ai">${generatedSection.title}</div><div class="section-content">${withCitationMarkup(generatedSection.content)}</div>`
-                : `<div class="section-title section-title-ai">${generatedSection.title}</div><div class="empty-content">本章節無內容</div>`;
-
-            const gtSection = (gtData?.sections || []).find((s) => s.id === sectionId);
-            const gtContent = gtSection && gtSection.content
-                ? `<div class="section-title section-title-gt">${gtSection.title}</div><div class="section-content">${escapeHtml(gtSection.content)}</div>`
-                : `<div class="section-title section-title-gt">${generatedSection.title}</div><div class="empty-content">老師摘要目前無此章節</div>`;
-
-            genPanel.innerHTML = `<div class="compare-column-title ai-title">AI 生成摘要</div>${generatedContent}`;
-            gtPanel.innerHTML = `<div class="compare-column-title gt-title">老師摘要</div>${gtContent}`;
         }
 
         // Normalize CH_1 → CH_01 (pad to 2 digits to match chunk keys)
@@ -896,7 +802,6 @@
             const url = new URL(window.location.href);
             url.searchParams.set('case', currentCaseName);
             url.searchParams.set('condition', currentCondition);
-            url.searchParams.set('mode', currentMode);
             url.searchParams.set('group', currentGroup);
             window.history.replaceState({}, '', url.toString());
 
@@ -1039,6 +944,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             const stBtn = document.getElementById('sourceToggle');
             if (stBtn) stBtn.addEventListener('click', toggleSourcePanel);
+            const ntBtn = document.getElementById('navToggle');
+            if (ntBtn) ntBtn.addEventListener('click', toggleNavPanel);
             initResizers();
         });
 

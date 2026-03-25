@@ -20,6 +20,11 @@
       display: flex; align-items: center; padding: 0 20px; gap: 12px; z-index: 100;
     }
     .toolbar h1 { font-size: 17px; font-weight: 600; color: #333; white-space: nowrap; }
+    .toolbar .condition-select {
+      font-size: 14px; color: #374151; background: #f3f4f6;
+      border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 4px 10px; min-width: 220px;
+    }
     .toolbar .spacer { flex: 1; }
     .toolbar a.nav-link {
       color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
@@ -62,6 +67,8 @@
     /* ─── MOBILE TOOLBAR ELEMENTS (hidden on desktop) ─── */
     .mobile-case-badge, .mobile-menu-btn, .mobile-backdrop { display: none; }
     .toolbar-controls { display: contents; }
+    .ctrl-label { display: none; }
+    .ctrl-row, .ctrl-row-nav { display: contents; }
     .ctrl-row-case-btn { display: none; }
     .ctrl-row-nav { display: contents; }
     .badge {
@@ -74,61 +81,28 @@
     .main {
       display: flex; margin-top: calc(var(--toolbar-h) + var(--subbar-h)); height: calc(100vh - var(--toolbar-h) - var(--subbar-h));
     }
-
-    /* ─── LEFT PANEL: Case List ─── */
-    .case-panel {
-      width: 260px; background: white; border-right: 1px solid #e0e0e0;
-      overflow-y: auto; padding: 12px 0; flex-shrink: 0;
-    }
-    .case-search {
-      margin: 0 12px 8px; padding: 7px 12px 7px 30px; border: 1px solid #e5e7eb;
-      border-radius: 8px; font-size: 12px; width: calc(100% - 24px); outline: none;
-      background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cline x1='9.5' y1='9.5' x2='13' y2='13'/%3E%3C/svg%3E") no-repeat 8px center;
-    }
-    .case-search:focus { border-color: #4f46e5; }
-    .case-item {
-      padding: 8px 16px; cursor: pointer; font-size: 12px; color: #555;
-      border-left: 3px solid transparent; transition: all 0.12s;
-      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    .case-item:hover { background: #f5f5f5; }
-    .case-item.active { background: #eef2ff; color: #4f46e5; border-left-color: #4f46e5; font-weight: 500; }
-    .case-count { font-size: 11px; color: #9ca3af; padding: 4px 16px; }
-
-    /* ─── RIGHT: Content Area ─── */
-    .content-area {
-      flex: 1; overflow-y: auto; background: #fafafa;
-    }
+    .content-area { flex: 1; overflow-y: auto; background: #fafafa; }
     .content-inner { padding: 24px 32px; }
+    .panel-card {
+      background: white; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;
+    }
+    .panel-head {
+      padding: 14px 16px 12px; border-bottom: 1px solid #e5e7eb; background: #fafafa;
+    }
+    .panel-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8b5cf6; margin-bottom: 6px; }
+    .panel-title { font-size: 18px; font-weight: 700; color: #111827; }
+    .panel-meta { font-size: 12px; color: #6b7280; margin-top: 4px; }
 
     /* ─── DUAL-COLUMN LAYOUT ─── */
     .tl-columns { display: flex; gap: 24px; align-items: flex-start; }
-    .tl-col-left { flex: 55; min-width: 0; }
-    .tl-col-right {
-      flex: 45; min-width: 0;
-      position: sticky; top: 0;
-      max-height: calc(100vh - 52px);
-      overflow-y: auto;
-    }
+    .tl-col-left { flex: 44; min-width: 0; position: sticky; top: 24px; max-height: calc(100vh - 120px); }
+    .tl-col-center { flex: 56; min-width: 0; }
 
     /* ─── SOURCE PANEL (full text with highlighter) ─── */
     .source-panel {
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
       min-height: 200px; display: flex; flex-direction: column;
     }
-    .source-panel-header {
-      display: flex; align-items: center; gap: 8px;
-      padding: 14px 18px 10px; border-bottom: 1px solid #f3f4f6;
-      position: sticky; top: 0; background: white; border-radius: 10px 10px 0 0; z-index: 2;
-    }
-    .source-panel-icon {
-      width: 26px; height: 26px; border-radius: 6px;
-      background: #f5f5f4; color: #78716c;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-      font-size: 13px;
-    }
-    .source-panel-title { font-size: 13px; font-weight: 600; color: #333; }
-    .source-panel-subtitle { font-size: 10px; color: #9ca3af; margin-top: 1px; }
     .source-panel-body {
       font-size: 13px; color: #475569; line-height: 1.9;
       padding: 14px 18px; white-space: pre-wrap; word-break: break-all;
@@ -260,12 +234,11 @@
 
     /* ─── RESPONSIVE: TABLET ─── */
     @media (max-width: 1024px) {
-      .case-panel { width: 200px; }
       .content-inner { padding: 20px; }
       .tl-summary-card { min-width: 120px; padding: 10px 14px; }
       .tl-columns { gap: 16px; }
-      .tl-col-left { flex: 50; }
-      .tl-col-right { flex: 50; }
+      .tl-col-left { flex: 45; }
+      .tl-col-center { flex: 55; }
     }
 
     /* ─── RESPONSIVE: MOBILE ─── */
@@ -275,6 +248,7 @@
                  justify-content: space-between; padding: 0 12px !important; gap: 8px !important; }
       .toolbar h1 { font-size: 15px !important; }
       .toolbar .spacer { display: none; }
+      .toolbar .condition-select { min-width: 0; width: 100%; font-size: 15px; padding: 10px 12px; }
 
       .mobile-case-badge {
         display: flex; align-items: center;
@@ -304,6 +278,8 @@
       }
       .toolbar-controls.open { display: flex !important; }
 
+      .ctrl-label { display: block; font-size: 12px; font-weight: 600; color: #64748b; margin-bottom: 4px; }
+      .ctrl-row { display: flex; flex-direction: column; }
       .ctrl-row-nav {
         display: flex; flex-direction: row; gap: 6px; justify-content: center;
       }
@@ -313,23 +289,8 @@
         font-weight: 500; text-decoration: none !important;
       }
 
-      .ctrl-row-case-btn { display: flex; }
-      .ctrl-row-case-btn button {
-        width: 100%; padding: 10px; border: 1px solid #e5e7eb; border-radius: 8px;
-        background: #f8fafc; font-size: 14px; color: #334155; cursor: pointer;
-        font-family: inherit; text-align: left;
-      }
-      .ctrl-row-case-btn button:hover { background: #f1f5f9; }
-
       .progress-subbar { top: var(--toolbar-h); }
       .main { flex-direction: column; margin-top: calc(var(--toolbar-h) + var(--subbar-h)) !important; height: auto; min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)) !important; }
-      .resizer { display: none; }
-      .case-panel {
-        position: fixed; top: 0; left: 0; bottom: 0; width: 260px; z-index: 200;
-        transform: translateX(-100%); transition: transform 0.3s ease;
-        box-shadow: 4px 0 20px rgba(0,0,0,0.15);
-      }
-      body.case-panel-open .case-panel { transform: translateX(0); }
       .content-area { padding: 0; flex: 1; }
       .content-inner { padding: 16px 12px; }
       .tl-summary { gap: 8px; }
@@ -340,43 +301,12 @@
       .tl-meta { gap: 8px; }
 
       .tl-columns { flex-direction: column; }
-      .tl-col-right { display: none; }
-      .tl-col-left { flex: 1; }
+      .tl-col-left { flex: 1; position: static; max-height: none; width: 100%; }
+      .tl-col-center { flex: 1; width: 100%; }
       .tl-source-toggle { display: inline-flex; }
-
-      .mobile-fab {
-        display: flex; position: fixed; bottom: 16px; left: 16px;
-        width: 44px; height: 44px; border-radius: 50%;
-        background: #4f46e5; color: #fff; border: none; font-size: 18px;
-        align-items: center; justify-content: center;
-        box-shadow: 0 4px 14px rgba(79,70,229,0.4); z-index: 120; cursor: pointer;
-      }
-      .mobile-fab:active { transform: scale(0.92); }
     }
-    /* ─── RESIZER ─── */
-    .resizer {
-      width: 6px; cursor: col-resize; background: transparent;
-      flex-shrink: 0; position: relative; z-index: 5;
-    }
-    .resizer::after {
-      content: ''; position: absolute; top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 2px; height: 40px; background: #cbd5e1; border-radius: 2px;
-      transition: background 0.2s, height 0.2s;
-    }
-    .resizer:hover::after, .resizer.active::after {
-      background: #4f46e5; height: 60px;
-    }
-
     @media (min-width: 769px) {
-      .mobile-fab { display: none !important; }
-      .drawer-overlay { display: none !important; }
     }
-    .drawer-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.35); z-index: 150; opacity: 0; transition: opacity 0.25s;
-    }
-    .drawer-overlay.visible { opacity: 1; }
     @media (max-width: 480px) {
       .tl-summary-card { min-width: 100%; }
     }
@@ -390,8 +320,9 @@
 
     <div class="toolbar-controls" id="toolbarControls">
       <span class="spacer"></span>
-      <div class="ctrl-row-case-btn">
-        <button onclick="toggleCasePanel(); closeMobileDrawer();" id="drawerCaseBtn">選擇案件...</button>
+      <div class="ctrl-row">
+        <label class="ctrl-label">案件</label>
+        <select class="condition-select" id="caseSelect"></select>
       </div>
       <div class="ctrl-row-nav">
         <a id="viewNavLink" class="nav-link" href="view.html">摘要檢視</a>
@@ -420,12 +351,6 @@
   </div>
 
   <div class="main">
-    <div class="case-panel" id="casePanel">
-      <input class="case-search" type="text" placeholder="搜尋案件..." id="caseSearch" oninput="filterCases()">
-      <div class="case-count" id="caseCount">-</div>
-      <div id="caseList"><div class="loading">載入中</div></div>
-    </div>
-    <div class="resizer"></div>
     <div class="content-area" id="contentArea">
       <div class="empty-state">
         <div class="icon">📅</div>
@@ -433,10 +358,6 @@
       </div>
     </div>
   </div>
-
-  <button class="mobile-fab" id="fabCases" onclick="toggleCasePanel()">&#9776;</button>
-  <div class="drawer-overlay" id="drawerOverlay" onclick="closeCasePanel()"></div>
-
   <script>
     let allCases = [];
     let caseSlugs = {};
@@ -457,35 +378,42 @@
         caseSlugs = manifest.case_slugs || {};
         caseInfo = manifest.case_info || {};
       } catch { allCases = []; }
-      renderCaseList(allCases);
+      renderCaseSelector();
       updateVolumeProgress();
       const params = new URLSearchParams(location.search);
       const caseParam = params.get('case');
       if (caseParam && allCases.includes(caseParam)) selectCase(caseParam);
+      else if (allCases.length > 0) selectCase(allCases[0]);
       updateMobileCaseBadge();
     }
 
-    function renderCaseList(cases) {
-      const el = document.getElementById('caseList');
-      document.getElementById('caseCount').textContent = `${cases.length} 案件`;
-      // Group by volume
+    function renderCaseSelector() {
+      const select = document.getElementById('caseSelect');
       const volumes = ['上冊', '中冊', '下冊'];
       const byVol = {};
       volumes.forEach(v => { byVol[v] = []; });
-      cases.forEach(c => {
+      allCases.forEach(c => {
         const vol = (caseInfo[c] || {}).volume || '';
         if (byVol[vol]) byVol[vol].push(c);
       });
       let html = '';
       volumes.forEach(vol => {
         if (!byVol[vol] || !byVol[vol].length) return;
-        html += `<div class="case-count" style="font-weight:600;color:#4f46e5;margin-top:8px">${esc(vol)}</div>`;
+        html += `<optgroup label="${esc(vol)}">`;
         byVol[vol].forEach(c => {
-          const isActive = c === currentCase ? 'active' : '';
-          html += `<div class="case-item ${isActive}" data-case="${esc(c)}" onclick="selectCase('${esc(c)}')" title="${esc(c)}">${esc(getCaseDisplay(c))}</div>`;
+          const selected = c === currentCase ? 'selected' : '';
+          html += `<option value="${esc(c)}" ${selected}>${esc(getCaseDisplay(c))}</option>`;
         });
+        html += '</optgroup>';
       });
-      el.innerHTML = html;
+      select.innerHTML = html;
+      if (!select.dataset.bound) {
+        select.addEventListener('change', () => {
+          closeMobileDrawer();
+          selectCase(select.value);
+        });
+        select.dataset.bound = '1';
+      }
     }
 
     function updateVolumeProgress() {
@@ -523,18 +451,12 @@
       selectCase(caseName);
     }
 
-    function filterCases() {
-      const q = document.getElementById('caseSearch').value.trim().toLowerCase();
-      renderCaseList(q ? allCases.filter(c => getCaseDisplay(c).toLowerCase().includes(q) || c.toLowerCase().includes(q)) : allCases);
-    }
-
     async function selectCase(caseName) {
       currentCase = caseName;
       timelineData = null;
       activeEventIdx = -1;
-      document.querySelectorAll('.case-item').forEach(el => {
-        el.classList.toggle('active', el.dataset.case === caseName);
-      });
+      const select = document.getElementById('caseSelect');
+      if (select) select.value = caseName;
       const url = new URL(location.href);
       url.searchParams.set('case', caseName);
       history.replaceState({}, '', url.toString());
@@ -542,7 +464,6 @@
       if (sl) sl.href = `view.html?case=${encodeURIComponent(caseName)}`;
       const evl = document.getElementById('evalLink');
       if (evl) evl.href = `eval.html?case=${encodeURIComponent(caseName)}`;
-      if (window.innerWidth <= 768) closeCasePanel();
 
       const contentArea = document.getElementById('contentArea');
       contentArea.innerHTML = '<div class="loading">載入時間軸中</div>';
@@ -639,9 +560,66 @@
       }
       html += '</div>';
 
-      // Dual-column
+      // Workbench
       html += '<div class="tl-columns">';
-      html += '<div class="tl-col-left"><div class="timeline">';
+      html += '<div class="tl-col-left">';
+      html += '<div class="source-panel" id="sourcePanel">';
+      html += '<div class="panel-head">';
+      html += '<div class="panel-kicker">SOURCE</div>';
+      html += `<div class="panel-title">原始判決書</div>`;
+      html += `<div class="panel-meta">${chunks.length} 段原文片段</div>`;
+      html += '</div>';
+      html += '<div class="source-panel-body" id="sourcePanelBody">';
+
+      if (chunks.length > 0) {
+        const sorted = [...chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
+        sorted.forEach(chunk => {
+          const cid = chunk.chunk_id || '';
+          const evtSpans = [];
+          events.forEach((evt, evtIdx) => {
+            if (evt.char_start == null || evt.char_end == null) return;
+            const overlapStart = Math.max(evt.char_start, chunk.start_char);
+            const overlapEnd = Math.min(evt.char_end, chunk.end_char);
+            if (overlapEnd > overlapStart) {
+              evtSpans.push({
+                relStart: overlapStart - chunk.start_char,
+                relEnd: overlapEnd - chunk.start_char,
+                evtIdx: evtIdx
+              });
+            }
+          });
+          evtSpans.sort((a, b) => a.relStart - b.relStart);
+          const content = chunk.content || '';
+          let chunkHtml = '';
+          let cursor = 0;
+          evtSpans.forEach(sp => {
+            if (sp.relStart > cursor) chunkHtml += esc(content.substring(cursor, sp.relStart));
+            chunkHtml += `<mark class="evt-highlight" data-evt="${sp.evtIdx}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
+            cursor = sp.relEnd;
+          });
+          if (cursor < content.length) chunkHtml += esc(content.substring(cursor));
+          html += `<div class="chunk-region" id="chunk_${esc(cid)}" data-chunk="${esc(cid)}">`;
+          const chunkMatch = cid.match(/chunk[_\s]*(\d+)/i);
+          const shortLabel = chunkMatch ? `Chunk ${chunkMatch[1]}` : cid;
+          html += `<span class="chunk-label">${esc(shortLabel)}</span>`;
+          html += chunkHtml;
+          html += '</div>';
+        });
+      } else {
+        html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案件無段落資料</span></div>';
+      }
+
+      html += '</div></div></div>';
+
+      html += '<div class="tl-col-center">';
+      html += '<div class="panel-card">';
+      html += '<div class="panel-head">';
+      html += '<div class="panel-kicker">TIMELINE</div>';
+      html += '<div class="panel-title">事件時間軸</div>';
+      html += `<div class="panel-meta">${events.length} 個事件，點擊事件可定位原文</div>`;
+      html += '</div>';
+      html += '<div style="padding: 20px 22px 24px;">';
+      html += '<div class="timeline">';
 
       events.forEach((evt, idx) => {
         const isCritical = evt.critical_decision;
@@ -683,67 +661,7 @@
         html += '</div>';
       });
 
-      html += '</div></div>'; // .timeline .tl-col-left
-
-      // Right column: render ALL chunks as continuous full text
-      html += '<div class="tl-col-right"><div class="source-panel" id="sourcePanel">';
-      html += '<div class="source-panel-header">';
-      html += '<div class="source-panel-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>';
-      html += `<div><div class="source-panel-title">原始判決書</div><div class="source-panel-subtitle">${chunks.length} 段落</div></div>`;
-      html += '</div>';
-      html += '<div class="source-panel-body" id="sourcePanelBody">';
-
-      if (chunks.length > 0) {
-        // Sort chunks by start_char
-        const sorted = [...chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
-        sorted.forEach(chunk => {
-          const cid = chunk.chunk_id || '';
-          // Pre-compute event highlights within this chunk
-          const evtSpans = [];
-          events.forEach((evt, evtIdx) => {
-            if (evt.char_start == null || evt.char_end == null) return;
-            const overlapStart = Math.max(evt.char_start, chunk.start_char);
-            const overlapEnd = Math.min(evt.char_end, chunk.end_char);
-            if (overlapEnd > overlapStart) {
-              evtSpans.push({
-                relStart: overlapStart - chunk.start_char,
-                relEnd: overlapEnd - chunk.start_char,
-                evtIdx: evtIdx
-              });
-            }
-          });
-          // Sort spans by start position
-          evtSpans.sort((a, b) => a.relStart - b.relStart);
-
-          // Build chunk HTML with event highlight spans
-          const content = chunk.content || '';
-          let chunkHtml = '';
-          let cursor = 0;
-          evtSpans.forEach(sp => {
-            if (sp.relStart > cursor) {
-              chunkHtml += esc(content.substring(cursor, sp.relStart));
-            }
-            chunkHtml += `<mark class="evt-highlight" data-evt="${sp.evtIdx}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
-            cursor = sp.relEnd;
-          });
-          if (cursor < content.length) {
-            chunkHtml += esc(content.substring(cursor));
-          }
-
-          html += `<div class="chunk-region" id="chunk_${esc(cid)}" data-chunk="${esc(cid)}">`;
-          const chunkMatch = cid.match(/chunk[_\s]*(\d+)/i);
-          const shortLabel = chunkMatch ? `Chunk ${chunkMatch[1]}` : cid;
-          html += `<span class="chunk-label">${esc(shortLabel)}</span>`;
-          html += chunkHtml;
-          html += '</div>';
-        });
-      } else {
-        html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案件無段落資料</span></div>';
-      }
-
-      html += '</div>'; // .source-panel-body
-      html += '</div></div>'; // .source-panel .tl-col-right
-
+      html += '</div></div></div>'; // .timeline / .panel-card / padding
       html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
 
@@ -819,19 +737,6 @@
       txt.classList.toggle('open');
     }
 
-    function toggleCasePanel() {
-      const open = document.body.classList.toggle('case-panel-open');
-      const overlay = document.getElementById('drawerOverlay');
-      if (open) { overlay.style.display = 'block'; requestAnimationFrame(() => overlay.classList.add('visible')); }
-      else { overlay.classList.remove('visible'); setTimeout(() => overlay.style.display = 'none', 250); }
-    }
-    function closeCasePanel() {
-      document.body.classList.remove('case-panel-open');
-      const overlay = document.getElementById('drawerOverlay');
-      overlay.classList.remove('visible');
-      setTimeout(() => overlay.style.display = 'none', 250);
-    }
-
     function esc(text) {
       const div = document.createElement('div');
       div.textContent = text == null ? '' : String(text);
@@ -854,59 +759,9 @@
     }
     function updateMobileCaseBadge() {
       const badge = document.getElementById('mobileCaseBadge');
-      const btn = document.getElementById('drawerCaseBtn');
       const display = currentCase ? getCaseDisplay(currentCase) : '選擇案件';
       if (badge) badge.textContent = display;
-      if (btn) btn.textContent = currentCase ? '目前：' + display : '選擇案件...';
     }
-
-    function initResizers() {
-      document.querySelectorAll('.resizer').forEach(resizer => {
-        const onPointerDown = (startEvt) => {
-          startEvt.preventDefault();
-          const leftEl = resizer.previousElementSibling;
-          const rightEl = resizer.nextElementSibling;
-          const startX = startEvt.clientX ?? startEvt.touches[0].clientX;
-          const startLeftW = leftEl.offsetWidth;
-          const startRightW = rightEl.offsetWidth;
-          resizer.classList.add('active');
-          document.body.style.cursor = 'col-resize';
-          document.body.style.userSelect = 'none';
-
-          const onMove = (e) => {
-            const x = e.clientX ?? e.touches[0].clientX;
-            const dx = x - startX;
-            leftEl.style.width = Math.max(100, startLeftW + dx) + 'px';
-            leftEl.style.flex = 'none';
-            rightEl.style.flex = '1';
-          };
-
-          const onUp = () => {
-            resizer.classList.remove('active');
-            document.body.style.cursor = '';
-            document.body.style.userSelect = '';
-            document.removeEventListener('mousemove', onMove);
-            document.removeEventListener('mouseup', onUp);
-            document.removeEventListener('touchmove', onMove);
-            document.removeEventListener('touchend', onUp);
-            try { localStorage.setItem('tlCasePanelW', leftEl.style.width); } catch {}
-          };
-
-          document.addEventListener('mousemove', onMove);
-          document.addEventListener('mouseup', onUp);
-          document.addEventListener('touchmove', onMove, { passive: false });
-          document.addEventListener('touchend', onUp);
-        };
-        resizer.addEventListener('mousedown', onPointerDown);
-        resizer.addEventListener('touchstart', onPointerDown, { passive: false });
-      });
-      // Restore saved width
-      try {
-        const w = localStorage.getItem('tlCasePanelW');
-        if (w) { const el = document.getElementById('casePanel'); if (el) { el.style.width = w; el.style.flex = 'none'; } }
-      } catch {}
-    }
-    initResizers();
 
     init();
   </script>
