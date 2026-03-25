@@ -573,22 +573,30 @@
     body.is-admin .admin-only { display: inline-flex; }
     body.is-admin .eval-only,
     body.is-admin .subbar,
+    body.is-admin .progress-subbar,
     body.is-admin .main,
     body.is-admin .footer { display: none; }
 
     /* ─── ADMIN PANEL ─── */
-    .admin-overlay {
-      position: fixed; inset: 0; z-index: 9998;
-      background: rgba(15,23,42,0.7);
-      display: flex; align-items: center; justify-content: center;
+    .admin-page {
+      display: none;
+      margin-top: var(--toolbar-h);
+      min-height: calc(100vh - var(--toolbar-h));
+      background: var(--slate-100);
+      padding: 28px 24px 48px;
     }
-    .admin-overlay.hidden { display: none; }
+    body.is-admin .admin-page { display: block; }
+    .admin-page.hidden { display: none !important; }
+    .admin-page-inner { max-width: 1120px; margin: 0 auto; }
     .admin-panel {
       background: white; border-radius: 16px; padding: 32px;
-      width: 90vw; max-width: 900px; max-height: 80vh; overflow-y: auto;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border: 1px solid var(--slate-300);
+      box-shadow: 0 20px 60px rgba(15,23,42,0.08);
     }
     .admin-panel h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--slate-900); }
+    .admin-panel-head { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:18px; }
+    .admin-panel-head p { margin-top:6px; font-size:13px; color: var(--slate-500); line-height:1.6; }
+    .admin-panel-actions { display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end; }
     .admin-panel table { width: 100%; border-collapse: collapse; font-size: 13px; }
     .admin-panel th, .admin-panel td { padding: 6px 10px; border: 1px solid var(--slate-300); text-align: center; }
     .admin-panel th { background: var(--slate-100); font-weight: 600; color: var(--slate-700); position: sticky; top: 0; }
@@ -618,22 +626,6 @@
     <div class="login-links">
       <a href="index.html">返回首頁</a>
       <a href="#" id="adminLoginLink" style="font-size:12px;color:var(--slate-300);text-decoration:none" onclick="event.preventDefault();toggleAdminLogin()">系統管理者</a>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════ -->
-<!-- ADMIN PANEL OVERLAY                                        -->
-<!-- ═══════════════════════════════════════════════════════════ -->
-<div class="admin-overlay hidden" id="adminOverlay" onclick="if(event.target===this)hideAdminPanel()">
-  <div class="admin-panel">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-      <h2 style="margin:0;">管理面板</h2>
-      <button class="btn btn-ghost" onclick="hideAdminPanel()">關閉</button>
-    </div>
-    <div id="adminContent"></div>
-    <div style="margin-top:16px;display:flex;gap:10px;">
-      <button class="btn btn-primary" onclick="adminExportAll()">匯出全部評估者</button>
     </div>
   </div>
 </div>
@@ -685,6 +677,27 @@
       <a href="index.html" class="btn btn-ghost" onclick="closeToolbarMenus()">首頁</a>
       <div class="toolbar-menu-sep"></div>
       <button class="btn btn-ghost" onclick="closeToolbarMenus();logout()">登出</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ADMIN PAGE                                                 -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="admin-page hidden" id="adminPage">
+  <div class="admin-page-inner">
+    <div class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2 style="margin:0;">管理面板</h2>
+          <p>管理者可檢視各評估者進度，並執行匯入、匯出與雲端還原。</p>
+        </div>
+        <div class="admin-panel-actions">
+          <button class="btn btn-ghost" onclick="renderAdminContent()">重新整理</button>
+          <button class="btn btn-primary" onclick="adminExportAll()">匯出全部評估者</button>
+        </div>
+      </div>
+      <div id="adminContent"></div>
     </div>
   </div>
 </div>
@@ -3294,13 +3307,14 @@ function initResizers() {
 // ═══════════════════════════════════════════════════════════════
 
 function showAdminPanel() {
-  const overlay = document.getElementById('adminOverlay');
-  overlay.classList.remove('hidden');
+  const page = document.getElementById('adminPage');
+  page.classList.remove('hidden');
   renderAdminContent();
+  page.scrollIntoView({ block: 'start', behavior: 'smooth' });
 }
 
 function hideAdminPanel() {
-  document.getElementById('adminOverlay').classList.add('hidden');
+  document.getElementById('adminPage').classList.add('hidden');
 }
 
 function renderAdminContent() {
