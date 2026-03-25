@@ -705,10 +705,10 @@ def build():
         info["short_title"] = short
         verdict = info.get("verdict")
         if vol == "上冊" and verdict:
-            info["display"] = f"{verdict}{info['number']}・{short}" if short else case
+            info["display"] = f"{vol[:1]}-{verdict}{info['number']}・{short}" if short else case
         else:
             vol_mark = vol[:1] if vol else ""
-            info["display"] = f"{vol_mark}{info['number']}・{short}" if short else case
+            info["display"] = f"{vol_mark}-{info['number']}・{short}" if short else case
         case_info[case] = info
 
     # Build eval_cases list (30 cases, ordered by volume then by manifest order)
