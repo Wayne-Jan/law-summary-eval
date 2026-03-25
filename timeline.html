@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Timeline Viewer — 醫療糾紛事件時間軸</title>
+  <title>時間軸檢視 — 醫療糾紛事件時間軸</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --toolbar-h: 52px; --subbar-h: 30px; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f8f9fa;
@@ -14,20 +15,53 @@
 
     /* ─── TOOLBAR ─── */
     .toolbar {
-      position: fixed; top: 0; left: 0; right: 0; height: 52px;
+      position: fixed; top: 0; left: 0; right: 0; height: var(--toolbar-h);
       background: white; border-bottom: 1px solid #e0e0e0;
       display: flex; align-items: center; padding: 0 20px; gap: 12px; z-index: 100;
     }
     .toolbar h1 { font-size: 17px; font-weight: 600; color: #333; white-space: nowrap; }
     .toolbar .spacer { flex: 1; }
-    .toolbar a { color: #4f46e5; text-decoration: none; font-size: 14px; }
+    .toolbar a.nav-link {
+      color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
+      padding: 6px 12px; border-radius: 8px; transition: all 0.15s;
+    }
+    .toolbar a.nav-link:hover { background: #eef2ff; color: #4f46e5; text-decoration: none; }
+    .toolbar a.nav-link.active { background: #4f46e5; color: #fff; }
+
+    .progress-subbar {
+      position: fixed; top: var(--toolbar-h); left: 0; right: 0; height: var(--subbar-h);
+      background: white; border-bottom: 1px solid #e2e8f0;
+      display: flex; align-items: center; padding: 0 16px; gap: 16px; z-index: 99;
+      font-size: 12px; color: #64748b;
+    }
+    .progress-subbar .vol-block { display: flex; align-items: center; gap: 6px; cursor: pointer; border-radius: 6px; padding: 2px 6px; transition: background .15s; }
+    .progress-subbar .vol-block:hover { background: #f1f5f9; }
+    .progress-subbar .vol-label { font-weight: 600; color: #334155; }
+    .progress-subbar .sep-dot { color: #cbd5e1; }
+    .vol-mini-bar { width: 48px; height: 6px; background: #e2e8f0; border-radius: 3px; overflow: hidden; }
+    .vol-mini-fill { height: 100%; background: #10b981; border-radius: 3px; transition: width 0.3s; }
+    #volModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:9000; align-items:center; justify-content:center; }
+    #volModal.show { display:flex; }
+    #volModalBox { background:#fff; border-radius:10px; padding:20px 24px; width:520px; max-height:80vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,.18); }
+    #volModalTitle { font-size:16px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; }
+    .vol-modal-row {
+      display:grid; grid-template-columns:1fr auto; align-items:center; gap:8px; padding:8px 10px;
+      border-bottom:1px solid #f1f5f9; font-size:13px; border-radius:8px; cursor:pointer;
+      transition: background .15s, box-shadow .15s;
+    }
+    .vol-modal-row:hover { background:#f8fafc; }
+    .vol-modal-row.current { background:#eef2ff; box-shadow: inset 0 0 0 1px rgba(79,70,229,0.18); }
+    .vol-modal-name {
+      border:none; background:transparent; text-align:left; cursor:pointer; padding:0;
+      font-size:13px; font-family:inherit; color:inherit;
+    }
+    .vol-modal-name:hover { text-decoration: underline; }
 
     /* ─── MOBILE TOOLBAR ELEMENTS (hidden on desktop) ─── */
     .mobile-case-badge, .mobile-menu-btn, .mobile-backdrop { display: none; }
     .toolbar-controls { display: contents; }
     .ctrl-row-case-btn { display: none; }
     .ctrl-row-nav { display: contents; }
-    .toolbar a:hover { text-decoration: underline; }
     .badge {
       display: inline-flex; align-items: center; gap: 4px; font-size: 11px;
       padding: 3px 10px; border-radius: 999px; font-weight: 600;
@@ -36,7 +70,7 @@
 
     /* ─── MAIN LAYOUT ─── */
     .main {
-      display: flex; margin-top: 52px; height: calc(100vh - 52px);
+      display: flex; margin-top: calc(var(--toolbar-h) + var(--subbar-h)); height: calc(100vh - var(--toolbar-h) - var(--subbar-h));
     }
 
     /* ─── LEFT PANEL: Case List ─── */
@@ -234,7 +268,8 @@
 
     /* ─── RESPONSIVE: MOBILE ─── */
     @media (max-width: 768px) {
-      .toolbar { height: 50px; overflow: visible; flex-wrap: nowrap !important;
+      :root { --toolbar-h: 50px; }
+      .toolbar { height: var(--toolbar-h); overflow: visible; flex-wrap: nowrap !important;
                  justify-content: space-between; padding: 0 12px !important; gap: 8px !important; }
       .toolbar h1 { font-size: 15px !important; }
       .toolbar .spacer { display: none; }
@@ -255,13 +290,13 @@
       }
 
       .mobile-backdrop {
-        display: none; position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
+        display: none; position: fixed; top: var(--toolbar-h); left: 0; right: 0; bottom: 0;
         background: rgba(0,0,0,0.25); z-index: 98;
       }
       .mobile-backdrop.open { display: block; }
 
       .toolbar-controls {
-        display: none !important; position: absolute; top: 50px; left: 0; right: 0;
+        display: none !important; position: absolute; top: var(--toolbar-h); left: 0; right: 0;
         background: white; padding: 16px; flex-direction: column; gap: 14px;
         box-shadow: 0 8px 24px rgba(0,0,0,0.12); border-radius: 0 0 12px 12px; z-index: 99;
       }
@@ -284,7 +319,8 @@
       }
       .ctrl-row-case-btn button:hover { background: #f1f5f9; }
 
-      .main { flex-direction: column; margin-top: 50px !important; height: auto; min-height: calc(100vh - 50px) !important; }
+      .progress-subbar { top: var(--toolbar-h); }
+      .main { flex-direction: column; margin-top: calc(var(--toolbar-h) + var(--subbar-h)) !important; height: auto; min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)) !important; }
       .resizer { display: none; }
       .case-panel {
         position: fixed; top: 0; left: 0; bottom: 0; width: 260px; z-index: 200;
@@ -346,28 +382,57 @@
 </head>
 <body>
   <div class="toolbar">
-    <h1>時間軸</h1>
-    <span class="mobile-case-badge" id="mobileCaseBadge" onclick="toggleMobileDrawer()">選擇案例</span>
+    <h1>時間軸檢視</h1>
+    <span class="mobile-case-badge" id="mobileCaseBadge" onclick="toggleMobileDrawer()">選擇案件</span>
     <button class="mobile-menu-btn" onclick="toggleMobileDrawer()">&#9776;</button>
 
     <div class="toolbar-controls" id="toolbarControls">
       <span class="spacer"></span>
       <div class="ctrl-row-case-btn">
-        <button onclick="toggleCasePanel(); closeMobileDrawer();" id="drawerCaseBtn">選擇案例...</button>
+        <button onclick="toggleCasePanel(); closeMobileDrawer();" id="drawerCaseBtn">選擇案件...</button>
       </div>
       <div class="ctrl-row-nav">
-        <a id="summaryLink" href="view.html">摘要瀏覽</a>
-        <a id="evalLink" href="eval.html">專家評估</a>
-        <a href="metrics.html">AI 指標</a>
-        <a href="index.html">返回總覽</a>
+        <a id="viewNavLink" class="nav-link" href="view.html">摘要檢視</a>
+        <a id="timelineNavLink" class="nav-link active" href="timeline.html">時間軸檢視</a>
+        <a id="evalLink" class="nav-link" href="eval.html">專家評估</a>
+        <a class="nav-link" href="metrics.html">AI 指標</a>
+        <a class="nav-link" href="index.html">首頁</a>
       </div>
     </div>
   </div>
+  <div class="progress-subbar" id="progressSubbar">
+    <div class="vol-block" onclick="openVolModal(0)">
+      <span class="vol-label">上冊</span>
+      <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill0" style="width:0%"></div></div>
+      <span id="volText0">0</span>
+    </div>
+    <span class="sep-dot">·</span>
+    <div class="vol-block" onclick="openVolModal(1)">
+      <span class="vol-label">中冊</span>
+      <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill1" style="width:0%"></div></div>
+      <span id="volText1">0</span>
+    </div>
+    <span class="sep-dot">·</span>
+    <div class="vol-block" onclick="openVolModal(2)">
+      <span class="vol-label">下冊</span>
+      <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill2" style="width:0%"></div></div>
+      <span id="volText2">0</span>
+    </div>
+  </div>
   <div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
+  <div id="volModal" onclick="if(event.target===this)closeVolModal()">
+    <div id="volModalBox">
+      <div id="volModalTitle">
+        <span id="volModalLabel"></span>
+        <button onclick="closeVolModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#64748b;">✕</button>
+      </div>
+      <div id="volModalList"></div>
+    </div>
+  </div>
 
   <div class="main">
     <div class="case-panel" id="casePanel">
-      <input class="case-search" type="text" placeholder="搜尋案例..." id="caseSearch" oninput="filterCases()">
+      <input class="case-search" type="text" placeholder="搜尋案件..." id="caseSearch" oninput="filterCases()">
       <div class="case-count" id="caseCount">-</div>
       <div id="caseList"><div class="loading">載入中</div></div>
     </div>
@@ -375,7 +440,7 @@
     <div class="content-area" id="contentArea">
       <div class="empty-state">
         <div class="icon">📅</div>
-        <div class="msg">選擇案例以檢視事件時間軸</div>
+        <div class="msg">選擇案件以檢視事件時間軸</div>
       </div>
     </div>
   </div>
@@ -391,7 +456,12 @@
     let timelineData = null;
     let activeEventIdx = -1;
 
-    function getCaseDisplay(name) { return (caseInfo[name] || {}).display || name; }
+    function getCaseDisplay(name) {
+      const info = caseInfo[name] || {};
+      const m = name.match(/^(有罪|無罪)(\d+)\.(臺灣[^0-9]+?地方法院)/);
+      if (m) return `${m[1]}${m[2].padStart(2, '0')}・${m[3]}`;
+      return info.display || name;
+    }
 
     async function init() {
       try {
@@ -401,6 +471,7 @@
         caseInfo = manifest.case_info || {};
       } catch { allCases = []; }
       renderCaseList(allCases);
+      updateVolumeProgress();
       const params = new URLSearchParams(location.search);
       const caseParam = params.get('case');
       if (caseParam && allCases.includes(caseParam)) selectCase(caseParam);
@@ -409,7 +480,7 @@
 
     function renderCaseList(cases) {
       const el = document.getElementById('caseList');
-      document.getElementById('caseCount').textContent = `${cases.length} 案例`;
+      document.getElementById('caseCount').textContent = `${cases.length} 案件`;
       // Group by volume
       const volumes = ['上冊', '中冊', '下冊'];
       const byVol = {};
@@ -430,6 +501,42 @@
       el.innerHTML = html;
     }
 
+    function updateVolumeProgress() {
+      const volumes = ['上冊', '中冊', '下冊'];
+      volumes.forEach((vol, idx) => {
+        const total = allCases.filter(c => ((caseInfo[c] || {}).volume || '') === vol).length;
+        const textEl = document.getElementById(`volText${idx}`);
+        const fillEl = document.getElementById(`volFill${idx}`);
+        if (textEl) textEl.textContent = `${total}`;
+        if (fillEl) fillEl.style.width = total ? '100%' : '0%';
+      });
+    }
+
+    function openVolModal(volIdx) {
+      const volNames = ['上冊', '中冊', '下冊'];
+      const volName = volNames[volIdx];
+      const cases = allCases.filter(c => ((caseInfo[c] || {}).volume || '') === volName);
+      document.getElementById('volModalLabel').textContent = `${volName}（${cases.length} 案）`;
+      document.getElementById('volModalList').innerHTML = cases.map(c => {
+        const rowCls = c === currentCase ? 'vol-modal-row current' : 'vol-modal-row';
+        return `<div class="${rowCls}" onclick='jumpToCaseFromVolModal(${JSON.stringify(c)})'>
+          <button class="vol-modal-name" onclick='event.stopPropagation();jumpToCaseFromVolModal(${JSON.stringify(c)})'>${esc(getCaseDisplay(c))}</button>
+          <span style="font-size:12px;color:#94a3b8;">切換</span>
+        </div>`;
+      }).join('');
+      document.getElementById('volModal').classList.add('show');
+    }
+
+    function closeVolModal() {
+      document.getElementById('volModal').classList.remove('show');
+    }
+
+    function jumpToCaseFromVolModal(caseName) {
+      closeVolModal();
+      if (!caseName) return;
+      selectCase(caseName);
+    }
+
     function filterCases() {
       const q = document.getElementById('caseSearch').value.trim().toLowerCase();
       renderCaseList(q ? allCases.filter(c => getCaseDisplay(c).toLowerCase().includes(q) || c.toLowerCase().includes(q)) : allCases);
@@ -445,7 +552,7 @@
       const url = new URL(location.href);
       url.searchParams.set('case', caseName);
       history.replaceState({}, '', url.toString());
-      const sl = document.getElementById('summaryLink');
+      const sl = document.getElementById('viewNavLink');
       if (sl) sl.href = `view.html?case=${encodeURIComponent(caseName)}`;
       const evl = document.getElementById('evalLink');
       if (evl) evl.href = `eval.html?case=${encodeURIComponent(caseName)}`;
@@ -461,7 +568,7 @@
         timelineData = await res.json();
         renderEvents();
       } catch {
-        contentArea.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div class="msg">此案例無時間軸資料</div></div>`;
+        contentArea.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div class="msg">此案件無時間軸資料</div></div>`;
       }
       updateMobileCaseBadge();
     }
@@ -645,7 +752,7 @@
           html += '</div>';
         });
       } else {
-        html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案例無段落資料</span></div>';
+        html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案件無段落資料</span></div>';
       }
 
       html += '</div>'; // .source-panel-body
@@ -762,9 +869,9 @@
     function updateMobileCaseBadge() {
       const badge = document.getElementById('mobileCaseBadge');
       const btn = document.getElementById('drawerCaseBtn');
-      const display = currentCase ? getCaseDisplay(currentCase) : '選擇案例';
+      const display = currentCase ? getCaseDisplay(currentCase) : '選擇案件';
       if (badge) badge.textContent = display;
-      if (btn) btn.textContent = currentCase ? '目前：' + display : '選擇案例...';
+      if (btn) btn.textContent = currentCase ? '目前：' + display : '選擇案件...';
     }
 
     function initResizers() {

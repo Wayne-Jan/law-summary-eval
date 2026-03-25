@@ -364,9 +364,9 @@
   <span class="nav-logo">LegalSummary Eval</span>
   <span class="nav-spacer"></span>
   <a href="#why">平台說明</a>
-  <a href="#data">資料規模</a>
   <a href="#cases">案件列表</a>
   <a href="timeline.html">時間軸檢視</a>
+  <a href="view.html">摘要檢視</a>
   <a href="eval.html">專家評估</a>
   <a href="metrics.html">AI 指標</a>
   <a href="view.html" class="nav-cta">開始查看</a>
@@ -532,11 +532,17 @@ function fil(f, btn) {
   tb.innerHTML = r.map(c=>`
     <tr onclick="location.href='view.html?case=${encodeURIComponent(c.n)}'">
       <td>${c.i}</td>
-      <td class="cn" title="${esc(c.n)}">${esc(c.display)}</td>
+      <td class="cn" title="${esc(c.n)}">${esc(formatCaseDisplay(c.n, c.display))}</td>
       <td class="cc">${esc(c.vol)}</td>
       <td class="cc">${c.c}</td>
       <td><svg class="ai" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg></td>
     </tr>`).join('');
+}
+
+function formatCaseDisplay(caseName, fallback) {
+  const m = caseName.match(/^(有罪|無罪)(\d+)\.(臺灣[^0-9]+?地方法院)/);
+  if (m) return `${m[1]}${m[2].padStart(2, '0')}・${m[3]}`;
+  return fallback || caseName;
 }
 
 function esc(t) { const d=document.createElement('div'); d.textContent=t; return d.innerHTML; }

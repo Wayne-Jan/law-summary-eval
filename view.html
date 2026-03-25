@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>摘要瀏覽</title>
+    <title>摘要檢視</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -33,8 +33,12 @@
         }
 
         .toolbar .spacer { flex: 1; }
-        .toolbar a { color: #4f46e5; text-decoration: none; font-size: 14px; }
-        .toolbar a:hover { text-decoration: underline; }
+        .toolbar a.nav-link {
+            color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
+            padding: 6px 12px; border-radius: 8px; transition: all 0.15s;
+        }
+        .toolbar a.nav-link:hover { background: #eef2ff; color: #4f46e5; text-decoration: none; }
+        .toolbar a.nav-link.active { background: #4f46e5; color: #fff; }
 
         .toolbar .mode-select {
             font-size: 14px; color: #374151; background: #f9fafb;
@@ -368,12 +372,12 @@
 </head>
 <body>
     <div class="toolbar">
-        <h1>摘要瀏覽</h1>
-        <span class="mobile-case-badge" id="mobileCaseBadge" onclick="toggleMobileDrawer()">選擇案例</span>
+        <h1>摘要檢視</h1>
+        <span class="mobile-case-badge" id="mobileCaseBadge" onclick="toggleMobileDrawer()">選擇案件</span>
         <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileDrawer()">&#9776;</button>
         <div class="toolbar-controls" id="toolbarControls">
             <div class="ctrl-row">
-                <label class="ctrl-label">案例</label>
+                <label class="ctrl-label">案件</label>
                 <select class="condition-select" id="caseSelect"></select>
             </div>
             <div class="ctrl-row-half">
@@ -406,10 +410,11 @@
             </div>
             <span class="spacer"></span>
             <div class="ctrl-row-nav">
-                <a id="timelineLink" href="timeline.html">時間軸</a>
-                <a id="evalLink" href="eval.html">專家評估</a>
-                <a href="metrics.html">AI 指標</a>
-                <a href="index.html">返回總覽</a>
+                <a id="viewNavLink" class="nav-link active" href="view.html">摘要檢視</a>
+                <a id="timelineLink" class="nav-link" href="timeline.html">時間軸檢視</a>
+                <a id="evalLink" class="nav-link" href="eval.html">專家評估</a>
+                <a class="nav-link" href="metrics.html">AI 指標</a>
+                <a class="nav-link" href="index.html">首頁</a>
             </div>
         </div>
     </div>
@@ -500,7 +505,10 @@
         }
 
         function getCaseDisplay(name) {
-            return (caseInfo[name] || {}).display || name;
+            const info = caseInfo[name] || {};
+            const m = name.match(/^(有罪|無罪)(\d+)\.(臺灣[^0-9]+?地方法院)/);
+            if (m) return `${m[1]}${m[2].padStart(2, '0')}・${m[3]}`;
+            return info.display || name;
         }
 
         function renderCaseSelector() {
@@ -536,7 +544,7 @@
         }
 
         async function loadData() {
-            if (!currentCaseName) { alert('未指定案例名稱'); return; }
+            if (!currentCaseName) { alert('未指定案件名稱'); return; }
             renderCaseSelector();
             try {
                 const response = await fetch(`./data/${encodeURIComponent(currentCondition)}/${getSlug(currentCaseName)}.json`);
@@ -836,7 +844,7 @@
         }
         function updateMobileCaseBadge() {
             const badge = document.getElementById('mobileCaseBadge');
-            if (badge) badge.textContent = getCaseDisplay(currentCaseName) || '選擇案例';
+            if (badge) badge.textContent = getCaseDisplay(currentCaseName) || '選擇案件';
         }
 
         // ─── Mobile Nav/Source Drawer Logic ───

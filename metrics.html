@@ -454,8 +454,8 @@
   <span class="spacer"></span>
   <div class="nav-links">
     <a href="index.html">首頁</a>
-    <a href="view.html">摘要瀏覽</a>
-    <a href="timeline.html">時間軸</a>
+    <a href="view.html">摘要檢視</a>
+    <a href="timeline.html">時間軸檢視</a>
     <a href="eval.html">專家評估</a>
     <a href="metrics.html" class="active">AI 指標</a>
   </div>
@@ -471,8 +471,8 @@
 <!-- Mobile menu -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="index.html">首頁</a>
-  <a href="view.html">摘要瀏覽</a>
-  <a href="timeline.html">時間軸</a>
+  <a href="view.html">摘要檢視</a>
+  <a href="timeline.html">時間軸檢視</a>
   <a href="eval.html">專家評估</a>
   <a href="metrics.html" class="active">AI 指標</a>
 </div>
@@ -492,13 +492,13 @@
   </div>
   <div class="page-tab-bar">
     <button class="page-tab-btn active" data-main-tab="overview" onclick="setMainTab('overview')">總覽</button>
-    <button class="page-tab-btn" data-main-tab="relative" onclick="setMainTab('relative')">模型卡</button>
+    <button class="page-tab-btn" data-main-tab="relative" onclick="setMainTab('relative')">模型輪廓</button>
     <button class="page-tab-btn" data-main-tab="cases" onclick="setMainTab('cases')">個案比較</button>
   </div>
 
   <div id="pagePanel_overview" class="page-panel active">
     <div class="panel-hero">
-      <div class="panel-kicker">Overview</div>
+      <div class="panel-kicker">整體比較</div>
       <div class="panel-title">同一冊別下的整體表現比較</div>
       <div class="panel-desc">用表格做精確比較最適合看排序、缺值與樣本數。這裡聚焦各模型在目前冊別下的整體指標，方便直接橫向比較。</div>
     </div>
@@ -520,7 +520,7 @@
                 data-tip="ROUGE-L F-score：以最長公共子序列衡量摘要與 Ground Truth 的文字重疊程度，字元級計算">ROUGE-L</th>
             <th class="sort-btn" data-col="bertscore" data-dir=""
                 data-tip="BERTScore F1：使用 BERT 語意嵌入衡量摘要與 Ground Truth 的語意相似度">BERTScore F1</th>
-            <th>案例數</th>
+            <th>案件數</th>
           </tr>
         </thead>
         <tbody id="overviewBody"></tbody>
@@ -530,7 +530,7 @@
 
   <div id="pagePanel_cards" class="page-panel" style="display:none">
     <div class="panel-hero">
-      <div class="panel-kicker">Model Cards</div>
+      <div class="panel-kicker">模型卡</div>
       <div class="panel-title">用單模型卡片看各自的能力輪廓</div>
       <div class="panel-desc">模型卡適合做快速介紹與直覺閱讀。每張卡保留相同的六個主軸，讓你像看角色能力面板一樣掌握模型個性，但不取代上面的精確比較表。</div>
     </div>
@@ -540,7 +540,7 @@
 
   <div id="pagePanel_relative" class="page-panel">
     <div class="panel-hero">
-      <div class="panel-kicker">Model Cards</div>
+      <div class="panel-kicker">模型輪廓</div>
       <div class="panel-title">用相對位置看各模型的能力輪廓</div>
       <div class="panel-desc">這裡保留原始分數卡片，但雷達圖改成同冊內的相對位置視覺化。圖上標示 P0 到 P100，方便比較不同量級指標在目前冊別中的相對強弱。</div>
     </div>
@@ -549,19 +549,19 @@
 
   <div id="pagePanel_cases" class="page-panel">
     <div class="panel-hero">
-      <div class="panel-kicker">Case Comparison</div>
+      <div class="panel-kicker">逐案比較</div>
       <div class="panel-title">逐案拆開，觀察模型之間的差異</div>
-      <div class="panel-desc">個案頁適合看同一案例在不同模型下的細部表現，包含規則式指標、事實召回、寫作品質，以及 ROUGE / BERTScore 的逐項比較。</div>
+      <div class="panel-desc">個案頁適合看同一案件在不同模型下的細部表現，包含規則式指標、事實召回、寫作品質，以及 ROUGE / BERTScore 的逐項比較。</div>
     </div>
     <div class="case-selector">
-      <label for="caseSelect">選擇案例：</label>
+      <label for="caseSelect">選擇案件：</label>
       <select id="caseSelect"><option value="">載入中...</option></select>
     </div>
     <div id="caseDetail" class="case-detail">
       <div class="tab-bar" id="tabBar"></div>
       <div id="tabPanels"></div>
     </div>
-    <div id="noDataMsg" class="no-data-msg" style="display:none">此案例尚無 AI 評估資料。</div>
+    <div id="noDataMsg" class="no-data-msg" style="display:none">此案件尚無 AI 評估資料。</div>
   </div>
 </div>
 
@@ -634,6 +634,12 @@
   function fmt(v, digits) {
     if (v == null) return null;
     return typeof v === 'number' ? v.toFixed(digits === undefined ? 3 : digits) : String(v);
+  }
+
+  function formatCaseDisplay(caseName) {
+    const m = caseName.match(/^(有罪|無罪)(\d+)\.(臺灣[^0-9]+?地方法院)/);
+    if (m) return `${m[1]}${m[2].padStart(2, '0')}・${m[3]}`;
+    return caseName;
   }
 
   // ─── Label maps for sub-metrics ───
@@ -1322,7 +1328,7 @@
   // ─── Build case selector ───
   function buildCaseSelector() {
     const sel = document.getElementById('caseSelect');
-    sel.innerHTML = '<option value="">-- 請選擇案例 --</option>';
+    sel.innerHTML = '<option value="">-- 請選擇案件 --</option>';
     const casesWithEval = new Set();
     for (const cond of Object.values(DATA.conditions)) {
       for (const c of Object.values(cond.cases)) {
@@ -1334,7 +1340,7 @@
       const slug = DATA.case_slugs[caseName];
       const opt = document.createElement('option');
       opt.value = slug;
-      opt.textContent = caseName;
+      opt.textContent = formatCaseDisplay(caseName);
       sel.appendChild(opt);
     }
     sel.onchange = () => renderCaseDetail(sel.value);
@@ -1483,7 +1489,7 @@
       const data = caseData[dataKey] || {};
       Object.keys(data).filter(k => k !== 'avg').forEach(k => allKeys.add(k));
     }
-    if (allKeys.size === 0) return '<div class="no-data-msg">此案例無此類指標資料。</div>';
+    if (allKeys.size === 0) return '<div class="no-data-msg">此案件無此類指標資料。</div>';
 
     // Use label order if available, otherwise insertion order
     const orderedKeys = Object.keys(labels).filter(k => allKeys.has(k));
@@ -1531,7 +1537,7 @@
   function buildRougeBertTab(matches) {
     const keys = ['rouge1', 'rouge2', 'rougeL', 'bertscore_p', 'bertscore_r', 'bertscore_f1'];
     const hasAny = matches.some(m => m.caseData.rouge_bertscore);
-    if (!hasAny) return '<div class="no-data-msg">此案例無 ROUGE / BERTScore 資料。</div>';
+    if (!hasAny) return '<div class="no-data-msg">此案件無 ROUGE / BERTScore 資料。</div>';
 
     let html = '';
     for (const k of keys) {

@@ -676,8 +676,8 @@
     <button class="btn btn-ghost" type="button" onclick="toggleToolbarMenu('moreMenu')">☰ 更多</button>
     <div class="toolbar-menu" id="moreMenu">
       <button class="btn btn-ghost" id="cloudSyncBtn" onclick="closeToolbarMenus();syncToFirestore()">☁ 同步</button>
-      <a href="view.html" class="btn btn-ghost" id="viewLink" onclick="closeToolbarMenus()">檢視</a>
-      <a href="timeline.html" class="btn btn-ghost" id="timelineLink" onclick="closeToolbarMenus()">時間軸</a>
+      <a href="view.html" class="btn btn-ghost" id="viewLink" onclick="closeToolbarMenus()">摘要檢視</a>
+      <a href="timeline.html" class="btn btn-ghost" id="timelineLink" onclick="closeToolbarMenus()">時間軸檢視</a>
       <a href="index.html" class="btn btn-ghost" onclick="closeToolbarMenus()">首頁</a>
       <div class="toolbar-menu-sep"></div>
       <button class="btn btn-ghost" onclick="closeToolbarMenus();logout()">登出</button>
@@ -1428,7 +1428,7 @@ async function initApp() {
     byVol[vol].forEach(c => {
       const opt = document.createElement('option');
       opt.value = c;
-      opt.textContent = (ci[c] || {}).display || c;
+      opt.textContent = getCaseDisplayName(c);
       og.appendChild(opt);
     });
     sel.appendChild(og);
@@ -2073,7 +2073,7 @@ function renderTimelinePanel() {
   const barEl = document.getElementById('tlSummaryBar');
   if (events.length === 0) {
     barEl.innerHTML = '';
-    document.getElementById('tlEventList').innerHTML = '<div class="tl25-no-data">此案例無時間軸資料</div>';
+    document.getElementById('tlEventList').innerHTML = '<div class="tl25-no-data">此案件無時間軸資料</div>';
     return;
   }
 
@@ -3105,7 +3105,7 @@ function openVolModal(volIdx) {
 
   let html = '';
   cases.forEach(c => {
-    const shortName = (manifest.case_info[c] && manifest.case_info[c].display) || c;
+    const shortName = getCaseDisplayName(c);
     const done = isPhase3Complete(c);
     const rowCls = c === currentCase ? 'vol-modal-row current' : 'vol-modal-row';
     let pills = '';
@@ -3171,6 +3171,13 @@ async function jumpToCaseConditionFromVolModal(caseName, condIdx) {
 function esc(s) {
   if (!s) return '';
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function getCaseDisplayName(caseName) {
+  const info = manifest && manifest.case_info ? (manifest.case_info[caseName] || {}) : {};
+  const m = caseName.match(/^(有罪|無罪)(\d+)\.(臺灣[^0-9]+?地方法院)/);
+  if (m) return `${m[1]}${m[2].padStart(2, '0')}・${m[3]}`;
+  return info.display || caseName;
 }
 
 function getSlug(name) { return caseSlugs[name] || encodeURIComponent(name); }
@@ -3315,8 +3322,7 @@ function renderAdminContent() {
   const condLetters = ANON_LABELS.map(l => l.replace('版本 ', ''));
 
   cases.forEach(c => {
-    const ci = manifest && manifest.case_info ? manifest.case_info[c] : null;
-    const display = ci ? ci.display || c : c;
+    const display = getCaseDisplayName(c);
     const caseStatus = evaluators.some(ev => getEvaluatorCaseStatus(ev, c) !== 'empty');
     html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;">${esc(display)}</td>`;
     evaluators.forEach(ev => {
