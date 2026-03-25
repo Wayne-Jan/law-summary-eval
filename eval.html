@@ -16,6 +16,7 @@
       --purple: #7c3aed; --purple-light: #f5f3ff;
       --slate-900: #0f172a; --slate-700: #334155; --slate-500: #64748b;
       --slate-300: #cbd5e1; --slate-100: #f1f5f9; --slate-50: #f8fafc;
+      --toolbar-h: 56px; --subbar-h: 30px; --footer-h: 36px;
     }
     body { font-family: var(--sans); background: var(--slate-50); color: var(--slate-700); }
 
@@ -45,6 +46,42 @@
     .btn-ghost:hover { background: var(--slate-100); }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .save-indicator { font-size: 12px; color: var(--emerald); white-space: nowrap; transition: opacity 0.5s; opacity: 0; }
+    .cloud-status {
+      font-size: 12px; color: var(--slate-500); white-space: nowrap;
+      padding: 4px 10px; border-radius: 999px; background: var(--slate-100);
+    }
+    .cloud-status.syncing { color: var(--indigo); background: var(--indigo-light); }
+    .cloud-status.synced { color: var(--emerald); background: var(--emerald-light); }
+    .cloud-status.error { color: var(--rose); background: var(--rose-light); }
+    .toolbar-help {
+      position: relative; display: inline-flex; align-items: center;
+    }
+    .toolbar-shortcut-panel {
+      position: absolute; top: calc(100% + 8px); right: 0; width: 240px;
+      padding: 12px 14px; border-radius: 12px; border: 1px solid var(--slate-300);
+      background: white; box-shadow: 0 12px 24px rgba(15,23,42,0.12);
+      display: none; z-index: 120;
+    }
+    .toolbar-shortcut-panel.show { display: block; }
+    .toolbar-shortcut-title { font-size: 13px; font-weight: 700; color: var(--slate-900); margin-bottom: 8px; }
+    .toolbar-shortcut-line { font-size: 12px; color: var(--slate-500); line-height: 1.6; }
+    .toolbar-menu-wrap { position: relative; display: inline-flex; align-items: center; }
+    .toolbar-menu {
+      position: absolute; top: calc(100% + 8px); right: 0; min-width: 180px;
+      padding: 8px; border-radius: 12px; border: 1px solid var(--slate-300);
+      background: white; box-shadow: 0 12px 24px rgba(15,23,42,0.12);
+      display: none; z-index: 120;
+    }
+    .toolbar-menu.show { display: block; }
+    .toolbar-menu .btn, .toolbar-menu a.btn {
+      width: 100%; justify-content: flex-start; display: flex; margin-bottom: 6px;
+      text-decoration: none;
+    }
+    .toolbar-menu .btn:last-child, .toolbar-menu a.btn:last-child { margin-bottom: 0; }
+    .toolbar-menu-sep {
+      height: 1px; background: var(--slate-100); margin: 6px 2px;
+    }
+    .btn-icon { padding-inline: 10px; }
 
     /* Condition progress pills */
     .cond-pills { display: flex; gap: 4px; align-items: center; }
@@ -69,7 +106,7 @@
     .phase-dot.locked { opacity: 0.4; cursor: not-allowed; }
 
     /* ─── MAIN CONTAINER ─── */
-    .main { margin-top: 86px; height: calc(100vh - 86px - 36px); position: relative; }
+    .main { margin-top: calc(var(--toolbar-h) + var(--subbar-h)); height: calc(100vh - var(--toolbar-h) - var(--subbar-h) - var(--footer-h)); position: relative; }
 
     /* ─── VIEWS (Phase 1/TL/3) ─── */
     .view { display: none; height: 100%; }
@@ -85,9 +122,12 @@
     /* ─── PHASE FB: Section Feedback (same three-panel layout as Phase 1) ─── */
     #phaseFBView { flex-direction: row; }
     .fb-section-item { margin-bottom: 10px; }
+    .fb-section-item {
+      padding: 12px; border-radius: 10px; background: white; border: 1px solid #e2e8f0;
+    }
     .fb-section-label { font-size: 12px; font-weight: 600; color: var(--slate-700); margin-bottom: 4px; }
     .fb-section-textarea {
-      width: 100%; min-height: 60px; font-size: 13px; padding: 7px 10px;
+      width: 100%; min-height: 84px; font-size: 13px; padding: 9px 10px;
       border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
       resize: vertical; line-height: 1.6; transition: border-color 0.15s;
     }
@@ -95,7 +135,7 @@
     .fb-intro { font-size: 13px; color: var(--slate-500); margin-bottom: 12px; line-height: 1.5; }
     /* ─── PROGRESS SUBBAR ─── */
     .progress-subbar {
-      position: fixed; top: 56px; left: 0; right: 0; height: 30px;
+      position: fixed; top: var(--toolbar-h); left: 0; right: 0; height: var(--subbar-h);
       background: white; border-bottom: 1px solid #e2e8f0;
       display: flex; align-items: center; padding: 0 16px; gap: 16px; z-index: 99;
       font-size: 12px; color: var(--slate-500);
@@ -351,15 +391,44 @@
     }
     .frozen-banner.show { display: block; }
 
+    .eval-item.kbd-active {
+      border-color: var(--indigo);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.12);
+    }
+
     /* ─── RESPONSIVE ─── */
     @media (max-width: 900px) {
-      .toolbar { flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 6px; }
-      .cond-pills, .phase-indicators { flex-wrap: wrap; }
+      :root { --toolbar-h: 108px; }
+      .toolbar { flex-wrap: wrap; height: auto; padding: 8px 12px; gap: 6px; align-content: flex-start; }
+      .toolbar h1 { font-size: 15px; }
+      #caseSelect { max-width: none; flex: 1 1 240px; }
+      .cond-pills, .phase-indicators {
+        flex-wrap: nowrap; overflow-x: auto; width: 100%;
+        padding-bottom: 2px; scrollbar-width: none;
+      }
+      .cond-pills::-webkit-scrollbar, .phase-indicators::-webkit-scrollbar { display: none; }
+      .toolbar .sep { display: none; }
+      .cloud-status { order: 8; }
+      #phaseFBView { flex-direction: column; }
+      #phaseFBView .panel-source, #phaseFBView .panel-summary, #phaseFBView .panel-eval {
+        flex: none !important; width: 100% !important;
+      }
+      #phaseFBView .panel-source, #phaseFBView .panel-summary { max-height: 26vh; }
+      #fbEval { padding: 12px 12px 88px; }
+      .fb-intro { margin-bottom: 10px; }
+      .fb-section-item { margin-bottom: 12px; padding: 12px; }
+      .fb-section-label { font-size: 13px; margin-bottom: 6px; }
+      .fb-section-textarea { min-height: 112px; font-size: 14px; }
+      #phaseFBView .action-bar {
+        position: sticky; bottom: 0; background: rgba(248,250,252,0.96);
+        backdrop-filter: blur(8px); padding: 10px 0 0; margin-top: 12px;
+      }
       #phase1View { flex-direction: column; }
       .panel-source, .panel-summary, .panel-eval { flex: none !important; width: 100% !important; height: auto; max-height: 40vh; }
       .phase3-columns { flex-direction: column; }
       .phase3-col { flex: none; max-height: 30vh; }
       .p3-choices { flex-direction: column; align-items: center; }
+      .toolbar-shortcut-panel, .toolbar-menu { right: 0; left: auto; max-width: calc(100vw - 24px); }
     }
 
     /* ─── PHASE TL: Timeline Evaluation (three-column) ─── */
@@ -544,18 +613,40 @@
   <div class="phase-indicators" id="phaseIndicators"></div>
   <div class="spacer"></div>
   <span class="save-indicator" id="saveIndicator"></span>
+  <span class="cloud-status" id="cloudStatus">雲端待命</span>
   <span id="userBadge" class="user-badge"></span>
-  <button class="btn btn-ghost" onclick="logout()">登出</button>
-  <button class="btn btn-ghost" id="cloudSyncBtn" onclick="syncToFirestore()">☁ 同步</button>
-  <button class="btn btn-primary admin-only" onclick="exportJSON()">匯出此案</button>
-  <button class="btn btn-ghost admin-only" onclick="exportAllJSON()">匯出全部</button>
-  <button class="btn btn-ghost admin-only" onclick="importJSON()">匯入</button>
-  <button class="btn btn-ghost admin-only" onclick="restoreFromFirestore()">從雲端還原</button>
-  <button class="btn btn-ghost admin-only" onclick="showAdminPanel()">管理</button>
-  <div class="sep"></div>
-  <a href="view.html" class="btn btn-ghost" id="viewLink">檢視</a>
-  <a href="timeline.html" class="btn btn-ghost" id="timelineLink">時間軸</a>
-  <a href="index.html" class="btn btn-ghost">首頁</a>
+  <div class="toolbar-help">
+    <button class="btn btn-ghost btn-icon" type="button" onclick="toggleShortcutHelp()">⌨ 快捷鍵</button>
+    <div class="toolbar-shortcut-panel" id="shortcutHelpPanel">
+      <div class="toolbar-shortcut-title">評分快捷鍵</div>
+      <div class="toolbar-shortcut-line">↑ / ↓：切換目前評分題目</div>
+      <div class="toolbar-shortcut-line">1-5：給目前題目打分</div>
+      <div class="toolbar-shortcut-line">Tab / Shift+Tab：切換版本</div>
+      <div class="toolbar-shortcut-line">在輸入文字時快捷鍵會暫停</div>
+    </div>
+  </div>
+  <div class="toolbar-menu-wrap admin-only">
+    <button class="btn btn-ghost" type="button" onclick="toggleToolbarMenu('adminMenu')">管理 ▾</button>
+    <div class="toolbar-menu" id="adminMenu">
+      <button class="btn btn-primary" onclick="closeToolbarMenus();exportJSON()">匯出此案</button>
+      <button class="btn btn-ghost" onclick="closeToolbarMenus();exportAllJSON()">匯出全部</button>
+      <button class="btn btn-ghost" onclick="closeToolbarMenus();importJSON()">匯入</button>
+      <button class="btn btn-ghost" onclick="closeToolbarMenus();restoreFromFirestore()">從雲端還原</button>
+      <div class="toolbar-menu-sep"></div>
+      <button class="btn btn-ghost" onclick="closeToolbarMenus();showAdminPanel()">管理面板</button>
+    </div>
+  </div>
+  <div class="toolbar-menu-wrap">
+    <button class="btn btn-ghost" type="button" onclick="toggleToolbarMenu('moreMenu')">☰ 更多</button>
+    <div class="toolbar-menu" id="moreMenu">
+      <button class="btn btn-ghost" id="cloudSyncBtn" onclick="closeToolbarMenus();syncToFirestore()">☁ 同步</button>
+      <a href="view.html" class="btn btn-ghost" id="viewLink" onclick="closeToolbarMenus()">檢視</a>
+      <a href="timeline.html" class="btn btn-ghost" id="timelineLink" onclick="closeToolbarMenus()">時間軸</a>
+      <a href="index.html" class="btn btn-ghost" onclick="closeToolbarMenus()">首頁</a>
+      <div class="toolbar-menu-sep"></div>
+      <button class="btn btn-ghost" onclick="closeToolbarMenus();logout()">登出</button>
+    </div>
+  </div>
 </div>
 
 <!-- ─── PROGRESS SUBBAR ─── -->
@@ -800,8 +891,18 @@ function shouldSyncKeyForEvaluator(key, evaluator) {
 function writeCloudRecord(key, data) {
   const ev = getCloudEvaluatorId();
   if (!ev || ev === 'default') return Promise.resolve();
+  setCloudStatus('同步中', 'syncing');
+  clearTimeout(cloudStatusTimer);
   return cloudRecordRef(ev, key)
-    .set({ key, data, updated: firebase.firestore.FieldValue.serverTimestamp() });
+    .set({ key, data, updated: firebase.firestore.FieldValue.serverTimestamp() })
+    .then(() => {
+      setCloudStatus('已同步', 'synced');
+      cloudStatusTimer = setTimeout(() => setCloudStatus('雲端待命', ''), 2500);
+    })
+    .catch((e) => {
+      setCloudStatus('同步失敗', 'error');
+      throw e;
+    });
 }
 
 const USERS = {
@@ -815,6 +916,7 @@ const USERS = {
 const USER_BY_EMAIL = Object.fromEntries(
   Object.entries(USERS).map(([name, info]) => [info.email, { name, role: info.role, email: info.email }])
 );
+let cloudStatusTimer = null;
 
 function setLocalSessionProfile(name, role) {
   localStorage.setItem('eval_v2_auth_user', name);
@@ -833,6 +935,13 @@ function getAuthProfile(user = auth.currentUser) {
 
 function getCloudEvaluatorId() {
   return auth.currentUser ? auth.currentUser.uid : '';
+}
+
+function setCloudStatus(text, state) {
+  const el = document.getElementById('cloudStatus');
+  if (!el) return;
+  el.textContent = text;
+  el.className = `cloud-status${state ? ' ' + state : ''}`;
 }
 
 async function doLogin() {
@@ -871,6 +980,7 @@ function handleAuthStateChanged(user) {
   if (!user) {
     clearLocalSessionProfile();
     document.body.classList.remove('is-admin');
+    setCloudStatus('雲端待命', '');
     showLoginOverlay();
     return;
   }
@@ -1228,6 +1338,7 @@ let gtDataCache = null;
 let tlDataCache = null; // timeline data for current case
 let activeChunk = null;
 let autoSaveTimer = null;
+let keyboardFocusIndex = 0;
 
 // ═══════════════════════════════════════════════════════════════
 // INIT
@@ -1298,6 +1409,7 @@ async function initApp() {
   renderEvalForm();
   onCaseChange();
   initResizers();
+  updateLayoutHeights();
   autoRestoreFromFirestore(); // silently pull cloud data on login
 }
 
@@ -1481,8 +1593,7 @@ function renderCondPills() {
     const isCurrent = (i === currentCondIdx && currentPhase !== 3);
     let cls = 'cond-pill';
     let icon = '';
-    if (currentPhase === 'tl') { cls += ' locked'; }
-    else if (currentPhase === 3 && locked) { cls += ' locked'; icon = ' &#x2713;'; }
+    if (currentPhase === 3 && locked) { cls += ' locked'; icon = ' &#x2713;'; }
     else if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
     else if (done) { cls += ' done'; icon = ' &#x2713;'; }
     else if (isCurrent) { cls += ' active'; icon = ' &#x2192;'; }
@@ -1494,7 +1605,6 @@ function renderCondPills() {
 function switchCondition(idx) {
   if (isCaseLocked(currentCase)) return;
   if (currentPhase === 3) return; // In phase 3, no condition switching
-  if (currentPhase === 'tl') return; // Timeline is per-case, not per-condition
   saveCurrentState();
   currentCondIdx = idx;
   // If in fb but target condition hasn't finished phase 1, go to phase 1
@@ -1568,6 +1678,69 @@ async function loadCurrentView() {
     document.getElementById('phase3View').classList.add('active');
     await loadPhase3();
   }
+
+  syncKeyboardFocus(true);
+}
+
+function getKeyboardEvalItems() {
+  if (currentPhase === 1) return Array.from(document.querySelectorAll('#p1EvalForm .eval-item'));
+  if (currentPhase === 'tl') return Array.from(document.querySelectorAll('#tlEvalForm .eval-item'));
+  return [];
+}
+
+function syncKeyboardFocus(reset) {
+  document.querySelectorAll('.eval-item.kbd-active').forEach(item => item.classList.remove('kbd-active'));
+  const items = getKeyboardEvalItems();
+  if (!items.length) {
+    keyboardFocusIndex = 0;
+    return;
+  }
+  if (reset) keyboardFocusIndex = 0;
+  if (keyboardFocusIndex >= items.length) keyboardFocusIndex = items.length - 1;
+  items.forEach((item, idx) => item.classList.toggle('kbd-active', idx === keyboardFocusIndex));
+}
+
+function focusKeyboardEvalItem(nextIndex) {
+  const items = getKeyboardEvalItems();
+  if (!items.length) return;
+  keyboardFocusIndex = Math.max(0, Math.min(nextIndex, items.length - 1));
+  syncKeyboardFocus(false);
+  items[keyboardFocusIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function getEvalInputNameForDim(dimId) {
+  if (currentPhase === 1) return `p1_${dimId}`;
+  if (currentPhase === 'tl') return `tl_${dimId}`;
+  return '';
+}
+
+function applyKeyboardScore(score) {
+  const items = getKeyboardEvalItems();
+  if (!items.length) return;
+  const item = items[keyboardFocusIndex];
+  const dimId = item.dataset.dim;
+  const inputName = getEvalInputNameForDim(dimId);
+  if (!inputName) return;
+  const input = document.querySelector(`input[name="${inputName}"][value="${score}"]`);
+  if (!input) return;
+  input.checked = true;
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+  if (keyboardFocusIndex < items.length - 1) {
+    focusKeyboardEvalItem(keyboardFocusIndex + 1);
+  } else {
+    syncKeyboardFocus(false);
+  }
+}
+
+function cycleCondition(direction) {
+  if (currentPhase === 3 || isCaseLocked(currentCase)) return;
+  const total = EVAL_CONDITIONS.length;
+  const nextIdx = (currentCondIdx + direction + total) % total;
+  switchCondition(nextIdx);
+}
+
+function isTextEntryTarget(target) {
+  return !!(target && (target.closest('textarea, input, select') || target.isContentEditable));
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2295,6 +2468,7 @@ function savePhase3State() {
   existing.ranking = ranking;
   if (reason) existing.ranking_reason = reason.value.trim();
   localStorage.setItem(key, JSON.stringify(existing));
+  writeCloudRecord(key, existing).catch(e => console.warn('Firestore phase3 write failed:', e));
 }
 
 function collectPhase3Data() {
@@ -2357,6 +2531,7 @@ function completePhase3() {
   const ev = getEvaluator();
   const key = `eval_v2_${ev}_${currentCase}_phase3`;
   localStorage.setItem(key, JSON.stringify(data));
+  writeCloudRecord(key, data).catch(e => console.warn('Firestore phase3 write failed:', e));
 
   showToast('此案評估完成！', 'success');
   renderCondPills();
@@ -2479,6 +2654,7 @@ function saveCurrentState() {
     const key = `eval_v2_${ev}_${currentCase}_phase3`;
     data._saved = new Date().toISOString();
     localStorage.setItem(key, JSON.stringify(data));
+    writeCloudRecord(key, data).catch(e => console.warn('Firestore phase3 write failed:', e));
   }
 }
 
@@ -2500,7 +2676,46 @@ document.addEventListener('input', (e) => {
   }
 });
 
+document.addEventListener('click', (e) => {
+  const evalItem = e.target.closest('.eval-item');
+  if (evalItem) {
+    const items = getKeyboardEvalItems();
+    const idx = items.indexOf(evalItem);
+    if (idx >= 0) {
+      keyboardFocusIndex = idx;
+      syncKeyboardFocus(false);
+    }
+  }
+  if (e.target.closest('.toolbar-menu-wrap') || e.target.closest('.toolbar-help')) return;
+  closeToolbarMenus();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('loginOverlay') && !document.getElementById('loginOverlay').classList.contains('hidden')) return;
+  if (isTextEntryTarget(e.target)) return;
+
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    cycleCondition(e.shiftKey ? -1 : 1);
+    return;
+  }
+
+  if (currentPhase !== 1 && currentPhase !== 'tl') return;
+
+  if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    focusKeyboardEvalItem(keyboardFocusIndex + 1);
+  } else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    focusKeyboardEvalItem(keyboardFocusIndex - 1);
+  } else if (/^[1-5]$/.test(e.key)) {
+    e.preventDefault();
+    applyKeyboardScore(parseInt(e.key, 10));
+  }
+});
+
 window.addEventListener('beforeunload', () => saveCurrentState());
+window.addEventListener('resize', updateLayoutHeights);
 
 // ═══════════════════════════════════════════════════════════════
 // EXPORT JSON
@@ -2710,6 +2925,7 @@ async function syncToFirestore() {
   const syncBtn = document.getElementById('cloudSyncBtn');
   if (syncBtn) { syncBtn.disabled = true; syncBtn.textContent = '同步中...'; }
   try {
+    setCloudStatus('同步中', 'syncing');
     const MAX_BATCH_WRITES = 450; // Keep below Firestore's hard 500-write limit.
     let batch = db.batch();
     let writes = 0;
@@ -2729,10 +2945,12 @@ async function syncToFirestore() {
       } catch {}
     }
     if (writes > 0) await batch.commit();
+    setCloudStatus('已同步', 'synced');
     showToast('已同步至雲端 ✓', 'success');
     if (syncBtn) { syncBtn.textContent = '已同步 ✓'; setTimeout(() => { syncBtn.disabled = false; syncBtn.textContent = '☁ 同步'; }, 3000); }
   } catch (e) {
     console.error('Firestore sync error:', e);
+    setCloudStatus('同步失敗', 'error');
     showToast('同步失敗，請稍後再試', 'error');
     if (syncBtn) { syncBtn.disabled = false; syncBtn.textContent = '☁ 同步'; }
   }
@@ -2745,17 +2963,20 @@ async function restoreFromFirestore() {
   const label = profile ? profile.name : '目前使用者';
   if (!confirm(`從雲端還原 ${label} 的全部資料？（會覆蓋本機現有資料）`)) return;
   try {
+    setCloudStatus('同步中', 'syncing');
     const snapshot = await db.collection('evals').doc(ev).collection('records').get();
-    if (snapshot.empty) { showToast('雲端尚無備份資料', 'error'); return; }
+    if (snapshot.empty) { setCloudStatus('雲端待命', ''); showToast('雲端尚無備份資料', 'error'); return; }
     snapshot.forEach(doc => {
       const { key, data } = doc.data();
       if (key && data !== undefined) localStorage.setItem(key, JSON.stringify(data));
     });
+    setCloudStatus('已同步', 'synced');
     showToast(`已還原 ${snapshot.size} 筆資料`, 'success');
     onCaseChange();
     updateFooter();
   } catch (e) {
     console.error('Firestore restore error:', e);
+    setCloudStatus('同步失敗', 'error');
     showToast('還原失敗', 'error');
   }
 }
@@ -2861,11 +3082,39 @@ function updateURL() {
   if (tl) tl.href = `timeline.html?case=${enc}`;
 }
 
+function updateLayoutHeights() {
+  const toolbar = document.querySelector('.toolbar');
+  if (!toolbar) return;
+  document.documentElement.style.setProperty('--toolbar-h', `${toolbar.offsetHeight}px`);
+}
+
 function showSaveIndicator() {
   const el = document.getElementById('saveIndicator');
   el.textContent = '已儲存';
   el.style.opacity = '1';
   setTimeout(() => el.style.opacity = '0', 2000);
+}
+
+function toggleToolbarMenu(menuId) {
+  const menu = document.getElementById(menuId);
+  if (!menu) return;
+  const shouldShow = !menu.classList.contains('show');
+  closeToolbarMenus();
+  if (shouldShow) menu.classList.add('show');
+}
+
+function closeToolbarMenus() {
+  document.querySelectorAll('.toolbar-menu.show').forEach(el => el.classList.remove('show'));
+  const panel = document.getElementById('shortcutHelpPanel');
+  if (panel) panel.classList.remove('show');
+}
+
+function toggleShortcutHelp() {
+  const panel = document.getElementById('shortcutHelpPanel');
+  if (!panel) return;
+  const shouldShow = !panel.classList.contains('show');
+  closeToolbarMenus();
+  if (shouldShow) panel.classList.add('show');
 }
 
 function showToast(msg, type) {
