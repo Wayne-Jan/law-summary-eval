@@ -491,6 +491,10 @@
     .admin-panel .status-partial { color: var(--amber); }
     .admin-panel .status-empty { color: var(--slate-300); }
   </style>
+  <!-- Firebase compat (works with regular scripts, no bundler needed) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
@@ -542,11 +546,11 @@
   <span class="save-indicator" id="saveIndicator"></span>
   <span id="userBadge" class="user-badge"></span>
   <button class="btn btn-ghost" onclick="logout()">登出</button>
-  <button class="btn btn-ghost" id="gistSyncBtn" onclick="syncToGist()">同步備份</button>
+  <button class="btn btn-ghost" id="cloudSyncBtn" onclick="syncToFirestore()">☁ 同步</button>
   <button class="btn btn-primary admin-only" onclick="exportJSON()">匯出此案</button>
   <button class="btn btn-ghost admin-only" onclick="exportAllJSON()">匯出全部</button>
   <button class="btn btn-ghost admin-only" onclick="importJSON()">匯入</button>
-  <button class="btn btn-ghost admin-only" onclick="restoreFromGist()">從備份還原</button>
+  <button class="btn btn-ghost admin-only" onclick="restoreFromFirestore()">從雲端還原</button>
   <button class="btn btn-ghost admin-only" onclick="showAdminPanel()">管理</button>
   <div class="sep"></div>
   <a href="view.html" class="btn btn-ghost" id="viewLink">檢視</a>
@@ -767,23 +771,68 @@
 // USER CONFIG & AUTH
 // ═══════════════════════════════════════════════════════════════
 
-// ─── GIST BACKUP ───
-const GIST_ID   = 'ba78908e8723358fd9b91c92e853069a';
-const GIST_FILE = 'data.json';
-function getGistToken() { return localStorage.getItem('law_eval_gist_token') || ''; }
+// ─── FIREBASE ───
+const firebaseConfig = {
+  apiKey: "AIzaSyCIs5MX4evekzi3o8Coz8alRhXFAqAkJuA",
+  authDomain: "law-eval-2f86e.firebaseapp.com",
+  projectId: "law-eval-2f86e",
+  storageBucket: "law-eval-2f86e.firebasestorage.app",
+  messagingSenderId: "850825118261",
+  appId: "1:850825118261:web:dab7cc69af88d0d99b277c"
+};
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+const db = firebase.firestore();
 
-// SHA-256 hashes of passwords (generate with: echo -n "password" | sha256sum)
+function fsDocId(key) {
+  // Encode key for use as Firestore document ID (no forward slashes allowed)
+  return encodeURIComponent(key).substring(0, 1400);
+}
+
+function cloudRecordRef(evaluator, key) {
+  return db.collection('evals').doc(evaluator).collection('records').doc(fsDocId(key));
+}
+
+function shouldSyncKeyForEvaluator(key, evaluator) {
+  return key.startsWith(`eval_v2_${evaluator}_`) || key.startsWith(`eval_v2_condorder_${evaluator}_`);
+}
+
+function writeCloudRecord(key, data) {
+  const ev = getCloudEvaluatorId();
+  if (!ev || ev === 'default') return Promise.resolve();
+  return cloudRecordRef(ev, key)
+    .set({ key, data, updated: firebase.firestore.FieldValue.serverTimestamp() });
+}
+
 const USERS = {
-  '王敏銓': { role: 'legal', hash: 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bfc2' },
-  '李惠宗': { role: 'legal', hash: 'cc399d73903f06ee694032ab0538f05634ff7e1ce5e8e50ac330a871484f34cf' },
-  '丁鴻志': { role: 'medical', hash: '216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad' },
-  '施朝仁': { role: 'medical', hash: 'e11d8cb94b54e0a2fd0e780f93dd51837fd39bf0c9b86f21e760d02a8550ddf7' },
-  'admin':  { role: 'admin', hash: '50d68d52e62a95017f3edcdfbe6b8aaae5a504b44dc81e83fa0b7dac015d73a1' },
+  '王敏銓': { role: 'legal', email: 'wmq@law-eval.local' },
+  '李惠宗': { role: 'legal', email: 'lhz@law-eval.local' },
+  '丁鴻志': { role: 'medical', email: 'dhz@law-eval.local' },
+  '施朝仁': { role: 'medical', email: 'scr@law-eval.local' },
+  'admin':  { role: 'admin', email: 'admin@law-eval.local' },
 };
 
-async function sha256(str) {
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
-  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+const USER_BY_EMAIL = Object.fromEntries(
+  Object.entries(USERS).map(([name, info]) => [info.email, { name, role: info.role, email: info.email }])
+);
+
+function setLocalSessionProfile(name, role) {
+  localStorage.setItem('eval_v2_auth_user', name);
+  localStorage.setItem('eval_v2_auth_role', role);
+}
+
+function clearLocalSessionProfile() {
+  localStorage.removeItem('eval_v2_auth_user');
+  localStorage.removeItem('eval_v2_auth_role');
+}
+
+function getAuthProfile(user = auth.currentUser) {
+  if (!user || !user.email) return null;
+  return USER_BY_EMAIL[user.email] || null;
+}
+
+function getCloudEvaluatorId() {
+  return auth.currentUser ? auth.currentUser.uid : '';
 }
 
 async function doLogin() {
@@ -800,33 +849,45 @@ async function doLogin() {
   const user = USERS[username];
   if (!user) { errorEl.textContent = '使用者不存在'; return; }
 
-  const hash = await sha256(password);
-  if (hash !== user.hash) { errorEl.textContent = '密碼錯誤'; return; }
+  try {
+    await auth.signInWithEmailAndPassword(user.email, password);
+  } catch (e) {
+    console.error('Firebase Auth login failed:', e);
+    errorEl.textContent = '登入失敗，請確認姓名與密碼';
+  }
+}
 
-  localStorage.setItem('eval_v2_auth_user', username);
-  localStorage.setItem('eval_v2_auth_role', user.role);
+async function logout() {
+  try {
+    await auth.signOut();
+  } finally {
+    clearLocalSessionProfile();
+    document.body.classList.remove('is-admin');
+    location.reload();
+  }
+}
+
+function handleAuthStateChanged(user) {
+  if (!user) {
+    clearLocalSessionProfile();
+    document.body.classList.remove('is-admin');
+    showLoginOverlay();
+    return;
+  }
+
+  const profile = getAuthProfile(user);
+  if (!profile) {
+    auth.signOut();
+    return;
+  }
+
+  setLocalSessionProfile(profile.name, profile.role);
   hideLoginOverlay();
   applyAuth();
-  initApp();
-}
-
-function checkAuth() {
-  const user = localStorage.getItem('eval_v2_auth_user');
-  const role = localStorage.getItem('eval_v2_auth_role');
-  if (user && USERS[user] && role) {
-    hideLoginOverlay();
-    applyAuth();
-    return true;
+  if (!window.__evalAppInitialized) {
+    window.__evalAppInitialized = true;
+    initApp();
   }
-  showLoginOverlay();
-  return false;
-}
-
-function logout() {
-  localStorage.removeItem('eval_v2_auth_user');
-  localStorage.removeItem('eval_v2_auth_role');
-  document.body.classList.remove('is-admin');
-  showLoginOverlay();
 }
 
 function showLoginOverlay() {
@@ -1173,8 +1234,8 @@ let autoSaveTimer = null;
 // ═══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (!checkAuth()) return;
-  initApp();
+  showLoginOverlay();
+  auth.onAuthStateChanged(handleAuthStateChanged);
 });
 
 async function initApp() {
@@ -1237,29 +1298,20 @@ async function initApp() {
   renderEvalForm();
   onCaseChange();
   initResizers();
-  autoRestoreFromGist(); // silently pull cloud data on login
+  autoRestoreFromFirestore(); // silently pull cloud data on login
 }
 
-async function autoRestoreFromGist() {
-  const ev = getEvaluator();
+async function autoRestoreFromFirestore() {
+  const ev = getCloudEvaluatorId();
   if (!ev || ev === 'default') return;
-  if (!getGistToken()) return;
   try {
-    const resp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-      headers: { 'Authorization': `token ${getGistToken()}`, 'Accept': 'application/vnd.github.v3+json' }
-    });
-    if (!resp.ok) return;
-    const gist = await resp.json();
-    const content = gist.files[GIST_FILE] && gist.files[GIST_FILE].content;
-    if (!content) return;
-    const gistData = JSON.parse(content);
-    const evData = gistData[ev] && gistData[ev].data;
-    if (!evData) return;
-    // Only write keys that don't exist locally (never overwrite newer local data)
+    const snapshot = await db.collection('evals').doc(ev).collection('records').get();
+    if (snapshot.empty) return;
     let merged = 0;
-    Object.entries(evData).forEach(([key, val]) => {
-      if (!localStorage.getItem(key)) {
-        localStorage.setItem(key, JSON.stringify(val));
+    snapshot.forEach(doc => {
+      const { key, data } = doc.data();
+      if (key && data !== undefined && !localStorage.getItem(key)) {
+        localStorage.setItem(key, JSON.stringify(data));
         merged++;
       }
     });
@@ -1268,7 +1320,7 @@ async function autoRestoreFromGist() {
       onCaseChange();
       updateFooter();
     }
-  } catch (e) { /* silently ignore */ }
+  } catch (e) { /* silently ignore network errors */ }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1291,6 +1343,7 @@ function getConditionOrder(caseName) {
       [order[i], order[j]] = [order[j], order[i]];
     }
     localStorage.setItem(key, JSON.stringify(order));
+    writeCloudRecord(key, order).catch(e => console.warn('Firestore condorder write failed:', e));
   }
   return order;
 }
@@ -1320,8 +1373,11 @@ function getPhaseData(caseName, condIdx, phase) {
 
 function setPhaseData(caseName, condIdx, phase, data) {
   data._saved = new Date().toISOString();
-  localStorage.setItem(stateKey(caseName, condIdx, phase), JSON.stringify(data));
+  const key = stateKey(caseName, condIdx, phase);
+  localStorage.setItem(key, JSON.stringify(data));
   showSaveIndicator();
+  // Async write to Firestore (fire-and-forget)
+  writeCloudRecord(key, data).catch(e => console.warn('Firestore write failed:', e));
 }
 
 function isPhase1Complete(caseName, condIdx) {
@@ -2018,7 +2074,7 @@ function completePhaseTL() {
   }
   data._complete = true;
   setPhaseData(currentCase, currentCondIdx, 'TL', data);
-  syncToGist(); // auto-backup when a condition is fully complete
+  // setPhaseData above already wrote to Firestore
 
   // Check if all conditions done
   if (areAllCondsComplete(currentCase)) {
@@ -2308,7 +2364,7 @@ function completePhase3() {
   updateFooter();
   document.getElementById('p3CompleteBtn').disabled = true;
   document.getElementById('p3CompleteBtn').textContent = '此案已完成';
-  syncToGist(); // auto-backup on case complete
+  // setPhaseData above already wrote to Firestore
 }
 
 function togglePhase3Source() {
@@ -2643,88 +2699,63 @@ function importSingleCase(data) {
 // ═══════════════════════════════════════════════════════════════
 
 // ═══════════════════════════════════════════════════════════════
-// GIST BACKUP
+// CLOUD SYNC
 // ═══════════════════════════════════════════════════════════════
 
-function collectAllEvalData(evaluator) {
-  // Collect everything in localStorage for this evaluator
-  const data = {};
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (!key.startsWith(`eval_v2_${evaluator}_`)) continue;
-    try { data[key] = JSON.parse(localStorage.getItem(key)); } catch {}
-  }
-  return data;
-}
+// ─── FIRESTORE SYNC ───
 
-async function syncToGist() {
-  const ev = getEvaluator();
+async function syncToFirestore() {
+  const ev = getCloudEvaluatorId();
   if (!ev || ev === 'default') return;
-  if (!getGistToken()) return; // silently skip if no token configured
-  const syncBtn = document.getElementById('gistSyncBtn');
+  const syncBtn = document.getElementById('cloudSyncBtn');
   if (syncBtn) { syncBtn.disabled = true; syncBtn.textContent = '同步中...'; }
-
   try {
-    // 1. Fetch current Gist content
-    let gistData = {};
-    const getResp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-      headers: { 'Authorization': `token ${getGistToken()}`, 'Accept': 'application/vnd.github.v3+json' }
-    });
-    if (getResp.ok) {
-      const gist = await getResp.json();
-      const content = gist.files[GIST_FILE] && gist.files[GIST_FILE].content;
-      if (content) try { gistData = JSON.parse(content); } catch {}
+    const MAX_BATCH_WRITES = 450; // Keep below Firestore's hard 500-write limit.
+    let batch = db.batch();
+    let writes = 0;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!shouldSyncKeyForEvaluator(key, ev)) continue;
+      try {
+        const data = JSON.parse(localStorage.getItem(key));
+        const ref = cloudRecordRef(ev, key);
+        batch.set(ref, { key, data, updated: firebase.firestore.FieldValue.serverTimestamp() });
+        writes++;
+        if (writes >= MAX_BATCH_WRITES) {
+          await batch.commit();
+          batch = db.batch();
+          writes = 0;
+        }
+      } catch {}
     }
-
-    // 2. Update this evaluator's section
-    gistData[ev] = { _synced: new Date().toISOString(), data: collectAllEvalData(ev) };
-
-    // 3. PATCH Gist
-    const patchResp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-      method: 'PATCH',
-      headers: {
-        'Authorization': `token ${getGistToken()}`,
-        'Accept': 'application/vnd.github.v3+json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ files: { [GIST_FILE]: { content: JSON.stringify(gistData, null, 2) } } })
-    });
-
-    if (patchResp.ok) {
-      showToast('已備份至雲端 ✓', 'success');
-      if (syncBtn) { syncBtn.textContent = '已同步 ✓'; setTimeout(() => { syncBtn.disabled = false; syncBtn.textContent = '同步備份'; }, 3000); }
-    } else {
-      throw new Error('PATCH failed: ' + patchResp.status);
-    }
+    if (writes > 0) await batch.commit();
+    showToast('已同步至雲端 ✓', 'success');
+    if (syncBtn) { syncBtn.textContent = '已同步 ✓'; setTimeout(() => { syncBtn.disabled = false; syncBtn.textContent = '☁ 同步'; }, 3000); }
   } catch (e) {
-    console.error('Gist sync error:', e);
-    showToast('備份失敗，請稍後再試', 'error');
-    if (syncBtn) { syncBtn.disabled = false; syncBtn.textContent = '同步備份'; }
+    console.error('Firestore sync error:', e);
+    showToast('同步失敗，請稍後再試', 'error');
+    if (syncBtn) { syncBtn.disabled = false; syncBtn.textContent = '☁ 同步'; }
   }
 }
 
-async function restoreFromGist() {
-  const ev = getEvaluator();
+async function restoreFromFirestore() {
+  const ev = getCloudEvaluatorId();
   if (!ev || ev === 'default') return;
-  if (!confirm(`從雲端備份還原 ${ev} 的資料？（會覆蓋本機現有資料）`)) return;
-
+  const profile = getAuthProfile();
+  const label = profile ? profile.name : '目前使用者';
+  if (!confirm(`從雲端還原 ${label} 的全部資料？（會覆蓋本機現有資料）`)) return;
   try {
-    const getResp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
-      headers: { 'Authorization': `token ${getGistToken()}`, 'Accept': 'application/vnd.github.v3+json' }
+    const snapshot = await db.collection('evals').doc(ev).collection('records').get();
+    if (snapshot.empty) { showToast('雲端尚無備份資料', 'error'); return; }
+    snapshot.forEach(doc => {
+      const { key, data } = doc.data();
+      if (key && data !== undefined) localStorage.setItem(key, JSON.stringify(data));
     });
-    if (!getResp.ok) throw new Error('fetch failed');
-    const gist = await getResp.json();
-    const content = gist.files[GIST_FILE] && gist.files[GIST_FILE].content;
-    if (!content) { showToast('雲端無備份資料', 'error'); return; }
-    const gistData = JSON.parse(content);
-    const evData = gistData[ev] && gistData[ev].data;
-    if (!evData || Object.keys(evData).length === 0) { showToast(`${ev} 尚無雲端備份`, 'error'); return; }
-    Object.entries(evData).forEach(([key, val]) => localStorage.setItem(key, JSON.stringify(val)));
-    showToast(`已從雲端還原 ${Object.keys(evData).length} 筆資料`, 'success');
+    showToast(`已還原 ${snapshot.size} 筆資料`, 'success');
     onCaseChange();
     updateFooter();
   } catch (e) {
-    console.error('Gist restore error:', e);
+    console.error('Firestore restore error:', e);
     showToast('還原失敗', 'error');
   }
 }
@@ -2961,34 +2992,18 @@ function renderAdminContent() {
 
   html += '</tbody></table></div>';
 
-  // Gist Token setup section (admin only)
-  const currentToken = getGistToken();
-  const tokenMasked = currentToken ? currentToken.slice(0,8) + '••••••••' + currentToken.slice(-4) : '（未設定）';
+  // Firestore status section
   html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--slate-300);">`;
-  html += `<div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:8px;">Gist Token 設定</div>`;
-  html += `<div style="font-size:13px;color:var(--slate-500);margin-bottom:8px;">目前：${esc(tokenMasked)}</div>`;
-  html += `<div style="display:flex;gap:8px;align-items:center;">`;
-  html += `<input type="password" id="gistTokenInput" placeholder="ghp_..." style="flex:1;font-size:13px;padding:6px 10px;border:1px solid var(--slate-300);border-radius:6px;font-family:var(--sans);">`;
-  html += `<button class="btn btn-primary" onclick="saveGistToken()">儲存</button>`;
-  if (currentToken) html += `<button class="btn btn-ghost" onclick="clearGistToken()">清除</button>`;
-  html += `</div></div>`;
+  html += `<div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:6px;">雲端同步（Firebase Auth + Firestore）</div>`;
+  html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.6;">`;
+  html += `✅ 已連接 Firebase 專案 <code>law-eval-2f86e</code>，資料依登入身分分流<br>`;
+  html += `每次完成一個版本評分自動備份。登入時自動從雲端補回缺少的資料。<br>`;
+  html += `如需強制全量同步，請點工具列的「☁ 同步」。</div>`;
+  html += `</div>`;
 
   container.innerHTML = html;
 }
 
-function saveGistToken() {
-  const val = document.getElementById('gistTokenInput').value.trim();
-  if (!val) { showToast('請輸入 Token', 'error'); return; }
-  localStorage.setItem('law_eval_gist_token', val);
-  showToast('Token 已儲存', 'success');
-  renderAdminContent();
-}
-
-function clearGistToken() {
-  localStorage.removeItem('law_eval_gist_token');
-  showToast('Token 已清除', 'success');
-  renderAdminContent();
-}
 
 function getEvCondOrderFor(evaluator, caseName) {
   const key = `eval_v2_condorder_${evaluator}_${caseName}`;
