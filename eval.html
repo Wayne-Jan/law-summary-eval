@@ -410,9 +410,87 @@
       .panel-tl-source { flex: none !important; max-height: 35vh; }
       .panel-tl-eval { flex: none !important; }
     }
+
+    /* ─── LOGIN OVERLAY ─── */
+    .login-overlay {
+      position: fixed; inset: 0; z-index: 9999;
+      background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(49,46,129,0.95));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .login-overlay.hidden { display: none; }
+    .login-card {
+      background: white; border-radius: 16px; padding: 40px;
+      width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .login-card h2 { font-size: 20px; font-weight: 700; margin-bottom: 24px; text-align: center; color: var(--slate-900); }
+    .login-card select, .login-card input {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--slate-300);
+      border-radius: 8px; font-size: 15px; margin-bottom: 14px; font-family: var(--sans);
+    }
+    .login-card .btn { width: 100%; padding: 12px; font-size: 15px; }
+    .login-error { color: var(--rose); font-size: 13px; text-align: center; margin-bottom: 10px; min-height: 20px; }
+
+    /* ─── USER BADGE ─── */
+    .user-badge { font-size: 13px; font-weight: 600; padding: 4px 12px; border-radius: 20px; white-space: nowrap; background: var(--slate-100); color: var(--slate-900); }
+    .user-badge.admin { background: #fef2f2; color: #b91c1c; }
+
+    /* ─── ADMIN ONLY ─── */
+    .admin-only { display: none; }
+    body.is-admin .admin-only { display: inline-flex; }
+
+    /* ─── ADMIN PANEL ─── */
+    .admin-overlay {
+      position: fixed; inset: 0; z-index: 9998;
+      background: rgba(15,23,42,0.7);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .admin-overlay.hidden { display: none; }
+    .admin-panel {
+      background: white; border-radius: 16px; padding: 32px;
+      width: 90vw; max-width: 900px; max-height: 80vh; overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .admin-panel h2 { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--slate-900); }
+    .admin-panel table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .admin-panel th, .admin-panel td { padding: 6px 10px; border: 1px solid var(--slate-300); text-align: center; }
+    .admin-panel th { background: var(--slate-100); font-weight: 600; color: var(--slate-700); position: sticky; top: 0; }
+    .admin-panel .status-done { color: var(--emerald); font-weight: 700; }
+    .admin-panel .status-partial { color: var(--amber); }
+    .admin-panel .status-empty { color: var(--slate-300); }
   </style>
 </head>
 <body>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- LOGIN OVERLAY                                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-card">
+    <h2>醫療糾紛判決書摘要評估</h2>
+    <select id="loginUser">
+      <option value="">-- 選擇評估者 --</option>
+    </select>
+    <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()" />
+    <div class="login-error" id="loginError"></div>
+    <button class="btn btn-primary" onclick="doLogin()">登入</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- ADMIN PANEL OVERLAY                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="admin-overlay hidden" id="adminOverlay" onclick="if(event.target===this)hideAdminPanel()">
+  <div class="admin-panel">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h2 style="margin:0;">管理面板</h2>
+      <button class="btn btn-ghost" onclick="hideAdminPanel()">關閉</button>
+    </div>
+    <div id="adminContent"></div>
+    <div style="margin-top:16px;display:flex;gap:10px;">
+      <button class="btn btn-primary" onclick="adminExportAll()">匯出全部評估者</button>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
 <!-- TOOLBAR                                                    -->
@@ -426,11 +504,12 @@
   <div class="phase-indicators" id="phaseIndicators"></div>
   <div class="spacer"></div>
   <span class="save-indicator" id="saveIndicator"></span>
-  <label>評估者</label>
-  <input type="text" id="evaluatorName" placeholder="姓名" style="width:80px" />
-  <button class="btn btn-primary" onclick="exportJSON()">匯出此案</button>
-  <button class="btn btn-ghost" onclick="exportAllJSON()">匯出全部</button>
-  <button class="btn btn-ghost" onclick="importJSON()">匯入</button>
+  <span id="userBadge" class="user-badge"></span>
+  <button class="btn btn-ghost" onclick="logout()">登出</button>
+  <button class="btn btn-primary admin-only" onclick="exportJSON()">匯出此案</button>
+  <button class="btn btn-ghost admin-only" onclick="exportAllJSON()">匯出全部</button>
+  <button class="btn btn-ghost admin-only" onclick="importJSON()">匯入</button>
+  <button class="btn btn-ghost admin-only" onclick="showAdminPanel()">管理</button>
   <div class="sep"></div>
   <a href="view.html" class="btn btn-ghost" id="viewLink">檢視</a>
   <a href="timeline.html" class="btn btn-ghost" id="timelineLink">時間軸</a>
@@ -562,6 +641,117 @@
 
 <script>
 // ═══════════════════════════════════════════════════════════════
+// USER CONFIG & AUTH
+// ═══════════════════════════════════════════════════════════════
+
+// SHA-256 hashes of passwords (generate with: echo -n "password" | sha256sum)
+const USERS = {
+  '王敏銓': { role: 'legal', hash: 'd17f25ecfbcc7857f7bebea469308be0b2580943e96d13a3ad98a13675c4bfc2' },
+  '李惠宗': { role: 'legal', hash: 'cc399d73903f06ee694032ab0538f05634ff7e1ce5e8e50ac330a871484f34cf' },
+  '丁鴻志': { role: 'medical', hash: '216e683ff0d2d25165b8bb7ba608c9a628ef299924ca49ab981ec7d2fecd6dad' },
+  '施朝仁': { role: 'medical', hash: 'e11d8cb94b54e0a2fd0e780f93dd51837fd39bf0c9b86f21e760d02a8550ddf7' },
+  'admin':  { role: 'admin', hash: '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918' },
+};
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function doLogin() {
+  const userSel = document.getElementById('loginUser');
+  const passInput = document.getElementById('loginPassword');
+  const errorEl = document.getElementById('loginError');
+  const username = userSel.value;
+  const password = passInput.value;
+
+  errorEl.textContent = '';
+  if (!username) { errorEl.textContent = '請選擇評估者'; return; }
+  if (!password) { errorEl.textContent = '請輸入密碼'; return; }
+
+  const user = USERS[username];
+  if (!user) { errorEl.textContent = '使用者不存在'; return; }
+
+  const hash = await sha256(password);
+  if (hash !== user.hash) { errorEl.textContent = '密碼錯誤'; return; }
+
+  localStorage.setItem('eval_v2_auth_user', username);
+  localStorage.setItem('eval_v2_auth_role', user.role);
+  hideLoginOverlay();
+  applyAuth();
+  initApp();
+}
+
+function checkAuth() {
+  const user = localStorage.getItem('eval_v2_auth_user');
+  const role = localStorage.getItem('eval_v2_auth_role');
+  if (user && USERS[user] && role) {
+    hideLoginOverlay();
+    applyAuth();
+    return true;
+  }
+  showLoginOverlay();
+  return false;
+}
+
+function logout() {
+  localStorage.removeItem('eval_v2_auth_user');
+  localStorage.removeItem('eval_v2_auth_role');
+  document.body.classList.remove('is-admin');
+  showLoginOverlay();
+}
+
+function showLoginOverlay() {
+  const overlay = document.getElementById('loginOverlay');
+  overlay.classList.remove('hidden');
+  // Populate user select
+  const sel = document.getElementById('loginUser');
+  if (sel.options.length <= 1) {
+    Object.keys(USERS).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      sel.appendChild(opt);
+    });
+  }
+  document.getElementById('loginPassword').value = '';
+  document.getElementById('loginError').textContent = '';
+}
+
+function hideLoginOverlay() {
+  document.getElementById('loginOverlay').classList.add('hidden');
+}
+
+function applyAuth() {
+  const user = getCurrentUser();
+  const role = getCurrentRole();
+  // Update badge
+  const badge = document.getElementById('userBadge');
+  badge.textContent = user;
+  badge.className = `user-badge ${role}`;
+  // Admin class
+  if (role === 'admin') {
+    document.body.classList.add('is-admin');
+  } else {
+    document.body.classList.remove('is-admin');
+  }
+}
+
+function getCurrentUser() {
+  return localStorage.getItem('eval_v2_auth_user') || '';
+}
+
+function getCurrentRole() {
+  return localStorage.getItem('eval_v2_auth_role') || 'medical';
+}
+
+function getActiveTLDimensions() {
+  const role = getCurrentRole();
+  if (role === 'admin') return TL_DIMENSIONS;
+  return TL_DIMENSIONS.filter(d => d.roles.includes(role));
+}
+
+// ═══════════════════════════════════════════════════════════════
 // CONSTANTS
 // ═══════════════════════════════════════════════════════════════
 
@@ -592,6 +782,7 @@ const TL_DIMENSIONS = [
   // ─── 一般評估（對照原文即可）───
   {
     id: 'time_accuracy', name: '1. 時間正確性', num: 1,
+    roles: ['medical', 'legal'],
     guide: '事件的日期/時間是否與原文一致？請點擊事件卡片，對照右方高亮的原文段落。',
     checks: [
       '每個事件的日期是否與原文記載一致',
@@ -608,6 +799,7 @@ const TL_DIMENSIONS = [
   },
   {
     id: 'source_alignment', name: '2. 原文對齊品質', num: 2,
+    roles: ['medical', 'legal'],
     guide: '點擊每個事件卡片，檢查中欄高亮的原文段落是否正確對應該事件的來源。',
     checks: [
       '高亮範圍是否涵蓋該事件的核心敘述',
@@ -624,6 +816,7 @@ const TL_DIMENSIONS = [
   },
   {
     id: 'overview_clarity', name: '3. 整體概覽性', num: 3,
+    roles: ['medical', 'legal'],
     guide: '只看時間軸（不看原文），能否快速掌握這個醫療事件的來龍去脈？',
     checks: [
       '讀完所有事件後，是否能理解病人為何就醫、接受了什麼處置、最終結果如何',
@@ -635,12 +828,13 @@ const TL_DIMENSIONS = [
       4: '大致能掌握全貌，但 1 處需回頭推敲才能理解前後關聯',
       3: '能理解個別事件，但整體脈絡需要自行拼湊',
       2: '事件片段零散，難以串連出完整故事',
-      1: '讀完後仍無法理解這個案件在說什麼'
+      1: '讀完後仍無法理解案件的基本經過'
     }
   },
   // ─── 醫學專業評估（需臨床判斷）───
   {
     id: 'clinical_completeness', name: '4. 臨床事件完整性', num: 4,
+    roles: ['medical'],
     guide: '從醫學角度看，判決書中臨床上重要的事件是否都被抽取出來？有無遺漏或多餘？',
     checks: [
       '到院、轉院、手術、重要用藥、病情變化等臨床轉折點是否都有對應事件',
@@ -657,7 +851,8 @@ const TL_DIMENSIONS = [
   },
   {
     id: 'clinical_accuracy', name: '5. 臨床描述準確性', num: 5,
-    guide: '事件描述在醫學上是否正確？有無誤用術語、扭曲因果、或產生幻覺？',
+    roles: ['medical'],
+    guide: '事件描述在醫學上是否正確？有無誤用術語、扭曲因果、或捏造原文不存在的資訊？',
     checks: [
       '醫學術語使用是否正確（疾病名、手術名、藥物名）',
       '事件描述是否忠實反映原文，有無添加原文不存在的資訊',
@@ -673,6 +868,7 @@ const TL_DIMENSIONS = [
   },
   {
     id: 'critical_decision_marking', name: '6. 關鍵決策標記正確性', num: 6,
+    roles: ['medical'],
     guide: '標為「關鍵決策」的事件是否確實是醫療過失認定的核心節點？有無漏標或誤標？',
     checks: [
       '標為關鍵決策的事件是否確實是法院認定過失的關鍵點',
@@ -688,8 +884,9 @@ const TL_DIMENSIONS = [
     }
   },
   {
-    id: 'granularity', name: '7. 事件粒度適當性', num: 7,
-    guide: '事件的拆分粒度在臨床上是否恰當？不會太粗（合併不同處置）或太細（拆出瑣碎步驟）。',
+    id: 'granularity', name: '7. 事件拆分適當性', num: 7,
+    roles: ['medical'],
+    guide: '事件的拆分是否恰當？不同就診/處置是否分開，同一處置的連續步驟是否合併？',
     checks: [
       '不同診次/不同日的事件是否有適當分開',
       '同一次處置的連續步驟是否有適當合併（而非拆成過多瑣碎事件）',
@@ -843,7 +1040,12 @@ let autoSaveTimer = null;
 // INIT
 // ═══════════════════════════════════════════════════════════════
 
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', () => {
+  if (!checkAuth()) return;
+  initApp();
+});
+
+async function initApp() {
   // Load manifest
   try {
     const resp = await fetch('./data/manifest.json');
@@ -861,6 +1063,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Populate case selector with volume optgroups
   const sel = document.getElementById('caseSelect');
+  sel.innerHTML = ''; // Clear any previous options on re-init
   const ci = manifest.case_info || {};
   const volumes = ['上冊', '中冊', '下冊'];
   const byVol = {};
@@ -882,14 +1085,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     sel.appendChild(og);
   });
 
-  // Restore evaluator name
-  const savedName = localStorage.getItem('eval_v2_evaluator');
-  if (savedName) document.getElementById('evaluatorName').value = savedName;
-
-  document.getElementById('evaluatorName').addEventListener('change', () => {
-    localStorage.setItem('eval_v2_evaluator', document.getElementById('evaluatorName').value);
-  });
-
   // URL params
   const params = new URLSearchParams(location.search);
   const urlCase = params.get('case');
@@ -909,7 +1104,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   renderEvalForm();
   onCaseChange();
   initResizers();
-});
+}
 
 // ═══════════════════════════════════════════════════════════════
 // CONDITION RANDOMIZATION
@@ -1384,7 +1579,7 @@ function renderTLEvalForm() {
   const container = document.getElementById('tlEvalForm');
   let html = '';
 
-  TL_DIMENSIONS.forEach(dim => {
+  getActiveTLDimensions().forEach(dim => {
     html += `<div class="eval-item" data-dim="${dim.id}">`;
     html += `<div class="eval-item-title">${esc(dim.name)}</div>`;
     html += `<div style="font-size:12px;color:var(--slate-500);margin-bottom:4px;">${esc(dim.guide)}</div>`;
@@ -1504,13 +1699,13 @@ function findTLChunkForEvent(evt) {
 }
 
 function collectPhaseTLData() {
-  const scores = {};
-  TL_DIMENSIONS.forEach(dim => {
+  const existing = getPhaseData(currentCase, currentCondIdx, 'TL') || {};
+  const scores = { ...(existing.scores || {}) }; // preserve scores from other roles
+  getActiveTLDimensions().forEach(dim => {
     const checked = document.querySelector(`input[name="tl_${dim.id}"]:checked`);
     if (checked) scores[dim.id] = parseInt(checked.value);
   });
   const comment = document.getElementById('tlComment').value.trim();
-  const existing = getPhaseData(currentCase, currentCondIdx, 'TL') || {};
   return {
     ...existing,
     real_condition: getRealCondition(currentCase, currentCondIdx),
@@ -1520,8 +1715,8 @@ function collectPhaseTLData() {
 }
 
 function restorePhaseTL() {
-  // Clear all
-  TL_DIMENSIONS.forEach(dim => {
+  // Clear active dimensions (only those rendered in DOM)
+  getActiveTLDimensions().forEach(dim => {
     document.querySelectorAll(`input[name="tl_${dim.id}"]`).forEach(r => r.checked = false);
   });
   document.getElementById('tlComment').value = '';
@@ -1543,18 +1738,20 @@ function onPhaseTLChange() {
 }
 
 function updateTLProgress() {
+  const activeDims = getActiveTLDimensions();
   let filled = 0;
-  TL_DIMENSIONS.forEach(dim => {
+  activeDims.forEach(dim => {
     if (document.querySelector(`input[name="tl_${dim.id}"]:checked`)) filled++;
   });
-  document.getElementById('tlProgressText').textContent = `${filled} / ${TL_DIMENSIONS.length}`;
+  document.getElementById('tlProgressText').textContent = `${filled} / ${activeDims.length}`;
 }
 
 function completePhaseTL() {
   const data = collectPhaseTLData();
-  const filledCount = Object.keys(data.scores).length;
-  if (filledCount < TL_DIMENSIONS.length) {
-    showToast(`尚有 ${TL_DIMENSIONS.length - filledCount} 項未評分`, 'error');
+  const activeDims = getActiveTLDimensions();
+  const activeFilledCount = activeDims.filter(d => data.scores[d.id] != null).length;
+  if (activeFilledCount < activeDims.length) {
+    showToast(`尚有 ${activeDims.length - activeFilledCount} 項未評分`, 'error');
     return;
   }
   data._complete = true;
@@ -1986,6 +2183,7 @@ function exportJSON() {
   const result = {
     meta: {
       evaluator,
+      role: getCurrentRole(),
       case_name: currentCase,
       timestamp: new Date().toISOString(),
       condition_order: condOrder,
@@ -2047,7 +2245,7 @@ function buildCaseExportData(caseName) {
   const evaluator = getEvaluator() || 'anonymous';
   const condOrder = getConditionOrder(caseName);
   const result = {
-    meta: { evaluator, case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2.1' },
+    meta: { evaluator, role: getCurrentRole(), case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2.1' },
     phase1: {}, phaseTL: {}, phase3: null
   };
   for (let i = 0; i < 4; i++) {
@@ -2188,8 +2386,7 @@ function esc(s) {
 function getSlug(name) { return caseSlugs[name] || encodeURIComponent(name); }
 
 function getEvaluator() {
-  const el = document.getElementById('evaluatorName');
-  return el ? el.value.trim() || 'default' : 'default';
+  return getCurrentUser() || 'default';
 }
 
 function updateURL() {
@@ -2263,6 +2460,139 @@ function initResizers() {
     resizer.addEventListener('mousedown', onPointerDown);
     resizer.addEventListener('touchstart', onPointerDown, { passive: false });
   });
+}
+
+// ═══════════════════════════════════════════════════════════════
+// ADMIN PANEL
+// ═══════════════════════════════════════════════════════════════
+
+function showAdminPanel() {
+  const overlay = document.getElementById('adminOverlay');
+  overlay.classList.remove('hidden');
+  renderAdminContent();
+}
+
+function hideAdminPanel() {
+  document.getElementById('adminOverlay').classList.add('hidden');
+}
+
+function renderAdminContent() {
+  const container = document.getElementById('adminContent');
+  const evaluators = Object.keys(USERS).filter(u => u !== 'admin');
+  const cases = caseList.length > 0 ? caseList : [];
+
+  if (cases.length === 0) {
+    container.innerHTML = '<p>尚無案件資料</p>';
+    return;
+  }
+
+  let html = '<div style="overflow-x:auto;"><table>';
+  html += '<thead><tr><th style="text-align:left;">案件</th>';
+  evaluators.forEach(ev => {
+    const role = USERS[ev].role;
+    html += `<th>${esc(ev)}<br><span style="font-size:11px;font-weight:400;color:var(--slate-500);">${role}</span></th>`;
+  });
+  html += '</tr></thead><tbody>';
+
+  cases.forEach(c => {
+    const ci = manifest && manifest.case_info ? manifest.case_info[c] : null;
+    const display = ci ? ci.display || c : c;
+    html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;">${esc(display)}</td>`;
+    evaluators.forEach(ev => {
+      const status = getEvaluatorCaseStatus(ev, c);
+      let cls = 'status-empty';
+      let text = '-';
+      if (status === 'complete') { cls = 'status-done'; text = '&#x2713;'; }
+      else if (status === 'partial') { cls = 'status-partial'; text = '...'; }
+      html += `<td class="${cls}">${text}</td>`;
+    });
+    html += '</tr>';
+  });
+
+  html += '</tbody></table></div>';
+  container.innerHTML = html;
+}
+
+function getEvaluatorCaseStatus(evaluator, caseName) {
+  // Check if this evaluator has any data for this case
+  let hasAny = false;
+  let allDone = true;
+
+  // Check phase3 completion (= case fully done)
+  const p3Key = `eval_v2_${evaluator}_${caseName}_phase3`;
+  try {
+    const p3 = JSON.parse(localStorage.getItem(p3Key));
+    if (p3 && p3._complete) return 'complete';
+  } catch {}
+
+  // Check if any phase1 data exists
+  const condOrderKey = `eval_v2_condorder_${evaluator}_${caseName}`;
+  let condOrder;
+  try {
+    condOrder = JSON.parse(localStorage.getItem(condOrderKey));
+  } catch {}
+  if (!condOrder) condOrder = EVAL_CONDITIONS;
+
+  for (let i = 0; i < 4; i++) {
+    const cond = condOrder[i] || EVAL_CONDITIONS[i];
+    const p1Key = `eval_v2_${evaluator}_${caseName}_${cond}_phase1`;
+    const tlKey = `eval_v2_${evaluator}_${caseName}_${cond}_phaseTL`;
+    try {
+      const p1 = JSON.parse(localStorage.getItem(p1Key));
+      if (p1 && p1.scores && Object.keys(p1.scores).length > 0) hasAny = true;
+    } catch {}
+    try {
+      const tl = JSON.parse(localStorage.getItem(tlKey));
+      if (tl && tl.scores && Object.keys(tl.scores).length > 0) hasAny = true;
+    } catch {}
+  }
+
+  if (hasAny) return 'partial';
+  return 'empty';
+}
+
+function adminExportAll() {
+  const evaluators = Object.keys(USERS).filter(u => u !== 'admin');
+  const allData = {};
+
+  evaluators.forEach(ev => {
+    const evalData = {};
+    // Temporarily override getCurrentUser for buildCaseExportData
+    const origUser = localStorage.getItem('eval_v2_auth_user');
+    const origRole = localStorage.getItem('eval_v2_auth_role');
+    localStorage.setItem('eval_v2_auth_user', ev);
+    localStorage.setItem('eval_v2_auth_role', USERS[ev].role);
+
+    caseList.forEach(c => {
+      const data = buildCaseExportData(c);
+      const hasAnyScore = Object.values(data.phase1).some(v => v.scores && Object.keys(v.scores).length > 0);
+      if (hasAnyScore) evalData[c] = data;
+    });
+
+    // Restore original user
+    if (origUser) localStorage.setItem('eval_v2_auth_user', origUser);
+    else localStorage.removeItem('eval_v2_auth_user');
+    if (origRole) localStorage.setItem('eval_v2_auth_role', origRole);
+    else localStorage.removeItem('eval_v2_auth_role');
+
+    if (Object.keys(evalData).length > 0) {
+      allData[ev] = { role: USERS[ev].role, cases: evalData };
+    }
+  });
+
+  if (Object.keys(allData).length === 0) {
+    showToast('尚無任何評估者的資料', 'error');
+    return;
+  }
+
+  const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `eval_v2_admin_all_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast(`已匯出 ${Object.keys(allData).length} 位評估者的資料`, 'info');
 }
 </script>
 </body>
