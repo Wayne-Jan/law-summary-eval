@@ -633,8 +633,9 @@
   <span class="save-indicator" id="saveIndicator"></span>
   <span class="cloud-status" id="cloudStatus">雲端待命</span>
   <span id="userBadge" class="user-badge"></span>
+  <button class="btn btn-ghost admin-only" type="button" onclick="showAdminPanel()">▤ 管理</button>
   <div class="toolbar-help">
-    <button class="btn btn-ghost btn-icon" type="button" onclick="toggleShortcutHelp()">⌨ 快捷鍵</button>
+    <button class="btn btn-ghost btn-icon" type="button" onclick="toggleShortcutHelp()" title="快捷鍵">⌨</button>
     <div class="toolbar-shortcut-panel" id="shortcutHelpPanel">
       <div class="toolbar-shortcut-title">評分快捷鍵</div>
       <div class="toolbar-shortcut-line">↑ / ↓：切換目前評分題目</div>
@@ -645,14 +646,12 @@
     </div>
   </div>
   <div class="toolbar-menu-wrap admin-only">
-    <button class="btn btn-ghost" type="button" onclick="toggleToolbarMenu('adminMenu')">管理 ▾</button>
+    <button class="btn btn-ghost btn-icon" type="button" onclick="toggleToolbarMenu('adminMenu')" title="管理操作">⋯</button>
     <div class="toolbar-menu" id="adminMenu">
       <button class="btn btn-primary" onclick="closeToolbarMenus();exportJSON()">匯出此案</button>
       <button class="btn btn-ghost" onclick="closeToolbarMenus();exportAllJSON()">匯出全部</button>
       <button class="btn btn-ghost" onclick="closeToolbarMenus();importJSON()">匯入</button>
       <button class="btn btn-ghost" onclick="closeToolbarMenus();restoreFromFirestore()">從雲端還原</button>
-      <div class="toolbar-menu-sep"></div>
-      <button class="btn btn-ghost" onclick="closeToolbarMenus();showAdminPanel()">管理面板</button>
     </div>
   </div>
   <div class="toolbar-menu-wrap">
@@ -1088,6 +1087,11 @@ function getActiveTLDimensions() {
   const role = getCurrentRole();
   if (role === 'admin') return TL_DIMENSIONS;
   return TL_DIMENSIONS.filter(d => d.roles.includes(role));
+}
+
+function getTLExpectedCountForRole(role) {
+  if (role === 'admin') return TL_DIMENSIONS.length;
+  return TL_DIMENSIONS.filter(d => d.roles.includes(role)).length;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2779,6 +2783,7 @@ function exportJSON() {
     result.phase1[label] = {
       real_condition: cond,
       scores: p1 ? p1.scores || {} : {},
+      overall_comment: p1 ? p1.overall_comment || '' : '',
       revision_count: p1 ? p1.revision_count || 0 : 0
     };
 
@@ -2786,7 +2791,8 @@ function exportJSON() {
     const pfb = getPhaseData(currentCase, i, 'FB');
     result.phaseFB[label] = {
       real_condition: cond,
-      sections: pfb ? pfb.sections || {} : {}
+      sections: pfb ? pfb.sections || {} : {},
+      _complete: pfb ? !!pfb._complete : false
     };
 
     // Phase TL
@@ -2794,7 +2800,8 @@ function exportJSON() {
     result.phaseTL[label] = {
       real_condition: cond,
       scores: ptl ? ptl.scores || {} : {},
-      comment: ptl ? ptl.comment || '' : ''
+      comment: ptl ? ptl.comment || '' : '',
+      _complete: ptl ? !!ptl._complete : false
     };
   }
 
@@ -2807,7 +2814,8 @@ function exportJSON() {
       result.phase3 = {
         ranking: p3.ranking || [],
         ranking_reason: p3.ranking_reason || '',
-        revision_count: p3.revision_count || 0
+        revision_count: p3.revision_count || 0,
+        _complete: !!p3._complete
       };
     }
   } catch {}
@@ -2827,7 +2835,7 @@ function buildCaseExportData(caseName) {
   const condOrder = getConditionOrder(caseName);
   const result = {
     meta: { evaluator, role: getCurrentRole(), case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2.1' },
-    phase1: {}, phaseTL: {}, phase3: null
+    phase1: {}, phaseFB: {}, phaseTL: {}, phase3: null
   };
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAnonLabel(i);
@@ -2839,16 +2847,23 @@ function buildCaseExportData(caseName) {
       overall_comment: p1 ? p1.overall_comment || '' : '',
       revision_count: p1 ? p1.revision_count || 0 : 0
     };
+    const pfb = getPhaseData(caseName, i, 'FB');
+    result.phaseFB[label] = {
+      real_condition: cond,
+      sections: pfb ? pfb.sections || {} : {},
+      _complete: pfb ? !!pfb._complete : false
+    };
     const ptl = getPhaseData(caseName, i, 'TL');
     result.phaseTL[label] = {
       real_condition: cond,
       scores: ptl ? ptl.scores || {} : {},
-      comment: ptl ? ptl.comment || '' : ''
+      comment: ptl ? ptl.comment || '' : '',
+      _complete: ptl ? !!ptl._complete : false
     };
   }
   try {
     const p3 = JSON.parse(localStorage.getItem(`eval_v2_${evaluator}_${caseName}_phase3`));
-    if (p3) result.phase3 = { ranking: p3.ranking || [], ranking_reason: p3.ranking_reason || '', revision_count: p3.revision_count || 0 };
+    if (p3) result.phase3 = { ranking: p3.ranking || [], ranking_reason: p3.ranking_reason || '', revision_count: p3.revision_count || 0, _complete: !!p3._complete };
   } catch {}
   return result;
 }
@@ -2905,35 +2920,46 @@ function importJSON() {
 
 function importSingleCase(data) {
   const evaluator = data.meta.evaluator || getEvaluator() || 'anonymous';
+  const role = data.meta.role || 'medical';
   const caseName = data.meta.case_name;
   if (data.meta.condition_order) {
     localStorage.setItem(`eval_v2_condorder_${evaluator}_${caseName}`, JSON.stringify(data.meta.condition_order));
   }
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAnonLabel(i);
+    const cond = (data.meta.condition_order && data.meta.condition_order[i]) || EVAL_CONDITIONS[i];
     if (data.phase1 && data.phase1[label]) {
-      const key = `eval_v2_${evaluator}_${caseName}_${i}_phase1`;
+      const key = `eval_v2_${evaluator}_${caseName}_${cond}_phase1`;
       const p1 = data.phase1[label];
-      localStorage.setItem(key, JSON.stringify({ scores: p1.scores, overall_comment: p1.overall_comment, revision_count: p1.revision_count }));
+      localStorage.setItem(key, JSON.stringify({ scores: p1.scores || {}, overall_comment: p1.overall_comment || '', revision_count: p1.revision_count || 0 }));
     }
-    // phase2 data ignored (Phase 2 removed)
+    if (data.phaseFB && data.phaseFB[label]) {
+      const key = `eval_v2_${evaluator}_${caseName}_${cond}_phaseFB`;
+      const pfb = data.phaseFB[label];
+      localStorage.setItem(key, JSON.stringify({ sections: pfb.sections || {}, _complete: !!pfb._complete }));
+    }
   }
   // Phase TL
   if (data.phaseTL) {
     for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
       const label = getAnonLabel(i);
       if (data.phaseTL[label]) {
-        const cond = data.meta.condition_order[i];
+        const cond = (data.meta.condition_order && data.meta.condition_order[i]) || EVAL_CONDITIONS[i];
         const key = `eval_v2_${evaluator}_${caseName}_${cond}_phaseTL`;
         const ptl = data.phaseTL[label];
         const stored = { scores: ptl.scores || {}, comment: ptl.comment || '' };
-        if (Object.keys(stored.scores).length === TL_DIMENSIONS.length) stored._complete = true;
+        if (ptl._complete || Object.keys(stored.scores).length >= getTLExpectedCountForRole(role)) stored._complete = true;
         localStorage.setItem(key, JSON.stringify(stored));
       }
     }
   }
   if (data.phase3) {
-    localStorage.setItem(`eval_v2_${evaluator}_${caseName}_phase3`, JSON.stringify(data.phase3));
+    localStorage.setItem(`eval_v2_${evaluator}_${caseName}_phase3`, JSON.stringify({
+      ranking: data.phase3.ranking || [],
+      ranking_reason: data.phase3.ranking_reason || '',
+      revision_count: data.phase3.revision_count || 0,
+      _complete: !!data.phase3._complete
+    }));
   }
 }
 
@@ -3304,11 +3330,10 @@ function renderAdminContent() {
 
   // Firestore status section
   html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--slate-300);">`;
-  html += `<div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:6px;">雲端同步（Firebase Auth + Firestore）</div>`;
+  html += `<div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:6px;">同步狀態</div>`;
   html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.6;">`;
-  html += `✅ 已連接 Firebase 專案 <code>law-eval-2f86e</code>，資料依登入身分分流<br>`;
-  html += `每次完成一個版本評分自動備份。登入時自動從雲端補回缺少的資料。<br>`;
-  html += `如需強制全量同步，請點工具列的「☁ 同步」。</div>`;
+  html += `Firebase Auth / Firestore 已啟用。<br>`;
+  html += `自動同步開啟，可於工具列手動觸發全量同步。</div>`;
   html += `</div>`;
 
   container.innerHTML = html;
