@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>人類專家評估 v2 — 醫療糾紛判決書摘要</title>
+  <title>醫療糾紛判決書摘要評估</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -499,7 +499,7 @@
 <!-- TOOLBAR                                                    -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 <div class="toolbar">
-  <h1>評估 v2</h1>
+  <h1>摘要品質評估</h1>
   <select id="caseSelect" title="選擇案件"></select>
   <div class="sep"></div>
   <div class="cond-pills" id="condPills"></div>
@@ -545,7 +545,7 @@
     </div>
     <div class="resizer"></div>
     <div class="panel panel-eval" id="p1Eval">
-      <div id="p1FrozenBanner" class="frozen-banner">Phase 1 已凍結（已完成評分）</div>
+      <div id="p1FrozenBanner" class="frozen-banner">評分已完成</div>
       <div id="p1EvalForm"></div>
       <div style="padding:8px 0;">
         <label style="font-size:13px;color:var(--slate-500);">整體短評（選填，限 100 字）</label>
@@ -1310,9 +1310,9 @@ function renderPhaseIndicators() {
   const allDone = areAllCondsComplete(currentCase);
 
   const phases = [
-    { num: 1, label: 'Phase 1' },
-    { num: 'tl', label: '時間軸' },
-    { num: 3, label: 'Phase 3' }
+    { num: 1, label: '品質評分' },
+    { num: 'tl', label: '時間軸評估' },
+    { num: 3, label: '整體排序' }
   ];
 
   let html = '';
@@ -1499,7 +1499,7 @@ function completePhase1() {
     return;
   }
   setPhaseData(currentCase, currentCondIdx, 1, data);
-  showToast('Phase 1 完成，進入時間軸評估', 'success');
+  showToast('品質評分完成，進入時間軸評估', 'success');
   currentPhase = 'tl';
   renderCondPills();
   renderPhaseIndicators();
@@ -1785,7 +1785,7 @@ function completePhaseTL() {
 
   // Check if all conditions done
   if (areAllCondsComplete(currentCase)) {
-    showToast('所有版本已完成，進入 Phase 3 排序', 'success');
+    showToast('所有版本已完成，進入整體排序', 'success');
     currentPhase = 3;
   } else {
     // Move to next incomplete condition
