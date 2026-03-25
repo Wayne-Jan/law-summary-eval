@@ -199,7 +199,15 @@
       content: ''; position: absolute; left: 0; top: 20%; height: 60%;
       width: 1px; background: rgba(255,255,255,0.08);
     }
-    .num-value { font-family: var(--serif); font-size: 40px; font-weight: 900; color: #fff; line-height: 1.2; }
+    .num-value {
+      font-family: var(--serif);
+      font-size: clamp(28px, 3.6vw, 40px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.15;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
     .num-value .u { font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.4); }
     .num-label { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 8px; line-height: 1.6; }
 
@@ -318,7 +326,7 @@
       .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .num-item { min-width: 50%; padding: 24px 12px; }
       .num-item + .num-item::before { display: none; }
-      .num-value { font-size: 32px; }
+      .num-value { font-size: clamp(26px, 5vw, 32px); }
 
       .filter-row { gap: 8px; }
       .sbox { width: 100%; order: -1; }
@@ -490,7 +498,7 @@ async function init() {
 
     document.getElementById('numbers').innerHTML = `
       <div class="num-item"><div class="num-value">${cs.length}<span class="u"> 件</span></div><div class="num-label">醫療糾紛刑事案件</div></div>
-      <div class="num-item"><div class="num-value">${volCounts['上冊']||0} <span class="u">/</span> ${volCounts['中冊']||0} <span class="u">/</span> ${volCounts['下冊']||0}</div><div class="num-label">上冊 / 中冊 / 下冊冊別分布</div></div>
+      <div class="num-item"><div class="num-value">${volCounts['上冊']||0}<span class="u"> / </span>${volCounts['中冊']||0}<span class="u"> / </span>${volCounts['下冊']||0}</div><div class="num-label">上冊 / 中冊 / 下冊冊別分布</div></div>
       <div class="num-item"><div class="num-value">${tc}</div><div class="num-label">模型與條件組合</div></div>
       <div class="num-item"><div class="num-value">${te}</div><div class="num-label">已完成評估紀錄</div></div>
     `;
