@@ -69,7 +69,7 @@
     .phase-dot.locked { opacity: 0.4; cursor: not-allowed; }
 
     /* ─── MAIN CONTAINER ─── */
-    .main { margin-top: 56px; height: calc(100vh - 56px - 36px); position: relative; }
+    .main { margin-top: 86px; height: calc(100vh - 86px - 36px); position: relative; }
 
     /* ─── VIEWS (Phase 1/TL/3) ─── */
     .view { display: none; height: 100%; }
@@ -82,6 +82,29 @@
     .panel-summary { flex: 35 0 0; border-right: 1px solid #e2e8f0; background: white; }
     .panel-eval { flex: 35 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
 
+    /* ─── PHASE FB: Section Feedback (same three-panel layout as Phase 1) ─── */
+    #phaseFBView { flex-direction: row; }
+    .fb-section-item { margin-bottom: 10px; }
+    .fb-section-label { font-size: 12px; font-weight: 600; color: var(--slate-700); margin-bottom: 4px; }
+    .fb-section-textarea {
+      width: 100%; min-height: 60px; font-size: 13px; padding: 7px 10px;
+      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
+      resize: vertical; line-height: 1.6; transition: border-color 0.15s;
+    }
+    .fb-section-textarea:focus { outline: none; border-color: var(--indigo); }
+    .fb-intro { font-size: 13px; color: var(--slate-500); margin-bottom: 12px; line-height: 1.5; }
+    /* ─── PROGRESS SUBBAR ─── */
+    .progress-subbar {
+      position: fixed; top: 56px; left: 0; right: 0; height: 30px;
+      background: white; border-bottom: 1px solid #e2e8f0;
+      display: flex; align-items: center; padding: 0 16px; gap: 16px; z-index: 99;
+      font-size: 12px; color: var(--slate-500);
+    }
+    .progress-subbar .vol-block { display: flex; align-items: center; gap: 6px; }
+    .progress-subbar .vol-label { font-weight: 600; color: var(--slate-700); }
+    .vol-mini-bar { width: 48px; height: 6px; background: var(--slate-200); border-radius: 3px; overflow: hidden; }
+    .vol-mini-fill { height: 100%; background: var(--emerald); border-radius: 3px; transition: width 0.3s; }
+    .progress-subbar .sep-dot { color: var(--slate-300); }
     /* ─── PHASE 3: Four-column ─── */
     #phase3View { flex-direction: column; }
     .phase3-source-toggle {
@@ -519,6 +542,27 @@
   <a href="index.html" class="btn btn-ghost">首頁</a>
 </div>
 
+<!-- ─── PROGRESS SUBBAR ─── -->
+<div class="progress-subbar" id="progressSubbar">
+  <div class="vol-block">
+    <span class="vol-label">上冊</span>
+    <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill0" style="width:0%"></div></div>
+    <span id="volText0">0/6</span>
+  </div>
+  <span class="sep-dot">·</span>
+  <div class="vol-block">
+    <span class="vol-label">中冊</span>
+    <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill1" style="width:0%"></div></div>
+    <span id="volText1">0/12</span>
+  </div>
+  <span class="sep-dot">·</span>
+  <div class="vol-block">
+    <span class="vol-label">下冊</span>
+    <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill2" style="width:0%"></div></div>
+    <span id="volText2">0/12</span>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════════════════════════ -->
 <!-- MAIN CONTENT                                               -->
 <!-- ═══════════════════════════════════════════════════════════ -->
@@ -547,14 +591,62 @@
     <div class="panel panel-eval" id="p1Eval">
       <div id="p1FrozenBanner" class="frozen-banner">評分已完成</div>
       <div id="p1EvalForm"></div>
-      <div style="padding:8px 0;">
-        <label style="font-size:13px;color:var(--slate-500);">整體短評（選填，限 100 字）</label>
-        <textarea id="p1OverallComment" class="eval-comment" maxlength="100" placeholder="整體短評..."></textarea>
-      </div>
       <div class="action-bar" style="border-top:none;padding:8px 0;">
         <span style="font-size:13px;color:var(--slate-500);" id="p1ProgressText"></span>
         <div class="spacer"></div>
         <button class="btn btn-primary" id="p1CompleteBtn" onclick="completePhase1()">完成評分 &#x2192;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── PHASE FB: Section Feedback ─── -->
+  <div class="view" id="phaseFBView">
+    <div class="panel panel-source" id="fbSource">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:#f5f5f4;color:#78716c;">&#x1F4C4;</div>
+        <span class="panel-header-text">原文</span>
+        <span class="panel-header-sub" id="fbChunkCount"></span>
+      </div>
+      <div class="panel-body" id="fbSourceBody"><span class="empty-text">載入中...</span></div>
+    </div>
+    <div class="resizer"></div>
+    <div class="panel panel-summary" id="fbSummaryPanel">
+      <div class="panel-header">
+        <div class="panel-header-icon" style="background:var(--purple-light);color:var(--purple);">AI</div>
+        <span class="panel-header-text">AI 摘要</span>
+        <span class="panel-header-sub" id="fbCondLabel"></span>
+      </div>
+      <div id="fbSummaryBody" style="padding:12px 16px;"><span class="empty-text">載入中...</span></div>
+    </div>
+    <div class="resizer"></div>
+    <div class="panel panel-eval" id="fbEval">
+      <p class="fb-intro">以下為選填欄位。如有需要，可針對各章節留下文字意見；若無意見，請直接點擊「略過」。</p>
+      <div id="fbSectionForm">
+        <div class="fb-section-item">
+          <div class="fb-section-label">（一）公訴事實與起訴意旨</div>
+          <textarea class="fb-section-textarea" id="fb_facts" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
+        </div>
+        <div class="fb-section-item">
+          <div class="fb-section-label">（二）被告回應</div>
+          <textarea class="fb-section-textarea" id="fb_defense" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
+        </div>
+        <div class="fb-section-item">
+          <div class="fb-section-label">（三）鑑定意見</div>
+          <textarea class="fb-section-textarea" id="fb_opinions" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
+        </div>
+        <div class="fb-section-item">
+          <div class="fb-section-label">（四）判決結果</div>
+          <textarea class="fb-section-textarea" id="fb_verdict" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
+        </div>
+        <div class="fb-section-item">
+          <div class="fb-section-label">（五）判決理由</div>
+          <textarea class="fb-section-textarea" id="fb_reasoning" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
+        </div>
+      </div>
+      <div class="action-bar" style="border-top:none;padding:8px 0;margin-top:8px;">
+        <div class="spacer"></div>
+        <button class="btn btn-ghost" id="fbSkipBtn" onclick="skipPhaseFB()">略過</button>
+        <button class="btn btn-primary" id="fbSaveBtn" onclick="completePhaseFB()">儲存並繼續 &#x2192;</button>
       </div>
     </div>
   </div>
@@ -1201,8 +1293,13 @@ function isPhaseTLComplete(caseName, condIdx) {
   return d && d._complete === true;
 }
 
+function isPhaseFBComplete(caseName, condIdx) {
+  const d = getPhaseData(caseName, condIdx, 'FB');
+  return d && d._complete === true;
+}
+
 function isCondComplete(caseName, condIdx) {
-  return isPhase1Complete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
+  return isPhase1Complete(caseName, condIdx) && isPhaseFBComplete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
 }
 
 function areAllCondsComplete(caseName) {
@@ -1251,6 +1348,8 @@ async function onCaseChange() {
         currentCondIdx = i;
         if (!isPhase1Complete(currentCase, i)) {
           currentPhase = 1;
+        } else if (!isPhaseFBComplete(currentCase, i)) {
+          currentPhase = 'fb';
         } else {
           currentPhase = 'tl';
         }
@@ -1281,6 +1380,7 @@ function renderCondPills() {
     let cls = 'cond-pill';
     let icon = '';
     if (currentPhase === 'tl') { cls += ' locked'; }
+    else if (currentPhase === 3 && locked) { cls += ' locked'; icon = ' &#x2713;'; }
     else if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
     else if (done) { cls += ' done'; icon = ' &#x2713;'; }
     else if (isCurrent) { cls += ' active'; icon = ' &#x2192;'; }
@@ -1295,6 +1395,10 @@ function switchCondition(idx) {
   if (currentPhase === 'tl') return; // Timeline is per-case, not per-condition
   saveCurrentState();
   currentCondIdx = idx;
+  // If in fb but target condition hasn't finished phase 1, go to phase 1
+  if (currentPhase === 'fb' && !isPhase1Complete(currentCase, idx)) {
+    currentPhase = 1;
+  }
   // Stay on the current phase — don't auto-jump
   renderCondPills();
   renderPhaseIndicators();
@@ -1312,6 +1416,7 @@ function renderPhaseIndicators() {
 
   const phases = [
     { num: 1, label: '品質評分' },
+    { num: 'fb', label: '章節意見' },
     { num: 'tl', label: '時間軸評估' },
     { num: 3, label: '整體排序' }
   ];
@@ -1322,6 +1427,7 @@ function renderPhaseIndicators() {
     if (p.num === currentPhase) cls += ' active';
     else if (p.num === 3 && !allDone && !locked) cls += ' locked';
     else if (p.num === 1 && isPhase1Frozen(currentCase, currentCondIdx)) cls += ' done';
+    else if (p.num === 'fb' && isPhaseFBComplete(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 'tl' && isPhaseTLComplete(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 3 && locked) cls += ' done';
     const phaseArg = typeof p.num === 'string' ? `'${p.num}'` : p.num;
@@ -1350,6 +1456,9 @@ async function loadCurrentView() {
   if (currentPhase === 1) {
     document.getElementById('phase1View').classList.add('active');
     await loadPhase1();
+  } else if (currentPhase === 'fb') {
+    document.getElementById('phaseFBView').classList.add('active');
+    await loadPhaseFB();
   } else if (currentPhase === 'tl') {
     document.getElementById('phaseTLView').classList.add('active');
     await loadPhaseTL();
@@ -1394,11 +1503,9 @@ async function loadPhase1() {
   if (frozen) {
     document.getElementById('p1CompleteBtn').disabled = true;
     document.getElementById('p1CompleteBtn').textContent = '已凍結';
-    document.getElementById('p1OverallComment').disabled = true;
   } else {
     document.getElementById('p1CompleteBtn').disabled = false;
     document.getElementById('p1CompleteBtn').textContent = '完成評分 \u2192';
-    document.getElementById('p1OverallComment').disabled = false;
   }
 
   // Restore saved data
@@ -1443,13 +1550,11 @@ function collectPhase1Data() {
     const checked = document.querySelector(`input[name="p1_${dim.id}"]:checked`);
     if (checked) scores[dim.id] = parseInt(checked.value);
   }));
-  const comment = document.getElementById('p1OverallComment').value.trim();
   const existing = getPhaseData(currentCase, currentCondIdx, 1) || {};
   return {
     ...existing,
     real_condition: getRealCondition(currentCase, currentCondIdx),
     scores,
-    overall_comment: comment,
     revision_count: (existing.revision_count || 0)
   };
 }
@@ -1459,7 +1564,6 @@ function restorePhase1() {
   DIMENSIONS.forEach(g => g.items.forEach(dim => {
     document.querySelectorAll(`input[name="p1_${dim.id}"]`).forEach(r => r.checked = false);
   }));
-  document.getElementById('p1OverallComment').value = '';
 
   const data = getPhaseData(currentCase, currentCondIdx, 1);
   if (!data) return;
@@ -1469,7 +1573,6 @@ function restorePhase1() {
       if (radio) radio.checked = true;
     });
   }
-  if (data.overall_comment) document.getElementById('p1OverallComment').value = data.overall_comment;
 }
 
 function onPhase1Change() {
@@ -1500,7 +1603,93 @@ function completePhase1() {
     return;
   }
   setPhaseData(currentCase, currentCondIdx, 1, data);
-  showToast('品質評分完成，進入時間軸評估', 'success');
+  showToast('品質評分完成，進入章節意見', 'success');
+  currentPhase = 'fb';
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PHASE FB: Section Feedback
+// ═══════════════════════════════════════════════════════════════
+
+const FB_SECTION_IDS = ['facts', 'defense', 'opinions', 'verdict', 'reasoning'];
+
+async function loadPhaseFB() {
+  const cond = getRealCondition(currentCase, currentCondIdx);
+  const slug = getSlug(currentCase);
+
+  if (!aiDataCache[cond]) {
+    try {
+      const resp = await fetch(`./data/${cond}/${slug}.json`);
+      if (resp.ok) aiDataCache[cond] = await resp.json();
+    } catch {}
+  }
+  const aiData = aiDataCache[cond];
+
+  renderSourcePanel('fbSourceBody', 'fbChunkCount', aiData);
+
+  const label = getAnonLabel(currentCondIdx);
+  document.getElementById('fbCondLabel').textContent = label;
+
+  const fbSummaryBody = document.getElementById('fbSummaryBody');
+  if (aiData && aiData.sections) {
+    fbSummaryBody.innerHTML = aiData.sections.map(s =>
+      `<div class="section-block">` +
+      `<div class="section-title section-title-ai">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
+      `<div class="section-body">${renderCitations(s.content || '')}</div>` +
+      `</div>`
+    ).join('');
+    fbSummaryBody.querySelectorAll('.citation-tag').forEach(tag => {
+      tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, 'fbSourceBody'));
+    });
+  } else {
+    fbSummaryBody.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
+  }
+
+  restorePhaseFB();
+  initResizers();
+}
+
+function collectPhaseFBData() {
+  const sections = {};
+  FB_SECTION_IDS.forEach(id => {
+    const el = document.getElementById(`fb_${id}`);
+    if (el) sections[id] = el.value.trim();
+  });
+  const existing = getPhaseData(currentCase, currentCondIdx, 'FB') || {};
+  return { ...existing, real_condition: getRealCondition(currentCase, currentCondIdx), sections };
+}
+
+function restorePhaseFB() {
+  FB_SECTION_IDS.forEach(id => {
+    const el = document.getElementById(`fb_${id}`);
+    if (el) el.value = '';
+  });
+  const data = getPhaseData(currentCase, currentCondIdx, 'FB');
+  if (!data || !data.sections) return;
+  FB_SECTION_IDS.forEach(id => {
+    const el = document.getElementById(`fb_${id}`);
+    if (el && data.sections[id]) el.value = data.sections[id];
+  });
+}
+
+function completePhaseFB() {
+  const data = collectPhaseFBData();
+  data._complete = true;
+  setPhaseData(currentCase, currentCondIdx, 'FB', data);
+  showToast('章節意見已儲存，進入時間軸評估', 'success');
+  currentPhase = 'tl';
+  renderCondPills();
+  renderPhaseIndicators();
+  loadCurrentView();
+}
+
+function skipPhaseFB() {
+  const data = { real_condition: getRealCondition(currentCase, currentCondIdx), sections: {}, _complete: true };
+  setPhaseData(currentCase, currentCondIdx, 'FB', data);
+  showToast('已略過章節意見，進入時間軸評估', 'success');
   currentPhase = 'tl';
   renderCondPills();
   renderPhaseIndicators();
@@ -1793,7 +1982,13 @@ function completePhaseTL() {
     for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
       if (!isCondComplete(currentCase, i)) {
         currentCondIdx = i;
-        currentPhase = 1;
+        if (!isPhase1Complete(currentCase, i)) {
+          currentPhase = 1;
+        } else if (!isPhaseFBComplete(currentCase, i)) {
+          currentPhase = 'fb';
+        } else {
+          currentPhase = 'tl';
+        }
         showToast(`進入 ${getAnonLabel(i)}`, 'success');
         break;
       }
@@ -2162,9 +2357,13 @@ function saveCurrentState() {
 
   if (currentPhase === 1 && !isPhase1Frozen(currentCase, currentCondIdx)) {
     const data = collectPhase1Data();
-    if (Object.keys(data.scores).length > 0 || data.overall_comment) {
+    if (Object.keys(data.scores).length > 0) {
       setPhaseData(currentCase, currentCondIdx, 1, data);
     }
+  } else if (currentPhase === 'fb') {
+    const data = collectPhaseFBData();
+    const hasContent = FB_SECTION_IDS.some(id => data.sections[id]);
+    if (hasContent) setPhaseData(currentCase, currentCondIdx, 'FB', data);
   } else if (currentPhase === 'tl') {
     const data = collectPhaseTLData();
     if (Object.keys(data.scores).length > 0 || data.comment) {
@@ -2186,12 +2385,13 @@ function debounceSave() {
 
 // Listen for changes
 document.addEventListener('change', (e) => {
-  if (e.target.closest('#p1EvalForm') || e.target.id === 'p1OverallComment') {
+  if (e.target.closest('#p1EvalForm')) {
     onPhase1Change();
   }
 });
 document.addEventListener('input', (e) => {
-  if (e.target.id === 'p1OverallComment' || e.target.id === 'tlComment' || e.target.id === 'p3RankingReason') {
+  if (e.target.id === 'tlComment' || e.target.id === 'p3RankingReason' ||
+      e.target.closest('#fbSectionForm')) {
     debounceSave();
   }
 });
@@ -2217,6 +2417,7 @@ function exportJSON() {
       rubric_version: 'v2.1'
     },
     phase1: {},
+    phaseFB: {},
     phaseTL: {},
     phase3: null
   };
@@ -2231,8 +2432,14 @@ function exportJSON() {
     result.phase1[label] = {
       real_condition: cond,
       scores: p1 ? p1.scores || {} : {},
-      overall_comment: p1 ? p1.overall_comment || '' : '',
       revision_count: p1 ? p1.revision_count || 0 : 0
+    };
+
+    // Phase FB
+    const pfb = getPhaseData(currentCase, i, 'FB');
+    result.phaseFB[label] = {
+      real_condition: cond,
+      sections: pfb ? pfb.sections || {} : {}
     };
 
     // Phase TL
@@ -2389,7 +2596,6 @@ function importSingleCase(data) {
 
 function updateFooter() {
   let completed = 0;
-  // Only count cases in the first 30
   const evalCases = caseList.slice(0, 30);
   evalCases.forEach(c => {
     if (isPhase3Complete(c)) completed++;
@@ -2399,6 +2605,25 @@ function updateFooter() {
   document.getElementById('footerText').textContent = `${completed} / ${total} 案完成`;
   document.getElementById('footerFill').style.width = pct + '%';
   document.getElementById('footerPct').textContent = pct + '%';
+
+  // Update volume progress sub-bar
+  const volNames = ['上冊', '中冊', '下冊'];
+  const volTotals = [6, 12, 12];
+  const volCounts = [0, 0, 0];
+  evalCases.forEach(c => {
+    if (!isPhase3Complete(c)) return;
+    const ci = manifest && manifest.case_info ? manifest.case_info[c] : null;
+    const vol = ci ? ci.volume : null;
+    const idx = volNames.indexOf(vol);
+    if (idx >= 0) volCounts[idx]++;
+  });
+  for (let v = 0; v < 3; v++) {
+    const pctV = volTotals[v] > 0 ? Math.round(volCounts[v] / volTotals[v] * 100) : 0;
+    const fillEl = document.getElementById(`volFill${v}`);
+    const textEl = document.getElementById(`volText${v}`);
+    if (fillEl) fillEl.style.width = pctV + '%';
+    if (textEl) textEl.textContent = `${volCounts[v]}/${volTotals[v]}`;
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
