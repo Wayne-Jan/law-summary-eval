@@ -532,9 +532,11 @@
   <span class="save-indicator" id="saveIndicator"></span>
   <span id="userBadge" class="user-badge"></span>
   <button class="btn btn-ghost" onclick="logout()">登出</button>
+  <button class="btn btn-ghost" id="gistSyncBtn" onclick="syncToGist()">同步備份</button>
   <button class="btn btn-primary admin-only" onclick="exportJSON()">匯出此案</button>
   <button class="btn btn-ghost admin-only" onclick="exportAllJSON()">匯出全部</button>
   <button class="btn btn-ghost admin-only" onclick="importJSON()">匯入</button>
+  <button class="btn btn-ghost admin-only" onclick="restoreFromGist()">從備份還原</button>
   <button class="btn btn-ghost admin-only" onclick="showAdminPanel()">管理</button>
   <div class="sep"></div>
   <a href="view.html" class="btn btn-ghost" id="viewLink">檢視</a>
@@ -738,6 +740,11 @@
 // ═══════════════════════════════════════════════════════════════
 // USER CONFIG & AUTH
 // ═══════════════════════════════════════════════════════════════
+
+// ─── GIST BACKUP ───
+const GIST_ID   = 'ba78908e8723358fd9b91c92e853069a';
+const GIST_FILE = 'data.json';
+function getGistToken() { return localStorage.getItem('law_eval_gist_token') || ''; }
 
 // SHA-256 hashes of passwords (generate with: echo -n "password" | sha256sum)
 const USERS = {
@@ -2261,6 +2268,7 @@ function completePhase3() {
   updateFooter();
   document.getElementById('p3CompleteBtn').disabled = true;
   document.getElementById('p3CompleteBtn').textContent = '此案已完成';
+  syncToGist(); // auto-backup on case complete
 }
 
 function togglePhase3Source() {
@@ -2594,6 +2602,96 @@ function importSingleCase(data) {
 // FOOTER: Overall progress
 // ═══════════════════════════════════════════════════════════════
 
+// ═══════════════════════════════════════════════════════════════
+// GIST BACKUP
+// ═══════════════════════════════════════════════════════════════
+
+function collectAllEvalData(evaluator) {
+  // Collect everything in localStorage for this evaluator
+  const data = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (!key.startsWith(`eval_v2_${evaluator}_`)) continue;
+    try { data[key] = JSON.parse(localStorage.getItem(key)); } catch {}
+  }
+  return data;
+}
+
+async function syncToGist() {
+  const ev = getEvaluator();
+  if (!ev || ev === 'default') return;
+  if (!getGistToken()) {
+    showToast('請先由管理員在管理面板設定 Gist Token', 'error');
+    return;
+  }
+  const syncBtn = document.getElementById('gistSyncBtn');
+  if (syncBtn) { syncBtn.disabled = true; syncBtn.textContent = '同步中...'; }
+
+  try {
+    // 1. Fetch current Gist content
+    let gistData = {};
+    const getResp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+      headers: { 'Authorization': `token ${getGistToken()}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (getResp.ok) {
+      const gist = await getResp.json();
+      const content = gist.files[GIST_FILE] && gist.files[GIST_FILE].content;
+      if (content) try { gistData = JSON.parse(content); } catch {}
+    }
+
+    // 2. Update this evaluator's section
+    gistData[ev] = { _synced: new Date().toISOString(), data: collectAllEvalData(ev) };
+
+    // 3. PATCH Gist
+    const patchResp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `token ${getGistToken()}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ files: { [GIST_FILE]: { content: JSON.stringify(gistData, null, 2) } } })
+    });
+
+    if (patchResp.ok) {
+      showToast('已備份至雲端 ✓', 'success');
+      if (syncBtn) { syncBtn.textContent = '已同步 ✓'; setTimeout(() => { syncBtn.disabled = false; syncBtn.textContent = '同步備份'; }, 3000); }
+    } else {
+      throw new Error('PATCH failed: ' + patchResp.status);
+    }
+  } catch (e) {
+    console.error('Gist sync error:', e);
+    showToast('備份失敗，請稍後再試', 'error');
+    if (syncBtn) { syncBtn.disabled = false; syncBtn.textContent = '同步備份'; }
+  }
+}
+
+async function restoreFromGist() {
+  const ev = getEvaluator();
+  if (!ev || ev === 'default') return;
+  if (!confirm(`從雲端備份還原 ${ev} 的資料？（會覆蓋本機現有資料）`)) return;
+
+  try {
+    const getResp = await fetch(`https://api.github.com/gists/${GIST_ID}`, {
+      headers: { 'Authorization': `token ${getGistToken()}`, 'Accept': 'application/vnd.github.v3+json' }
+    });
+    if (!getResp.ok) throw new Error('fetch failed');
+    const gist = await getResp.json();
+    const content = gist.files[GIST_FILE] && gist.files[GIST_FILE].content;
+    if (!content) { showToast('雲端無備份資料', 'error'); return; }
+    const gistData = JSON.parse(content);
+    const evData = gistData[ev] && gistData[ev].data;
+    if (!evData || Object.keys(evData).length === 0) { showToast(`${ev} 尚無雲端備份`, 'error'); return; }
+    Object.entries(evData).forEach(([key, val]) => localStorage.setItem(key, JSON.stringify(val)));
+    showToast(`已從雲端還原 ${Object.keys(evData).length} 筆資料`, 'success');
+    onCaseChange();
+    updateFooter();
+  } catch (e) {
+    console.error('Gist restore error:', e);
+    showToast('還原失敗', 'error');
+  }
+}
+
 function updateFooter() {
   let completed = 0;
   const evalCases = caseList.slice(0, 30);
@@ -2762,7 +2860,34 @@ function renderAdminContent() {
   });
 
   html += '</tbody></table></div>';
+
+  // Gist Token setup section (admin only)
+  const currentToken = getGistToken();
+  const tokenMasked = currentToken ? currentToken.slice(0,8) + '••••••••' + currentToken.slice(-4) : '（未設定）';
+  html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--slate-300);">`;
+  html += `<div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:8px;">Gist Token 設定</div>`;
+  html += `<div style="font-size:13px;color:var(--slate-500);margin-bottom:8px;">目前：${esc(tokenMasked)}</div>`;
+  html += `<div style="display:flex;gap:8px;align-items:center;">`;
+  html += `<input type="password" id="gistTokenInput" placeholder="ghp_..." style="flex:1;font-size:13px;padding:6px 10px;border:1px solid var(--slate-300);border-radius:6px;font-family:var(--sans);">`;
+  html += `<button class="btn btn-primary" onclick="saveGistToken()">儲存</button>`;
+  if (currentToken) html += `<button class="btn btn-ghost" onclick="clearGistToken()">清除</button>`;
+  html += `</div></div>`;
+
   container.innerHTML = html;
+}
+
+function saveGistToken() {
+  const val = document.getElementById('gistTokenInput').value.trim();
+  if (!val) { showToast('請輸入 Token', 'error'); return; }
+  localStorage.setItem('law_eval_gist_token', val);
+  showToast('Token 已儲存', 'success');
+  renderAdminContent();
+}
+
+function clearGistToken() {
+  localStorage.removeItem('law_eval_gist_token');
+  showToast('Token 已清除', 'success');
+  renderAdminContent();
 }
 
 function getEvaluatorCaseStatus(evaluator, caseName) {
