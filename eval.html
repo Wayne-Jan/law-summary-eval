@@ -100,8 +100,18 @@
       display: flex; align-items: center; padding: 0 16px; gap: 16px; z-index: 99;
       font-size: 12px; color: var(--slate-500);
     }
-    .progress-subbar .vol-block { display: flex; align-items: center; gap: 6px; }
+    .progress-subbar .vol-block { display: flex; align-items: center; gap: 6px; cursor: pointer; border-radius: 6px; padding: 2px 6px; transition: background .15s; }
+    .progress-subbar .vol-block:hover { background: var(--slate-100); }
     .progress-subbar .vol-label { font-weight: 600; color: var(--slate-700); }
+    /* ─── VOL MODAL ─── */
+    #volModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:9000; align-items:center; justify-content:center; }
+    #volModal.show { display:flex; }
+    #volModalBox { background:#fff; border-radius:10px; padding:20px 24px; width:520px; max-height:80vh; overflow-y:auto; box-shadow:0 8px 32px rgba(0,0,0,.18); }
+    #volModalTitle { font-size:16px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; justify-content:space-between; }
+    .vol-modal-row { display:grid; grid-template-columns:1fr auto; align-items:center; gap:8px; padding:6px 0; border-bottom:1px solid #f1f5f9; font-size:13px; }
+    .vol-modal-row:last-child { border-bottom:none; }
+    .vol-modal-pills { display:flex; gap:4px; }
+    .vol-modal-pill { font-size:11px; padding:1px 5px; border-radius:4px; font-weight:600; }
     .vol-mini-bar { width: 48px; height: 6px; background: var(--slate-200); border-radius: 3px; overflow: hidden; }
     .vol-mini-fill { height: 100%; background: var(--emerald); border-radius: 3px; transition: width 0.3s; }
     .progress-subbar .sep-dot { color: var(--slate-300); }
@@ -546,22 +556,33 @@
 
 <!-- ─── PROGRESS SUBBAR ─── -->
 <div class="progress-subbar" id="progressSubbar">
-  <div class="vol-block">
+  <div class="vol-block" onclick="openVolModal(0)">
     <span class="vol-label">上冊</span>
     <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill0" style="width:0%"></div></div>
     <span id="volText0">0/6</span>
   </div>
   <span class="sep-dot">·</span>
-  <div class="vol-block">
+  <div class="vol-block" onclick="openVolModal(1)">
     <span class="vol-label">中冊</span>
     <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill1" style="width:0%"></div></div>
     <span id="volText1">0/12</span>
   </div>
   <span class="sep-dot">·</span>
-  <div class="vol-block">
+  <div class="vol-block" onclick="openVolModal(2)">
     <span class="vol-label">下冊</span>
     <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill2" style="width:0%"></div></div>
     <span id="volText2">0/12</span>
+  </div>
+</div>
+
+<!-- ─── VOL DETAIL MODAL ─── -->
+<div id="volModal" onclick="if(event.target===this)closeVolModal()">
+  <div id="volModalBox">
+    <div id="volModalTitle">
+      <span id="volModalLabel"></span>
+      <button onclick="closeVolModal()" style="background:none;border:none;font-size:18px;cursor:pointer;color:#64748b;">✕</button>
+    </div>
+    <div id="volModalList"></div>
   </div>
 </div>
 
@@ -1514,7 +1535,7 @@ function renderEvalForm() {
     html += `<div class="eval-group-title">${esc(group.group)}</div>`;
     group.items.forEach(dim => {
       html += `<div class="eval-item" data-dim="${dim.id}">`;
-      html += `<div class="eval-item-title">${dim.num}. ${esc(dim.name)}</div>`;
+      html += `<div class="eval-item-title">${esc(dim.name)}</div>`;
       html += `<span class="eval-item-toggle" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#x25BE;</span>`;
       html += `<div class="eval-anchors"><table>`;
       for (let s = 5; s >= 1; s--) {
@@ -2708,6 +2729,48 @@ function updateFooter() {
     if (fillEl) fillEl.style.width = pctV + '%';
     if (textEl) textEl.textContent = `${volCounts[v]}/${volTotals[v]}`;
   }
+}
+
+// ─── VOL MODAL ───
+function openVolModal(volIdx) {
+  const volNames = ['上冊', '中冊', '下冊'];
+  const volName = volNames[volIdx];
+  const evalCases = caseList.slice(0, 30);
+  const cases = evalCases.filter(c => {
+    const ci = manifest && manifest.case_info ? manifest.case_info[c] : null;
+    return ci && ci.volume === volName;
+  });
+  const ev = getCurrentEvaluator();
+  const condLetters = 'ABCDE';
+
+  document.getElementById('volModalLabel').textContent = `${volName}（${cases.length} 案）`;
+
+  let html = '';
+  cases.forEach(c => {
+    const shortName = (manifest.case_info[c] && manifest.case_info[c].short_name) || c;
+    const done = isPhase3Complete(c);
+    const condOrder = getEvCondOrderFor(ev, c);
+    let pills = '';
+    for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
+      const cs = getEvaluatorCondStatus(ev, c, i);
+      let bg = '#e2e8f0'; let color = '#64748b'; let sym = '–';
+      if (cs === 'done')    { bg = '#d1fae5'; color = '#065f46'; sym = '✓'; }
+      else if (cs === 'partial') { bg = '#fef3c7'; color = '#92400e'; sym = '·'; }
+      pills += `<span class="vol-modal-pill" style="background:${bg};color:${color};">${condLetters[i]}${sym}</span>`;
+    }
+    const rowStyle = done ? 'color:#065f46;font-weight:600;' : '';
+    html += `<div class="vol-modal-row">
+      <span style="${rowStyle}">${esc(shortName)}</span>
+      <div class="vol-modal-pills">${pills}</div>
+    </div>`;
+  });
+
+  document.getElementById('volModalList').innerHTML = html;
+  document.getElementById('volModal').classList.add('show');
+}
+
+function closeVolModal() {
+  document.getElementById('volModal').classList.remove('show');
 }
 
 // ═══════════════════════════════════════════════════════════════
