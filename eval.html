@@ -2844,17 +2844,38 @@ function renderAdminContent() {
   });
   html += '</tr></thead><tbody>';
 
+  const condLetters = ANON_LABELS.map(l => l.replace('版本 ', ''));
+
   cases.forEach(c => {
     const ci = manifest && manifest.case_info ? manifest.case_info[c] : null;
     const display = ci ? ci.display || c : c;
+    const caseStatus = evaluators.some(ev => getEvaluatorCaseStatus(ev, c) !== 'empty');
     html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;">${esc(display)}</td>`;
     evaluators.forEach(ev => {
-      const status = getEvaluatorCaseStatus(ev, c);
-      let cls = 'status-empty';
-      let text = '-';
-      if (status === 'complete') { cls = 'status-done'; text = '&#x2713;'; }
-      else if (status === 'partial') { cls = 'status-partial'; text = '...'; }
-      html += `<td class="${cls}">${text}</td>`;
+      const overall = getEvaluatorCaseStatus(ev, c);
+      let cellStyle = '';
+      if (overall === 'complete') cellStyle = 'background:var(--emerald-light);';
+      else if (overall === 'partial') cellStyle = 'background:#fffbeb;';
+
+      // Per-condition pills
+      let pills = '';
+      for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
+        const cs = getEvaluatorCondStatus(ev, c, i);
+        const letter = condLetters[i] || String.fromCharCode(65 + i);
+        let color = '#cbd5e1'; // empty = slate
+        let symbol = '–';
+        if (cs === 'done') { color = '#059669'; symbol = '✓'; }       // green
+        else if (cs === 'partial') { color = '#d97706'; symbol = '·'; } // amber
+        pills += `<span style="font-size:11px;font-weight:600;color:${color};margin-right:3px;">${letter}${symbol}</span>`;
+      }
+
+      // Phase 3 indicator
+      const p3Key = `eval_v2_${ev}_${c}_phase3`;
+      let p3done = false;
+      try { const p3 = JSON.parse(localStorage.getItem(p3Key)); p3done = !!(p3 && p3._complete); } catch {}
+      if (p3done) pills += `<span style="font-size:11px;font-weight:700;color:var(--indigo);margin-left:2px;">★</span>`;
+
+      html += `<td style="padding:4px 8px;${cellStyle}">${pills}</td>`;
     });
     html += '</tr>';
   });
@@ -2890,41 +2911,44 @@ function clearGistToken() {
   renderAdminContent();
 }
 
-function getEvaluatorCaseStatus(evaluator, caseName) {
-  // Check if this evaluator has any data for this case
-  let hasAny = false;
-  let allDone = true;
+function getEvCondOrderFor(evaluator, caseName) {
+  const key = `eval_v2_condorder_${evaluator}_${caseName}`;
+  try { const o = JSON.parse(localStorage.getItem(key)); if (Array.isArray(o)) return o; } catch {}
+  return EVAL_CONDITIONS.slice();
+}
 
-  // Check phase3 completion (= case fully done)
+// Returns 'done' | 'partial' | 'empty' for one condition slot of one evaluator
+function getEvaluatorCondStatus(evaluator, caseName, condIdx) {
+  const condOrder = getEvCondOrderFor(evaluator, caseName);
+  const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
+  const prefix = `eval_v2_${evaluator}_${caseName}_${cond}_phase`;
+  let p1done = false, fbdone = false, tldone = false;
+  try {
+    const p1 = JSON.parse(localStorage.getItem(prefix + '1'));
+    p1done = !!(p1 && p1.scores && Object.keys(p1.scores).length >= 10);
+  } catch {}
+  try {
+    const fb = JSON.parse(localStorage.getItem(prefix + 'FB'));
+    fbdone = !!(fb && fb._complete);
+  } catch {}
+  try {
+    const tl = JSON.parse(localStorage.getItem(prefix + 'TL'));
+    tldone = !!(tl && tl._complete);
+  } catch {}
+  if (p1done && fbdone && tldone) return 'done';
+  if (p1done || fbdone || tldone) return 'partial';
+  return 'empty';
+}
+
+function getEvaluatorCaseStatus(evaluator, caseName) {
   const p3Key = `eval_v2_${evaluator}_${caseName}_phase3`;
   try {
     const p3 = JSON.parse(localStorage.getItem(p3Key));
     if (p3 && p3._complete) return 'complete';
   } catch {}
-
-  // Check if any phase1 data exists
-  const condOrderKey = `eval_v2_condorder_${evaluator}_${caseName}`;
-  let condOrder;
-  try {
-    condOrder = JSON.parse(localStorage.getItem(condOrderKey));
-  } catch {}
-  if (!condOrder) condOrder = EVAL_CONDITIONS;
-
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
-    const cond = condOrder[i] || EVAL_CONDITIONS[i];
-    const p1Key = `eval_v2_${evaluator}_${caseName}_${cond}_phase1`;
-    const tlKey = `eval_v2_${evaluator}_${caseName}_${cond}_phaseTL`;
-    try {
-      const p1 = JSON.parse(localStorage.getItem(p1Key));
-      if (p1 && p1.scores && Object.keys(p1.scores).length > 0) hasAny = true;
-    } catch {}
-    try {
-      const tl = JSON.parse(localStorage.getItem(tlKey));
-      if (tl && tl.scores && Object.keys(tl.scores).length > 0) hasAny = true;
-    } catch {}
+    if (getEvaluatorCondStatus(evaluator, caseName, i) !== 'empty') return 'partial';
   }
-
-  if (hasAny) return 'partial';
   return 'empty';
 }
 
