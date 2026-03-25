@@ -162,7 +162,9 @@
     .vol-modal-pill {
       font-size:11px; padding:2px 6px; border-radius:6px; font-weight:700;
       border:none; cursor:pointer; font-family:var(--sans);
+      transition: transform .15s, box-shadow .15s, filter .15s;
     }
+    .vol-modal-pill:hover { transform: translateY(-1px); filter: brightness(0.98); box-shadow: 0 2px 8px rgba(15,23,42,0.12); }
     .vol-modal-name {
       border: none; background: transparent; text-align: left; cursor: pointer;
       font-size: 13px; font-family: var(--sans); color: inherit; padding: 0;
@@ -3325,20 +3327,24 @@ function getEvaluatorCondStatus(evaluator, caseName, condIdx) {
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
   const prefix = `eval_v2_${evaluator}_${caseName}_${cond}_phase`;
   let p1done = false, fbdone = false, tldone = false;
+  let p1partial = false, fbpartial = false, tlpartial = false;
   try {
     const p1 = JSON.parse(localStorage.getItem(prefix + '1'));
     p1done = !!(p1 && p1.scores && Object.keys(p1.scores).length >= 9);
+    p1partial = !!(p1 && p1.scores && Object.keys(p1.scores).length > 0);
   } catch {}
   try {
     const fb = JSON.parse(localStorage.getItem(prefix + 'FB'));
     fbdone = !!(fb && fb._complete);
+    fbpartial = !!(fb && fb.sections && Object.values(fb.sections).some(v => (v || '').trim()));
   } catch {}
   try {
     const tl = JSON.parse(localStorage.getItem(prefix + 'TL'));
     tldone = !!(tl && tl._complete);
+    tlpartial = !!(tl && ((tl.scores && Object.keys(tl.scores).length > 0) || (tl.comment || '').trim()));
   } catch {}
   if (p1done && fbdone && tldone) return 'done';
-  if (p1done || fbdone || tldone) return 'partial';
+  if (p1partial || fbpartial || tlpartial || p1done || fbdone || tldone) return 'partial';
   return 'empty';
 }
 
