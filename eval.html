@@ -56,6 +56,15 @@
     .toolbar-help {
       position: relative; display: inline-flex; align-items: center;
     }
+    .toolbar-shortcut-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .toolbar-shortcut-icon {
+      font-size: 14px; line-height: 1;
+    }
+    .toolbar-shortcut-label {
+      white-space: nowrap;
+    }
     .toolbar-shortcut-panel {
       position: absolute; top: calc(100% + 8px); right: 0; width: 240px;
       padding: 12px 14px; border-radius: 12px; border: 1px solid var(--slate-300);
@@ -447,6 +456,8 @@
       .phase3-col { flex: none; max-height: 30vh; }
       .p3-choices { flex-direction: column; align-items: center; }
       .toolbar-shortcut-panel, .toolbar-menu { right: 0; left: auto; max-width: calc(100vw - 24px); }
+      .toolbar-shortcut-btn { min-width: 40px; justify-content: center; padding-left: 10px; padding-right: 10px; }
+      .toolbar-shortcut-label { display: none; }
     }
 
     /* ─── PHASE TL: Timeline Evaluation (three-column) ─── */
@@ -557,6 +568,10 @@
     /* ─── ADMIN ONLY ─── */
     .admin-only { display: none; }
     body.is-admin .admin-only { display: inline-flex; }
+    body.is-admin .eval-only,
+    body.is-admin .subbar,
+    body.is-admin .main,
+    body.is-admin .footer { display: none; }
 
     /* ─── ADMIN PANEL ─── */
     .admin-overlay {
@@ -624,18 +639,21 @@
 <!-- ═══════════════════════════════════════════════════════════ -->
 <div class="toolbar">
   <h1>摘要品質評估</h1>
-  <select id="caseSelect" title="選擇案件"></select>
-  <div class="sep"></div>
-  <div class="cond-pills" id="condPills"></div>
-  <div class="sep"></div>
-  <div class="phase-indicators" id="phaseIndicators"></div>
+  <select id="caseSelect" class="eval-only" title="選擇案件"></select>
+  <div class="sep eval-only"></div>
+  <div class="cond-pills eval-only" id="condPills"></div>
+  <div class="sep eval-only"></div>
+  <div class="phase-indicators eval-only" id="phaseIndicators"></div>
   <div class="spacer"></div>
-  <span class="save-indicator" id="saveIndicator"></span>
+  <span class="save-indicator eval-only" id="saveIndicator"></span>
   <span class="cloud-status" id="cloudStatus">雲端待命</span>
   <span id="userBadge" class="user-badge"></span>
   <button class="btn btn-ghost admin-only" type="button" onclick="showAdminPanel()">▤ 管理</button>
   <div class="toolbar-help">
-    <button class="btn btn-ghost btn-icon" type="button" onclick="toggleShortcutHelp()" title="快捷鍵">⌨</button>
+    <button class="btn btn-ghost toolbar-shortcut-btn" type="button" onclick="toggleShortcutHelp()" title="快捷鍵">
+      <span class="toolbar-shortcut-icon">⌨</span>
+      <span class="toolbar-shortcut-label">快捷鍵</span>
+    </button>
     <div class="toolbar-shortcut-panel" id="shortcutHelpPanel">
       <div class="toolbar-shortcut-title">評分快捷鍵</div>
       <div class="toolbar-shortcut-line">↑ / ↓：切換目前評分題目</div>
@@ -1015,6 +1033,8 @@ function handleAuthStateChanged(user) {
   if (!window.__evalAppInitialized) {
     window.__evalAppInitialized = true;
     initApp();
+  } else if (profile.role === 'admin') {
+    showAdminPanel();
   }
 }
 
@@ -1072,6 +1092,7 @@ function applyAuth() {
     document.body.classList.add('is-admin');
   } else {
     document.body.classList.remove('is-admin');
+    hideAdminPanel();
   }
 }
 
@@ -1434,6 +1455,7 @@ async function initApp() {
   initResizers();
   updateLayoutHeights();
   autoRestoreFromFirestore(); // silently pull cloud data on login
+  if (getCurrentRole() === 'admin') showAdminPanel();
 }
 
 async function autoRestoreFromFirestore() {
