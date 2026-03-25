@@ -2740,14 +2740,14 @@ function openVolModal(volIdx) {
     const ci = manifest && manifest.case_info ? manifest.case_info[c] : null;
     return ci && ci.volume === volName;
   });
-  const ev = getCurrentEvaluator();
+  const ev = getEvaluator();
   const condLetters = 'ABCDE';
 
   document.getElementById('volModalLabel').textContent = `${volName}（${cases.length} 案）`;
 
   let html = '';
   cases.forEach(c => {
-    const shortName = (manifest.case_info[c] && manifest.case_info[c].short_name) || c;
+    const shortName = (manifest.case_info[c] && manifest.case_info[c].display) || c;
     const done = isPhase3Complete(c);
     const condOrder = getEvCondOrderFor(ev, c);
     let pills = '';
