@@ -190,6 +190,7 @@
       padding-bottom: 12px; border-bottom: 1px solid var(--slate-100);
     }
     .overview-card-title { font-size: 17px; font-weight: 700; color: var(--slate-900); }
+    .lens-mark { color: var(--indigo); }
     .overview-card-scores {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
     }
@@ -792,6 +793,11 @@
     return data;
   }
 
+  function formatModelLabel(label) {
+    if (!label || !label.startsWith('LENS-')) return label;
+    return `<span class="lens-mark">LENS</span>${label.slice(4)}`;
+  }
+
   // ─── Filter ───
   window.setFilter = function(filter) {
     currentFilter = filter;
@@ -1048,7 +1054,7 @@
       card.innerHTML = `
         <div class="model-card-head">
           <div>
-            <div class="model-card-title">${cond.label}</div>
+            <div class="model-card-title">${formatModelLabel(cond.label)}</div>
             <div class="model-card-sub">${currentVolume} · ${cond.eval_count ?? '--'} 案</div>
           </div>
           <span class="badge ${cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource'}">${cond.group}</span>
@@ -1102,7 +1108,7 @@
       card.innerHTML = `
         <div class="model-card-head">
           <div>
-            <div class="model-card-title">${cond.label}</div>
+            <div class="model-card-title">${formatModelLabel(cond.label)}</div>
             <div class="model-card-sub">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 相對位置雷達圖</div>
           </div>
           <span class="badge ${cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource'}">${cond.group}</span>
@@ -1267,7 +1273,7 @@
     panel.innerHTML = `
       <div class="model-detail-head">
         <div>
-          <div class="model-detail-title">${cond.label} 能力檔案</div>
+          <div class="model-detail-title">${formatModelLabel(cond.label)} 能力檔案</div>
           <div class="model-detail-desc">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 先看能力輪廓，再展開細項</div>
         </div>
         <button class="detail-close-btn" type="button" onclick="closeModelDetail()">收起</button>
@@ -1342,7 +1348,7 @@
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td class="cond-name">${cond.label}</td>
+        <td class="cond-name">${formatModelLabel(cond.label)}</td>
         <td><span class="badge ${badgeClass}">${cond.group}</span></td>
         <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg) || '--'}</td>
         <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg) || '--'}</td>
@@ -1509,7 +1515,7 @@
 
       html += `<div class="overview-card">
         <div class="overview-card-header">
-          <span class="overview-card-title">${cond.label}</span>
+          <span class="overview-card-title">${formatModelLabel(cond.label)}</span>
           <span class="badge ${badgeClass}">${cond.group}</span>
         </div>
         <div class="overview-card-scores" style="grid-template-columns: repeat(${scores.length <= 4 ? 2 : 3}, 1fr);">`;
@@ -1579,7 +1585,7 @@
           fmtVal = fmt(v);
         }
         html += `<div class="dim-bar-row">
-          <span class="dim-bar-cond">${cond.label}</span>
+          <span class="dim-bar-cond">${formatModelLabel(cond.label)}</span>
           <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
           <span class="dim-bar-value">${fmtVal}</span>
         </div>`;
@@ -1609,7 +1615,7 @@
         const pct = v * 100;
         const cls = 'dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low');
         html += `<div class="dim-bar-row">
-          <span class="dim-bar-cond">${cond.label}</span>
+          <span class="dim-bar-cond">${formatModelLabel(cond.label)}</span>
           <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
           <span class="dim-bar-value">${fmt(v)}</span>
         </div>`;
