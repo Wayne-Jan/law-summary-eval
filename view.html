@@ -93,7 +93,7 @@
 
         /* Left: Section navigation */
         .nav-panel {
-            width: 210px; background: white; border-right: 1px solid #e0e0e0;
+            width: 220px; background: white; border-right: 1px solid #e0e0e0;
             overflow-y: auto; transition: width 0.2s; position: relative;
         }
         .nav-panel-body { padding: 8px 0 18px; }
@@ -123,7 +123,7 @@
         .nav-item.has-content .nav-icon { background: #10b981; }
 
         /* Middle: Content panel */
-        .content-panel { flex: 1; padding: 0; overflow-y: auto; background: #fafafa; }
+        .content-panel { flex: 1 1 auto; min-width: 0; padding: 0; overflow-y: auto; background: #fafafa; }
         .single-panel { height: 100%; display: flex; flex-direction: column; }
         .content-panel-body { padding: 14px 18px; }
 
@@ -152,7 +152,7 @@
 
         /* ─── RIGHT: Source panel (replaces old citation cards) ─── */
         .source-panel {
-            width: 360px; background: white; border-left: 1px solid #e0e0e0;
+            width: 430px; background: white; border-left: 1px solid #e0e0e0;
             display: flex; flex-direction: column; transition: width 0.2s; position: relative;
         }
 
@@ -262,8 +262,8 @@
             .toolbar h1 { font-size: 15px; }
             .toolbar .condition-select { min-width: 140px; font-size: 13px; }
             .toolbar .condition-label { font-size: 13px; }
-            .nav-panel { width: 190px; }
-            .source-panel { width: 300px; }
+            .nav-panel { width: 200px; }
+            .source-panel { width: 360px; }
         }
 
         @media (max-width: 768px) {
@@ -782,7 +782,10 @@
                 el.style.width = '';
                 el.style.flex = '';
             });
-            try { localStorage.removeItem('viewPanelWidths'); } catch {}
+            try {
+                localStorage.removeItem(PANEL_WIDTHS_STORAGE_KEY);
+                localStorage.removeItem('viewPanelWidths');
+            } catch {}
         }
 
         function toggleNavPanel() {
@@ -877,6 +880,8 @@
         window.closeMobileDrawer = closeMobileDrawer;
 
         // ─── Resizable panels ───
+        const PANEL_WIDTHS_STORAGE_KEY = 'viewPanelWidths_v2';
+
         function initResizers() {
             document.querySelectorAll('.resizer').forEach(resizer => {
                 const onPointerDown = (startEvt) => {
@@ -915,7 +920,7 @@
                             document.querySelectorAll('.main > *:not(.resizer)').forEach(el => {
                                 if (el.id) widths[el.id] = el.style.width;
                             });
-                            localStorage.setItem('viewPanelWidths', JSON.stringify(widths));
+                            localStorage.setItem(PANEL_WIDTHS_STORAGE_KEY, JSON.stringify(widths));
                         } catch {}
                     };
 
@@ -931,7 +936,7 @@
 
             // Restore saved widths
             try {
-                const saved = JSON.parse(localStorage.getItem('viewPanelWidths'));
+                const saved = JSON.parse(localStorage.getItem(PANEL_WIDTHS_STORAGE_KEY));
                 if (saved) {
                     Object.entries(saved).forEach(([id, w]) => {
                         const el = document.getElementById(id);
