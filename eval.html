@@ -1054,6 +1054,18 @@ const USERS = {
   'admin':  { role: 'admin', email: 'admin@law-eval.local' },
 };
 
+const USER_DISPLAY_NAMES = {
+  '王敏銓': '法學專家 WMC',
+  '李惠宗': '法學專家 LHZ',
+  '丁鴻志': '醫學專家 DHZ',
+  '施朝仁': '醫學專家 SCR',
+  'admin': '系統管理員',
+};
+
+function getUserDisplayName(name) {
+  return USER_DISPLAY_NAMES[name] || name;
+}
+
 const USER_BY_EMAIL = Object.fromEntries(
   Object.entries(USERS).map(([name, info]) => [info.email, { name, role: info.role, email: info.email }])
 );
@@ -1177,7 +1189,7 @@ function showLoginOverlay() {
     Object.keys(USERS).filter(n => n !== 'admin').forEach(name => {
       const opt = document.createElement('option');
       opt.value = name;
-      opt.textContent = name;
+      opt.textContent = getUserDisplayName(name);
       sel.appendChild(opt);
     });
   }
@@ -1215,7 +1227,7 @@ function applyAuth() {
   const role = getSessionRole();
   // Update badge
   const badge = document.getElementById('userBadge');
-  badge.textContent = user;
+  badge.textContent = getUserDisplayName(user);
   badge.className = `user-badge ${role}`;
   // Admin class
   if (role === 'admin') {
