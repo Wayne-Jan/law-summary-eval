@@ -506,7 +506,7 @@
     <div class="panel-hero">
       <div class="panel-kicker">整體比較</div>
       <div class="panel-title">同一冊別下的整體表現比較</div>
-      <div class="panel-desc">用表格做精確比較最適合看排序、缺值與樣本數。這裡聚焦各模型在目前冊別下的整體指標，方便直接橫向比較。</div>
+      <div class="panel-desc">用表格做精確比較最適合看排序、缺值與樣本數。<br>這裡聚焦各模型在目前冊別下的整體指標，方便直接橫向比較。</div>
     </div>
     <div class="overview-table-wrap">
       <table class="overview-table" id="overviewTable">
@@ -541,7 +541,7 @@
     <div class="panel-hero">
       <div class="panel-kicker">模型卡</div>
       <div class="panel-title">用單模型卡片看各自的能力輪廓</div>
-      <div class="panel-desc">模型卡適合做快速介紹與直覺閱讀。每張卡保留相同的六個主軸，讓你像看角色能力面板一樣掌握模型個性，但不取代上面的精確比較表。</div>
+      <div class="panel-desc">模型卡適合做快速介紹與直覺閱讀。<br>每張卡保留相同的六個主軸，讓你像看角色能力面板一樣掌握模型個性，但不取代上面的精確比較表。</div>
     </div>
     <div id="modelCardGrid" class="model-card-grid"></div>
     <div id="modelDetailPanel" class="model-detail-panel"></div>
@@ -551,7 +551,7 @@
     <div class="panel-hero">
       <div class="panel-kicker">模型輪廓</div>
       <div class="panel-title">用相對位置看各模型的能力輪廓</div>
-      <div class="panel-desc">這裡保留原始分數卡片，但雷達圖改成同冊內的相對位置視覺化。圖上標示 P0 到 P100，方便比較不同量級指標在目前冊別中的相對強弱。</div>
+      <div class="panel-desc">這裡保留原始分數卡片，但雷達圖改成同冊內的相對位置視覺化。<br>圖上標示 P0 到 P100，方便比較不同量級指標在目前冊別中的相對強弱。</div>
     </div>
     <div id="relativeCardGrid" class="model-card-grid"></div>
   </div>
@@ -560,7 +560,7 @@
     <div class="panel-hero">
       <div class="panel-kicker">逐案比較</div>
       <div class="panel-title">逐案拆開，觀察模型之間的差異</div>
-      <div class="panel-desc">個案頁適合看同一案件在不同模型下的細部表現，包含規則式指標、事實召回、寫作品質，以及 ROUGE / BERTScore 的逐項比較。</div>
+      <div class="panel-desc">個案頁適合看同一案件在不同模型下的細部表現。<br>包含規則式指標、事實召回、寫作品質，以及 ROUGE / BERTScore 的逐項比較。</div>
     </div>
     <div class="case-selector">
       <label for="caseSelect">選擇案件：</label>
@@ -754,7 +754,7 @@
   let currentMainTab = 'overview';
   let currentModelDetail = null;
   const METRICS_DISPLAY_LABELS = {
-    'claude_afg_v5.1': 'LENS-Haiku 4.5-A*',
+    'claude_afg_v5.1': 'LENS-Haiku 4.5-A',
     'ablation_no_afg': 'LENS-Haiku 4.5-B',
     'ablation_no_react': 'LENS-Haiku 4.5-C',
     'opensource_afg_v11_5': 'LENS-GPT-OSS-A',
@@ -796,6 +796,13 @@
   function formatModelLabel(label) {
     if (!label || !label.startsWith('LENS-')) return label;
     return `<span class="lens-mark">${label}</span>`;
+  }
+
+  function formatOverviewModelLabel(condKey, label) {
+    if (condKey === 'claude_afg_v5.1' && label === 'LENS-Haiku 4.5-A') {
+      return formatModelLabel('LENS-Haiku 4.5-A*');
+    }
+    return formatModelLabel(label);
   }
 
   // ─── Filter ───
@@ -1348,7 +1355,7 @@
 
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td class="cond-name">${formatModelLabel(cond.label)}</td>
+        <td class="cond-name">${formatOverviewModelLabel(condKey, cond.label)}</td>
         <td><span class="badge ${badgeClass}">${cond.group}</span></td>
         <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg) || '--'}</td>
         <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg) || '--'}</td>

@@ -93,17 +93,10 @@
 
         /* Left: Section navigation */
         .nav-panel {
-            width: 220px; background: white; border-right: 1px solid #e0e0e0;
+            width: 210px; background: white; border-right: 1px solid #e0e0e0;
             overflow-y: auto; transition: width 0.2s; position: relative;
         }
         .nav-panel-body { padding: 8px 0 18px; }
-
-        .panel-toggle {
-            position: absolute; top: 8px; right: 8px; z-index: 5;
-            border: 1px solid #d1d5db; background: #fff; color: #374151;
-            border-radius: 6px; font-size: 11px;
-            width: 22px; height: 22px; line-height: 20px; cursor: pointer;
-        }
         .panel-head {
             min-height: 48px; padding: 10px 16px; border-bottom: 1px solid #f3f4f6; background: #fafafa;
             display: flex; flex-direction: column; justify-content: center;
@@ -152,11 +145,9 @@
 
         /* ─── RIGHT: Source panel (replaces old citation cards) ─── */
         .source-panel {
-            width: 430px; background: white; border-left: 1px solid #e0e0e0;
+            width: 360px; background: white; border-left: 1px solid #e0e0e0;
             display: flex; flex-direction: column; transition: width 0.2s; position: relative;
         }
-
-        .source-toggle { left: 8px; right: auto; }
 
         .source-panel-header {
             min-height: 48px; padding: 10px 16px; border-bottom: 1px solid #f3f4f6;
@@ -262,8 +253,8 @@
             .toolbar h1 { font-size: 15px; }
             .toolbar .condition-select { min-width: 140px; font-size: 13px; }
             .toolbar .condition-label { font-size: 13px; }
-            .nav-panel { width: 200px; }
-            .source-panel { width: 360px; }
+            .nav-panel { width: 190px; }
+            .source-panel { width: 300px; }
         }
 
         @media (max-width: 768px) {
@@ -349,7 +340,6 @@
             body.source-collapsed .source-panel-header,
             body.source-collapsed .source-list { display: block; }
 
-            .panel-toggle { display: none; }
             .content-panel { flex: 1; padding: 16px; overflow-y: auto; }
             .section-title { font-size: 16px; margin-bottom: 12px; }
             .section-content { font-size: 14px; line-height: 1.7; }
@@ -438,7 +428,6 @@
 
     <div class="main" style="margin-bottom: 36px;">
         <div class="nav-panel" id="navPanel">
-            <button class="panel-toggle" id="navToggle" title="收合章節">&#171;</button>
             <div class="panel-head">
                 <div class="panel-kicker">導覽</div>
                 <div class="panel-title">章節導航</div>
@@ -463,7 +452,6 @@
         </div>
         <div class="resizer" id="resizerRight"></div>
         <div class="source-panel" id="sourcePanel">
-            <button class="panel-toggle source-toggle" id="sourceToggle" title="收合原文">&#187;</button>
             <div class="source-panel-header">
                 <div class="icon">&#128196;</div>
                 原始判決書
@@ -776,32 +764,6 @@
 
         // ─── PANEL TOGGLES ───
 
-        function clearAllPanelInlineWidths() {
-            // Clear ALL inline widths so CSS flex layout takes over
-            document.querySelectorAll('.main > *:not(.resizer)').forEach(el => {
-                el.style.width = '';
-                el.style.flex = '';
-            });
-            try {
-                localStorage.removeItem(PANEL_WIDTHS_STORAGE_KEY);
-                localStorage.removeItem('viewPanelWidths');
-            } catch {}
-        }
-
-        function toggleNavPanel() {
-            document.body.classList.toggle('nav-collapsed');
-            clearAllPanelInlineWidths();
-            const btn = document.getElementById('navToggle');
-            if (btn) btn.textContent = document.body.classList.contains('nav-collapsed') ? '»' : '«';
-        }
-
-        function toggleSourcePanel() {
-            document.body.classList.toggle('source-collapsed');
-            clearAllPanelInlineWidths();
-            const btn = document.getElementById('sourceToggle');
-            if (btn) btn.textContent = document.body.classList.contains('source-collapsed') ? '«' : '»';
-        }
-
         function updateUrlState() {
             const url = new URL(window.location.href);
             url.searchParams.set('case', currentCaseName);
@@ -880,8 +842,6 @@
         window.closeMobileDrawer = closeMobileDrawer;
 
         // ─── Resizable panels ───
-        const PANEL_WIDTHS_STORAGE_KEY = 'viewPanelWidths_v2';
-
         function initResizers() {
             document.querySelectorAll('.resizer').forEach(resizer => {
                 const onPointerDown = (startEvt) => {
@@ -914,13 +874,12 @@
                         document.removeEventListener('mouseup', onUp);
                         document.removeEventListener('touchmove', onMove);
                         document.removeEventListener('touchend', onUp);
-                        // Save widths to localStorage
                         try {
                             const widths = {};
                             document.querySelectorAll('.main > *:not(.resizer)').forEach(el => {
                                 if (el.id) widths[el.id] = el.style.width;
                             });
-                            localStorage.setItem(PANEL_WIDTHS_STORAGE_KEY, JSON.stringify(widths));
+                            localStorage.setItem('viewPanelWidths', JSON.stringify(widths));
                         } catch {}
                     };
 
@@ -934,9 +893,8 @@
                 resizer.addEventListener('touchstart', onPointerDown, { passive: false });
             });
 
-            // Restore saved widths
             try {
-                const saved = JSON.parse(localStorage.getItem(PANEL_WIDTHS_STORAGE_KEY));
+                const saved = JSON.parse(localStorage.getItem('viewPanelWidths'));
                 if (saved) {
                     Object.entries(saved).forEach(([id, w]) => {
                         const el = document.getElementById(id);
@@ -946,12 +904,8 @@
             } catch {}
         }
 
-        // Init source panel toggle + resizers
+        // Init resizers
         document.addEventListener('DOMContentLoaded', () => {
-            const stBtn = document.getElementById('sourceToggle');
-            if (stBtn) stBtn.addEventListener('click', toggleSourcePanel);
-            const ntBtn = document.getElementById('navToggle');
-            if (ntBtn) ntBtn.addEventListener('click', toggleNavPanel);
             initResizers();
         });
 
