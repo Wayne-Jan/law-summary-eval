@@ -189,6 +189,53 @@
       border-radius: 6px; margin-bottom: 14px;
     }
 
+    /* ─── BOOKS ─── */
+    .books-section { background: var(--slate-50); }
+    .books-row {
+      display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+      max-width: 900px; margin: 0 auto;
+    }
+    .book-card {
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+      text-decoration: none; color: inherit;
+      transition: transform 0.3s ease;
+    }
+    .book-card:hover { transform: translateY(-6px); }
+    .book-cover {
+      width: 180px; height: auto; border-radius: 4px;
+      box-shadow:
+        0 4px 6px rgba(0,0,0,0.07),
+        0 12px 28px rgba(0,0,0,0.12),
+        -4px 2px 12px rgba(0,0,0,0.06);
+      transition: box-shadow 0.3s ease;
+    }
+    .book-card:hover .book-cover {
+      box-shadow:
+        0 8px 16px rgba(0,0,0,0.1),
+        0 20px 48px rgba(0,0,0,0.18),
+        -6px 4px 20px rgba(0,0,0,0.08);
+    }
+    .book-meta { text-align: center; }
+    .book-vol {
+      font-family: var(--serif); font-size: 15px; font-weight: 700;
+      color: var(--slate-900); margin-bottom: 4px;
+    }
+    .book-stats {
+      font-size: 12px; color: var(--slate-500); line-height: 1.7;
+    }
+    .book-publisher {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; color: var(--indigo); font-weight: 500;
+      margin-top: 6px; opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .book-card:hover .book-publisher { opacity: 1; }
+    .books-footer {
+      text-align: center; margin-top: 48px;
+      font-size: 13px; color: var(--slate-500); line-height: 1.9;
+    }
+    .books-footer strong { color: var(--slate-700); font-weight: 600; }
+
     /* ─── NUMBERS ─── */
     .section.dark {
       background: var(--slate-900); padding: 80px 24px;
@@ -300,6 +347,8 @@
 
     /* ─── TABLET (≤1024px) ─── */
     @media (max-width: 1024px) {
+      .books-row { gap: 36px; }
+      .book-cover { width: 160px; }
       .section { padding: 64px 20px; }
       .feat { gap: 32px; }
       .feat-text h3 { font-size: 20px; }
@@ -313,6 +362,9 @@
 
     /* ─── MOBILE (≤768px) ─── */
     @media (max-width: 768px) {
+      .books-row { gap: 32px; }
+      .book-cover { width: 140px; }
+      .book-publisher { opacity: 1; }
       .nav { padding: 0 16px; gap: 12px; }
       .nav a:not(.nav-cta) { display: none; }
       .nav-cta { padding: 6px 14px; font-size: 11px; }
@@ -385,6 +437,7 @@
   <span class="nav-logo">LegalSummary Eval</span>
   <span class="nav-spacer"></span>
   <a href="#why">平台說明</a>
+  <a href="#books">資料來源</a>
   <a href="#cases">案件列表</a>
   <a href="timeline.html">時間軸檢視</a>
   <a href="view.html">摘要檢視</a>
@@ -457,6 +510,54 @@
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- BOOKS -->
+<section class="section books-section" id="books">
+  <div class="reveal">
+    <div class="section-label">資料來源</div>
+    <div class="section-title">醫療過失刑事判決選集</div>
+    <p class="section-desc">蔡惠芳、蘇宜成、陳惠芬 著，興大法學叢書，五南出版</p>
+  </div>
+  <div class="books-row reveal">
+    <a class="book-card" href="https://www.wunan.com.tw/bookdetail?NO=16478" target="_blank" rel="noopener">
+      <img class="book-cover" src="醫療過失刑事判決選集(上).gif" alt="醫療過失刑事判決選集（上）">
+      <div class="book-meta">
+        <div class="book-vol">上冊</div>
+        <div class="book-stats">40 案 · 中位數 6,279 字</div>
+        <div class="book-publisher">
+          五南書店
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 3h8v8"/><path d="M13 3L3 13"/></svg>
+        </div>
+      </div>
+    </a>
+    <a class="book-card" href="https://www.wunan.com.tw/bookdetail?NO=17058" target="_blank" rel="noopener">
+      <img class="book-cover" src="醫療過失刑事判決選集(中).gif" alt="醫療過失刑事判決選集（中）">
+      <div class="book-meta">
+        <div class="book-vol">中冊</div>
+        <div class="book-stats">30 案 · 中位數 11,732 字</div>
+        <div class="book-publisher">
+          五南書店
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 3h8v8"/><path d="M13 3L3 13"/></svg>
+        </div>
+      </div>
+    </a>
+    <a class="book-card" href="https://www.wunan.com.tw/bookdetail?NO=17353" target="_blank" rel="noopener">
+      <img class="book-cover" src="醫療過失刑事判決選集(下).gif" alt="醫療過失刑事判決選集（下）">
+      <div class="book-meta">
+        <div class="book-vol">下冊</div>
+        <div class="book-stats">30 案 · 中位數 11,845 字</div>
+        <div class="book-publisher">
+          五南書店
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 3h8v8"/><path d="M13 3L3 13"/></svg>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="books-footer reveal">
+    本平台所有判決原文與教師參考摘要均來自上述三冊選集，<br>
+    涵蓋 <strong>100 件</strong>醫療糾紛刑事判決，原文總字數逾 <strong>110 萬字</strong>。
   </div>
 </section>
 
