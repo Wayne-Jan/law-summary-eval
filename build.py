@@ -5,6 +5,12 @@ Outputs JSON in the EXACT same format as /api/view/{case} returns,
 so the frontend HTML can be copied from viz/static/view.html with
 minimal changes (only swap fetch URLs to static paths).
 
+Incremental rebuilds are optimized for the common case where only a
+small number of eval results change: we reuse already-parsed chunk data
+within each case and only rewrite JSON files whose serialized payload
+actually changed. That keeps rebuilds faster and avoids dirtying the
+entire static bundle on every run.
+
 All output filenames use ASCII slugs (case_001, case_002, ...) to avoid
 GitHub Pages issues with non-ASCII filenames.
 
@@ -150,6 +156,22 @@ def read_json(path):
         return json.load(f)
 
 
+def write_json_if_changed(path, obj):
+    """Write JSON only when the serialized payload differs.
+
+    This keeps incremental rebuilds fast and preserves clean git diffs
+    when only a few cases change between runs.
+    """
+    payload = json.dumps(obj, ensure_ascii=False, indent=1)
+    if os.path.exists(path):
+        existing = read_text(path)
+        if existing == payload:
+            return False
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(payload)
+    return True
+
+
 def find_in_volumes(base_dir, relative_path):
     """Search for a file across all volume subdirectories."""
     for vol in VOLUMES:
@@ -259,6 +281,7 @@ def load_sections(case_dir):
 def load_chunks_for_case(case_name, case_dir, volume):
     """Build CH_XX -> content mapping, same logic as server.py."""
     chunks = {}
+    raw_chunks = None
 
     # 1. Try citations.txt (pre-built)
     citations_txt_path = os.path.join(case_dir, "citations.txt")
@@ -275,6 +298,18 @@ def load_chunks_for_case(case_name, case_dir, volume):
                 current_content.append(line)
         if current_alias and current_content:
             chunks[current_alias] = "\n".join(current_content).strip()
+
+    chunks_json_path = os.path.join(CHUNKS_DIR, volume, f"{case_name}.json")
+    if os.path.exists(chunks_json_path):
+        raw_chunks = read_json(chunks_json_path)
+        if isinstance(raw_chunks, list):
+            chunk_list = raw_chunks
+        elif isinstance(raw_chunks, dict):
+            chunk_list = raw_chunks.get("chunks", [])
+        else:
+            chunk_list = []
+    else:
+        chunk_list = []
 
     # 2. Build citations_map from meta/citations.json or chunk_alias_mapping
     citations_map = {}
@@ -294,10 +329,7 @@ def load_chunks_for_case(case_name, case_dir, volume):
                     citations_map[alias] = val
 
     # 3. Fallback: positional mapping from chunks JSON (volume-aware)
-    chunks_json_path = os.path.join(CHUNKS_DIR, volume, f"{case_name}.json")
-    if not citations_map and os.path.exists(chunks_json_path):
-        raw = read_json(chunks_json_path)
-        chunk_list = raw if isinstance(raw, list) else raw.get("chunks", [])
+    if not citations_map and chunk_list:
         for idx, chunk in enumerate(chunk_list, start=1):
             alias = f"CH_{idx:02d}"
             chunk_id = chunk.get("chunk_id", "")
@@ -305,11 +337,9 @@ def load_chunks_for_case(case_name, case_dir, volume):
                 citations_map[alias] = chunk_id
 
     # 4. Fill missing chunks from raw chunks JSON
-    if citations_map and os.path.exists(chunks_json_path):
-        missing = set(citations_map.keys()) - set(chunks.keys())
+    if citations_map and chunk_list:
+        missing = sorted(set(citations_map.keys()) - set(chunks.keys()))
         if missing:
-            raw = read_json(chunks_json_path)
-            chunk_list = raw if isinstance(raw, list) else raw.get("chunks", [])
             id_to_content = {
                 c.get("chunk_id", ""): c.get("content", "") for c in chunk_list
             }
@@ -319,9 +349,7 @@ def load_chunks_for_case(case_name, case_dir, volume):
                     chunks[alias] = id_to_content[chunk_id]
 
     # 5. Last resort: if still no chunks, use positional content
-    if not chunks and os.path.exists(chunks_json_path):
-        raw = read_json(chunks_json_path)
-        chunk_list = raw if isinstance(raw, list) else raw.get("chunks", [])
+    if not chunks and chunk_list:
         for idx, chunk in enumerate(chunk_list, start=1):
             chunks[f"CH_{idx:02d}"] = chunk.get("content", "")
 
@@ -431,6 +459,8 @@ def parse_gt_sections(raw_text):
 
 def build():
     os.makedirs(SITE_DATA, exist_ok=True)
+    rewritten_outputs = 0
+    unchanged_outputs = 0
 
     # Collect all conditions and cases (volume-aware)
     # all_conditions: cond -> {case_name -> {"dir": case_dir, "volume": vol}}
@@ -588,8 +618,10 @@ def build():
 
             slug = case_slugs[case]
             out_path = os.path.join(cond_out_dir, slug + ".json")
-            with open(out_path, "w", encoding="utf-8") as f:
-                json.dump(view_data, f, ensure_ascii=False, indent=1)
+            if write_json_if_changed(out_path, view_data):
+                rewritten_outputs += 1
+            else:
+                unchanged_outputs += 1
 
         manifest_conditions[cond] = {
             "label": label,
@@ -601,8 +633,10 @@ def build():
 
     # Build cases list (same as /api/view-cases)
     cases_json_path = os.path.join(SITE_DATA, "cases.json")
-    with open(cases_json_path, "w", encoding="utf-8") as f:
-        json.dump(all_cases, f, ensure_ascii=False, indent=1)
+    if write_json_if_changed(cases_json_path, all_cases):
+        rewritten_outputs += 1
+    else:
+        unchanged_outputs += 1
 
     # Build GT data (same format as /api/view-gt/{case})
     if os.path.isdir(GT_SUMMARY_DIR):
@@ -624,10 +658,11 @@ def build():
                 ],
             }
             slug = case_slugs[gt_case]
-            with open(
-                os.path.join(gt_out_dir, slug + ".json"), "w", encoding="utf-8"
-            ) as f:
-                json.dump(gt_data, f, ensure_ascii=False, indent=1)
+            gt_path = os.path.join(gt_out_dir, slug + ".json")
+            if write_json_if_changed(gt_path, gt_data):
+                rewritten_outputs += 1
+            else:
+                unchanged_outputs += 1
             gt_count += 1
         print(f"  {'_gt (teacher summaries)':45s}  {gt_count:3d} cases")
 
@@ -707,10 +742,11 @@ def build():
                     case_slugs[case_name] = slug
                     next_idx += 1
                     case_volumes[case_name] = vol
-                with open(
-                    os.path.join(tl_out_dir, slug + ".json"), "w", encoding="utf-8"
-                ) as f:
-                    json.dump(tl_data, f, ensure_ascii=False, indent=1)
+                tl_path = os.path.join(tl_out_dir, slug + ".json")
+                if write_json_if_changed(tl_path, tl_data):
+                    rewritten_outputs += 1
+                else:
+                    unchanged_outputs += 1
                 tl_count += 1
 
     print(f"  {'timeline (extraction v3.9 only)':45s}  {tl_count:3d} cases  ({tl_realign_count} spans realigned)")
@@ -762,8 +798,10 @@ def build():
         "case_info": case_info,
         "volumes": VOLUMES,
     }
-    with open(os.path.join(SITE_DATA, "manifest.json"), "w", encoding="utf-8") as f:
-        json.dump(manifest, f, ensure_ascii=False, indent=1)
+    if write_json_if_changed(os.path.join(SITE_DATA, "manifest.json"), manifest):
+        rewritten_outputs += 1
+    else:
+        unchanged_outputs += 1
 
     total = sum(c["case_count"] for c in manifest_conditions.values())
     vol_counts = {}
@@ -773,6 +811,9 @@ def build():
     vol_summary = ", ".join(f"{v}:{vol_counts.get(v, 0)}" for v in VOLUMES)
     print(
         f"\n  Total: {len(manifest_conditions)} conditions, {len(all_cases)} cases ({vol_summary}), {total} data files"
+    )
+    print(
+        f"  Rewritten: {rewritten_outputs} files, unchanged skipped: {unchanged_outputs}"
     )
 
 
