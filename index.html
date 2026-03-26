@@ -163,32 +163,6 @@
       max-width: 520px; margin: 0 auto 52px; line-height: 1.8;
     }
 
-    /* ─── FEATURE CARDS (image + text side by side) ─── */
-    .features { max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; gap: 64px; }
-
-    .feat {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
-    }
-    .feat.reverse { direction: rtl; }
-    .feat.reverse > * { direction: ltr; }
-
-    .feat-img {
-      border-radius: 16px; overflow: hidden; aspect-ratio: 4/3;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.1);
-    }
-    .feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    .feat-text h3 {
-      font-family: var(--serif); font-size: 24px; font-weight: 700;
-      color: var(--slate-900); margin-bottom: 12px; letter-spacing: -0.3px;
-    }
-    .feat-text p { font-size: 14px; color: var(--slate-500); line-height: 1.9; }
-    .feat-text .feat-tag {
-      display: inline-block; font-size: 11px; font-weight: 600;
-      color: var(--indigo); background: #eef2ff; padding: 4px 12px;
-      border-radius: 6px; margin-bottom: 14px;
-    }
-
     /* ─── BOOKS ─── */
     .books-section { background: var(--slate-50); }
     .books-row {
@@ -350,9 +324,6 @@
       .books-row { gap: 36px; }
       .book-cover { width: 160px; }
       .section { padding: 64px 20px; }
-      .feat { gap: 32px; }
-      .feat-text h3 { font-size: 20px; }
-      .features { gap: 48px; }
       .hero-stats { gap: 28px; }
       .hero-stat-value { font-size: 28px; }
       .cn { max-width: 280px; }
@@ -365,6 +336,7 @@
       .books-row { gap: 32px; }
       .book-cover { width: 140px; }
       .book-publisher { opacity: 1; }
+      .books-footer br { display: none; }
       .nav { padding: 0 16px; gap: 12px; }
       .nav a:not(.nav-cta) { display: none; }
       .nav-cta { padding: 6px 14px; font-size: 11px; }
@@ -387,12 +359,6 @@
       .section-title { font-size: clamp(20px, 5vw, 28px); }
       .section-desc { font-size: 13px; margin-bottom: 32px; }
 
-      .feat { grid-template-columns: 1fr; gap: 20px; }
-      .feat.reverse { direction: ltr; }
-      .feat-img { aspect-ratio: 16/9; }
-      .feat-text h3 { font-size: 18px; }
-      .feat-text p { font-size: 13px; }
-
       .section.dark { padding: 48px 16px; }
       .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 12px; }
       .num-item { min-height: 144px; padding: 22px 12px 18px; }
@@ -414,6 +380,8 @@
 
     /* ─── SMALL PHONE (≤480px) ─── */
     @media (max-width: 480px) {
+      .books-row { gap: 24px; }
+      .book-cover { width: 120px; }
       .hero { min-height: auto; }
       .hero-content { width: min(100%, calc(100vw - 20px)); padding: 88px 0 48px; }
       .hero h1 { font-size: 24px; letter-spacing: -0.5px; }
@@ -436,7 +404,6 @@
 <nav class="nav">
   <span class="nav-logo">LegalSummary Eval</span>
   <span class="nav-spacer"></span>
-  <a href="#why">關於</a>
   <a href="timeline.html">時間軸檢視</a>
   <a href="view.html">摘要檢視</a>
   <a href="eval.html">專家評估</a>
@@ -451,8 +418,8 @@
     <div class="hero-badge"><span class="dot"></span>醫療糾紛 · 刑事判決書 · 自動摘要</div>
     <h1>讓每一份判決書<br>都能被<span class="accent">準確理解</span></h1>
     <p class="hero-sub">
-      100 件醫療糾紛刑事判決，20 種模型摘要，<br>
-      逐案對照原文、教師參考摘要、引用來源與專家評分。
+      100 件醫療糾紛刑事判決，24 種模型與條件組合，<br>
+      涵蓋 Claude、GPT、Gemini 及 8 種開源模型，逐案比較摘要品質。
     </p>
     <div class="hero-actions">
       <a href="#cases" class="btn btn-primary">瀏覽案件</a>
@@ -463,51 +430,6 @@
   <div class="scroll-hint">
     往下瀏覽
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 7l4 4 4-4"/></svg>
-  </div>
-</section>
-
-<!-- WHY -->
-<section class="section" id="why">
-  <div class="reveal">
-    <div class="section-label">平台說明</div>
-    <div class="section-title">為什麼需要這個平台</div>
-    <p class="section-desc">醫療糾紛判決同時涉及就醫時序、法律論證與鑑定意見，一般摘要很難兼顧。這裡把原文、參考摘要和模型輸出並排，讓品質差異一目了然。</p>
-  </div>
-  <div class="features">
-
-    <div class="feat reveal">
-      <div class="feat-img">
-        <img src="https://images.unsplash.com/photo-1505751172876-fa1923c5c528?w=800&q=80" alt="醫療場景">
-      </div>
-      <div class="feat-text">
-        <span class="feat-tag">問題</span>
-        <h3>萬字判決書，<br>醫療人員如何消化？</h3>
-        <p>一份判決書涵蓋就醫過程、醫療處置、鑑定意見、法院認定與量刑理由。摘要如果遺漏關鍵時序、誤述專業術語，或把論證簡化成結論，讀者就可能被誤導。</p>
-      </div>
-    </div>
-
-    <div class="feat reverse reveal">
-      <div class="feat-img">
-        <img src="https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&q=80" alt="法律文件">
-      </div>
-      <div class="feat-text">
-        <span class="feat-tag">挑戰</span>
-        <h3>醫學術語 × 法律概念<br>跨領域的理解門檻</h3>
-        <p>醫療常規、注意義務、相當因果關係——這些概念同時橫跨醫學與法律兩個專業領域。正確的摘要需要準確理解雙方的專業語境，不容許任何事實上的偏差。</p>
-      </div>
-    </div>
-
-    <div class="feat reveal">
-      <div class="feat-img">
-        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="數據分析">
-      </div>
-      <div class="feat-text">
-        <span class="feat-tag">解決方案</span>
-        <h3>系統化評估，<br>客觀衡量摘要品質</h3>
-        <p>由老師親手撰寫的標準摘要作為評分依據，逐項比對各家語言模型的自動摘要——事實有沒有寫對、原文有沒有引對、文字讀不讀得通，全部攤開來看，找出真正能用的摘要方案。</p>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -554,7 +476,7 @@
     </a>
   </div>
   <div class="books-footer reveal">
-    本平台所有判決原文與教師參考摘要均來自上述三冊選集，<br>
+    本平台所有判決原文均來自上述三冊選集，<br>
     涵蓋 <strong>100 件</strong>醫療糾紛刑事判決，原文總字數逾 <strong>110 萬字</strong>。
   </div>
 </section>
@@ -563,7 +485,7 @@
 <section class="section dark" id="data">
   <div class="reveal">
     <div class="section-label">資料規模</div>
-    <div class="section-title">大規模系統化比較</div>
+    <div class="section-title">平台數據</div>
   </div>
   <div class="numbers reveal" id="numbers"></div>
 </section>
@@ -573,7 +495,7 @@
   <div class="reveal">
     <div class="section-label">案件列表</div>
     <div class="section-title">選擇案件開始閱讀</div>
-    <p class="section-desc">點選任一案件，比較各模型的摘要結果與老師摘要。</p>
+    <p class="section-desc">點選任一案件，比較各模型的摘要結果。</p>
   </div>
   <div class="reveal">
     <div class="filter-row">
