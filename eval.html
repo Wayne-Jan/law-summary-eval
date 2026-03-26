@@ -2362,8 +2362,17 @@ function showTLEventSource(idx) {
     el.classList.toggle('active', parseInt(el.dataset.idx) === idx);
   });
 
-  // Clear previous highlights (only event marks, NOT chunk-region.active)
+  // Clear previous highlights
+  document.querySelectorAll('#tlSourceBody .chunk-region.active').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('#tlSourceBody .tl-evt-highlight.active').forEach(el => el.classList.remove('active'));
+
+  // Find the chunk containing this event and activate it
+  const chunk = findTLChunkForEvent(evt);
+  if (chunk) {
+    const cid = chunk.chunk_id || '';
+    const regionEl = document.getElementById('tl_chunk_' + cid);
+    if (regionEl) regionEl.classList.add('active');
+  }
 
   // Highlight only the specific event's marks across all chunks
   const evtMarks = document.querySelectorAll(`#tlSourceBody .tl-evt-highlight[data-evt="${idx}"]`);
