@@ -146,6 +146,34 @@
     }
     .scroll-hint svg { display: block; margin: 3px auto 0; }
 
+    /* ─── FEATURES (WHY) ─── */
+    .features { max-width: 960px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
+
+    .feat {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    .feat.reverse { direction: rtl; }
+    .feat.reverse > * { direction: ltr; }
+
+    .feat-illust {
+      display: flex; align-items: center; justify-content: center;
+      aspect-ratio: 4/3; border-radius: 20px;
+      background: var(--slate-50);
+      border: 1px solid #e2e8f0;
+    }
+    .feat-illust svg { width: 60%; height: auto; }
+
+    .feat-text h3 {
+      font-family: var(--serif); font-size: 24px; font-weight: 700;
+      color: var(--slate-900); margin-bottom: 12px; letter-spacing: -0.3px;
+    }
+    .feat-text p { font-size: 14px; color: var(--slate-500); line-height: 1.9; }
+    .feat-text .feat-tag {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      color: var(--indigo); background: #eef2ff; padding: 4px 12px;
+      border-radius: 6px; margin-bottom: 14px;
+    }
+
     /* ─── SHARED SECTION ─── */
     .section { padding: 96px 24px; }
     .section-label {
@@ -324,6 +352,7 @@
       .books-row { gap: 36px; }
       .book-cover { width: 160px; }
       .section { padding: 64px 20px; }
+      .features { gap: 48px; }
       .hero-stats { gap: 28px; }
       .hero-stat-value { font-size: 28px; }
       .cn { max-width: 280px; }
@@ -337,6 +366,11 @@
       .book-cover { width: 140px; }
       .book-publisher { opacity: 1; }
       .books-footer br { display: none; }
+      .feat { grid-template-columns: 1fr; gap: 20px; }
+      .feat.reverse { direction: ltr; }
+      .feat-illust { aspect-ratio: 16/9; }
+      .feat-text h3 { font-size: 18px; }
+      .feat-text p { font-size: 13px; }
       .nav { padding: 0 16px; gap: 12px; }
       .nav a:not(.nav-cta) { display: none; }
       .nav-cta { padding: 6px 14px; font-size: 11px; }
@@ -430,6 +464,118 @@
   <div class="scroll-hint">
     往下瀏覽
     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 7l4 4 4-4"/></svg>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="section" id="why">
+  <div class="reveal">
+    <div class="section-label">研究背景</div>
+    <div class="section-title">為什麼需要這個平台</div>
+    <p class="section-desc">醫療糾紛判決同時涉及就醫時序、法律論證與鑑定意見，一般摘要很難兼顧。這裡把原文、參考摘要和模型輸出並排，讓品質差異一目了然。</p>
+  </div>
+  <div class="features">
+
+    <div class="feat reveal">
+      <div class="feat-illust">
+        <!-- 萬字判決書：堆疊文件 -->
+        <svg viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- stacked pages -->
+          <rect x="52" y="28" width="120" height="148" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5"/>
+          <rect x="60" y="20" width="120" height="148" rx="6" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+          <rect x="68" y="12" width="120" height="148" rx="6" fill="#fff" stroke="#94a3b8" stroke-width="1.5"/>
+          <!-- text lines -->
+          <line x1="84" y1="36" x2="172" y2="36" stroke="#cbd5e1" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="48" x2="164" y2="48" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="60" x2="170" y2="60" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="72" x2="152" y2="72" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="84" x2="168" y2="84" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="96" x2="148" y2="96" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="108" x2="172" y2="108" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="120" x2="156" y2="120" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+          <line x1="84" y1="132" x2="140" y2="132" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
+          <!-- word count badge -->
+          <rect x="138" y="140" width="54" height="22" rx="11" fill="#4f46e5" opacity="0.12"/>
+          <text x="165" y="155" text-anchor="middle" font-family="system-ui" font-size="10" font-weight="600" fill="#4f46e5">10,000+</text>
+        </svg>
+      </div>
+      <div class="feat-text">
+        <span class="feat-tag">問題</span>
+        <h3>萬字判決書，<br>醫療人員如何消化？</h3>
+        <p>一份判決書涵蓋就醫過程、醫療處置、鑑定意見、法院認定與量刑理由。摘要如果遺漏關鍵時序、誤述專業術語，或把論證簡化成結論，讀者就可能被誤導。</p>
+      </div>
+    </div>
+
+    <div class="feat reverse reveal">
+      <div class="feat-illust">
+        <!-- 醫學×法律：交叉圓 -->
+        <svg viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- medical circle -->
+          <circle cx="96" cy="90" r="56" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.5"/>
+          <!-- legal circle -->
+          <circle cx="144" cy="90" r="56" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5" opacity="0.85"/>
+          <!-- overlap tint -->
+          <path d="M120 42.5a56 56 0 0 1 0 95 56 56 0 0 1 0-95Z" fill="#4f46e5" opacity="0.08"/>
+          <!-- medical cross -->
+          <rect x="82" y="78" width="28" height="4" rx="2" fill="#6366f1"/>
+          <rect x="94" y="66" width="4" height="28" rx="2" fill="#6366f1"/>
+          <!-- legal scale -->
+          <circle cx="156" cy="78" r="2.5" fill="#059669"/>
+          <line x1="144" y1="96" x2="168" y2="96" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="156" y1="78" x2="156" y2="96" stroke="#059669" stroke-width="1.5"/>
+          <line x1="144" y1="96" x2="140" y2="104" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="168" y1="96" x2="172" y2="104" stroke="#059669" stroke-width="1.5" stroke-linecap="round"/>
+          <path d="M134 104a6 6 0 0 0 12 0" stroke="#059669" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M166 104a6 6 0 0 0 12 0" stroke="#059669" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <!-- labels -->
+          <text x="78" y="124" font-family="system-ui" font-size="10" font-weight="500" fill="#6366f1">醫學</text>
+          <text x="152" y="124" font-family="system-ui" font-size="10" font-weight="500" fill="#059669">法律</text>
+        </svg>
+      </div>
+      <div class="feat-text">
+        <span class="feat-tag">挑戰</span>
+        <h3>醫學術語 × 法律概念<br>跨領域的理解門檻</h3>
+        <p>醫療常規、注意義務、相當因果關係——這些概念同時橫跨醫學與法律兩個專業領域。正確的摘要需要準確理解雙方的專業語境，不容許任何事實上的偏差。</p>
+      </div>
+    </div>
+
+    <div class="feat reveal">
+      <div class="feat-illust">
+        <!-- 系統化評估：量表 dashboard -->
+        <svg viewBox="0 0 240 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- card bg -->
+          <rect x="32" y="20" width="176" height="140" rx="12" fill="#fff" stroke="#e2e8f0" stroke-width="1.5"/>
+          <!-- header bar -->
+          <rect x="32" y="20" width="176" height="32" rx="12" fill="#f8fafc"/>
+          <rect x="32" y="40" width="176" height="12" fill="#f8fafc"/>
+          <circle cx="50" cy="36" r="4" fill="#e2e8f0"/>
+          <circle cx="62" cy="36" r="4" fill="#e2e8f0"/>
+          <circle cx="74" cy="36" r="4" fill="#e2e8f0"/>
+          <!-- metric bars -->
+          <text x="48" y="72" font-family="system-ui" font-size="8" fill="#94a3b8">事實正確</text>
+          <rect x="96" y="65" width="96" height="10" rx="5" fill="#f1f5f9"/>
+          <rect x="96" y="65" width="82" height="10" rx="5" fill="#4f46e5" opacity="0.7"/>
+          <text x="48" y="92" font-family="system-ui" font-size="8" fill="#94a3b8">引用忠實</text>
+          <rect x="96" y="85" width="96" height="10" rx="5" fill="#f1f5f9"/>
+          <rect x="96" y="85" width="74" height="10" rx="5" fill="#818cf8" opacity="0.7"/>
+          <text x="48" y="112" font-family="system-ui" font-size="8" fill="#94a3b8">結構完整</text>
+          <rect x="96" y="105" width="96" height="10" rx="5" fill="#f1f5f9"/>
+          <rect x="96" y="105" width="88" height="10" rx="5" fill="#6366f1" opacity="0.7"/>
+          <text x="48" y="132" font-family="system-ui" font-size="8" fill="#94a3b8">可讀性</text>
+          <rect x="96" y="125" width="96" height="10" rx="5" fill="#f1f5f9"/>
+          <rect x="96" y="125" width="90" height="10" rx="5" fill="#a5b4fc" opacity="0.7"/>
+          <!-- checkmark -->
+          <circle cx="192" cy="148" r="10" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1"/>
+          <path d="M187 148l3 3 5-6" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="feat-text">
+        <span class="feat-tag">解決方案</span>
+        <h3>系統化評估，<br>客觀衡量摘要品質</h3>
+        <p>由老師親手撰寫的標準摘要作為評分依據，逐項比對各家語言模型的自動摘要——事實有沒有寫對、原文有沒有引對、文字讀不讀得通，全部攤開來看，找出真正能用的摘要方案。</p>
+      </div>
+    </div>
+
   </div>
 </section>
 
