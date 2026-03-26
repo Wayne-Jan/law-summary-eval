@@ -282,6 +282,22 @@
       font-size: 14px; line-height: 1.7; color: var(--slate-500);
       max-width: 820px;
     }
+    .panel-note {
+      margin-top: 10px;
+      max-width: 900px;
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--slate-500);
+    }
+    .panel-note code {
+      font-family: var(--mono);
+      font-size: 11px;
+      background: var(--slate-100);
+      color: var(--slate-700);
+      border: 1px solid #e5e7eb;
+      border-radius: 999px;
+      padding: 2px 7px;
+    }
 
     /* ─── MODEL CARDS ─── */
     .model-card-grid {
@@ -506,6 +522,9 @@
       <div class="panel-kicker">整體比較</div>
       <div class="panel-title">同一冊別下的整體表現比較</div>
       <div class="panel-desc">用表格做精確比較最適合看排序、缺值與樣本數。這裡聚焦各模型在目前冊別下的整體指標，方便直接橫向比較。</div>
+      <div class="panel-note">
+        <code>LENS-P*</code> 為 proprietary family，generation backend 使用 Claude Haiku 4.5。<code>LENS-OA*</code> 與 <code>LENS-OB*</code> 為兩組 open-source writer families，分別對應 GPT-OSS 與 Nemotron Super。
+      </div>
     </div>
     <div class="overview-table-wrap">
       <table class="overview-table" id="overviewTable">
@@ -752,11 +771,30 @@
   let currentVolume = '上冊';
   let currentMainTab = 'overview';
   let currentModelDetail = null;
+  const METRICS_DISPLAY_LABELS = {
+    'claude_afg_v5.1': 'LENS-P1',
+    'ablation_no_afg': 'LENS-P2',
+    'ablation_no_react': 'LENS-P3',
+    'opensource_afg_v11_5': 'LENS-OA1',
+    'opensource_afg_v11_5_no_react': 'LENS-OA2',
+    'opensource_afg_v11_5_no_afg': 'LENS-OA3',
+    'opensource_afg_v11_5_writer_nemotron_super': 'LENS-OB1',
+    'opensource_afg_v11_5_no_react_writer_nemotron_super': 'LENS-OB2',
+    'opensource_afg_v11_5_no_afg_writer_nemotron_super': 'LENS-OB3'
+  };
   const VOLUME_DATA_FILES = {
     '上冊': 'data/eval_metrics_upper.json',
     '中冊': 'data/eval_metrics_middle.json',
     '下冊': 'data/eval_metrics_lower.json',
   };
+
+  function applyMetricsDisplayLabels(data) {
+    if (!data || !data.conditions) return data;
+    for (const [condKey, cond] of Object.entries(data.conditions)) {
+      if (METRICS_DISPLAY_LABELS[condKey]) cond.label = METRICS_DISPLAY_LABELS[condKey];
+    }
+    return data;
+  }
 
   // ─── Filter ───
   window.setFilter = function(filter) {
@@ -1609,7 +1647,7 @@
       fetch('data/manifest.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
     ])
       .then(([data, manifest]) => {
-        DATA = data;
+        DATA = applyMetricsDisplayLabels(data);
         CASE_INFO = (manifest && manifest.case_info) || {};
         buildOverview();
         buildCaseSelector();
