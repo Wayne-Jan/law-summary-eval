@@ -556,7 +556,19 @@ def build():
             eval_scores = (
                 extract_eval_summary(eval_dir) if os.path.isdir(eval_dir) else None
             )
+            has_llm = False
             if eval_scores:
+                q = eval_scores.get("quality")
+                if isinstance(q, (int, float)):
+                    has_llm = True
+                elif isinstance(q, dict):
+                    # Various report.json formats: .avg, .overall_quality, .overall (float)
+                    ov = q.get("avg") or q.get("overall_quality") or q.get("overall")
+                    if ov is not None:
+                        has_llm = True
+                elif eval_scores.get("quality_avg") is not None:
+                    has_llm = True
+            if has_llm:
                 eval_count += 1
 
             view_data = {

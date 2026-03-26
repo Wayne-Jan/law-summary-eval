@@ -262,7 +262,9 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
     if rouge_avg:
         payload["averages"]["rouge_bertscore"] = rouge_avg
         payload["averages"]["rouge_bertscore_n"] = rouge_n
-    payload["eval_count"] = len(raw_cases)
+    llm_count = sum(1 for _, c in raw_cases if c["quality"].get("avg") is not None)
+    payload["eval_count"] = llm_count
+    payload["total_cases"] = len(raw_cases)
     return payload
 
 
