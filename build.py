@@ -23,7 +23,9 @@ Usage:
 
 import json
 import os
+import hashlib
 import re
+import tempfile
 import sys
 from pathlib import Path
 
@@ -38,6 +40,13 @@ EXTRACTIONS_DIR_V39 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.9")
 SOURCE_TEXT_DIR = os.path.join(SOURCE_PROJECT, "原始判決書")
 GT_SUMMARY_DIR = os.path.join(SOURCE_PROJECT, "摘要 (ground_truth)")
 SITE_DATA = os.path.join(SCRIPT_DIR, "data")
+TIMELINE_ALIGN_CACHE_DIR = os.path.join(
+    tempfile.gettempdir(), "law-summary-eval-build-cache"
+)
+TIMELINE_ALIGN_CACHE_PATH = os.path.join(
+    TIMELINE_ALIGN_CACHE_DIR, "timeline_align_cache.json"
+)
+TIMELINE_ALIGN_CACHE_VERSION = 1
 
 VOLUMES = ["上冊", "中冊", "下冊"]
 
@@ -170,6 +179,43 @@ def write_json_if_changed(path, obj):
     with open(path, "w", encoding="utf-8") as f:
         f.write(payload)
     return True
+
+
+def load_timeline_align_cache():
+    """Load the local cache that stores aligned timeline events.
+
+    The cache lives outside the repo so rebuilds stay fast without
+    polluting git status. It is only an optimization: if the cache is
+    missing or stale, the build still works.
+    """
+    cache = read_json(TIMELINE_ALIGN_CACHE_PATH)
+    if not isinstance(cache, dict):
+        return {"version": TIMELINE_ALIGN_CACHE_VERSION, "cases": {}}
+    if cache.get("version") != TIMELINE_ALIGN_CACHE_VERSION:
+        return {"version": TIMELINE_ALIGN_CACHE_VERSION, "cases": {}}
+    cases = cache.get("cases", {})
+    if not isinstance(cases, dict):
+        cases = {}
+    return {"version": TIMELINE_ALIGN_CACHE_VERSION, "cases": cases}
+
+
+def save_timeline_align_cache(cache):
+    os.makedirs(TIMELINE_ALIGN_CACHE_DIR, exist_ok=True)
+    write_json_if_changed(TIMELINE_ALIGN_CACHE_PATH, cache)
+
+
+def fingerprint_event_texts(events):
+    """Hash the extraction texts that drive alignment.
+
+    If the source text and these texts stay the same, we can reuse the
+    previous alignment result without calling smart_align again.
+    """
+    h = hashlib.sha1()
+    for evt in events:
+        txt = (evt.get("extraction_text") or "").strip()
+        h.update(txt.encode("utf-8"))
+        h.update(b"\0")
+    return h.hexdigest()
 
 
 def find_in_volumes(base_dir, relative_path):
@@ -459,6 +505,8 @@ def parse_gt_sections(raw_text):
 
 def build():
     os.makedirs(SITE_DATA, exist_ok=True)
+    timeline_align_cache = load_timeline_align_cache()
+    timeline_align_cases = timeline_align_cache.setdefault("cases", {})
     rewritten_outputs = 0
     unchanged_outputs = 0
 
@@ -671,6 +719,8 @@ def build():
     os.makedirs(tl_out_dir, exist_ok=True)
     tl_count = 0
     tl_realign_count = 0
+    tl_cache_hits = 0
+    tl_cache_misses = 0
     extraction_dir = EXTRACTIONS_DIR_V39
     if not os.path.isdir(extraction_dir):
         print("  WARNING: extraction v3.9 directory not found, skipping timeline")
@@ -692,6 +742,50 @@ def build():
                 events = tl_result.get("timeline", tl_result.get("events", []))
                 if not events:
                     continue
+
+                cache_key = f"{vol}/{case_name}"
+                source_path = os.path.join(SOURCE_TEXT_DIR, vol, case_name + ".txt")
+                source_sig = None
+                if os.path.exists(source_path):
+                    st = os.stat(source_path)
+                    source_sig = f"{st.st_mtime_ns}:{st.st_size}"
+                text_sig = fingerprint_event_texts(events)
+                cached = timeline_align_cases.get(cache_key)
+                if (
+                    isinstance(cached, dict)
+                    and cached.get("source_sig") == source_sig
+                    and cached.get("text_sig") == text_sig
+                    and isinstance(cached.get("events"), list)
+                ):
+                    events = cached["events"]
+                    tl_realign_count += int(cached.get("realigned", 0) or 0)
+                    tl_cache_hits += 1
+                else:
+                    # Realign char_start/char_end using smart_align (volume-aware)
+                    if os.path.exists(source_path):
+                        source_text = open(source_path, encoding="utf-8").read()
+                        realigned = 0
+                        for evt in events:
+                            txt = (evt.get("extraction_text") or "").strip()
+                            if not txt:
+                                continue
+                            hit = smart_align(source_text, txt)
+                            if hit:
+                                evt["char_start"] = hit.start
+                                evt["char_end"] = hit.end
+                                realigned += 1
+                        if realigned:
+                            tl_realign_count = tl_realign_count + realigned
+                    else:
+                        realigned = 0
+                    timeline_align_cases[cache_key] = {
+                        "source_sig": source_sig,
+                        "text_sig": text_sig,
+                        "realigned": realigned,
+                        "events": events,
+                    }
+                    tl_cache_misses += 1
+
                 # Load chunks for this case (volume-aware)
                 chunk_path = os.path.join(CHUNKS_DIR, vol, case_name + ".json")
                 chunks_data = []
@@ -708,23 +802,6 @@ def build():
                             }
                             for c in raw_chunks
                         ]
-                # Realign char_start/char_end using smart_align (volume-aware)
-                source_path = os.path.join(SOURCE_TEXT_DIR, vol, case_name + ".txt")
-                if os.path.exists(source_path):
-                    source_text = open(source_path, encoding="utf-8").read()
-                    realigned = 0
-                    for evt in events:
-                        txt = (evt.get("extraction_text") or "").strip()
-                        if not txt:
-                            continue
-                        hit = smart_align(source_text, txt)
-                        if hit:
-                            evt["char_start"] = hit.start
-                            evt["char_end"] = hit.end
-                            realigned += 1
-                    if realigned:
-                        tl_realign_count = tl_realign_count + realigned
-
                 tl_summary = tl_result.get("timeline_summary", {})
                 time_gaps = tl_result.get("time_gaps", tl_summary.get("time_gaps", []))
                 tl_data = {
@@ -750,6 +827,7 @@ def build():
                 tl_count += 1
 
     print(f"  {'timeline (extraction v3.9 only)':45s}  {tl_count:3d} cases  ({tl_realign_count} spans realigned)")
+    print(f"  {'timeline alignment cache':45s}  {tl_cache_hits:3d} hits  {tl_cache_misses:3d} misses")
 
     # Load human eval 30-case whitelist
     eval_candidates_path = os.path.join(SOURCE_PROJECT, "data", "human_eval_30_candidates.json")
@@ -815,6 +893,8 @@ def build():
     print(
         f"  Rewritten: {rewritten_outputs} files, unchanged skipped: {unchanged_outputs}"
     )
+
+    save_timeline_align_cache(timeline_align_cache)
 
 
 if __name__ == "__main__":
