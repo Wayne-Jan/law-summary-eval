@@ -86,30 +86,6 @@
       color: var(--slate-500); background: var(--slate-100);
       border-bottom: 1px solid #e5e7eb; white-space: nowrap;
     }
-    .overview-table .col-group-header {
-      text-align: center;
-      padding: 8px 14px 6px;
-      border-bottom: 1px solid #e5e7eb;
-      background: #f8fafc;
-    }
-    .overview-table .col-group-header .group-pill {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 10.5px;
-      font-weight: 700;
-      letter-spacing: 0.4px;
-      border: 1px solid transparent;
-      line-height: 1;
-    }
-    .col-group-header.cg-auto .group-pill { color: var(--indigo); background: #eef2ff; border-color: #c7d2fe; }
-    .col-group-header.cg-llm .group-pill { color: #b45309; background: #fffbeb; border-color: #fcd34d; }
-    .col-group-header.cg-ref .group-pill { color: #0f766e; background: #f0fdfa; border-color: #99f6e4; }
-    .overview-table .group-start {
-      border-left: 2px solid #dbe4f0;
-    }
     .overview-table td {
       padding: 10px 14px; border-bottom: 1px solid var(--slate-100);
       white-space: nowrap;
@@ -530,26 +506,21 @@
       <table class="overview-table" id="overviewTable">
         <thead>
           <tr>
-            <th rowspan="2">模型</th>
-            <th rowspan="2">分類</th>
-            <th class="col-group-header cg-auto" colspan="1"><span class="group-pill">規則式指標</span></th>
-            <th class="col-group-header cg-llm" colspan="3"><span class="group-pill">LLM-as-Judge</span></th>
-            <th class="col-group-header cg-ref" colspan="2"><span class="group-pill">參考式指標</span></th>
-            <th rowspan="2">案件數</th>
-          </tr>
-          <tr>
+            <th>模型</th>
+            <th>分類</th>
             <th class="sort-btn" data-col="rule" data-dir=""
                 data-tip="自動計算的 6 項基本指標：引用率、日期正確率、數字正確率、判決結果吻合、機構歸屬正確、無中生有比例">Rule-Based</th>
-            <th class="sort-btn group-start" data-col="fact" data-dir=""
+            <th class="sort-btn" data-col="fact" data-dir=""
                 data-tip="摘要涵蓋了多少關鍵事實，以老師標註的時間軸、人物、論證等 8 類事實為基準">Fact Recall</th>
             <th class="sort-btn" data-col="quality" data-dir=""
                 data-tip="寫作品質：以 14 個維度評分（1-5 分），涵蓋流暢度、精確度、連貫性、術語正確等">Quality</th>
             <th class="sort-btn" data-col="faith" data-dir=""
                 data-tip="忠實度：摘要中每一句引用原文的地方，是否真的被原文支持">Faithfulness</th>
-            <th class="sort-btn group-start" data-col="rougeL" data-dir=""
+            <th class="sort-btn" data-col="rougeL" data-dir=""
                 data-tip="摘要與標準摘要的文字重疊程度，越高代表用詞越接近">ROUGE-L</th>
             <th class="sort-btn" data-col="bertscore" data-dir=""
                 data-tip="摘要與標準摘要的語意相似度，即使用詞不同但意思相近也會得高分">BERTScore F1</th>
+            <th>案件數</th>
           </tr>
         </thead>
         <tbody id="overviewBody"></tbody>
