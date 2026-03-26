@@ -199,15 +199,16 @@
       display: flex; flex-direction: column; align-items: center; gap: 20px;
       text-decoration: none; color: inherit;
       transition: transform 0.3s ease;
+      cursor: pointer;
     }
-    .book-card:hover { transform: translateY(-6px); }
+    .book-card:hover { transform: translateY(-6px) perspective(600px) rotateY(-3deg); }
     .book-cover {
       width: 180px; height: auto; border-radius: 4px;
       box-shadow:
         0 4px 6px rgba(0,0,0,0.07),
         0 12px 28px rgba(0,0,0,0.12),
         -4px 2px 12px rgba(0,0,0,0.06);
-      transition: box-shadow 0.3s ease;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
     }
     .book-card:hover .book-cover {
       box-shadow:
@@ -215,6 +216,12 @@
         0 20px 48px rgba(0,0,0,0.18),
         -6px 4px 20px rgba(0,0,0,0.08);
     }
+    .book-card .book-browse {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 11px; color: var(--indigo); font-weight: 500;
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .book-card:hover .book-browse { opacity: 1; }
     .book-meta { text-align: center; }
     .book-vol {
       font-family: var(--serif); font-size: 15px; font-weight: 700;
@@ -312,11 +319,22 @@
       border-bottom: 1px solid #e5e7eb; text-transform: uppercase; letter-spacing: 0.5px;
     }
     .ctable td { padding: 11px 16px; font-size: 13px; color: #374151; border-bottom: 1px solid #f3f4f6; }
-    .ctable tbody tr { cursor: pointer; transition: background 0.12s; }
+    .ctable tbody tr {
+      cursor: pointer; transition: background 0.12s, opacity 0.35s ease, transform 0.35s ease;
+      position: relative;
+    }
     .ctable tbody tr:hover { background: #eef2ff; }
     .ctable tbody tr:hover td:first-child { color: var(--indigo); }
     .ctable tbody tr:last-child td { border-bottom: none; }
-    .ctable td:first-child { font-size: 12px; color: #9ca3af; font-weight: 500; text-align: center; width: 48px; }
+    .ctable td:first-child {
+      font-size: 12px; color: #9ca3af; font-weight: 500; text-align: center; width: 48px;
+      border-left: 3px solid transparent; padding-left: 13px;
+    }
+    .ctable tr[data-vol="上冊"] td:first-child { border-left-color: var(--indigo); }
+    .ctable tr[data-vol="中冊"] td:first-child { border-left-color: #0d9488; }
+    .ctable tr[data-vol="下冊"] td:first-child { border-left-color: #d97706; }
+    .ctable tbody tr.row-enter { opacity: 0; transform: translateY(8px); }
+    .ctable tbody tr.row-vis { opacity: 1; transform: translateY(0); }
     .cn { max-width: 380px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
     .vb { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
     .vb.g { background: #fef2f2; color: #b91c1c; }
@@ -518,39 +536,42 @@
     <p class="section-desc">蔡惠芳、蘇宜成、陳惠芬 著，興大法學叢書，五南出版</p>
   </div>
   <div class="books-row reveal">
-    <a class="book-card" href="https://www.wunan.com.tw/bookdetail?NO=16478" target="_blank" rel="noopener">
+    <div class="book-card" data-vol="上冊" onclick="scrollToCases('上冊')">
       <img class="book-cover" src="book-upper.gif" alt="醫療過失刑事判決選集（上）">
       <div class="book-meta">
         <div class="book-vol">上冊</div>
         <div class="book-stats">40 案 · 中位數 6,279 字</div>
-        <div class="book-publisher">
+        <span class="book-browse">瀏覽案件 →</span>
+        <a class="book-publisher" href="https://www.wunan.com.tw/bookdetail?NO=16478" target="_blank" rel="noopener" onclick="event.stopPropagation()">
           五南書店
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 3h8v8"/><path d="M13 3L3 13"/></svg>
-        </div>
+        </a>
       </div>
-    </a>
-    <a class="book-card" href="https://www.wunan.com.tw/bookdetail?NO=17058" target="_blank" rel="noopener">
+    </div>
+    <div class="book-card" data-vol="中冊" onclick="scrollToCases('中冊')">
       <img class="book-cover" src="book-middle.gif" alt="醫療過失刑事判決選集（中）">
       <div class="book-meta">
         <div class="book-vol">中冊</div>
         <div class="book-stats">30 案 · 中位數 11,732 字</div>
-        <div class="book-publisher">
+        <span class="book-browse">瀏覽案件 →</span>
+        <a class="book-publisher" href="https://www.wunan.com.tw/bookdetail?NO=17058" target="_blank" rel="noopener" onclick="event.stopPropagation()">
           五南書店
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 3h8v8"/><path d="M13 3L3 13"/></svg>
-        </div>
+        </a>
       </div>
-    </a>
-    <a class="book-card" href="https://www.wunan.com.tw/bookdetail?NO=17353" target="_blank" rel="noopener">
+    </div>
+    <div class="book-card" data-vol="下冊" onclick="scrollToCases('下冊')">
       <img class="book-cover" src="book-lower.gif" alt="醫療過失刑事判決選集（下）">
       <div class="book-meta">
         <div class="book-vol">下冊</div>
         <div class="book-stats">30 案 · 中位數 11,845 字</div>
-        <div class="book-publisher">
+        <span class="book-browse">瀏覽案件 →</span>
+        <a class="book-publisher" href="https://www.wunan.com.tw/bookdetail?NO=17353" target="_blank" rel="noopener" onclick="event.stopPropagation()">
           五南書店
           <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 3h8v8"/><path d="M13 3L3 13"/></svg>
-        </div>
+        </a>
       </div>
-    </a>
+    </div>
   </div>
   <div class="books-footer reveal">
     本平台所有判決原文均來自上述三冊選集，<br>
@@ -577,10 +598,10 @@
   <div class="reveal">
     <div class="filter-row">
       <div class="ftabs" id="volTabs">
-        <button class="ftab active" onclick="fil('all',this)">全部</button>
-        <button class="ftab" onclick="fil('上冊',this)">上冊</button>
-        <button class="ftab" onclick="fil('中冊',this)">中冊</button>
-        <button class="ftab" onclick="fil('下冊',this)">下冊</button>
+        <button class="ftab active" data-vol="all" onclick="fil('all',this)">全部</button>
+        <button class="ftab" data-vol="上冊" onclick="fil('上冊',this)">上冊</button>
+        <button class="ftab" data-vol="中冊" onclick="fil('中冊',this)">中冊</button>
+        <button class="ftab" data-vol="下冊" onclick="fil('下冊',this)">下冊</button>
       </div>
       <span style="flex:1"></span>
       <span class="rcount" id="rc"></span>
@@ -650,13 +671,24 @@ function fil(f, btn) {
   const tb = document.getElementById('cb');
   if(!r.length) { tb.innerHTML='<tr><td colspan="5"><div class="empty-s">沒有符合條件的案件</div></td></tr>'; return; }
   tb.innerHTML = r.map(c=>`
-    <tr onclick="location.href='view.html?case=${encodeURIComponent(c.n)}'">
+    <tr class="row-enter" data-vol="${esc(c.vol)}" onclick="location.href='view.html?case=${encodeURIComponent(c.n)}'">
       <td>${c.i}</td>
       <td class="cn" title="${esc(c.n)}">${esc(formatCaseDisplay(c.n, c.display))}</td>
       <td class="cc">${esc(c.vol)}</td>
       <td class="cc">${c.c}</td>
       <td><svg class="ai" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 4l4 4-4 4"/></svg></td>
     </tr>`).join('');
+  requestAnimationFrame(() => {
+    tb.querySelectorAll('.row-enter').forEach((row, i) => {
+      setTimeout(() => row.classList.add('row-vis'), i * 25);
+    });
+  });
+}
+
+function scrollToCases(vol) {
+  const btn = document.querySelector(`.ftab[data-vol="${vol}"]`);
+  if (btn) { fil(vol, btn); }
+  document.getElementById('cases').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function formatCaseDisplay(caseName, fallback) {
