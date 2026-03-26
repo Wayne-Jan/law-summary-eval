@@ -95,13 +95,14 @@
 
     /* ─── DUAL-COLUMN LAYOUT ─── */
     .tl-columns { display: flex; gap: 24px; align-items: flex-start; }
-    .tl-col-left { flex: 42; min-width: 0; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
-    .tl-col-right { flex: 58; min-width: 0; }
+    .tl-col-left { flex: 42; min-width: 0; }
+    .tl-col-right { flex: 58; min-width: 0; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
+    .source-panel { flex: 1; min-height: 0; }
 
     /* ─── SOURCE PANEL (full text with highlighter) ─── */
     .source-panel {
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
-      min-height: 200px; max-height: calc(100vh - 140px); display: flex; flex-direction: column;
+      min-height: 200px; display: flex; flex-direction: column;
     }
     .source-panel-body {
       font-size: 13px; color: #475569; line-height: 1.9;
@@ -580,7 +581,63 @@
 
       // Workbench
       html += '<div class="tl-columns">';
+
+      // Left column: timeline events
       html += '<div class="tl-col-left">';
+      html += '<div class="panel-card">';
+      html += '<div class="panel-head">';
+      html += '<div class="panel-kicker">TIMELINE</div>';
+      html += '<div class="panel-title">事件時間軸</div>';
+      html += `<div class="panel-meta">${events.length} 個事件，點擊事件可定位到右側原文</div>`;
+      html += '</div>';
+      html += '<div style="padding: 20px 22px 24px;">';
+      html += '<div class="timeline">';
+
+      events.forEach((evt, idx) => {
+        const isCritical = evt.critical_decision;
+        const typeClass = isCritical ? 'critical_decision' : (evt.event_type || '');
+
+        html += `<div class="tl-event ${isCritical ? 'critical' : ''}" data-idx="${idx}" onclick="showSource(${idx})">`;
+        html += '<div class="tl-event-header">';
+        html += `<span class="tl-date">${esc(evt.timestamp || evt.timestamp_normalized || '日期不明')}</span>`;
+        if (evt.event_type) html += `<span class="tl-event-type ${esc(typeClass)}">${esc(formatEventType(evt.event_type))}</span>`;
+        if (isCritical) html += '<span class="badge critical">關鍵決策</span>';
+        html += '</div>';
+        html += `<div class="tl-desc">${esc(evt.description || '')}</div>`;
+
+        const meta = [];
+        if (evt.actors && evt.actors.length) meta.push(`<span class="tl-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
+        if (evt.location) meta.push(`<span class="tl-meta-item"><strong>地點:</strong> ${esc(evt.location)}</span>`);
+        if (evt.vital_signs && Object.keys(evt.vital_signs).length) {
+          const vs = Object.entries(evt.vital_signs).map(([k,v])=>`${k}: ${v}`).join(', ');
+          meta.push(`<span class="tl-meta-item"><strong>生命體徵:</strong> ${esc(vs)}</span>`);
+        }
+        if (meta.length) html += `<div class="tl-meta">${meta.join('')}</div>`;
+
+        if (isCritical && evt.decision_content) {
+          html += `<div class="tl-decision"><div class="tl-decision-label">決策內容</div>${esc(evt.decision_content)}</div>`;
+        }
+
+        // Mobile-only collapsible (shows chunk with highlight)
+        if (evt.extraction_text) {
+          const chunk = findChunkForEvent(evt);
+          const mobileContent = chunk
+            ? highlightInChunk(chunk.content, chunk.start_char, evt)
+            : '<mark>' + esc(evt.extraction_text) + '</mark>';
+          html += `<button class="tl-source-toggle" onclick="event.stopPropagation(); toggleSource(${idx})">`;
+          html += `<svg id="srcArrow${idx}" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 2.5L8 6L4.5 9.5"/></svg>`;
+          html += `查看原文</button>`;
+          html += `<div class="tl-source-text" id="srcText${idx}">${mobileContent}</div>`;
+        }
+
+        html += '</div>';
+      });
+
+      html += '</div></div></div>'; // .timeline / padding / .panel-card
+      html += '</div>'; // tl-col-left
+
+      // Right column: source panel (sticky)
+      html += '<div class="tl-col-right">';
       html += '<div class="source-panel" id="sourcePanel">';
       html += '<div class="panel-head">';
       html += '<div class="panel-kicker">SOURCE</div>';
@@ -627,60 +684,7 @@
         html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案件無段落資料</span></div>';
       }
 
-      html += '</div></div></div>';
-
-      html += '<div class="tl-col-right">';
-      html += '<div class="panel-card">';
-      html += '<div class="panel-head">';
-      html += '<div class="panel-kicker">TIMELINE</div>';
-      html += '<div class="panel-title">事件時間軸</div>';
-      html += `<div class="panel-meta">${events.length} 個事件，點擊事件可平滑定位到左側原文</div>`;
-      html += '</div>';
-      html += '<div style="padding: 20px 22px 24px;">';
-      html += '<div class="timeline">';
-
-      events.forEach((evt, idx) => {
-        const isCritical = evt.critical_decision;
-        const typeClass = isCritical ? 'critical_decision' : (evt.event_type || '');
-
-        html += `<div class="tl-event ${isCritical ? 'critical' : ''}" data-idx="${idx}" onclick="showSource(${idx})">`;
-        html += '<div class="tl-event-header">';
-        html += `<span class="tl-date">${esc(evt.timestamp || evt.timestamp_normalized || '日期不明')}</span>`;
-        if (evt.event_type) html += `<span class="tl-event-type ${esc(typeClass)}">${esc(formatEventType(evt.event_type))}</span>`;
-        if (isCritical) html += '<span class="badge critical">關鍵決策</span>';
-        html += '</div>';
-        html += `<div class="tl-desc">${esc(evt.description || '')}</div>`;
-
-        const meta = [];
-        if (evt.actors && evt.actors.length) meta.push(`<span class="tl-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join(', '))}</span>`);
-        if (evt.location) meta.push(`<span class="tl-meta-item"><strong>地點:</strong> ${esc(evt.location)}</span>`);
-        if (evt.vital_signs && Object.keys(evt.vital_signs).length) {
-          const vs = Object.entries(evt.vital_signs).map(([k,v])=>`${k}: ${v}`).join(', ');
-          meta.push(`<span class="tl-meta-item"><strong>生命體徵:</strong> ${esc(vs)}</span>`);
-        }
-        if (meta.length) html += `<div class="tl-meta">${meta.join('')}</div>`;
-
-        if (isCritical && evt.decision_content) {
-          html += `<div class="tl-decision"><div class="tl-decision-label">決策內容</div>${esc(evt.decision_content)}</div>`;
-        }
-
-        // Mobile-only collapsible (shows chunk with highlight)
-        if (evt.extraction_text) {
-          const chunk = findChunkForEvent(evt);
-          const mobileContent = chunk
-            ? highlightInChunk(chunk.content, chunk.start_char, evt)
-            : '<mark>' + esc(evt.extraction_text) + '</mark>';
-          html += `<button class="tl-source-toggle" onclick="event.stopPropagation(); toggleSource(${idx})">`;
-          html += `<svg id="srcArrow${idx}" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.5 2.5L8 6L4.5 9.5"/></svg>`;
-          html += `查看原文</button>`;
-          html += `<div class="tl-source-text" id="srcText${idx}">${mobileContent}</div>`;
-        }
-
-        html += '</div>';
-      });
-
-      html += '</div></div></div>'; // .timeline / .panel-card / padding
-      html += '</div></div>'; // tl-col-right .panel-card
+      html += '</div></div></div>'; // source-panel-body / source-panel / tl-col-right
       html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
       if (events.length > 0 && activeEventIdx >= 0) showSource(activeEventIdx, false);
