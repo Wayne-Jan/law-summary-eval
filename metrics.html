@@ -789,7 +789,7 @@
     if (activeSort) {
       sortEntries(entries, activeSort.dataset.col, activeSort.dataset.dir);
     } else {
-      sortEntries(entries, 'quality', 'desc');
+      sortEntries(entries, 'canonical', 'asc');
     }
     renderOverviewRows(entries);
     buildModelCards(entries);
@@ -800,8 +800,8 @@
     renderModelDetail(entries);
   }
 
-  function sortModelCardEntries(entries) {
-    const priority = {
+  function getCanonicalPriority(key, cond) {
+    const fixed = {
       'claude_afg_v5.1': 0,
       'ablation_no_afg': 1,
       'ablation_no_react': 2,
@@ -811,18 +811,30 @@
       'baseline_gpt-5.3': 13,
       'baseline_gemini-3.1-pro': 14,
       'baseline_gemini-3.0-flash': 15,
+      'opensource_afg_v11_5': 30,
+      'opensource_afg_v11_5_no_react': 31,
+      'opensource_afg_v11_5_no_afg': 32,
+      'opensource_afg_v11_5_writer_nemotron_super': 33,
+      'opensource_afg_v11_5_no_react_writer_nemotron_super': 34,
+      'opensource_afg_v11_5_no_afg_writer_nemotron_super': 35,
     };
-    return [...entries].sort((a, b) => {
-      const [keyA, condA] = a;
-      const [keyB, condB] = b;
-      const pa = priority[keyA] ?? 999;
-      const pb = priority[keyB] ?? 999;
-      if (pa !== pb) return pa - pb;
-      const groupA = condA.group === '商用模型' ? 0 : 1;
-      const groupB = condB.group === '商用模型' ? 0 : 1;
-      if (groupA !== groupB) return groupA - groupB;
-      return condA.label.localeCompare(condB.label, 'zh-Hant');
-    });
+    if (fixed[key] != null) return fixed[key];
+    if (cond.group === '開源模型' && cond.label.startsWith('Baseline-')) return 200;
+    if (cond.group === '商用模型') return 100;
+    return 300;
+  }
+
+  function compareCanonicalEntries(a, b) {
+    const [keyA, condA] = a;
+    const [keyB, condB] = b;
+    const pa = getCanonicalPriority(keyA, condA);
+    const pb = getCanonicalPriority(keyB, condB);
+    if (pa !== pb) return pa - pb;
+    return condA.label.localeCompare(condB.label, 'zh-Hant');
+  }
+
+  function sortModelCardEntries(entries) {
+    return [...entries].sort(compareCanonicalEntries);
   }
 
   function buildModelCardRadar(cond, color) {
@@ -1246,6 +1258,10 @@
   }
 
   function sortEntries(entries, col, dir) {
+    if (col === 'canonical') {
+      entries.sort(compareCanonicalEntries);
+      return;
+    }
     const key = {
       rule: 'rule_based_avg', fact: 'fact_recall_avg',
       quality: 'quality_avg', faith: 'faithfulness_avg',
