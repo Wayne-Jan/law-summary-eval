@@ -86,6 +86,14 @@
       color: var(--slate-500); background: var(--slate-100);
       border-bottom: 1px solid #e5e7eb; white-space: nowrap;
     }
+    .overview-table .col-group-header {
+      text-align: center; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; padding: 8px 14px;
+      border-bottom: 2px solid #e5e7eb;
+    }
+    .col-group-header.cg-auto { color: var(--indigo); background: #eef2ff; }
+    .col-group-header.cg-llm { color: #b45309; background: #fef3c7; }
+    .col-group-header.cg-ref { color: #0f766e; background: #ccfbf1; }
     .overview-table td {
       padding: 10px 14px; border-bottom: 1px solid var(--slate-100);
       white-space: nowrap;
@@ -506,21 +514,26 @@
       <table class="overview-table" id="overviewTable">
         <thead>
           <tr>
-            <th>模型</th>
-            <th>分類</th>
+            <th rowspan="2">模型</th>
+            <th rowspan="2">分類</th>
+            <th class="col-group-header cg-auto" colspan="1">規則式指標</th>
+            <th class="col-group-header cg-llm" colspan="3">LLM-as-Judge</th>
+            <th class="col-group-header cg-ref" colspan="2">參考式指標</th>
+            <th rowspan="2">案件數</th>
+          </tr>
+          <tr>
             <th class="sort-btn" data-col="rule" data-dir=""
-                data-tip="規則式指標平均：引用率、日期/數字 F1、判決吻合、機構歸屬、幻覺率（反向），共 6 項自動計算">Rule-Based</th>
+                data-tip="自動計算的 6 項基本指標：引用率、日期正確率、數字正確率、判決結果吻合、機構歸屬正確、無中生有比例">Rule-Based</th>
             <th class="sort-btn" data-col="fact" data-dir=""
-                data-tip="事實召回率：以結構化 Ground Truth（時間軸、實體、控訴、辯護、鑑定、推理、因果鏈、量刑）為基準，衡量摘要涵蓋了多少關鍵事實">Fact Recall</th>
+                data-tip="摘要涵蓋了多少關鍵事實，以老師標註的時間軸、人物、論證等 8 類事實為基準">Fact Recall</th>
             <th class="sort-btn" data-col="quality" data-dir=""
-                data-tip="寫作品質：由 LLM 以 14 個 Likert 維度（1-5 分）評分，涵蓋流暢度、精簡度、連貫性、涵蓋度、精確度、術語、結構等">Quality</th>
+                data-tip="寫作品質：以 14 個維度評分（1-5 分），涵蓋流暢度、精確度、連貫性、術語正確等">Quality</th>
             <th class="sort-btn" data-col="faith" data-dir=""
-                data-tip="忠實度：逐句驗證 [CH_XX] 引用是否被原文支持。A=完全支持、B=部分支持、C=不支持、D=無法驗證">Faithfulness</th>
+                data-tip="忠實度：摘要中每一句引用原文的地方，是否真的被原文支持">Faithfulness</th>
             <th class="sort-btn" data-col="rougeL" data-dir=""
-                data-tip="ROUGE-L F-score：以最長公共子序列衡量摘要與 Ground Truth 的文字重疊程度，字元級計算">ROUGE-L</th>
+                data-tip="摘要與標準摘要的文字重疊程度，越高代表用詞越接近">ROUGE-L</th>
             <th class="sort-btn" data-col="bertscore" data-dir=""
-                data-tip="BERTScore F1：使用 BERT 語意嵌入衡量摘要與 Ground Truth 的語意相似度">BERTScore F1</th>
-            <th>案件數</th>
+                data-tip="摘要與標準摘要的語意相似度，即使用詞不同但意思相近也會得高分">BERTScore F1</th>
           </tr>
         </thead>
         <tbody id="overviewBody"></tbody>
@@ -643,23 +656,23 @@
   // ─── Label maps for sub-metrics ───
   const RULE_LABELS = {
     citation_rate: '引用率',
-    date_f1: '日期 F1',
-    num_f1: '數字 F1',
+    date_f1: '日期正確率',
+    num_f1: '數字正確率',
     verdict_match: '判決吻合',
     institution_attr: '機構歸屬',
-    hallucination_rate_rule: '幻覺率(反)',
+    hallucination_rate_rule: '無中生有(反)',
     compression_ratio: '壓縮率',
     gt_length_ratio: 'GT 長度比'
   };
   const RULE_TIPS = {
-    citation_rate: '摘要中有多少比例的陳述標註了 [CH_XX] 來源引用',
-    date_f1: '摘要中的日期與 Ground Truth 日期的 F1 分數',
-    num_f1: '摘要中的數字（金額、劑量等）與 Ground Truth 的 F1 分數',
-    verdict_match: '摘要的判決結果（有罪/無罪/刑度）是否與 Ground Truth 一致',
+    citation_rate: '摘要中有多少比例的陳述標註了來源引用',
+    date_f1: '摘要中的日期與標準摘要的日期是否一致',
+    num_f1: '摘要中的數字（金額、劑量等）與標準摘要是否一致',
+    verdict_match: '摘要的判決結果（有罪/無罪/刑度）是否與標準摘要一致',
     institution_attr: '醫療機構名稱是否正確匿名化且歸屬正確',
-    hallucination_rate_rule: '（反向指標）未被來源文本支持的事實陳述比例，越高越好',
-    compression_ratio: '摘要相對原文的壓縮程度 = 1 - (摘要字數 / 原文字數)，越高代表壓縮越多',
-    gt_length_ratio: '摘要字數與 Ground Truth 字數的比值，接近 1.0 代表長度相近'
+    hallucination_rate_rule: '未被原文支持的事實陳述比例（已反轉，越高越好）',
+    compression_ratio: '摘要相對原文的壓縮程度，越高代表壓縮越多',
+    gt_length_ratio: '摘要字數與標準摘要字數的比值，接近 1.0 代表長度相近'
   };
   const FACT_LABELS = {
     timeline_recall: '時間軸',
@@ -722,12 +735,12 @@
     bertscore_f1: 'BERTScore F1'
   };
   const ROUGE_BERT_TIPS = {
-    rouge1: 'ROUGE-1：單字元重疊的 F-score，衡量基本用詞一致性',
-    rouge2: 'ROUGE-2：雙字元重疊的 F-score，衡量短語級一致性',
-    rougeL: 'ROUGE-L F-score：以最長公共子序列衡量摘要與 Ground Truth 的文字重疊程度，字元級計算',
-    bertscore_p: 'BERTScore Precision：摘要中多少語意內容能在 Ground Truth 中找到對應',
-    bertscore_r: 'BERTScore Recall：Ground Truth 中多少語意內容被摘要涵蓋',
-    bertscore_f1: 'BERTScore F1：使用 BERT 語意嵌入衡量摘要與 Ground Truth 的語意相似度'
+    rouge1: 'ROUGE-1：摘要與標準摘要的單字用詞重疊程度',
+    rouge2: 'ROUGE-2：摘要與標準摘要的短語重疊程度',
+    rougeL: 'ROUGE-L：摘要與標準摘要的文字重疊程度，越高代表用詞越接近',
+    bertscore_p: 'BERTScore 精確率：摘要中多少內容能在標準摘要中找到語意對應',
+    bertscore_r: 'BERTScore 召回率：標準摘要中多少內容被摘要涵蓋',
+    bertscore_f1: 'BERTScore F1：摘要與標準摘要的語意相似度，即使用詞不同也能衡量'
   };
   const MODEL_CARD_AXES = [
     { key: 'rule', label: 'Rule-Based', short: 'Rule', get: a => a.rule_based_avg },
