@@ -313,6 +313,20 @@
       background: #fff; border-radius: 12px; overflow: hidden;
       border: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
+    .cases-preview-note {
+      max-width: 920px; margin: 10px auto 0;
+      font-size: 12px; color: #94a3b8; text-align: right;
+    }
+    .cases-preview-actions {
+      max-width: 920px; margin: 16px auto 0;
+      display: flex; justify-content: center;
+    }
+    .cases-preview-btn {
+      border: 1px solid #cbd5e1; background: #fff; color: #475569;
+      border-radius: 999px; padding: 8px 16px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .cases-preview-btn:hover { border-color: var(--indigo); color: var(--indigo); background: #eef2ff; }
     .ctable th {
       text-align: left; padding: 12px 16px;
       font-size: 11px; color: #9ca3af; font-weight: 600; background: #fafafa;
@@ -396,7 +410,7 @@
       .feat-text h3 { font-size: 18px; }
       .feat-text p { font-size: 13px; }
       .nav { padding: 0 16px; gap: 12px; }
-      .footer { padding: 24px 16px 76px; }
+      .footer { padding: 24px 16px; }
       .nav a:not(.nav-cta) { display: none; }
       .nav-cta { padding: 6px 14px; font-size: 11px; }
 
@@ -631,6 +645,10 @@
       <thead><tr><th style="width:48px">#</th><th>案件</th><th>冊別</th><th>比較條件</th><th style="width:36px"></th></tr></thead>
       <tbody id="cb"></tbody>
     </table>
+    <div class="cases-preview-note" id="casesPreviewNote"></div>
+    <div class="cases-preview-actions">
+      <button class="cases-preview-btn" id="casesPreviewBtn" type="button" onclick="toggleCasesPreview()" hidden>展開全部案件</button>
+    </div>
   </div>
 </section>
 
@@ -641,7 +659,7 @@
 </footer>
 
 <script>
-let ac=[], cf='all';
+let ac=[], cf='all', showAllCases=false;
 
 async function init() {
   try {
@@ -693,8 +711,25 @@ function fil(f, btn) {
   if(q) r=r.filter(c=>c.display.toLowerCase().includes(q) || c.n.toLowerCase().includes(q));
   document.getElementById('rc').textContent = r.length===ac.length ? '' : r.length+' / '+ac.length;
   const tb = document.getElementById('cb');
-  if(!r.length) { tb.innerHTML='<tr><td colspan="5"><div class="empty-s">沒有符合條件的案件</div></td></tr>'; return; }
-  tb.innerHTML = r.map(c=>`
+  const previewBtn = document.getElementById('casesPreviewBtn');
+  const previewNote = document.getElementById('casesPreviewNote');
+  if(!r.length) {
+    tb.innerHTML='<tr><td colspan="5"><div class="empty-s">沒有符合條件的案件</div></td></tr>';
+    if (previewBtn) previewBtn.hidden = true;
+    if (previewNote) previewNote.textContent = '';
+    return;
+  }
+  const limit = 12;
+  const shouldPreview = !q && !showAllCases && r.length > limit;
+  const visibleRows = shouldPreview ? r.slice(0, limit) : r;
+  if (previewBtn) {
+    previewBtn.hidden = r.length <= limit;
+    previewBtn.textContent = shouldPreview ? `展開全部 ${r.length} 件案件` : '收合回預覽';
+  }
+  if (previewNote) {
+    previewNote.textContent = shouldPreview ? `目前顯示前 ${visibleRows.length} 件案件預覽` : '';
+  }
+  tb.innerHTML = visibleRows.map(c=>`
     <tr class="row-enter" data-vol="${esc(c.vol)}" onclick="location.href='view.html?case=${encodeURIComponent(c.n)}'">
       <td>${c.i}</td>
       <td class="cn" title="${esc(c.n)}">${esc(formatCaseDisplay(c.n, c.display))}</td>
@@ -707,6 +742,11 @@ function fil(f, btn) {
       setTimeout(() => row.classList.add('row-vis'), i * 25);
     });
   });
+}
+
+function toggleCasesPreview() {
+  showAllCases = !showAllCases;
+  fil(cf);
 }
 
 function scrollToCases(vol) {
