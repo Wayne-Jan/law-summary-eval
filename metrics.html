@@ -93,6 +93,11 @@
     .overview-table tr:last-child td { border-bottom: none; }
     .overview-table tr:hover td { background: #fafbfc; }
     .overview-table .cond-name { font-weight: 600; color: var(--slate-900); }
+    .table-notes {
+      font-size: 11px; color: var(--slate-500); padding: 8px 14px; line-height: 1.8;
+    }
+    .table-notes sup { font-weight: 600; color: var(--slate-600); }
+    .overview-table th sup { font-weight: 400; color: var(--slate-400); margin-left: 2px; }
 
     .badge {
       display: inline-block; font-size: 11px; font-weight: 600;
@@ -509,22 +514,25 @@
             <th>模型</th>
             <th>分類</th>
             <th class="sort-btn" data-col="rule" data-dir=""
-                data-tip="自動計算的 6 項基本指標：引用率、日期正確率、數字正確率、判決結果吻合、機構歸屬正確、無中生有比例">Rule-Based</th>
+                data-tip="自動計算的 6 項基本指標：引用率、日期正確率、數字正確率、判決結果吻合、機構歸屬正確、無中生有比例">Rule-Based<sup>†</sup></th>
             <th class="sort-btn" data-col="fact" data-dir=""
-                data-tip="摘要涵蓋了多少關鍵事實，以老師標註的時間軸、人物、論證等 8 類事實為基準">Fact Recall</th>
+                data-tip="摘要涵蓋了多少關鍵事實，以老師標註的時間軸、人物、論證等 8 類事實為基準">Fact Recall<sup>‡</sup></th>
             <th class="sort-btn" data-col="quality" data-dir=""
-                data-tip="寫作品質：以 14 個維度評分（1-5 分），涵蓋流暢度、精確度、連貫性、術語正確等">Quality</th>
+                data-tip="寫作品質：以 14 個維度評分（1-5 分），涵蓋流暢度、精確度、連貫性、術語正確等">Quality<sup>‡</sup></th>
             <th class="sort-btn" data-col="faith" data-dir=""
-                data-tip="忠實度：摘要中每一句引用原文的地方，是否真的被原文支持">Faithfulness</th>
+                data-tip="忠實度：摘要中每一句引用原文的地方，是否真的被原文支持">Faithfulness<sup>‡</sup></th>
             <th class="sort-btn" data-col="rougeL" data-dir=""
-                data-tip="摘要與標準摘要的文字重疊程度，越高代表用詞越接近">ROUGE-L</th>
+                data-tip="摘要與標準摘要的文字重疊程度，越高代表用詞越接近">ROUGE-L<sup>§</sup></th>
             <th class="sort-btn" data-col="bertscore" data-dir=""
-                data-tip="摘要與標準摘要的語意相似度，即使用詞不同但意思相近也會得高分">BERTScore F1</th>
+                data-tip="摘要與標準摘要的語意相似度，即使用詞不同但意思相近也會得高分">BERTScore F1<sup>§</sup></th>
             <th>案件數</th>
           </tr>
         </thead>
         <tbody id="overviewBody"></tbody>
       </table>
+      <div class="table-notes">
+        <sup>†</sup> 規則式自動計算　　<sup>‡</sup> LLM-as-Judge　　<sup>§</sup> 與標準摘要比較之參考式指標
+      </div>
     </div>
   </div>
 
