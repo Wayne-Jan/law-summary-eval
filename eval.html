@@ -644,6 +644,49 @@
       border-color: #fca5a5;
       color: #991b1b;
     }
+    .admin-panel .admin-version-grid { display:flex; flex-wrap:wrap; gap:6px; }
+    .admin-panel .admin-version-item { display:inline-flex; align-items:center; gap:4px; }
+    .admin-panel .admin-version-chip {
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:34px; padding:4px 9px; border-radius:999px;
+      border:1px solid var(--slate-300); background:white; color:var(--slate-700);
+      text-decoration:none; font-size:11px; font-weight:700;
+      transition:transform .15s, box-shadow .15s, border-color .15s, color .15s, background .15s;
+    }
+    .admin-panel .admin-version-chip:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(79,70,229,0.14);
+      border-color: var(--indigo);
+      color: var(--indigo);
+      background: var(--indigo-light);
+    }
+    .admin-panel .admin-version-chip.status-done { border-color:#a7f3d0; color:#047857; background:#ecfdf5; }
+    .admin-panel .admin-version-chip.status-partial { border-color:#fcd34d; color:#b45309; background:#fffbeb; }
+    .admin-panel .admin-version-chip.status-empty { border-color:#cbd5e1; color:#64748b; background:#f8fafc; }
+    .admin-panel .admin-version-delete {
+      border:1px solid #fecaca; background:white; color:#b91c1c;
+      border-radius:999px; width:24px; height:24px; font-size:12px; font-weight:700;
+      line-height:1; cursor:pointer; transition:background .15s, border-color .15s, transform .15s;
+    }
+    .admin-panel .admin-version-delete:hover { background:#fef2f2; border-color:#fca5a5; transform:translateY(-1px); }
+    .admin-inspect-banner {
+      display:none; align-items:center; gap:8px; padding:6px 12px; border-radius:999px;
+      background:#eff6ff; color:#1d4ed8; font-size:12px; font-weight:700; white-space:nowrap;
+    }
+    .admin-inspect-banner.show { display:inline-flex; }
+    .admin-inspect-banner .muted { color:#475569; font-weight:600; }
+    body.is-admin.admin-inspect select.eval-only { display: block; }
+    body.is-admin.admin-inspect .cond-pills.eval-only,
+    body.is-admin.admin-inspect .phase-indicators.eval-only,
+    body.is-admin.admin-inspect .sep.eval-only { display: flex; }
+    body.is-admin.admin-inspect .progress-subbar { display: flex; }
+    body.is-admin.admin-inspect .main { display: flex; }
+    body.is-admin.admin-inspect .footer { display: flex; }
+    body.is-admin.admin-inspect .admin-page { display: none; }
+    body.is-admin.admin-inspect .toolbar-menu-wrap.admin-only,
+    body.is-admin.admin-inspect .toolbar-help,
+    body.is-admin.admin-inspect .save-indicator,
+    body.is-admin.admin-inspect #cloudStatus { display: none; }
   </style>
   <!-- Firebase compat (works with regular scripts, no bundler needed) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -685,6 +728,7 @@
   <span class="save-indicator eval-only" id="saveIndicator"></span>
   <span class="cloud-status" id="cloudStatus">雲端待命</span>
   <span id="userBadge" class="user-badge"></span>
+  <span class="admin-inspect-banner" id="adminInspectBanner"></span>
   <button class="btn btn-ghost admin-only" type="button" onclick="showAdminPanel()">▤ 管理</button>
   <div class="toolbar-help">
     <button class="btn btn-ghost toolbar-shortcut-btn" type="button" onclick="toggleShortcutHelp()" title="快捷鍵">
@@ -1097,6 +1141,7 @@ function handleAuthStateChanged(user) {
   if (!user) {
     clearLocalSessionProfile();
     document.body.classList.remove('is-admin');
+    document.body.classList.remove('admin-inspect');
     setCloudStatus('雲端待命', '');
     showLoginOverlay();
     return;
@@ -1163,8 +1208,8 @@ function hideLoginOverlay() {
 }
 
 function applyAuth() {
-  const user = getCurrentUser();
-  const role = getCurrentRole();
+  const user = getSessionUser();
+  const role = getSessionRole();
   // Update badge
   const badge = document.getElementById('userBadge');
   badge.textContent = user;
@@ -1178,11 +1223,20 @@ function applyAuth() {
   }
 }
 
+function getSessionUser() {
+  return localStorage.getItem('eval_v2_auth_user') || '';
+}
+
+function getSessionRole() {
+  return localStorage.getItem('eval_v2_auth_role') || 'medical';
+}
+
 function getCurrentUser() {
   return localStorage.getItem('eval_v2_auth_user') || '';
 }
 
 function getCurrentRole() {
+  if (isAdminInspectMode()) return adminInspect.role || 'medical';
   return localStorage.getItem('eval_v2_auth_role') || 'medical';
 }
 
@@ -1465,6 +1519,13 @@ let tlDataCache = null; // timeline data for current case
 let activeChunk = null;
 let autoSaveTimer = null;
 let keyboardFocusIndex = 0;
+let adminInspect = {
+  active: false,
+  evaluator: '',
+  evaluatorUid: '',
+  role: '',
+  records: new Map(),
+};
 
 // ═══════════════════════════════════════════════════════════════
 // INIT
@@ -1532,12 +1593,15 @@ async function initApp() {
     onCaseChange();
   });
 
+  await initAdminInspectFromURL();
+
   renderEvalForm();
   onCaseChange();
+  if (isAdminInspectMode()) await applyAdminInspectRouteFromURL();
   initResizers();
   updateLayoutHeights();
-  autoRestoreFromFirestore(); // silently pull cloud data on login
-  if (getCurrentRole() === 'admin') showAdminPanel();
+  if (!isAdminInspectMode()) autoRestoreFromFirestore(); // silently pull cloud data on login
+  if (getSessionRole() === 'admin' && !isAdminInspectMode()) showAdminPanel();
 }
 
 async function autoRestoreFromFirestore() {
@@ -1569,12 +1633,9 @@ async function autoRestoreFromFirestore() {
 function getConditionOrder(caseName) {
   const ev = getEvaluator();
   const key = `eval_v2_condorder_${ev}_${caseName}`;
-  let order = null;
-  try {
-    const stored = localStorage.getItem(key);
-    if (stored) order = JSON.parse(stored);
-  } catch {}
+  let order = loadStoredJSON(key);
   if (!order || !Array.isArray(order) || order.length !== EVAL_CONDITIONS.length) {
+    if (isAdminInspectMode()) return EVAL_CONDITIONS.slice();
     // Generate random permutation
     order = [...EVAL_CONDITIONS];
     for (let i = order.length - 1; i > 0; i--) {
@@ -1604,10 +1665,7 @@ function stateKey(caseName, condIdx, phase) {
 }
 
 function getPhaseData(caseName, condIdx, phase) {
-  try {
-    const raw = localStorage.getItem(stateKey(caseName, condIdx, phase));
-    return raw ? JSON.parse(raw) : null;
-  } catch { return null; }
+  return loadStoredJSON(stateKey(caseName, condIdx, phase));
 }
 
 function setPhaseData(caseName, condIdx, phase, data) {
@@ -1653,10 +1711,8 @@ function areAllCondsComplete(caseName) {
 function isPhase3Complete(caseName) {
   const ev = getEvaluator();
   const key = `eval_v2_${ev}_${caseName}_phase3`;
-  try {
-    const d = JSON.parse(localStorage.getItem(key));
-    return d && d._complete === true;
-  } catch { return false; }
+  const d = loadStoredJSON(key);
+  return !!(d && d._complete === true);
 }
 
 function isCaseLocked(caseName) {
@@ -1742,6 +1798,7 @@ function switchCondition(idx) {
   renderCondPills();
   renderPhaseIndicators();
   loadCurrentView();
+  updateURL();
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1783,6 +1840,7 @@ function switchPhase(phase) {
   renderCondPills();
   renderPhaseIndicators();
   loadCurrentView();
+  updateURL();
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -1807,6 +1865,7 @@ async function loadCurrentView() {
   }
 
   syncKeyboardFocus(true);
+  applyReadOnlyMode();
 }
 
 function getKeyboardEvalItems() {
@@ -1842,6 +1901,7 @@ function getEvalInputNameForDim(dimId) {
 }
 
 function applyKeyboardScore(score) {
+  if (isAdminInspectMode()) return;
   const items = getKeyboardEvalItems();
   if (!items.length) return;
   const item = items[keyboardFocusIndex];
@@ -1978,6 +2038,7 @@ function restorePhase1() {
 }
 
 function onPhase1Change() {
+  if (isAdminInspectMode()) return;
   // TODO: re-enable freeze check before production
   // if (isPhase1Frozen(currentCase, currentCondIdx)) return;
   updatePhase1Progress();
@@ -1994,6 +2055,7 @@ function updatePhase1Progress() {
 }
 
 function completePhase1() {
+  if (isAdminInspectMode()) return;
   // TODO: re-enable freeze check before production
   // if (isPhase1Frozen(currentCase, currentCondIdx)) return;
   // Validate all 11 items
@@ -2078,6 +2140,7 @@ function restorePhaseFB() {
 }
 
 function completePhaseFB() {
+  if (isAdminInspectMode()) return;
   const data = collectPhaseFBData();
   data._complete = true;
   setPhaseData(currentCase, currentCondIdx, 'FB', data);
@@ -2089,6 +2152,7 @@ function completePhaseFB() {
 }
 
 function skipPhaseFB() {
+  if (isAdminInspectMode()) return;
   const data = { real_condition: getRealCondition(currentCase, currentCondIdx), sections: {}, _complete: true };
   setPhaseData(currentCase, currentCondIdx, 'FB', data);
   showToast('已略過章節意見，進入時間軸評估', 'success');
@@ -2351,6 +2415,7 @@ function restorePhaseTL() {
 }
 
 function onPhaseTLChange() {
+  if (isAdminInspectMode()) return;
   updateTLProgress();
   debounceSave();
 }
@@ -2365,6 +2430,7 @@ function updateTLProgress() {
 }
 
 function completePhaseTL() {
+  if (isAdminInspectMode()) return;
   const data = collectPhaseTLData();
   const activeDims = getActiveTLDimensions();
   const activeFilledCount = activeDims.filter(d => data.scores[d.id] != null).length;
@@ -2536,6 +2602,7 @@ function renderPhase3Selection() {
 }
 
 function selectPhase3Choice(idx) {
+  if (isAdminInspectMode()) return;
   p3Ranking.push(idx);
 
   renderPhase3Selection();
@@ -2551,6 +2618,7 @@ function selectPhase3Choice(idx) {
 }
 
 function undoPhase3Selection() {
+  if (isAdminInspectMode()) return;
   p3Ranking.pop();
   renderPhase3Selection();
   savePhase3State();
@@ -2565,6 +2633,7 @@ function undoPhase3Selection() {
 }
 
 function resetPhase3Selection() {
+  if (isAdminInspectMode()) return;
   p3Ranking = [];
   renderPhase3Selection();
   savePhase3State();
@@ -2586,10 +2655,10 @@ function renderPhase3Summary() {
 }
 
 function savePhase3State() {
+  if (isAdminInspectMode()) return;
   const ev = getEvaluator();
   const key = `eval_v2_${ev}_${currentCase}_phase3`;
-  let existing = {};
-  try { existing = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
+  let existing = loadStoredJSON(key) || {};
   const ranking = p3Ranking.map(idx => getAnonLabel(idx));
   const reason = document.getElementById('p3RankingReason');
   existing.ranking = ranking;
@@ -2601,8 +2670,7 @@ function savePhase3State() {
 function collectPhase3Data() {
   const ev = getEvaluator();
   const key = `eval_v2_${ev}_${currentCase}_phase3`;
-  let existing = {};
-  try { existing = JSON.parse(localStorage.getItem(key)) || {}; } catch {}
+  let existing = loadStoredJSON(key) || {};
   return {
     ...existing,
     ranking: p3Ranking.map(idx => getAnonLabel(idx)),
@@ -2614,8 +2682,7 @@ function collectPhase3Data() {
 function restorePhase3() {
   const ev = getEvaluator();
   const key = `eval_v2_${ev}_${currentCase}_phase3`;
-  let data = null;
-  try { data = JSON.parse(localStorage.getItem(key)); } catch {}
+  let data = loadStoredJSON(key);
   if (!data || !data.ranking || !Array.isArray(data.ranking)) return;
 
   // Convert labels back to indices
@@ -2647,6 +2714,7 @@ function restorePhase3() {
 }
 
 function completePhase3() {
+  if (isAdminInspectMode()) return;
   if (p3Ranking.length !== 4) {
     showToast('請完成所有排序步驟', 'error');
     return;
@@ -2759,6 +2827,7 @@ function highlightChunk(alias, sourceBodyId) {
 // ═══════════════════════════════════════════════════════════════
 
 function saveCurrentState() {
+  if (isAdminInspectMode()) return;
   if (!currentCase || !getEvaluator()) return;
 
   if (currentPhase === 1 && !isPhase1Frozen(currentCase, currentCondIdx)) {
@@ -2786,6 +2855,7 @@ function saveCurrentState() {
 }
 
 function debounceSave() {
+  if (isAdminInspectMode()) return;
   clearTimeout(autoSaveTimer);
   autoSaveTimer = setTimeout(() => saveCurrentState(), 500);
 }
@@ -3263,12 +3333,23 @@ function getCaseDisplayName(caseName) {
 function getSlug(name) { return caseSlugs[name] || encodeURIComponent(name); }
 
 function getEvaluator() {
-  return getCurrentUser() || 'default';
+  return isAdminInspectMode() ? adminInspect.evaluator : (getSessionUser() || 'default');
 }
 
 function updateURL() {
   const url = new URL(location.href);
   url.searchParams.set('case', currentCase);
+  if (isAdminInspectMode()) {
+    url.searchParams.set('admin_view', '1');
+    url.searchParams.set('evaluator', adminInspect.evaluator);
+    url.searchParams.set('version', String.fromCharCode(65 + currentCondIdx));
+    url.searchParams.set('phase', typeof currentPhase === 'string' ? currentPhase : String(currentPhase));
+  } else {
+    url.searchParams.delete('admin_view');
+    url.searchParams.delete('evaluator');
+    url.searchParams.delete('version');
+    url.searchParams.delete('phase');
+  }
   history.replaceState({}, '', url.toString());
 
   const enc = encodeURIComponent(currentCase);
@@ -3318,6 +3399,147 @@ function showToast(msg, type) {
   el.textContent = msg;
   el.className = `toast toast-${type || 'info'} show`;
   setTimeout(() => el.classList.remove('show'), 2500);
+}
+
+function isAdminInspectMode() {
+  return !!adminInspect.active;
+}
+
+function loadLocalJSON(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  } catch {
+    return null;
+  }
+}
+
+function loadStoredJSON(key) {
+  if (isAdminInspectMode()) {
+    const value = adminInspect.records.get(key);
+    return value == null ? null : JSON.parse(JSON.stringify(value));
+  }
+  return loadLocalJSON(key);
+}
+
+async function initAdminInspectFromURL() {
+  if (getSessionRole() !== 'admin') {
+    adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
+    document.body.classList.remove('admin-inspect');
+    setAdminInspectBanner();
+    return;
+  }
+
+  const params = new URLSearchParams(location.search);
+  if (params.get('admin_view') !== '1') {
+    adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
+    document.body.classList.remove('admin-inspect');
+    setAdminInspectBanner();
+    return;
+  }
+
+  const evaluator = params.get('evaluator') || '';
+  if (!evaluator || !USERS[evaluator] || evaluator === 'admin') {
+    adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
+    document.body.classList.remove('admin-inspect');
+    setAdminInspectBanner();
+    return;
+  }
+
+  const evaluatorUid = await lookupEvaluatorCloudUidByName(evaluator);
+  const records = new Map();
+  if (evaluatorUid) {
+    const snapshot = await db.collection('evals').doc(evaluatorUid).collection('records').get();
+    snapshot.forEach(doc => {
+      const row = doc.data() || {};
+      if (row.key) records.set(row.key, row.data);
+    });
+  }
+
+  adminInspect = {
+    active: true,
+    evaluator,
+    evaluatorUid,
+    role: USERS[evaluator].role,
+    records,
+  };
+  document.body.classList.add('admin-inspect');
+  hideAdminPanel();
+
+  const targetCase = params.get('case');
+  if (targetCase && caseList.includes(targetCase)) currentCase = targetCase;
+
+  const version = (params.get('version') || '').toUpperCase();
+  if (/^[A-E]$/.test(version)) currentCondIdx = version.charCodeAt(0) - 65;
+
+  const phase = params.get('phase');
+  if (phase === 'fb' || phase === 'tl') currentPhase = phase;
+  else if (phase === '1' || phase === '3') currentPhase = parseInt(phase, 10);
+
+  setAdminInspectBanner();
+}
+
+async function applyAdminInspectRouteFromURL() {
+  if (!isAdminInspectMode()) return;
+  const params = new URLSearchParams(location.search);
+  const targetCase = params.get('case');
+  if (targetCase && caseList.includes(targetCase)) {
+    currentCase = targetCase;
+    const sel = document.getElementById('caseSelect');
+    if (sel) sel.value = targetCase;
+  }
+
+  const version = (params.get('version') || '').toUpperCase();
+  if (/^[A-E]$/.test(version)) {
+    currentCondIdx = Math.max(0, Math.min(EVAL_CONDITIONS.length - 1, version.charCodeAt(0) - 65));
+  }
+
+  const phase = params.get('phase');
+  if (phase === 'fb' || phase === 'tl') currentPhase = phase;
+  else if (phase === '1' || phase === '3') currentPhase = parseInt(phase, 10);
+  else if (/^[A-E]$/.test(version)) currentPhase = getDefaultPhaseForCondition(currentCase, currentCondIdx);
+
+  renderCondPills();
+  renderPhaseIndicators();
+  await loadCurrentView();
+  updateFooter();
+  updateURL();
+}
+
+function setAdminInspectBanner() {
+  const el = document.getElementById('adminInspectBanner');
+  if (!el) return;
+  if (!isAdminInspectMode()) {
+    el.classList.remove('show');
+    el.textContent = '';
+    return;
+  }
+  const versionLabel = ANON_LABELS[currentCondIdx] || `版本 ${String.fromCharCode(65 + currentCondIdx)}`;
+  el.innerHTML = `管理檢視 <span class="muted">${esc(adminInspect.evaluator)}</span><span class="muted">${esc(versionLabel)}</span><span class="muted">唯讀</span>`;
+  el.classList.add('show');
+}
+
+function exitAdminInspectMode() {
+  adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
+  document.body.classList.remove('admin-inspect');
+  setAdminInspectBanner();
+  const url = new URL(location.href);
+  url.searchParams.delete('admin_view');
+  url.searchParams.delete('evaluator');
+  url.searchParams.delete('version');
+  url.searchParams.delete('phase');
+  history.replaceState({}, '', url.toString());
+  showAdminPanel();
+}
+
+function applyReadOnlyMode() {
+  setAdminInspectBanner();
+  if (!isAdminInspectMode()) return;
+  const root = document.querySelector('.view.active');
+  if (!root) return;
+  root.querySelectorAll('input, textarea, button').forEach(el => {
+    if (!el.closest('.toolbar')) el.disabled = true;
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -3372,6 +3594,10 @@ function initResizers() {
 // ═══════════════════════════════════════════════════════════════
 
 function showAdminPanel() {
+  if (isAdminInspectMode()) {
+    exitAdminInspectMode();
+    return;
+  }
   const page = document.getElementById('adminPage');
   page.classList.remove('hidden');
   renderAdminContent();
@@ -3392,7 +3618,7 @@ function renderAdminContent() {
     return;
   }
 
-  let html = '<div style="margin-bottom:14px;font-size:13px;color:var(--slate-500);line-height:1.6;">點案件名稱可直接跳到摘要檢視；各評估者欄位可直接檢視或刪除該案件資料。</div>';
+  let html = '<div style="margin-bottom:14px;font-size:13px;color:var(--slate-500);line-height:1.6;">點版本可直接進入老師評估頁的唯讀管理檢視；可刪除單一版本，或刪除整案資料。</div>';
   html += '<div style="overflow-x:auto;"><table>';
   html += '<thead><tr><th style="text-align:left;">案件</th>';
   evaluators.forEach(ev => {
@@ -3405,8 +3631,7 @@ function renderAdminContent() {
 
   cases.forEach(c => {
     const display = getCaseDisplayName(c);
-    const caseHref = `view.html?case=${encodeURIComponent(c)}`;
-    html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;"><a class="jump-link" href="${caseHref}">${esc(display)}</a></td>`;
+    html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;">${esc(display)}</td>`;
     evaluators.forEach(ev => {
       const overall = getEvaluatorCaseStatus(ev, c);
       let cellStyle = '';
@@ -3414,28 +3639,35 @@ function renderAdminContent() {
       else if (overall === 'partial') cellStyle = 'background:#fffbeb;';
 
       // Per-condition pills
-      let pills = '';
+      let pills = '<div class="admin-version-grid">';
       for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
         const cs = getEvaluatorCondStatus(ev, c, i);
         const letter = condLetters[i] || String.fromCharCode(65 + i);
-        let color = '#cbd5e1'; // empty = slate
         let symbol = '–';
-        if (cs === 'done') { color = '#059669'; symbol = '✓'; }       // green
-        else if (cs === 'partial') { color = '#d97706'; symbol = '·'; } // amber
-        pills += `<span style="font-size:11px;font-weight:600;color:${color};margin-right:3px;">${letter}${symbol}</span>`;
+        let cls = 'status-empty';
+        if (cs === 'done') { symbol = '✓'; cls = 'status-done'; }
+        else if (cs === 'partial') { symbol = '·'; cls = 'status-partial'; }
+        const href = buildAdminInspectHref(ev, c, letter, getDefaultPhaseForEvaluatorCondition(ev, c, i));
+        const del = cs !== 'empty'
+          ? `<button class="admin-version-delete" type="button" onclick='adminDeleteVersionData(${JSON.stringify(ev)}, ${JSON.stringify(c)}, ${i})' title="刪除版本 ${letter}">×</button>`
+          : '';
+        pills += `<div class="admin-version-item"><a class="admin-version-chip ${cls}" href="${href}" title="檢視 ${ev} / ${display} / 版本 ${letter}">${letter}${symbol}</a>${del}</div>`;
       }
+      pills += '</div>';
 
       // Phase 3 indicator
       const p3Key = `eval_v2_${ev}_${c}_phase3`;
       let p3done = false;
-      try { const p3 = JSON.parse(localStorage.getItem(p3Key)); p3done = !!(p3 && p3._complete); } catch {}
-      if (p3done) pills += `<span style="font-size:11px;font-weight:700;color:var(--indigo);margin-left:2px;">★</span>`;
+      const p3 = loadLocalJSON(p3Key);
+      p3done = !!(p3 && p3._complete);
 
       const statusHtml = pills || `<span style="font-size:11px;color:var(--slate-400);">尚無資料</span>`;
       const deleteBtn = overall !== 'empty'
-        ? `<button class="admin-mini-btn danger" onclick='adminDeleteCaseData(${JSON.stringify(ev)}, ${JSON.stringify(c)})'>刪除</button>`
+        ? `<button class="admin-mini-btn danger" onclick='adminDeleteCaseData(${JSON.stringify(ev)}, ${JSON.stringify(c)})'>刪整案</button>`
         : '';
-      html += `<td style="padding:6px 8px;${cellStyle}"><div class="admin-cell">${statusHtml}<div class="admin-cell-actions"><a class="admin-mini-btn jump-link" href="${caseHref}">檢視</a>${deleteBtn}</div></div></td>`;
+      const inspectHref = buildAdminInspectHref(ev, c, null, null);
+      const p3badge = p3done ? `<span style="font-size:11px;font-weight:700;color:var(--indigo);">★ 已排序</span>` : `<span style="font-size:11px;color:var(--slate-400);">未排序</span>`;
+      html += `<td style="padding:6px 8px;${cellStyle}"><div class="admin-cell">${statusHtml}<div class="admin-cell-actions"><a class="admin-mini-btn jump-link" href="${inspectHref}">檢視整案</a>${deleteBtn}${p3badge}</div></div></td>`;
     });
     html += '</tr>';
   });
@@ -3510,6 +3742,42 @@ function getEvaluatorCaseKeys(evaluator, caseName) {
   return keys;
 }
 
+function getEvaluatorVersionKeys(evaluator, caseName, condIdx) {
+  const condOrder = getEvCondOrderFor(evaluator, caseName);
+  const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
+  const keys = [];
+  ['1', 'FB', 'TL'].forEach(phase => {
+    const key = `eval_v2_${evaluator}_${caseName}_${cond}_phase${phase}`;
+    if (localStorage.getItem(key)) keys.push(key);
+  });
+  const phase3Key = `eval_v2_${evaluator}_${caseName}_phase3`;
+  if (localStorage.getItem(phase3Key)) keys.push(phase3Key);
+  return keys;
+}
+
+function getDefaultPhaseForEvaluatorCondition(evaluator, caseName, condIdx) {
+  const condOrder = getEvCondOrderFor(evaluator, caseName);
+  const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
+  const prefix = `eval_v2_${evaluator}_${caseName}_${cond}_phase`;
+  const p1 = loadLocalJSON(prefix + '1');
+  const fb = loadLocalJSON(prefix + 'FB');
+  const tl = loadLocalJSON(prefix + 'TL');
+  if (!(p1 && p1.scores && Object.keys(p1.scores).length >= 9)) return 1;
+  if (!(fb && fb._complete)) return 'fb';
+  if (!(tl && tl._complete)) return 'tl';
+  return 1;
+}
+
+function buildAdminInspectHref(evaluator, caseName, versionLetter, phase) {
+  const url = new URL('eval.html', location.href);
+  url.searchParams.set('admin_view', '1');
+  if (evaluator) url.searchParams.set('evaluator', evaluator);
+  if (caseName) url.searchParams.set('case', caseName);
+  if (versionLetter) url.searchParams.set('version', versionLetter);
+  if (phase) url.searchParams.set('phase', String(phase));
+  return `${url.pathname}${url.search}`;
+}
+
 async function adminDeleteCaseData(evaluator, caseName) {
   const display = getCaseDisplayName(caseName);
   const keys = getEvaluatorCaseKeys(evaluator, caseName);
@@ -3544,6 +3812,49 @@ async function adminDeleteCaseData(evaluator, caseName) {
   if (currentCase === caseName) onCaseChange();
 
   if (cloudDeleted) showToast(`已刪除 ${evaluator} 的案件資料`, 'success');
+  else if (cloudWarning) showToast(cloudWarning, 'error');
+}
+
+async function adminDeleteVersionData(evaluator, caseName, condIdx) {
+  const display = getCaseDisplayName(caseName);
+  const letter = ANON_LABELS[condIdx] || `版本 ${String.fromCharCode(65 + condIdx)}`;
+  const keys = getEvaluatorVersionKeys(evaluator, caseName, condIdx);
+  if (!keys.length) {
+    showToast(`${evaluator} 的 ${letter} 目前沒有可刪除資料`, 'error');
+    return;
+  }
+  const confirmed = confirm(`刪除 ${evaluator} 的「${display}」${letter} 資料？\n會移除這個版本的評分與意見，並清除整案排序結果。`);
+  if (!confirmed) return;
+
+  keys.forEach(key => localStorage.removeItem(key));
+
+  let cloudDeleted = false;
+  let cloudWarning = '';
+  try {
+    const uid = await lookupEvaluatorCloudUidByName(evaluator);
+    if (uid) {
+      const batch = db.batch();
+      keys.forEach(key => batch.delete(cloudRecordRef(uid, key)));
+      await batch.commit();
+      cloudDeleted = true;
+    } else {
+      cloudWarning = '該評估者尚未建立雲端索引，雲端資料未刪除。請對方先重新登入一次。';
+    }
+  } catch (err) {
+    console.error('Admin cloud version delete failed:', err);
+    cloudWarning = '雲端刪除失敗，本機資料已刪除。';
+  }
+
+  renderAdminContent();
+  updateFooter();
+
+  if (isAdminInspectMode() && adminInspect.evaluator === evaluator && currentCase === caseName && currentCondIdx === condIdx) {
+    exitAdminInspectMode();
+  } else if (currentCase === caseName) {
+    onCaseChange();
+  }
+
+  if (cloudDeleted) showToast(`已刪除 ${evaluator} 的 ${letter} 資料`, 'success');
   else if (cloudWarning) showToast(cloudWarning, 'error');
 }
 
