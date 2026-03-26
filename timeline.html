@@ -683,7 +683,7 @@
       html += '</div></div>'; // tl-col-right .panel-card
       html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
-      if (events.length > 0) showSource(activeEventIdx >= 0 ? activeEventIdx : 0, false);
+      if (events.length > 0 && activeEventIdx >= 0) showSource(activeEventIdx, false);
 
     }
 
@@ -694,20 +694,16 @@
       if (!evt) return;
       activeEventIdx = idx;
 
-      // Highlight active event card on the left
+      // Highlight active event card (no scroll — only visual)
       document.querySelectorAll('.tl-event').forEach(el => {
         el.classList.toggle('active-source', parseInt(el.dataset.idx) === idx);
         el.classList.remove('focus-pulse');
       });
       const activeCard = document.querySelector(`.tl-event[data-idx="${idx}"]`);
-      if (scrollEvent && activeCard && lastScrolledEventIdx !== idx) {
-        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }
       if (activeCard) {
         void activeCard.offsetWidth;
         activeCard.classList.add('focus-pulse');
       }
-      lastScrolledEventIdx = idx;
 
       // Clear all previous chunk/event highlights
       document.querySelectorAll('.chunk-region.active').forEach(el => {
@@ -730,14 +726,13 @@
           const evtMarks = regionEl.querySelectorAll(`.evt-highlight[data-evt="${idx}"]`);
           evtMarks.forEach(m => m.classList.add('active'));
 
-          // Smooth scroll to event first, then ease into the source highlight.
-          const scrollTarget = evtMarks.length > 0 ? evtMarks[0] : regionEl;
-          if (sourceScrollTimer) window.clearTimeout(sourceScrollTimer);
-          sourceScrollTimer = window.setTimeout(() => {
+          // Single smooth scroll to source highlight (like eval.html)
+          if (scrollEvent) {
+            const scrollTarget = evtMarks.length > 0 ? evtMarks[0] : regionEl;
             requestAnimationFrame(() => {
               scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
             });
-          }, scrollEvent ? 180 : 0);
+          }
         }
       }
     }
