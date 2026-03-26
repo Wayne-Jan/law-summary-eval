@@ -34,12 +34,12 @@ VOLUME_TO_FILE = {
 }
 EXTRA_CONDITIONS = OrderedDict(
     [
-        ("opensource_afg_v11_5", {"label": "OpenAFG v11.5", "group": "開源模型"}),
-        ("opensource_afg_v11_5_no_afg", {"label": "OpenAFG v11.5 (No AFG)", "group": "開源模型"}),
-        ("opensource_afg_v11_5_no_react", {"label": "OpenAFG v11.5 (No ReAct)", "group": "開源模型"}),
-        ("opensource_afg_v11_5_writer_nemotron_super", {"label": "OpenAFG v11.5 (Nemo-Super Writer)", "group": "開源模型"}),
-        ("opensource_afg_v11_5_no_react_writer_nemotron_super", {"label": "OpenAFG v11.5 (No ReAct, Nemo-Super Writer)", "group": "開源模型"}),
-        ("opensource_afg_v11_5_no_afg_writer_nemotron_super", {"label": "OpenAFG v11.5 (No AFG, Nemo-Super Writer)", "group": "開源模型"}),
+        ("opensource_afg_v11_5", {"label": "Open-A1", "group": "開源模型"}),
+        ("opensource_afg_v11_5_no_react", {"label": "Open-A2", "group": "開源模型"}),
+        ("opensource_afg_v11_5_no_afg", {"label": "Open-A3", "group": "開源模型"}),
+        ("opensource_afg_v11_5_writer_nemotron_super", {"label": "Open-B1", "group": "開源模型"}),
+        ("opensource_afg_v11_5_no_react_writer_nemotron_super", {"label": "Open-B2", "group": "開源模型"}),
+        ("opensource_afg_v11_5_no_afg_writer_nemotron_super", {"label": "Open-B3", "group": "開源模型"}),
         ("baseline_ollama_nemotron-3-super-cloud", {"label": "Baseline-Nemotron 3 Super", "group": "開源模型"}),
     ]
 )
