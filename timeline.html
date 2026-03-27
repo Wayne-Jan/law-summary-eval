@@ -112,9 +112,19 @@
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
       min-height: 200px; display: flex; flex-direction: column;
     }
-    .source-panel-tools {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-      padding: 10px 18px 0;
+    .source-head-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 14px; flex-wrap: wrap;
+    }
+    .source-head-main {
+      min-width: 0;
+    }
+    .source-head-actions {
+      display: flex; justify-content: flex-end; align-items: flex-start;
+      flex: 0 0 auto; min-height: 30px;
+    }
+    .source-head-actions:empty {
+      display: none;
     }
     .source-panel-body {
       font-size: 14px; color: #475569; line-height: 1.85;
@@ -184,7 +194,7 @@
     .source-panel-empty svg { margin-bottom: 10px; opacity: 0.5; }
     .source-panel-empty span { font-size: 13px; }
     .source-switcher {
-      display: flex; gap: 8px; flex-wrap: wrap;
+      display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;
     }
     .span-tab {
       appearance: none; -webkit-appearance: none;
@@ -321,7 +331,9 @@
       .tl-columns { gap: 16px; }
       .tl-col-left { flex: 42; }
       .tl-col-right { flex: 58; }
-      .source-panel-tools { flex-direction: column; align-items: flex-start; }
+      .source-head-row { flex-direction: column; align-items: flex-start; }
+      .source-head-actions { width: 100%; justify-content: flex-start; }
+      .source-switcher { justify-content: flex-start; }
     }
 
     /* ─── RESPONSIVE: MOBILE ─── */
@@ -845,15 +857,17 @@
       html += '<div class="source-stack">';
       html += '<div class="source-panel" id="sourcePanel">';
       html += '<div class="panel-head source-head">';
+      html += '<div class="source-head-row">';
+      html += '<div class="source-head-main">';
       html += '<div class="panel-kicker">SOURCE</div>';
       html += `<div class="panel-title">原始判決書</div>`;
       html += `<div class="panel-meta">${chunks.length} 段原文片段</div>`;
       html += '</div>';
       if (timelineSourceMode === 'v310') {
-        html += `<div class="source-panel-tools">`;
-        html += `<div id="sourceSwitcherHost"></div>`;
-        html += `</div>`;
+        html += `<div class="source-head-actions" id="sourceSwitcherHost"></div>`;
       }
+      html += '</div>';
+      html += '</div>';
       html += '<div class="source-panel-body" id="sourcePanelBody">';
 
       if (chunks.length > 0) {
