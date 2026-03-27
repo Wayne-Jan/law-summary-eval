@@ -39,6 +39,7 @@ PREDICTIONS = os.path.join(SOURCE_PROJECT, "data", "predictions")
 CHUNKS_DIR = os.path.join(SOURCE_PROJECT, "data", "chunks_20260105")
 EXTRACTIONS_DIR_V39 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.9")
 EXTRACTIONS_DIR_V310 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.10")
+EXTRACTIONS_DIR_V3104 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.10.4")
 SOURCE_TEXT_DIR = os.path.join(SOURCE_PROJECT, "原始判決書")
 GT_SUMMARY_DIR = os.path.join(SOURCE_PROJECT, "摘要 (ground_truth)")
 SITE_DATA = os.path.join(SCRIPT_DIR, "data")
@@ -49,6 +50,14 @@ TIMELINE_ALIGN_CACHE_PATH = os.path.join(
     TIMELINE_ALIGN_CACHE_DIR, "timeline_align_cache.json"
 )
 TIMELINE_ALIGN_CACHE_VERSION = 1
+VIEW_BUILD_CACHE_PATH = os.path.join(
+    TIMELINE_ALIGN_CACHE_DIR, "view_build_cache.json"
+)
+VIEW_BUILD_CACHE_VERSION = 1
+TIMELINE_V310_BUILD_CACHE_PATH = os.path.join(
+    TIMELINE_ALIGN_CACHE_DIR, "timeline_v310_build_cache.json"
+)
+TIMELINE_V310_BUILD_CACHE_VERSION = 1
 
 VOLUMES = ["上冊", "中冊", "下冊"]
 
@@ -209,6 +218,119 @@ def load_timeline_align_cache():
 def save_timeline_align_cache(cache):
     os.makedirs(TIMELINE_ALIGN_CACHE_DIR, exist_ok=True)
     write_json_if_changed(TIMELINE_ALIGN_CACHE_PATH, cache)
+
+
+def load_view_build_cache():
+    cache = read_json(VIEW_BUILD_CACHE_PATH)
+    if not isinstance(cache, dict):
+        return {"version": VIEW_BUILD_CACHE_VERSION, "cases": {}}
+    if cache.get("version") != VIEW_BUILD_CACHE_VERSION:
+        return {"version": VIEW_BUILD_CACHE_VERSION, "cases": {}}
+    cases = cache.get("cases", {})
+    if not isinstance(cases, dict):
+        cases = {}
+    return {"version": VIEW_BUILD_CACHE_VERSION, "cases": cases}
+
+
+def save_view_build_cache(cache):
+    os.makedirs(TIMELINE_ALIGN_CACHE_DIR, exist_ok=True)
+    write_json_if_changed(VIEW_BUILD_CACHE_PATH, cache)
+
+
+def load_timeline_v310_build_cache():
+    cache = read_json(TIMELINE_V310_BUILD_CACHE_PATH)
+    if not isinstance(cache, dict):
+        return {"version": TIMELINE_V310_BUILD_CACHE_VERSION, "cases": {}}
+    if cache.get("version") != TIMELINE_V310_BUILD_CACHE_VERSION:
+        return {"version": TIMELINE_V310_BUILD_CACHE_VERSION, "cases": {}}
+    cases = cache.get("cases", {})
+    if not isinstance(cases, dict):
+        cases = {}
+    return {"version": TIMELINE_V310_BUILD_CACHE_VERSION, "cases": cases}
+
+
+def save_timeline_v310_build_cache(cache):
+    os.makedirs(TIMELINE_ALIGN_CACHE_DIR, exist_ok=True)
+    write_json_if_changed(TIMELINE_V310_BUILD_CACHE_PATH, cache)
+
+
+def _stat_sig(path):
+    if not os.path.exists(path):
+        return "-"
+    st = os.stat(path)
+    return f"{st.st_mtime_ns}:{st.st_size}"
+
+
+def _hash_parts(parts):
+    h = hashlib.sha1()
+    for part in parts:
+        h.update(str(part).encode("utf-8"))
+        h.update(b"\0")
+    return h.hexdigest()
+
+
+def compute_view_input_fingerprint(case_dir, case_name, volume, cond):
+    parts = [
+        "view_v1",
+        cond,
+        case_name,
+        volume,
+        json.dumps(CONDITION_LABELS, ensure_ascii=False, sort_keys=True),
+        json.dumps(CONDITION_GROUPS, ensure_ascii=False, sort_keys=True),
+    ]
+
+    section_dir = os.path.join(case_dir, "workspace", "sections")
+    if not os.path.isdir(section_dir):
+        section_dir = case_dir
+    for _, filename, _ in SECTION_FILES:
+        file_path = os.path.join(section_dir, filename)
+        parts.extend([file_path, _stat_sig(file_path)])
+
+    candidate_paths = [
+        os.path.join(case_dir, "citations.txt"),
+        os.path.join(case_dir, "meta", "citations.json"),
+        os.path.join(case_dir, "workspace", "chunk_alias_mapping.json"),
+        os.path.join(case_dir, "meta", "metadata.json"),
+        os.path.join(CHUNKS_DIR, volume, f"{case_name}.json"),
+    ]
+    for path in candidate_paths:
+        parts.extend([path, _stat_sig(path)])
+
+    eval_dir = os.path.join(case_dir, "eval")
+    if os.path.isdir(eval_dir):
+        for name in sorted(os.listdir(eval_dir)):
+            path = os.path.join(eval_dir, name)
+            parts.extend([path, _stat_sig(path)])
+    else:
+        parts.extend([eval_dir, "-"])
+
+    return _hash_parts(parts)
+
+
+def find_v310_master_path(case_name):
+    preferred = os.path.join(EXTRACTIONS_DIR_V3104, case_name, "master.json")
+    if os.path.exists(preferred):
+        return preferred
+    fallback = os.path.join(EXTRACTIONS_DIR_V310, case_name, "master.json")
+    if os.path.exists(fallback):
+        return fallback
+    return None
+
+
+def compute_v310_timeline_fingerprint(case_name, volume):
+    master_path = find_v310_master_path(case_name)
+    if not master_path:
+        return None
+    parts = [
+        "timeline_v310_v1",
+        case_name,
+        volume,
+        master_path,
+        _stat_sig(master_path),
+    ]
+    chunk_path = os.path.join(CHUNKS_DIR, volume, f"{case_name}.json")
+    parts.extend([chunk_path, _stat_sig(chunk_path)])
+    return _hash_parts(parts)
 
 
 def fingerprint_event_texts(events):
@@ -415,9 +537,9 @@ def load_metadata(case_dir):
 
 
 def load_v310_timeline(case_name, volume):
-    """Load a v3.10 timeline master and normalize it for the static viewer."""
-    master_path = os.path.join(EXTRACTIONS_DIR_V310, case_name, "master.json")
-    if not os.path.exists(master_path):
+    """Load a v3.10.4 timeline master and normalize it for the static viewer."""
+    master_path = find_v310_master_path(case_name)
+    if not master_path or not os.path.exists(master_path):
         return None
 
     master = read_json(master_path)
@@ -455,7 +577,7 @@ def load_v310_timeline(case_name, volume):
     return {
         "case_name": case_name,
         "volume": volume,
-        "source": "v3.10",
+        "source": "v3.10.4",
         "events": events,
         "timeline_summary": tl_summary,
         "time_gaps": time_gaps,
@@ -568,6 +690,8 @@ def build():
     os.makedirs(SITE_DATA, exist_ok=True)
     timeline_align_cache = load_timeline_align_cache()
     timeline_align_cases = timeline_align_cache.setdefault("cases", {})
+    view_build_cache = load_view_build_cache()
+    view_build_cases = view_build_cache.setdefault("cases", {})
     rewritten_outputs = 0
     unchanged_outputs = 0
 
@@ -690,6 +814,21 @@ def build():
         for case, info in cases.items():
             case_dir = info["dir"]
             volume = info["volume"]
+            slug = case_slugs[case]
+            out_path = os.path.join(cond_out_dir, slug + ".json")
+            cache_key = f"{cond}/{case}"
+            fingerprint = compute_view_input_fingerprint(case_dir, case, volume, cond)
+            cached = view_build_cases.get(cache_key)
+            if (
+                isinstance(cached, dict)
+                and cached.get("fingerprint") == fingerprint
+                and os.path.exists(out_path)
+            ):
+                if cached.get("has_llm"):
+                    eval_count += 1
+                unchanged_outputs += 1
+                continue
+
             sections = load_sections(case_dir)
             chunks, citations_map = load_chunks_for_case(case, case_dir, volume)
             metadata = load_metadata(case_dir)
@@ -728,12 +867,14 @@ def build():
                 "eval": eval_scores,
             }
 
-            slug = case_slugs[case]
-            out_path = os.path.join(cond_out_dir, slug + ".json")
             if write_json_if_changed(out_path, view_data):
                 rewritten_outputs += 1
             else:
                 unchanged_outputs += 1
+            view_build_cases[cache_key] = {
+                "fingerprint": fingerprint,
+                "has_llm": has_llm,
+            }
 
         manifest_conditions[cond] = {
             "label": label,
@@ -895,14 +1036,14 @@ def build():
     print(f"  {'timeline (extraction v3.9 only)':45s}  {tl_count:3d} cases  ({tl_realign_count} spans realigned)")
     print(f"  {'timeline alignment cache':45s}  {tl_cache_hits:3d} hits  {tl_cache_misses:3d} misses")
 
-    log_stage(build_started, "Stage 6/7: building timeline v3.10 views")
-    # Build timeline data (extraction v3.10, volume-aware)
+    log_stage(build_started, "Stage 6/7: building timeline v3.10.4 views")
+    # Build timeline data (extraction v3.10.4 via timeline_v310 artifact path)
     tl_v310_out_dir = os.path.join(SITE_DATA, "timeline_v310")
     os.makedirs(tl_v310_out_dir, exist_ok=True)
     tl_v310_count = 0
     v310_dir = EXTRACTIONS_DIR_V310
     if not os.path.isdir(v310_dir):
-        print("  WARNING: extraction v3.10 directory not found, skipping timeline_v310")
+        print("  WARNING: extraction v3.10.4 directory not found, skipping timeline_v310")
     else:
         for case_name in sorted(os.listdir(v310_dir)):
             case_dir = os.path.join(v310_dir, case_name)
@@ -932,7 +1073,7 @@ def build():
             else:
                 unchanged_outputs += 1
             tl_v310_count += 1
-        print(f"  {'timeline (extraction v3.10)':45s}  {tl_v310_count:3d} cases")
+        print(f"  {'timeline (extraction v3.10.4)':45s}  {tl_v310_count:3d} cases")
 
     log_stage(build_started, "Stage 7/7: writing eval whitelist and manifest")
     # Load human eval 30-case whitelist
@@ -1001,6 +1142,7 @@ def build():
     )
 
     save_timeline_align_cache(timeline_align_cache)
+    save_view_build_cache(view_build_cache)
     log_stage(build_started, "Build complete")
 
 
