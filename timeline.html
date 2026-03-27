@@ -6,7 +6,7 @@
   <title>時間軸檢視 — 醫療糾紛事件時間軸</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root { --toolbar-h: 52px; --subbar-h: 76px; }
+    :root { --toolbar-h: 52px; --subbar-h: 44px; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f8f9fa;
@@ -25,6 +25,12 @@
       border: 1px solid #e5e7eb; border-radius: 12px;
       padding: 4px 10px; min-width: 220px;
     }
+    .case-context-badge {
+      display: inline-flex; align-items: center;
+      font-size: 12px; font-weight: 600; color: #64748b;
+      background: #f8fafc; border: 1px solid #e2e8f0;
+      border-radius: 999px; padding: 5px 10px; white-space: nowrap;
+    }
     .toolbar .spacer { flex: 1; }
     .toolbar a.nav-link {
       color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
@@ -36,8 +42,8 @@
     .progress-subbar {
       position: fixed; top: var(--toolbar-h); left: 0; right: 0; height: var(--subbar-h);
       background: white; border-bottom: 1px solid #e2e8f0;
-      display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
-      padding: 6px 16px; gap: 6px; z-index: 99;
+      display: flex; align-items: center; justify-content: flex-start;
+      padding: 0 16px; z-index: 99;
     }
     .subbar-line {
       display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
@@ -241,14 +247,20 @@
     }
 
     /* ─── SUMMARY BANNER ─── */
-    .tl-summary { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-    .tl-summary-card {
-      background: white; border: 1px solid #e5e7eb; border-radius: 10px;
-      padding: 14px 18px; flex: 1; min-width: 140px;
+    .tl-summary {
+      display: flex; gap: 10px; margin-bottom: 18px; flex-wrap: wrap;
+      padding: 10px 12px; background: white; border: 1px solid #e5e7eb; border-radius: 12px;
     }
-    .tl-summary-label { font-size: 11px; color: #9ca3af; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .tl-summary-value { font-size: 20px; font-weight: 700; color: #1f2937; }
-    .tl-summary-value.small { font-size: 14px; font-weight: 500; }
+    .tl-summary-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border-radius: 999px; background: #f8fafc;
+      border: 1px solid #e2e8f0; color: #334155;
+    }
+    .tl-summary-label {
+      font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;
+    }
+    .tl-summary-value { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .tl-summary-value.small { font-size: 13px; font-weight: 600; }
 
     /* ─── TIMELINE ─── */
     .timeline { position: relative; padding-left: 28px; }
@@ -353,7 +365,7 @@
     /* ─── RESPONSIVE: TABLET ─── */
     @media (max-width: 1024px) {
       .content-inner { padding: 20px; }
-      .tl-summary-card { min-width: 120px; padding: 10px 14px; }
+      .case-context-badge { font-size: 11px; }
       .tl-columns { gap: 16px; }
       .tl-col-left { flex: 42; }
       .tl-col-right { flex: 58; }
@@ -412,9 +424,9 @@
       .main { flex-direction: column; margin-top: calc(var(--toolbar-h) + var(--subbar-h)) !important; height: auto; min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)) !important; }
       .content-area { padding: 0; flex: 1; }
       .content-inner { padding: 16px 12px; }
-      .tl-summary { gap: 8px; }
-      .tl-summary-card { min-width: 45%; padding: 10px 12px; }
-      .tl-summary-value { font-size: 16px; }
+      .tl-summary { gap: 8px; padding: 10px; }
+      .tl-summary-chip { width: 100%; justify-content: space-between; }
+      .tl-summary-value { font-size: 13px; }
       .tl-event { padding: 12px 14px; cursor: default; }
       .tl-desc { font-size: 12px; }
       .tl-meta { gap: 8px; }
@@ -428,7 +440,7 @@
     @media (min-width: 769px) {
     }
     @media (max-width: 480px) {
-      .tl-summary-card { min-width: 100%; }
+      .case-context-badge { max-width: 100%; }
     }
   </style>
 </head>
@@ -442,6 +454,7 @@
       <div class="ctrl-row">
         <label class="ctrl-label">案件</label>
         <select class="condition-select" id="caseSelect"></select>
+        <span class="case-context-badge" id="caseContextBadge"></span>
       </div>
       <span class="spacer"></span>
       <div class="ctrl-row-nav">
@@ -454,12 +467,6 @@
     </div>
   </div>
   <div class="progress-subbar" id="progressSubbar">
-    <div class="subbar-line">
-      <span class="subbar-label">冊別：</span>
-      <button class="volume-pill" id="volBtn0" onclick="openVolModal('上冊')">上冊<span class="volume-pill-count" id="volText0"></span></button>
-      <button class="volume-pill" id="volBtn1" onclick="openVolModal('中冊')">中冊<span class="volume-pill-count" id="volText1"></span></button>
-      <button class="volume-pill" id="volBtn2" onclick="openVolModal('下冊')">下冊<span class="volume-pill-count" id="volText2"></span></button>
-    </div>
     <div class="subbar-line">
       <span class="subbar-label">來源：</span>
       <button class="volume-pill source-pill" id="sourceLegacyBtn" onclick="switchTimelineSource('legacy')">Legacy</button>
@@ -568,13 +575,11 @@
     function updateVolumeProgress() {
       const volumes = ['上冊', '中冊', '下冊'];
       const currentVolume = currentCase ? ((caseInfo[currentCase] || {}).volume || '') : '';
-      volumes.forEach((vol, idx) => {
-        const total = allCases.filter(c => ((caseInfo[c] || {}).volume || '') === vol).length;
-        const textEl = document.getElementById(`volText${idx}`);
-        const btnEl = document.getElementById(`volBtn${idx}`);
-        if (textEl) textEl.textContent = ` ${total}案`;
-        if (btnEl) btnEl.classList.toggle('active', vol === currentVolume);
-      });
+      const total = currentVolume ? allCases.filter(c => ((caseInfo[c] || {}).volume || '') === currentVolume).length : 0;
+      const badge = document.getElementById('caseContextBadge');
+      if (badge) {
+        badge.textContent = currentVolume ? `${currentVolume}・${total}案` : '';
+      }
     }
 
     function updateSourceProgress() {
@@ -816,8 +821,8 @@
 
       // Summary banner
       html += '<div class="tl-summary">';
-      html += `<div class="tl-summary-card"><div class="tl-summary-label">事件數</div><div class="tl-summary-value">${events.length}</div></div>`;
-      html += `<div class="tl-summary-card"><div class="tl-summary-label">關鍵決策</div><div class="tl-summary-value" style="color:#dc2626">${criticalCount}</div></div>`;
+      html += `<div class="tl-summary-chip"><span class="tl-summary-label">事件數</span><span class="tl-summary-value">${events.length}</span></div>`;
+      html += `<div class="tl-summary-chip"><span class="tl-summary-label">關鍵決策</span><span class="tl-summary-value" style="color:#dc2626">${criticalCount}</span></div>`;
       const spanStart = span.start_date || span.start || '';
       const spanEnd = span.end_date || span.end || '';
       if (spanStart) {
@@ -829,8 +834,9 @@
           const h = (d2 - d1) / 3600000;
           if (h > 0) label += `（共 ${h >= 24 ? Math.round(h/24)+' 天' : Math.round(h)+' 小時'}）`;
         }
-        html += `<div class="tl-summary-card"><div class="tl-summary-label">時間跨度</div><div class="tl-summary-value small">${esc(label)}</div></div>`;
+        html += `<div class="tl-summary-chip"><span class="tl-summary-label">時間跨度</span><span class="tl-summary-value small">${esc(label)}</span></div>`;
       }
+      html += `<div class="tl-summary-chip"><span class="tl-summary-label">原文片段</span><span class="tl-summary-value">${chunks.length}</span></div>`;
       html += '</div>';
 
       // Workbench
