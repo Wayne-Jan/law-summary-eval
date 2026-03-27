@@ -152,18 +152,24 @@
     .progress-subbar {
       position: fixed; top: var(--toolbar-h); left: 0; right: 0; height: var(--subbar-h);
       background: white; border-bottom: 1px solid #e2e8f0;
-      display: flex; align-items: center; padding: 0 16px; gap: 16px; z-index: 99;
+      display: flex; align-items: center; padding: 0 16px; gap: 10px; z-index: 99;
       font-size: 12px; color: var(--slate-500);
     }
-    .progress-subbar .vol-block { display: flex; align-items: center; gap: 6px; cursor: pointer; border-radius: 8px; padding: 4px 8px; transition: background .15s, box-shadow .15s, transform .15s; }
+    .progress-subbar .vol-block {
+      display: inline-flex; align-items: center; gap: 8px;
+      cursor: pointer; border-radius: 999px; padding: 5px 10px;
+      transition: background .15s, box-shadow .15s, transform .15s, border-color .15s;
+      border: 1px solid #e2e8f0; background: #f8fafc;
+      font-size: 12px; font-weight: 600; color: #64748b;
+    }
     .progress-subbar .vol-block:hover { transform: translateY(-1px); box-shadow: 0 2px 10px rgba(15,23,42,0.08); }
-    .progress-subbar .vol-label { font-weight: 700; color: var(--slate-700); }
-    .progress-subbar .vol-block[data-vol="上冊"] { background: #eef2ff; }
-    .progress-subbar .vol-block[data-vol="上冊"] .vol-label { color: var(--indigo); }
-    .progress-subbar .vol-block[data-vol="中冊"] { background: #f0fdfa; }
-    .progress-subbar .vol-block[data-vol="中冊"] .vol-label { color: #0d9488; }
-    .progress-subbar .vol-block[data-vol="下冊"] { background: #fff7ed; }
-    .progress-subbar .vol-block[data-vol="下冊"] .vol-label { color: #d97706; }
+    .progress-subbar .vol-label { font-weight: 600; }
+    .progress-subbar .vol-block[data-vol="上冊"] { color: #4f46e5; background: #eef2ff; border-color: #c7d2fe; }
+    .progress-subbar .vol-block[data-vol="中冊"] { color: #0d9488; background: #f0fdfa; border-color: #99f6e4; }
+    .progress-subbar .vol-block[data-vol="下冊"] { color: #d97706; background: #fff7ed; border-color: #fdba74; }
+    .progress-subbar .vol-text { opacity: 0.82; font-weight: 600; }
+    .progress-subbar .sep-dot { display: none; }
+    .progress-subbar .vol-mini-bar { display: none; }
     /* ─── VOL MODAL ─── */
     #volModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:9000; align-items:center; justify-content:center; }
     #volModal.show { display:flex; }
@@ -906,19 +912,19 @@
   <div class="vol-block" data-vol="上冊" onclick="openVolModal(0)">
     <span class="vol-label">上冊</span>
     <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill0" style="width:0%"></div></div>
-    <span id="volText0">0/6</span>
+    <span class="vol-text" id="volText0">0/6</span>
   </div>
   <span class="sep-dot">·</span>
   <div class="vol-block" data-vol="中冊" onclick="openVolModal(1)">
     <span class="vol-label">中冊</span>
     <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill1" style="width:0%"></div></div>
-    <span id="volText1">0/12</span>
+    <span class="vol-text" id="volText1">0/12</span>
   </div>
   <span class="sep-dot">·</span>
   <div class="vol-block" data-vol="下冊" onclick="openVolModal(2)">
     <span class="vol-label">下冊</span>
     <div class="vol-mini-bar"><div class="vol-mini-fill" id="volFill2" style="width:0%"></div></div>
-    <span id="volText2">0/12</span>
+    <span class="vol-text" id="volText2">0/12</span>
   </div>
 </div>
 
