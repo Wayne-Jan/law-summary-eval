@@ -747,9 +747,12 @@
         if (timelineSourceMode === 'v310') {
           const evidence = getEventAlignmentSummary(evt);
           html += '<div class="tl-evidence-row">';
-          html += `<span class="tl-evidence-pill">證據 ${evidence.total} 段</span>`;
-          html += `<span class="tl-evidence-pill">Primary ${evidence.primary}</span>`;
-          if (evidence.supporting > 0) html += `<span class="tl-evidence-pill">Supporting ${evidence.supporting}</span>`;
+          html += `<span class="tl-evidence-pill">${evidence.total} 段證據</span>`;
+          if (evidence.supporting > 0) {
+            html += `<span class="tl-evidence-pill">含 ${evidence.supporting} 段補充</span>`;
+          } else {
+            html += `<span class="tl-evidence-pill">單一主證據</span>`;
+          }
           html += `<span class="tl-evidence-pill status-${evidence.status}">${esc(formatEvidenceStatus(evidence.status))}</span>`;
           html += '</div>';
           if (evt.critical_overlap_annotation) {
@@ -787,8 +790,8 @@
       html += `<div class="panel-meta">${chunks.length} 段原文片段</div>`;
       if (timelineSourceMode === 'v310') {
         html += `<div class="source-legend">`;
-        html += `<span class="source-legend-item"><span class="legend-swatch primary"></span>Primary</span>`;
-        html += `<span class="source-legend-item"><span class="legend-swatch supporting"></span>Supporting</span>`;
+        html += `<span class="source-legend-item"><span class="legend-swatch primary"></span>主證據</span>`;
+        html += `<span class="source-legend-item"><span class="legend-swatch supporting"></span>補充證據</span>`;
         html += `</div>`;
       }
       html += '</div>';
@@ -927,7 +930,7 @@
     }
 
     function formatEvidenceStatus(status) {
-      const map = { exact: 'Exact', fuzzy: 'Fuzzy', partial: 'Partial', unresolved: 'Unresolved' };
+      const map = { exact: '精確對齊', fuzzy: '模糊對齊', partial: '部分對齊', unresolved: '待定位' };
       return map[status] || status;
     }
 

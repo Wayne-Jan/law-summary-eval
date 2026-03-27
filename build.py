@@ -38,7 +38,6 @@ from modules.extraction_v3_8.alignment_engine import smart_align
 PREDICTIONS = os.path.join(SOURCE_PROJECT, "data", "predictions")
 CHUNKS_DIR = os.path.join(SOURCE_PROJECT, "data", "chunks_20260105")
 EXTRACTIONS_DIR_V39 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.9")
-EXTRACTIONS_DIR_V310 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.10")
 EXTRACTIONS_DIR_V3104 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.10.4")
 SOURCE_TEXT_DIR = os.path.join(SOURCE_PROJECT, "原始判決書")
 GT_SUMMARY_DIR = os.path.join(SOURCE_PROJECT, "摘要 (ground_truth)")
@@ -308,12 +307,9 @@ def compute_view_input_fingerprint(case_dir, case_name, volume, cond):
 
 
 def find_v310_master_path(case_name):
-    preferred = os.path.join(EXTRACTIONS_DIR_V3104, case_name, "master.json")
-    if os.path.exists(preferred):
-        return preferred
-    fallback = os.path.join(EXTRACTIONS_DIR_V310, case_name, "master.json")
-    if os.path.exists(fallback):
-        return fallback
+    master_path = os.path.join(EXTRACTIONS_DIR_V3104, case_name, "master.json")
+    if os.path.exists(master_path):
+        return master_path
     return None
 
 
@@ -1041,10 +1037,11 @@ def build():
     tl_v310_out_dir = os.path.join(SITE_DATA, "timeline_v310")
     os.makedirs(tl_v310_out_dir, exist_ok=True)
     tl_v310_count = 0
-    v310_dir = EXTRACTIONS_DIR_V310
+    v310_dir = EXTRACTIONS_DIR_V3104
     if not os.path.isdir(v310_dir):
         print("  WARNING: extraction v3.10.4 directory not found, skipping timeline_v310")
     else:
+        emitted_v310_paths = set()
         for case_name in sorted(os.listdir(v310_dir)):
             case_dir = os.path.join(v310_dir, case_name)
             if not os.path.isdir(case_dir):
@@ -1068,11 +1065,20 @@ def build():
                 next_idx += 1
                 case_volumes[case_name] = volume
             tl_path = os.path.join(tl_v310_out_dir, slug + ".json")
+            emitted_v310_paths.add(os.path.abspath(tl_path))
             if write_json_if_changed(tl_path, tl_data):
                 rewritten_outputs += 1
             else:
                 unchanged_outputs += 1
             tl_v310_count += 1
+        for name in sorted(os.listdir(tl_v310_out_dir)):
+            if not name.endswith(".json"):
+                continue
+            stale_path = os.path.abspath(os.path.join(tl_v310_out_dir, name))
+            if stale_path in emitted_v310_paths:
+                continue
+            os.remove(stale_path)
+            rewritten_outputs += 1
         print(f"  {'timeline (extraction v3.10.4)':45s}  {tl_v310_count:3d} cases")
 
     log_stage(build_started, "Stage 7/7: writing eval whitelist and manifest")
