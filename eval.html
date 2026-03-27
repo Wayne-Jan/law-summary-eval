@@ -3203,7 +3203,7 @@ function saveCurrentState() {
     if (Object.keys(data.scores).length > 0 || data.comment) {
       setPhaseData(currentCase, currentCondIdx, 'TL', data);
     }
-  } else if (currentPhase === 3) {
+  } else if (currentPhase === 3 && SHOW_PHASE3_UI) {
     const data = collectPhase3Data();
     const ev = getEvaluator();
     const key = `eval_v2_${ev}_${currentCase}_phase3`;
@@ -3226,7 +3226,7 @@ document.addEventListener('change', (e) => {
   }
 });
 document.addEventListener('input', (e) => {
-  if (e.target.id === 'tlComment' || e.target.id === 'p3RankingReason' ||
+  if (e.target.id === 'tlComment' || (SHOW_PHASE3_UI && e.target.id === 'p3RankingReason') ||
       e.target.closest('#fbSectionForm')) {
     debounceSave();
   }
@@ -3255,7 +3255,7 @@ document.addEventListener('keydown', (e) => {
     if (currentPhase === 1) completePhase1();
     else if (currentPhase === 'fb') completePhaseFB();
     else if (currentPhase === 'tl') completePhaseTL();
-    else if (currentPhase === 3) completePhase3();
+    else if (currentPhase === 3 && SHOW_PHASE3_UI) completePhase3();
     return;
   }
 
