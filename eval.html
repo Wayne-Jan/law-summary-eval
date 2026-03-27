@@ -1391,6 +1391,7 @@ const EVAL_CONDITIONS = [
   'baseline_claude-sonnet'
 ];
 const PHASE3_COND_COUNT = 4; // Phase 3 ranking only covers ablation conditions (A-D)
+const SHOW_PHASE3_UI = false;
 
 const ANON_LABELS = ['版本 A', '版本 B', '版本 C', '版本 D', '版本 E'];
 
@@ -1875,9 +1876,9 @@ async function onCaseChange() {
 
   // Find first incomplete condition
   if (isCaseLocked(currentCase)) {
-    currentPhase = 3;
+    currentPhase = 'tl';
   } else if (areAllCondsComplete(currentCase)) {
-    currentPhase = 3;
+    currentPhase = 'tl';
   } else {
     for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
       if (!isCondComplete(currentCase, i)) {
@@ -1912,11 +1913,10 @@ function renderCondPills() {
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAnonLabel(i);
     const done = isCondComplete(currentCase, i);
-    const isCurrent = (i === currentCondIdx && currentPhase !== 3);
+    const isCurrent = (i === currentCondIdx);
     let cls = 'cond-pill';
     let icon = '';
-    if (currentPhase === 3 && locked) { cls += ' locked'; icon = ' &#x2713;'; }
-    else if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
+    if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
     else if (done) { cls += ' done'; icon = ' &#x2713;'; }
     else if (isCurrent) { cls += ' active'; icon = ' &#x2192;'; }
     html += `<span class="${cls}" onclick="switchCondition(${i})">${esc(label)}${icon}</span>`;
@@ -1926,7 +1926,6 @@ function renderCondPills() {
 
 function switchCondition(idx) {
   if (isCaseLocked(currentCase)) return;
-  if (currentPhase === 3) return; // In phase 3, no condition switching
   saveCurrentState();
   currentCondIdx = idx;
   // If in fb but target condition hasn't finished phase 1, go to phase 1
@@ -1952,19 +1951,16 @@ function renderPhaseIndicators() {
   const phases = [
     { num: 1, label: '品質評分' },
     { num: 'fb', label: '章節意見' },
-    { num: 'tl', label: '時間軸評估' },
-    { num: 3, label: '整體排序' }
+    { num: 'tl', label: '時間軸評估' }
   ];
 
   let html = '';
   phases.forEach(p => {
     let cls = 'phase-dot';
     if (p.num === currentPhase) cls += ' active';
-    else if (p.num === 3 && !allDone && !locked) cls += ' locked';
     else if (p.num === 1 && isPhase1Frozen(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 'fb' && isPhaseFBComplete(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 'tl' && isPhaseTLComplete(currentCase, currentCondIdx)) cls += ' done';
-    else if (p.num === 3 && locked) cls += ' done';
     const phaseArg = typeof p.num === 'string' ? `'${p.num}'` : p.num;
     html += `<span class="${cls}" onclick="switchPhase(${phaseArg})">${p.label}</span>`;
   });
@@ -1972,6 +1968,7 @@ function renderPhaseIndicators() {
 }
 
 function switchPhase(phase) {
+  if (phase === 3 && !SHOW_PHASE3_UI) return;
   // TODO: re-enable locking before production deployment
   // Phase locking temporarily disabled for preview/testing
   saveCurrentState();
@@ -1998,9 +1995,13 @@ async function loadCurrentView() {
   } else if (currentPhase === 'tl') {
     document.getElementById('phaseTLView').classList.add('active');
     await loadPhaseTL();
-  } else if (currentPhase === 3) {
+  } else if (currentPhase === 3 && SHOW_PHASE3_UI) {
     document.getElementById('phase3View').classList.add('active');
     await loadPhase3();
+  } else if (currentPhase === 3 && !SHOW_PHASE3_UI) {
+    currentPhase = 'tl';
+    document.getElementById('phaseTLView').classList.add('active');
+    await loadPhaseTL();
   }
 
   syncKeyboardFocus(true);
@@ -2069,7 +2070,7 @@ function applyKeyboardScore(score) {
 }
 
 function cycleCondition(direction) {
-  if (currentPhase === 3 || isCaseLocked(currentCase)) return;
+  if ((!SHOW_PHASE3_UI && currentPhase === 3) || isCaseLocked(currentCase)) return;
   const total = EVAL_CONDITIONS.length;
   const nextIdx = (currentCondIdx + direction + total) % total;
   switchCondition(nextIdx);
@@ -2750,8 +2751,8 @@ function completePhaseTL() {
 
   // Check if all conditions done
   if (areAllCondsComplete(currentCase)) {
-    showToast('所有版本已完成，進入整體排序', 'success');
-    currentPhase = 3;
+    showToast('所有版本已完成時間軸評估', 'success');
+    currentPhase = 'tl';
   } else {
     // Move to next incomplete condition
     for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
@@ -3783,7 +3784,8 @@ async function initAdminInspectFromURL() {
 
   const phase = params.get('phase');
   if (phase === 'fb' || phase === 'tl') currentPhase = phase;
-  else if (phase === '1' || phase === '3') currentPhase = parseInt(phase, 10);
+  else if (phase === '1') currentPhase = 1;
+  else if (phase === '3') currentPhase = SHOW_PHASE3_UI ? 3 : 'tl';
 
   setAdminInspectBanner();
 }
@@ -3805,7 +3807,8 @@ async function applyAdminInspectRouteFromURL() {
 
   const phase = params.get('phase');
   if (phase === 'fb' || phase === 'tl') currentPhase = phase;
-  else if (phase === '1' || phase === '3') currentPhase = parseInt(phase, 10);
+  else if (phase === '1') currentPhase = 1;
+  else if (phase === '3') currentPhase = SHOW_PHASE3_UI ? 3 : 'tl';
   else if (/^[A-E]$/.test(version)) currentPhase = getDefaultPhaseForCondition(currentCase, currentCondIdx);
 
   renderCondPills();
