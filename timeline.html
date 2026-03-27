@@ -25,21 +25,6 @@
       border: 1px solid #e5e7eb; border-radius: 12px;
       padding: 4px 10px; min-width: 220px;
     }
-    .case-context-badge {
-      display: inline-flex; align-items: center;
-      font-size: 12px; font-weight: 600; color: #64748b;
-      background: #f8fafc; border: 1px solid #e2e8f0;
-      border-radius: 999px; padding: 5px 10px; white-space: nowrap;
-    }
-    .case-context-badge.vol-upper {
-      color: #4f46e5; background: #eef2ff; border-color: #c7d2fe;
-    }
-    .case-context-badge.vol-middle {
-      color: #0d9488; background: #f0fdfa; border-color: #99f6e4;
-    }
-    .case-context-badge.vol-lower {
-      color: #d97706; background: #fff7ed; border-color: #fdba74;
-    }
     .toolbar .spacer { flex: 1; }
     .toolbar a.nav-link {
       color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
@@ -448,9 +433,6 @@
     }
     @media (min-width: 769px) {
     }
-    @media (max-width: 480px) {
-      .case-context-badge { max-width: 100%; }
-    }
   </style>
 </head>
 <body>
@@ -463,7 +445,6 @@
       <div class="ctrl-row">
         <label class="ctrl-label">案件</label>
         <select class="condition-select" id="caseSelect"></select>
-        <span class="case-context-badge" id="caseContextBadge"></span>
       </div>
       <span class="spacer"></span>
       <div class="ctrl-row-nav">
@@ -539,7 +520,6 @@
         contentArea.dataset.boundSpanPills = '1';
       }
       renderCaseSelector();
-      updateVolumeProgress();
       const params = new URLSearchParams(location.search);
       const caseParam = params.get('case');
       const sourceParam = params.get('source');
@@ -578,19 +558,6 @@
           selectCase(select.value);
         });
         select.dataset.bound = '1';
-      }
-    }
-
-    function updateVolumeProgress() {
-      const currentVolume = currentCase ? ((caseInfo[currentCase] || {}).volume || '') : '';
-      const total = currentVolume ? allCases.filter(c => ((caseInfo[c] || {}).volume || '') === currentVolume).length : 0;
-      const badge = document.getElementById('caseContextBadge');
-      if (badge) {
-        badge.textContent = currentVolume ? `${currentVolume}・${total}案` : '';
-        badge.className = 'case-context-badge';
-        if (currentVolume === '上冊') badge.classList.add('vol-upper');
-        else if (currentVolume === '中冊') badge.classList.add('vol-middle');
-        else if (currentVolume === '下冊') badge.classList.add('vol-lower');
       }
     }
 
