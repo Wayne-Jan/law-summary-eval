@@ -154,6 +154,7 @@
     .evt-highlight.selected {
       outline: 2px solid rgba(79, 70, 229, 0.34);
       outline-offset: 1px;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
     }
     .evt-highlight[data-role="primary"][data-status="MATCH_FUZZY"].active,
     .evt-highlight[data-role="supporting"][data-status="MATCH_FUZZY"].active {
@@ -962,7 +963,15 @@
         const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
         if (scrollTarget) {
           requestAnimationFrame(() => {
-            scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            const body = document.getElementById('sourcePanelBody');
+            if (body && body.contains(scrollTarget)) {
+              const bodyRect = body.getBoundingClientRect();
+              const targetRect = scrollTarget.getBoundingClientRect();
+              const nextTop = body.scrollTop + (targetRect.top - bodyRect.top) - Math.max(48, body.clientHeight * 0.28);
+              body.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' });
+            } else {
+              scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
           });
         }
       }
