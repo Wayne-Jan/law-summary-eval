@@ -701,6 +701,16 @@
       return `span_anchor_${evtIdx}_${String(spanId).replace(/[^a-zA-Z0-9_-]/g, '_')}`;
     }
 
+    function getOffsetTopWithin(element, ancestor) {
+      let top = 0;
+      let node = element;
+      while (node && node !== ancestor) {
+        top += node.offsetTop || 0;
+        node = node.offsetParent;
+      }
+      return top;
+    }
+
     function findChunkForEvent(evt) {
       const chunks = (timelineData && timelineData.chunks) || [];
       const spans = getEventSpans(evt);
@@ -985,9 +995,8 @@
           requestAnimationFrame(() => {
             const body = document.getElementById('sourcePanelBody');
             if (body && body.contains(scrollTarget)) {
-              const bodyRect = body.getBoundingClientRect();
-              const targetRect = scrollTarget.getBoundingClientRect();
-              const nextTop = body.scrollTop + (targetRect.top - bodyRect.top) - Math.max(48, body.clientHeight * 0.28);
+              const targetTop = getOffsetTopWithin(scrollTarget, body);
+              const nextTop = targetTop - Math.max(48, body.clientHeight * 0.28);
               body.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' });
             } else {
               scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
