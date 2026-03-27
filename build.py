@@ -320,10 +320,9 @@ def compute_view_input_fingerprint(case_dir, case_name, volume, cond):
 
 
 def find_v310_master_path(case_name):
-    for base_dir in (EXTRACTIONS_DIR_V3104_PATCHED, EXTRACTIONS_DIR_V3104):
-        master_path = os.path.join(base_dir, case_name, "master.json")
-        if os.path.exists(master_path):
-            return master_path
+    master_path = os.path.join(EXTRACTIONS_DIR_V3104_PATCHED, case_name, "master.json")
+    if os.path.exists(master_path):
+        return master_path
     return None
 
 
@@ -1051,30 +1050,18 @@ def build():
     tl_v310_out_dir = os.path.join(SITE_DATA, "timeline_v310")
     os.makedirs(tl_v310_out_dir, exist_ok=True)
     tl_v310_count = 0
-    v310_candidate_dirs = [
-        d
-        for d in (EXTRACTIONS_DIR_V3104_PATCHED, EXTRACTIONS_DIR_V3104)
-        if os.path.isdir(d)
-    ]
-    if not v310_candidate_dirs:
-        print("  WARNING: extraction v3.10.4 directory not found, skipping timeline_v310")
+    patched_v310_dir = EXTRACTIONS_DIR_V3104_PATCHED
+    if not os.path.isdir(patched_v310_dir):
+        print("  WARNING: extraction v3.10.4 patched directory not found, skipping timeline_v310")
     else:
         emitted_v310_paths = set()
-        v310_case_names = set()
-        for base_dir in v310_candidate_dirs:
-            for case_name in os.listdir(base_dir):
-                case_dir = os.path.join(base_dir, case_name)
-                if os.path.isdir(case_dir):
-                    v310_case_names.add(case_name)
-        for case_name in sorted(v310_case_names):
-            case_dir = None
-            for base_dir in v310_candidate_dirs:
-                candidate_dir = os.path.join(base_dir, case_name)
-                if os.path.isdir(candidate_dir):
-                    case_dir = candidate_dir
-                    break
-            if not case_dir:
-                continue
+        v310_case_names = sorted(
+            case_name
+            for case_name in os.listdir(patched_v310_dir)
+            if os.path.isdir(os.path.join(patched_v310_dir, case_name))
+        )
+        for case_name in v310_case_names:
+            case_dir = os.path.join(patched_v310_dir, case_name)
             master_path = os.path.join(case_dir, "master.json")
             if not os.path.exists(master_path):
                 continue
@@ -1109,7 +1096,7 @@ def build():
             os.remove(stale_path)
             rewritten_outputs += 1
         print(
-            f"  {'timeline (extraction v3.10.4 patched-first)':45s}  {tl_v310_count:3d} cases"
+            f"  {'timeline (extraction v3.10.4 patched only)':45s}  {tl_v310_count:3d} cases"
         )
 
     log_stage(build_started, "Stage 7/7: writing eval whitelist and manifest")
