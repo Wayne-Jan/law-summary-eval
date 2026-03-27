@@ -994,7 +994,8 @@
         if (scrollTarget) {
           requestAnimationFrame(() => {
             const body = document.getElementById('sourcePanelBody');
-            if (body && body.contains(scrollTarget)) {
+            const bodyIsScrollable = body && body.scrollHeight > body.clientHeight + 4;
+            if (body && body.contains(scrollTarget) && bodyIsScrollable) {
               const targetTop = getOffsetTopWithin(scrollTarget, body);
               const nextTop = targetTop - Math.max(48, body.clientHeight * 0.28);
               body.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' });
