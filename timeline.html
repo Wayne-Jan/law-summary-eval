@@ -274,18 +274,16 @@
     .tl-evidence-row {
       display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
     }
-    .tl-evidence-pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
-      border: 1px solid #dbeafe; background: #f8fbff; color: #1d4ed8;
+    .tl-span-pill.status-exact {
+      border-color: #dbeafe; background: #f8fbff; color: #1d4ed8;
     }
-    .tl-evidence-pill.status-fuzzy {
+    .tl-span-pill.status-fuzzy {
       border-color: #bae6fd; background: #f0fdfa; color: #0f766e;
     }
-    .tl-evidence-pill.status-partial {
+    .tl-span-pill.status-partial {
       border-color: #fed7aa; background: #fff7ed; color: #c2410c;
     }
-    .tl-evidence-pill.status-unresolved {
+    .tl-span-pill.status-unresolved {
       border-color: #fecaca; background: #fef2f2; color: #b91c1c;
     }
     .tl-event-evidence { display: none; }
@@ -441,7 +439,7 @@
     <div class="subbar-line">
       <span class="subbar-label">來源：</span>
       <button class="volume-pill source-pill" id="sourceLegacyBtn" onclick="switchTimelineSource('legacy')">Legacy</button>
-      <button class="volume-pill source-pill" id="sourceV310Btn" onclick="switchTimelineSource('v310')">v3.10.4</button>
+      <button class="volume-pill source-pill" id="sourceV310Btn" onclick="switchTimelineSource('v310')">Next</button>
     </div>
   </div>
   <div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
@@ -487,6 +485,19 @@
         caseSlugs = manifest.case_slugs || {};
         caseInfo = manifest.case_info || {};
       } catch { allCases = []; }
+      const contentArea = document.getElementById('contentArea');
+      if (contentArea && !contentArea.dataset.boundSpanPills) {
+        contentArea.addEventListener('click', (event) => {
+          const pill = event.target.closest('.tl-span-pill[data-evt][data-span-id]');
+          if (!pill) return;
+          event.stopPropagation();
+          const evtIdx = Number(pill.dataset.evt);
+          const spanId = pill.dataset.spanId == null ? null : String(pill.dataset.spanId);
+          if (Number.isNaN(evtIdx)) return;
+          selectSpan(evtIdx, spanId);
+        });
+        contentArea.dataset.boundSpanPills = '1';
+      }
       renderCaseSelector();
       updateVolumeProgress();
       const params = new URLSearchParams(location.search);
@@ -599,7 +610,7 @@
         timelineData = await res.json();
         renderEvents();
       } catch {
-        const sourceLabel = timelineSourceMode === 'v310' ? 'v3.10.4' : 'Legacy';
+        const sourceLabel = timelineSourceMode === 'v310' ? 'Next' : 'Legacy';
         contentArea.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div class="msg">此案件無 ${esc(sourceLabel)} 時間軸資料</div></div>`;
       }
       updateMobileCaseBadge();
@@ -686,10 +697,10 @@
           ? '主證據'
           : (supportingTotal <= 1 ? '補充證據' : `補充證據 ${++supportingIndex}`);
         const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
-        html += `<button class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}" onclick="event.stopPropagation(); selectSpan(${evtIdx}, ${JSON.stringify(sp.span_id)})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
+        html += `<button class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
       });
       if (evidenceStatus) {
-        html += `<span class="tl-evidence-pill status-${evidenceStatus}">${esc(formatEvidenceStatus(evidenceStatus))}</span>`;
+        html += `<span class="tl-span-pill status-${evidenceStatus}">${esc(formatEvidenceStatus(evidenceStatus))}</span>`;
       }
       html += '</div>';
       return html;
