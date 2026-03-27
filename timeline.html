@@ -610,7 +610,7 @@
       const raw = Array.isArray(evt.source_spans) ? evt.source_spans.filter(Boolean) : [];
       const spans = raw
         .map((sp, idx) => ({
-          span_id: sp.span_id || `span_${idx + 1}`,
+          span_id: String(sp.span_id || `span_${idx + 1}`),
           role: sp.role || 'supporting',
           quote: sp.quote || '',
           char_start: Number.isInteger(sp.char_start) ? sp.char_start : -1,
@@ -650,7 +650,7 @@
       if (!spans.length) return null;
       const primary = spans.find(sp => sp.role === 'primary');
       if (activeSpanId) {
-        const found = spans.find(sp => sp.span_id === activeSpanId);
+        const found = spans.find(sp => sp.span_id === String(activeSpanId));
         if (found) return found;
       }
       return primary || spans[0];
@@ -910,7 +910,8 @@
       activeEventIdx = idx;
       const evtSpans = getEventSpans(evt);
       if (!evtSpans.length) activeSpanId = null;
-      else if (!activeSpanId || !evtSpans.some(sp => sp.span_id === activeSpanId)) activeSpanId = (getActiveSpan(evt) || evtSpans[0]).span_id;
+      else if (!activeSpanId || !evtSpans.some(sp => sp.span_id === String(activeSpanId))) activeSpanId = (getActiveSpan(evt) || evtSpans[0]).span_id;
+      else activeSpanId = String(activeSpanId);
 
       // Highlight active event card (no scroll — only visual)
       document.querySelectorAll('.tl-event').forEach(el => {
@@ -971,7 +972,7 @@
     function selectSpan(evtIdx, spanId) {
       if (!timelineData || evtIdx < 0) return;
       activeEventIdx = evtIdx;
-      activeSpanId = spanId || null;
+      activeSpanId = spanId == null ? null : String(spanId);
       showSource(evtIdx, true);
     }
 
