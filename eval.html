@@ -304,14 +304,20 @@
       box-decoration-break: clone; -webkit-box-decoration-break: clone;
       transition: background 0.3s;
     }
-    .chunk-region.active mark { background: #fef9c3; }
+    #phase1View .chunk-region.active mark,
+    #phaseFBView .chunk-region.active mark,
+    #phase3View .chunk-region.active mark { background: #fef9c3; }
     .chunk-label {
       display: none; font-size: 11px; font-weight: 700; color: var(--amber);
       background: #fef3c7; padding: 2px 6px; border-radius: 3px;
       vertical-align: middle; margin-right: 4px; letter-spacing: 0.3px;
     }
-    .chunk-region.active .chunk-label { display: inline; }
-    .chunk-region.active { border-left: 3px solid var(--amber); padding-left: 12px; margin-left: -15px; }
+    #phase1View .chunk-region.active .chunk-label,
+    #phaseFBView .chunk-region.active .chunk-label,
+    #phase3View .chunk-region.active .chunk-label { display: inline; }
+    #phase1View .chunk-region.active,
+    #phaseFBView .chunk-region.active,
+    #phase3View .chunk-region.active { border-left: 3px solid var(--amber); padding-left: 12px; margin-left: -15px; }
 
     /* Section blocks */
     .section-block { margin-bottom: 16px; }
@@ -475,13 +481,13 @@
     /* ─── PHASE TL: Timeline Evaluation (three-column) ─── */
     #phaseTLView { flex-direction: row; }
     .panel-timeline {
-      flex: 31 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto;
-    }
-    .panel-tl-source {
       flex: 33 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto;
     }
+    .panel-tl-source {
+      flex: 37 0 0; border-right: 1px solid #e2e8f0; background: white; overflow-y: auto;
+    }
     .panel-tl-eval {
-      flex: 36 0 0; background: var(--slate-50); overflow-y: auto; padding: 14px 16px;
+      flex: 30 0 0; background: var(--slate-50); overflow-y: auto; padding: 10px 12px;
     }
 
     /* Timeline / Source workbench aligned with timeline.html */
@@ -511,7 +517,7 @@
     }
     .tl-summary-value { font-size: 13px; font-weight: 700; color: #0f172a; }
     .tl-summary-value.small { font-size: 13px; font-weight: 600; }
-    .timeline-panel-body { padding: 16px 16px 16px 32px; }
+    .timeline-panel-body { padding: 14px 14px 14px 28px; }
     .timeline { position: relative; padding-left: 28px; }
     .timeline::before {
       content: ''; position: absolute; left: 10px; top: 0; bottom: 0;
@@ -2458,6 +2464,22 @@ function getOffsetTopWithin(element, ancestor) {
   return top;
 }
 
+function isoToMinguoTL(iso, refIso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  const y = d.getFullYear() - 1911;
+  const m = d.getMonth() + 1;
+  const day = d.getDate();
+  if (refIso) {
+    const ref = new Date(refIso);
+    if (!Number.isNaN(ref.getTime()) && ref.getFullYear() === d.getFullYear()) {
+      return `${m}月${day}日`;
+    }
+  }
+  return `民國${y}年${m}月${day}日`;
+}
+
 function renderTimelinePanel() {
   const events = (tlDataCache && tlDataCache.events) || [];
   const summary = (tlDataCache && tlDataCache.timeline_summary) || {};
@@ -2477,8 +2499,22 @@ function renderTimelinePanel() {
   const span = summary.time_span;
   let spanText = '';
   if (span) {
-    const hours = span.duration_hours;
-    spanText = hours >= 24 ? `${Math.round(hours / 24)} 天` : `${Math.round(hours)} 小時`;
+    const spanStart = span.start_date || span.start || '';
+    const spanEnd = span.end_date || span.end || '';
+    if (spanStart) {
+      const fmt = isoToMinguoTL(spanStart);
+      const fmt2 = isoToMinguoTL(spanEnd, spanStart);
+      spanText = `${fmt} ~ ${fmt2}`;
+      const d1 = new Date(spanStart);
+      const d2 = new Date(spanEnd);
+      if (!Number.isNaN(d1.getTime()) && !Number.isNaN(d2.getTime())) {
+        const h = (d2 - d1) / 3600000;
+        if (h > 0) spanText += `（共 ${h >= 24 ? Math.round(h / 24) + ' 天' : Math.round(h) + ' 小時'}）`;
+      }
+    } else {
+      const hours = span.duration_hours;
+      spanText = hours >= 24 ? `${Math.round(hours / 24)} 天` : `${Math.round(hours)} 小時`;
+    }
   }
   barEl.innerHTML = `
     <div class="tl-summary-chip"><span class="tl-summary-label">事件數</span><span class="tl-summary-value">${events.length}</span></div>
