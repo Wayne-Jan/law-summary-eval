@@ -100,11 +100,11 @@
     .panel-title { font-size: 15px; font-weight: 600; color: #111827; }
     .panel-meta { font-size: 12px; color: #6b7280; margin-top: 4px; }
 
-    /* ─── THREE-COLUMN LAYOUT ─── */
+    /* ─── TWO-COLUMN LAYOUT ─── */
     .tl-columns { display: flex; gap: 20px; align-items: flex-start; }
-    .tl-col-left { flex: 40; min-width: 0; }
-    .tl-col-source { flex: 36; min-width: 0; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
-    .tl-col-inspector { flex: 24; min-width: 280px; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
+    .tl-col-left { flex: 44; min-width: 0; }
+    .tl-col-right { flex: 56; min-width: 0; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
+    .source-stack { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
     .source-panel { flex: 1; min-height: 0; }
 
     /* ─── SOURCE PANEL (full text with highlighter) ─── */
@@ -366,9 +366,8 @@
       .content-inner { padding: 20px; }
       .tl-summary-card { min-width: 120px; padding: 10px 14px; }
       .tl-columns { gap: 16px; }
-      .tl-col-left { flex: 40; }
-      .tl-col-source { flex: 34; }
-      .tl-col-inspector { flex: 26; min-width: 240px; }
+      .tl-col-left { flex: 42; }
+      .tl-col-right { flex: 58; }
     }
 
     /* ─── RESPONSIVE: MOBILE ─── */
@@ -431,9 +430,8 @@
       .tl-meta { gap: 8px; }
 
       .tl-columns { flex-direction: column; }
-      .tl-col-left, .tl-col-source, .tl-col-inspector {
-        flex: 1; position: static; max-height: none; width: 100%; min-width: 0;
-      }
+      .tl-col-left { flex: 1; position: static; max-height: none; width: 100%; }
+      .tl-col-right { flex: 1; position: static; max-height: none; width: 100%; }
       .tl-source-toggle { display: inline-flex; }
     }
     @media (min-width: 769px) {
@@ -929,8 +927,9 @@
       html += '</div></div></div>'; // .timeline / padding / .panel-card
       html += '</div>'; // tl-col-left
 
-      // Middle column: source panel
-      html += '<div class="tl-col-source">';
+      // Right column: source + evidence
+      html += '<div class="tl-col-right">';
+      html += '<div class="source-stack">';
       html += '<div class="source-panel" id="sourcePanel">';
       html += '<div class="panel-head">';
       html += '<div class="panel-kicker">SOURCE</div>';
@@ -987,10 +986,8 @@
         html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案件無段落資料</span></div>';
       }
 
-      html += '</div></div></div>'; // source-panel-body / source-panel / tl-col-source
+      html += '</div></div>'; // source-panel-body / source-panel
 
-      // Right column: evidence inspector
-      html += '<div class="tl-col-inspector">';
       html += '<div class="evidence-panel" id="evidencePanel">';
       html += '<div class="panel-head">';
       html += '<div class="panel-kicker">EVIDENCE</div>';
@@ -998,6 +995,7 @@
       html += `<div class="panel-meta">${timelineSourceMode === 'v310' ? '點擊事件後可切換各段證據' : 'Legacy 模式不顯示多段證據說明'}</div>`;
       html += '</div>';
       html += '<div class="evidence-panel-body" id="evidencePanelBody"></div>';
+      html += '</div>';
       html += '</div></div>';
 
       html += '</div></div>'; // .tl-columns .content-inner
