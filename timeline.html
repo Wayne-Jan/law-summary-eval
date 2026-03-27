@@ -101,7 +101,7 @@
     .panel-meta { font-size: 12px; color: #6b7280; margin-top: 4px; }
 
     /* ─── TWO-COLUMN LAYOUT ─── */
-    .tl-columns { display: flex; gap: 20px; align-items: flex-start; }
+    .tl-columns { display: flex; gap: 20px; align-items: stretch; }
     .tl-col-left { flex: 44; min-width: 0; }
     .tl-col-right { flex: 56; min-width: 0; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
     .source-stack { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
@@ -112,9 +112,9 @@
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
       min-height: 200px; display: flex; flex-direction: column;
     }
-    .source-head-tools {
+    .source-panel-tools {
       display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-      margin-top: 8px;
+      padding: 10px 18px 0;
     }
     .source-panel-body {
       font-size: 14px; color: #475569; line-height: 1.85;
@@ -329,7 +329,7 @@
       .tl-columns { gap: 16px; }
       .tl-col-left { flex: 42; }
       .tl-col-right { flex: 58; }
-      .source-head-tools { flex-direction: column; align-items: flex-start; }
+      .source-panel-tools { flex-direction: column; align-items: flex-start; }
     }
 
     /* ─── RESPONSIVE: MOBILE ─── */
@@ -852,8 +852,9 @@
       html += '<div class="panel-kicker">SOURCE</div>';
       html += `<div class="panel-title">原始判決書</div>`;
       html += `<div class="panel-meta">${chunks.length} 段原文片段</div>`;
+      html += '</div>';
       if (timelineSourceMode === 'v310') {
-        html += `<div class="source-head-tools">`;
+        html += `<div class="source-panel-tools">`;
         html += `<div class="source-legend">`;
         html += `<span class="source-legend-item"><span class="legend-swatch primary"></span>主證據</span>`;
         html += `<span class="source-legend-item"><span class="legend-swatch supporting"></span>補充證據</span>`;
@@ -861,7 +862,6 @@
         html += `<div id="sourceSwitcherHost"></div>`;
         html += `</div>`;
       }
-      html += '</div>';
       html += '<div class="source-panel-body" id="sourcePanelBody">';
 
       if (chunks.length > 0) {
