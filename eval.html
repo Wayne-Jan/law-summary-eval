@@ -672,9 +672,9 @@
     .evt-highlight.active { background: #fef9c3; box-shadow: 0 1px 0 #eab308; }
     .evt-highlight[data-role="supporting"].active { background: #dbeafe; box-shadow: 0 1px 0 #60a5fa; }
     .evt-highlight.selected {
-      outline: 2px solid rgba(79, 70, 229, 0.34);
+      outline: 2px solid rgba(15, 118, 110, 0.34);
       outline-offset: 1px;
-      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+      box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.12);
     }
     .evt-highlight[data-role="primary"][data-status="MATCH_FUZZY"].active,
     .evt-highlight[data-role="supporting"][data-status="MATCH_FUZZY"].active {
@@ -2493,6 +2493,52 @@ function getTLSpanAnchorId(evtIdx, spanId) {
   return `tl_span_anchor_${evtIdx}_${String(spanId).replace(/[^a-zA-Z0-9_-]/g, '_')}`;
 }
 
+function normalizeLooseTextTL(text) {
+  return String(text || '').replace(/\s+/g, '');
+}
+
+function refineTLSpanRangeInChunk(chunkContent, relStart, relEnd, quote) {
+  const rawQuote = String(quote || '');
+  if (!rawQuote) return null;
+  const windowPad = 120;
+  const searchStart = Math.max(0, relStart - windowPad);
+  const searchEnd = Math.min(chunkContent.length, relEnd + windowPad);
+  const windowText = chunkContent.slice(searchStart, searchEnd);
+
+  const exactIdx = windowText.indexOf(rawQuote);
+  if (exactIdx >= 0) {
+    return {
+      relStart: searchStart + exactIdx,
+      relEnd: searchStart + exactIdx + rawQuote.length,
+      method: 'exact_in_window',
+    };
+  }
+
+  const normalizedQuote = normalizeLooseTextTL(rawQuote);
+  if (!normalizedQuote) return null;
+
+  const normalizedChars = [];
+  const indexMap = [];
+  for (let i = 0; i < windowText.length; i += 1) {
+    const ch = windowText[i];
+    if (!/\s/.test(ch)) {
+      normalizedChars.push(ch);
+      indexMap.push(i);
+    }
+  }
+  const normalizedWindow = normalizedChars.join('');
+  const normalizedIdx = normalizedWindow.indexOf(normalizedQuote);
+  if (normalizedIdx < 0) return null;
+
+  const origStart = indexMap[normalizedIdx];
+  const origEnd = indexMap[normalizedIdx + normalizedQuote.length - 1] + 1;
+  return {
+    relStart: searchStart + origStart,
+    relEnd: searchStart + origEnd,
+    method: 'normalized_in_window',
+  };
+}
+
 function getOffsetTopWithin(element, ancestor) {
   let top = 0;
   let node = element;
@@ -2641,12 +2687,27 @@ function renderTLSourcePanel() {
         const overlapStart = Math.max(sp.char_start, chunk.start_char);
         const overlapEnd = Math.min(sp.char_end, chunk.end_char);
         if (overlapEnd > overlapStart) {
+          let relStart = overlapStart - chunk.start_char;
+          let relEnd = overlapEnd - chunk.start_char;
+          const status = sp.alignment_status || evt.alignment_status || 'UNRESOLVED';
+          if (status === 'MATCH_FUZZY' || status === 'PARTIAL_UNRESOLVED') {
+            const refined = refineTLSpanRangeInChunk(
+              chunk.content || '',
+              relStart,
+              relEnd,
+              sp.quote || ''
+            );
+            if (refined && refined.relEnd > refined.relStart) {
+              relStart = refined.relStart;
+              relEnd = refined.relEnd;
+            }
+          }
           evtSpans.push({
-            relStart: overlapStart - chunk.start_char,
-            relEnd: overlapEnd - chunk.start_char,
+            relStart,
+            relEnd,
             evtIdx,
             role: sp.role || 'supporting',
-            status: sp.alignment_status || evt.alignment_status || 'UNRESOLVED',
+            status,
             spanId: sp.span_id || '',
             anchorId: getTLSpanAnchorId(evtIdx, sp.span_id || ''),
           });
