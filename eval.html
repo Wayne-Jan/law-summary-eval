@@ -547,6 +547,62 @@
       margin-top: 8px; padding: 8px 12px; background: var(--rose-light); border-radius: 6px;
       font-size: 12px; color: #991b1b; line-height: 1.5;
     }
+    .tl25-event-evidence { margin-top: 10px; }
+    .tl25-evidence-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .tl25-span-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid #bfdbfe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s, background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    button.tl25-span-pill { cursor: pointer; }
+    .tl25-span-pill[data-evt][data-span-id]:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(59,130,246,0.12);
+      border-color: #60a5fa;
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+    .tl25-span-pill.active {
+      border-color: #3b82f6;
+      background: #dbeafe;
+      color: #1d4ed8;
+      box-shadow: 0 8px 18px rgba(59,130,246,0.14);
+    }
+    .tl25-span-pill.status-exact,
+    .tl25-span-pill.status-fuzzy,
+    .tl25-span-pill.status-partial,
+    .tl25-span-pill.status-unresolved {
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+    .tl25-span-pill.status-exact { border-color:#bbf7d0; background:#ecfdf5; color:#047857; }
+    .tl25-span-pill.status-fuzzy { border-color:#bfdbfe; background:#eff6ff; color:#1d4ed8; }
+    .tl25-span-pill.status-partial { border-color:#fde68a; background:#fffbeb; color:#b45309; }
+    .tl25-span-pill.status-unresolved { border-color:#e2e8f0; background:#f8fafc; color:#64748b; }
+    .tl25-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      flex: 0 0 10px;
+    }
+    .tl25-swatch.primary { background: #facc15; }
+    .tl25-swatch.supporting { background: #bfdbfe; }
     .tl25-no-data {
       display: flex; align-items: center; justify-content: center;
       height: 200px; color: var(--slate-500); font-size: 14px;
@@ -558,6 +614,7 @@
       transition: background 0.3s; border-radius: 2px;
     }
     .tl-evt-highlight.active { background: #fef9c3; box-shadow: 0 1px 0 #eab308; }
+    .tl-evt-highlight.selected { background: #fde68a; box-shadow: 0 0 0 2px rgba(245,158,11,0.18); }
     .tl25-event.active { border-color: var(--indigo); box-shadow: 0 2px 12px rgba(79,70,229,0.12); }
     .tl25-event { cursor: pointer; }
     .tl25-event:hover { border-color: var(--indigo); box-shadow: 0 2px 12px rgba(79,70,229,0.08); }
@@ -1571,6 +1628,8 @@ let aiDataCache = {}; // { conditionKey: data }
 let gtDataCache = null;
 let tlDataCache = null; // timeline data for current case
 let activeChunk = null;
+let activeTLEventIdx = -1;
+let activeTLSpanId = null;
 let autoSaveTimer = null;
 let keyboardFocusIndex = 0;
 let adminInspect = {
@@ -1588,6 +1647,15 @@ let adminInspect = {
 document.addEventListener('DOMContentLoaded', () => {
   showLoginOverlay();
   auth.onAuthStateChanged(handleAuthStateChanged);
+  document.addEventListener('click', (event) => {
+    const pill = event.target.closest('.tl25-span-pill[data-evt][data-span-id]');
+    if (!pill) return;
+    event.preventDefault();
+    event.stopPropagation();
+    const evtIdx = Number(pill.dataset.evt);
+    const spanId = String(pill.dataset.spanId || '');
+    selectTLSpan(evtIdx, spanId);
+  });
 });
 
 async function initApp() {
@@ -2246,10 +2314,13 @@ async function loadPhaseTL() {
   // Load timeline data
   if (!tlDataCache) {
     try {
-      const resp = await fetch(`./data/timeline/${slug}.json`);
+      const resp = await fetch(`./data/timeline_v310/${slug}.json`);
       if (resp.ok) tlDataCache = await resp.json();
     } catch {}
   }
+
+  activeTLEventIdx = -1;
+  activeTLSpanId = null;
 
   // Render source text (middle panel)
   renderTLSourcePanel();
@@ -2270,6 +2341,103 @@ async function loadPhaseTL() {
 
   // Re-init resizers for this view
   initResizers();
+}
+
+function getTLEventSpans(evt) {
+  if (!evt) return [];
+  const raw = Array.isArray(evt.source_spans) ? evt.source_spans.filter(Boolean) : [];
+  const spans = raw
+    .map((sp, idx) => ({
+      span_id: String(sp.span_id || `span_${idx + 1}`),
+      role: sp.role || 'supporting',
+      quote: sp.quote || '',
+      char_start: Number.isInteger(sp.char_start) ? sp.char_start : -1,
+      char_end: Number.isInteger(sp.char_end) ? sp.char_end : -1,
+      alignment_status: sp.alignment_status || evt.alignment_status || 'UNRESOLVED',
+    }))
+    .filter(sp => sp.char_start >= 0 && sp.char_end > sp.char_start);
+  if (spans.length) return spans;
+  if (evt.char_start != null && evt.char_end != null && evt.char_start >= 0 && evt.char_end > evt.char_start) {
+    return [{
+      span_id: 'event_range',
+      role: 'primary',
+      quote: evt.extraction_text || '',
+      char_start: evt.char_start,
+      char_end: evt.char_end,
+      alignment_status: evt.alignment_status || 'UNRESOLVED',
+    }];
+  }
+  return [];
+}
+
+function getTLAlignmentSummary(evt) {
+  const spans = getTLEventSpans(evt);
+  if (!spans.length) return { total: 0, status: 'unresolved' };
+  const statuses = spans.map(sp => sp.alignment_status);
+  let status = 'exact';
+  if (statuses.some(s => s === 'UNRESOLVED')) status = 'unresolved';
+  else if (statuses.some(s => s === 'PARTIAL_UNRESOLVED')) status = 'partial';
+  else if (statuses.some(s => s === 'MATCH_FUZZY')) status = 'fuzzy';
+  return { total: spans.length, status };
+}
+
+function getTLActiveSpan(evt) {
+  const spans = getTLEventSpans(evt);
+  if (!spans.length) return null;
+  if (activeTLSpanId) {
+    const found = spans.find(sp => sp.span_id === String(activeTLSpanId));
+    if (found) return found;
+  }
+  return spans.find(sp => sp.role === 'primary') || spans[0];
+}
+
+function formatTLEvidenceStatus(status) {
+  const map = { exact: '精確對齊', fuzzy: '模糊對齊', partial: '部分對齊', unresolved: '待定位' };
+  return map[status] || status;
+}
+
+function renderTLEventSpanSwitcher(evt, evtIdx) {
+  const spans = getTLEventSpans(evt);
+  if (!spans.length) return '';
+  const activeForEvent = activeTLEventIdx === evtIdx ? getTLActiveSpan(evt) : null;
+  const supportingTotal = spans.filter(sp => sp.role !== 'primary').length;
+  const evidence = getTLAlignmentSummary(evt);
+  let supportingIndex = 0;
+  let html = '<div class="tl25-event-evidence"><div class="tl25-evidence-row">';
+  spans.forEach(sp => {
+    const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
+    const title = sp.role === 'primary'
+      ? '主證據'
+      : (supportingTotal <= 1 ? '補充證據' : `補充證據 ${++supportingIndex}`);
+    const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
+    html += `<button type="button" class="tl25-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}"><span class="tl25-swatch ${swatchClass}"></span>${esc(title)}</button>`;
+  });
+  html += `<span class="tl25-span-pill status-${evidence.status}">${esc(formatTLEvidenceStatus(evidence.status))}</span>`;
+  html += '</div></div>';
+  return html;
+}
+
+function updateTLEventSpanPills() {
+  document.querySelectorAll('.tl25-span-pill[data-evt][data-span-id]').forEach(el => {
+    const evtIdx = Number(el.dataset.evt);
+    const spanId = String(el.dataset.spanId || '');
+    const isActive = evtIdx === activeTLEventIdx && spanId === String(activeTLSpanId || '');
+    el.classList.toggle('active', isActive);
+  });
+}
+
+function getTLSpanAnchorId(evtIdx, spanId) {
+  return `tl_span_anchor_${evtIdx}_${String(spanId).replace(/[^a-zA-Z0-9_-]/g, '_')}`;
+}
+
+function getOffsetTopWithin(element, ancestor) {
+  let top = 0;
+  let node = element;
+  while (node && node !== ancestor) {
+    top += node.offsetTop || 0;
+    node = node.offsetParent;
+  }
+  return top;
 }
 
 function renderTimelinePanel() {
@@ -2298,6 +2466,7 @@ function renderTimelinePanel() {
     <div class="tl25-stat"><span class="tl25-stat-label">事件數</span><strong>${events.length}</strong></div>
     <div class="tl25-stat"><span class="tl25-stat-label">關鍵決策</span><strong style="color:var(--rose);">${critCount}</strong></div>
     ${spanText ? `<div class="tl25-stat"><span class="tl25-stat-label">時間跨度</span><strong>${spanText}</strong></div>` : ''}
+    <div class="tl25-stat"><span class="tl25-stat-label">原文片段</span><strong>${(tlDataCache && tlDataCache.chunks ? tlDataCache.chunks.length : 0)}</strong></div>
   `;
 
   // Event cards
@@ -2318,9 +2487,12 @@ function renderTimelinePanel() {
     if (isCritical && evt.decision_content) {
       html += `<div class="tl25-decision"><strong>決策：</strong>${esc(evt.decision_content)}</div>`;
     }
+    html += renderTLEventSpanSwitcher(evt, idx);
     html += `</div>`;
     return html;
   }).join('');
+
+  updateTLEventSpanPills();
 }
 
 function renderTLEvalForm() {
@@ -2365,20 +2537,28 @@ function renderTLSourcePanel() {
 
   const chunks = [...tlDataCache.chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
   const events = tlDataCache.events || [];
-  countEl.textContent = `${chunks.length} 段`;
+  countEl.textContent = `${chunks.length} 段原文片段`;
 
   let html = '';
   chunks.forEach(chunk => {
     const cid = chunk.chunk_id || '';
-    // Pre-compute event highlight spans within this chunk
     const evtSpans = [];
     events.forEach((evt, evtIdx) => {
-      if (evt.char_start == null || evt.char_end == null) return;
-      const overlapStart = Math.max(evt.char_start, chunk.start_char);
-      const overlapEnd = Math.min(evt.char_end, chunk.end_char);
-      if (overlapEnd > overlapStart) {
-        evtSpans.push({ relStart: overlapStart - chunk.start_char, relEnd: overlapEnd - chunk.start_char, evtIdx });
-      }
+      getTLEventSpans(evt).forEach(sp => {
+        const overlapStart = Math.max(sp.char_start, chunk.start_char);
+        const overlapEnd = Math.min(sp.char_end, chunk.end_char);
+        if (overlapEnd > overlapStart) {
+          evtSpans.push({
+            relStart: overlapStart - chunk.start_char,
+            relEnd: overlapEnd - chunk.start_char,
+            evtIdx,
+            role: sp.role || 'supporting',
+            status: sp.alignment_status || evt.alignment_status || 'UNRESOLVED',
+            spanId: sp.span_id || '',
+            anchorId: getTLSpanAnchorId(evtIdx, sp.span_id || ''),
+          });
+        }
+      });
     });
     evtSpans.sort((a, b) => a.relStart - b.relStart);
 
@@ -2387,7 +2567,7 @@ function renderTLSourcePanel() {
     let cursor = 0;
     evtSpans.forEach(sp => {
       if (sp.relStart > cursor) chunkHtml += esc(content.substring(cursor, sp.relStart));
-      chunkHtml += `<mark class="tl-evt-highlight" data-evt="${sp.evtIdx}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
+      chunkHtml += `<mark id="${esc(sp.anchorId)}" class="tl-evt-highlight" data-evt="${sp.evtIdx}" data-role="${esc(sp.role)}" data-status="${esc(sp.status)}" data-span-id="${esc(sp.spanId)}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
       cursor = sp.relEnd;
     });
     if (cursor < content.length) chunkHtml += esc(content.substring(cursor));
@@ -2409,6 +2589,14 @@ function showTLEventSource(idx) {
   const events = tlDataCache.events || [];
   const evt = events[idx];
   if (!evt) return;
+  activeTLEventIdx = idx;
+  const evtSpans = getTLEventSpans(evt);
+  if (!evtSpans.length) activeTLSpanId = null;
+  else if (!activeTLSpanId || !evtSpans.some(sp => sp.span_id === String(activeTLSpanId))) {
+    activeTLSpanId = (getTLActiveSpan(evt) || evtSpans[0]).span_id;
+  } else {
+    activeTLSpanId = String(activeTLSpanId);
+  }
 
   // Highlight active event card
   document.querySelectorAll('.tl25-event').forEach(el => {
@@ -2428,31 +2616,56 @@ function showTLEventSource(idx) {
   }
 
   // Highlight only the specific event's marks across all chunks
-  const evtMarks = document.querySelectorAll(`#tlSourceBody .tl-evt-highlight[data-evt="${idx}"]`);
-  evtMarks.forEach(m => m.classList.add('active'));
-  if (evtMarks.length > 0) {
+  const evtMarks = Array.from(document.querySelectorAll(`#tlSourceBody .tl-evt-highlight[data-evt="${idx}"]`));
+  evtMarks.forEach(m => {
+    m.classList.add('active');
+    if (activeTLSpanId && m.dataset.spanId === activeTLSpanId) m.classList.add('selected');
+  });
+  const selectedAnchorId = activeTLSpanId ? getTLSpanAnchorId(idx, activeTLSpanId) : '';
+  const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
+  const scrollTarget = selectedMark || evtMarks[0];
+  if (scrollTarget) {
     requestAnimationFrame(() => {
-      evtMarks[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const body = document.getElementById('tlSourceBody');
+      const bodyIsScrollable = body && body.scrollHeight > body.clientHeight + 4;
+      if (body && body.contains(scrollTarget) && bodyIsScrollable) {
+        const targetTop = getOffsetTopWithin(scrollTarget, body);
+        const nextTop = targetTop - Math.max(48, body.clientHeight * 0.28);
+        body.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' });
+      } else {
+        scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
     });
   }
+  updateTLEventSpanPills();
 }
 
 function findTLChunkForEvent(evt) {
   const chunks = (tlDataCache && tlDataCache.chunks) || [];
-  const cs = evt.char_start;
-  const ce = evt.char_end;
-  if (cs == null || ce == null) return null;
-  for (const chunk of chunks) {
-    if (cs >= chunk.start_char && cs < chunk.end_char) return chunk;
+  const spans = getTLEventSpans(evt);
+  if (!spans.length) return null;
+  for (const span of spans) {
+    for (const chunk of chunks) {
+      if (span.char_start >= chunk.start_char && span.char_start < chunk.end_char) return chunk;
+    }
   }
   let best = null, bestOverlap = 0;
   for (const chunk of chunks) {
-    const overlapStart = Math.max(cs, chunk.start_char);
-    const overlapEnd = Math.min(ce, chunk.end_char);
-    const overlap = overlapEnd - overlapStart;
-    if (overlap > bestOverlap) { bestOverlap = overlap; best = chunk; }
+    for (const span of spans) {
+      const overlapStart = Math.max(span.char_start, chunk.start_char);
+      const overlapEnd = Math.min(span.char_end, chunk.end_char);
+      const overlap = overlapEnd - overlapStart;
+      if (overlap > bestOverlap) { bestOverlap = overlap; best = chunk; }
+    }
   }
   return best;
+}
+
+function selectTLSpan(evtIdx, spanId) {
+  if (!tlDataCache || evtIdx < 0) return;
+  activeTLEventIdx = evtIdx;
+  activeTLSpanId = spanId == null ? null : String(spanId);
+  showTLEventSource(evtIdx);
 }
 
 function collectPhaseTLData() {
