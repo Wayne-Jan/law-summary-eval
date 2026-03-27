@@ -102,10 +102,16 @@
 
     /* ─── TWO-COLUMN LAYOUT ─── */
     .tl-columns { display: flex; gap: 20px; align-items: stretch; }
-    .tl-col-left { flex: 44; min-width: 0; }
+    .tl-col-left {
+      flex: 44; min-width: 0; position: sticky; top: 0;
+      max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h));
+      display: flex; flex-direction: column;
+    }
     .tl-col-right { flex: 56; min-width: 0; display: flex; flex-direction: column; }
     .source-stack { display: flex; flex-direction: column; gap: 14px; min-height: 0; }
     .source-panel { flex: 1; min-height: 0; }
+    .timeline-panel-card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .timeline-panel-body { padding: 20px 22px 24px; overflow-y: auto; flex: 1; min-height: 0; }
 
     /* ─── SOURCE PANEL (full text with highlighter) ─── */
     .source-panel {
@@ -197,14 +203,11 @@
     .source-switcher-hint {
       font-size: 12px; color: #94a3b8;
     }
-    .tl-span-switcher {
-      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; justify-content: flex-start;
-    }
     .tl-span-pill {
       appearance: none; -webkit-appearance: none;
       display: inline-flex; align-items: center; gap: 6px;
       font-family: inherit; font-size: 12px; font-weight: 600;
-      padding: 5px 12px; border-radius: 999px; border: 1px solid #dbeafe;
+      padding: 3px 10px; border-radius: 999px; border: 1px solid #dbeafe;
       background: #f8fafc; color: #64748b; cursor: pointer; line-height: 1.4;
       box-shadow: none; outline: none;
     }
@@ -397,6 +400,7 @@
       .tl-columns { flex-direction: column; }
       .tl-col-left { flex: 1; position: static; max-height: none; width: 100%; }
       .tl-col-right { flex: 1; position: static; max-height: none; width: 100%; }
+      .timeline-panel-body { overflow: visible; }
       .tl-source-toggle { display: inline-flex; }
     }
     @media (min-width: 769px) {
@@ -668,14 +672,14 @@
       return primary || spans[0];
     }
 
-    function renderEventSpanSwitcher(evt, evtIdx) {
+    function renderEventSpanSwitcher(evt, evtIdx, evidenceStatus) {
       if (timelineSourceMode !== 'v310') return '';
       const spans = getEventSpans(evt);
       if (!spans.length) return '';
       const activeForEvent = activeEventIdx === evtIdx ? getActiveSpan(evt) : null;
       const supportingTotal = spans.filter(sp => sp.role !== 'primary').length;
       let supportingIndex = 0;
-      let html = '<div class="tl-span-switcher">';
+      let html = '<div class="tl-evidence-row">';
       spans.forEach(sp => {
         const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
         const title = sp.role === 'primary'
@@ -684,6 +688,9 @@
         const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
         html += `<button class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}" onclick="event.stopPropagation(); selectSpan(${evtIdx}, ${JSON.stringify(sp.span_id)})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
       });
+      if (evidenceStatus) {
+        html += `<span class="tl-evidence-pill status-${evidenceStatus}">${esc(formatEvidenceStatus(evidenceStatus))}</span>`;
+      }
       html += '</div>';
       return html;
     }
@@ -796,13 +803,13 @@
 
       // Left column: timeline events
       html += '<div class="tl-col-left">';
-      html += '<div class="panel-card">';
+      html += '<div class="panel-card timeline-panel-card">';
       html += '<div class="panel-head">';
       html += '<div class="panel-kicker">TIMELINE</div>';
       html += '<div class="panel-title">事件時間軸</div>';
       html += `<div class="panel-meta">${events.length} 個事件，點擊事件可同步查看原文</div>`;
       html += '</div>';
-      html += '<div style="padding: 20px 22px 24px;">';
+      html += '<div class="timeline-panel-body">';
       html += '<div class="timeline">';
 
       events.forEach((evt, idx) => {
@@ -832,16 +839,7 @@
         if (timelineSourceMode === 'v310') {
           const evidence = getEventAlignmentSummary(evt);
           html += '<div class="tl-event-evidence">';
-          html += '<div class="tl-evidence-row">';
-          html += `<span class="tl-evidence-pill">${evidence.total} 段證據</span>`;
-          if (evidence.supporting > 0) {
-            html += `<span class="tl-evidence-pill">含 ${evidence.supporting} 段補充</span>`;
-          } else {
-            html += `<span class="tl-evidence-pill">單一主證據</span>`;
-          }
-          html += `<span class="tl-evidence-pill status-${evidence.status}">${esc(formatEvidenceStatus(evidence.status))}</span>`;
-          html += '</div>';
-          html += renderEventSpanSwitcher(evt, idx);
+          html += renderEventSpanSwitcher(evt, idx, evidence.status);
           html += '</div>';
         }
 
