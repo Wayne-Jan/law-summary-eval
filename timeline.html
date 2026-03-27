@@ -765,6 +765,52 @@
       return top;
     }
 
+    function normalizeLooseText(text) {
+      return String(text || '').replace(/\s+/g, '');
+    }
+
+    function refineSpanRangeInChunk(chunkContent, relStart, relEnd, quote) {
+      const rawQuote = String(quote || '');
+      if (!rawQuote) return null;
+      const windowPad = 120;
+      const searchStart = Math.max(0, relStart - windowPad);
+      const searchEnd = Math.min(chunkContent.length, relEnd + windowPad);
+      const windowText = chunkContent.slice(searchStart, searchEnd);
+
+      const exactIdx = windowText.indexOf(rawQuote);
+      if (exactIdx >= 0) {
+        return {
+          relStart: searchStart + exactIdx,
+          relEnd: searchStart + exactIdx + rawQuote.length,
+          method: 'exact_in_window'
+        };
+      }
+
+      const normalizedQuote = normalizeLooseText(rawQuote);
+      if (!normalizedQuote) return null;
+
+      const normalizedChars = [];
+      const indexMap = [];
+      for (let i = 0; i < windowText.length; i += 1) {
+        const ch = windowText[i];
+        if (!/\s/.test(ch)) {
+          normalizedChars.push(ch);
+          indexMap.push(i);
+        }
+      }
+      const normalizedWindow = normalizedChars.join('');
+      const normalizedIdx = normalizedWindow.indexOf(normalizedQuote);
+      if (normalizedIdx < 0) return null;
+
+      const origStart = indexMap[normalizedIdx];
+      const origEnd = indexMap[normalizedIdx + normalizedQuote.length - 1] + 1;
+      return {
+        relStart: searchStart + origStart,
+        relEnd: searchStart + origEnd,
+        method: 'normalized_in_window'
+      };
+    }
+
     function findChunkForEvent(evt) {
       const chunks = (timelineData && timelineData.chunks) || [];
       const spans = getEventSpans(evt);
@@ -930,12 +976,27 @@
               const overlapStart = Math.max(sp.char_start, chunk.start_char);
               const overlapEnd = Math.min(sp.char_end, chunk.end_char);
               if (overlapEnd > overlapStart) {
+                let relStart = overlapStart - chunk.start_char;
+                let relEnd = overlapEnd - chunk.start_char;
+                const status = sp.alignment_status || evt.alignment_status || 'UNRESOLVED';
+                if (status === 'MATCH_FUZZY' || status === 'PARTIAL_UNRESOLVED') {
+                  const refined = refineSpanRangeInChunk(
+                    chunk.content || '',
+                    relStart,
+                    relEnd,
+                    sp.quote || ''
+                  );
+                  if (refined && refined.relEnd > refined.relStart) {
+                    relStart = refined.relStart;
+                    relEnd = refined.relEnd;
+                  }
+                }
                 evtSpans.push({
-                  relStart: overlapStart - chunk.start_char,
-                  relEnd: overlapEnd - chunk.start_char,
+                  relStart,
+                  relEnd,
                   evtIdx: evtIdx,
                   role: sp.role || 'supporting',
-                  status: sp.alignment_status || evt.alignment_status || 'UNRESOLVED',
+                  status,
                   spanId: sp.span_id || '',
                   anchorId: getSpanAnchorId(evtIdx, sp.span_id || '')
                 });
