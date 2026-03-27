@@ -17,6 +17,16 @@ GitHub Pages issues with non-ASCII filenames.
 Volume-aware: scans predictions/{cond}/{volume}/{case}/ where volume
 is one of 上冊, 中冊, 下冊.
 
+LLM-eval refresh workflow:
+    1. Generate or update evaluation JSONs in Law_extraction_refactor
+       under data/predictions/{cond}/{volume}/{case}/eval/.
+    2. Run this script from law-summary-eval:
+           python3 build.py
+       to rebuild the static website data in data/.
+    3. If metrics changed, also run:
+           python3 build_metrics_data.py
+       so metrics.html reads the refreshed eval_metrics_*.json files.
+
 Usage:
     python build.py
 """
