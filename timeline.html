@@ -685,6 +685,10 @@
       host.innerHTML = html;
     }
 
+    function getSpanAnchorId(evtIdx, spanId) {
+      return `span_anchor_${evtIdx}_${String(spanId).replace(/[^a-zA-Z0-9_-]/g, '_')}`;
+    }
+
     function findChunkForEvent(evt) {
       const chunks = (timelineData && timelineData.chunks) || [];
       const spans = getEventSpans(evt);
@@ -868,7 +872,8 @@
                   evtIdx: evtIdx,
                   role: sp.role || 'supporting',
                   status: sp.alignment_status || evt.alignment_status || 'UNRESOLVED',
-                  spanId: sp.span_id || ''
+                  spanId: sp.span_id || '',
+                  anchorId: getSpanAnchorId(evtIdx, sp.span_id || '')
                 });
               }
             });
@@ -879,7 +884,7 @@
           let cursor = 0;
           evtSpans.forEach(sp => {
             if (sp.relStart > cursor) chunkHtml += esc(content.substring(cursor, sp.relStart));
-            chunkHtml += `<mark class="evt-highlight" data-evt="${sp.evtIdx}" data-role="${esc(sp.role)}" data-status="${esc(sp.status)}" data-span-id="${esc(sp.spanId)}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
+            chunkHtml += `<mark id="${esc(sp.anchorId)}" class="evt-highlight" data-evt="${sp.evtIdx}" data-role="${esc(sp.role)}" data-status="${esc(sp.status)}" data-span-id="${esc(sp.spanId)}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
             cursor = sp.relEnd;
           });
           if (cursor < content.length) chunkHtml += esc(content.substring(cursor));
@@ -959,7 +964,8 @@
       });
 
       if (scrollEvent) {
-        const selectedMark = evtMarks.find(mark => mark.dataset.spanId === activeSpanId);
+        const selectedAnchorId = activeSpanId ? getSpanAnchorId(idx, activeSpanId) : '';
+        const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
         const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
         if (scrollTarget) {
           requestAnimationFrame(() => {
