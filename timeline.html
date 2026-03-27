@@ -100,10 +100,11 @@
     .panel-title { font-size: 15px; font-weight: 600; color: #111827; }
     .panel-meta { font-size: 12px; color: #6b7280; margin-top: 4px; }
 
-    /* ─── DUAL-COLUMN LAYOUT ─── */
+    /* ─── THREE-COLUMN LAYOUT ─── */
     .tl-columns { display: flex; gap: 20px; align-items: flex-start; }
-    .tl-col-left { flex: 44; min-width: 0; }
-    .tl-col-right { flex: 56; min-width: 0; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
+    .tl-col-left { flex: 40; min-width: 0; }
+    .tl-col-source { flex: 36; min-width: 0; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
+    .tl-col-inspector { flex: 24; min-width: 280px; position: sticky; top: 0; max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)); display: flex; flex-direction: column; }
     .source-panel { flex: 1; min-height: 0; }
 
     /* ─── SOURCE PANEL (full text with highlighter) ─── */
@@ -155,6 +156,10 @@
     .evt-highlight[data-role="supporting"].active {
       background: #dbeafe; box-shadow: 0 1px 0 #60a5fa;
     }
+    .evt-highlight.selected {
+      outline: 2px solid rgba(79, 70, 229, 0.34);
+      outline-offset: 1px;
+    }
     .evt-highlight[data-role="primary"][data-status="MATCH_FUZZY"].active,
     .evt-highlight[data-role="supporting"][data-status="MATCH_FUZZY"].active {
       outline: 1px dashed rgba(14, 116, 144, 0.45);
@@ -182,6 +187,63 @@
     }
     .source-panel-empty svg { margin-bottom: 10px; opacity: 0.5; }
     .source-panel-empty span { font-size: 13px; }
+    .evidence-panel {
+      background: white; border: 1px solid #e5e7eb; border-radius: 10px;
+      display: flex; flex-direction: column;
+    }
+    .evidence-panel-body {
+      padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 12px;
+    }
+    .evidence-summary {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .evidence-summary-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 10px; border-radius: 999px; border: 1px solid #e2e8f0;
+      background: #f8fafc; font-size: 12px; color: #334155; font-weight: 600;
+    }
+    .span-tab-row {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .span-tab {
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 7px 10px; border-radius: 10px; border: 1px solid #dbeafe;
+      background: #f8fbff; color: #1d4ed8; cursor: pointer;
+    }
+    .span-tab:hover { border-color: #60a5fa; }
+    .span-tab.active {
+      background: #dbeafe; border-color: #60a5fa; color: #1e3a8a;
+    }
+    .span-detail {
+      border: 1px solid #e5e7eb; border-radius: 12px; background: #fcfcfd;
+      padding: 14px;
+    }
+    .span-detail-head {
+      display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; margin-bottom: 10px;
+    }
+    .span-detail-title {
+      font-size: 14px; font-weight: 700; color: #111827;
+    }
+    .span-detail-meta {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px;
+    }
+    .span-detail-meta .evidence-summary-pill { font-size: 11px; padding: 4px 9px; }
+    .span-quote {
+      font-size: 13px; line-height: 1.8; color: #334155; background: #fff;
+      border-left: 3px solid #e2e8f0; padding: 10px 12px; border-radius: 8px;
+      white-space: pre-wrap;
+    }
+    .span-reason {
+      margin-top: 10px; font-size: 13px; color: #475569; line-height: 1.7;
+    }
+    .span-overlap-note {
+      margin-top: 10px; font-size: 12px; line-height: 1.6;
+      color: #92400e; background: #fffbeb; border: 1px solid #fde68a;
+      padding: 10px 12px; border-radius: 10px;
+    }
+    .evidence-panel-empty {
+      padding: 20px 16px 24px; color: #94a3b8; font-size: 13px; line-height: 1.7;
+    }
 
     /* ─── SUMMARY BANNER ─── */
     .tl-summary { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
@@ -259,6 +321,8 @@
       margin-top: 8px; padding: 8px 10px; border-radius: 8px;
       background: #f8fafc; border: 1px solid #e2e8f0; font-size: 12px; color: #475569;
     }
+    .tl-event-evidence { display: none; }
+    .tl-event.active-source .tl-event-evidence { display: block; }
 
     /* ─── MOBILE: collapsible source (hidden on desktop) ─── */
     .tl-source-toggle {
@@ -302,8 +366,9 @@
       .content-inner { padding: 20px; }
       .tl-summary-card { min-width: 120px; padding: 10px 14px; }
       .tl-columns { gap: 16px; }
-      .tl-col-left { flex: 42; }
-      .tl-col-right { flex: 58; }
+      .tl-col-left { flex: 40; }
+      .tl-col-source { flex: 34; }
+      .tl-col-inspector { flex: 26; min-width: 240px; }
     }
 
     /* ─── RESPONSIVE: MOBILE ─── */
@@ -366,8 +431,9 @@
       .tl-meta { gap: 8px; }
 
       .tl-columns { flex-direction: column; }
-      .tl-col-left { flex: 1; position: static; max-height: none; width: 100%; }
-      .tl-col-right { flex: 1; position: static; max-height: none; width: 100%; }
+      .tl-col-left, .tl-col-source, .tl-col-inspector {
+        flex: 1; position: static; max-height: none; width: 100%; min-width: 0;
+      }
       .tl-source-toggle { display: inline-flex; }
     }
     @media (min-width: 769px) {
@@ -438,6 +504,7 @@
     let timelineSourceMode = 'legacy'; // legacy | v310
     let timelineData = null;
     let activeEventIdx = -1;
+    let activeSpanId = null;
     let lastScrolledEventIdx = -1;
     let sourceScrollTimer = null;
 
@@ -542,6 +609,7 @@
       currentCase = caseName;
       timelineData = null;
       activeEventIdx = -1;
+      activeSpanId = null;
       const select = document.getElementById('caseSelect');
       if (select) select.value = caseName;
       const url = new URL(location.href);
@@ -594,6 +662,8 @@
           span_id: sp.span_id || `span_${idx + 1}`,
           role: sp.role || 'supporting',
           quote: sp.quote || '',
+          evidence_type: sp.evidence_type || '',
+          support_role: sp.support_role || '',
           char_start: Number.isInteger(sp.char_start) ? sp.char_start : -1,
           char_end: Number.isInteger(sp.char_end) ? sp.char_end : -1,
           alignment_status: sp.alignment_status || evt.alignment_status || 'UNRESOLVED'
@@ -605,12 +675,22 @@
           span_id: 'event_range',
           role: 'primary',
           quote: evt.extraction_text || '',
+          evidence_type: 'primary_quote',
+          support_role: '',
           char_start: evt.char_start,
           char_end: evt.char_end,
           alignment_status: evt.alignment_status || 'UNRESOLVED'
         }];
       }
       return [];
+    }
+
+    function normalizeAlignmentStatus(status) {
+      const raw = String(status || '').toUpperCase();
+      if (raw === 'MATCH_EXACT') return 'exact';
+      if (raw === 'MATCH_FUZZY') return 'fuzzy';
+      if (raw === 'PARTIAL_UNRESOLVED') return 'partial';
+      return 'unresolved';
     }
 
     function getEventAlignmentSummary(evt) {
@@ -624,6 +704,72 @@
       else if (statuses.some(s => s === 'PARTIAL_UNRESOLVED')) status = 'partial';
       else if (statuses.some(s => s === 'MATCH_FUZZY')) status = 'fuzzy';
       return { total: spans.length, primary, supporting, status };
+    }
+
+    function hasTimeAnchor(text) {
+      return /(?:上午|下午|凌晨|中午|晚上|晚間)?\s*\d{1,2}\s*時(?:\d{1,2}\s*分)?|\d+月\d+日/.test(String(text || ''));
+    }
+
+    function inferSupportRole(evt, sp) {
+      if (sp.support_role) return sp.support_role;
+      if (sp.role === 'primary') return 'primary_anchor';
+      if (hasTimeAnchor(sp.quote)) return 'time_anchor';
+      if (evt.critical_decision) return 'critical_context';
+      if (evt.event_type === 'final_outcome' || evt.event_type === 'deterioration') return 'outcome_support';
+      if (evt.event_type === 'consultation' || evt.event_type === 'transfer') return 'causal_context';
+      if (evt.event_type === 'diagnosis' || evt.event_type === 'initial_contact') return 'background_context';
+      return 'action_support';
+    }
+
+    function formatSupportRoleLabel(role) {
+      const map = {
+        primary_anchor: '主證據',
+        time_anchor: '時間定位',
+        action_support: '過程補充',
+        outcome_support: '結果補充',
+        causal_context: '前後脈絡',
+        critical_context: '決策脈絡',
+        background_context: '背景資訊'
+      };
+      return map[role] || '補充證據';
+    }
+
+    function buildSpanExplanation(evt, sp) {
+      const role = inferSupportRole(evt, sp);
+      const status = normalizeAlignmentStatus(sp.alignment_status);
+      const roleMap = {
+        primary_anchor: '這段原文直接對應事件的核心敘述。',
+        time_anchor: '這段原文主要提供事件的時間定位。',
+        action_support: '這段原文補充事件的處置或動作細節。',
+        outcome_support: '這段原文補充事件的結果或後續變化。',
+        causal_context: '這段原文補充事件前後承接的脈絡。',
+        critical_context: '這段原文補充法院關注的決策脈絡。',
+        background_context: '這段原文提供理解事件所需的背景資訊。'
+      };
+      const statusMap = {
+        exact: '此段與原文為精確對齊。',
+        fuzzy: '此段可支持事件內容，但定位屬模糊對齊。',
+        partial: '此事件只有部分證據完成對齊。',
+        unresolved: '此段目前仍待定位。'
+      };
+      return {
+        supportRole: role,
+        supportLabel: formatSupportRoleLabel(role),
+        supportText: roleMap[role] || '這段原文補充此事件的相關證據。',
+        status,
+        statusText: statusMap[status] || '此段證據已納入事件。',
+        isPrimary: sp.role === 'primary'
+      };
+    }
+
+    function getActiveSpan(evt) {
+      const spans = getEventSpans(evt);
+      if (!spans.length) return null;
+      if (activeSpanId) {
+        const found = spans.find(sp => sp.span_id === activeSpanId);
+        if (found) return found;
+      }
+      return spans[0];
     }
 
     function findChunkForEvent(evt) {
@@ -715,7 +861,7 @@
       html += '<div class="panel-head">';
       html += '<div class="panel-kicker">TIMELINE</div>';
       html += '<div class="panel-title">事件時間軸</div>';
-      html += `<div class="panel-meta">${events.length} 個事件，點擊事件可定位到右側原文</div>`;
+      html += `<div class="panel-meta">${events.length} 個事件，點擊事件可同步查看原文與證據說明</div>`;
       html += '</div>';
       html += '<div style="padding: 20px 22px 24px;">';
       html += '<div class="timeline">';
@@ -746,6 +892,7 @@
         }
         if (timelineSourceMode === 'v310') {
           const evidence = getEventAlignmentSummary(evt);
+          html += '<div class="tl-event-evidence">';
           html += '<div class="tl-evidence-row">';
           html += `<span class="tl-evidence-pill">${evidence.total} 段證據</span>`;
           if (evidence.supporting > 0) {
@@ -761,6 +908,7 @@
             html += `此關鍵事件與 Event ${esc((ann.overlap_with_event_ids || []).join(', '))} 屬同一論證窗口，建議主事件為 Event ${esc(ann.recommended_canonical_event_id || '')}。`;
             html += `</div>`;
           }
+          html += '</div>';
         }
 
         // Mobile-only collapsible (shows chunk with highlight)
@@ -781,8 +929,8 @@
       html += '</div></div></div>'; // .timeline / padding / .panel-card
       html += '</div>'; // tl-col-left
 
-      // Right column: source panel (sticky)
-      html += '<div class="tl-col-right">';
+      // Middle column: source panel
+      html += '<div class="tl-col-source">';
       html += '<div class="source-panel" id="sourcePanel">';
       html += '<div class="panel-head">';
       html += '<div class="panel-kicker">SOURCE</div>';
@@ -839,10 +987,23 @@
         html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案件無段落資料</span></div>';
       }
 
-      html += '</div></div></div>'; // source-panel-body / source-panel / tl-col-right
+      html += '</div></div></div>'; // source-panel-body / source-panel / tl-col-source
+
+      // Right column: evidence inspector
+      html += '<div class="tl-col-inspector">';
+      html += '<div class="evidence-panel" id="evidencePanel">';
+      html += '<div class="panel-head">';
+      html += '<div class="panel-kicker">EVIDENCE</div>';
+      html += `<div class="panel-title">證據說明</div>`;
+      html += `<div class="panel-meta">${timelineSourceMode === 'v310' ? '點擊事件後可切換各段證據' : 'Legacy 模式不顯示多段證據說明'}</div>`;
+      html += '</div>';
+      html += '<div class="evidence-panel-body" id="evidencePanelBody"></div>';
+      html += '</div></div>';
+
       html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
       if (events.length > 0 && activeEventIdx >= 0) showSource(activeEventIdx, false);
+      else renderEvidenceInspector();
 
     }
 
@@ -852,6 +1013,9 @@
       const evt = events[idx];
       if (!evt) return;
       activeEventIdx = idx;
+      const evtSpans = getEventSpans(evt);
+      if (!evtSpans.length) activeSpanId = null;
+      else if (!activeSpanId || !evtSpans.some(sp => sp.span_id === activeSpanId)) activeSpanId = evtSpans[0].span_id;
 
       // Highlight active event card (no scroll — only visual)
       document.querySelectorAll('.tl-event').forEach(el => {
@@ -870,11 +1034,15 @@
         el.classList.remove('focus-pulse');
       });
       document.querySelectorAll('.evt-highlight.active').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.evt-highlight.selected').forEach(el => el.classList.remove('selected'));
 
       const evtMarks = Array.from(document.querySelectorAll(`.evt-highlight[data-evt="${idx}"]`));
       const activeRegions = new Set();
       evtMarks.forEach(mark => {
         mark.classList.add('active');
+        if (activeSpanId && mark.dataset.spanId === activeSpanId) {
+          mark.classList.add('selected');
+        }
         const region = mark.closest('.chunk-region');
         if (region) activeRegions.add(region);
       });
@@ -894,13 +1062,83 @@
       });
 
       if (scrollEvent) {
-        const scrollTarget = evtMarks[0] || [...activeRegions][0];
+        const selectedMark = evtMarks.find(mark => mark.dataset.spanId === activeSpanId);
+        const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
         if (scrollTarget) {
           requestAnimationFrame(() => {
             scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
           });
         }
       }
+
+      renderEvidenceInspector();
+    }
+
+    function selectSpan(evtIdx, spanId) {
+      if (!timelineData || evtIdx < 0) return;
+      activeEventIdx = evtIdx;
+      activeSpanId = spanId || null;
+      showSource(evtIdx, true);
+    }
+
+    function renderEvidenceInspector() {
+      const panel = document.getElementById('evidencePanelBody');
+      if (!panel) return;
+      if (timelineSourceMode !== 'v310') {
+        panel.innerHTML = '<div class="evidence-panel-empty">Legacy 模式維持原本單段式時間軸，不顯示多段證據說明。</div>';
+        return;
+      }
+      if (!timelineData || activeEventIdx < 0) {
+        panel.innerHTML = '<div class="evidence-panel-empty">請先點選左側事件。選定後，這裡會顯示該事件的主證據、補充證據與對齊情況。</div>';
+        return;
+      }
+      const evt = (timelineData.events || [])[activeEventIdx];
+      if (!evt) {
+        panel.innerHTML = '<div class="evidence-panel-empty">目前沒有可顯示的證據內容。</div>';
+        return;
+      }
+      const spans = getEventSpans(evt);
+      if (!spans.length) {
+        panel.innerHTML = '<div class="evidence-panel-empty">此事件目前沒有可定位的證據片段。</div>';
+        return;
+      }
+      const evidence = getEventAlignmentSummary(evt);
+      const activeSpan = getActiveSpan(evt) || spans[0];
+      if (activeSpan) activeSpanId = activeSpan.span_id;
+      const explanation = buildSpanExplanation(evt, activeSpan);
+
+      let html = '<div class="evidence-summary">';
+      html += `<span class="evidence-summary-pill">${evidence.total} 段證據</span>`;
+      html += `<span class="evidence-summary-pill">${formatEvidenceStatus(evidence.status)}</span>`;
+      if (evidence.supporting > 0) html += `<span class="evidence-summary-pill">${evidence.supporting} 段補充</span>`;
+      html += '</div>';
+
+      html += '<div class="span-tab-row">';
+      let supportingIndex = 0;
+      spans.forEach((sp) => {
+        const exp = buildSpanExplanation(evt, sp);
+        const activeCls = sp.span_id === activeSpanId ? ' active' : '';
+        const title = exp.isPrimary ? '主證據' : `補充證據 ${++supportingIndex}`;
+        html += `<button class="span-tab${activeCls}" onclick="selectSpan(${activeEventIdx}, ${JSON.stringify(sp.span_id)})">${esc(title)}</button>`;
+      });
+      html += '</div>';
+
+      html += '<div class="span-detail">';
+      html += '<div class="span-detail-head">';
+      html += `<div><div class="span-detail-title">${esc(explanation.supportLabel)}</div>`;
+      html += '<div class="span-detail-meta">';
+      html += `<span class="evidence-summary-pill">${esc(formatEvidenceStatus(explanation.status))}</span>`;
+      html += `<span class="evidence-summary-pill">${esc(activeSpan.role === 'primary' ? '主證據' : '補充證據')}</span>`;
+      html += '</div></div>';
+      html += `</div>`;
+      html += `<div class="span-quote">${esc(activeSpan.quote || '')}</div>`;
+      html += `<div class="span-reason">${esc(explanation.supportText)} ${esc(explanation.statusText)}</div>`;
+      if (evt.critical_overlap_annotation) {
+        const ann = evt.critical_overlap_annotation;
+        html += `<div class="span-overlap-note">此關鍵事件與 Event ${esc((ann.overlap_with_event_ids || []).join(', '))} 屬同一論證窗口，建議主事件為 Event ${esc(ann.recommended_canonical_event_id || '')}。</div>`;
+      }
+      html += '</div>';
+      panel.innerHTML = html;
     }
 
     function isoToMinguo(iso, refIso) {
