@@ -48,6 +48,9 @@ from modules.extraction_v3_8.alignment_engine import smart_align
 PREDICTIONS = os.path.join(SOURCE_PROJECT, "data", "predictions")
 CHUNKS_DIR = os.path.join(SOURCE_PROJECT, "data", "chunks_20260105")
 EXTRACTIONS_DIR_V39 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.9")
+EXTRACTIONS_DIR_V3104_PATCHED = os.path.join(
+    SOURCE_PROJECT, "data", "extractions_v3.10.4_patched"
+)
 EXTRACTIONS_DIR_V3104 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.10.4")
 SOURCE_TEXT_DIR = os.path.join(SOURCE_PROJECT, "原始判決書")
 GT_SUMMARY_DIR = os.path.join(SOURCE_PROJECT, "摘要 (ground_truth)")
@@ -317,9 +320,10 @@ def compute_view_input_fingerprint(case_dir, case_name, volume, cond):
 
 
 def find_v310_master_path(case_name):
-    master_path = os.path.join(EXTRACTIONS_DIR_V3104, case_name, "master.json")
-    if os.path.exists(master_path):
-        return master_path
+    for base_dir in (EXTRACTIONS_DIR_V3104_PATCHED, EXTRACTIONS_DIR_V3104):
+        master_path = os.path.join(base_dir, case_name, "master.json")
+        if os.path.exists(master_path):
+            return master_path
     return None
 
 
@@ -1047,14 +1051,29 @@ def build():
     tl_v310_out_dir = os.path.join(SITE_DATA, "timeline_v310")
     os.makedirs(tl_v310_out_dir, exist_ok=True)
     tl_v310_count = 0
-    v310_dir = EXTRACTIONS_DIR_V3104
-    if not os.path.isdir(v310_dir):
+    v310_candidate_dirs = [
+        d
+        for d in (EXTRACTIONS_DIR_V3104_PATCHED, EXTRACTIONS_DIR_V3104)
+        if os.path.isdir(d)
+    ]
+    if not v310_candidate_dirs:
         print("  WARNING: extraction v3.10.4 directory not found, skipping timeline_v310")
     else:
         emitted_v310_paths = set()
-        for case_name in sorted(os.listdir(v310_dir)):
-            case_dir = os.path.join(v310_dir, case_name)
-            if not os.path.isdir(case_dir):
+        v310_case_names = set()
+        for base_dir in v310_candidate_dirs:
+            for case_name in os.listdir(base_dir):
+                case_dir = os.path.join(base_dir, case_name)
+                if os.path.isdir(case_dir):
+                    v310_case_names.add(case_name)
+        for case_name in sorted(v310_case_names):
+            case_dir = None
+            for base_dir in v310_candidate_dirs:
+                candidate_dir = os.path.join(base_dir, case_name)
+                if os.path.isdir(candidate_dir):
+                    case_dir = candidate_dir
+                    break
+            if not case_dir:
                 continue
             master_path = os.path.join(case_dir, "master.json")
             if not os.path.exists(master_path):
@@ -1089,7 +1108,9 @@ def build():
                 continue
             os.remove(stale_path)
             rewritten_outputs += 1
-        print(f"  {'timeline (extraction v3.10.4)':45s}  {tl_v310_count:3d} cases")
+        print(
+            f"  {'timeline (extraction v3.10.4 patched-first)':45s}  {tl_v310_count:3d} cases"
+        )
 
     log_stage(build_started, "Stage 7/7: writing eval whitelist and manifest")
     # Load human eval 30-case whitelist
