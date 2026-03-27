@@ -31,6 +31,15 @@
       background: #f8fafc; border: 1px solid #e2e8f0;
       border-radius: 999px; padding: 5px 10px; white-space: nowrap;
     }
+    .case-context-badge.vol-upper {
+      color: #4f46e5; background: #eef2ff; border-color: #c7d2fe;
+    }
+    .case-context-badge.vol-middle {
+      color: #0d9488; background: #f0fdfa; border-color: #99f6e4;
+    }
+    .case-context-badge.vol-lower {
+      color: #d97706; background: #fff7ed; border-color: #fdba74;
+    }
     .toolbar .spacer { flex: 1; }
     .toolbar a.nav-link {
       color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
@@ -497,7 +506,7 @@
     let caseSlugs = {};
     let caseInfo = {};
     let currentCase = null;
-    let timelineSourceMode = 'legacy'; // legacy | v310
+    let timelineSourceMode = 'v310'; // legacy | v310
     let timelineData = null;
     let activeEventIdx = -1;
     let activeSpanId = null;
@@ -573,12 +582,15 @@
     }
 
     function updateVolumeProgress() {
-      const volumes = ['上冊', '中冊', '下冊'];
       const currentVolume = currentCase ? ((caseInfo[currentCase] || {}).volume || '') : '';
       const total = currentVolume ? allCases.filter(c => ((caseInfo[c] || {}).volume || '') === currentVolume).length : 0;
       const badge = document.getElementById('caseContextBadge');
       if (badge) {
         badge.textContent = currentVolume ? `${currentVolume}・${total}案` : '';
+        badge.className = 'case-context-badge';
+        if (currentVolume === '上冊') badge.classList.add('vol-upper');
+        else if (currentVolume === '中冊') badge.classList.add('vol-middle');
+        else if (currentVolume === '下冊') badge.classList.add('vol-lower');
       }
     }
 
@@ -619,6 +631,7 @@
       activeSpanId = null;
       const select = document.getElementById('caseSelect');
       if (select) select.value = caseName;
+      updateVolumeProgress();
       const url = new URL(location.href);
       url.searchParams.set('case', caseName);
       url.searchParams.set('source', timelineSourceMode);
