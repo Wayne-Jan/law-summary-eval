@@ -112,20 +112,6 @@
       background: white; border: 1px solid #e5e7eb; border-radius: 10px;
       min-height: 200px; display: flex; flex-direction: column;
     }
-    .source-head-row {
-      display: flex; align-items: flex-start; justify-content: space-between;
-      gap: 14px; flex-wrap: wrap;
-    }
-    .source-head-main {
-      min-width: 0;
-    }
-    .source-head-actions {
-      display: flex; justify-content: flex-end; align-items: flex-start;
-      flex: 0 0 auto; min-height: 30px;
-    }
-    .source-head-actions:empty {
-      display: none;
-    }
     .source-panel-body {
       font-size: 14px; color: #475569; line-height: 1.85;
       padding: 14px 18px; white-space: pre-wrap; word-break: break-all;
@@ -210,6 +196,21 @@
     }
     .source-switcher-hint {
       font-size: 12px; color: #94a3b8;
+    }
+    .tl-span-switcher {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; justify-content: flex-start;
+    }
+    .tl-span-pill {
+      appearance: none; -webkit-appearance: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: inherit; font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: 999px; border: 1px solid #dbeafe;
+      background: #f8fafc; color: #64748b; cursor: pointer; line-height: 1.4;
+      box-shadow: none; outline: none;
+    }
+    .tl-span-pill:hover { border-color: #bfdbfe; color: #475569; }
+    .tl-span-pill.active {
+      background: #eff6ff; border-color: #93c5fd; color: #1d4ed8;
     }
 
     /* ─── SUMMARY BANNER ─── */
@@ -331,8 +332,6 @@
       .tl-columns { gap: 16px; }
       .tl-col-left { flex: 42; }
       .tl-col-right { flex: 58; }
-      .source-head-row { flex-direction: column; align-items: flex-start; }
-      .source-head-actions { width: 100%; justify-content: flex-start; }
       .source-switcher { justify-content: flex-start; }
     }
 
@@ -669,32 +668,33 @@
       return primary || spans[0];
     }
 
-    function renderSourceSwitcher() {
-      const host = document.getElementById('sourceSwitcherHost');
-      if (!host) return;
-      if (timelineSourceMode !== 'v310') {
-        host.innerHTML = '';
-        return;
-      }
-      if (!timelineData || activeEventIdx < 0 || !(timelineData.events || [])[activeEventIdx]) {
-        host.innerHTML = '';
-        return;
-      }
-      const evt = timelineData.events[activeEventIdx];
+    function renderEventSpanSwitcher(evt, evtIdx) {
+      if (timelineSourceMode !== 'v310') return '';
       const spans = getEventSpans(evt);
-      let html = '<div class="source-switcher">';
+      if (!spans.length) return '';
+      const activeForEvent = activeEventIdx === evtIdx ? getActiveSpan(evt) : null;
       const supportingTotal = spans.filter(sp => sp.role !== 'primary').length;
       let supportingIndex = 0;
+      let html = '<div class="tl-span-switcher">';
       spans.forEach(sp => {
-        const activeCls = sp.span_id === activeSpanId ? ' active' : '';
+        const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
         const title = sp.role === 'primary'
           ? '主證據'
           : (supportingTotal <= 1 ? '補充證據' : `補充證據 ${++supportingIndex}`);
         const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
-        html += `<button class="span-tab${activeCls}" onclick="selectSpan(${activeEventIdx}, ${JSON.stringify(sp.span_id)})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
+        html += `<button class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}" onclick="event.stopPropagation(); selectSpan(${evtIdx}, ${JSON.stringify(sp.span_id)})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
       });
       html += '</div>';
-      host.innerHTML = html;
+      return html;
+    }
+
+    function updateEventSpanPills() {
+      document.querySelectorAll('.tl-span-pill').forEach(el => {
+        const evtIdx = Number(el.dataset.evt);
+        const spanId = String(el.dataset.spanId || '');
+        const isActive = evtIdx === activeEventIdx && spanId === String(activeSpanId || '');
+        el.classList.toggle('active', isActive);
+      });
     }
 
     function getSpanAnchorId(evtIdx, spanId) {
@@ -841,6 +841,7 @@
           }
           html += `<span class="tl-evidence-pill status-${evidence.status}">${esc(formatEvidenceStatus(evidence.status))}</span>`;
           html += '</div>';
+          html += renderEventSpanSwitcher(evt, idx);
           html += '</div>';
         }
 
@@ -866,17 +867,10 @@
       html += '<div class="tl-col-right">';
       html += '<div class="source-stack">';
       html += '<div class="source-panel" id="sourcePanel">';
-      html += '<div class="panel-head source-head">';
-      html += '<div class="source-head-row">';
-      html += '<div class="source-head-main">';
+      html += '<div class="panel-head">';
       html += '<div class="panel-kicker">SOURCE</div>';
       html += `<div class="panel-title">原始判決書</div>`;
       html += `<div class="panel-meta">${chunks.length} 段原文片段</div>`;
-      html += '</div>';
-      if (timelineSourceMode === 'v310') {
-        html += `<div class="source-head-actions" id="sourceSwitcherHost"></div>`;
-      }
-      html += '</div>';
       html += '</div>';
       html += '<div class="source-panel-body" id="sourcePanelBody">';
 
@@ -927,8 +921,8 @@
 
       html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
-      renderSourceSwitcher();
       if (events.length > 0 && activeEventIdx >= 0) showSource(activeEventIdx, false);
+      else updateEventSpanPills();
 
     }
 
@@ -1005,7 +999,7 @@
           });
         }
       }
-      renderSourceSwitcher();
+      updateEventSpanPills();
     }
 
     function selectSpan(evtIdx, spanId) {
