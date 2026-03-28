@@ -363,18 +363,63 @@
 
     /* ─── FOOTER ─── */
     .footer {
-      position: relative;
-      padding: 28px 24px; text-align: center;
-      font-size: 12px; color: #94a3b8; background: #fff;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
       border-top: 1px solid #e2e8f0;
+      padding: 56px 24px 28px;
+    }
+    .footer-shell {
+      width: min(1120px, calc(100vw - 48px));
+      margin: 0 auto;
+    }
+    .footer-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .footer-card {
+      display: flex; align-items: center; gap: 16px;
+      min-height: 88px;
+      padding: 18px 20px;
+      border: 1px solid #e2e8f0;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 10px 30px rgba(15,23,42,0.04);
+    }
+    .footer-icon {
+      width: 42px; height: 42px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #f8fafc; border: 1px solid #e2e8f0;
+      font-size: 15px; font-weight: 700; color: var(--slate-700);
+      flex-shrink: 0;
+    }
+    .footer-card-label {
+      font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: #94a3b8; font-weight: 700; margin-bottom: 4px;
+    }
+    .footer-card-value {
+      font-size: 16px; color: var(--slate-900); font-weight: 600;
+      line-height: 1.6;
+    }
+    .footer-card-value a {
+      color: inherit; text-decoration: none;
+    }
+    .footer-card-value a:hover { color: var(--indigo); }
+    .footer-meta {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid #e2e8f0;
+      font-size: 12px; color: #94a3b8;
       line-height: 1.9;
     }
-    .footer a {
-      color: inherit;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+    .footer-meta strong { color: var(--slate-700); font-weight: 600; }
+    .footer-links {
+      display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
     }
-    .footer a:hover { color: var(--slate-700); }
+    .footer-links a {
+      color: inherit; text-decoration: none;
+    }
+    .footer-links a:hover { color: var(--slate-700); }
 
     /* ─── ANIMATIONS ─── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -410,7 +455,12 @@
       .feat-text h3 { font-size: 18px; }
       .feat-text p { font-size: 13px; }
       .nav { padding: 0 16px; gap: 12px; }
-      .footer { padding: 24px 16px; }
+      .footer { padding: 36px 16px 22px; }
+      .footer-shell { width: min(100%, calc(100vw - 32px)); }
+      .footer-cards { grid-template-columns: 1fr; gap: 12px; }
+      .footer-card { min-height: auto; padding: 16px 18px; border-radius: 18px; }
+      .footer-card-value { font-size: 15px; }
+      .footer-meta { flex-direction: column; align-items: flex-start; gap: 10px; }
       .nav a:not(.nav-cta) { display: none; }
       .nav-cta { padding: 6px 14px; font-size: 11px; }
 
@@ -653,9 +703,40 @@
 </section>
 
 <footer class="footer">
-  <div>Legal Summary Evaluation Platform · 醫療糾紛刑事判決摘要比較與評估</div>
-  <div>研究與平台維護：詹元嘉 · 國立中興大學博士生</div>
-  <div>聯絡：<a href="mailto:koala8104@email.nchu.edu.tw">koala8104@email.nchu.edu.tw</a></div>
+  <div class="footer-shell">
+    <div class="footer-cards">
+      <div class="footer-card">
+        <div class="footer-icon">LS</div>
+        <div>
+          <div class="footer-card-label">Platform</div>
+          <div class="footer-card-value">Legal Summary Evaluation<br>醫療糾紛刑事判決摘要比較與評估</div>
+        </div>
+      </div>
+      <div class="footer-card">
+        <div class="footer-icon">研</div>
+        <div>
+          <div class="footer-card-label">Maintainer</div>
+          <div class="footer-card-value">詹元嘉 · 國立中興大學博士生</div>
+        </div>
+      </div>
+      <div class="footer-card">
+        <div class="footer-icon">@</div>
+        <div>
+          <div class="footer-card-label">Contact</div>
+          <div class="footer-card-value"><a href="mailto:koala8104@email.nchu.edu.tw">koala8104@email.nchu.edu.tw</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-meta">
+      <div>Copyright © 2026 <strong>Legal Summary Evaluation Platform</strong>. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="view.html">摘要檢視</a>
+        <a href="timeline.html">時間軸檢視</a>
+        <a href="metrics.html">AI 評估指標</a>
+        <a href="eval.html">專家評估</a>
+      </div>
+    </div>
+  </div>
 </footer>
 
 <script src="versioning.js"></script>

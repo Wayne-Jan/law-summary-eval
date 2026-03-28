@@ -181,32 +181,20 @@
       background: #dbe4ff; color: #4338ca; text-decoration: none;
     }
     .overview-preview-toggle {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin: 0 16px 16px; padding: 8px 12px;
+      display: inline-flex; align-items: center;
+      margin: 0 16px 16px; padding: 8px 14px;
       border: 1px solid rgba(79,70,229,0.18); border-radius: 999px;
-      background: var(--indigo-light); color: var(--indigo); font-size: 12px; font-weight: 700;
+      background: rgba(255,255,255,0.85); color: var(--indigo); font-size: 12px; font-weight: 700;
       cursor: pointer;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.48);
+      box-shadow: 0 4px 16px rgba(79,70,229,0.08);
     }
-    .overview-preview-toggle:hover { background: #dbe4ff; }
-    .overview-preview-toggle::after { content: '▾'; font-size: 11px; line-height: 1; }
-    .overview-preview-toggle[aria-expanded="true"]::after { content: '▴'; }
+    .overview-preview-toggle:hover { background: #ffffff; border-color: rgba(79,70,229,0.28); }
     .overview-expand-footer td {
       padding: 14px 18px 16px;
-      background: linear-gradient(180deg, #f8faff 0%, #eef2ff 100%);
+      background: #eef2ff;
       border-top: 1px solid #dbe4ff;
       border-bottom: none;
       text-align: center;
-      position: relative;
-    }
-    .overview-expand-footer td::before {
-      content: '';
-      position: absolute;
-      left: 24px;
-      right: 24px;
-      top: 50%;
-      border-top: 1px solid #c7d2fe;
-      transform: translateY(-50%);
     }
     .metrics-modal[hidden] { display: none; }
     .metrics-modal {
@@ -1093,7 +1081,7 @@
     return `${rowsHtml}
       <tr class="overview-expand-row overview-expand-footer">
         <td colspan="9">
-          <button class="overview-preview-toggle" type="button" onclick="openCaseListModal('${esc(condKey)}')">完整列表 · ${label}</button>
+          <button class="overview-preview-toggle" type="button" onclick="openCaseListModal('${esc(condKey)}')">${label}</button>
         </td>
       </tr>`;
   }
