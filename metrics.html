@@ -76,6 +76,12 @@
 
     /* ─── OVERVIEW TABLE ─── */
     .overview-table-wrap { overflow-x: auto; overflow-y: visible; margin-bottom: 24px; }
+    .mobile-scroll-hint {
+      display: none; margin: 10px 0 8px;
+      font-size: 12px; color: var(--slate-500);
+      background: white; border: 1px solid #e2e8f0; border-radius: 10px;
+      padding: 8px 10px;
+    }
     .overview-table {
       width: 100%; border-collapse: collapse; font-size: 14px;
       background: white; border-radius: 8px;
@@ -434,6 +440,7 @@
 
     @media (max-width: 768px) {
       .content { padding: 16px 12px 40px; }
+      .mobile-scroll-hint { display: block; }
       .overview-cards-grid { grid-template-columns: 1fr; }
       .overview-card-scores { grid-template-columns: repeat(2, 1fr); }
       .model-card-grid { grid-template-columns: 1fr; }
@@ -446,6 +453,11 @@
       .page-tab-bar { display: flex; width: 100%; border-radius: 16px; }
       .page-tab-btn { flex: 1; text-align: center; padding: 9px 10px; }
       .panel-title { font-size: 19px; }
+      .panel-desc { font-size: 13px; line-height: 1.6; }
+      .filter-bar { gap: 6px; }
+      .filter-bar-label { width: 100%; }
+      .filter-btn { padding: 6px 12px; }
+      .table-notes { padding: 8px 0 0; }
       .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
@@ -504,10 +516,11 @@
 
   <div id="pagePanel_overview" class="page-panel active">
     <div class="panel-hero">
-      <div class="panel-kicker">整體比較</div>
-      <div class="panel-title">同一冊別下的整體表現比較</div>
-      <div class="panel-desc">用表格做精確比較最適合看排序、缺值與樣本數。<br>這裡聚焦各模型在目前冊別下的整體指標，方便直接橫向比較。</div>
+    <div class="panel-kicker">整體比較</div>
+    <div class="panel-title">同一冊別下的整體表現比較</div>
+    <div class="panel-desc">用表格做精確比較最適合看排序、缺值與樣本數。<br>這裡聚焦各模型在目前冊別下的整體指標，方便直接橫向比較。</div>
     </div>
+    <div class="mobile-scroll-hint">手機上可左右滑動表格查看完整欄位。</div>
     <div class="overview-table-wrap">
       <table class="overview-table" id="overviewTable">
         <thead>
