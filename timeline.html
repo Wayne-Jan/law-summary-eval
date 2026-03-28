@@ -422,7 +422,8 @@
         font-weight: 500; text-decoration: none !important;
       }
       .ctrl-row-nav a.active {
-        background: #eef2ff; border-color: #c7d2fe; color: #4338ca !important;
+        background: #fff; border-color: #818cf8; color: #4338ca !important;
+        box-shadow: inset 3px 0 0 #4f46e5;
       }
 
       .main { flex-direction: column; margin-top: calc(var(--toolbar-h) + var(--subbar-h)) !important; height: auto; min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)) !important; }
@@ -756,7 +757,8 @@
         const bodyIsScrollable = body && body.scrollHeight > body.clientHeight + 4;
         if (body && body.contains(scrollTarget) && bodyIsScrollable) {
           const targetTop = getOffsetTopWithin(scrollTarget, body);
-          const nextTop = targetTop - Math.max(32, body.clientHeight * 0.2);
+          const targetHeight = scrollTarget.offsetHeight || 0;
+          const nextTop = targetTop - ((body.clientHeight - targetHeight) / 2);
           body.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' });
         } else {
           scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
