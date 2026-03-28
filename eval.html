@@ -3900,6 +3900,10 @@ async function syncToFirestore() {
 }
 
 async function restoreFromFirestore() {
+  if (getSessionRole() !== 'admin') {
+    showToast('只有管理員可使用雲端還原', 'error');
+    return;
+  }
   const ev = getCloudEvaluatorId();
   if (!ev || ev === 'default') return;
   const profile = getAuthProfile();
