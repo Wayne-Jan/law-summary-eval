@@ -116,11 +116,23 @@
       box-shadow: 0 8px 22px rgba(15,23,42,0.06);
     }
     .overview-case-row td {
-      background: #fff;
-      border-bottom: 1px solid #eef2ff;
+      background: #fafbfc;
+      border-top: 1px solid #eef2f7;
+      border-bottom: 1px solid #eef2f7;
     }
     .overview-case-row:last-of-type td {
       border-bottom: none;
+    }
+    .overview-case-row td:first-child {
+      border-left: 1px solid #eef2f7;
+      border-radius: 12px 0 0 12px;
+      padding-left: 24px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
+    }
+    .overview-case-row td:last-child {
+      border-right: 1px solid #eef2f7;
+      border-radius: 0 12px 12px 0;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.75);
     }
     .overview-case-main {
       display: flex; align-items: center; gap: 10px;
@@ -134,15 +146,12 @@
     .overview-case-link:hover {
       color: var(--indigo);
     }
-    .overview-case-badge {
+    .overview-case-volume {
       display: inline-flex; align-items: center;
-      padding: 3px 8px; border-radius: 999px;
-      border: 1px solid #e2e8f0; background: #f8fafc;
-      color: var(--slate-500); font-size: 11px; font-weight: 600;
+      padding: 3px 9px; border-radius: 999px;
+      border: 1px solid #dbe4ff; background: #eef2ff;
+      color: #4f46e5; font-size: 11px; font-weight: 700;
       white-space: nowrap; flex-shrink: 0;
-    }
-    .overview-case-row td:first-child {
-      padding-left: 24px;
     }
     .overview-preview-toggle {
       display: inline-flex; align-items: center; gap: 6px;
@@ -524,6 +533,8 @@
       .tab-btn { font-size: 12px; padding: 6px 12px; }
       .overview-case-main { align-items: flex-start; }
       .overview-case-link { white-space: normal; }
+      .overview-case-row td:first-child { border-radius: 12px 12px 0 0; }
+      .overview-case-row td:last-child { border-radius: 0 0 12px 12px; }
     }
   </style>
 </head>
@@ -740,6 +751,26 @@
     return caseId;
   }
 
+  function getCaseMeta(caseId) {
+    const canonical = DATA?.case_display_by_slug?.[caseId] || caseId;
+    return CASE_INFO[canonical] || {};
+  }
+
+  function formatCompactCaseLabel(caseId) {
+    const meta = getCaseMeta(caseId);
+    const num = meta.number ? `${meta.number}` : '';
+    const title = meta.short_title || resolveCaseDisplay(caseId);
+    return num ? `${num}・${title}` : title;
+  }
+
+  function formatVolumePill(caseId) {
+    const vol = getCaseMeta(caseId).volume;
+    if (vol === '上冊') return '上冊';
+    if (vol === '中冊') return '中冊';
+    if (vol === '下冊') return '下冊';
+    return currentVolume;
+  }
+
   function esc(text) {
     const div = document.createElement('div');
     div.textContent = text == null ? '' : String(text);
@@ -840,15 +871,15 @@
       const rougeBert = c.rouge_bertscore || {};
       const href = buildCaseViewHref(condKey, row.caseName);
       const nameHtml = href
-        ? `<a class="overview-case-link" href="${esc(href)}" target="_blank" rel="noopener">${esc(resolveCaseDisplay(row.caseName))}</a>`
-        : `<span class="overview-case-link">${esc(resolveCaseDisplay(row.caseName))}</span>`;
+        ? `<a class="overview-case-link" href="${esc(href)}" target="_blank" rel="noopener">${esc(formatCompactCaseLabel(row.caseName))}</a>`
+        : `<span class="overview-case-link">${esc(formatCompactCaseLabel(row.caseName))}</span>`;
       return `<tr class="overview-case-row">
         <td>
           <div class="overview-case-main">
             ${nameHtml}
           </div>
         </td>
-        <td><span class="overview-case-badge">單案</span></td>
+        <td><span class="overview-case-volume">${esc(formatVolumePill(row.caseName))}</span></td>
         <td class="score-cell ${scoreClass01(rb.avg)}">${fmt(rb.avg) || '--'}</td>
         <td class="score-cell ${scoreClass01(fr.avg)}">${fmt(fr.avg) || '--'}</td>
         <td class="score-cell ${scoreClass5(q.avg)}">${fmt(q.avg, 2) || '--'}</td>
