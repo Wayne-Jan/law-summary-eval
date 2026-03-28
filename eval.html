@@ -1266,6 +1266,7 @@ const USER_BY_EMAIL = Object.fromEntries(
 );
 let cloudStatusTimer = null;
 let adminUserIndexCache = new Map();
+const adminBackupDetailsCache = new Map();
 
 function setLocalSessionProfile(name, role) {
   localStorage.setItem('eval_v2_auth_user', name);
@@ -1319,6 +1320,111 @@ function setCloudStatus(text, state) {
   };
   el.textContent = compactMap[text] || text;
   el.className = `cloud-status${state ? ' ' + state : ''}`;
+}
+
+function formatBackupStatus(status, isEmpty) {
+  if (status === 'empty' || isEmpty) return { label: '空備份', tone: '#92400e', bg: '#fffbeb', border: '#fcd34d' };
+  if (status === 'stale') return { label: '延遲', tone: '#b91c1c', bg: '#fef2f2', border: '#fca5a5' };
+  return { label: '正常', tone: '#047857', bg: '#ecfdf5', border: '#a7f3d0' };
+}
+
+function formatSnapshotDateLabel(snapshotId) {
+  if (!snapshotId) return '尚無快照';
+  return snapshotId;
+}
+
+function buildBackupHealthSummary(backups) {
+  if (!backups.length) {
+    return {
+      label: '無資料',
+      tone: '#b91c1c',
+      bg: '#fef2f2',
+      border: '#fca5a5',
+      detail: '尚未找到任何每日歷史備份快照',
+    };
+  }
+  const latest = backups[0];
+  const latestDate = latest.snapshot_date || latest.snapshot_id || '';
+  const inferredEmpty = !!latest.is_empty || Number(latest.evaluator_count || 0) === 0 || Number(latest.case_count || 0) === 0;
+  const dayMs = 24 * 60 * 60 * 1000;
+  const ageMs = latestDate ? (Date.now() - new Date(`${latestDate}T00:00:00Z`).getTime()) : Number.POSITIVE_INFINITY;
+  if (latest.status === 'empty' || inferredEmpty) {
+    return {
+      label: '空備份',
+      tone: '#92400e',
+      bg: '#fffbeb',
+      border: '#fcd34d',
+      detail: `最近快照 ${formatSnapshotDateLabel(latestDate)} 為空備份`,
+    };
+  }
+  if (!Number.isFinite(ageMs) || ageMs > 1.5 * dayMs) {
+    return {
+      label: '延遲',
+      tone: '#b91c1c',
+      bg: '#fef2f2',
+      border: '#fca5a5',
+      detail: `最近快照 ${formatSnapshotDateLabel(latestDate)}，已超過 36 小時`,
+    };
+  }
+  return {
+    label: '正常',
+    tone: '#047857',
+    bg: '#ecfdf5',
+    border: '#a7f3d0',
+    detail: `最近快照 ${formatSnapshotDateLabel(latestDate)} 正常`,
+  };
+}
+
+async function fetchBackupSnapshots(limit = 30) {
+  if (getSessionRole() !== 'admin' || !auth.currentUser) return [];
+  const snapshot = await db.collection('eval_backups_daily').orderBy('snapshot_date', 'desc').limit(limit).get();
+  return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }));
+}
+
+async function fetchBackupEvaluatorSummaries(snapshotId) {
+  if (!snapshotId) return [];
+  if (adminBackupDetailsCache.has(snapshotId)) return adminBackupDetailsCache.get(snapshotId);
+  const snapshot = await db.collection('eval_backups_daily').doc(snapshotId).collection('evaluators').get();
+  const rows = snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+    .sort((a, b) => String(a.evaluator || a.id).localeCompare(String(b.evaluator || b.id), 'zh-Hant'));
+  adminBackupDetailsCache.set(snapshotId, rows);
+  return rows;
+}
+
+async function adminToggleBackupDetails(snapshotId) {
+  const target = document.getElementById(`backupDetails-${snapshotId}`);
+  if (!target) return;
+  if (target.dataset.loaded === '1') {
+    target.style.display = target.style.display === 'none' ? 'grid' : 'none';
+    return;
+  }
+  target.innerHTML = '<div style="font-size:12px;color:var(--slate-500);">載入中...</div>';
+  target.style.display = 'grid';
+  try {
+    const rows = await fetchBackupEvaluatorSummaries(snapshotId);
+    if (!rows.length) {
+      target.innerHTML = '<div style="font-size:12px;color:var(--slate-500);">此快照沒有 evaluator 明細</div>';
+    } else {
+      target.innerHTML = rows.map(row => {
+        const tone = formatBackupStatus(row.case_count === 0 ? 'empty' : 'ok', row.case_count === 0);
+        return `<div style="display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid var(--slate-200);border-radius:10px;background:#fff;">
+          <div style="font-size:12px;color:var(--slate-700);">
+            <strong>${esc(row.evaluator || row.id)}</strong>
+            <span style="color:var(--slate-500);margin-left:6px;">${esc(row.role || 'unknown')}</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
+            <span style="font-size:11px;color:var(--slate-500);">${Number(row.case_count || 0)} 案</span>
+            <span style="font-size:11px;color:var(--slate-500);">${Number(row.record_count || 0)} 筆</span>
+            <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:11px;font-weight:700;">${tone.label}</span>
+          </div>
+        </div>`;
+      }).join('');
+    }
+    target.dataset.loaded = '1';
+  } catch (err) {
+    console.error('Failed to load backup evaluator summaries:', err);
+    target.innerHTML = '<div style="font-size:12px;color:#b91c1c;">讀取備份摘要失敗</div>';
+  }
 }
 
 async function doLogin() {
@@ -4144,7 +4250,7 @@ function hideAdminPanel() {
   document.getElementById('adminPage').classList.add('hidden');
 }
 
-function renderAdminContent() {
+async function renderAdminContent() {
   const container = document.getElementById('adminContent');
   const evaluators = Object.keys(USERS).filter(u => u !== 'admin');
   const cases = caseList.length > 0 ? caseList : [];
@@ -4210,12 +4316,60 @@ function renderAdminContent() {
 
   html += '</tbody></table></div>';
 
-  // Firestore status section
-  html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--slate-300);">`;
-  html += `<div style="font-size:14px;font-weight:600;color:var(--slate-900);margin-bottom:6px;">同步狀態</div>`;
-  html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.6;">`;
+  let backups = [];
+  try {
+    backups = await fetchBackupSnapshots(30);
+  } catch (err) {
+    console.error('Failed to load backup snapshots:', err);
+  }
+  const backupSummary = buildBackupHealthSummary(backups);
+  html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--slate-300);display:grid;gap:14px;">`;
+  html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">`;
+  html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
+  html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);margin-bottom:8px;">同步狀態</div>`;
+  html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">`;
   html += `Firebase Auth / Firestore 已啟用。<br>`;
-  html += `自動同步開啟，可於工具列手動觸發全量同步。</div>`;
+  html += `評分資料會自動寫入雲端 latest records，可於工具列手動觸發全量同步。</div>`;
+  html += `</div>`;
+  html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
+  html += `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;">`;
+  html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);">歷史備份</div>`;
+  html += `<span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;border:1px solid ${backupSummary.border};background:${backupSummary.bg};color:${backupSummary.tone};font-size:12px;font-weight:700;">${backupSummary.label}</span>`;
+  html += `</div>`;
+  html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">${esc(backupSummary.detail)}<br>每日排程：03:00，來源 collection：<code>eval_backups_daily</code></div>`;
+  html += `</div>`;
+  html += `</div>`;
+
+  html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
+  html += `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">`;
+  html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);">備份歷程</div>`;
+  html += `<div style="font-size:12px;color:var(--slate-500);">最近 30 筆快照</div>`;
+  html += `</div>`;
+  if (!backups.length) {
+    html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">目前沒有可顯示的歷史備份資料。</div>`;
+  } else {
+    html += `<div style="overflow-x:auto;"><table>`;
+    html += `<thead><tr><th>日期</th><th>狀態</th><th>評估者</th><th>案件</th><th>記錄</th><th>摘要</th><th>動作</th></tr></thead><tbody>`;
+    backups.forEach(item => {
+      const inferredEmpty = !!item.is_empty || Number(item.evaluator_count || 0) === 0 || Number(item.case_count || 0) === 0;
+      const tone = formatBackupStatus(item.status, inferredEmpty);
+      const summary = inferredEmpty
+        ? '此快照為空備份'
+        : `${Number(item.evaluator_count || 0)} 位評估者 / ${Number(item.case_count || 0)} 案`;
+      html += `<tr>`;
+      html += `<td>${esc(item.snapshot_date || item.snapshot_id || item.id)}</td>`;
+      html += `<td><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:11px;font-weight:700;">${tone.label}</span></td>`;
+      html += `<td>${Number(item.evaluator_count || 0)}</td>`;
+      html += `<td>${Number(item.case_count || 0)}</td>`;
+      html += `<td>${Number(item.record_count || 0)}</td>`;
+      html += `<td style="text-align:left;color:var(--slate-500);font-size:12px;">${esc(summary)}</td>`;
+      html += `<td><button class="admin-mini-btn" type="button" onclick='adminToggleBackupDetails(${JSON.stringify(item.snapshot_id || item.id)})'>查看摘要</button></td>`;
+      html += `</tr>`;
+      html += `<tr><td colspan="7" style="background:#f8fafc;"><div id="backupDetails-${esc(item.snapshot_id || item.id)}" style="display:none;gap:8px;padding:10px 0;"></div></td></tr>`;
+    });
+    html += `</tbody></table></div>`;
+  }
+  html += `</div>`;
   html += `</div>`;
 
   container.innerHTML = html;

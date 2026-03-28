@@ -16,6 +16,16 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
+    match /eval_backups_daily/{snapshotId} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /eval_backups_daily/{snapshotId}/evaluators/{evaluator} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
