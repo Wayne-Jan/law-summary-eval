@@ -2742,12 +2742,23 @@ function setTLMobileTab(tab) {
 
 function renderTLEventSpanSwitcher(evt, evtIdx) {
   const spans = getTLEventSpans(evt);
-  if (spans.length <= 1) return '';
+  if (spans.length <= 1 && !evt.critical_decision) return '';
   const activeForEvent = activeTLEventIdx === evtIdx ? getTLActiveSpan(evt) : null;
-  const supportingTotal = spans.filter(sp => sp.role !== 'primary').length;
+  const renderSpans = spans.length > 0
+    ? spans
+    : (evt.critical_decision ? [{
+        span_id: 'event_range',
+        role: 'primary',
+        quote: '',
+        char_start: -1,
+        char_end: -1,
+        alignment_status: evt.alignment_status || 'UNRESOLVED',
+      }] : []);
+  if (!renderSpans.length) return '';
+  const supportingTotal = renderSpans.filter(sp => sp.role !== 'primary').length;
   let supportingIndex = 0;
   let html = '<div class="tl-event-evidence"><div class="tl-evidence-row">';
-  spans.forEach(sp => {
+  renderSpans.forEach(sp => {
     const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
     const title = sp.role === 'primary'
       ? '主證據'
