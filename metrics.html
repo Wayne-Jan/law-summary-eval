@@ -106,58 +106,29 @@
       width: 12px; flex-shrink: 0; color: var(--indigo); font-size: 11px;
       line-height: 1; font-weight: 800;
     }
-    .overview-expand-row td {
-      padding: 0 14px 14px; border-bottom: none; background: transparent;
+    /* ─── EXPAND: Inline case rows (inside overview-table) ─── */
+    .overview-case-row td {
+      background: var(--indigo-light); font-size: 13px;
+      border-bottom: 1px solid rgba(79,70,229,0.08);
     }
-    .overview-expand-shell {
-      border: 1px solid rgba(79,70,229,0.12);
-      border-top: 3px solid var(--indigo);
-      border-radius: 0 0 14px 14px;
-      overflow: hidden;
-      background:
-        linear-gradient(135deg, rgba(79,70,229,0.05), rgba(79,70,229,0.02)),
-        white;
-      box-shadow: 0 8px 22px rgba(79,70,229,0.08);
+    .overview-case-row:last-child td { border-bottom: none; }
+    .overview-case-row td:first-child {
+      padding-left: 32px; font-weight: 500; color: var(--slate-700);
+      max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    /* ─── EXPAND: Case table ─── */
-    .expand-case-table {
-      width: 100%; border-collapse: collapse; font-size: 13px;
+    .overview-case-row:hover td { background: rgba(79,70,229,0.10); }
+    .overview-case-row td a { color: var(--slate-700); text-decoration: none; }
+    .overview-case-row td a:hover { color: var(--indigo); text-decoration: underline; }
+    .overview-show-more td {
+      background: var(--indigo-light); text-align: center;
+      padding: 6px 14px; border-bottom: none;
     }
-    .expand-case-table thead th {
-      padding: 8px 10px; font-size: 11px; font-weight: 600; color: var(--slate-500);
-      background: rgba(79,70,229,0.04); border-bottom: 1px solid rgba(79,70,229,0.08);
-      text-align: center; white-space: nowrap; cursor: pointer; user-select: none;
+    .overview-show-more button {
+      border: none; background: none; color: var(--indigo); font-size: 12px;
+      font-weight: 700; cursor: pointer; font-family: var(--sans); padding: 4px 12px;
+      border-radius: 6px; transition: background 0.15s;
     }
-    .expand-case-table thead th:first-child { text-align: left; padding-left: 16px; cursor: default; }
-    .expand-case-table thead th:hover { color: var(--indigo); }
-    .expand-case-table thead th .sort-arrow { font-size: 9px; margin-left: 2px; color: var(--indigo); }
-    .expand-case-table tbody td {
-      padding: 7px 10px; border-bottom: 1px solid var(--slate-100);
-      text-align: center; font-variant-numeric: tabular-nums; font-weight: 600;
-    }
-    .expand-case-table tbody td:first-child {
-      text-align: left; padding-left: 16px; font-weight: 600; color: var(--slate-900);
-      max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    .expand-case-table tbody tr:hover td { background: rgba(79,70,229,0.03); }
-    .expand-case-table tbody tr:last-child td { border-bottom: none; }
-    .expand-case-table tbody td a {
-      color: var(--slate-900); text-decoration: none;
-    }
-    .expand-case-table tbody td a:hover { color: var(--indigo); text-decoration: underline; }
-    .expand-show-more {
-      display: block; width: 100%; padding: 9px; border: none;
-      background: rgba(79,70,229,0.04); color: var(--indigo); font-size: 12px;
-      font-weight: 700; cursor: pointer; font-family: var(--sans);
-      border-top: 1px solid rgba(79,70,229,0.08); transition: background 0.15s;
-    }
-    .expand-show-more:hover { background: rgba(79,70,229,0.08); }
-    @media (max-width: 768px) {
-      .expand-case-table thead th { padding: 6px 6px; font-size: 10px; }
-      .expand-case-table tbody td { padding: 6px 6px; font-size: 12px; }
-      .expand-case-table tbody td:first-child { max-width: 140px; padding-left: 10px; }
-      .expand-case-table thead th:first-child { padding-left: 10px; }
-    }
+    .overview-show-more button:hover { background: rgba(79,70,229,0.10); }
     .overview-table .cond-name { font-weight: 600; color: var(--slate-900); }
     .table-notes {
       font-size: 11px; color: var(--slate-500); padding: 8px 14px; line-height: 1.8;
@@ -525,7 +496,7 @@
       .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
-      .overview-expand-row td { padding: 0 0 14px; }
+      .overview-case-row td:first-child { max-width: 180px; padding-left: 16px; }
     }
   </style>
 </head>
@@ -779,122 +750,101 @@
     };
   }
 
-  // Per-expand sort state & show-all state
-  let expandSortState = {};
   let expandShowAll = {};
   const EXPAND_DEFAULT_LIMIT = 10;
 
   function expandScoreCell(v, scale) {
-    if (v == null) return '<td style="color:var(--slate-400)">--</td>';
+    if (v == null) return '<td class="score-cell" style="color:var(--slate-400)">--</td>';
     const cls = scale === '5' ? scoreClass5(v) : scoreClass01(v);
     const digits = scale === '5' ? 2 : 3;
-    return `<td class="${cls}">${fmt(v, digits)}</td>`;
+    return `<td class="score-cell ${cls}">${fmt(v, digits)}</td>`;
   }
 
-  function buildCasePreviewBlock(condKey, ranking) {
-    const totalCount = ranking.rows.length;
-    if (!totalCount) {
-      return `<div style="padding:16px;text-align:center;font-size:13px;color:var(--slate-500)">尚無個案資料</div>`;
-    }
+  function buildCaseViewHref(condKey, caseName) {
+    const slug = DATA.case_slugs?.[caseName];
+    if (!slug) return null;
+    return `view.html?case=${encodeURIComponent(slug)}&condition=${encodeURIComponent(condKey)}`;
+  }
 
-    // Sort
-    let sortedRows = [...ranking.rows];
-    const sortState = expandSortState[condKey];
-    if (sortState) {
-      const { col, dir } = sortState;
-      sortedRows.sort((a, b) => {
-        const va = getExpandSortValue(a, col);
-        const vb = getExpandSortValue(b, col);
-        if (va == null && vb == null) return 0;
-        if (va == null) return 1;
-        if (vb == null) return -1;
-        return dir === 'asc' ? va - vb : vb - va;
-      });
-    }
-
+  function buildExpandCaseRows(condKey, ranking) {
+    if (!ranking.rows.length) return '';
     const showAll = !!expandShowAll[condKey];
-    const displayRows = showAll ? sortedRows : sortedRows.slice(0, EXPAND_DEFAULT_LIMIT);
-    const hasMore = totalCount > EXPAND_DEFAULT_LIMIT;
+    const displayRows = showAll ? ranking.rows : ranking.rows.slice(0, EXPAND_DEFAULT_LIMIT);
+    const hasMore = ranking.rows.length > EXPAND_DEFAULT_LIMIT;
 
-    // Table header
-    const cols = [
-      { key: 'name', label: '案例', sortable: false },
-      { key: 'rule', label: 'Rule' },
-      { key: 'fact', label: 'Fact' },
-      { key: 'quality', label: 'Quality' },
-      { key: 'faith', label: 'Faith' },
-      { key: 'rougeL', label: 'ROUGE-L' },
-      { key: 'bert', label: 'BERT F1' },
-    ];
-    const thCells = cols.map(c => {
-      if (c.sortable === false) return `<th>${c.label}</th>`;
-      const isSorted = sortState && sortState.col === c.key;
-      const arrow = isSorted ? `<span class="sort-arrow">${sortState.dir === 'desc' ? '▼' : '▲'}</span>` : '';
-      return `<th onclick="expandSort('${esc(condKey)}','${c.key}')">${c.label}${arrow}</th>`;
-    }).join('');
-
-    // Table body
-    const tbodyRows = displayRows.map(row => {
+    let html = displayRows.map(row => {
       const c = row.caseData || {};
       const rb = c.rule_based || {};
       const fr = c.fact_recall || {};
       const q = c.quality || {};
       const rougeBert = c.rouge_bertscore || {};
-      return `<tr>
-        <td><a href="javascript:void(0)" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">${esc(formatCaseDisplay(row.caseName))}</a></td>
+      const href = buildCaseViewHref(condKey, row.caseName);
+      const nameHtml = href
+        ? `<a href="${esc(href)}" target="_blank">${esc(formatCaseDisplay(row.caseName))}</a>`
+        : esc(formatCaseDisplay(row.caseName));
+      return `<tr class="overview-case-row">
+        <td colspan="2">${nameHtml}</td>
         ${expandScoreCell(rb.avg, '01')}
         ${expandScoreCell(fr.avg, '01')}
         ${expandScoreCell(q.avg, '5')}
         ${expandScoreCell(c.faithfulness, '01')}
         ${expandScoreCell(rougeBert.rougeL, '01')}
         ${expandScoreCell(rougeBert.bertscore_f1, '01')}
+        <td></td>
       </tr>`;
     }).join('');
 
-    const showMoreBtn = hasMore ? `
-      <button class="expand-show-more" type="button" onclick="toggleExpandShowAll('${esc(condKey)}')">
-        ${showAll ? '收起' : '顯示全部 ' + totalCount + ' 案'}
-      </button>
-    ` : '';
-
-    return `
-      <div style="overflow-x:auto;">
-        <table class="expand-case-table">
-          <thead><tr>${thCells}</tr></thead>
-          <tbody>${tbodyRows}</tbody>
-        </table>
-      </div>
-      ${showMoreBtn}
-    `;
-  }
-
-  function getExpandSortValue(row, col) {
-    const c = row.caseData || {};
-    switch (col) {
-      case 'rule': return (c.rule_based || {}).avg;
-      case 'fact': return (c.fact_recall || {}).avg;
-      case 'quality': return (c.quality || {}).avg;
-      case 'faith': return c.faithfulness;
-      case 'rougeL': return (c.rouge_bertscore || {}).rougeL;
-      case 'bert': return (c.rouge_bertscore || {}).bertscore_f1;
-      default: return row.score;
+    if (hasMore) {
+      const label = showAll ? '收起' : `顯示全部 ${ranking.rows.length} 案`;
+      html += `<tr class="overview-show-more">
+        <td colspan="9"><button type="button" onclick="toggleExpandShowAll('${esc(condKey)}')">${label}</button></td>
+      </tr>`;
     }
+    return html;
   }
-
-  window.expandSort = function(condKey, col) {
-    const prev = expandSortState[condKey];
-    if (prev && prev.col === col) {
-      expandSortState[condKey] = { col, dir: prev.dir === 'desc' ? 'asc' : 'desc' };
-    } else {
-      expandSortState[condKey] = { col, dir: 'desc' };
-    }
-    renderOverviewRows(getSortedEntries());
-  };
 
   window.toggleExpandShowAll = function(condKey) {
     expandShowAll[condKey] = !expandShowAll[condKey];
     renderOverviewRows(getSortedEntries());
+    renderModelDetail(getFilteredEntries());
   };
+
+  function buildModelDetailCaseTable(condKey, ranking) {
+    if (!ranking.rows.length) return '<div style="padding:16px;text-align:center;font-size:13px;color:var(--slate-500)">尚無個案資料</div>';
+    const showAll = !!expandShowAll[condKey];
+    const displayRows = showAll ? ranking.rows : ranking.rows.slice(0, EXPAND_DEFAULT_LIMIT);
+    const hasMore = ranking.rows.length > EXPAND_DEFAULT_LIMIT;
+    const rowsHtml = displayRows.map(row => {
+      const c = row.caseData || {};
+      const rb = c.rule_based || {};
+      const fr = c.fact_recall || {};
+      const q = c.quality || {};
+      const rougeBert = c.rouge_bertscore || {};
+      const href = buildCaseViewHref(condKey, row.caseName);
+      const nameHtml = href
+        ? `<a href="${esc(href)}" target="_blank">${esc(formatCaseDisplay(row.caseName))}</a>`
+        : esc(formatCaseDisplay(row.caseName));
+      return `<tr>
+        <td style="text-align:left;font-weight:600;color:var(--slate-900);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameHtml}</td>
+        ${expandScoreCell(rb.avg, '01')}${expandScoreCell(fr.avg, '01')}${expandScoreCell(q.avg, '5')}${expandScoreCell(c.faithfulness, '01')}${expandScoreCell(rougeBert.rougeL, '01')}${expandScoreCell(rougeBert.bertscore_f1, '01')}
+      </tr>`;
+    }).join('');
+    const showMoreHtml = hasMore ? `<tr><td colspan="7" style="text-align:center;padding:8px">
+      <button style="border:none;background:none;color:var(--indigo);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--sans)" onclick="toggleExpandShowAll('${esc(condKey)}')">${showAll ? '收起' : '顯示全部 ' + ranking.rows.length + ' 案'}</button>
+    </td></tr>` : '';
+    return `<table style="width:100%;border-collapse:collapse;font-size:13px">
+      <thead><tr style="background:var(--slate-50)">
+        <th style="text-align:left;padding:8px 10px;font-size:11px;font-weight:600;color:var(--slate-500)">案例</th>
+        <th style="padding:8px 10px;font-size:11px;font-weight:600;color:var(--slate-500)">Rule</th>
+        <th style="padding:8px 10px;font-size:11px;font-weight:600;color:var(--slate-500)">Fact</th>
+        <th style="padding:8px 10px;font-size:11px;font-weight:600;color:var(--slate-500)">Quality</th>
+        <th style="padding:8px 10px;font-size:11px;font-weight:600;color:var(--slate-500)">Faith</th>
+        <th style="padding:8px 10px;font-size:11px;font-weight:600;color:var(--slate-500)">ROUGE-L</th>
+        <th style="padding:8px 10px;font-size:11px;font-weight:600;color:var(--slate-500)">BERT F1</th>
+      </tr></thead>
+      <tbody>${rowsHtml}${showMoreHtml}</tbody>
+    </table>`;
+  }
 
   function focusCaseInBrowser(caseName) {
     const slug = DATA.case_slugs?.[caseName];
@@ -1551,7 +1501,7 @@
         <button class="detail-close-btn" type="button" onclick="closeModelDetail()">收起</button>
       </div>
       <div class="model-detail-summary">${modelCapabilitySummary(cond)}</div>
-      <div class="case-preview-block">${buildCasePreviewBlock(condKey, ranking)}</div>
+      <div class="case-preview-block">${buildModelDetailCaseTable(condKey, ranking)}</div>
       <div class="capability-grid">${buildCapabilityCards(cond)}</div>
       <details class="metric-detail-block">
         <summary>Rule-Based 細項</summary>
@@ -1614,14 +1564,9 @@
     for (const [condKey, cond] of entries) {
       const a = cond.averages;
       const rb = a.rouge_bertscore || {};
-      const rbN = a.rouge_bertscore_n;
       const evalN = cond.eval_count;
       const badgeClass = cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource';
       const expanded = currentOverviewDetail === condKey;
-
-      // ROUGE-L and BERTScore cells
-      const rougeLVal = rb.rougeL != null ? fmt(rb.rougeL) : null;
-      const bertVal = rb.bertscore_f1 != null ? fmt(rb.bertscore_f1) : null;
 
       rows.push(`
         <tr class="overview-row${expanded ? ' expanded' : ''}" data-cond-key="${esc(condKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
@@ -1631,27 +1576,18 @@
           <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg) || '--'}</td>
           <td class="score-cell ${scoreClass5(a.quality_avg)}">${fmt(a.quality_avg, 2) || '--'}</td>
           <td class="score-cell ${scoreClass01(a.faithfulness_avg)}">${fmt(a.faithfulness_avg) || '--'}</td>
-          <td class="score-cell ${scoreClass01(rb.rougeL)}">${rougeLVal || '--'}</td>
-          <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${bertVal || '--'}</td>
+          <td class="score-cell ${scoreClass01(rb.rougeL)}">${fmt(rb.rougeL) || '--'}</td>
+          <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${fmt(rb.bertscore_f1) || '--'}</td>
           <td>${evalN}</td>
         </tr>
-        ${expanded ? `
-          <tr class="overview-expand-row">
-            <td colspan="9">
-              <div class="overview-expand-shell">
-                ${buildCasePreviewBlock(condKey, getCaseRanking(cond))}
-              </div>
-            </td>
-          </tr>
-        ` : ''}
+        ${expanded ? buildExpandCaseRows(condKey, getCaseRanking(cond)) : ''}
       `);
     }
     tbody.innerHTML = rows.join('');
     tbody.querySelectorAll('.overview-row').forEach(tr => {
-      tr.addEventListener('click', () => {
-        const key = tr.dataset.condKey;
-        if (!key) return;
-        toggleOverviewDetail(key);
+      tr.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return; // don't toggle when clicking links
+        toggleOverviewDetail(tr.dataset.condKey);
       });
     });
   }
