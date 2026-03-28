@@ -98,6 +98,27 @@
     }
     .overview-table tr:last-child td { border-bottom: none; }
     .overview-table tr:hover td { background: #fafbfc; }
+    .overview-row { cursor: pointer; }
+    .overview-row .cond-name {
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .overview-row-toggle {
+      width: 12px; flex-shrink: 0; color: var(--indigo); font-size: 11px;
+      line-height: 1; font-weight: 800;
+    }
+    .overview-expand-row td {
+      padding: 0 14px 14px; border-bottom: none; background: transparent;
+    }
+    .overview-expand-shell {
+      border: 1px solid rgba(79,70,229,0.12);
+      border-top: 3px solid var(--indigo);
+      border-radius: 0 0 14px 14px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(79,70,229,0.05), rgba(79,70,229,0.02)),
+        white;
+      box-shadow: 0 8px 22px rgba(79,70,229,0.08);
+    }
     .overview-table .cond-name { font-weight: 600; color: var(--slate-900); }
     .table-notes {
       font-size: 11px; color: var(--slate-500); padding: 8px 14px; line-height: 1.8;
@@ -532,6 +553,7 @@
         gap: 8px;
       }
       .case-preview-action { grid-column: 1 / -1; justify-self: start; }
+      .overview-expand-row td { padding: 0 0 14px; }
     }
   </style>
 </head>
@@ -734,6 +756,12 @@
     return (CASE_INFO[caseName] || {}).display || caseName;
   }
 
+  function esc(text) {
+    const div = document.createElement('div');
+    div.textContent = text == null ? '' : String(text);
+    return div.innerHTML;
+  }
+
   function normalizeCaseMetric(value, scale) {
     if (value == null || Number.isNaN(value)) return null;
     if (scale === '5') return value / 5;
@@ -779,9 +807,87 @@
     };
   }
 
-  function formatPreviewScore(score) {
-    if (score == null) return '--';
-    return `${Math.round(score * 100)}%`;
+  function buildCasePreviewBlock(condKey, ranking) {
+    const previewRows = ranking.rows.slice(0, 3);
+    const previewCount = previewRows.length;
+    const totalCount = ranking.rows.length;
+    const expanded = !!modelCasePreviewExpanded[condKey];
+    const previewList = previewRows.map(row => {
+      const c = row.caseData || {};
+      const rb = c.rule_based || {};
+      const fr = c.fact_recall || {};
+      const q = c.quality || {};
+      return `
+        <div class="case-preview-row">
+          <a class="case-preview-name" href="javascript:void(0)" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">${esc(formatCaseDisplay(row.caseName))}</a>
+          <div class="case-preview-metric score-cell ${scoreClass01(rb.avg)}" title="Rule-Based">${fmt(rb.avg) || '--'}</div>
+          <div class="case-preview-metric score-cell ${scoreClass01(fr.avg)}" title="Fact Recall">${fmt(fr.avg) || '--'}</div>
+          <div class="case-preview-metric score-cell ${scoreClass5(q.avg)}" title="Quality">${fmt(q.avg, 2) || '--'}</div>
+          <button class="case-preview-action" type="button" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">查看</button>
+        </div>
+      `;
+    }).join('');
+    const fullList = expanded ? `
+      <div class="case-preview-list" style="padding-top:0;">
+        ${ranking.rows.map(row => {
+          const c = row.caseData || {};
+          const rb = c.rule_based || {};
+          const fr = c.fact_recall || {};
+          const q = c.quality || {};
+          return `
+            <div class="case-preview-row">
+              <a class="case-preview-name" href="javascript:void(0)" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">${esc(formatCaseDisplay(row.caseName))}</a>
+              <div class="case-preview-metric score-cell ${scoreClass01(rb.avg)}" title="Rule-Based">${fmt(rb.avg) || '--'}</div>
+              <div class="case-preview-metric score-cell ${scoreClass01(fr.avg)}" title="Fact Recall">${fmt(fr.avg) || '--'}</div>
+              <div class="case-preview-metric score-cell ${scoreClass5(q.avg)}" title="Quality">${fmt(q.avg, 2) || '--'}</div>
+              <button class="case-preview-action" type="button" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">查看</button>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    ` : '';
+    if (!totalCount) {
+      return `
+        <div class="case-preview-head">
+          <div>
+            <div class="case-preview-title">單案預覽</div>
+            <div class="case-preview-sub">此模型目前沒有可用的單案資料</div>
+          </div>
+          <div class="case-preview-sub">0/0 預覽</div>
+        </div>
+        <div class="no-data-msg" style="padding:18px 16px 20px;">此模型目前沒有可用的單案資料。</div>
+      `;
+    }
+    return `
+      <div class="case-preview-head">
+        <div>
+          <div class="case-preview-title">單案預覽</div>
+          <div class="case-preview-sub">先看代表案例，再決定要不要展開全部</div>
+        </div>
+        <div class="case-preview-sub">${previewCount}/${totalCount} 預覽</div>
+      </div>
+      <div class="case-preview-summary">
+        <div class="case-preview-stat">
+          <div class="case-preview-stat-label">最強案例</div>
+          <div class="case-preview-stat-value">${ranking.best ? esc(formatCaseDisplay(ranking.best.caseName)) : '--'}</div>
+        </div>
+        <div class="case-preview-stat">
+          <div class="case-preview-stat-label">最弱案例</div>
+          <div class="case-preview-stat-value">${ranking.worst ? esc(formatCaseDisplay(ranking.worst.caseName)) : '--'}</div>
+        </div>
+        <div class="case-preview-stat">
+          <div class="case-preview-stat-label">平均偏差最大</div>
+          <div class="case-preview-stat-value">${ranking.dev ? esc(formatCaseDisplay(ranking.dev.caseName)) : '--'}</div>
+        </div>
+      </div>
+      <div class="case-preview-list">
+        ${previewList}
+      </div>
+      <div style="padding:0 16px 16px;">
+        <button class="case-preview-toggle" type="button" aria-expanded="${expanded ? 'true' : 'false'}" onclick="toggleCasePreview(${JSON.stringify(condKey)})">${expanded ? '收起完整列表' : '展開完整列表'}</button>
+      </div>
+      ${fullList}
+    `;
   }
 
   function focusCaseInBrowser(caseName) {
@@ -796,10 +902,12 @@
   }
 
   let modelCasePreviewExpanded = {};
-  window.toggleModelCasePreview = function(condKey) {
+  window.toggleCasePreview = function(condKey) {
     modelCasePreviewExpanded[condKey] = !modelCasePreviewExpanded[condKey];
+    renderOverviewRows(getSortedEntries());
     renderModelDetail(getFilteredEntries());
   };
+  window.toggleModelCasePreview = window.toggleCasePreview;
   window.focusCaseInBrowser = focusCaseInBrowser;
 
   // ─── Label maps for sub-metrics ───
@@ -990,15 +1098,19 @@
     return entries.filter(([, cond]) => cond.group === currentFilter);
   }
 
-  function rebuildTable() {
+  function getSortedEntries() {
     const entries = getFilteredEntries();
-    // Re-apply current sort
     const activeSort = document.querySelector('.sort-btn.asc, .sort-btn.desc');
     if (activeSort) {
       sortEntries(entries, activeSort.dataset.col, activeSort.dataset.dir);
     } else {
       sortEntries(entries, 'canonical', 'asc');
     }
+    return entries;
+  }
+
+  function rebuildTable() {
+    const entries = getSortedEntries();
     renderOverviewRows(entries);
     buildModelCards(entries);
     buildRelativeModelCards(entries);
@@ -1420,10 +1532,6 @@
     }
     const [condKey, cond] = found;
     const ranking = getCaseRanking(cond);
-    const previewRows = ranking.rows.slice(0, 3);
-    const previewCount = previewRows.length;
-    const totalCount = ranking.rows.length;
-    const expanded = !!modelCasePreviewExpanded[condKey];
     const ruleItems = Object.entries(RULE_LABELS).map(([key, label]) => ({ key, label, tip: RULE_TIPS[key] || '' }));
     const factItems = Object.entries(FACT_LABELS).map(([key, label]) => ({ key, label, tip: FACT_TIPS[key] || '' }));
     const qualityItems = Object.entries(QUALITY_LABELS).map(([key, label]) => ({ key, label, tip: QUALITY_TIPS[key] || '' }));
@@ -1444,68 +1552,7 @@
         <button class="detail-close-btn" type="button" onclick="closeModelDetail()">收起</button>
       </div>
       <div class="model-detail-summary">${modelCapabilitySummary(cond)}</div>
-      <div class="case-preview-block">
-        <div class="case-preview-head">
-          <div>
-            <div class="case-preview-title">單案預覽</div>
-            <div class="case-preview-sub">先看代表案例，再決定要不要展開全部</div>
-          </div>
-          <div class="case-preview-sub">${previewCount}/${totalCount} 預覽</div>
-        </div>
-        <div class="case-preview-summary">
-          <div class="case-preview-stat">
-            <div class="case-preview-stat-label">最強案例</div>
-            <div class="case-preview-stat-value">${ranking.best ? esc(formatCaseDisplay(ranking.best.caseName)) : '--'}</div>
-          </div>
-          <div class="case-preview-stat">
-            <div class="case-preview-stat-label">最弱案例</div>
-            <div class="case-preview-stat-value">${ranking.worst ? esc(formatCaseDisplay(ranking.worst.caseName)) : '--'}</div>
-          </div>
-          <div class="case-preview-stat">
-            <div class="case-preview-stat-label">平均偏差最大</div>
-            <div class="case-preview-stat-value">${ranking.dev ? esc(formatCaseDisplay(ranking.dev.caseName)) : '--'}</div>
-          </div>
-        </div>
-        <div class="case-preview-list">
-          ${previewRows.map(row => {
-            const c = row.caseData || {};
-            const rb = c.rule_based || {};
-            const fr = c.fact_recall || {};
-            const q = c.quality || {};
-            return `
-              <div class="case-preview-row">
-                <a class="case-preview-name" href="javascript:void(0)" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">${esc(formatCaseDisplay(row.caseName))}</a>
-                <div class="case-preview-metric score-cell ${scoreClass01(rb.avg)}" title="Rule-Based">${fmt(rb.avg) || '--'}</div>
-                <div class="case-preview-metric score-cell ${scoreClass01(fr.avg)}" title="Fact Recall">${fmt(fr.avg) || '--'}</div>
-                <div class="case-preview-metric score-cell ${scoreClass5(q.avg)}" title="Quality">${fmt(q.avg, 2) || '--'}</div>
-                <button class="case-preview-action" type="button" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">查看</button>
-              </div>
-            `;
-          }).join('')}
-        </div>
-        <div style="padding:0 16px 16px;">
-          <button class="case-preview-toggle" type="button" aria-expanded="${expanded ? 'true' : 'false'}" onclick="toggleModelCasePreview(${JSON.stringify(condKey)})">${expanded ? '收起完整列表' : '展開完整列表'}</button>
-        </div>
-        ${expanded ? `
-          <div class="case-preview-list" style="padding-top:0;">
-            ${ranking.rows.map(row => {
-              const c = row.caseData || {};
-              const rb = c.rule_based || {};
-              const fr = c.fact_recall || {};
-              const q = c.quality || {};
-              return `
-                <div class="case-preview-row">
-                  <a class="case-preview-name" href="javascript:void(0)" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">${esc(formatCaseDisplay(row.caseName))}</a>
-                  <div class="case-preview-metric score-cell ${scoreClass01(rb.avg)}" title="Rule-Based">${fmt(rb.avg) || '--'}</div>
-                  <div class="case-preview-metric score-cell ${scoreClass01(fr.avg)}" title="Fact Recall">${fmt(fr.avg) || '--'}</div>
-                  <div class="case-preview-metric score-cell ${scoreClass5(q.avg)}" title="Quality">${fmt(q.avg, 2) || '--'}</div>
-                  <button class="case-preview-action" type="button" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">查看</button>
-                </div>
-              `;
-            }).join('')}
-          </div>
-        ` : ''}
-      </div>
+      <div class="case-preview-block">${buildCasePreviewBlock(condKey, ranking)}</div>
       <div class="capability-grid">${buildCapabilityCards(cond)}</div>
       <details class="metric-detail-block">
         <summary>Rule-Based 細項</summary>
@@ -1561,33 +1608,61 @@
 
   function renderOverviewRows(entries) {
     const tbody = document.getElementById('overviewBody');
-    tbody.innerHTML = '';
+    if (currentOverviewDetail && !entries.some(([key]) => key === currentOverviewDetail)) {
+      currentOverviewDetail = null;
+    }
+    const rows = [];
     for (const [condKey, cond] of entries) {
       const a = cond.averages;
       const rb = a.rouge_bertscore || {};
       const rbN = a.rouge_bertscore_n;
       const evalN = cond.eval_count;
       const badgeClass = cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource';
+      const expanded = currentOverviewDetail === condKey;
 
       // ROUGE-L and BERTScore cells
       const rougeLVal = rb.rougeL != null ? fmt(rb.rougeL) : null;
       const bertVal = rb.bertscore_f1 != null ? fmt(rb.bertscore_f1) : null;
 
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td class="cond-name">${formatOverviewModelLabel(condKey, cond.label)}</td>
-        <td><span class="badge ${badgeClass}">${cond.group}</span></td>
-        <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg) || '--'}</td>
-        <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg) || '--'}</td>
-        <td class="score-cell ${scoreClass5(a.quality_avg)}">${fmt(a.quality_avg, 2) || '--'}</td>
-        <td class="score-cell ${scoreClass01(a.faithfulness_avg)}">${fmt(a.faithfulness_avg) || '--'}</td>
-        <td class="score-cell ${scoreClass01(rb.rougeL)}">${rougeLVal || '--'}</td>
-        <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${bertVal || '--'}</td>
-        <td>${evalN}</td>
-      `;
-      tbody.appendChild(tr);
+      rows.push(`
+        <tr class="overview-row${expanded ? ' expanded' : ''}" data-cond-key="${esc(condKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
+          <td class="cond-name"><span class="overview-row-toggle">${expanded ? '▾' : '▸'}</span>${formatOverviewModelLabel(condKey, cond.label)}</td>
+          <td><span class="badge ${badgeClass}">${cond.group}</span></td>
+          <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg) || '--'}</td>
+          <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg) || '--'}</td>
+          <td class="score-cell ${scoreClass5(a.quality_avg)}">${fmt(a.quality_avg, 2) || '--'}</td>
+          <td class="score-cell ${scoreClass01(a.faithfulness_avg)}">${fmt(a.faithfulness_avg) || '--'}</td>
+          <td class="score-cell ${scoreClass01(rb.rougeL)}">${rougeLVal || '--'}</td>
+          <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${bertVal || '--'}</td>
+          <td>${evalN}</td>
+        </tr>
+        ${expanded ? `
+          <tr class="overview-expand-row">
+            <td colspan="9">
+              <div class="overview-expand-shell">
+                ${buildCasePreviewBlock(condKey, getCaseRanking(cond))}
+              </div>
+            </td>
+          </tr>
+        ` : ''}
+      `);
     }
+    tbody.innerHTML = rows.join('');
+    tbody.querySelectorAll('.overview-row').forEach(tr => {
+      tr.addEventListener('click', () => {
+        const key = tr.dataset.condKey;
+        if (!key) return;
+        toggleOverviewDetail(key);
+      });
+    });
   }
+
+  let currentOverviewDetail = null;
+  window.toggleOverviewDetail = function(condKey) {
+    currentOverviewDetail = currentOverviewDetail === condKey ? null : condKey;
+    renderOverviewRows(getSortedEntries());
+    renderModelDetail(getFilteredEntries());
+  };
 
   // ─── Sort click handler ───
   document.querySelectorAll('.sort-btn').forEach(th => {
