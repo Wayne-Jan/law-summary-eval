@@ -442,7 +442,7 @@
       .tl-source-toggle, .tl-source-text { display: none !important; }
       .source-panel {
         position: fixed; left: 0; right: 0; bottom: 0;
-        min-height: 0; max-height: 72vh;
+        min-height: 0; max-height: 76vh;
         border-radius: 18px 18px 0 0; border-left: none; border-right: none; border-bottom: none;
         box-shadow: 0 -18px 40px rgba(15,23,42,0.18);
         transform: translateY(calc(100% + 24px)); transition: transform 0.28s ease;
@@ -451,10 +451,20 @@
       .source-panel.mobile-open {
         transform: translateY(0); pointer-events: auto;
       }
-      .source-panel .panel-head { padding-top: 18px; }
+      .source-panel .panel-head {
+        padding: 16px 16px 10px 16px;
+        min-height: 0;
+      }
       .source-panel .panel-head::before {
         content: ''; width: 42px; height: 4px; border-radius: 999px;
         background: #cbd5e1; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+      }
+      .source-panel .panel-kicker,
+      .source-panel .panel-meta { display: none; }
+      .source-panel .panel-title {
+        font-size: 14px;
+        font-weight: 700;
+        padding-right: 40px;
       }
       .mobile-sheet-close { display: inline-flex; align-items: center; justify-content: center; }
       .source-panel-body { padding-bottom: 28px; }
@@ -737,6 +747,21 @@
 
     function shouldAutoScrollTimelineSource() {
       return !isMobileTimelineLayout();
+    }
+
+    function scrollTimelineSourceBodyToTarget(scrollTarget) {
+      if (!scrollTarget) return;
+      requestAnimationFrame(() => {
+        const body = document.getElementById('sourcePanelBody');
+        const bodyIsScrollable = body && body.scrollHeight > body.clientHeight + 4;
+        if (body && body.contains(scrollTarget) && bodyIsScrollable) {
+          const targetTop = getOffsetTopWithin(scrollTarget, body);
+          const nextTop = targetTop - Math.max(32, body.clientHeight * 0.2);
+          body.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' });
+        } else {
+          scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
     }
 
     function normalizeLooseText(text) {
@@ -1063,23 +1088,14 @@
 
       if (isMobileTimelineLayout()) openMobileSourceSheet();
 
-      if (scrollEvent && shouldAutoScrollTimelineSource()) {
-        const selectedAnchorId = activeSpanId ? getSpanAnchorId(idx, activeSpanId) : '';
-        const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
-        const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
-        if (scrollTarget) {
-          requestAnimationFrame(() => {
-            const body = document.getElementById('sourcePanelBody');
-            const bodyIsScrollable = body && body.scrollHeight > body.clientHeight + 4;
-            if (body && body.contains(scrollTarget) && bodyIsScrollable) {
-              const targetTop = getOffsetTopWithin(scrollTarget, body);
-              const nextTop = targetTop - Math.max(48, body.clientHeight * 0.28);
-              body.scrollTo({ top: Math.max(0, nextTop), behavior: 'smooth' });
-            } else {
-              scrollTarget.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-          });
-        }
+      const selectedAnchorId = activeSpanId ? getSpanAnchorId(idx, activeSpanId) : '';
+      const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
+      const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
+
+      if (isMobileTimelineLayout()) {
+        if (scrollTarget) setTimeout(() => scrollTimelineSourceBodyToTarget(scrollTarget), 140);
+      } else if (scrollEvent && shouldAutoScrollTimelineSource()) {
+        scrollTimelineSourceBodyToTarget(scrollTarget);
       }
       updateEventSpanPills();
     }
