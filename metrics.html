@@ -120,6 +120,10 @@
       border-top: 1px solid #eef2f7;
       border-bottom: 1px solid #eef2f7;
     }
+    .overview-case-row td:nth-child(2),
+    .overview-case-row td:last-child {
+      text-align: center;
+    }
     .overview-case-row:last-of-type td {
       border-bottom: none;
     }
@@ -161,6 +165,17 @@
     }
     .overview-case-volume.vol-lower {
       color: #d97706; background: #fff7ed; border-color: #fdba74;
+    }
+    .overview-case-action {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 4px 10px; border-radius: 999px;
+      border: 1px solid #c7d2fe; background: #eef2ff;
+      color: #4f46e5; font-size: 11px; font-weight: 700;
+      text-decoration: none; white-space: nowrap;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.45);
+    }
+    .overview-case-action:hover {
+      background: #dbe4ff; color: #4338ca; text-decoration: none;
     }
     .overview-preview-toggle {
       display: inline-flex; align-items: center; gap: 6px;
@@ -890,6 +905,9 @@
       const nameHtml = href
         ? `<a class="overview-case-link" href="${esc(href)}" target="_blank" rel="noopener">${esc(formatCompactCaseLabel(row.caseName))}</a>`
         : `<span class="overview-case-link">${esc(formatCompactCaseLabel(row.caseName))}</span>`;
+      const actionHtml = href
+        ? `<a class="overview-case-action" href="${esc(href)}" target="_blank" rel="noopener">檢視摘要</a>`
+        : '';
       return `<tr class="overview-case-row">
         <td>
           <div class="overview-case-main">
@@ -903,7 +921,7 @@
         <td class="score-cell ${scoreClass01(c.faithfulness)}">${fmt(c.faithfulness) || '--'}</td>
         <td class="score-cell ${scoreClass01(rougeBert.rougeL)}">${fmt(rougeBert.rougeL) || '--'}</td>
         <td class="score-cell ${scoreClass01(rougeBert.bertscore_f1)}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
-        <td></td>
+        <td>${actionHtml}</td>
       </tr>`;
     }).join('');
 
