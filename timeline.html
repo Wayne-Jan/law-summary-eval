@@ -704,9 +704,16 @@
       return primary || spans[0];
     }
 
+    function shouldRenderEventSpanSwitcher(evt) {
+      const spans = getEventSpans(evt);
+      if (!spans.length) return false;
+      if (evt?.critical_decision && !isMobileTimelineLayout()) return true;
+      return spans.length > 1;
+    }
+
     function renderEventSpanSwitcher(evt, evtIdx) {
       const spans = getEventSpans(evt);
-      if (spans.length <= 1) return '';
+      if (!shouldRenderEventSpanSwitcher(evt)) return '';
       const activeForEvent = activeEventIdx === evtIdx ? getActiveSpan(evt) : null;
       const supportingTotal = spans.filter(sp => sp.role !== 'primary').length;
       let supportingIndex = 0;
