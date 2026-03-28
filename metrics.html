@@ -193,21 +193,20 @@
     .overview-preview-toggle[aria-expanded="true"]::after { content: '▴'; }
     .overview-expand-footer td {
       padding: 14px 18px 16px;
-      background: linear-gradient(180deg, #f5f7ff 0%, #eef2ff 100%);
+      background: linear-gradient(180deg, #f8faff 0%, #eef2ff 100%);
       border-top: 1px solid #dbe4ff;
       border-bottom: none;
       text-align: center;
+      position: relative;
     }
-    .overview-expand-footer-inner {
-      display: inline-flex; align-items: center; gap: 10px;
-      padding: 10px 14px;
-      border: 1px solid rgba(79,70,229,0.12);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.72);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
-    }
-    .overview-expand-footer-note {
-      font-size: 12px; color: var(--slate-500);
+    .overview-expand-footer td::before {
+      content: '';
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      top: 50%;
+      border-top: 1px solid #c7d2fe;
+      transform: translateY(-50%);
     }
     .metrics-modal[hidden] { display: none; }
     .metrics-modal {
@@ -234,19 +233,15 @@
       border-bottom: 1px solid #e2e8f0;
       background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
     }
-    .metrics-modal-kicker {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-      color: #6366f1; margin-bottom: 4px;
+    .metrics-modal-title-row {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
     }
     .metrics-modal-title {
       font-size: 20px; font-weight: 700; color: var(--slate-900);
     }
-    .metrics-modal-subtitle {
-      font-size: 13px; color: var(--slate-500); margin-top: 4px;
-    }
     .metrics-modal-summary {
       display: inline-flex; align-items: center; gap: 8px;
-      margin-top: 10px; padding: 6px 10px;
+      padding: 6px 10px;
       border-radius: 999px; background: #f8fafc;
       border: 1px solid #e2e8f0; color: var(--slate-500); font-size: 12px;
     }
@@ -776,10 +771,11 @@
   <div class="metrics-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="caseListModalTitle">
     <div class="metrics-modal-header">
       <div>
-        <div class="metrics-modal-kicker">全部案件</div>
-        <div class="metrics-modal-title" id="caseListModalTitle">模型案例列表</div>
-        <div class="metrics-modal-subtitle" id="caseListModalSubtitle"></div>
-        <div class="metrics-modal-summary" id="caseListModalSummary"></div>
+        <div class="metrics-modal-title-row">
+          <div class="metrics-modal-title" id="caseListModalTitle">模型案例列表</div>
+          <span class="overview-case-volume" id="caseListModalVolume">上冊</span>
+          <div class="metrics-modal-summary" id="caseListModalSummary"></div>
+        </div>
       </div>
       <button class="metrics-modal-close" type="button" aria-label="關閉" onclick="closeCaseListModal()">×</button>
     </div>
@@ -917,12 +913,15 @@
     return currentVolume;
   }
 
-  function volumePillClass(caseId) {
-    const vol = getCaseMeta(caseId).volume || currentVolume;
+  function volumePillClassByValue(vol) {
     if (vol === '上冊') return 'vol-upper';
     if (vol === '中冊') return 'vol-middle';
     if (vol === '下冊') return 'vol-lower';
     return 'vol-upper';
+  }
+
+  function volumePillClass(caseId) {
+    return volumePillClassByValue(getCaseMeta(caseId).volume || currentVolume);
   }
 
   function esc(text) {
@@ -1094,10 +1093,7 @@
     return `${rowsHtml}
       <tr class="overview-expand-row overview-expand-footer">
         <td colspan="9">
-          <div class="overview-expand-footer-inner">
-            <span class="overview-expand-footer-note">完整列表</span>
-            <button class="overview-preview-toggle" type="button" onclick="openCaseListModal('${esc(condKey)}')">${label}</button>
-          </div>
+          <button class="overview-preview-toggle" type="button" onclick="openCaseListModal('${esc(condKey)}')">完整列表 · ${label}</button>
         </td>
       </tr>`;
   }
@@ -1120,8 +1116,10 @@
     const orderedRows = getOrderedCaseRows(cond);
     caseListModalCondKey = condKey;
     document.getElementById('caseListModalTitle').textContent = plainModelLabel(cond.label);
-    document.getElementById('caseListModalSubtitle').textContent = `${currentVolume} 案件列表`;
-    document.getElementById('caseListModalSummary').textContent = `${currentVolume}・共 ${orderedRows.length} 案`;
+    const volumeEl = document.getElementById('caseListModalVolume');
+    volumeEl.textContent = currentVolume;
+    volumeEl.className = `overview-case-volume ${volumePillClassByValue(currentVolume)}`;
+    document.getElementById('caseListModalSummary').textContent = `共 ${orderedRows.length} 案`;
     document.getElementById('caseListModalBody').innerHTML = buildModalCaseRows(condKey, cond);
     const modal = document.getElementById('caseListModal');
     modal.hidden = false;
