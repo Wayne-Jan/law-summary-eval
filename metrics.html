@@ -119,6 +119,45 @@
         white;
       box-shadow: 0 8px 22px rgba(79,70,229,0.08);
     }
+    /* ─── EXPAND: Case table ─── */
+    .expand-case-table {
+      width: 100%; border-collapse: collapse; font-size: 13px;
+    }
+    .expand-case-table thead th {
+      padding: 8px 10px; font-size: 11px; font-weight: 600; color: var(--slate-500);
+      background: rgba(79,70,229,0.04); border-bottom: 1px solid rgba(79,70,229,0.08);
+      text-align: center; white-space: nowrap; cursor: pointer; user-select: none;
+    }
+    .expand-case-table thead th:first-child { text-align: left; padding-left: 16px; cursor: default; }
+    .expand-case-table thead th:hover { color: var(--indigo); }
+    .expand-case-table thead th .sort-arrow { font-size: 9px; margin-left: 2px; color: var(--indigo); }
+    .expand-case-table tbody td {
+      padding: 7px 10px; border-bottom: 1px solid var(--slate-100);
+      text-align: center; font-variant-numeric: tabular-nums; font-weight: 600;
+    }
+    .expand-case-table tbody td:first-child {
+      text-align: left; padding-left: 16px; font-weight: 600; color: var(--slate-900);
+      max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .expand-case-table tbody tr:hover td { background: rgba(79,70,229,0.03); }
+    .expand-case-table tbody tr:last-child td { border-bottom: none; }
+    .expand-case-table tbody td a {
+      color: var(--slate-900); text-decoration: none;
+    }
+    .expand-case-table tbody td a:hover { color: var(--indigo); text-decoration: underline; }
+    .expand-show-more {
+      display: block; width: 100%; padding: 9px; border: none;
+      background: rgba(79,70,229,0.04); color: var(--indigo); font-size: 12px;
+      font-weight: 700; cursor: pointer; font-family: var(--sans);
+      border-top: 1px solid rgba(79,70,229,0.08); transition: background 0.15s;
+    }
+    .expand-show-more:hover { background: rgba(79,70,229,0.08); }
+    @media (max-width: 768px) {
+      .expand-case-table thead th { padding: 6px 6px; font-size: 10px; }
+      .expand-case-table tbody td { padding: 6px 6px; font-size: 12px; }
+      .expand-case-table tbody td:first-child { max-width: 140px; padding-left: 10px; }
+      .expand-case-table thead th:first-child { padding-left: 10px; }
+    }
     .overview-table .cond-name { font-weight: 600; color: var(--slate-900); }
     .table-notes {
       font-size: 11px; color: var(--slate-500); padding: 8px 14px; line-height: 1.8;
@@ -391,66 +430,6 @@
       background: white; border: 1px solid #e5e7eb; border-radius: 14px;
       margin-bottom: 16px; overflow: hidden;
     }
-    .case-preview-head {
-      display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
-      padding: 14px 16px; background: var(--slate-50); border-bottom: 1px solid #e5e7eb;
-    }
-    .case-preview-title {
-      font-size: 14px; font-weight: 700; color: var(--slate-900);
-    }
-    .case-preview-sub {
-      font-size: 12px; color: var(--slate-500); white-space: nowrap;
-    }
-    .case-preview-summary {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 10px; padding: 14px 16px 6px;
-    }
-    .case-preview-stat {
-      background: var(--slate-50); border: 1px solid #e5e7eb; border-radius: 12px;
-      padding: 10px 12px;
-    }
-    .case-preview-stat-label {
-      font-size: 11px; color: var(--slate-500); margin-bottom: 4px; font-weight: 600;
-    }
-    .case-preview-stat-value {
-      font-size: 14px; font-weight: 700; color: var(--slate-900); line-height: 1.35;
-    }
-    .case-preview-list {
-      padding: 10px 16px 14px;
-      display: grid; gap: 8px;
-    }
-    .case-preview-row {
-      display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, auto) auto;
-      gap: 10px; align-items: center;
-      padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff;
-    }
-    .case-preview-name {
-      font-size: 13px; font-weight: 600; color: var(--slate-900); text-decoration: none;
-      min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    .case-preview-metric {
-      font-size: 12px; color: var(--slate-500); font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-    }
-    .case-preview-row .score-cell {
-      font-size: 12px;
-    }
-    .case-preview-action {
-      justify-self: end; border: none; border-radius: 999px; cursor: pointer;
-      font-family: var(--sans); font-size: 12px; font-weight: 700;
-      padding: 6px 10px; background: var(--indigo-light); color: var(--indigo);
-    }
-    .case-preview-action:hover { background: #dbe4ff; }
-    .case-preview-toggle {
-      display: inline-flex; align-items: center; gap: 6px;
-      margin: 0 16px 16px; padding: 8px 12px;
-      border: 1px solid var(--slate-300); border-radius: 999px;
-      background: white; color: var(--slate-700); font-size: 12px; font-weight: 700;
-      cursor: pointer;
-    }
-    .case-preview-toggle:hover { border-color: var(--indigo); color: var(--indigo); }
-    .case-preview-toggle::after { content: '▾'; font-size: 11px; line-height: 1; }
-    .case-preview-toggle[aria-expanded="true"]::after { content: '▴'; }
     .capability-grid {
       display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px; margin-bottom: 18px;
@@ -546,13 +525,6 @@
       .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
-      .case-preview-head { align-items: flex-start; flex-direction: column; }
-      .case-preview-summary { grid-template-columns: 1fr; }
-      .case-preview-row {
-        grid-template-columns: minmax(0, 1fr) repeat(3, auto);
-        gap: 8px;
-      }
-      .case-preview-action { grid-column: 1 / -1; justify-self: start; }
       .overview-expand-row td { padding: 0 0 14px; }
     }
   </style>
@@ -807,88 +779,122 @@
     };
   }
 
+  // Per-expand sort state & show-all state
+  let expandSortState = {};
+  let expandShowAll = {};
+  const EXPAND_DEFAULT_LIMIT = 10;
+
+  function expandScoreCell(v, scale) {
+    if (v == null) return '<td style="color:var(--slate-400)">--</td>';
+    const cls = scale === '5' ? scoreClass5(v) : scoreClass01(v);
+    const digits = scale === '5' ? 2 : 3;
+    return `<td class="${cls}">${fmt(v, digits)}</td>`;
+  }
+
   function buildCasePreviewBlock(condKey, ranking) {
-    const previewRows = ranking.rows.slice(0, 3);
-    const previewCount = previewRows.length;
     const totalCount = ranking.rows.length;
-    const expanded = !!modelCasePreviewExpanded[condKey];
-    const previewList = previewRows.map(row => {
+    if (!totalCount) {
+      return `<div style="padding:16px;text-align:center;font-size:13px;color:var(--slate-500)">尚無個案資料</div>`;
+    }
+
+    // Sort
+    let sortedRows = [...ranking.rows];
+    const sortState = expandSortState[condKey];
+    if (sortState) {
+      const { col, dir } = sortState;
+      sortedRows.sort((a, b) => {
+        const va = getExpandSortValue(a, col);
+        const vb = getExpandSortValue(b, col);
+        if (va == null && vb == null) return 0;
+        if (va == null) return 1;
+        if (vb == null) return -1;
+        return dir === 'asc' ? va - vb : vb - va;
+      });
+    }
+
+    const showAll = !!expandShowAll[condKey];
+    const displayRows = showAll ? sortedRows : sortedRows.slice(0, EXPAND_DEFAULT_LIMIT);
+    const hasMore = totalCount > EXPAND_DEFAULT_LIMIT;
+
+    // Table header
+    const cols = [
+      { key: 'name', label: '案例', sortable: false },
+      { key: 'rule', label: 'Rule' },
+      { key: 'fact', label: 'Fact' },
+      { key: 'quality', label: 'Quality' },
+      { key: 'faith', label: 'Faith' },
+      { key: 'rougeL', label: 'ROUGE-L' },
+      { key: 'bert', label: 'BERT F1' },
+    ];
+    const thCells = cols.map(c => {
+      if (c.sortable === false) return `<th>${c.label}</th>`;
+      const isSorted = sortState && sortState.col === c.key;
+      const arrow = isSorted ? `<span class="sort-arrow">${sortState.dir === 'desc' ? '▼' : '▲'}</span>` : '';
+      return `<th onclick="expandSort('${esc(condKey)}','${c.key}')">${c.label}${arrow}</th>`;
+    }).join('');
+
+    // Table body
+    const tbodyRows = displayRows.map(row => {
       const c = row.caseData || {};
       const rb = c.rule_based || {};
       const fr = c.fact_recall || {};
       const q = c.quality || {};
-      return `
-        <div class="case-preview-row">
-          <a class="case-preview-name" href="javascript:void(0)" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">${esc(formatCaseDisplay(row.caseName))}</a>
-          <div class="case-preview-metric score-cell ${scoreClass01(rb.avg)}" title="Rule-Based">${fmt(rb.avg) || '--'}</div>
-          <div class="case-preview-metric score-cell ${scoreClass01(fr.avg)}" title="Fact Recall">${fmt(fr.avg) || '--'}</div>
-          <div class="case-preview-metric score-cell ${scoreClass5(q.avg)}" title="Quality">${fmt(q.avg, 2) || '--'}</div>
-          <button class="case-preview-action" type="button" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">查看</button>
-        </div>
-      `;
+      const rougeBert = c.rouge_bertscore || {};
+      return `<tr>
+        <td><a href="javascript:void(0)" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">${esc(formatCaseDisplay(row.caseName))}</a></td>
+        ${expandScoreCell(rb.avg, '01')}
+        ${expandScoreCell(fr.avg, '01')}
+        ${expandScoreCell(q.avg, '5')}
+        ${expandScoreCell(c.faithfulness, '01')}
+        ${expandScoreCell(rougeBert.rougeL, '01')}
+        ${expandScoreCell(rougeBert.bertscore_f1, '01')}
+      </tr>`;
     }).join('');
-    const fullList = expanded ? `
-      <div class="case-preview-list" style="padding-top:0;">
-        ${ranking.rows.map(row => {
-          const c = row.caseData || {};
-          const rb = c.rule_based || {};
-          const fr = c.fact_recall || {};
-          const q = c.quality || {};
-          return `
-            <div class="case-preview-row">
-              <a class="case-preview-name" href="javascript:void(0)" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">${esc(formatCaseDisplay(row.caseName))}</a>
-              <div class="case-preview-metric score-cell ${scoreClass01(rb.avg)}" title="Rule-Based">${fmt(rb.avg) || '--'}</div>
-              <div class="case-preview-metric score-cell ${scoreClass01(fr.avg)}" title="Fact Recall">${fmt(fr.avg) || '--'}</div>
-              <div class="case-preview-metric score-cell ${scoreClass5(q.avg)}" title="Quality">${fmt(q.avg, 2) || '--'}</div>
-              <button class="case-preview-action" type="button" onclick="focusCaseInBrowser(${JSON.stringify(row.caseName)})">查看</button>
-            </div>
-          `;
-        }).join('')}
-      </div>
+
+    const showMoreBtn = hasMore ? `
+      <button class="expand-show-more" type="button" onclick="toggleExpandShowAll('${esc(condKey)}')">
+        ${showAll ? '收起' : '顯示全部 ' + totalCount + ' 案'}
+      </button>
     ` : '';
-    if (!totalCount) {
-      return `
-        <div class="case-preview-head">
-          <div>
-            <div class="case-preview-title">單案預覽</div>
-            <div class="case-preview-sub">此模型目前沒有可用的單案資料</div>
-          </div>
-          <div class="case-preview-sub">0/0 預覽</div>
-        </div>
-        <div class="no-data-msg" style="padding:18px 16px 20px;">此模型目前沒有可用的單案資料。</div>
-      `;
-    }
+
     return `
-      <div class="case-preview-head">
-        <div>
-          <div class="case-preview-title">單案預覽</div>
-          <div class="case-preview-sub">先看代表案例，再決定要不要展開全部</div>
-        </div>
-        <div class="case-preview-sub">${previewCount}/${totalCount} 預覽</div>
+      <div style="overflow-x:auto;">
+        <table class="expand-case-table">
+          <thead><tr>${thCells}</tr></thead>
+          <tbody>${tbodyRows}</tbody>
+        </table>
       </div>
-      <div class="case-preview-summary">
-        <div class="case-preview-stat">
-          <div class="case-preview-stat-label">最強案例</div>
-          <div class="case-preview-stat-value">${ranking.best ? esc(formatCaseDisplay(ranking.best.caseName)) : '--'}</div>
-        </div>
-        <div class="case-preview-stat">
-          <div class="case-preview-stat-label">最弱案例</div>
-          <div class="case-preview-stat-value">${ranking.worst ? esc(formatCaseDisplay(ranking.worst.caseName)) : '--'}</div>
-        </div>
-        <div class="case-preview-stat">
-          <div class="case-preview-stat-label">平均偏差最大</div>
-          <div class="case-preview-stat-value">${ranking.dev ? esc(formatCaseDisplay(ranking.dev.caseName)) : '--'}</div>
-        </div>
-      </div>
-      <div class="case-preview-list">
-        ${previewList}
-      </div>
-      <div style="padding:0 16px 16px;">
-        <button class="case-preview-toggle" type="button" aria-expanded="${expanded ? 'true' : 'false'}" onclick="toggleCasePreview(${JSON.stringify(condKey)})">${expanded ? '收起完整列表' : '展開完整列表'}</button>
-      </div>
-      ${fullList}
+      ${showMoreBtn}
     `;
   }
+
+  function getExpandSortValue(row, col) {
+    const c = row.caseData || {};
+    switch (col) {
+      case 'rule': return (c.rule_based || {}).avg;
+      case 'fact': return (c.fact_recall || {}).avg;
+      case 'quality': return (c.quality || {}).avg;
+      case 'faith': return c.faithfulness;
+      case 'rougeL': return (c.rouge_bertscore || {}).rougeL;
+      case 'bert': return (c.rouge_bertscore || {}).bertscore_f1;
+      default: return row.score;
+    }
+  }
+
+  window.expandSort = function(condKey, col) {
+    const prev = expandSortState[condKey];
+    if (prev && prev.col === col) {
+      expandSortState[condKey] = { col, dir: prev.dir === 'desc' ? 'asc' : 'desc' };
+    } else {
+      expandSortState[condKey] = { col, dir: 'desc' };
+    }
+    renderOverviewRows(getSortedEntries());
+  };
+
+  window.toggleExpandShowAll = function(condKey) {
+    expandShowAll[condKey] = !expandShowAll[condKey];
+    renderOverviewRows(getSortedEntries());
+  };
 
   function focusCaseInBrowser(caseName) {
     const slug = DATA.case_slugs?.[caseName];
@@ -901,13 +907,6 @@
     if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  let modelCasePreviewExpanded = {};
-  window.toggleCasePreview = function(condKey) {
-    modelCasePreviewExpanded[condKey] = !modelCasePreviewExpanded[condKey];
-    renderOverviewRows(getSortedEntries());
-    renderModelDetail(getFilteredEntries());
-  };
-  window.toggleModelCasePreview = window.toggleCasePreview;
   window.focusCaseInBrowser = focusCaseInBrowser;
 
   // ─── Label maps for sub-metrics ───

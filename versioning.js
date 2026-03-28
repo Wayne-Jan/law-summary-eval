@@ -28,11 +28,15 @@
   }
 
   function setUrlVersion(version) {
+    // Store version in state only; do not pollute the URL bar.
     if (!version) return;
+    state.version = version;
+    // Clean up any existing ?v= from the URL
     const url = new URL(window.location.href);
-    if (url.searchParams.get('v') === version) return;
-    url.searchParams.set('v', version);
-    window.history.replaceState({}, '', url.toString());
+    if (url.searchParams.has('v')) {
+      url.searchParams.delete('v');
+      window.history.replaceState({}, '', url.pathname + (url.search || '') + url.hash);
+    }
   }
 
   function versionedHref(href) {
