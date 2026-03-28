@@ -243,48 +243,6 @@
     }
     .books-footer strong { color: var(--slate-700); font-weight: 600; }
 
-    /* ─── NUMBERS ─── */
-    .section.dark {
-      background: var(--slate-900); padding: 80px 24px;
-    }
-    .section.dark .section-label { color: #818cf8; }
-    .section.dark .section-title { color: #fff; }
-
-    .numbers {
-      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; max-width: min(960px, 100%); margin: 0 auto;
-      background: rgba(255,255,255,0.04); border-radius: 20px;
-      border: 1px solid rgba(255,255,255,0.08); overflow: hidden;
-      box-shadow: 0 18px 60px rgba(2,6,23,0.22);
-    }
-    .num-item {
-      min-height: 168px;
-      text-align: center;
-      padding: 28px 20px 24px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-    }
-    .num-item + .num-item::before {
-      content: ''; position: absolute; left: 0; top: 20%; height: 60%;
-      width: 1px; background: rgba(255,255,255,0.08);
-    }
-    .num-value {
-      font-family: var(--serif);
-      font-size: clamp(26px, 3.2vw, 38px);
-      font-weight: 900;
-      color: #fff;
-      line-height: 1.28;
-      word-break: keep-all;
-      overflow-wrap: anywhere;
-      text-wrap: balance;
-    }
-    .num-value.tight { font-size: clamp(24px, 2.7vw, 33px); }
-    .num-value .u { font-size: 20px; font-weight: 400; color: rgba(255,255,255,0.4); }
-    .num-label { font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6; max-width: 16ch; margin: 0 auto; }
-
     /* ─── CASE TABLE ─── */
     .section.cases-section { background: var(--slate-50); }
 
@@ -482,11 +440,6 @@
       .section-desc { font-size: 13px; margin-bottom: 32px; }
 
       .section.dark { padding: 48px 16px; }
-      .numbers { grid-template-columns: repeat(2, minmax(0, 1fr)); border-radius: 12px; }
-      .num-item { min-height: 144px; padding: 22px 12px 18px; }
-      .num-item + .num-item::before { display: none; }
-      .num-value { font-size: clamp(24px, 5vw, 30px); }
-      .num-value.tight { font-size: clamp(22px, 4.4vw, 28px); }
 
       .filter-row { gap: 8px; }
       .sbox { width: 100%; order: -1; }
@@ -511,10 +464,9 @@
       .hero-stats { gap: 12px; margin-top: 36px; }
       .hero-stat-value { font-size: 20px; }
 
-      .hero-stats, .numbers { grid-template-columns: 1fr; }
+      .hero-stats { grid-template-columns: 1fr; }
       .hero-stat { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
       .hero-stat:last-child { border-bottom: none; }
-      .num-item { min-height: 128px; }
       .cn { max-width: 140px; }
       .ctable td:nth-child(4) { display: none; } /* hide conditions count on very small */
       .ctable th:nth-child(4) { display: none; }
@@ -662,15 +614,6 @@
   </div>
 </section>
 
-<!-- NUMBERS -->
-<section class="section dark" id="data">
-  <div class="reveal">
-    <div class="section-label">資料規模</div>
-    <div class="section-title">平台數據</div>
-  </div>
-  <div class="numbers reveal" id="numbers"></div>
-</section>
-
 <!-- CASES -->
 <section class="section cases-section" id="cases">
   <div class="reveal">
@@ -748,21 +691,11 @@ async function init() {
     const tc = Object.keys(co).length;
     const tf = Object.values(co).reduce((s,c)=>s+c.case_count,0);
     const te = Object.values(co).reduce((s,c)=>s+c.eval_count,0);
-    const volCounts = {};
-    cs.forEach(n => { const v = (ci[n]||{}).volume||''; volCounts[v] = (volCounts[v]||0)+1; });
-
     document.getElementById('heroStats').innerHTML = `
       <div class="hero-stat"><div class="hero-stat-value">${cs.length}</div><div class="hero-stat-label">案件總數</div></div>
       <div class="hero-stat"><div class="hero-stat-value">${tc}</div><div class="hero-stat-label">比較條件</div></div>
       <div class="hero-stat"><div class="hero-stat-value">${tf}</div><div class="hero-stat-label">摘要產出</div></div>
       <div class="hero-stat"><div class="hero-stat-value">${te}</div><div class="hero-stat-label">評估紀錄</div></div>
-    `;
-
-    document.getElementById('numbers').innerHTML = `
-      <div class="num-item"><div class="num-value">${cs.length}<span class="u"> 件</span></div><div class="num-label">醫療糾紛刑事案件</div></div>
-      <div class="num-item"><div class="num-value tight">${volCounts['上冊']||0}<span class="u"> / </span>${volCounts['中冊']||0}<span class="u"> / </span>${volCounts['下冊']||0}</div><div class="num-label">上冊 / 中冊 / 下冊</div></div>
-      <div class="num-item"><div class="num-value">${tc}</div><div class="num-label">模型與條件組合</div></div>
-      <div class="num-item"><div class="num-value">${te}</div><div class="num-label">已完成評估紀錄</div></div>
     `;
 
     ac = cs.map((n,i) => {
