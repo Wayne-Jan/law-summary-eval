@@ -493,8 +493,7 @@
   <div class="progress-subbar" id="progressSubbar">
     <div class="subbar-line">
       <span class="subbar-label">來源：</span>
-      <button class="volume-pill source-pill" id="sourceLegacyBtn" onclick="switchTimelineSource('legacy')">Legacy</button>
-      <button class="volume-pill source-pill" id="sourceV310Btn" onclick="switchTimelineSource('v310')">Next</button>
+      <span class="volume-pill source-pill active">v3.10.4</span>
     </div>
   </div>
   <div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
@@ -522,7 +521,6 @@
     let caseSlugs = {};
     let caseInfo = {};
     let currentCase = null;
-    let timelineSourceMode = 'v310'; // legacy | v310
     let timelineData = null;
     let activeEventIdx = -1;
     let activeSpanId = null;
@@ -558,11 +556,11 @@
       renderCaseSelector();
       const params = new URLSearchParams(location.search);
       const caseParam = params.get('case');
-      const sourceParam = params.get('source');
-      if (sourceParam === 'v310' || sourceParam === 'legacy') {
-        timelineSourceMode = sourceParam;
+      if (params.has('source')) {
+        const url = new URL(location.href);
+        url.searchParams.delete('source');
+        history.replaceState({}, '', url.toString());
       }
-      updateSourceProgress();
       if (caseParam && allCases.includes(caseParam)) selectCase(caseParam);
       else if (allCases.length > 0) selectCase(allCases[0]);
       updateMobileCaseBadge();
@@ -597,13 +595,6 @@
       }
     }
 
-    function updateSourceProgress() {
-      const legacyBtn = document.getElementById('sourceLegacyBtn');
-      const v310Btn = document.getElementById('sourceV310Btn');
-      if (legacyBtn) legacyBtn.classList.toggle('active', timelineSourceMode === 'legacy');
-      if (v310Btn) v310Btn.classList.toggle('active', timelineSourceMode === 'v310');
-    }
-
     function openVolModal(volName) {
       const cases = allCases.filter(c => ((caseInfo[c] || {}).volume || '') === volName);
       document.getElementById('volModalLabel').textContent = `${volName}（${cases.length} 案）`;
@@ -636,7 +627,7 @@
       if (select) select.value = caseName;
       const url = new URL(location.href);
       url.searchParams.set('case', caseName);
-      url.searchParams.set('source', timelineSourceMode);
+      url.searchParams.delete('source');
       history.replaceState({}, '', url.toString());
       const sl = document.getElementById('viewNavLink');
       if (sl) sl.href = versionedHref(`view.html?case=${encodeURIComponent(caseName)}`);
@@ -647,33 +638,15 @@
       contentArea.innerHTML = '<div class="loading">載入時間軸中</div>';
 
       const slug = caseSlugs[caseName] || caseName;
-      const baseDir = timelineSourceMode === 'v310' ? './data/timeline_v310/' : './data/timeline/';
       try {
-        const res = await fetch(`${baseDir}${slug}.json`);
+        const res = await fetch(`./data/timeline_v310/${slug}.json`);
         if (!res.ok) throw new Error('not found');
         timelineData = await res.json();
         renderEvents();
       } catch {
-        const sourceLabel = timelineSourceMode === 'v310' ? 'Next' : 'Legacy';
-        contentArea.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div class="msg">此案件無 ${esc(sourceLabel)} 時間軸資料</div></div>`;
+        contentArea.innerHTML = `<div class="empty-state"><div class="icon">⚠️</div><div class="msg">此案件目前無 v3.10.4 時間軸資料</div></div>`;
       }
       updateMobileCaseBadge();
-    }
-
-    function switchTimelineSource(mode) {
-      const nextMode = mode === 'v310' ? 'v310' : 'legacy';
-      if (timelineSourceMode === nextMode) return;
-      timelineSourceMode = nextMode;
-      updateSourceProgress();
-      const url = new URL(location.href);
-      url.searchParams.set('source', timelineSourceMode);
-      if (currentCase) {
-        url.searchParams.set('case', currentCase);
-      }
-      history.replaceState({}, '', url.toString());
-      if (currentCase) {
-        selectCase(currentCase);
-      }
     }
 
     function getEventSpans(evt) {
@@ -728,7 +701,6 @@
     }
 
     function renderEventSpanSwitcher(evt, evtIdx, evidenceStatus) {
-      if (timelineSourceMode !== 'v310') return '';
       const spans = getEventSpans(evt);
       if (!spans.length) return '';
       const activeForEvent = activeEventIdx === evtIdx ? getActiveSpan(evt) : null;
@@ -938,12 +910,10 @@
         if (isCritical && evt.decision_content) {
           html += `<div class="tl-decision"><div class="tl-decision-label">決策內容</div>${esc(evt.decision_content)}</div>`;
         }
-        if (timelineSourceMode === 'v310') {
-          const evidence = getEventAlignmentSummary(evt);
-          html += '<div class="tl-event-evidence">';
-          html += renderEventSpanSwitcher(evt, idx, evidence.status);
-          html += '</div>';
-        }
+        const evidence = getEventAlignmentSummary(evt);
+        html += '<div class="tl-event-evidence">';
+        html += renderEventSpanSwitcher(evt, idx, evidence.status);
+        html += '</div>';
 
         // Mobile-only collapsible (shows chunk with highlight)
         if (evt.extraction_text) {
