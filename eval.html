@@ -98,10 +98,24 @@
     }
     .btn-icon { padding-inline: 10px; }
     .tl-mobile-guide {
+      display: none;
       margin: 0 0 10px; padding: 10px 12px;
       border: 1px solid #ddd6fe; border-radius: 10px;
       background: #faf5ff; color: #5b21b6;
       font-size: 12px; line-height: 1.65;
+    }
+    .tl-mobile-tabs {
+      display: none;
+      gap: 8px; padding: 10px 12px 0;
+      background: var(--slate-50);
+    }
+    .tl-mobile-tab {
+      flex: 1; font-family: var(--sans); font-size: 13px; font-weight: 600;
+      padding: 9px 12px; border: 1px solid var(--slate-300); border-radius: 999px;
+      background: white; color: var(--slate-500); cursor: pointer;
+    }
+    .tl-mobile-tab.active {
+      border-color: var(--indigo); background: var(--indigo-light); color: var(--indigo);
     }
 
     /* Condition progress pills */
@@ -610,8 +624,7 @@
       font-size: 12px; color: #991b1b; line-height: 1.5;
     }
     .tl-decision-label { font-weight: 600; margin-bottom: 2px; }
-    .tl-event-evidence { display: none; margin-top: 10px; }
-    .tl-event.active-source .tl-event-evidence { display: block; }
+    .tl-event-evidence { display: block; margin-top: 10px; }
     .tl-evidence-row { display: flex; gap: 6px; flex-wrap: wrap; }
     .legend-swatch { width: 10px; height: 10px; border-radius: 999px; }
     .legend-swatch.primary { background: #facc15; }
@@ -704,9 +717,17 @@
 
     @media (max-width: 900px) {
       #phaseTLView { flex-direction: column; }
-      .panel-timeline { flex: none !important; max-height: 35vh; }
-      .panel-tl-source { flex: none !important; max-height: 35vh; }
-      .panel-tl-eval { flex: none !important; }
+      .tl-mobile-tabs { display: flex; }
+      .tl-mobile-guide { display: block; }
+      #phaseTLView .resizer { display: none; }
+      .panel-timeline, .panel-tl-source, .panel-tl-eval {
+        display: none; flex: none !important; width: 100% !important; max-height: none;
+      }
+      .panel-timeline.mobile-active,
+      .panel-tl-source.mobile-active,
+      .panel-tl-eval.mobile-active { display: block; }
+      .panel-tl-eval { padding-bottom: 84px; }
+      #phaseTLView .panel-body, #phaseTLView .timeline-panel-body { max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h) - 132px); overflow-y: auto; }
       .tl-eval-group-title { margin-bottom: 10px; }
     }
 
@@ -1083,6 +1104,11 @@
 
   <!-- ─── PHASE TL: Timeline Evaluation ─── -->
   <div class="view" id="phaseTLView">
+    <div class="tl-mobile-tabs" id="tlMobileTabs">
+      <button type="button" class="tl-mobile-tab active" data-tab="events" onclick="setTLMobileTab('events')">事件</button>
+      <button type="button" class="tl-mobile-tab" data-tab="source" onclick="setTLMobileTab('source')">原文</button>
+      <button type="button" class="tl-mobile-tab" data-tab="eval" onclick="setTLMobileTab('eval')">評分</button>
+    </div>
     <!-- Left: Timeline Events -->
     <div class="panel panel-timeline" id="tlTimeline">
       <div class="panel-head">
@@ -2427,6 +2453,7 @@ async function loadPhaseTL() {
   renderTLEvalForm();
   restorePhaseTL();
   updateTLProgress();
+  setTLMobileTab('events');
 
   const locked = isCaseLocked(currentCase);
   if (locked) {
@@ -2486,17 +2513,31 @@ function getTLActiveSpan(evt) {
   return spans.find(sp => sp.role === 'primary') || spans[0];
 }
 
-function formatTLEvidenceStatus(status) {
-  const map = { exact: '精確對齊', fuzzy: '模糊對齊', partial: '部分對齊', unresolved: '待定位' };
-  return map[status] || status;
+function isTLMobileLayout() {
+  return window.innerWidth <= 900;
+}
+
+function setTLMobileTab(tab) {
+  const nextTab = ['events', 'source', 'eval'].includes(tab) ? tab : 'events';
+  document.querySelectorAll('.tl-mobile-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === nextTab);
+  });
+  const panelMap = {
+    events: document.getElementById('tlTimeline'),
+    source: document.getElementById('tlSourcePanel'),
+    eval: document.getElementById('tlEvalPanel'),
+  };
+  Object.entries(panelMap).forEach(([key, el]) => {
+    if (!el) return;
+    el.classList.toggle('mobile-active', key === nextTab || !isTLMobileLayout());
+  });
 }
 
 function renderTLEventSpanSwitcher(evt, evtIdx) {
   const spans = getTLEventSpans(evt);
-  if (!spans.length) return '';
+  if (spans.length <= 1) return '';
   const activeForEvent = activeTLEventIdx === evtIdx ? getTLActiveSpan(evt) : null;
   const supportingTotal = spans.filter(sp => sp.role !== 'primary').length;
-  const evidence = getTLAlignmentSummary(evt);
   let supportingIndex = 0;
   let html = '<div class="tl-event-evidence"><div class="tl-evidence-row">';
   spans.forEach(sp => {
@@ -2507,7 +2548,6 @@ function renderTLEventSpanSwitcher(evt, evtIdx) {
     const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
     html += `<button type="button" class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}" onclick="event.stopPropagation(); selectTLSpan(${evtIdx}, ${JSON.stringify(String(sp.span_id))})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
   });
-  html += `<span class="tl-span-pill status-${evidence.status}">${esc(formatTLEvidenceStatus(evidence.status))}</span>`;
   html += '</div></div>';
   return html;
 }
@@ -2817,6 +2857,7 @@ function showTLEventSource(idx) {
   const selectedAnchorId = activeTLSpanId ? getTLSpanAnchorId(idx, activeTLSpanId) : '';
   const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
   const scrollTarget = selectedMark || evtMarks[0];
+  if (isTLMobileLayout()) setTLMobileTab('source');
   if (scrollTarget && shouldAutoScrollTLEvalSource()) {
     requestAnimationFrame(() => {
       const body = document.getElementById('tlSourceBody');
@@ -3405,7 +3446,11 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('beforeunload', () => saveCurrentState());
-window.addEventListener('resize', updateLayoutHeights);
+window.addEventListener('resize', () => {
+  updateLayoutHeights();
+  const activeTab = document.querySelector('.tl-mobile-tab.active')?.dataset.tab || 'events';
+  setTLMobileTab(activeTab);
+});
 
 // ═══════════════════════════════════════════════════════════════
 // EXPORT JSON

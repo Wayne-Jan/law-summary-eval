@@ -82,7 +82,7 @@
     }
     .panel-head {
       min-height: 48px; padding: 10px 16px; border-bottom: 1px solid #f3f4f6; background: #fafafa;
-      display: flex; flex-direction: column; justify-content: center;
+      display: flex; flex-direction: column; justify-content: center; position: relative;
     }
     .panel-kicker { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; color: #8b5cf6; margin-bottom: 4px; }
     .panel-title { font-size: 15px; font-weight: 600; color: #111827; }
@@ -178,6 +178,13 @@
     }
     .source-panel-empty svg { margin-bottom: 10px; opacity: 0.5; }
     .source-panel-empty span { font-size: 13px; }
+    .mobile-sheet-close {
+      display: none;
+      position: absolute; top: 10px; right: 12px;
+      width: 32px; height: 32px; border: 1px solid #e2e8f0; border-radius: 999px;
+      background: white; color: #475569; font-size: 18px; line-height: 1; cursor: pointer;
+    }
+    .source-sheet-backdrop { display: none; }
     .source-switcher {
       display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end;
     }
@@ -389,6 +396,11 @@
         background: rgba(0,0,0,0.25); z-index: 98;
       }
       .mobile-backdrop.open { display: block; }
+      .source-sheet-backdrop {
+        position: fixed; inset: var(--toolbar-h) 0 0 0;
+        background: rgba(15,23,42,0.32); z-index: 109;
+      }
+      .source-sheet-backdrop.open { display: block; }
 
       .toolbar-controls {
         display: none !important; position: absolute; top: var(--toolbar-h); left: 0; right: 0;
@@ -425,9 +437,27 @@
 
       .tl-columns { flex-direction: column; }
       .tl-col-left { flex: 1; position: static; max-height: none; width: 100%; }
-      .tl-col-right { flex: 1; position: static; max-height: none; width: 100%; }
+      .tl-col-right { flex: 1; position: static; max-height: none; width: 100%; display: contents; }
       .timeline-panel-body { overflow: visible; }
-      .tl-source-toggle { display: inline-flex; }
+      .tl-source-toggle, .tl-source-text { display: none !important; }
+      .source-panel {
+        position: fixed; left: 0; right: 0; bottom: 0;
+        min-height: 0; max-height: 72vh;
+        border-radius: 18px 18px 0 0; border-left: none; border-right: none; border-bottom: none;
+        box-shadow: 0 -18px 40px rgba(15,23,42,0.18);
+        transform: translateY(calc(100% + 24px)); transition: transform 0.28s ease;
+        z-index: 110; pointer-events: none;
+      }
+      .source-panel.mobile-open {
+        transform: translateY(0); pointer-events: auto;
+      }
+      .source-panel .panel-head { padding-top: 18px; }
+      .source-panel .panel-head::before {
+        content: ''; width: 42px; height: 4px; border-radius: 999px;
+        background: #cbd5e1; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+      }
+      .mobile-sheet-close { display: inline-flex; align-items: center; justify-content: center; }
+      .source-panel-body { padding-bottom: 28px; }
     }
     @media (min-width: 769px) {
     }
@@ -455,6 +485,7 @@
     </div>
   </div>
   <div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
+  <div class="source-sheet-backdrop" id="sourceSheetBackdrop" onclick="closeMobileSourceSheet()"></div>
   <div id="volModal" onclick="if(event.target===this)closeVolModal()">
     <div id="volModalBox">
       <div id="volModalTitle">
@@ -484,6 +515,10 @@
     let activeSpanId = null;
     let lastScrolledEventIdx = -1;
     let sourceScrollTimer = null;
+
+    function isMobileTimelineLayout() {
+      return window.innerWidth <= 768;
+    }
 
     function getCaseDisplay(name) {
       const info = caseInfo[name] || {};
@@ -701,7 +736,7 @@
     }
 
     function shouldAutoScrollTimelineSource() {
-      return window.innerWidth > 768;
+      return !isMobileTimelineLayout();
     }
 
     function normalizeLooseText(text) {
@@ -899,6 +934,7 @@
       html += '<div class="panel-kicker">SOURCE</div>';
       html += `<div class="panel-title">原始判決書</div>`;
       html += `<div class="panel-meta">${chunks.length} 段原文片段</div>`;
+      html += '<button class="mobile-sheet-close" type="button" onclick="closeMobileSourceSheet()" aria-label="關閉原文面板">×</button>';
       html += '</div>';
       html += '<div class="source-panel-body" id="sourcePanelBody">';
 
@@ -964,6 +1000,7 @@
 
       html += '</div></div>'; // .tl-columns .content-inner
       document.getElementById('contentArea').innerHTML = html;
+      closeMobileSourceSheet();
       if (events.length > 0 && activeEventIdx >= 0) showSource(activeEventIdx, false);
       else updateEventSpanPills();
 
@@ -1023,6 +1060,8 @@
         void regionEl.offsetWidth;
         regionEl.classList.add('focus-pulse');
       });
+
+      if (isMobileTimelineLayout()) openMobileSourceSheet();
 
       if (scrollEvent && shouldAutoScrollTimelineSource()) {
         const selectedAnchorId = activeSpanId ? getSpanAnchorId(idx, activeSpanId) : '';
@@ -1085,6 +1124,24 @@
       txt.classList.toggle('open');
     }
 
+    function openMobileSourceSheet() {
+      if (!isMobileTimelineLayout()) return;
+      const panel = document.getElementById('sourcePanel');
+      const backdrop = document.getElementById('sourceSheetBackdrop');
+      if (!panel || !backdrop) return;
+      panel.classList.add('mobile-open');
+      backdrop.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMobileSourceSheet() {
+      const panel = document.getElementById('sourcePanel');
+      const backdrop = document.getElementById('sourceSheetBackdrop');
+      if (panel) panel.classList.remove('mobile-open');
+      if (backdrop) backdrop.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
     function esc(text) {
       const div = document.createElement('div');
       div.textContent = text == null ? '' : String(text);
@@ -1110,6 +1167,10 @@
       const display = currentCase ? getCaseDisplay(currentCase) : '選擇案件';
       if (badge) badge.textContent = display;
     }
+
+    window.addEventListener('resize', () => {
+      if (!isMobileTimelineLayout()) closeMobileSourceSheet();
+    });
 
     init();
   </script>
