@@ -153,6 +153,15 @@
       color: #4f46e5; font-size: 11px; font-weight: 700;
       white-space: nowrap; flex-shrink: 0;
     }
+    .overview-case-volume.vol-upper {
+      color: #4f46e5; background: #eef2ff; border-color: #c7d2fe;
+    }
+    .overview-case-volume.vol-middle {
+      color: #0d9488; background: #f0fdfa; border-color: #99f6e4;
+    }
+    .overview-case-volume.vol-lower {
+      color: #d97706; background: #fff7ed; border-color: #fdba74;
+    }
     .overview-preview-toggle {
       display: inline-flex; align-items: center; gap: 6px;
       margin: 0 16px 16px; padding: 8px 12px;
@@ -771,6 +780,14 @@
     return currentVolume;
   }
 
+  function volumePillClass(caseId) {
+    const vol = getCaseMeta(caseId).volume || currentVolume;
+    if (vol === '上冊') return 'vol-upper';
+    if (vol === '中冊') return 'vol-middle';
+    if (vol === '下冊') return 'vol-lower';
+    return 'vol-upper';
+  }
+
   function esc(text) {
     const div = document.createElement('div');
     div.textContent = text == null ? '' : String(text);
@@ -879,7 +896,7 @@
             ${nameHtml}
           </div>
         </td>
-        <td><span class="overview-case-volume">${esc(formatVolumePill(row.caseName))}</span></td>
+        <td><span class="overview-case-volume ${esc(volumePillClass(row.caseName))}">${esc(formatVolumePill(row.caseName))}</span></td>
         <td class="score-cell ${scoreClass01(rb.avg)}">${fmt(rb.avg) || '--'}</td>
         <td class="score-cell ${scoreClass01(fr.avg)}">${fmt(fr.avg) || '--'}</td>
         <td class="score-cell ${scoreClass5(q.avg)}">${fmt(q.avg, 2) || '--'}</td>
