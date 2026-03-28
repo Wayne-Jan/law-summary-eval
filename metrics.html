@@ -138,6 +138,13 @@
       display: flex; align-items: center; gap: 10px;
       min-width: 0;
     }
+    .overview-case-rank {
+      display: inline-flex; align-items: center;
+      padding: 2px 8px; border-radius: 999px;
+      border: 1px solid #dbe4ff; background: white;
+      color: #4f46e5; font-size: 11px; font-weight: 700;
+      white-space: nowrap; flex-shrink: 0;
+    }
     .overview-case-link {
       min-width: 0;
       font-size: 13px; font-weight: 600; color: var(--slate-900); text-decoration: none;
@@ -191,6 +198,65 @@
       border-bottom: none;
       text-align: center;
     }
+    .metrics-modal[hidden] { display: none; }
+    .metrics-modal {
+      position: fixed; inset: 0; z-index: 220;
+      display: flex; align-items: center; justify-content: center;
+      padding: 32px 20px;
+    }
+    .metrics-modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(15,23,42,0.48);
+      backdrop-filter: blur(4px);
+    }
+    .metrics-modal-dialog {
+      position: relative; width: min(1180px, 100%);
+      max-height: min(86vh, 920px);
+      background: white; border: 1px solid #dbe4ff; border-radius: 18px;
+      box-shadow: 0 24px 60px rgba(15,23,42,0.2);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .metrics-modal-header {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+      padding: 18px 22px 16px;
+      border-bottom: 1px solid #e2e8f0;
+      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+    }
+    .metrics-modal-kicker {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      color: #6366f1; margin-bottom: 4px;
+    }
+    .metrics-modal-title {
+      font-size: 20px; font-weight: 700; color: var(--slate-900);
+    }
+    .metrics-modal-subtitle {
+      font-size: 13px; color: var(--slate-500); margin-top: 4px;
+    }
+    .metrics-modal-close {
+      width: 36px; height: 36px; border: 1px solid #dbe4ff; border-radius: 10px;
+      background: white; color: var(--slate-700); cursor: pointer; font-size: 20px; line-height: 1;
+      flex-shrink: 0;
+    }
+    .metrics-modal-close:hover { background: #f8fafc; color: var(--indigo); }
+    .metrics-modal-body {
+      padding: 0 20px 20px;
+      overflow: auto;
+    }
+    .metrics-modal-table {
+      width: 100%; border-collapse: collapse; font-size: 14px;
+    }
+    .metrics-modal-table th {
+      position: sticky; top: 0; z-index: 1;
+      text-align: left; padding: 12px 14px; font-weight: 600; font-size: 12px;
+      color: var(--slate-500); background: #f8fafc;
+      border-bottom: 1px solid #e5e7eb; white-space: nowrap;
+    }
+    .metrics-modal-table td {
+      padding: 12px 14px; border-bottom: 1px solid #eef2f7; white-space: nowrap;
+      background: white;
+    }
+    .metrics-modal-table tr:hover td { background: #fafbfc; }
     .overview-table .cond-name { font-weight: 600; color: var(--slate-900); }
     .table-notes {
       font-size: 11px; color: var(--slate-500); padding: 8px 14px; line-height: 1.8;
@@ -688,6 +754,38 @@
   </div>
 </div>
 
+<div class="metrics-modal" id="caseListModal" hidden>
+  <div class="metrics-modal-backdrop" onclick="closeCaseListModal()"></div>
+  <div class="metrics-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="caseListModalTitle">
+    <div class="metrics-modal-header">
+      <div>
+        <div class="metrics-modal-kicker">全部案件</div>
+        <div class="metrics-modal-title" id="caseListModalTitle">模型案例列表</div>
+        <div class="metrics-modal-subtitle" id="caseListModalSubtitle"></div>
+      </div>
+      <button class="metrics-modal-close" type="button" aria-label="關閉" onclick="closeCaseListModal()">×</button>
+    </div>
+    <div class="metrics-modal-body">
+      <table class="metrics-modal-table">
+        <thead>
+          <tr>
+            <th>案件</th>
+            <th>冊別</th>
+            <th>Rule-Based</th>
+            <th>Fact Recall</th>
+            <th>Quality</th>
+            <th>Faithfulness</th>
+            <th>ROUGE-L</th>
+            <th>BERTScore F1</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody id="caseListModalBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <script src="versioning.js"></script>
 <script>
 (function() {
@@ -736,6 +834,9 @@
     if (!hamburgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
       mobileMenu.classList.remove('open');
     }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCaseListModal();
   });
 
   // ─── Score color helpers ───
@@ -870,11 +971,23 @@
       if (seen.has(caseId)) continue;
       rows.push({ caseId, caseName: DATA?.case_display_by_slug?.[caseId] || caseId, caseData });
     }
+    rows.sort((a, b) => {
+      const metaA = getCaseMeta(a.caseName);
+      const metaB = getCaseMeta(b.caseName);
+      const numA = Number(metaA.number);
+      const numB = Number(metaB.number);
+      const hasNumA = Number.isFinite(numA);
+      const hasNumB = Number.isFinite(numB);
+      if (hasNumA && hasNumB && numA !== numB) return numA - numB;
+      if (hasNumA !== hasNumB) return hasNumA ? -1 : 1;
+      return String(a.caseName).localeCompare(String(b.caseName), 'zh-Hant');
+    });
     return rows;
   }
 
   let expandShowAll = {};
   const EXPAND_DEFAULT_LIMIT = 10;
+  let caseListModalCondKey = null;
 
   function expandScoreCell(v, scale) {
     if (v == null) return '<td class="score-cell" style="color:var(--slate-400)">--</td>';
@@ -889,51 +1002,78 @@
     return `view.html?case=${encodeURIComponent(slug)}&condition=${encodeURIComponent(condKey)}`;
   }
 
+  function buildOverviewCaseRow(condKey, row, rankLabel = '') {
+    const c = row.caseData || {};
+    const rb = c.rule_based || {};
+    const fr = c.fact_recall || {};
+    const q = c.quality || {};
+    const rougeBert = c.rouge_bertscore || {};
+    const href = buildCaseViewHref(condKey, row.caseName);
+    const nameHtml = href
+      ? `<a class="overview-case-link" href="${esc(href)}" target="_blank" rel="noopener">${esc(formatCompactCaseLabel(row.caseName))}</a>`
+      : `<span class="overview-case-link">${esc(formatCompactCaseLabel(row.caseName))}</span>`;
+    const actionHtml = href
+      ? `<a class="overview-case-action" href="${esc(href)}" target="_blank" rel="noopener">檢視摘要</a>`
+      : '';
+    const rankHtml = rankLabel ? `<span class="overview-case-rank">${esc(rankLabel)}</span>` : '';
+    return `<tr class="overview-case-row">
+      <td>
+        <div class="overview-case-main">
+          ${rankHtml}
+          ${nameHtml}
+        </div>
+      </td>
+      <td><span class="overview-case-volume ${esc(volumePillClass(row.caseName))}">${esc(formatVolumePill(row.caseName))}</span></td>
+      <td class="score-cell ${scoreClass01(rb.avg)}">${fmt(rb.avg) || '--'}</td>
+      <td class="score-cell ${scoreClass01(fr.avg)}">${fmt(fr.avg) || '--'}</td>
+      <td class="score-cell ${scoreClass5(q.avg)}">${fmt(q.avg, 2) || '--'}</td>
+      <td class="score-cell ${scoreClass01(c.faithfulness)}">${fmt(c.faithfulness) || '--'}</td>
+      <td class="score-cell ${scoreClass01(rougeBert.rougeL)}">${fmt(rougeBert.rougeL) || '--'}</td>
+      <td class="score-cell ${scoreClass01(rougeBert.bertscore_f1)}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
+      <td>${actionHtml}</td>
+    </tr>`;
+  }
+
+  function getPreviewCaseRows(cond) {
+    const orderedRows = getOrderedCaseRows(cond).map(row => ({ ...row, score: caseCompositeScore(row.caseData) }));
+    if (!orderedRows.length) return [];
+    const scorable = orderedRows.filter(row => row.score != null);
+    if (!scorable.length) return orderedRows.slice(0, 3).map((row, idx) => ({ row, label: ['最高', '平均', '最低'][idx] || '' }));
+    const sorted = [...scorable].sort((a, b) => b.score - a.score || String(a.caseName).localeCompare(String(b.caseName), 'zh-Hant'));
+    const avg = scorable.reduce((sum, row) => sum + row.score, 0) / scorable.length;
+    const avgRow = scorable.reduce((best, row) => (
+      best == null || Math.abs(row.score - avg) < Math.abs(best.score - avg) ? row : best
+    ), null);
+    const candidates = [
+      { label: '最高', row: sorted[0] },
+      { label: '平均', row: avgRow },
+      { label: '最低', row: sorted[sorted.length - 1] }
+    ];
+    const unique = [];
+    const seen = new Set();
+    for (const item of candidates) {
+      if (!item.row) continue;
+      const key = item.row.caseId || item.row.caseName;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      unique.push(item);
+    }
+    return unique;
+  }
+
   function buildExpandCaseRows(condKey, cond) {
+    const previewRows = getPreviewCaseRows(cond);
     const orderedRows = getOrderedCaseRows(cond);
-    if (!orderedRows.length) {
+    if (!previewRows.length && !orderedRows.length) {
       return `<tr class="overview-expand-row"><td colspan="9"><div class="overview-expand-shell"><div style="padding:16px;color:var(--slate-500);font-size:13px;text-align:center;">此模型目前沒有可用的單案資料。</div></div></td></tr>`;
     }
-    const showAll = !!expandShowAll[condKey];
-    const displayRows = showAll ? orderedRows : orderedRows.slice(0, EXPAND_DEFAULT_LIMIT);
-    const hasMore = orderedRows.length > EXPAND_DEFAULT_LIMIT;
-
-    const rowsHtml = displayRows.map(row => {
-      const c = row.caseData || {};
-      const rb = c.rule_based || {};
-      const fr = c.fact_recall || {};
-      const q = c.quality || {};
-      const rougeBert = c.rouge_bertscore || {};
-      const href = buildCaseViewHref(condKey, row.caseName);
-      const nameHtml = href
-        ? `<a class="overview-case-link" href="${esc(href)}" target="_blank" rel="noopener">${esc(formatCompactCaseLabel(row.caseName))}</a>`
-        : `<span class="overview-case-link">${esc(formatCompactCaseLabel(row.caseName))}</span>`;
-      const actionHtml = href
-        ? `<a class="overview-case-action" href="${esc(href)}" target="_blank" rel="noopener">檢視摘要</a>`
-        : '';
-      return `<tr class="overview-case-row">
-        <td>
-          <div class="overview-case-main">
-            ${nameHtml}
-          </div>
-        </td>
-        <td><span class="overview-case-volume ${esc(volumePillClass(row.caseName))}">${esc(formatVolumePill(row.caseName))}</span></td>
-        <td class="score-cell ${scoreClass01(rb.avg)}">${fmt(rb.avg) || '--'}</td>
-        <td class="score-cell ${scoreClass01(fr.avg)}">${fmt(fr.avg) || '--'}</td>
-        <td class="score-cell ${scoreClass5(q.avg)}">${fmt(q.avg, 2) || '--'}</td>
-        <td class="score-cell ${scoreClass01(c.faithfulness)}">${fmt(c.faithfulness) || '--'}</td>
-        <td class="score-cell ${scoreClass01(rougeBert.rougeL)}">${fmt(rougeBert.rougeL) || '--'}</td>
-        <td class="score-cell ${scoreClass01(rougeBert.bertscore_f1)}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
-        <td>${actionHtml}</td>
-      </tr>`;
-    }).join('');
-
-    if (!hasMore) return rowsHtml;
-    const label = showAll ? '收起完整列表' : `顯示全部 ${orderedRows.length} 案`;
+    const rowsHtml = previewRows.map(({ row, label }) => buildOverviewCaseRow(condKey, row, label)).join('');
+    if (!orderedRows.length) return rowsHtml;
+    const label = `顯示全部 ${orderedRows.length} 案`;
     return `${rowsHtml}
       <tr class="overview-expand-row overview-expand-footer">
         <td colspan="9">
-          <button class="overview-preview-toggle" type="button" onclick="toggleExpandShowAll('${esc(condKey)}')" aria-expanded="${showAll ? 'true' : 'false'}">${label}</button>
+          <button class="overview-preview-toggle" type="button" onclick="openCaseListModal('${esc(condKey)}')">${label}</button>
         </td>
       </tr>`;
   }
@@ -942,6 +1082,31 @@
     expandShowAll[condKey] = !expandShowAll[condKey];
     renderOverviewRows(getSortedEntries());
     renderModelDetail(getFilteredEntries());
+  };
+
+  function buildModalCaseRows(condKey, cond) {
+    return getOrderedCaseRows(cond).map(row => buildOverviewCaseRow(condKey, row)).join('');
+  }
+
+  window.openCaseListModal = function(condKey) {
+    const entries = getFilteredEntries();
+    const match = entries.find(([key]) => key === condKey);
+    if (!match) return;
+    const [, cond] = match;
+    caseListModalCondKey = condKey;
+    document.getElementById('caseListModalTitle').textContent = formatModelLabel(cond.label);
+    document.getElementById('caseListModalSubtitle').textContent = `${currentVolume}・共 ${getOrderedCaseRows(cond).length} 案`;
+    document.getElementById('caseListModalBody').innerHTML = buildModalCaseRows(condKey, cond);
+    const modal = document.getElementById('caseListModal');
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeCaseListModal = function() {
+    caseListModalCondKey = null;
+    const modal = document.getElementById('caseListModal');
+    modal.hidden = true;
+    document.body.style.overflow = '';
   };
 
   function buildModelDetailCaseTable(condKey, ranking) {
