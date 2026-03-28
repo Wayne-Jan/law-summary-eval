@@ -49,7 +49,7 @@ PREDICTIONS = os.path.join(SOURCE_PROJECT, "data", "predictions")
 CHUNKS_DIR = os.path.join(SOURCE_PROJECT, "data", "chunks_20260105")
 EXTRACTIONS_DIR_V39 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.9")
 EXTRACTIONS_DIR_V3104_PATCHED = os.path.join(
-    SOURCE_PROJECT, "data", "extractions_v3.10.4_patched"
+    SOURCE_PROJECT, "data", "extractions_v3.10.4_patched_claude"
 )
 EXTRACTIONS_DIR_V3104 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.10.4")
 SOURCE_TEXT_DIR = os.path.join(SOURCE_PROJECT, "原始判決書")

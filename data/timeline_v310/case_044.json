@@ -340,9 +340,9 @@
      "evidence_type": "primary_quote",
      "char_start": 870,
      "char_end": 990,
-     "alignment_status": "MATCH_FUZZY",
-     "alignment_method": "fuzzy",
-     "alignment_confidence": 0.8741,
+     "alignment_status": "MATCH_EXACT",
+     "alignment_method": "llm_verifier",
+     "alignment_confidence": 0.95,
      "support_role": "primary_anchor",
      "support_reason": "直接描述此事件的核心內容。",
      "reasoning_confidence": "medium"
@@ -350,9 +350,9 @@
    ],
    "char_start": 870,
    "char_end": 990,
-   "alignment_status": "MATCH_FUZZY",
-   "alignment_method": "fuzzy",
-   "alignment_confidence": 0.8741,
+   "alignment_status": "MATCH_EXACT",
+   "alignment_method": "llm_verifier",
+   "alignment_confidence": 0.95,
    "decision_support_status": "SUPPORTED",
    "unsupported_decision_clauses": [],
    "decision_support_missing_tokens": [],
@@ -361,10 +361,9 @@
     "judgment": "SUPPORTED",
     "unsupported_clauses": [],
     "same_action_notes": [
-     "decision_content 中的『未進行任何身體理學等相關檢查之鑑別診斷』與 source_span 中的『未進行任何身體理學等相關檢查之鑑別診斷』完全一致。",
-     "『未注意冠狀動膜疾病為重要鑑別診斷』與 source_span 中的『疏未注意冠狀動脈疾病，乃是胸部不適症狀最重要之鑑別診斷之一』為同一概念的改寫。"
+     "primary span 已完整涵蓋 decision_content 的兩個否定性陳述"
     ],
-    "reasoning": "decision_content 的兩個主要部分都已在現有 source_span 中得到支持，沒有新增未支持的醫療動作或檢查。"
+    "reasoning": "primary span 已明確包含「未進行任何身體理學等相關檢查之鑑別診斷」和「未注意冠狀動脈疾病為重要鑑別診斷」等內容，與 decision_content 完全對應。"
    }
   },
   {
@@ -398,34 +397,6 @@
      "support_role": "primary_anchor",
      "support_reason": "直接描述此事件的核心內容。",
      "reasoning_confidence": "medium"
-    },
-    {
-     "span_id": "span_2",
-     "role": "supporting",
-     "quote": "但Ｄｅｃａ皮脂類固醇可能與胃潰瘍之發生、復發、穿孔、出血、及延遲癒合有關，有消化性潰瘍患者應謹慎使用",
-     "evidence_type": "primary_quote",
-     "char_start": 569,
-     "char_end": 619,
-     "alignment_status": "MATCH_EXACT",
-     "alignment_method": "exact",
-     "alignment_confidence": 1.0,
-     "support_role": "critical_context",
-     "support_reason": "補充關鍵決策的判斷脈絡。",
-     "reasoning_confidence": "medium"
-    },
-    {
-     "span_id": "span_3",
-     "role": "supporting",
-     "quote": "並「Ａｍｉｎｏｐｈｙｌｌｉｎ ｉｎｊ」對廓清率較低之病人如五十五歲以上病人尤其是男性，使用一般劑量可能出現高血中濃度",
-     "evidence_type": "primary_quote",
-     "char_start": 620,
-     "char_end": 678,
-     "alignment_status": "MATCH_EXACT",
-     "alignment_method": "exact",
-     "alignment_confidence": 1.0,
-     "support_role": "critical_context",
-     "support_reason": "補充關鍵決策的判斷脈絡。",
-     "reasoning_confidence": "medium"
     }
    ],
    "char_start": 991,
@@ -436,29 +407,15 @@
    "decision_support_status": "SUPPORTED",
    "unsupported_decision_clauses": [],
    "decision_support_missing_tokens": [],
-   "grounding_judge_status": "UNSUPPORTED",
+   "grounding_judge_status": "SUPPORTED",
    "grounding_judge_assessment": {
-    "judgment": "UNSUPPORTED",
-    "unsupported_clauses": [
-     {
-      "clause": "未注意劉清輝身體狀況（64歲男性，有胃潰瘍）是否適合注射Aminophyllin及Deca",
-      "reason": "現有 spans 只提到未注意身體狀況而施予 Aminophyllin，但未明確支持『64歲男性』、『有胃潰瘍』、『Deca』等具體條件。",
-      "gap_type": "missing_omission_support",
-      "search_hints": [
-       "64歲",
-       "胃潰瘍",
-       "Deca",
-       "皮脂類固醇",
-       "消化性潰瘍"
-      ],
-      "candidate_evidence_quotes": [
-       "但Ｄｅｃａ皮脂類固醇可能與胃潰瘍之發生、復發、穿孔、出血、及延遲癒合有關，有消化性潰瘍患者應謹慎使用",
-       "並「Ａｍｉｎｏｐｈｙｌｌｉｎ ｉｎｊ」對廓清率較低之病人如五十五歲以上病人尤其是男性，使用一般劑量可能出現高血中濃度"
-      ]
-     }
+    "judgment": "SUPPORTED",
+    "unsupported_clauses": [],
+    "same_action_notes": [
+     "decision_content 中的「未注意劉清輝身體狀況」與 extraction_text 的「復未注意劉清輝之身體狀況」為相同描述。",
+     "「率然用藥」與「率施予」為同一動作的摘要改寫。"
     ],
-    "same_action_notes": [],
-    "reasoning": "現有證據支持未注意身體狀況而施藥，但缺乏對年齡、胃潰瘍病史及Deca用藥的具體支持。"
+    "reasoning": "現有 primary span 已完整支持 decision_content 的兩個主要部分：未注意病患身體狀況與率然用藥。"
    }
   },
   {
@@ -583,8 +540,15 @@
    "decision_support_status": "SUPPORTED",
    "unsupported_decision_clauses": [],
    "decision_support_missing_tokens": [],
-   "grounding_judge_status": "NOT_RUN",
-   "grounding_judge_assessment": {}
+   "grounding_judge_status": "SUPPORTED",
+   "grounding_judge_assessment": {
+    "judgment": "SUPPORTED",
+    "unsupported_clauses": [],
+    "same_action_notes": [
+     "primary span 已完整涵蓋 decision_content 中所有動作描述"
+    ],
+    "reasoning": "primary span 已完整支持決定轉診及未做適當處置的描述，包含氣管內管等氧氣治療的具體缺失。"
+   }
   },
   {
    "event_id": 14,

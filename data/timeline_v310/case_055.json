@@ -82,8 +82,15 @@
    "decision_support_status": "SUPPORTED",
    "unsupported_decision_clauses": [],
    "decision_support_missing_tokens": [],
-   "grounding_judge_status": "NOT_RUN",
-   "grounding_judge_assessment": {}
+   "grounding_judge_status": "SUPPORTED",
+   "grounding_judge_assessment": {
+    "judgment": "SUPPORTED",
+    "unsupported_clauses": [],
+    "same_action_notes": [
+     "decision_content 是對 primary span 的摘要濃縮，描述的是同一醫療決策。"
+    ],
+    "reasoning": "decision_content 的「決定於妊娠37週多（未達常規38週）以催生方式提早引產」與 primary span 中的描述完全一致，僅是摘要濃縮。"
+   }
   },
   {
    "event_id": 3,
@@ -202,8 +209,15 @@
    "decision_support_status": "SUPPORTED",
    "unsupported_decision_clauses": [],
    "decision_support_missing_tokens": [],
-   "grounding_judge_status": "NOT_RUN",
-   "grounding_judge_assessment": {}
+   "grounding_judge_status": "SUPPORTED",
+   "grounding_judge_assessment": {
+    "judgment": "SUPPORTED",
+    "unsupported_clauses": [],
+    "same_action_notes": [
+     "decision_content 是 extraction_text 的精簡改寫，涵蓋所有關鍵元素。"
+    ],
+    "reasoning": "primary span 已完整涵蓋 decision_content 的所有元素，包括未親自檢查、未指示檢查胎位等，以及僅由護理人員檢查子宮頸口擴張及變薄程度。"
+   }
   },
   {
    "event_id": 6,
@@ -309,6 +323,20 @@
      "support_role": "primary_anchor",
      "support_reason": "直接描述此事件的核心內容。",
      "reasoning_confidence": "medium"
+    },
+    {
+     "span_id": "span_2",
+     "role": "supporting",
+     "quote": "於破水後，檢查有無臍帶脫垂被胎頭壓迫之現象",
+     "evidence_type": "supporting_quote",
+     "char_start": 606,
+     "char_end": 627,
+     "alignment_status": "MATCH_EXACT",
+     "alignment_method": "exact",
+     "alignment_confidence": 1.0,
+     "support_role": "critical_context",
+     "support_reason": "補充關鍵決策的判斷脈絡。",
+     "reasoning_confidence": "medium"
     }
    ],
    "char_start": 799,
@@ -316,22 +344,18 @@
    "alignment_status": "MATCH_EXACT",
    "alignment_method": "exact",
    "alignment_confidence": 1.0,
-   "decision_support_status": "UNSUPPORTED",
-   "unsupported_decision_clauses": [
-    {
-     "clause": "破水後未立即檢查有無臍帶脫垂",
-     "missing_tokens": [
-      "破水後",
-      "立即檢查有無臍帶脫垂"
-     ]
-    }
-   ],
-   "decision_support_missing_tokens": [
-    "破水後",
-    "立即檢查有無臍帶脫垂"
-   ],
-   "grounding_judge_status": "NOT_RUN",
-   "grounding_judge_assessment": {}
+   "decision_support_status": "SUPPORTED",
+   "unsupported_decision_clauses": [],
+   "decision_support_missing_tokens": [],
+   "grounding_judge_status": "SUPPORTED",
+   "grounding_judge_assessment": {
+    "judgment": "SUPPORTED",
+    "unsupported_clauses": [],
+    "same_action_notes": [
+     "primary span 已完整涵蓋 decision_content 的關鍵動作「未立即到產房或指示護理人員檢查有無臍帶脫垂」"
+    ],
+    "reasoning": "decision_content 與 primary span 描述完全一致，已完整支持。"
+   }
   },
   {
    "event_id": 9,
@@ -478,20 +502,6 @@
      "support_role": "primary_anchor",
      "support_reason": "直接描述此事件的核心內容。",
      "reasoning_confidence": "medium"
-    },
-    {
-     "span_id": "span_2",
-     "role": "supporting",
-     "quote": "遲至同日中午12時50分許，經護理人員告知胎兒心跳下降至每分鐘100至120下，始親自到產房對甲○○內診，發現臍帶脫垂之現象",
-     "evidence_type": "context_quote",
-     "char_start": 854,
-     "char_end": 916,
-     "alignment_status": "MATCH_EXACT",
-     "alignment_method": "exact",
-     "alignment_confidence": 1.0,
-     "support_role": "critical_context",
-     "support_reason": "補充關鍵決策的判斷脈絡。",
-     "reasoning_confidence": "medium"
     }
    ],
    "char_start": 932,
@@ -515,8 +525,15 @@
     "持續頂住胎頭",
     "準備緊急分娩之措施"
    ],
-   "grounding_judge_status": "NOT_RUN",
-   "grounding_judge_assessment": {}
+   "grounding_judge_status": "SUPPORTED",
+   "grounding_judge_assessment": {
+    "judgment": "SUPPORTED",
+    "unsupported_clauses": [],
+    "same_action_notes": [
+     "decision_content 是對 extraction_text 的摘要濃縮，描述的是同一組醫療行為與未作為"
+    ],
+    "reasoning": "decision_content 的「未立即採取持續頂住胎頭並準備緊急分娩之措施」已完整對應到 source_span 中「未持續以手伸入陰道將胎頭頂住...同時準備緊急剖腹生產、轉診剖腹生產或即刻以真空吸引方式輔助由產道生產」的內容，屬於同一事件的不同表述方式。"
+   }
   },
   {
    "event_id": 13,
@@ -546,34 +563,6 @@
      "support_role": "primary_anchor",
      "support_reason": "直接描述此事件的核心內容。",
      "reasoning_confidence": "medium"
-    },
-    {
-     "span_id": "span_2",
-     "role": "supporting",
-     "quote": "遲至同日中午12時50分許，經護理人員告知胎兒心跳下降至每分鐘100至120下，始親自到產房對甲○○內診，發現臍帶脫垂之現象",
-     "evidence_type": "context_quote",
-     "char_start": 854,
-     "char_end": 916,
-     "alignment_status": "MATCH_EXACT",
-     "alignment_method": "exact",
-     "alignment_confidence": 1.0,
-     "support_role": "critical_context",
-     "support_reason": "補充關鍵決策的判斷脈絡。",
-     "reasoning_confidence": "medium"
-    },
-    {
-     "span_id": "span_3",
-     "role": "supporting",
-     "quote": "被告取消剖腹生產，準備用真空吸引輔助生產",
-     "evidence_type": "context_quote",
-     "char_start": 2008,
-     "char_end": 2028,
-     "alignment_status": "MATCH_EXACT",
-     "alignment_method": "exact",
-     "alignment_confidence": 1.0,
-     "support_role": "critical_context",
-     "support_reason": "補充關鍵決策的判斷脈絡。",
-     "reasoning_confidence": "medium"
     }
    ],
    "char_start": 1010,
@@ -584,6 +573,12 @@
    "decision_support_status": "UNSUPPORTED",
    "unsupported_decision_clauses": [
     {
+     "clause": "取消剖腹生產",
+     "missing_tokens": [
+      "取消剖腹生產"
+     ]
+    },
+    {
      "clause": "但未立即採取替代緊急分娩措施",
      "missing_tokens": [
       "立即",
@@ -592,11 +587,20 @@
     }
    ],
    "decision_support_missing_tokens": [
+    "取消剖腹生產",
     "立即",
     "替代緊急分娩措施"
    ],
-   "grounding_judge_status": "NOT_RUN",
-   "grounding_judge_assessment": {}
+   "grounding_judge_status": "SUPPORTED",
+   "grounding_judge_assessment": {
+    "judgment": "SUPPORTED",
+    "unsupported_clauses": [],
+    "same_action_notes": [
+     "「捨棄剖腹生產」與「取消剖腹生產」為同一動作的不同表述",
+     "「未為其他緊急處理措施」與「未立即採取替代緊急分娩措施」為同一未作為的改寫"
+    ],
+    "reasoning": "decision_content 的兩個 clause 都已在 primary span 中找到對應支持，僅是表達方式不同。"
+   }
   },
   {
    "event_id": 14,
@@ -746,34 +750,6 @@
      "support_role": "primary_anchor",
      "support_reason": "直接描述此事件的核心內容。",
      "reasoning_confidence": "medium"
-    },
-    {
-     "span_id": "span_2",
-     "role": "supporting",
-     "quote": "真空吸引在子宮頸開8公分時，多數醫生絕不敢冒然使用，最好等到全開時再用",
-     "evidence_type": "supporting_quote",
-     "char_start": 6550,
-     "char_end": 6585,
-     "alignment_status": "MATCH_EXACT",
-     "alignment_method": "exact",
-     "alignment_confidence": 1.0,
-     "support_role": "critical_context",
-     "support_reason": "補充關鍵決策的判斷脈絡。",
-     "reasoning_confidence": "medium"
-    },
-    {
-     "span_id": "span_3",
-     "role": "supporting",
-     "quote": "此時子宮頸並未全開無法使用真空吸引",
-     "evidence_type": "supporting_quote",
-     "char_start": 6795,
-     "char_end": 6812,
-     "alignment_status": "MATCH_EXACT",
-     "alignment_method": "exact",
-     "alignment_confidence": 1.0,
-     "support_role": "critical_context",
-     "support_reason": "補充關鍵決策的判斷脈絡。",
-     "reasoning_confidence": "medium"
     }
    ],
    "char_start": 6840,
@@ -784,15 +760,29 @@
    "decision_support_status": "SUPPORTED",
    "unsupported_decision_clauses": [],
    "decision_support_missing_tokens": [],
-   "grounding_judge_status": "SUPPORTED",
+   "grounding_judge_status": "UNSUPPORTED",
    "grounding_judge_assessment": {
-    "judgment": "SUPPORTED",
-    "unsupported_clauses": [],
-    "same_action_notes": [
-     "『延遲至子宮頸全開才使用真空吸引』與現有 spans 描述一致",
-     "『未在子宮頸開8公分時立即使用』在 supporting spans 中有明確對比說明"
+    "judgment": "UNSUPPORTED",
+    "unsupported_clauses": [
+     {
+      "clause": "延遲至子宮頸全開才使用真空吸引",
+      "reason": "現有 span 只描述「才使用真空吸引」，沒有支持「延遲」的判斷依據。",
+      "gap_type": "missing_omission_support",
+      "search_hints": [],
+      "candidate_evidence_quotes": [],
+      "patchable": false
+     },
+     {
+      "clause": "未在子宮頸開8公分時立即使用",
+      "reason": "這是對醫師未作為的否定推論，原文中不會有直接陳述。",
+      "gap_type": "missing_omission_support",
+      "search_hints": [],
+      "candidate_evidence_quotes": [],
+      "patchable": false
+     }
     ],
-    "reasoning": "現有 spans 完整支持決策內容的兩個部分，包含時間點對比與未作為原因"
+    "same_action_notes": [],
+    "reasoning": "現有 span 僅支持真空吸引的事實，但「延遲」和「未在8公分時使用」都是法律評價性推論，無法從原文找到 verbatim 支持。"
    }
   },
   {
