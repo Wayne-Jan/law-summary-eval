@@ -115,66 +115,35 @@
       background: white;
       box-shadow: 0 8px 22px rgba(15,23,42,0.06);
     }
-    .overview-preview-meta {
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
-      padding: 12px 16px; background: linear-gradient(135deg, rgba(79,70,229,0.035), rgba(79,70,229,0.012));
-      border-bottom: 1px solid #e5e7eb;
+    .overview-case-row td {
+      background: #fff;
+      border-bottom: 1px solid #eef2ff;
     }
-    .overview-preview-tags {
-      display: flex; flex-wrap: wrap; gap: 8px;
+    .overview-case-row:last-of-type td {
+      border-bottom: none;
     }
-    .overview-preview-tag {
-      display: inline-flex; align-items: center; gap: 6px;
-      max-width: 360px;
-      padding: 6px 10px; border-radius: 999px;
-      background: #fff; border: 1px solid #e5e7eb;
-      color: var(--slate-700); font-size: 12px; line-height: 1.2;
-      box-shadow: 0 1px 2px rgba(15,23,42,0.03);
+    .overview-case-main {
+      display: flex; align-items: center; gap: 10px;
+      min-width: 0;
     }
-    .overview-preview-tag-label {
-      color: var(--slate-500); font-weight: 600; flex-shrink: 0;
-    }
-    .overview-preview-tag-value {
-      font-weight: 700; color: var(--slate-900);
+    .overview-case-link {
+      min-width: 0;
+      font-size: 13px; font-weight: 600; color: var(--slate-900); text-decoration: none;
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
-    .overview-preview-count {
-      font-size: 12px; color: var(--slate-500); white-space: nowrap;
-      font-variant-numeric: tabular-nums;
+    .overview-case-link:hover {
+      color: var(--indigo);
     }
-    .overview-preview-list {
-      padding: 12px 16px 4px;
-      display: grid; gap: 8px;
+    .overview-case-badge {
+      display: inline-flex; align-items: center;
+      padding: 3px 8px; border-radius: 999px;
+      border: 1px solid #e2e8f0; background: #f8fafc;
+      color: var(--slate-500); font-size: 11px; font-weight: 600;
+      white-space: nowrap; flex-shrink: 0;
     }
-    .overview-preview-row {
-      display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, auto) auto;
-      gap: 10px; align-items: center;
-      padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 14px; background: #fff;
-      box-shadow: 0 1px 2px rgba(15,23,42,0.03);
+    .overview-case-row td:first-child {
+      padding-left: 24px;
     }
-    .overview-preview-row:hover {
-      border-color: rgba(79,70,229,0.24);
-      box-shadow: 0 6px 16px rgba(79,70,229,0.08);
-    }
-    .overview-preview-name {
-      font-size: 13px; font-weight: 600; color: var(--slate-900); text-decoration: none;
-      min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-    }
-    .overview-preview-metric {
-      font-size: 12px; color: var(--slate-500); font-variant-numeric: tabular-nums;
-      white-space: nowrap;
-    }
-    .overview-preview-row .score-cell {
-      font-size: 12px;
-    }
-    .overview-preview-action {
-      justify-self: end; border: none; border-radius: 999px; cursor: pointer;
-      font-family: var(--sans); font-size: 12px; font-weight: 700;
-      padding: 6px 10px; background: var(--indigo-light); color: var(--indigo);
-      box-shadow: inset 0 0 0 1px rgba(79,70,229,0.10);
-      text-decoration: none;
-    }
-    .overview-preview-action:hover { background: #dbe4ff; }
     .overview-preview-toggle {
       display: inline-flex; align-items: center; gap: 6px;
       margin: 0 16px 16px; padding: 8px 12px;
@@ -553,10 +522,8 @@
       .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
-      .overview-preview-meta { flex-direction: column; align-items: flex-start; }
-      .overview-preview-tag { max-width: 100%; }
-      .overview-preview-row { grid-template-columns: minmax(0, 1fr); }
-      .overview-preview-action { grid-column: 1 / -1; justify-self: start; }
+      .overview-case-main { align-items: flex-start; }
+      .overview-case-link { white-space: normal; }
     }
   </style>
 </head>
@@ -824,6 +791,22 @@
     };
   }
 
+  function getOrderedCaseRows(cond) {
+    const rows = [];
+    const seen = new Set();
+    for (const caseName of DATA?.case_list || []) {
+      const slug = DATA?.case_slugs?.[caseName];
+      if (!slug || !cond?.cases?.[slug]) continue;
+      rows.push({ caseId: slug, caseName, caseData: cond.cases[slug] });
+      seen.add(slug);
+    }
+    for (const [caseId, caseData] of Object.entries(cond?.cases || {})) {
+      if (seen.has(caseId)) continue;
+      rows.push({ caseId, caseName: DATA?.case_display_by_slug?.[caseId] || caseId, caseData });
+    }
+    return rows;
+  }
+
   let expandShowAll = {};
   const EXPAND_DEFAULT_LIMIT = 10;
 
@@ -840,73 +823,52 @@
     return `view.html?case=${encodeURIComponent(slug)}&condition=${encodeURIComponent(condKey)}`;
   }
 
-  function buildExpandCaseRows(condKey, ranking) {
-    if (!ranking.rows.length) {
+  function buildExpandCaseRows(condKey, cond) {
+    const orderedRows = getOrderedCaseRows(cond);
+    if (!orderedRows.length) {
       return `<tr class="overview-expand-row"><td colspan="9"><div class="overview-expand-shell"><div style="padding:16px;color:var(--slate-500);font-size:13px;text-align:center;">此模型目前沒有可用的單案資料。</div></div></td></tr>`;
     }
     const showAll = !!expandShowAll[condKey];
-    const displayRows = showAll ? ranking.rows : ranking.rows.slice(0, EXPAND_DEFAULT_LIMIT);
-    const hasMore = ranking.rows.length > EXPAND_DEFAULT_LIMIT;
-
-    const meta = `
-      <div class="overview-preview-meta">
-        <div class="overview-preview-tags">
-          <div class="overview-preview-tag">
-            <span class="overview-preview-tag-label">最強</span>
-            <span class="overview-preview-tag-value">${ranking.best ? esc(resolveCaseDisplay(ranking.best.caseName)) : '--'}</span>
-          </div>
-          <div class="overview-preview-tag">
-            <span class="overview-preview-tag-label">最弱</span>
-            <span class="overview-preview-tag-value">${ranking.worst ? esc(resolveCaseDisplay(ranking.worst.caseName)) : '--'}</span>
-          </div>
-          <div class="overview-preview-tag">
-            <span class="overview-preview-tag-label">偏差最大</span>
-            <span class="overview-preview-tag-value">${ranking.dev ? esc(resolveCaseDisplay(ranking.dev.caseName)) : '--'}</span>
-          </div>
-        </div>
-        <div class="overview-preview-count">${displayRows.length}/${ranking.rows.length}</div>
-      </div>
-    `;
+    const displayRows = showAll ? orderedRows : orderedRows.slice(0, EXPAND_DEFAULT_LIMIT);
+    const hasMore = orderedRows.length > EXPAND_DEFAULT_LIMIT;
 
     const rowsHtml = displayRows.map(row => {
       const c = row.caseData || {};
       const rb = c.rule_based || {};
       const fr = c.fact_recall || {};
       const q = c.quality || {};
+      const rougeBert = c.rouge_bertscore || {};
       const href = buildCaseViewHref(condKey, row.caseName);
       const nameHtml = href
-        ? `<a class="overview-preview-name" href="${esc(href)}" target="_blank" rel="noopener">${esc(resolveCaseDisplay(row.caseName))}</a>`
-        : `<span class="overview-preview-name">${esc(resolveCaseDisplay(row.caseName))}</span>`;
-      const actionHtml = href
-        ? `<a class="overview-preview-action" href="${esc(href)}" target="_blank" rel="noopener">摘要檢視</a>`
-        : `<button class="overview-preview-action" type="button" onclick="focusCaseInBrowser(${JSON.stringify(resolveCaseDisplay(row.caseName))})">摘要檢視</button>`;
-      return `
-        <div class="overview-preview-row">
-          ${nameHtml}
-          <div class="overview-preview-metric score-cell ${scoreClass01(rb.avg)}" title="Rule-Based">${fmt(rb.avg) || '--'}</div>
-          <div class="overview-preview-metric score-cell ${scoreClass01(fr.avg)}" title="Fact Recall">${fmt(fr.avg) || '--'}</div>
-          <div class="overview-preview-metric score-cell ${scoreClass5(q.avg)}" title="Quality">${fmt(q.avg, 2) || '--'}</div>
-          ${actionHtml}
-        </div>
-      `;
-    }).join('');
-
-    const label = showAll ? '收起完整列表' : `顯示全部 ${ranking.rows.length} 案`;
-    return `
-      <tr class="overview-expand-row">
-        <td colspan="9">
-          <div class="overview-expand-shell">
-            ${meta}
-            <div class="overview-preview-list">
-              ${rowsHtml}
-            </div>
-            <div style="padding:0 16px 16px;">
-              <button class="overview-preview-toggle" type="button" onclick="toggleExpandShowAll('${esc(condKey)}')" aria-expanded="${showAll ? 'true' : 'false'}">${label}</button>
-            </div>
+        ? `<a class="overview-case-link" href="${esc(href)}" target="_blank" rel="noopener">${esc(resolveCaseDisplay(row.caseName))}</a>`
+        : `<span class="overview-case-link">${esc(resolveCaseDisplay(row.caseName))}</span>`;
+      return `<tr class="overview-case-row">
+        <td>
+          <div class="overview-case-main">
+            ${nameHtml}
           </div>
         </td>
-      </tr>
-    `;
+        <td><span class="overview-case-badge">單案</span></td>
+        <td class="score-cell ${scoreClass01(rb.avg)}">${fmt(rb.avg) || '--'}</td>
+        <td class="score-cell ${scoreClass01(fr.avg)}">${fmt(fr.avg) || '--'}</td>
+        <td class="score-cell ${scoreClass5(q.avg)}">${fmt(q.avg, 2) || '--'}</td>
+        <td class="score-cell ${scoreClass01(c.faithfulness)}">${fmt(c.faithfulness) || '--'}</td>
+        <td class="score-cell ${scoreClass01(rougeBert.rougeL)}">${fmt(rougeBert.rougeL) || '--'}</td>
+        <td class="score-cell ${scoreClass01(rougeBert.bertscore_f1)}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
+        <td></td>
+      </tr>`;
+    }).join('');
+
+    if (!hasMore) return rowsHtml;
+    const label = showAll ? '收起完整列表' : `顯示全部 ${orderedRows.length} 案`;
+    return `${rowsHtml}
+      <tr class="overview-expand-row">
+        <td colspan="9" style="padding:0 0 14px;background:transparent;border-bottom:none;">
+          <div style="display:flex;justify-content:center;padding-top:8px;">
+            <button class="overview-preview-toggle" type="button" onclick="toggleExpandShowAll('${esc(condKey)}')" aria-expanded="${showAll ? 'true' : 'false'}">${label}</button>
+          </div>
+        </td>
+      </tr>`;
   }
 
   window.toggleExpandShowAll = function(condKey) {
@@ -1686,7 +1648,7 @@
           <td class="score-cell ${scoreClass01(rb.bertscore_f1)}">${fmt(rb.bertscore_f1) || '--'}</td>
           <td>${evalN}</td>
         </tr>
-        ${expanded ? buildExpandCaseRows(condKey, getCaseRanking(cond)) : ''}
+        ${expanded ? buildExpandCaseRows(condKey, cond) : ''}
       `);
     }
     tbody.innerHTML = rows.join('');
