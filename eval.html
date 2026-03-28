@@ -1465,7 +1465,7 @@ const TL_DIMENSIONS = [
   {
     id: 'time_accuracy', name: '1. 時間正確性', num: 1,
     roles: ['medical', 'legal'],
-    guide: '事件的**日期/時間**是否與原文一致？請**點擊事件卡片**，對照右方高亮的**原文段落**。',
+    guide: '事件的**日期/時間**是否與原文一致？請點擊事件卡片，對照右方高亮的原文段落。',
     checks: [
       '每個事件的日期是否與原文記載一致',
       '事件之間的先後順序是否正確',
@@ -1482,7 +1482,7 @@ const TL_DIMENSIONS = [
   {
     id: 'source_alignment', name: '2. 原文對齊品質', num: 2,
     roles: ['medical', 'legal'],
-    guide: '點擊每個事件卡片，檢查中欄高亮的**原文段落**是否**正確對應該事件的來源**。',
+    guide: '點擊每個事件卡片，檢查中欄高亮的原文段落是否**正確對應該事件的來源**。',
     checks: [
       '高亮範圍是否涵蓋該事件的核心敘述',
       '有無對齊到不相關的段落',
@@ -1499,7 +1499,7 @@ const TL_DIMENSIONS = [
   {
     id: 'overview_clarity', name: '3. 整體概覽性', num: 3,
     roles: ['medical', 'legal'],
-    guide: '**只看時間軸（不看原文）**，能否快速掌握這個醫療事件的來龍去脈？請嘗試以**初次閱讀的角度**評估，**不依賴您已知的案情補充理解**。',
+    guide: '**只看時間軸（不看原文）**，能否快速掌握這個醫療事件的來龍去脈？請嘗試以**初次閱讀的角度**評估。',
     checks: [
       '讀完所有事件後，是否能理解病人為何就醫、接受了什麼處置、最終結果如何',
       '事件之間的邏輯脈絡是否清晰（而非片段資訊的堆砌）',
@@ -1517,7 +1517,7 @@ const TL_DIMENSIONS = [
   {
     id: 'clinical_completeness', name: '4. 臨床事件完整性', num: 4,
     roles: ['medical'],
-    guide: '從醫學角度看，判決書中**臨床上重要的事件**是否都被抽取出來？有無**遺漏或多餘**？',
+    guide: '從醫學角度看，判決書中**臨床上重要的事件**是否都被抽取出來？有無遺漏或多餘？',
     checks: [
       '到院、轉院、手術、重要用藥、病情變化等臨床轉折點是否都有對應事件',
       '有無遺漏可能影響醫療過失判斷的關鍵臨床事件',
@@ -1535,7 +1535,7 @@ const TL_DIMENSIONS = [
   {
     id: 'clinical_accuracy', name: '5. 臨床描述準確性', num: 5,
     roles: ['medical'],
-    guide: '事件描述在**醫學上是否正確**？有無**誤用術語**、**扭曲因果**、或**捏造原文不存在的資訊**？**本維度僅評估已抽取事件的描述是否正確，事件遺漏請在維度 4 評估。**',
+    guide: '事件描述在**醫學上是否正確**？有無誤用術語、扭曲因果、或捏造原文不存在的資訊？本維度**不評估事件遺漏**。',
     checks: [
       '醫學術語使用是否正確（疾病名、手術名、藥物名）',
       '事件描述是否忠實反映原文，有無添加原文不存在的資訊',
@@ -1552,7 +1552,7 @@ const TL_DIMENSIONS = [
   {
     id: 'critical_decision_marking', name: '6. 關鍵決策標記正確性', num: 6,
     roles: ['medical'],
-    guide: '標為「**關鍵決策**」的事件是否確實是**醫療過失認定的核心節點**？有無**漏標或誤標**？',
+    guide: '標為「**關鍵決策**」的事件是否確實是醫療過失認定的**核心節點**？有無漏標或誤標？',
     checks: [
       '標為關鍵決策的事件是否確實是法院認定過失的關鍵點',
       '有無遺漏應標記的關鍵決策（如明顯的注意義務違反、未執行的必要處置）',
@@ -1569,7 +1569,7 @@ const TL_DIMENSIONS = [
   {
     id: 'granularity', name: '7. 事件拆分適當性', num: 7,
     roles: ['medical'],
-    guide: '事件的拆分是否恰當？**不同就診/處置是否分開**，**同一處置的連續步驟是否合併**？',
+    guide: '事件的拆分是否恰當？**不同就診/處置是否分開**，同一處置的連續步驟是否合併？',
     checks: [
       '不同診次/不同日的事件是否有適當分開',
       '同一次處置的連續步驟是否有適當合併（而非拆成過多瑣碎事件）',
@@ -2659,7 +2659,7 @@ function renderTLEvalForm() {
   const container = document.getElementById('tlEvalForm');
   let html = '';
 
-  html += `<div style="font-size:12px;color:var(--slate-500);margin-bottom:10px;line-height:1.6;">${renderInlineEmphasis('第 1、2 題請對照原文評估；第 3 題請**只看時間軸**、以**初次閱讀角度**評估；第 4–7 題請以**醫學專業判斷**評估。')}</div>`;
+  html += `<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:10px 14px;margin:10px 0 12px;font-size:13px;color:#1e40af;line-height:1.5;">⚠️ <strong>評分提示</strong>：第 1、2 題請對照原文；第 3 題請${renderInlineEmphasis('**只看時間軸**、以**初次閱讀角度**評估')}；第 4–7 題請以${renderInlineEmphasis('**醫學專業判斷**')}評估。</div>`;
 
   getActiveTLDimensions().forEach(dim => {
     html += `<div class="eval-item" data-dim="${dim.id}">`;
