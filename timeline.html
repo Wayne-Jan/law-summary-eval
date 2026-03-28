@@ -700,6 +700,10 @@
       return top;
     }
 
+    function shouldAutoScrollTimelineSource() {
+      return window.innerWidth > 768;
+    }
+
     function normalizeLooseText(text) {
       return String(text || '').replace(/\s+/g, '');
     }
@@ -1020,7 +1024,7 @@
         regionEl.classList.add('focus-pulse');
       });
 
-      if (scrollEvent) {
+      if (scrollEvent && shouldAutoScrollTimelineSource()) {
         const selectedAnchorId = activeSpanId ? getSpanAnchorId(idx, activeSpanId) : '';
         const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
         const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];

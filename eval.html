@@ -2581,6 +2581,10 @@ function getOffsetTopWithin(element, ancestor) {
   return top;
 }
 
+function shouldAutoScrollTLEvalSource() {
+  return window.innerWidth > 900;
+}
+
 function isoToMinguoTL(iso, refIso) {
   if (!iso) return '';
   const d = new Date(iso);
@@ -2813,7 +2817,7 @@ function showTLEventSource(idx) {
   const selectedAnchorId = activeTLSpanId ? getTLSpanAnchorId(idx, activeTLSpanId) : '';
   const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
   const scrollTarget = selectedMark || evtMarks[0];
-  if (scrollTarget) {
+  if (scrollTarget && shouldAutoScrollTLEvalSource()) {
     requestAnimationFrame(() => {
       const body = document.getElementById('tlSourceBody');
       const bodyIsScrollable = body && body.scrollHeight > body.clientHeight + 4;
