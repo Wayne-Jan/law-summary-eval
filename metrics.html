@@ -106,29 +106,85 @@
       width: 12px; flex-shrink: 0; color: var(--indigo); font-size: 11px;
       line-height: 1; font-weight: 800;
     }
-    /* ─── EXPAND: Inline case rows (inside overview-table) ─── */
-    .overview-case-row td {
-      background: var(--indigo-light); font-size: 13px;
-      border-bottom: 1px solid rgba(79,70,229,0.08);
+    /* ─── EXPAND: Overview detail card ─── */
+    .overview-expand-shell {
+      border: 1px solid rgba(79,70,229,0.12);
+      border-top: 3px solid var(--indigo);
+      border-radius: 0 0 14px 14px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 8px 22px rgba(15,23,42,0.06);
     }
-    .overview-case-row:last-child td { border-bottom: none; }
-    .overview-case-row td:first-child {
-      padding-left: 32px; font-weight: 500; color: var(--slate-700);
-      max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    .overview-preview-head {
+      display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+      padding: 14px 16px; background: linear-gradient(135deg, rgba(79,70,229,0.04), rgba(79,70,229,0.015));
+      border-bottom: 1px solid #e5e7eb;
     }
-    .overview-case-row:hover td { background: rgba(79,70,229,0.10); }
-    .overview-case-row td a { color: var(--slate-700); text-decoration: none; }
-    .overview-case-row td a:hover { color: var(--indigo); text-decoration: underline; }
-    .overview-show-more td {
-      background: var(--indigo-light); text-align: center;
-      padding: 6px 14px; border-bottom: none;
+    .overview-preview-title {
+      font-size: 14px; font-weight: 700; color: var(--slate-900);
     }
-    .overview-show-more button {
-      border: none; background: none; color: var(--indigo); font-size: 12px;
-      font-weight: 700; cursor: pointer; font-family: var(--sans); padding: 4px 12px;
-      border-radius: 6px; transition: background 0.15s;
+    .overview-preview-sub {
+      font-size: 12px; color: var(--slate-500); white-space: nowrap;
     }
-    .overview-show-more button:hover { background: rgba(79,70,229,0.10); }
+    .overview-preview-summary {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 10px; padding: 14px 16px 8px;
+    }
+    .overview-preview-stat {
+      background: var(--slate-50); border: 1px solid #e5e7eb; border-radius: 12px;
+      padding: 10px 12px;
+    }
+    .overview-preview-stat-label {
+      font-size: 11px; color: var(--slate-500); margin-bottom: 4px; font-weight: 600;
+    }
+    .overview-preview-stat-value {
+      font-size: 14px; font-weight: 700; color: var(--slate-900); line-height: 1.35;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .overview-preview-list {
+      padding: 8px 16px 2px;
+      display: grid; gap: 8px;
+    }
+    .overview-preview-row {
+      display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, auto) auto;
+      gap: 10px; align-items: center;
+      padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff;
+      box-shadow: 0 1px 2px rgba(15,23,42,0.03);
+    }
+    .overview-preview-row:hover {
+      border-color: rgba(79,70,229,0.24);
+      box-shadow: 0 6px 16px rgba(79,70,229,0.08);
+    }
+    .overview-preview-name {
+      font-size: 13px; font-weight: 600; color: var(--slate-900); text-decoration: none;
+      min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .overview-preview-metric {
+      font-size: 12px; color: var(--slate-500); font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .overview-preview-row .score-cell {
+      font-size: 12px;
+    }
+    .overview-preview-action {
+      justify-self: end; border: none; border-radius: 999px; cursor: pointer;
+      font-family: var(--sans); font-size: 12px; font-weight: 700;
+      padding: 6px 10px; background: var(--indigo-light); color: var(--indigo);
+      box-shadow: inset 0 0 0 1px rgba(79,70,229,0.10);
+      text-decoration: none;
+    }
+    .overview-preview-action:hover { background: #dbe4ff; }
+    .overview-preview-toggle {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin: 0 16px 16px; padding: 8px 12px;
+      border: 1px solid rgba(79,70,229,0.18); border-radius: 999px;
+      background: var(--indigo-light); color: var(--indigo); font-size: 12px; font-weight: 700;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.48);
+    }
+    .overview-preview-toggle:hover { background: #dbe4ff; }
+    .overview-preview-toggle::after { content: '▾'; font-size: 11px; line-height: 1; }
+    .overview-preview-toggle[aria-expanded="true"]::after { content: '▴'; }
     .overview-table .cond-name { font-weight: 600; color: var(--slate-900); }
     .table-notes {
       font-size: 11px; color: var(--slate-500); padding: 8px 14px; line-height: 1.8;
@@ -496,7 +552,10 @@
       .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
-      .overview-case-row td:first-child { max-width: 180px; padding-left: 16px; }
+      .overview-preview-head { flex-direction: column; align-items: flex-start; }
+      .overview-preview-summary { grid-template-columns: 1fr; }
+      .overview-preview-row { grid-template-columns: minmax(0, 1fr); }
+      .overview-preview-action { grid-column: 1 / -1; justify-self: start; }
     }
   </style>
 </head>
@@ -696,7 +755,21 @@
   }
 
   function formatCaseDisplay(caseName) {
-    return (CASE_INFO[caseName] || {}).display || caseName;
+    if (!caseName) return caseName;
+    if (CASE_INFO[caseName] && CASE_INFO[caseName].display) return CASE_INFO[caseName].display;
+    if (DATA?.case_display_by_slug?.[caseName]) return DATA.case_display_by_slug[caseName];
+    return caseName;
+  }
+
+  function resolveCaseDisplay(caseId) {
+    return formatCaseDisplay(caseId);
+  }
+
+  function resolveCaseSlug(caseId) {
+    if (!caseId) return caseId;
+    if (DATA?.case_slugs?.[caseId]) return DATA.case_slugs[caseId];
+    if (DATA?.case_display_by_slug?.[caseId]) return caseId;
+    return caseId;
   }
 
   function esc(text) {
@@ -761,46 +834,82 @@
   }
 
   function buildCaseViewHref(condKey, caseName) {
-    const slug = DATA.case_slugs?.[caseName];
+    const slug = resolveCaseSlug(caseName);
     if (!slug) return null;
     return `view.html?case=${encodeURIComponent(slug)}&condition=${encodeURIComponent(condKey)}`;
   }
 
   function buildExpandCaseRows(condKey, ranking) {
-    if (!ranking.rows.length) return '';
+    if (!ranking.rows.length) {
+      return `<tr class="overview-expand-row"><td colspan="9"><div class="overview-expand-shell"><div style="padding:16px;color:var(--slate-500);font-size:13px;text-align:center;">此模型目前沒有可用的單案資料。</div></div></td></tr>`;
+    }
     const showAll = !!expandShowAll[condKey];
     const displayRows = showAll ? ranking.rows : ranking.rows.slice(0, EXPAND_DEFAULT_LIMIT);
     const hasMore = ranking.rows.length > EXPAND_DEFAULT_LIMIT;
 
-    let html = displayRows.map(row => {
+    const summary = `
+      <div class="overview-preview-summary">
+        <div class="overview-preview-stat">
+          <div class="overview-preview-stat-label">最強案例</div>
+          <div class="overview-preview-stat-value">${ranking.best ? esc(resolveCaseDisplay(ranking.best.caseName)) : '--'}</div>
+        </div>
+        <div class="overview-preview-stat">
+          <div class="overview-preview-stat-label">最弱案例</div>
+          <div class="overview-preview-stat-value">${ranking.worst ? esc(resolveCaseDisplay(ranking.worst.caseName)) : '--'}</div>
+        </div>
+        <div class="overview-preview-stat">
+          <div class="overview-preview-stat-label">平均偏差最大</div>
+          <div class="overview-preview-stat-value">${ranking.dev ? esc(resolveCaseDisplay(ranking.dev.caseName)) : '--'}</div>
+        </div>
+      </div>
+    `;
+
+    const rowsHtml = displayRows.map(row => {
       const c = row.caseData || {};
       const rb = c.rule_based || {};
       const fr = c.fact_recall || {};
       const q = c.quality || {};
-      const rougeBert = c.rouge_bertscore || {};
       const href = buildCaseViewHref(condKey, row.caseName);
       const nameHtml = href
-        ? `<a href="${esc(href)}" target="_blank">${esc(formatCaseDisplay(row.caseName))}</a>`
-        : esc(formatCaseDisplay(row.caseName));
-      return `<tr class="overview-case-row">
-        <td colspan="2">${nameHtml}</td>
-        ${expandScoreCell(rb.avg, '01')}
-        ${expandScoreCell(fr.avg, '01')}
-        ${expandScoreCell(q.avg, '5')}
-        ${expandScoreCell(c.faithfulness, '01')}
-        ${expandScoreCell(rougeBert.rougeL, '01')}
-        ${expandScoreCell(rougeBert.bertscore_f1, '01')}
-        <td></td>
-      </tr>`;
+        ? `<a class="overview-preview-name" href="${esc(href)}" target="_blank" rel="noopener">${esc(resolveCaseDisplay(row.caseName))}</a>`
+        : `<span class="overview-preview-name">${esc(resolveCaseDisplay(row.caseName))}</span>`;
+      const actionHtml = href
+        ? `<a class="overview-preview-action" href="${esc(href)}" target="_blank" rel="noopener">摘要檢視</a>`
+        : `<button class="overview-preview-action" type="button" onclick="focusCaseInBrowser(${JSON.stringify(resolveCaseDisplay(row.caseName))})">摘要檢視</button>`;
+      return `
+        <div class="overview-preview-row">
+          ${nameHtml}
+          <div class="overview-preview-metric score-cell ${scoreClass01(rb.avg)}" title="Rule-Based">${fmt(rb.avg) || '--'}</div>
+          <div class="overview-preview-metric score-cell ${scoreClass01(fr.avg)}" title="Fact Recall">${fmt(fr.avg) || '--'}</div>
+          <div class="overview-preview-metric score-cell ${scoreClass5(q.avg)}" title="Quality">${fmt(q.avg, 2) || '--'}</div>
+          ${actionHtml}
+        </div>
+      `;
     }).join('');
 
-    if (hasMore) {
-      const label = showAll ? '收起' : `顯示全部 ${ranking.rows.length} 案`;
-      html += `<tr class="overview-show-more">
-        <td colspan="9"><button type="button" onclick="toggleExpandShowAll('${esc(condKey)}')">${label}</button></td>
-      </tr>`;
-    }
-    return html;
+    const label = showAll ? '收起完整列表' : `顯示全部 ${ranking.rows.length} 案`;
+    return `
+      <tr class="overview-expand-row">
+        <td colspan="9">
+          <div class="overview-expand-shell">
+            <div class="overview-preview-head">
+              <div>
+                <div class="overview-preview-title">單案預覽</div>
+                <div class="overview-preview-sub">先看代表案例，再決定要不要展開全部</div>
+              </div>
+              <div class="overview-preview-sub">${displayRows.length}/${ranking.rows.length} 預覽</div>
+            </div>
+            ${summary}
+            <div class="overview-preview-list">
+              ${rowsHtml}
+            </div>
+            <div style="padding:0 16px 16px;">
+              <button class="overview-preview-toggle" type="button" onclick="toggleExpandShowAll('${esc(condKey)}')" aria-expanded="${showAll ? 'true' : 'false'}">${label}</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+    `;
   }
 
   window.toggleExpandShowAll = function(condKey) {
@@ -822,8 +931,8 @@
       const rougeBert = c.rouge_bertscore || {};
       const href = buildCaseViewHref(condKey, row.caseName);
       const nameHtml = href
-        ? `<a href="${esc(href)}" target="_blank">${esc(formatCaseDisplay(row.caseName))}</a>`
-        : esc(formatCaseDisplay(row.caseName));
+        ? `<a href="${esc(href)}" target="_blank">${esc(resolveCaseDisplay(row.caseName))}</a>`
+        : esc(resolveCaseDisplay(row.caseName));
       return `<tr>
         <td style="text-align:left;font-weight:600;color:var(--slate-900);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameHtml}</td>
         ${expandScoreCell(rb.avg, '01')}${expandScoreCell(fr.avg, '01')}${expandScoreCell(q.avg, '5')}${expandScoreCell(c.faithfulness, '01')}${expandScoreCell(rougeBert.rougeL, '01')}${expandScoreCell(rougeBert.bertscore_f1, '01')}
@@ -847,7 +956,7 @@
   }
 
   function focusCaseInBrowser(caseName) {
-    const slug = DATA.case_slugs?.[caseName];
+    const slug = resolveCaseSlug(caseName);
     if (!slug) return;
     setMainTab('cases');
     const sel = document.getElementById('caseSelect');
@@ -1889,6 +1998,10 @@
         syncVersionedLinks(document);
         DATA = applyMetricsDisplayLabels(data);
         CASE_INFO = (manifest && manifest.case_info) || {};
+        DATA.case_display_by_slug = {};
+        for (const [caseName, slug] of Object.entries(DATA.case_slugs || {})) {
+          DATA.case_display_by_slug[slug] = caseName;
+        }
         buildOverview();
         buildCaseSelector();
         resetCaseDetail();
