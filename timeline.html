@@ -516,6 +516,7 @@
       </div>
     </div>
   </div>
+  <script src="versioning.js"></script>
   <script>
     let allCases = [];
     let caseSlugs = {};
@@ -535,6 +536,7 @@
 
     async function init() {
       try {
+        await loadSiteVersion();
         const manifest = await (await fetch('./data/manifest.json')).json();
         allCases = manifest.cases || [];
         caseSlugs = manifest.case_slugs || {};
@@ -637,9 +639,9 @@
       url.searchParams.set('source', timelineSourceMode);
       history.replaceState({}, '', url.toString());
       const sl = document.getElementById('viewNavLink');
-      if (sl) sl.href = `view.html?v=20260328a&case=${encodeURIComponent(caseName)}`;
+      if (sl) sl.href = versionedHref(`view.html?case=${encodeURIComponent(caseName)}`);
       const evl = document.getElementById('evalLink');
-      if (evl) evl.href = `eval.html?v=20260328a&case=${encodeURIComponent(caseName)}`;
+      if (evl) evl.href = versionedHref(`eval.html?case=${encodeURIComponent(caseName)}`);
 
       const contentArea = document.getElementById('contentArea');
       contentArea.innerHTML = '<div class="loading">載入時間軸中</div>';

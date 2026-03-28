@@ -38,6 +38,7 @@ import re
 import tempfile
 import sys
 import time
+import subprocess
 from pathlib import Path
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -207,6 +208,19 @@ def write_json_if_changed(path, obj):
     with open(path, "w", encoding="utf-8") as f:
         f.write(payload)
     return True
+
+
+def get_build_version():
+    try:
+        sha = subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=SCRIPT_DIR,
+            text=True,
+            stderr=subprocess.DEVNULL,
+        ).strip()
+    except Exception:
+        sha = time.strftime("%Y%m%d")
+    return sha
 
 
 def load_timeline_align_cache():
@@ -697,6 +711,11 @@ def build():
         sys.stdout.reconfigure(line_buffering=True)
 
     os.makedirs(SITE_DATA, exist_ok=True)
+    site_meta = {
+        "version": get_build_version(),
+        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+    }
+    write_json_if_changed(os.path.join(SITE_DATA, "site_meta.json"), site_meta)
     timeline_align_cache = load_timeline_align_cache()
     timeline_align_cases = timeline_align_cache.setdefault("cases", {})
     view_build_cache = load_view_build_cache()

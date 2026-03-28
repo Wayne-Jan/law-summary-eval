@@ -658,12 +658,14 @@
   <div>聯絡：<a href="mailto:koala8104@email.nchu.edu.tw">koala8104@email.nchu.edu.tw</a></div>
 </footer>
 
+<script src="versioning.js"></script>
 <script>
 let ac=[], cf='all', showAllCases=false;
 
 async function init() {
   try {
     document.body.classList.add('js-ready');
+    await loadSiteVersion();
     const m = await (await fetch('./data/manifest.json')).json();
     const cs = m.cases, co = m.conditions, ci = m.case_info || {};
     const tc = Object.keys(co).length;
@@ -730,7 +732,7 @@ function fil(f, btn) {
     previewNote.textContent = shouldPreview ? `目前顯示前 ${visibleRows.length} 件案件預覽` : '';
   }
   tb.innerHTML = visibleRows.map(c=>`
-    <tr class="row-enter" data-vol="${esc(c.vol)}" onclick="location.href='view.html?case=${encodeURIComponent(c.n)}'">
+    <tr class="row-enter" data-vol="${esc(c.vol)}" onclick="location.href='${versionedHref(`view.html?case=${encodeURIComponent(c.n)}`)}'">
       <td>${c.i}</td>
       <td class="cn" title="${esc(c.n)}">${esc(formatCaseDisplay(c.n, c.display))}</td>
       <td class="cc">${esc(c.vol)}</td>

@@ -574,6 +574,7 @@
   </div>
 </div>
 
+<script src="versioning.js"></script>
 <script>
 (function() {
   // ─── Tooltip (body-level, no overflow clipping) ───
@@ -1656,6 +1657,7 @@
       fetch('data/manifest.json').then(r => (r.ok ? r.json() : null)).catch(() => null)
     ])
       .then(([data, manifest]) => {
+        syncVersionedLinks(document);
         DATA = applyMetricsDisplayLabels(data);
         CASE_INFO = (manifest && manifest.case_info) || {};
         buildOverview();
@@ -1671,6 +1673,7 @@
   }
 
   // ─── Load data ───
+  loadSiteVersion();
   loadVolumeData(currentVolume);
 
 })();

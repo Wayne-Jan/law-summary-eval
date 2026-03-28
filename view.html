@@ -489,6 +489,7 @@
         <div class="stat-item"><span class="stat-label">引用數:</span><span class="stat-value" id="statCitations">-</span></div>
     </div>
 
+    <script src="versioning.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const initialCaseName = urlParams.get('case') || '';
@@ -511,6 +512,7 @@
 
         async function loadCaseList() {
             try {
+                await loadSiteVersion();
                 const manifest = await (await fetch('./data/manifest.json')).json();
                 allCases = manifest.cases || [];
                 caseSlugs = manifest.case_slugs || {};
@@ -788,9 +790,9 @@
 
             const enc = encodeURIComponent(currentCaseName);
             const tlLink = document.getElementById('timelineLink');
-            if (tlLink && currentCaseName) tlLink.href = `timeline.html?v=20260328a&case=${enc}&source=v310`;
+            if (tlLink && currentCaseName) tlLink.href = versionedHref(`timeline.html?case=${enc}&source=v310`);
             const evLink = document.getElementById('evalLink');
-            if (evLink && currentCaseName) evLink.href = `eval.html?v=20260328a&case=${enc}`;
+            if (evLink && currentCaseName) evLink.href = versionedHref(`eval.html?case=${enc}`);
         }
 
         function escapeHtml(text) {

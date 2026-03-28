@@ -851,6 +851,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="versioning.js"></script>
 </head>
 <body>
 
@@ -1714,6 +1715,8 @@ let adminInspect = {
 // ═══════════════════════════════════════════════════════════════
 
 document.addEventListener('DOMContentLoaded', () => {
+  loadSiteVersion();
+  syncVersionedLinks(document);
   showLoginOverlay();
   auth.onAuthStateChanged(handleAuthStateChanged);
   document.addEventListener('click', (event) => {
@@ -3806,9 +3809,9 @@ function updateURL() {
 
   const enc = encodeURIComponent(currentCase);
   const vl = document.getElementById('viewLink');
-  if (vl) vl.href = `view.html?v=20260328a&case=${enc}`;
+  if (vl) vl.href = versionedHref(`view.html?case=${enc}`);
   const tl = document.getElementById('timelineLink');
-  if (tl) tl.href = `timeline.html?v=20260328a&case=${enc}&source=v310`;
+  if (tl) tl.href = versionedHref(`timeline.html?case=${enc}&source=v310`);
 }
 
 function updateLayoutHeights() {
@@ -4223,7 +4226,7 @@ function getDefaultPhaseForEvaluatorCondition(evaluator, caseName, condIdx) {
 }
 
 function buildAdminInspectHref(evaluator, caseName, versionLetter, phase) {
-  const url = new URL('eval.html?v=20260328a', location.href);
+  const url = new URL(versionedHref('eval.html'), location.href);
   url.searchParams.set('admin_view', '1');
   if (evaluator) url.searchParams.set('evaluator', evaluator);
   if (caseName) url.searchParams.set('case', caseName);
