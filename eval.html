@@ -1465,7 +1465,7 @@ const TL_DIMENSIONS = [
   {
     id: 'time_accuracy', name: '1. 時間正確性', num: 1,
     roles: ['medical', 'legal'],
-    guide: '事件的日期/時間是否與原文一致？請點擊事件卡片，對照右方高亮的原文段落。',
+    guide: '事件的**日期/時間**是否與原文一致？請**點擊事件卡片**，對照右方高亮的**原文段落**。',
     checks: [
       '每個事件的日期是否與原文記載一致',
       '事件之間的先後順序是否正確',
@@ -1482,7 +1482,7 @@ const TL_DIMENSIONS = [
   {
     id: 'source_alignment', name: '2. 原文對齊品質', num: 2,
     roles: ['medical', 'legal'],
-    guide: '點擊每個事件卡片，檢查中欄高亮的原文段落是否正確對應該事件的來源。',
+    guide: '點擊每個事件卡片，檢查中欄高亮的**原文段落**是否**正確對應該事件的來源**。',
     checks: [
       '高亮範圍是否涵蓋該事件的核心敘述',
       '有無對齊到不相關的段落',
@@ -1499,7 +1499,7 @@ const TL_DIMENSIONS = [
   {
     id: 'overview_clarity', name: '3. 整體概覽性', num: 3,
     roles: ['medical', 'legal'],
-    guide: '只看時間軸（不看原文），能否快速掌握這個醫療事件的來龍去脈？請嘗試以初次閱讀的角度評估，不依賴您已知的案情補充理解。',
+    guide: '**只看時間軸（不看原文）**，能否快速掌握這個醫療事件的來龍去脈？請嘗試以**初次閱讀的角度**評估，**不依賴您已知的案情補充理解**。',
     checks: [
       '讀完所有事件後，是否能理解病人為何就醫、接受了什麼處置、最終結果如何',
       '事件之間的邏輯脈絡是否清晰（而非片段資訊的堆砌）',
@@ -1517,7 +1517,7 @@ const TL_DIMENSIONS = [
   {
     id: 'clinical_completeness', name: '4. 臨床事件完整性', num: 4,
     roles: ['medical'],
-    guide: '從醫學角度看，判決書中臨床上重要的事件是否都被抽取出來？有無遺漏或多餘？',
+    guide: '從醫學角度看，判決書中**臨床上重要的事件**是否都被抽取出來？有無**遺漏或多餘**？',
     checks: [
       '到院、轉院、手術、重要用藥、病情變化等臨床轉折點是否都有對應事件',
       '有無遺漏可能影響醫療過失判斷的關鍵臨床事件',
@@ -1535,7 +1535,7 @@ const TL_DIMENSIONS = [
   {
     id: 'clinical_accuracy', name: '5. 臨床描述準確性', num: 5,
     roles: ['medical'],
-    guide: '事件描述在醫學上是否正確？有無誤用術語、扭曲因果、或捏造原文不存在的資訊？本維度僅評估已抽取事件的描述是否正確，事件遺漏請在維度 4 評估。',
+    guide: '事件描述在**醫學上是否正確**？有無**誤用術語**、**扭曲因果**、或**捏造原文不存在的資訊**？**本維度僅評估已抽取事件的描述是否正確，事件遺漏請在維度 4 評估。**',
     checks: [
       '醫學術語使用是否正確（疾病名、手術名、藥物名）',
       '事件描述是否忠實反映原文，有無添加原文不存在的資訊',
@@ -1552,7 +1552,7 @@ const TL_DIMENSIONS = [
   {
     id: 'critical_decision_marking', name: '6. 關鍵決策標記正確性', num: 6,
     roles: ['medical'],
-    guide: '標為「關鍵決策」的事件是否確實是醫療過失認定的核心節點？有無漏標或誤標？',
+    guide: '標為「**關鍵決策**」的事件是否確實是**醫療過失認定的核心節點**？有無**漏標或誤標**？',
     checks: [
       '標為關鍵決策的事件是否確實是法院認定過失的關鍵點',
       '有無遺漏應標記的關鍵決策（如明顯的注意義務違反、未執行的必要處置）',
@@ -1569,7 +1569,7 @@ const TL_DIMENSIONS = [
   {
     id: 'granularity', name: '7. 事件拆分適當性', num: 7,
     roles: ['medical'],
-    guide: '事件的拆分是否恰當？不同就診/處置是否分開，同一處置的連續步驟是否合併？',
+    guide: '事件的拆分是否恰當？**不同就診/處置是否分開**，**同一處置的連續步驟是否合併**？',
     checks: [
       '不同診次/不同日的事件是否有適當分開',
       '同一次處置的連續步驟是否有適當合併（而非拆成過多瑣碎事件）',
@@ -1590,6 +1590,7 @@ const DIMENSIONS = [
     group: '內容',
     items: [
       { id: 'coverage', name: '1. 內容涵蓋完整性', num: 1,
+        guide: '摘要是否涵蓋本案最重要的事實、爭點、鑑定意見與判決結論。',
         anchors: {
           5: '案件事實、雙方主張、鑑定意見、判決結果都完整呈現',
           4: '遺漏 1 個次要細節，整體仍完整',
@@ -1599,6 +1600,7 @@ const DIMENSIONS = [
         }
       },
       { id: 'precision', name: '2. 資訊精確度', num: 2,
+        guide: '摘要中的具體事實、醫療處置、人物主張與結論是否與判決內容一致。',
         anchors: {
           5: '所有資訊都與原文一致，無錯誤',
           4: '1 處細節描述不夠精確，但不影響理解',
@@ -1608,6 +1610,7 @@ const DIMENSIONS = [
         }
       },
       { id: 'reasoning', name: '3. 法律推理論證', num: 3,
+        guide: '是否清楚交代法院如何從事實與鑑定意見推到最終法律判斷。',
         anchors: {
           5: '法院的推理過程完整呈現，讀者能清楚理解判決邏輯',
           4: '推理大致完整，1 個環節說明不夠清楚',
@@ -1622,6 +1625,7 @@ const DIMENSIONS = [
     group: '寫作品質',
     items: [
       { id: 'fluency', name: '4. 語言流暢度', num: 4,
+        guide: '句子是否自然順暢，閱讀時不會因語病或卡頓而中斷理解。',
         anchors: {
           5: '語句自然流暢，無語法問題',
           4: '偶有 1 處用詞不自然，不影響閱讀',
@@ -1631,6 +1635,7 @@ const DIMENSIONS = [
         }
       },
       { id: 'coherence', name: '5. 邏輯連貫性', num: 5,
+        guide: '前後段落與句子之間是否銜接合理，敘事是否有清楚主線。',
         anchors: {
           5: '全文脈絡清楚，段落之間銜接自然',
           4: '1 處轉折稍顯突兀，整體仍連貫',
@@ -1640,6 +1645,7 @@ const DIMENSIONS = [
         }
       },
       { id: 'redundancy', name: '6. 資訊密度', num: 6,
+        guide: '內容是否精煉有效，沒有不必要的重複、鋪陳或贅述。',
         anchors: {
           5: '無重複，每句都提供新資訊',
           4: '1 處輕微重複，不影響閱讀',
@@ -1649,6 +1655,7 @@ const DIMENSIONS = [
         }
       },
       { id: 'accessibility', name: '7. 可理解性', num: 7,
+        guide: '即使不熟悉本案背景，讀者是否仍能順利理解摘要內容。',
         anchors: {
           5: '清楚易懂，專業術語適當且有脈絡可循',
           4: '1–2 處術語偏專業，但整體仍可理解',
@@ -1658,6 +1665,7 @@ const DIMENSIONS = [
         }
       },
       { id: 'uncertainty_calibration', name: '8. 不確定性標示', num: 8,
+        guide: '是否清楚區分法院認定、被告主張、鑑定意見與其他未確定資訊。',
         anchors: {
           5: '清楚區分法院認定的事實、鑑定意見、被告主張，不混淆',
           4: '大致區分，1 處來源歸屬不夠明確',
@@ -1672,6 +1680,7 @@ const DIMENSIONS = [
     group: '引用',
     items: [
       { id: 'citation_faithfulness', name: '9. 引用忠實度', num: 9,
+        guide: '引用標記是否真的支持該段摘要內容，沒有錯引、過度延伸或對不到原文。',
         anchors: {
           5: '抽查的引用標記都正確對應到原文該段內容',
           4: '1 處引用與原文對應稍弱',
@@ -2188,6 +2197,9 @@ function renderEvalForm() {
     group.items.forEach(dim => {
       html += `<div class="eval-item" data-dim="${dim.id}">`;
       html += `<div class="eval-item-title">${esc(dim.name)}</div>`;
+      if (dim.guide) {
+        html += `<div style="font-size:12px;color:var(--slate-500);margin-bottom:4px;">${esc(dim.guide)}</div>`;
+      }
       html += `<span class="eval-item-toggle" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#x25BE;</span>`;
       html += `<div class="eval-anchors"><table>`;
       for (let s = 5; s >= 1; s--) {
@@ -2647,10 +2659,12 @@ function renderTLEvalForm() {
   const container = document.getElementById('tlEvalForm');
   let html = '';
 
+  html += `<div style="font-size:12px;color:var(--slate-500);margin-bottom:10px;line-height:1.6;">${renderInlineEmphasis('第 1、2 題請對照原文評估；第 3 題請**只看時間軸**、以**初次閱讀角度**評估；第 4–7 題請以**醫學專業判斷**評估。')}</div>`;
+
   getActiveTLDimensions().forEach(dim => {
     html += `<div class="eval-item" data-dim="${dim.id}">`;
     html += `<div class="eval-item-title">${esc(dim.name)}</div>`;
-    html += `<div style="font-size:12px;color:var(--slate-500);margin-bottom:4px;">${esc(dim.guide)}</div>`;
+    html += `<div style="font-size:12px;color:var(--slate-500);margin-bottom:4px;line-height:1.6;">${renderInlineEmphasis(dim.guide)}</div>`;
     html += `<span class="eval-item-toggle" onclick="this.nextElementSibling.classList.toggle('show')">評分說明 &#x25BE;</span>`;
     html += `<div class="eval-anchors"><table>`;
     for (let s = 5; s >= 1; s--) {
@@ -3778,6 +3792,11 @@ async function jumpToCaseConditionFromVolModal(caseName, condIdx) {
 function esc(s) {
   if (!s) return '';
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function renderInlineEmphasis(text) {
+  const escaped = esc(text);
+  return escaped.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 }
 
 function getCaseDisplayName(caseName) {
