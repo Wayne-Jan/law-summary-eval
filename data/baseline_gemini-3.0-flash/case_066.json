@@ -29,33 +29,33 @@
   "opensource_afg_v11_5_no_afg_writer_nemotron_super"
  ],
  "condition_labels": {
-  "claude_afg_v5.1": "Claude-A",
-  "ablation_no_afg": "Claude-B",
-  "ablation_no_react": "Claude-C",
+  "claude_afg_v5.1": "LENS-Haiku 4.5-A",
+  "ablation_no_afg": "LENS-Haiku 4.5-B",
+  "ablation_no_react": "LENS-Haiku 4.5-C",
   "opensource_afg_v11": "Open-L1",
   "opensource_afg_v11_no_react": "Open-L2",
   "opensource_afg_v11_no_afg": "Open-L3",
-  "baseline_claude-haiku": "Baseline-Haiku",
-  "baseline_claude-sonnet": "Baseline-Sonnet",
-  "baseline_gemini-3.0-flash": "Baseline-Gemini 3.0 Flash",
-  "baseline_gemini-3.1-pro": "Baseline-Gemini 3.1 Pro",
-  "baseline_gpt-5.3": "Baseline-GPT 5.3",
-  "baseline_gpt-5.4-thinking": "Baseline-GPT 5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Baseline-Cogito 2.1",
-  "baseline_ollama_deepseek-v3.1-671b-cloud": "Baseline-DeepSeek v3.1",
-  "baseline_ollama_glm-5-cloud": "Baseline-GLM 5",
-  "baseline_ollama_gpt-oss-120b-cloud": "Baseline-GPT-OSS",
-  "baseline_ollama_kimi-k2.5-cloud": "Baseline-Kimi K2.5",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Baseline-Mistral Large 3",
-  "baseline_ollama_nemotron-3-super-cloud": "Baseline-Nemotron 3 Super",
-  "baseline_ollama_qwen3-next-80b-cloud": "Baseline-Qwen3 Next",
-  "baseline_ollama_qwen3.5-397b-cloud": "Baseline-Qwen3.5",
-  "opensource_afg_v11_5": "Open-A1",
-  "opensource_afg_v11_5_no_react": "Open-A2",
-  "opensource_afg_v11_5_no_afg": "Open-A3",
-  "opensource_afg_v11_5_writer_nemotron_super": "Open-B1",
-  "opensource_afg_v11_5_no_react_writer_nemotron_super": "Open-B2",
-  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "Open-B3"
+  "baseline_claude-haiku": "Claude Haiku 4.5",
+  "baseline_claude-sonnet": "Claude Sonnet 4.6",
+  "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
+  "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
+  "baseline_gpt-5.3": "GPT-5.3 Instant",
+  "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
+  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
+  "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
+  "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
+  "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
+  "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
+  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
+  "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
+  "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
+  "opensource_afg_v11_5": "LENS-GPT-OSS-A",
+  "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
+  "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
+  "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
+  "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
+  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -183,5 +183,550 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based": {
+   "citation_rate": 0.5641025641025641,
+   "date_f1": 0.6666666666666665,
+   "num_f1": 0.4210526315789473,
+   "verdict_match": 1.0,
+   "institution_attr": 1.0,
+   "hallucination_rate_rule": 0.5,
+   "compression_ratio": 0.9461,
+   "gt_length_ratio": 0.1887,
+   "avg": 0.7829
+  },
+  "fact_recall": {
+   "overall": 0.8,
+   "metrics": {
+    "timeline_recall": {
+     "score": 0.59,
+     "found": 10,
+     "total_weighted": 17,
+     "score_note": "critical events(3) × weight 2 + non-critical(11) × weight 1 = 17; found weighted: E1(2)+E3(2)+E7(1)+E10(1)+E11(1)+E12(2)+E14(1)=10; score=10/17=0.588",
+     "missing": [
+      "event_2: 98/11/4 服用膠囊後症狀加劇、心悸（摘要未獨立呈現此日事件）",
+      "event_4: 98/11/5 下午3:44 至天士藥局領藥，藥師提醒氣喘禁用（摘要未提）",
+      "event_5: 98/11/5 下午3:54 在派出所服用Inderal 1錠（服藥地點與時間未提）",
+      "event_6: 98/11/5 下午4:40 潘肇陽載送蔡少儀返回娘家（摘要未提）",
+      "event_8: 98/11/5 下午5:46 蔡崇文呼叫119救護車（摘要未提）",
+      "event_9: 98/11/5 下午5:51 救護人員到達時無呼吸脈搏（摘要未提此細節）",
+      "event_13: 98/11/5 下午6-7時 呂必新持偽造處方箋至天士藥局領藥（摘要未提）"
+     ],
+     "details": [
+      {
+       "event_id": 1,
+       "description": "98/11/3晚間8:47蔡少儀到民權診所就診（critical）",
+       "found": true,
+       "in_section": "facts",
+       "note": "日期、主訴、診斷均有；時間點8:47未明確"
+      },
+      {
+       "event_id": 2,
+       "description": "98/11/4服藥後症狀加劇且有心悸",
+       "found": false,
+       "in_section": "facts",
+       "note": "摘要未獨立描述此事件"
+      },
+      {
+       "event_id": 3,
+       "description": "98/11/5下午3:22回診開立Inderal（critical）",
+       "found": true,
+       "in_section": "facts",
+       "note": "回診、心悸、開立Inderal均有描述"
+      },
+      {
+       "event_id": 4,
+       "description": "98/11/5下午3:44至天士藥局領藥，藥師提醒禁忌",
+       "found": false,
+       "in_section": "facts",
+       "note": "天士藥局及藥師警示未提及"
+      },
+      {
+       "event_id": 5,
+       "description": "98/11/5下午3:54在派出所服用Inderal 1錠",
+       "found": false,
+       "in_section": "facts",
+       "note": "服藥地點及時間均未提及"
+      },
+      {
+       "event_id": 6,
+       "description": "98/11/5下午4:40潘肇陽送蔡少儀返回娘家",
+       "found": false,
+       "in_section": "facts",
+       "note": "返回娘家事件未提及"
+      },
+      {
+       "event_id": 7,
+       "description": "98/11/5下午5:46前蔡少儀在娘家昏迷",
+       "found": true,
+       "in_section": "facts",
+       "note": "「同日傍晚昏迷」描述吻合"
+      },
+      {
+       "event_id": 8,
+       "description": "98/11/5下午5:46蔡崇文呼叫119",
+       "found": false,
+       "in_section": "facts",
+       "note": "此獨立事件未提及"
+      },
+      {
+       "event_id": 9,
+       "description": "98/11/5下午5:51救護人員到達時無呼吸脈搏",
+       "found": false,
+       "in_section": "facts",
+       "note": "此時間點及生命跡象細節未提及"
+      },
+      {
+       "event_id": 10,
+       "description": "98/11/5下午6:01送至萬芳醫院急救",
+       "found": true,
+       "in_section": "facts",
+       "note": "「送往C醫院急救」吻合（C醫院對應萬芳醫院）"
+      },
+      {
+       "event_id": 11,
+       "description": "98/11/5下午6時許 缺氧性腦病變合併重度昏迷（重傷害）",
+       "found": true,
+       "in_section": "facts",
+       "note": "「呈現缺氧性腦病變合併重度昏迷之重傷害」完整呈現"
+      },
+      {
+       "event_id": 12,
+       "description": "98/11/5下午6時前偽造病歷登載不實（critical）",
+       "found": true,
+       "in_section": "facts",
+       "note": "「於事後在電腦病歷不實增列...4種藥物之紀錄，並製成不實處方箋」"
+      },
+      {
+       "event_id": 13,
+       "description": "98/11/5下午6-7時持偽造處方箋至天士藥局領藥",
+       "found": false,
+       "in_section": "facts",
+       "note": "此事件未提及"
+      },
+      {
+       "event_id": 14,
+       "description": "100/5/19蔡少儀在基隆醫院逝世",
+       "found": true,
+       "in_section": "opinions",
+       "note": "section_03中「丙雖於100年5月19日逝世」"
+      }
+     ]
+    },
+    "entity_recall": {
+     "score": 0.78,
+     "found": 7,
+     "total": 9,
+     "missing": [
+      "天士藥局（藥師提醒禁忌之重要機構，摘要未提及）",
+      "李芸蓁（護士，與偽造病歷事件相關，摘要未提）"
+     ],
+     "details": [
+      {
+       "entity": "呂必新（被告醫師甲）",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "蔡少儀（被害人丙）",
+       "type": "victim",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "潘肇陽（配偶丁）",
+       "type": "other_actor",
+       "found": true,
+       "in_section": "facts",
+       "note": "以「配偶丁」身份出現"
+      },
+      {
+       "entity": "民權診所（A診所）",
+       "type": "institution_clinic",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "行政院衛生署醫事審議委員會",
+       "type": "institution_medical_review",
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "entity": "臺北市立萬芳醫院（C醫院）",
+       "type": "institution_hospital",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "行政院衛生署基隆醫院",
+       "type": "institution_hospital",
+       "found": true,
+       "in_section": "opinions",
+       "note": "逝世地點間接提及"
+      },
+      {
+       "entity": "天士藥局",
+       "type": "institution_clinic",
+       "found": false,
+       "in_section": "facts",
+       "note": "摘要完全未提及天士藥局"
+      },
+      {
+       "entity": "李芸蓁（護士）",
+       "type": "other_actor",
+       "found": false,
+       "in_section": "facts",
+       "note": "摘要未提及護理師"
+      }
+     ]
+    },
+    "allegation_coverage": {
+     "score": 1.0,
+     "found": 2,
+     "total": 2,
+     "missing": [],
+     "details": [
+      {
+       "allegation_id": 1,
+       "content": "被告未依醫療準則診治氣喘病患，開立禁忌藥物Inderal導致被害人重傷",
+       "found": true,
+       "in_section": "facts",
+       "note": "未進行PEF評估、開立Inderal禁忌藥、導致重傷害均完整呈現"
+      },
+      {
+       "allegation_id": 2,
+       "content": "被告事後偽造病歷紀錄，登載不實之處方箋",
+       "found": true,
+       "in_section": "facts",
+       "note": "「在電腦病歷不實增列...4種藥物之紀錄，並製成不實處方箋」"
+      }
+     ]
+    },
+    "defense_recall": {
+     "score": 0.67,
+     "found": 2,
+     "total": 3,
+     "missing": [
+      "argument_2: 辯稱被害人未服用Inderal藥物，昏迷係氣喘自然病程所致"
+     ],
+     "details": [
+      {
+       "argument_id": 1,
+       "content": "辯稱判斷被害人非氣喘發作，開立Inderal是治療心悸",
+       "found": true,
+       "in_section": "defense",
+       "note": "「認丙並非氣喘發作...因丙主訴心悸，開立Inderal治療心悸」"
+      },
+      {
+       "argument_id": 2,
+       "content": "辯稱被害人未服用Inderal藥物，昏迷係氣喘自然病程所致",
+       "found": false,
+       "in_section": "defense",
+       "note": "摘要defense段未提此主張"
+      },
+      {
+       "argument_id": 3,
+       "content": "辯稱病歷修改屬醫師權限，非登載不實",
+       "found": true,
+       "in_section": "defense",
+       "note": "「身為醫師有權修改處方箋，伊並無登載不實之惡意」"
+      }
+     ]
+    },
+    "expert_opinion_recall": {
+     "score": 0.69,
+     "found": 11,
+     "total": 16,
+     "missing": [
+      "causation_assessment（昏迷層面）: 鑑定說昏迷因果亦不確定；摘要只說死亡因果不確定，有偏移",
+      "pharmacokinetics_timing: 口服Inderal 0.5小時起效、1-1.5小時達高峰、時序與病程相符（摘要未提）",
+      "具體服藥時間點3:54（摘要未提）",
+      "救護到達時間5:51（摘要未提）",
+      "氣喘自然病程本身可能導致嚴重後果之鑑定說明（摘要未提）"
+     ],
+     "details": [
+      {
+       "opinion_id": 1,
+       "subfield": "institution",
+       "found": true,
+       "in_section": "opinions",
+       "note": "「行政院衛生署醫事審議委員會鑑定書共4份」"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "core_conclusion（疏失）",
+       "found": true,
+       "in_section": "opinions",
+       "note": "「被告甲之開藥行為確有疏失」"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "core_conclusion（因果不確定）",
+       "found": true,
+       "in_section": "opinions",
+       "note": "「無法確定...是否為死因之直接連結」（死亡層面有描述）"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "breach_assessment（有疏失）",
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "causation_assessment（昏迷層面不確定）",
+       "found": false,
+       "in_section": "opinions",
+       "note": "原始鑑定對昏迷因果亦說不確定，摘要僅對應死亡"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "Inderal為β腎上腺素阻斷劑禁忌說明",
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "98/11/3及5日均為氣喘急性發作期",
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "藥理時間（0.5小時起效1-1.5小時達高峰）",
+       "found": false,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "服藥時間點3:54",
+       "found": false,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "救護到達5:51",
+       "found": false,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "死亡距昏迷逾一年",
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "住院期間併發肺炎及敗血症",
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "昏迷與服Inderal相關",
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "死亡不認定由Inderal直接所致",
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "氣喘急性發作本身可能致嚴重後果",
+       "found": false,
+       "in_section": "opinions"
+      },
+      {
+       "opinion_id": 1,
+       "subfield": "心跳停止描述",
+       "found": true,
+       "in_section": "opinions",
+       "note": "「丙服藥後出現心跳停止與昏迷」"
+      }
+     ]
+    },
+    "reasoning_coverage": {
+     "score": 0.8,
+     "found": 8,
+     "total": 10,
+     "missing": [
+      "aggravating_factor: 有脫產之虞（摘要reasoning未提及）",
+      "mitigating_factors: 無前科、年歲已大、曾嘗試和解（摘要未提任何減輕量刑因素）"
+     ],
+     "details": [
+      {
+       "type": "factual_finding",
+       "id": 1,
+       "content": "被告未依醫療準則進行氣喘重症度評鑑",
+       "found": true,
+       "in_section": "reasoning",
+       "note": "「未依醫療準則進行嚴重度評估，亦未給予適當藥物或建議轉診」"
+      },
+      {
+       "type": "factual_finding",
+       "id": 2,
+       "content": "被告開立禁忌藥物Inderal",
+       "found": true,
+       "in_section": "reasoning",
+       "note": "「自承知悉學理上氣喘者禁服Inderal，卻仍冒然開立」"
+      },
+      {
+       "type": "factual_finding",
+       "id": 3,
+       "content": "被告事後偽造病歷登載不實",
+       "found": true,
+       "in_section": "reasoning",
+       "note": "「擅自在病歷中補列未曾開立之...藥物紀錄，目的在於掩蓋原始診治之疏漏」"
+      },
+      {
+       "type": "legal_analysis",
+       "id": 1,
+       "court_position": "被告違反醫療準則具有過失",
+       "found": true,
+       "in_section": "reasoning",
+       "note": "「被告甲身為執業醫師，對病患負有高度注意義務，竟為圖利販售無療效之膠囊」"
+      },
+      {
+       "type": "legal_analysis",
+       "id": 2,
+       "court_position": "過失行為與重傷結果有因果關係",
+       "found": true,
+       "in_section": "reasoning",
+       "note": "「被告之過失行為使丙錯失正確治療機會並陷入重度昏迷，兩者間具相當因果關係」"
+      },
+      {
+       "type": "legal_analysis",
+       "id": 3,
+       "court_position": "病歷修改違反如實登載義務",
+       "found": true,
+       "in_section": "reasoning",
+       "note": "「破壞病歷作為診療參考之正確性，且違反醫療法關於病歷增刪應簽名蓋章之程序規定，構成行使業務登載不實文書罪」"
+      },
+      {
+       "type": "aggravating_factor",
+       "content": "身為醫師違反高度注意義務",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "type": "aggravating_factor",
+       "content": "對被害人造成重傷害",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "type": "aggravating_factor",
+       "content": "有脫產之虞",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "type": "mitigating_factors",
+       "content": "無前科、年歲已大、曾嘗試和解",
+       "found": false,
+       "in_section": "reasoning"
+      }
+     ]
+    },
+    "causation_chain_recall": {
+     "score": null,
+     "found": 0,
+     "total": 0,
+     "missing": [],
+     "details": [],
+     "note": "extraction 中 causation_chain 為空陣列，此維度排除計分"
+    },
+    "sentence_accuracy": {
+     "score": 1.0,
+     "correct": 8,
+     "total": 8,
+     "errors": [],
+     "details": [
+      {
+       "defendant": "呂必新（被告甲）",
+       "charge": "業務過失傷害致人重傷罪",
+       "field": "sentence_type",
+       "expected": "有期徒刑",
+       "actual": "有期徒刑",
+       "correct": true
+      },
+      {
+       "defendant": "呂必新（被告甲）",
+       "charge": "業務過失傷害致人重傷罪",
+       "field": "duration_months",
+       "expected": 6,
+       "actual": 6,
+       "correct": true
+      },
+      {
+       "defendant": "呂必新（被告甲）",
+       "charge": "行使業務登載不實文書罪",
+       "field": "sentence_type",
+       "expected": "有期徒刑",
+       "actual": "有期徒刑",
+       "correct": true
+      },
+      {
+       "defendant": "呂必新（被告甲）",
+       "charge": "行使業務登載不實文書罪",
+       "field": "duration_months",
+       "expected": 4,
+       "actual": 4,
+       "correct": true
+      },
+      {
+       "defendant": "呂必新（被告甲）",
+       "charge": "應執行刑",
+       "field": "sentence_type",
+       "expected": "有期徒刑",
+       "actual": "有期徒刑",
+       "correct": true
+      },
+      {
+       "defendant": "呂必新（被告甲）",
+       "charge": "應執行刑",
+       "field": "duration_months",
+       "expected": 8,
+       "actual": 8,
+       "correct": true
+      },
+      {
+       "defendant": "呂必新（被告甲）",
+       "charge": "易科罰金",
+       "field": "fine_conversion",
+       "expected": "新臺幣壹仟元折算壹日",
+       "actual": "新臺幣壹仟元折算壹日",
+       "correct": true
+      },
+      {
+       "defendant": "呂必新（被告甲）",
+       "field": "verdict_type",
+       "expected": "guilty",
+       "actual": "guilty",
+       "correct": true
+      }
+     ]
+    }
+   }
+  },
+  "quality": {
+   "overall": 4.41
+  },
+  "faithfulness": {
+   "score": 0.802,
+   "total_statements": 24,
+   "graded_statements": 24,
+   "grade_distribution": {
+    "A": 13,
+    "B": 4,
+    "C": 5,
+    "D": 2
+   }
+  }
+ }
 }

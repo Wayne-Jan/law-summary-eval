@@ -29,33 +29,33 @@
   "opensource_afg_v11_5_no_afg_writer_nemotron_super"
  ],
  "condition_labels": {
-  "claude_afg_v5.1": "Claude-A",
-  "ablation_no_afg": "Claude-B",
-  "ablation_no_react": "Claude-C",
+  "claude_afg_v5.1": "LENS-Haiku 4.5-A",
+  "ablation_no_afg": "LENS-Haiku 4.5-B",
+  "ablation_no_react": "LENS-Haiku 4.5-C",
   "opensource_afg_v11": "Open-L1",
   "opensource_afg_v11_no_react": "Open-L2",
   "opensource_afg_v11_no_afg": "Open-L3",
-  "baseline_claude-haiku": "Baseline-Haiku",
-  "baseline_claude-sonnet": "Baseline-Sonnet",
-  "baseline_gemini-3.0-flash": "Baseline-Gemini 3.0 Flash",
-  "baseline_gemini-3.1-pro": "Baseline-Gemini 3.1 Pro",
-  "baseline_gpt-5.3": "Baseline-GPT 5.3",
-  "baseline_gpt-5.4-thinking": "Baseline-GPT 5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Baseline-Cogito 2.1",
-  "baseline_ollama_deepseek-v3.1-671b-cloud": "Baseline-DeepSeek v3.1",
-  "baseline_ollama_glm-5-cloud": "Baseline-GLM 5",
-  "baseline_ollama_gpt-oss-120b-cloud": "Baseline-GPT-OSS",
-  "baseline_ollama_kimi-k2.5-cloud": "Baseline-Kimi K2.5",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Baseline-Mistral Large 3",
-  "baseline_ollama_nemotron-3-super-cloud": "Baseline-Nemotron 3 Super",
-  "baseline_ollama_qwen3-next-80b-cloud": "Baseline-Qwen3 Next",
-  "baseline_ollama_qwen3.5-397b-cloud": "Baseline-Qwen3.5",
-  "opensource_afg_v11_5": "Open-A1",
-  "opensource_afg_v11_5_no_react": "Open-A2",
-  "opensource_afg_v11_5_no_afg": "Open-A3",
-  "opensource_afg_v11_5_writer_nemotron_super": "Open-B1",
-  "opensource_afg_v11_5_no_react_writer_nemotron_super": "Open-B2",
-  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "Open-B3"
+  "baseline_claude-haiku": "Claude Haiku 4.5",
+  "baseline_claude-sonnet": "Claude Sonnet 4.6",
+  "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
+  "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
+  "baseline_gpt-5.3": "GPT-5.3 Instant",
+  "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
+  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
+  "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
+  "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
+  "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
+  "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
+  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
+  "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
+  "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
+  "opensource_afg_v11_5": "LENS-GPT-OSS-A",
+  "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
+  "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
+  "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
+  "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
+  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -259,5 +259,459 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based": {
+   "citation_rate": 0.75,
+   "date_f1": 0.4285714285714285,
+   "num_f1": 0.06666666666666667,
+   "verdict_match": 1.0,
+   "institution_attr": 1.0,
+   "hallucination_rate_rule": 1.0,
+   "compression_ratio": 0.9666,
+   "gt_length_ratio": 0.0788,
+   "avg": 0.9583
+  },
+  "fact_recall": {
+   "overall": 0.81,
+   "metrics": {
+    "timeline_recall": {
+     "score": 0.38,
+     "found": 8,
+     "total": 21,
+     "note": "critical_decision 事件計 2 分；共 17 個事件，其中 4 個 critical（共 21 分）",
+     "missing": [
+      "event_1 (101/7/6 門診，非 critical): 周八郎因疑似肝惡性腫瘤復發至仁愛醫院由丁金聰門診",
+      "event_4 (101/7/13 14:15 手術結束，非 critical): 手術結束，術中失血量約 1500c.c.",
+      "event_6 (101/7/13 15:40 送至普通病房，非 critical): 周八郎送至普通病房，生命徵象穩定",
+      "event_7 (101/7/13 18:00 護理師評估，非 critical): 護理師李依儒評估周八郎無疼痛主訴，傷口乾淨",
+      "event_10 (101/7/13 21:32，非 critical): 測得血紅素 8.1 g/dL，血小板 107000/μL",
+      "event_11 (101/7/13 22:00，非 critical): 血壓 85/46 mmHg、心跳 124 次/分，血氧飽和度 88%",
+      "event_12 (101/7/13 22:20 轉入加護病房，critical=2pt): 因病情惡化轉入加護病房進行後續急救",
+      "event_13 (101/7/13 23:01，非 critical): 測得血紅素 5.4 g/dL，血小板 89000/μL",
+      "event_14 (101/7/14 01:34，非 critical): 心臟超音波檢查未發現心因性休克病灶",
+      "event_16 (出血後 6h 內關鍵時間窗，critical=2pt): 術後出血若 6h 內確診止血，死亡率 8.6%，>6h 為 25%",
+      "event_17 (101/7/13 22:30～101/7/16 03:00，非 critical): 大量輸血仍無法維持血紅素正常範圍"
+     ],
+     "details": [
+      {
+       "event_id": 1,
+       "description": "101/7/6 周八郎至仁愛醫院由丁金聰門診",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 2,
+       "description": "101/7/9 住院，診斷復發性肝臟惡性腫瘤、肝硬化及B型肝炎帶原",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 3,
+       "description": "101/7/13 11:30 手術開始（膽囊摘除及三節肝葉切除術）",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 4,
+       "description": "101/7/13 14:15 手術結束，失血量約 1500c.c.",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 5,
+       "description": "101/7/13 術後送一般病房，醫囑「On Ward routine」，未提高監護密度",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 6,
+       "description": "101/7/13 15:40 送至普通病房，生命徵象穩定",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 7,
+       "description": "101/7/13 18:00 護理師李依儒評估無疼痛，傷口乾淨",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 8,
+       "description": "101/7/13 19:00 主訴呼吸困難及疼痛，血氧飽和度 92%",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 9,
+       "description": "101/7/13 20:30 失去意識、手腳冰冷、無脈搏，出現休克",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 10,
+       "description": "101/7/13 21:32 血紅素 8.1 g/dL，血小板 107000/μL",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 11,
+       "description": "101/7/13 22:00 血壓 85/46 mmHg，心跳 124 次/分",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 12,
+       "description": "101/7/13 22:20 轉入加護病房進行後續急救",
+       "critical_decision": true,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 13,
+       "description": "101/7/13 23:01 血紅素 5.4 g/dL，血小板 89000/μL",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 14,
+       "description": "101/7/14 01:34 心臟超音波未發現心因性休克病灶",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 15,
+       "description": "101/7/16 03:15 周八郎心跳停止，宣告死亡",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 16,
+       "description": "出血後 6h 內關鍵時間窗：≤6h 死亡率 8.6%，>6h 死亡率 25%",
+       "critical_decision": true,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 17,
+       "description": "101/7/13 22:30～101/7/16 03:00 大量輸血仍無法維持血紅素正常範圍",
+       "critical_decision": false,
+       "found": false,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "entity_recall": {
+     "score": 0.8,
+     "found": 4,
+     "total": 5,
+     "missing": [
+      "INST_2: 財團法人羅許基金會羅東博愛醫院（type: hospital）— 未在任何 section 提及"
+     ],
+     "details": [
+      {
+       "entity_id": "DEF_1",
+       "name": "丁金聰",
+       "type": "defendant",
+       "found": true,
+       "note": "摘要以「被告甲」表示"
+      },
+      {
+       "entity_id": "VIC_1",
+       "name": "周八郎",
+       "type": "victim",
+       "found": true,
+       "note": "摘要以「病患X」表示"
+      },
+      {
+       "entity_id": "INST_1",
+       "name": "臺北市立聯合醫院仁愛院區",
+       "type": "hospital",
+       "found": true,
+       "note": "摘要以「A醫院」表示"
+      },
+      {
+       "entity_id": "INST_2",
+       "name": "財團法人羅許基金會羅東博愛醫院",
+       "type": "hospital",
+       "found": false,
+       "note": "未在摘要任何段落提及"
+      },
+      {
+       "entity_id": "INST_3",
+       "name": "衛生福利部醫事審議委員會",
+       "type": "committee",
+       "found": true,
+       "note": "摘要以「醫審會」/「行政院衛生福利部醫事審議委員會」表示"
+      }
+     ]
+    },
+    "allegation_coverage": {
+     "score": 1.0,
+     "found": 1,
+     "total": 1,
+     "missing": [],
+     "details": [
+      {
+       "allegation_id": 1,
+       "content": "被告明知重大手術後有術後嚴重出血之高度可能性，未將病人送入加護病房或給予較高密度監護照護，僅以一般病房常規處理，致未能早期發現出血，延誤治療，導致死亡",
+       "found": true,
+       "in_section": "facts",
+       "note": "section_01 完整呈現：「明知該手術有術後嚴重出血之高度風險…未將病患X送入加護病房，亦未在一般病房採取提高監護密度之醫囑，僅開立一般病房常規醫囑」"
+      }
+     ]
+    },
+    "defense_recall": {
+     "score": 1.0,
+     "found": 3,
+     "total": 3,
+     "missing": [],
+     "details": [
+      {
+       "argument_id": 1,
+       "content": "死因為心因性休克，非出血性休克；血紅素下降係急救胸外按摩所致",
+       "found": true,
+       "in_section": "defense",
+       "note": "section_02 明確呈現心因性休克主張及血紅素數值辯解"
+      },
+      {
+       "argument_id": 2,
+       "content": "術後送一般病房並無錯誤，考量加護病房感染風險高，已獲家屬同意",
+       "found": true,
+       "in_section": "defense",
+       "note": "section_02 呈現感染風險論點及家屬同意主張"
+      },
+      {
+       "argument_id": 3,
+       "content": "死亡與是否送加護病房無因果關係",
+       "found": true,
+       "in_section": "defense",
+       "note": "section_02：「當日一般病房之護理頻率已足夠，與死亡結果無因果關係」"
+      }
+     ]
+    },
+    "expert_opinion_recall": {
+     "score": 0.67,
+     "found": 8,
+     "total": 12,
+     "missing": [
+      "opinion_1 causation: 凝血功能不良與死亡之關聯（僅提出血性休克，未提凝血功能不良）",
+      "opinion_2 core_conclusion: 術中失血量達 1500c.c. 及存在入住加護病房之客觀條件",
+      "opinion_2 causation: 6 小時內確診止血可降低死亡率（≤6h 死亡率 8.6%，>6h 死亡率 25%）",
+      "opinion_3 causation: 肝臟切除手術為直接出血原因，休克後凝血功能不良及肝硬化為加重因子"
+     ],
+     "details": [
+      {
+       "opinion_id": 1,
+       "institution": "衛生福利部醫事審議委員會",
+       "subfields": {
+        "institution": {
+         "found": true,
+         "note": "「行政院衛生福利部醫事審議委員會先後進行三次鑑定」"
+        },
+        "core_conclusion": {
+         "found": true,
+         "note": "術後血紅素持續下降、腹膜腔內持續出血、最可能死因為出血性休克"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "「未將病患送入加護病房，且在普通病房未提升照護密度，此舉與醫療常規不符」"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "凝血功能不良與死亡之關聯未在 opinions section 明確呈現"
+        }
+       },
+       "subfield_score": "3/4"
+      },
+      {
+       "opinion_id": 2,
+       "institution": "衛生福利部醫事審議委員會",
+       "subfields": {
+        "institution": {
+         "found": true,
+         "note": "同上"
+        },
+        "core_conclusion": {
+         "found": false,
+         "note": "術中失血量 1500c.c. 及入住加護病房客觀條件未在 opinions section 提及"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "「在普通病房未提升照護密度，此舉與醫療常規不符」隱含第二次鑑定內容"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "6 小時死亡率數據（8.6% vs 25%）未在 opinions section 提及"
+        }
+       },
+       "subfield_score": "2/4"
+      },
+      {
+       "opinion_id": 3,
+       "institution": "衛生福利部醫事審議委員會",
+       "subfields": {
+        "institution": {
+         "found": true,
+         "note": "同上"
+        },
+        "core_conclusion": {
+         "found": true,
+         "note": "「病患X術後血紅素持續下降且對大量輸血反應不佳，顯示腹膜腔內持續出血」"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "「在普通病房未提升照護密度」對應第三次鑑定之 breach_assessment"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "「肝臟切除手術為直接出血原因，休克後凝血功能不良及肝硬化為加重因子」未在 opinions section 明確呈現"
+        }
+       },
+       "subfield_score": "3/4"
+      }
+     ]
+    },
+    "reasoning_coverage": {
+     "score": 0.64,
+     "found": 7,
+     "total": 11,
+     "missing": [
+      "aggravating_factor: 事發後隱瞞事實，於死亡證明書錯載死因（section_05 未提及）",
+      "mitigating_factor: 已與家屬達成調解並賠償新臺幣 260 萬元",
+      "mitigating_factor: 告訴人表示若構成犯罪願從輕量刑",
+      "mitigating_factor: 被告長期行醫對社會有貢獻"
+     ],
+     "details": [
+      {
+       "finding_id": 1,
+       "content": "休克為出血性休克，非心因性休克；心肌酵素酶數值正常，心臟超音波無病灶，大量輸血後血紅素仍持續下降",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "finding_id": 2,
+       "content": "被告未將病人送加護病房或提高一般病房監護密度，違反注意義務，偏離醫療常規",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "finding_id": 3,
+       "content": "妥適提高監護密度可及早發現出血，因被告過失延誤治療導致死亡，有相當因果關係",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "analysis_id": 1,
+       "court_position": "被告違反注意義務，過失行為與死亡結果有相當因果關係，構成業務過失致死罪",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "analysis_id": 2,
+       "court_position": "告知同意法則不排除醫療過失責任；被告縱獲家屬同意亦不解免過失責任，且告知不完全",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "aggravating": "違反注意義務情節嚴重",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "aggravating": "事發後隱瞞事實，於死亡證明書錯載死因",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "aggravating": "審理中扭曲文獻、推諉他人，犯後態度不佳",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "mitigating": "已與家屬達成調解並賠償新臺幣 260 萬元",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "mitigating": "告訴人表示若構成犯罪願從輕量刑",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "mitigating": "被告長期行醫對社會有貢獻",
+       "found": false,
+       "in_section": "reasoning"
+      }
+     ]
+    },
+    "causation_chain_recall": {
+     "score": 1.0,
+     "found": 0,
+     "total": 0,
+     "missing": [],
+     "note": "master.json 中 causation_chain 為空陣列，無需評估",
+     "details": []
+    },
+    "sentence_accuracy": {
+     "score": 1.0,
+     "correct": 4,
+     "total": 4,
+     "errors": [],
+     "details": [
+      {
+       "defendant": "丁金聰（摘要代號：被告甲）",
+       "sentence_type": {
+        "gt": "有期徒刑",
+        "pred": "有期徒刑",
+        "correct": true
+       },
+       "duration_months": {
+        "gt": 10,
+        "pred": 10,
+        "correct": true
+       },
+       "probation_years": {
+        "gt": null,
+        "pred": null,
+        "correct": true
+       },
+       "verdict_type": {
+        "gt": "guilty",
+        "pred": "guilty",
+        "correct": true
+       }
+      }
+     ]
+    }
+   }
+  },
+  "quality": {
+   "overall": 4.41
+  },
+  "faithfulness": {
+   "score": 0.375,
+   "total_statements": 24,
+   "graded_statements": 24,
+   "grade_distribution": {
+    "A": 8,
+    "B": 0,
+    "C": 4,
+    "D": 12
+   }
+  }
+ }
 }

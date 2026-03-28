@@ -29,33 +29,33 @@
   "opensource_afg_v11_5_no_afg_writer_nemotron_super"
  ],
  "condition_labels": {
-  "claude_afg_v5.1": "Claude-A",
-  "ablation_no_afg": "Claude-B",
-  "ablation_no_react": "Claude-C",
+  "claude_afg_v5.1": "LENS-Haiku 4.5-A",
+  "ablation_no_afg": "LENS-Haiku 4.5-B",
+  "ablation_no_react": "LENS-Haiku 4.5-C",
   "opensource_afg_v11": "Open-L1",
   "opensource_afg_v11_no_react": "Open-L2",
   "opensource_afg_v11_no_afg": "Open-L3",
-  "baseline_claude-haiku": "Baseline-Haiku",
-  "baseline_claude-sonnet": "Baseline-Sonnet",
-  "baseline_gemini-3.0-flash": "Baseline-Gemini 3.0 Flash",
-  "baseline_gemini-3.1-pro": "Baseline-Gemini 3.1 Pro",
-  "baseline_gpt-5.3": "Baseline-GPT 5.3",
-  "baseline_gpt-5.4-thinking": "Baseline-GPT 5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Baseline-Cogito 2.1",
-  "baseline_ollama_deepseek-v3.1-671b-cloud": "Baseline-DeepSeek v3.1",
-  "baseline_ollama_glm-5-cloud": "Baseline-GLM 5",
-  "baseline_ollama_gpt-oss-120b-cloud": "Baseline-GPT-OSS",
-  "baseline_ollama_kimi-k2.5-cloud": "Baseline-Kimi K2.5",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Baseline-Mistral Large 3",
-  "baseline_ollama_nemotron-3-super-cloud": "Baseline-Nemotron 3 Super",
-  "baseline_ollama_qwen3-next-80b-cloud": "Baseline-Qwen3 Next",
-  "baseline_ollama_qwen3.5-397b-cloud": "Baseline-Qwen3.5",
-  "opensource_afg_v11_5": "Open-A1",
-  "opensource_afg_v11_5_no_react": "Open-A2",
-  "opensource_afg_v11_5_no_afg": "Open-A3",
-  "opensource_afg_v11_5_writer_nemotron_super": "Open-B1",
-  "opensource_afg_v11_5_no_react_writer_nemotron_super": "Open-B2",
-  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "Open-B3"
+  "baseline_claude-haiku": "Claude Haiku 4.5",
+  "baseline_claude-sonnet": "Claude Sonnet 4.6",
+  "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
+  "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
+  "baseline_gpt-5.3": "GPT-5.3 Instant",
+  "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
+  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
+  "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
+  "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
+  "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
+  "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
+  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
+  "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
+  "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
+  "opensource_afg_v11_5": "LENS-GPT-OSS-A",
+  "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
+  "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
+  "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
+  "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
+  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -153,5 +153,385 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based": {
+   "citation_rate": 0.6470588235294118,
+   "date_f1": 0.7499999999999999,
+   "num_f1": 0.22222222222222224,
+   "verdict_match": 1.0,
+   "institution_attr": 0.75,
+   "hallucination_rate_rule": 1.0,
+   "compression_ratio": 0.9172,
+   "gt_length_ratio": 0.2286,
+   "avg": 0.8995
+  },
+  "fact_recall": {
+   "overall": 0.822,
+   "metrics": {
+    "timeline_recall": {
+     "score": 0.733,
+     "found": 11,
+     "total": 15,
+     "missing": [
+      "event 5 (99/11/9 上午11:13): 鄭美君服藥後嘔吐，林月娥電話告知蘇繼鴻（具體時間點未出現）",
+      "event 6 (99/11/9 下午2:59): 鄭美君持續嘔吐，林月娥再次電話聯繫蘇繼鴻（具體時間點未出現）",
+      "event 9 (99/11/10 凌晨1:45): 鄭美君出現尿失禁及昏厥症狀（核心動作未描述）",
+      "event 11 (99/11/10 凌晨2:40): 進行緊急剖腹手術，發現右側輸卵管子宮外孕破裂（摘要未提及手術）"
+     ],
+     "details": [
+      {
+       "event_id": 1,
+       "description": "99/11/5 至新竹國泰醫院（B醫院）確認懷孕，陰道超音波看到子宮內胚囊",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 2,
+       "description": "99/11/9 上午9:30 因腹部劇烈疼痛及暈眩至蘇婦產科（A診所）就診",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 3,
+       "description": "腹部超音波未見胚囊，懷疑子宮外孕但未進行抽血檢測等進一步確認",
+       "critical_decision": true,
+       "weight": 2,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 4,
+       "description": "誤診為骨盆腔發炎感染，開立抗生素、止吐藥、黃體素（安胎藥）",
+       "critical_decision": true,
+       "weight": 2,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 5,
+       "description": "99/11/9 上午11:13 服藥後嘔吐，林月娥電話告知被告",
+       "critical_decision": false,
+       "weight": 1,
+       "found": false,
+       "in_section": "facts",
+       "note": "摘要僅泛述『病情加劇且持續嘔吐』，無具體時間11:13"
+      },
+      {
+       "event_id": 6,
+       "description": "99/11/9 下午2:59 仍持續嘔吐，林月娥再次電話聯繫被告",
+       "critical_decision": false,
+       "weight": 1,
+       "found": false,
+       "in_section": "facts",
+       "note": "具體時間點及第二次電話事件未出現"
+      },
+      {
+       "event_id": 7,
+       "description": "99/11/9 晚上7時 病情惡化回診（冒冷汗、心悸、無法行走）",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 8,
+       "description": "被告未進行必要檢查，僅上車施打止吐針，拒絕轉院建議",
+       "critical_decision": true,
+       "weight": 2,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 9,
+       "description": "99/11/10 凌晨1:45 鄭美君出現尿失禁及昏厥症狀",
+       "critical_decision": false,
+       "weight": 1,
+       "found": false,
+       "in_section": "facts",
+       "note": "摘要直接跳至送醫，未描述尿失禁及昏厥"
+      },
+      {
+       "event_id": 10,
+       "description": "99/11/10 凌晨2:05 送達臺大醫院新竹分院（C醫院）急診",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts",
+       "note": "摘要提及『送往C醫院急診』，語意等價"
+      },
+      {
+       "event_id": 11,
+       "description": "99/11/10 凌晨2:40 緊急剖腹手術，發現右側輸卵管子宮外孕破裂",
+       "critical_decision": false,
+       "weight": 1,
+       "found": false,
+       "in_section": "facts",
+       "note": "摘要未提及緊急手術過程"
+      },
+      {
+       "event_id": 12,
+       "description": "99/11/24 中午12:30 因腦部缺氧合併多重器官衰竭不治死亡",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "entity_recall": {
+     "score": 1.0,
+     "found": 6,
+     "total": 6,
+     "missing": [],
+     "details": [
+      {
+       "entity_id": "DEF_1",
+       "name": "蘇繼鴻（摘要代號：被告甲）",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "VIC_1",
+       "name": "鄭美君（摘要代號：病患X）",
+       "type": "victim",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_1",
+       "name": "蘇婦產科診所（摘要代號：A診所）",
+       "type": "clinic",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_2",
+       "name": "新竹國泰醫院（摘要代號：B醫院）",
+       "type": "hospital",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_3",
+       "name": "臺大醫院新竹分院（摘要代號：C醫院）",
+       "type": "hospital",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_4",
+       "name": "衛生福利部醫事審議委員會（醫審會）",
+       "type": "medical_review",
+       "found": true,
+       "in_section": "opinions"
+      }
+     ]
+    },
+    "allegation_coverage": {
+     "score": 1.0,
+     "found": 2,
+     "total": 2,
+     "missing": [],
+     "details": [
+      {
+       "allegation_id": 1,
+       "content": "未注意子宮外孕徵兆，未進行適當檢查即誤診為骨盆腔發炎",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "allegation_id": 2,
+       "content": "晚間回診時病情惡化仍僅施打止吐針，未建議轉診",
+       "found": true,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "defense_recall": {
+     "score": 0.667,
+     "found": 2,
+     "total": 3,
+     "missing": [
+      "argument 3: 證人林月娥證詞不實，家屬故意延誤送診時間（section_02 未提及此辯護論點）"
+     ],
+     "details": [
+      {
+       "argument_id": 1,
+       "content": "被告已診斷出子宮外孕並告知需至大醫院確認（病歷記載IUGS?）",
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "argument_id": 2,
+       "content": "死亡主因是後續醫院處置不當（C醫院手術不當、卵巢破裂未縫合）而非被告診療",
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "argument_id": 3,
+       "content": "證人林月娥證詞不實，被害人家屬故意延誤就診",
+       "found": false,
+       "in_section": "defense"
+      }
+     ]
+    },
+    "expert_opinion_recall": {
+     "score": 0.875,
+     "found": 7,
+     "total": 8,
+     "missing": [
+      "opinion 1 (醫審會) causation_assessment: 過失行為與死亡結果有因果關係（section_03 未明確陳述醫審會鑑定含因果關係結論）"
+     ],
+     "details": [
+      {
+       "opinion_id": 1,
+       "institution": "行政院衛生署醫事審議委員會（醫審會）",
+       "subfields": {
+        "institution": {
+         "found": true
+        },
+        "core_conclusion": {
+         "found": true,
+         "note": "被告醫療行為顯已違反醫療常規"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "明確認定違反醫療常規"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "section_03 未陳述醫審會對因果關係之評估"
+        }
+       },
+       "subfield_score": "3/4"
+      },
+      {
+       "opinion_id": 2,
+       "institution": "法務部法醫研究所",
+       "subfields": {
+        "institution": {
+         "found": true
+        },
+        "core_conclusion": {
+         "found": true,
+         "note": "病患確因子宮外孕破裂引起腹腔出血致多重器官衰竭死亡"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "N/A（法醫不評估醫療常規），自動通過"
+        },
+        "causation_assessment": {
+         "found": true,
+         "note": "死亡確與子宮外孕破裂直接相關"
+        }
+       },
+       "subfield_score": "4/4"
+      }
+     ]
+    },
+    "reasoning_coverage": {
+     "score": 0.6,
+     "found": 3,
+     "total": 5,
+     "missing": [
+      "aggravating_factors: 過失程度非輕、造成死亡嚴重結果、犯後態度不佳（section_05 未提及量刑加重事由）",
+      "mitigating_factors: 素行良善、無前科紀錄（section_05 未提及量刑減輕事由）"
+     ],
+     "details": [
+      {
+       "finding_id": 1,
+       "content": "被告未盡專業醫師注意義務，誤診被害人病情",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "finding_id": 2,
+       "content": "被告過失行為與被害人死亡有相當因果關係",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "analysis_id": 1,
+       "court_position": "被告行為該當業務過失致死罪（刑法276條第2項）",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item": "aggravating_factors",
+       "content": "過失程度非輕、造成死亡嚴重結果、犯後態度不佳",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item": "mitigating_factors",
+       "content": "素行良善、無前科紀錄",
+       "found": false,
+       "in_section": "reasoning"
+      }
+     ]
+    },
+    "causation_chain_recall": {
+     "score": 1.0,
+     "found": 0,
+     "total": 0,
+     "missing": [],
+     "details": [],
+     "note": "master.json 中 causation_chain 為空清單，無項目需評估"
+    },
+    "sentence_accuracy": {
+     "score": 1.0,
+     "correct": 4,
+     "total": 4,
+     "errors": [],
+     "details": [
+      {
+       "defendant": "蘇繼鴻（摘要代號：被告甲）",
+       "fields": {
+        "sentence_type": {
+         "expected": "有期徒刑",
+         "actual": "有期徒刑貳年",
+         "correct": true
+        },
+        "duration_months": {
+         "expected": 24,
+         "actual": 24,
+         "correct": true,
+         "note": "貳年=24個月"
+        },
+        "probation_years": {
+         "expected": null,
+         "actual": null,
+         "correct": true
+        },
+        "verdict_type": {
+         "expected": "guilty",
+         "actual": "guilty",
+         "correct": true
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  "quality": {
+   "overall": 4.31
+  },
+  "faithfulness": {
+   "score": 0.818,
+   "total_statements": 22,
+   "graded_statements": 22,
+   "grade_distribution": {
+    "A": 14,
+    "B": 5,
+    "C": 1,
+    "D": 2
+   }
+  }
+ }
 }

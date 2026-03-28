@@ -29,33 +29,33 @@
   "opensource_afg_v11_5_no_afg_writer_nemotron_super"
  ],
  "condition_labels": {
-  "claude_afg_v5.1": "Claude-A",
-  "ablation_no_afg": "Claude-B",
-  "ablation_no_react": "Claude-C",
+  "claude_afg_v5.1": "LENS-Haiku 4.5-A",
+  "ablation_no_afg": "LENS-Haiku 4.5-B",
+  "ablation_no_react": "LENS-Haiku 4.5-C",
   "opensource_afg_v11": "Open-L1",
   "opensource_afg_v11_no_react": "Open-L2",
   "opensource_afg_v11_no_afg": "Open-L3",
-  "baseline_claude-haiku": "Baseline-Haiku",
-  "baseline_claude-sonnet": "Baseline-Sonnet",
-  "baseline_gemini-3.0-flash": "Baseline-Gemini 3.0 Flash",
-  "baseline_gemini-3.1-pro": "Baseline-Gemini 3.1 Pro",
-  "baseline_gpt-5.3": "Baseline-GPT 5.3",
-  "baseline_gpt-5.4-thinking": "Baseline-GPT 5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Baseline-Cogito 2.1",
-  "baseline_ollama_deepseek-v3.1-671b-cloud": "Baseline-DeepSeek v3.1",
-  "baseline_ollama_glm-5-cloud": "Baseline-GLM 5",
-  "baseline_ollama_gpt-oss-120b-cloud": "Baseline-GPT-OSS",
-  "baseline_ollama_kimi-k2.5-cloud": "Baseline-Kimi K2.5",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Baseline-Mistral Large 3",
-  "baseline_ollama_nemotron-3-super-cloud": "Baseline-Nemotron 3 Super",
-  "baseline_ollama_qwen3-next-80b-cloud": "Baseline-Qwen3 Next",
-  "baseline_ollama_qwen3.5-397b-cloud": "Baseline-Qwen3.5",
-  "opensource_afg_v11_5": "Open-A1",
-  "opensource_afg_v11_5_no_react": "Open-A2",
-  "opensource_afg_v11_5_no_afg": "Open-A3",
-  "opensource_afg_v11_5_writer_nemotron_super": "Open-B1",
-  "opensource_afg_v11_5_no_react_writer_nemotron_super": "Open-B2",
-  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "Open-B3"
+  "baseline_claude-haiku": "Claude Haiku 4.5",
+  "baseline_claude-sonnet": "Claude Sonnet 4.6",
+  "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
+  "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
+  "baseline_gpt-5.3": "GPT-5.3 Instant",
+  "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
+  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
+  "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
+  "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
+  "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
+  "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
+  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
+  "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
+  "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
+  "opensource_afg_v11_5": "LENS-GPT-OSS-A",
+  "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
+  "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
+  "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
+  "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
+  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -165,5 +165,424 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based": {
+   "citation_rate": 0.6333333333333333,
+   "date_f1": 1.0,
+   "num_f1": 0.35294117647058826,
+   "verdict_match": 1.0,
+   "institution_attr": 0.5,
+   "hallucination_rate_rule": 0.5,
+   "compression_ratio": 0.8826,
+   "gt_length_ratio": 0.2162,
+   "avg": 0.7722
+  },
+  "fact_recall": {
+   "overall": 0.91,
+   "metrics": {
+    "timeline_recall": {
+     "score": 0.88,
+     "found": 22,
+     "total": 25,
+     "note": "critical_decision 事件計2分，共18事件（7 critical）。total_score=25，found_score=22。score=22/25",
+     "missing": [
+      "event_4: 13時52分，初次12導程心電圖結果顯示T波異常現象（non-critical, 1分）",
+      "event_13: 19時45分後，確診急性心肌梗塞（心肌酶大幅上升：CPK:1296、CK-MB:184、Troponin-I:28.1）（non-critical, 1分）",
+      "event_17: 20時50分，張獻璋血壓未測量到，待送心導管室（non-critical, 1分）"
+     ],
+     "details": [
+      {
+       "event_id": 1,
+       "timestamp": "95年5月5日13時15分",
+       "description": "張獻璋因胸痛等症狀前往仁愛醫院急診",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 2,
+       "timestamp": "95年5月5日13時21分",
+       "description": "血液生化檢查心肌酶呈正常值",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts",
+       "note": "摘要以「未發現心肌梗塞」語意等價"
+      },
+      {
+       "event_id": 3,
+       "timestamp": "95年5月5日13時35分",
+       "description": "林文允囑以NTG舌下片1顆",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 4,
+       "timestamp": "95年5月5日13時52分",
+       "description": "初次12導程心電圖顯示T波異常",
+       "critical_decision": false,
+       "found": false,
+       "in_section": null
+      },
+      {
+       "event_id": 5,
+       "timestamp": "95年5月5日13時52分後",
+       "description": "安排6小時後19時30分進行第二次心電圖及抽血追蹤",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 6,
+       "timestamp": "95年5月5日15時30分",
+       "description": "被告到場向病患解釋病情，將張獻璋改列為第一級留觀病人",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "facts",
+       "note": "摘要提及15時30分解釋病情，reasoning段提及第一級留觀"
+      },
+      {
+       "event_id": 7,
+       "timestamp": "95年5月5日16時20分",
+       "description": "護士莊慶齡記錄張獻璋胸痛復發",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 8,
+       "timestamp": "NTG觀察期間",
+       "description": "鑑定意見：胸痛復發須立即重作12導程心電圖",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "event_id": 9,
+       "timestamp": "最初評估後4-6小時",
+       "description": "鑑定意見：應重複追蹤12導程心電圖",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "opinions"
+      },
+      {
+       "event_id": 10,
+       "timestamp": "95年5月5日19時30分",
+       "description": "護士王郁菁送張獻璋進行預定第二次心電圖及抽血",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 11,
+       "timestamp": "95年5月5日19時40分",
+       "description": "張獻璋完成第二次檢查後立即發生抽搐、意識昏迷",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 12,
+       "timestamp": "95年5月5日19時45分",
+       "description": "林文允通知心臟內科值班醫師前來會診",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 13,
+       "timestamp": "95年5月5日19時45分後",
+       "description": "確診急性心肌梗塞（心肌酶大幅上升）",
+       "critical_decision": false,
+       "found": false,
+       "in_section": null
+      },
+      {
+       "event_id": 14,
+       "timestamp": "95年5月5日20時許",
+       "description": "林斯晨建議心導管手術，家屬等待兒子簽署同意書而延遲",
+       "critical_decision": true,
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "event_id": 15,
+       "timestamp": "95年5月5日20時5分",
+       "description": "張獻璋血壓不穩定（BP 33/?）",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "event_id": 16,
+       "timestamp": "95年5月5日20時45分",
+       "description": "家屬已填寫心導管手術同意書",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "event_id": 17,
+       "timestamp": "95年5月5日20時50分",
+       "description": "張獻璋血壓未測量到，待送心導管室",
+       "critical_decision": false,
+       "found": false,
+       "in_section": null
+      },
+      {
+       "event_id": 18,
+       "timestamp": "95年5月5日23時26分",
+       "description": "張獻璋因心肌梗塞不治死亡",
+       "critical_decision": false,
+       "found": true,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "entity_recall": {
+     "score": 1.0,
+     "found": 4,
+     "total": 4,
+     "missing": [],
+     "details": [
+      {
+       "entity_id": "DEF_1",
+       "name": "林文允",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts",
+       "note": "摘要以「被告甲」對應"
+      },
+      {
+       "entity_id": "VIC_1",
+       "name": "張獻璋",
+       "type": "victim",
+       "found": true,
+       "in_section": "facts",
+       "note": "摘要以「病患X」對應"
+      },
+      {
+       "entity_id": "INST_1",
+       "name": "臺北市立聯合醫院仁愛院區",
+       "type": "hospital",
+       "found": true,
+       "in_section": "facts",
+       "note": "摘要以「A醫院」對應"
+      },
+      {
+       "entity_id": "INST_2",
+       "name": "行政院衛生署醫事審議委員會",
+       "type": "medical_review",
+       "found": true,
+       "in_section": "opinions",
+       "note": "摘要以「醫事審議委員會」對應"
+      }
+     ]
+    },
+    "allegation_coverage": {
+     "score": 1.0,
+     "found": 1,
+     "total": 1,
+     "missing": [],
+     "details": [
+      {
+       "allegation_id": 1,
+       "content": "被告未依醫療常規密切迴診第一級留觀病患，未於病患胸痛復發時立即重作心電圖，延誤診斷與治療，致病人死亡",
+       "found": true,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "defense_recall": {
+     "score": 0.67,
+     "found": 2,
+     "total": 3,
+     "missing": [
+      "defense_argument_2: 護理紀錄顯示病患胸痛有改善（王美芳14時05分及15時30分記載、王郁菁記載「目前無不適」），故安排19時30分追蹤無違醫療常規"
+     ],
+     "details": [
+      {
+       "argument_id": 1,
+       "content": "病患初診時無典型心肌梗塞症狀，已依胸痛診療程序處理，安排6小時後追蹤",
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "argument_id": 2,
+       "content": "護理紀錄顯示胸痛改善（王美芳、王郁菁記載），安排19時30分追蹤無違常規",
+       "found": false,
+       "in_section": null,
+       "note": "defense 段未提及護理紀錄改善記載或王郁菁「目前無不適」之具體辯護依據"
+      },
+      {
+       "argument_id": 3,
+       "content": "家屬遲未簽署心導管手術同意書，延誤治療，與被告處置無因果關係",
+       "found": true,
+       "in_section": "defense"
+      }
+     ]
+    },
+    "expert_opinion_recall": {
+     "score": 1.0,
+     "found": 4,
+     "total": 4,
+     "missing": [],
+     "details": [
+      {
+       "opinion_id": 1,
+       "institution": "行政院衛生署醫事審議委員會",
+       "subfields": [
+        {
+         "field": "institution",
+         "found": true,
+         "note": "摘要以「醫事審議委員會」對應"
+        },
+        {
+         "field": "core_conclusion",
+         "found": true,
+         "note": "胸痛第一級應迴診、NTG後胸痛復發應立即重作心電圖，均出現於 opinions 段"
+        },
+        {
+         "field": "breach_assessment",
+         "found": true,
+         "note": "opinions 段隱含違反常規意涵（「須立刻重作12導程心電圖」）"
+        },
+        {
+         "field": "causation_assessment",
+         "found": true,
+         "note": "extraction 中 causation_assessment 為空字串，無此內容需核對，自動通過"
+        }
+       ]
+      }
+     ]
+    },
+    "reasoning_coverage": {
+     "score": 0.625,
+     "found": 5,
+     "total": 8,
+     "missing": [
+      "legal_analysis_2 court_position: 新舊刑法比較，適用行為時舊法對被告較有利",
+      "aggravating_factors: 被告為有經驗之醫師；犯後未承認犯行；未與被害人家屬和解",
+      "mitigating_factors: 急診醫療屬高度困難"
+     ],
+     "details": [
+      {
+       "item_type": "factual_finding",
+       "finding_id": 1,
+       "content": "被告未曾迴診張獻璋，亦未查看護理紀錄",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_type": "factual_finding",
+       "finding_id": 2,
+       "content": "病患至遲於16時20分許已有胸痛復發，護士莊慶齡已記載",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_type": "factual_finding",
+       "finding_id": 3,
+       "content": "被告將病患列為第一級留觀病人，應經常迴診觀察",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_type": "factual_finding",
+       "finding_id": 4,
+       "content": "無法進行心導管手術與家屬延誤簽署同意書無因果關係",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_type": "legal_analysis",
+       "analysis_id": 1,
+       "court_position": "業務過失致死罪成立，消極不作為與病患死亡有相當因果關係",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_type": "legal_analysis",
+       "analysis_id": 2,
+       "court_position": "適用行為時舊法對被告較有利",
+       "found": false,
+       "in_section": null
+      },
+      {
+       "item_type": "aggravating_factors",
+       "content": "被告為有經驗之醫師；犯後未承認犯行；未與家屬和解",
+       "found": false,
+       "in_section": null
+      },
+      {
+       "item_type": "mitigating_factors",
+       "content": "急診醫療屬高度困難",
+       "found": false,
+       "in_section": null
+      }
+     ]
+    },
+    "causation_chain_recall": {
+     "score": 1.0,
+     "found": 0,
+     "total": 0,
+     "missing": [],
+     "note": "extraction 中 causation_chain 為空陣列，無因果鏈需評估，自動給滿分",
+     "details": []
+    },
+    "sentence_accuracy": {
+     "score": 1.0,
+     "correct": 4,
+     "total": 4,
+     "errors": [],
+     "details": [
+      {
+       "defendant_id": "D001",
+       "defendant_name": "林文允",
+       "checks": [
+        {
+         "field": "sentence_type",
+         "expected": "有期徒刑",
+         "found_in_summary": "有期徒刑",
+         "correct": true
+        },
+        {
+         "field": "duration_months",
+         "expected": 16,
+         "found_in_summary": "壹年肆月（16個月）",
+         "correct": true
+        },
+        {
+         "field": "probation_years",
+         "expected": null,
+         "found_in_summary": "無緩刑記載",
+         "correct": true
+        },
+        {
+         "field": "verdict_type",
+         "expected": "guilty",
+         "found_in_summary": "有罪（業務過失致死罪）",
+         "correct": true
+        }
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "quality": {
+   "overall": 4.23
+  },
+  "faithfulness": {
+   "score": 0.816,
+   "total_statements": 19,
+   "graded_statements": 19,
+   "grade_distribution": {
+    "A": 14,
+    "B": 1,
+    "C": 3,
+    "D": 2
+   }
+  }
+ }
 }

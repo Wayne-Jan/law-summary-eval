@@ -29,33 +29,33 @@
   "opensource_afg_v11_5_no_afg_writer_nemotron_super"
  ],
  "condition_labels": {
-  "claude_afg_v5.1": "Claude-A",
-  "ablation_no_afg": "Claude-B",
-  "ablation_no_react": "Claude-C",
+  "claude_afg_v5.1": "LENS-Haiku 4.5-A",
+  "ablation_no_afg": "LENS-Haiku 4.5-B",
+  "ablation_no_react": "LENS-Haiku 4.5-C",
   "opensource_afg_v11": "Open-L1",
   "opensource_afg_v11_no_react": "Open-L2",
   "opensource_afg_v11_no_afg": "Open-L3",
-  "baseline_claude-haiku": "Baseline-Haiku",
-  "baseline_claude-sonnet": "Baseline-Sonnet",
-  "baseline_gemini-3.0-flash": "Baseline-Gemini 3.0 Flash",
-  "baseline_gemini-3.1-pro": "Baseline-Gemini 3.1 Pro",
-  "baseline_gpt-5.3": "Baseline-GPT 5.3",
-  "baseline_gpt-5.4-thinking": "Baseline-GPT 5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Baseline-Cogito 2.1",
-  "baseline_ollama_deepseek-v3.1-671b-cloud": "Baseline-DeepSeek v3.1",
-  "baseline_ollama_glm-5-cloud": "Baseline-GLM 5",
-  "baseline_ollama_gpt-oss-120b-cloud": "Baseline-GPT-OSS",
-  "baseline_ollama_kimi-k2.5-cloud": "Baseline-Kimi K2.5",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Baseline-Mistral Large 3",
-  "baseline_ollama_nemotron-3-super-cloud": "Baseline-Nemotron 3 Super",
-  "baseline_ollama_qwen3-next-80b-cloud": "Baseline-Qwen3 Next",
-  "baseline_ollama_qwen3.5-397b-cloud": "Baseline-Qwen3.5",
-  "opensource_afg_v11_5": "Open-A1",
-  "opensource_afg_v11_5_no_react": "Open-A2",
-  "opensource_afg_v11_5_no_afg": "Open-A3",
-  "opensource_afg_v11_5_writer_nemotron_super": "Open-B1",
-  "opensource_afg_v11_5_no_react_writer_nemotron_super": "Open-B2",
-  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "Open-B3"
+  "baseline_claude-haiku": "Claude Haiku 4.5",
+  "baseline_claude-sonnet": "Claude Sonnet 4.6",
+  "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
+  "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
+  "baseline_gpt-5.3": "GPT-5.3 Instant",
+  "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
+  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
+  "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
+  "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
+  "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
+  "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
+  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
+  "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
+  "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
+  "opensource_afg_v11_5": "LENS-GPT-OSS-A",
+  "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
+  "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
+  "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
+  "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
+  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -169,5 +169,448 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based": {
+   "citation_rate": 0.675,
+   "date_f1": 0.4444444444444444,
+   "num_f1": 0.6666666666666667,
+   "verdict_match": 1.0,
+   "institution_attr": 0.6666666666666666,
+   "hallucination_rate_rule": 0.5,
+   "compression_ratio": 0.9151,
+   "gt_length_ratio": 0.2106,
+   "avg": 0.7514
+  },
+  "fact_recall": {
+   "overall": 0.89,
+   "metrics": {
+    "timeline_recall": {
+     "score": 0.72,
+     "found": 13,
+     "total": 18,
+     "missing": [
+      "event13: 94年9月30日晚上7時40分後，許辰陽與莊欽翔緊急會診一般外科主治醫師尹文耀（critical_decision，2分）",
+      "event5: 94年9月30日下午5時8分，腹部X光片顯示胃、小腸、橫結腸均脹氣、腸壁增厚",
+      "event6: 94年9月30日下午5時10分，胸部X光片懷疑左側橫膈下游離氣",
+      "event11: 94年9月30日晚上7時39分，胸部X光片發現右側橫隔膜下方游離空氣"
+     ],
+     "details": [
+      {
+       "event_id": 1,
+       "description": "94年9月29日，許枝清至彰化基督教醫院接受大腸鏡檢查",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": false
+      },
+      {
+       "event_id": 2,
+       "description": "9月29日大腸鏡後腹痛持續加劇，發生乙狀結腸損傷或破裂",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": false
+      },
+      {
+       "event_id": 3,
+       "description": "94年9月30日下午4時27分，許枝清至大林慈濟醫院急診室就診",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": false
+      },
+      {
+       "event_id": 4,
+       "description": "94年9月30日下午4時48分，許辰陽醫師診治，病患主訴肚子痛、噁心、嘔吐",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": false
+      },
+      {
+       "event_id": 5,
+       "description": "94年9月30日下午5時8分，腹部X光片顯示胃、小腸、橫結腸均脹氣，腸壁增厚",
+       "found": false,
+       "in_section": null,
+       "critical_decision": false
+      },
+      {
+       "event_id": 6,
+       "description": "94年9月30日下午5時10分，胸部X光片懷疑左側橫膈下游離氣",
+       "found": false,
+       "in_section": null,
+       "critical_decision": false
+      },
+      {
+       "event_id": 7,
+       "description": "94年9月30日下午5時30分，許辰陽開立灌腸醫囑，莊欽翔授權護士蓋章（critical_decision）",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": true
+      },
+      {
+       "event_id": 8,
+       "description": "94年9月30日下午5時30分後，護士楊靜如對許枝清施行二次灌腸處置",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": false
+      },
+      {
+       "event_id": 9,
+       "description": "94年9月30日下午5時57分，血液檢驗報告顯示白血球24000/cumm",
+       "found": true,
+       "in_section": "defense",
+       "critical_decision": false
+      },
+      {
+       "event_id": 10,
+       "description": "94年9月30日晚上7時15分，灌腸後疼痛未緩解，出現腹脹腹痛",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": false
+      },
+      {
+       "event_id": 11,
+       "description": "94年9月30日晚上7時39分，胸部X光片發現右側橫隔膜下游離空氣",
+       "found": false,
+       "in_section": null,
+       "critical_decision": false
+      },
+      {
+       "event_id": 12,
+       "description": "94年9月30日晚上7時40分，電腦斷層掃瞄確認腹腔內游離空氣，懷疑腸道破裂",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": false
+      },
+      {
+       "event_id": 13,
+       "description": "94年9月30日晚上7時40分後，緊急會診一般外科主治醫師尹文耀（critical_decision）",
+       "found": false,
+       "in_section": null,
+       "critical_decision": true
+      },
+      {
+       "event_id": 14,
+       "description": "94年10月1日凌晨零時，尹文耀施行手術，發現直腸6×4公分裂孔及小腸壞死，實施腸切除吻合及人工肛門手術（critical_decision）",
+       "found": true,
+       "in_section": "opinions",
+       "critical_decision": true
+      },
+      {
+       "event_id": 15,
+       "description": "94年10月18日，許枝清因吻合處滲漏及持續腹膜炎合併敗血症死亡",
+       "found": true,
+       "in_section": "facts",
+       "critical_decision": false
+      }
+     ],
+     "scoring_note": "critical_decision events計2分。critical found: event7(2)+event14(2)=4；critical missing: event13(2)=2。non-critical found: 9；non-critical missing: 5,6,11=3。found=13, total=18"
+    },
+    "entity_recall": {
+     "score": 1.0,
+     "found": 6,
+     "total": 6,
+     "missing": [],
+     "details": [
+      {
+       "entity_id": "DEF_1",
+       "name": "許辰陽（醫師甲）",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "DEF_2",
+       "name": "莊欽翔（醫師乙）",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "VIC_1",
+       "name": "許枝清（病患X）",
+       "type": "victim",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_1",
+       "name": "財團法人佛教慈濟綜合醫院大林分院（A醫院）",
+       "type": "hospital",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_2",
+       "name": "財團法人彰化基督教醫院（B醫院）",
+       "type": "hospital",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_3",
+       "name": "行政院衛生署醫事審議委員會（醫審會）",
+       "type": "medical_review",
+       "found": true,
+       "in_section": "opinions"
+      }
+     ]
+    },
+    "allegation_coverage": {
+     "score": 1.0,
+     "found": 3,
+     "total": 3,
+     "missing": [],
+     "details": [
+      {
+       "allegation_id": 1,
+       "content": "被告許辰陽未評估腸道破裂風險，貿然施行灌腸處置",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "allegation_id": 2,
+       "content": "被告莊欽翔未督導住院醫師醫囑且未親自診察病人，授權護士蓋章",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "allegation_id": 3,
+       "content": "灌腸處置導致腸道破裂症狀惡化加速死亡",
+       "found": true,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "defense_recall": {
+     "score": 0.75,
+     "found": 3,
+     "total": 4,
+     "missing": [
+      "argument_id 2: 被告許辰陽辯稱腸道破裂係灌腸後用力排便所致，非灌腸前已存在"
+     ],
+     "details": [
+      {
+       "argument_id": 1,
+       "defendant": "DEF_1",
+       "content": "依一般看診流程評估無腸道破裂跡象，灌腸為合理處置",
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "argument_id": 2,
+       "defendant": "DEF_1",
+       "content": "被害人腸道破裂係灌腸後排便用力所致，非灌腸前已存在",
+       "found": false,
+       "in_section": null
+      },
+      {
+       "argument_id": 3,
+       "defendant": "DEF_2",
+       "content": "灌腸醫囑係住院醫師獨立開立，主治醫師僅依醫院慣例蓋章",
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "argument_id": 4,
+       "defendant": "DEF_2",
+       "content": "被害人死亡原因為小腸壞死非大腸穿孔，與灌腸無因果關係",
+       "found": true,
+       "in_section": "defense"
+      }
+     ]
+    },
+    "expert_opinion_recall": {
+     "score": 0.81,
+     "found": 13,
+     "total": 16,
+     "missing": [
+      "opinion_id 4 — core_conclusion: 綜合X光片應懷疑腹腔游離空氣（胸部及腹部X光片各異常發現細節），section_03未個別說明第4份鑑定具體結論",
+      "opinion_id 4 — breach_assessment: 第4份鑑定有醫療疏失之認定，未個別呈現",
+      "opinion_id 4 — causation_assessment: 第4份鑑定有因果關係之認定，未個別呈現"
+     ],
+     "details": [
+      {
+       "opinion_id": 1,
+       "institution": "行政院衛生署醫事審議委員會",
+       "subfields": {
+        "institution": true,
+        "core_conclusion": true,
+        "breach_assessment": true,
+        "causation_assessment": true
+       },
+       "found_subfields": 4,
+       "total_subfields": 4
+      },
+      {
+       "opinion_id": 2,
+       "institution": "行政院衛生署醫事審議委員會",
+       "subfields": {
+        "institution": true,
+        "core_conclusion": true,
+        "breach_assessment": true,
+        "causation_assessment": true
+       },
+       "found_subfields": 4,
+       "total_subfields": 4
+      },
+      {
+       "opinion_id": 3,
+       "institution": "行政院衛生署醫事審議委員會",
+       "subfields": {
+        "institution": true,
+        "core_conclusion": true,
+        "breach_assessment": true,
+        "causation_assessment": true
+       },
+       "found_subfields": 4,
+       "total_subfields": 4
+      },
+      {
+       "opinion_id": 4,
+       "institution": "行政院衛生署醫事審議委員會",
+       "subfields": {
+        "institution": true,
+        "core_conclusion": false,
+        "breach_assessment": false,
+        "causation_assessment": false
+       },
+       "found_subfields": 1,
+       "total_subfields": 4
+      }
+     ],
+     "scoring_note": "section_03將4份醫審會鑑定書概括合併描述，未個別說明第4份關於X光片游離空氣的具體核心結論及其違規和因果評估"
+    },
+    "reasoning_coverage": {
+     "score": 0.86,
+     "found": 6,
+     "total": 7,
+     "missing": [
+      "factual_finding 2: 灌腸處置前X光片（腹部5時8分、胸部5時10分）已顯示異常應提高警覺，section_05未明確呈現X光片異常細節"
+     ],
+     "details": [
+      {
+       "finding_id": 1,
+       "content": "被告許辰陽診察時已知被害人大腸鏡後腹痛加劇且有腹膜炎症狀",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "finding_id": 2,
+       "content": "灌腸處置前X光片已顯示異常（胃、小腸、橫結腸均脹氣，懷疑游離氣）應提高警覺",
+       "found": false,
+       "in_section": null
+      },
+      {
+       "finding_id": 3,
+       "content": "被告莊欽翔未親自診察即授權蓋章，違反醫師法第11條、第12條",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "analysis_id": 1,
+       "content": "成立業務過失致死罪（刑法第276條第2項）",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "analysis_id": 2,
+       "content": "有相當因果關係（灌腸為多重致死因素之一）",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "aggravating": "造成死亡結果、違反醫師法定義務",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "mitigating": "與家屬和解賠償170萬元、被害人延遲就醫、術後吻合處滲漏",
+       "found": true,
+       "in_section": "reasoning"
+      }
+     ]
+    },
+    "causation_chain_recall": {
+     "score": 1.0,
+     "found": 0,
+     "total": 0,
+     "missing": [],
+     "details": [],
+     "scoring_note": "extraction v3.10.4的causation_chain為空陣列，無需評估，score設為1.0"
+    },
+    "sentence_accuracy": {
+     "score": 1.0,
+     "correct": 8,
+     "total": 8,
+     "errors": [],
+     "details": [
+      {
+       "defendant_id": "D001",
+       "defendant_name": "許辰陽（被告甲）",
+       "fields": {
+        "sentence_type": {
+         "expected": "有期徒刑",
+         "found_in_summary": "有期徒刑肆月，減為有期徒刑貳月",
+         "correct": true
+        },
+        "duration_months": {
+         "expected": 4,
+         "found_in_summary": "肆月（貳月減刑後）",
+         "correct": true
+        },
+        "probation_years": {
+         "expected": null,
+         "found_in_summary": "無緩刑記載",
+         "correct": true
+        },
+        "verdict_type": {
+         "expected": "guilty",
+         "found_in_summary": "成立業務過失致死罪",
+         "correct": true
+        }
+       }
+      },
+      {
+       "defendant_id": "D002",
+       "defendant_name": "莊欽翔（被告乙）",
+       "fields": {
+        "sentence_type": {
+         "expected": "有期徒刑",
+         "found_in_summary": "有期徒刑貳月，減為有期徒刑壹月",
+         "correct": true
+        },
+        "duration_months": {
+         "expected": 2,
+         "found_in_summary": "貳月",
+         "correct": true
+        },
+        "probation_years": {
+         "expected": null,
+         "found_in_summary": "無緩刑記載",
+         "correct": true
+        },
+        "verdict_type": {
+         "expected": "guilty",
+         "found_in_summary": "成立業務過失致死罪",
+         "correct": true
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  "quality": {
+   "overall": 4.01
+  },
+  "faithfulness": {
+   "score": 0.704,
+   "total_statements": 27,
+   "graded_statements": 27,
+   "grade_distribution": {
+    "A": 11,
+    "B": 9,
+    "C": 5,
+    "D": 1
+   }
+  }
+ }
 }

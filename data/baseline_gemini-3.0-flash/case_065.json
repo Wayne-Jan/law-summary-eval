@@ -29,33 +29,33 @@
   "opensource_afg_v11_5_no_afg_writer_nemotron_super"
  ],
  "condition_labels": {
-  "claude_afg_v5.1": "Claude-A",
-  "ablation_no_afg": "Claude-B",
-  "ablation_no_react": "Claude-C",
+  "claude_afg_v5.1": "LENS-Haiku 4.5-A",
+  "ablation_no_afg": "LENS-Haiku 4.5-B",
+  "ablation_no_react": "LENS-Haiku 4.5-C",
   "opensource_afg_v11": "Open-L1",
   "opensource_afg_v11_no_react": "Open-L2",
   "opensource_afg_v11_no_afg": "Open-L3",
-  "baseline_claude-haiku": "Baseline-Haiku",
-  "baseline_claude-sonnet": "Baseline-Sonnet",
-  "baseline_gemini-3.0-flash": "Baseline-Gemini 3.0 Flash",
-  "baseline_gemini-3.1-pro": "Baseline-Gemini 3.1 Pro",
-  "baseline_gpt-5.3": "Baseline-GPT 5.3",
-  "baseline_gpt-5.4-thinking": "Baseline-GPT 5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Baseline-Cogito 2.1",
-  "baseline_ollama_deepseek-v3.1-671b-cloud": "Baseline-DeepSeek v3.1",
-  "baseline_ollama_glm-5-cloud": "Baseline-GLM 5",
-  "baseline_ollama_gpt-oss-120b-cloud": "Baseline-GPT-OSS",
-  "baseline_ollama_kimi-k2.5-cloud": "Baseline-Kimi K2.5",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Baseline-Mistral Large 3",
-  "baseline_ollama_nemotron-3-super-cloud": "Baseline-Nemotron 3 Super",
-  "baseline_ollama_qwen3-next-80b-cloud": "Baseline-Qwen3 Next",
-  "baseline_ollama_qwen3.5-397b-cloud": "Baseline-Qwen3.5",
-  "opensource_afg_v11_5": "Open-A1",
-  "opensource_afg_v11_5_no_react": "Open-A2",
-  "opensource_afg_v11_5_no_afg": "Open-A3",
-  "opensource_afg_v11_5_writer_nemotron_super": "Open-B1",
-  "opensource_afg_v11_5_no_react_writer_nemotron_super": "Open-B2",
-  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "Open-B3"
+  "baseline_claude-haiku": "Claude Haiku 4.5",
+  "baseline_claude-sonnet": "Claude Sonnet 4.6",
+  "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
+  "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
+  "baseline_gpt-5.3": "GPT-5.3 Instant",
+  "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
+  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
+  "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
+  "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
+  "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
+  "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
+  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
+  "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
+  "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
+  "opensource_afg_v11_5": "LENS-GPT-OSS-A",
+  "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
+  "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
+  "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
+  "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
+  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -153,5 +153,507 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based": {
+   "citation_rate": 0.5714285714285714,
+   "date_f1": 0.8571428571428571,
+   "num_f1": 0.5333333333333333,
+   "verdict_match": 1.0,
+   "institution_attr": 1.0,
+   "hallucination_rate_rule": 0.5714285714285714,
+   "compression_ratio": 0.8582,
+   "gt_length_ratio": 0.2727,
+   "avg": 0.8238
+  },
+  "fact_recall": {
+   "overall": 0.835,
+   "metrics": {
+    "timeline_recall": {
+     "score": 0.929,
+     "found": 13,
+     "total": 14,
+     "note": "計分方式：critical_decision 事件各計 2 分（events 4,5,9），其餘各 1 分。Total=14，found=13。",
+     "missing": [
+      "event_2: 98年6月5日晚間9時32分黃耀青離院返家（具體時間點未提及）"
+     ],
+     "details": [
+      {
+       "event_id": 1,
+       "description": "98/6/5 晚 7:30 黃耀青因左腳麻痛無力及腹部不適至壢新醫院急診",
+       "found": true,
+       "critical_decision": false,
+       "in_section": "facts",
+       "note": "摘要提及6/5晚因左腳麻痛及腹部不適至B醫院急診，語意等價"
+      },
+      {
+       "event_id": 2,
+       "description": "98/6/5 晚 9:32 黃耀青離院返家",
+       "found": false,
+       "critical_decision": false,
+       "in_section": "facts",
+       "note": "摘要僅說返家，未提及具體時間 9:32"
+      },
+      {
+       "event_id": 3,
+       "description": "98/6/6 凌晨 0:03 黃耀青因腹痛前往林口長庚醫院急診",
+       "found": true,
+       "critical_decision": false,
+       "in_section": "facts",
+       "note": "摘要「翌日（6日）凌晨0時3分因腹痛轉往A醫院」精確匹配"
+      },
+      {
+       "event_id": 4,
+       "description": "胸部X光顯示胸主動脈擴張應考慮主動脈瘤（critical）",
+       "found": true,
+       "critical_decision": true,
+       "in_section": "facts",
+       "note": "摘要明確提及「X光顯示明顯之胸主動脈擴張及應考慮胸主動脈瘤」"
+      },
+      {
+       "event_id": 5,
+       "description": "98/6/6 凌晨 1:15 洪國泰開立胃藥後同意黃耀青離院（critical）",
+       "found": true,
+       "critical_decision": true,
+       "in_section": "facts",
+       "note": "摘要提及「僅開立胃藥後即讓其離院」，核心動作吻合，具體時間 1:15 未提及但不影響語意"
+      },
+      {
+       "event_id": 6,
+       "description": "98/6/6 上午 6:15 黃耀青因持續腹痛輻射至背部再返壢新醫院急診",
+       "found": true,
+       "critical_decision": false,
+       "in_section": "facts",
+       "note": "摘要「6時15分因持續腹痛輻射至背部再次前往B醫院」精確匹配"
+      },
+      {
+       "event_id": 7,
+       "description": "朱海慶、王振宇施以抽血及開立止痛藥靜脈注射",
+       "found": true,
+       "critical_decision": false,
+       "in_section": "facts",
+       "note": "摘要「僅施以止痛及初步檢查」語意等價"
+      },
+      {
+       "event_id": 8,
+       "description": "朱海慶交班給金霍歌",
+       "found": true,
+       "critical_decision": false,
+       "in_section": "facts",
+       "note": "摘要「先後由被告乙、丙診治，後由被告丁接手」語意等價"
+      },
+      {
+       "event_id": 9,
+       "description": "98/6/6 上午 8:40 金霍歌建議內視鏡、開立口服藥物，同意黃耀青離院（critical）",
+       "found": true,
+       "critical_decision": true,
+       "in_section": "facts",
+       "note": "摘要「於8時40分同意其離院」精確提及時間，核心動作吻合"
+      },
+      {
+       "event_id": 10,
+       "description": "98/6/6 上午 10:42 黃耀青病情急速惡化陷入昏迷",
+       "found": true,
+       "critical_decision": false,
+       "in_section": "facts",
+       "note": "摘要「同日上午10時42分病情惡化，送醫後」語意等價"
+      },
+      {
+       "event_id": 11,
+       "description": "黃耀青因主動脈剝離破裂、心囊血塞、心臟性休克死亡",
+       "found": true,
+       "critical_decision": false,
+       "in_section": "facts",
+       "note": "摘要「因主動脈剝離破裂、心囊血塞及心臟性休克宣告不治」精確匹配"
+      }
+     ]
+    },
+    "entity_recall": {
+     "score": 1.0,
+     "found": 7,
+     "total": 7,
+     "missing": [],
+     "details": [
+      {
+       "entity": "洪國泰（被告甲）",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "朱海慶（被告乙）",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "王振宇（被告丙）",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "金霍歌（被告丁）",
+       "type": "defendant",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "黃耀青（病患X）",
+       "type": "victim",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "林口長庚紀念醫院（A醫院）",
+       "type": "institution",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "entity": "壢新醫院（B醫院）",
+       "type": "institution",
+       "found": true,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "allegation_coverage": {
+     "score": 1.0,
+     "found": 2,
+     "total": 2,
+     "missing": [],
+     "details": [
+      {
+       "allegation_id": 1,
+       "content": "洪國泰未注意X光主動脈擴張，未詢問病史/安排檢查/會診，僅開胃藥讓病人離院",
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "allegation_id": 2,
+       "content": "朱海慶、王振宇、金霍歌未注意短時間重複急診症狀未改善，僅給止痛藥未進一步檢查",
+       "found": true,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "defense_recall": {
+     "score": 1.0,
+     "found": 4,
+     "total": 4,
+     "missing": [],
+     "details": [
+      {
+       "argument_id": 1,
+       "defendant": "洪國泰",
+       "content": "已排除心肌梗塞等，血壓心跳正常，無主動脈剝離徵象，有建議內視鏡但病人拒絕，X光主動脈擴張與腹痛無關",
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "argument_id": 2,
+       "defendant": "朱海慶",
+       "content": "上腹痛需逐步排除，交班時未看到胰臟酵素報告",
+       "found": true,
+       "in_section": "defense",
+       "note": "摘要「被告乙辯稱病患剛到院伊即下班，未見到檢驗報告」語意等價"
+      },
+      {
+       "argument_id": 3,
+       "defendant": "王振宇",
+       "content": "當天值班至早上8時，有與金霍歌交接",
+       "found": true,
+       "in_section": "defense",
+       "note": "摘要「被告丙辯稱伊值班至早上8時即與被告丁交接」精確匹配"
+      },
+      {
+       "argument_id": 4,
+       "defendant": "金霍歌",
+       "content": "有建議內視鏡但病人拒絕，症狀緩解想回家，給腹痛注意事項",
+       "found": true,
+       "in_section": "defense"
+      }
+     ]
+    },
+    "expert_opinion_recall": {
+     "score": 0.667,
+     "found": 8,
+     "total": 12,
+     "missing": [
+      "opinion_1 causation_assessment: 延誤診斷及治療時機（摘要僅說疏失，未明確提到因果評估）",
+      "opinion_2 causation_assessment: 錯失正確診斷及治療機會（摘要僅說違醫療常規，未明確提到因果）",
+      "opinion_3 core_conclusion（非典型症狀描述：腹痛/下肢無力等）：摘要僅提存活可能，非典型症狀描述缺失",
+      "opinion_3 breach_assessment: 延誤診斷（摘要opinion 3部分未提及breach）"
+     ],
+     "details": [
+      {
+       "opinion_id": 1,
+       "institution": "行政院衛生署醫事審議委員會",
+       "report_id": "衛署醫字第0990209763號",
+       "subfields": {
+        "institution": {
+         "found": true,
+         "note": "摘要「醫審會鑑定結果」等價"
+        },
+        "core_conclusion": {
+         "found": true,
+         "note": "摘要提及應進一步詢問病史及理學檢查，判斷是否緊急CT或會診"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "摘要「其未予注意顯有疏失」"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "摘要未明確提到延誤診斷及治療時機之因果評估"
+        }
+       }
+      },
+      {
+       "opinion_id": 2,
+       "institution": "行政院衛生署醫事審議委員會",
+       "report_id": "衛署醫字第1010209457號",
+       "subfields": {
+        "institution": {
+         "found": true,
+         "note": "同一醫審會"
+        },
+        "core_conclusion": {
+         "found": true,
+         "note": "摘要描述乙丙丁應提高警覺、採取其他診斷方式"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "摘要「均與醫療常規有違」等價"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "摘要未明確提到錯失正確診斷及治療機會之因果評估"
+        }
+       }
+      },
+      {
+       "opinion_id": 3,
+       "institution": "行政院衛生署醫事審議委員會（法醫意見亦涉）",
+       "report_id": "衛署醫字第0990209763號、衛署醫字第1010209457號",
+       "subfields": {
+        "institution": {
+         "found": true,
+         "note": "法醫意見部分提及"
+        },
+        "core_conclusion": {
+         "found": false,
+         "note": "核心結論涉及非典型症狀（腹痛、下肢無力）之描述，摘要section_03僅提及「若能及時實施主動脈修補手術，仍有相當存活可能」，非典型症狀描述缺失"
+        },
+        "breach_assessment": {
+         "found": false,
+         "note": "此 opinion 的 breach_assessment（延誤診斷）在 opinions section 未明確提及"
+        },
+        "causation_assessment": {
+         "found": true,
+         "note": "摘要「若能及時實施主動脈修補手術，仍有相當存活可能」間接等價於與死亡有因果關係"
+        }
+       }
+      }
+     ]
+    },
+    "reasoning_coverage": {
+     "score": 0.5,
+     "found": 5,
+     "total": 10,
+     "missing": [
+      "aggravating_factor_1: 致被害人死亡（reasoning section 未提及加重因素）",
+      "aggravating_factor_2: 犯後未能坦承犯行並取得告訴人諒解（未提及）",
+      "mitigating_factor_1: 被告朱海慶、王振宇無前科（未提及）",
+      "mitigating_factor_2: 被告洪國泰、金霍歌素行良好（未提及）",
+      "mitigating_factor_3: 急診醫療屬高度困難專業（未提及）"
+     ],
+     "details": [
+      {
+       "item_id": "FF1",
+       "content": "洪國泰輕忽X光主動脈擴張，未進一步詢問病史及身體檢查",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "FF2",
+       "content": "朱海慶、王振宇知悉重複急診卻僅症狀治療等待結果",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "FF3",
+       "content": "金霍歌在病人拒絕內視鏡後未考慮其他病因/檢查即讓病人離院",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "FF4",
+       "content": "被告等疏失延誤治療時機，與黃耀青死亡有相當因果關係",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "LA1",
+       "content": "被告行為該當業務過失致死罪",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "AGG1",
+       "content": "致被害人死亡",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "AGG2",
+       "content": "犯後未能坦承犯行並取得告訴人諒解",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "MIT1",
+       "content": "被告朱海慶、王振宇無前科",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "MIT2",
+       "content": "被告洪國泰、金霍歌素行良好",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "MIT3",
+       "content": "急診醫療屬高度困難專業",
+       "found": false,
+       "in_section": "reasoning"
+      }
+     ]
+    },
+    "causation_chain_recall": {
+     "score": 1.0,
+     "found": 0,
+     "total": 0,
+     "missing": [],
+     "note": "master.json 中 causation_chain 為空陣列，無需評估，此維度預設 1.0",
+     "details": []
+    },
+    "sentence_accuracy": {
+     "score": 1.0,
+     "correct": 16,
+     "total": 16,
+     "errors": [],
+     "details": [
+      {
+       "defendant": "洪國泰（被告甲）",
+       "sentence_type": {
+        "gt": "有期徒刑",
+        "pred": "有期徒刑",
+        "correct": true
+       },
+       "duration_months": {
+        "gt": 5,
+        "pred": 5,
+        "correct": true
+       },
+       "probation_years": {
+        "gt": null,
+        "pred": null,
+        "correct": true
+       },
+       "verdict_type": {
+        "gt": "guilty",
+        "pred": "guilty",
+        "correct": true
+       }
+      },
+      {
+       "defendant": "朱海慶（被告乙）",
+       "sentence_type": {
+        "gt": "有期徒刑",
+        "pred": "有期徒刑",
+        "correct": true
+       },
+       "duration_months": {
+        "gt": 5,
+        "pred": 5,
+        "correct": true
+       },
+       "probation_years": {
+        "gt": null,
+        "pred": null,
+        "correct": true
+       },
+       "verdict_type": {
+        "gt": "guilty",
+        "pred": "guilty",
+        "correct": true
+       }
+      },
+      {
+       "defendant": "王振宇（被告丙）",
+       "sentence_type": {
+        "gt": "有期徒刑",
+        "pred": "有期徒刑",
+        "correct": true
+       },
+       "duration_months": {
+        "gt": 5,
+        "pred": 5,
+        "correct": true
+       },
+       "probation_years": {
+        "gt": null,
+        "pred": null,
+        "correct": true
+       },
+       "verdict_type": {
+        "gt": "guilty",
+        "pred": "guilty",
+        "correct": true
+       }
+      },
+      {
+       "defendant": "金霍歌（被告丁）",
+       "sentence_type": {
+        "gt": "有期徒刑",
+        "pred": "有期徒刑",
+        "correct": true
+       },
+       "duration_months": {
+        "gt": 5,
+        "pred": 5,
+        "correct": true
+       },
+       "probation_years": {
+        "gt": null,
+        "pred": null,
+        "correct": true
+       },
+       "verdict_type": {
+        "gt": "guilty",
+        "pred": "guilty",
+        "correct": true
+       }
+      }
+     ]
+    }
+   }
+  },
+  "quality": {
+   "overall": 4.06
+  },
+  "faithfulness": {
+   "score": 0.985,
+   "total_statements": 17,
+   "graded_statements": 17,
+   "grade_distribution": {
+    "A": 16,
+    "B": 1,
+    "C": 0,
+    "D": 0
+   }
+  }
+ }
 }

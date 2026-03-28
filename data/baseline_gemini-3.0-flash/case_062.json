@@ -29,33 +29,33 @@
   "opensource_afg_v11_5_no_afg_writer_nemotron_super"
  ],
  "condition_labels": {
-  "claude_afg_v5.1": "Claude-A",
-  "ablation_no_afg": "Claude-B",
-  "ablation_no_react": "Claude-C",
+  "claude_afg_v5.1": "LENS-Haiku 4.5-A",
+  "ablation_no_afg": "LENS-Haiku 4.5-B",
+  "ablation_no_react": "LENS-Haiku 4.5-C",
   "opensource_afg_v11": "Open-L1",
   "opensource_afg_v11_no_react": "Open-L2",
   "opensource_afg_v11_no_afg": "Open-L3",
-  "baseline_claude-haiku": "Baseline-Haiku",
-  "baseline_claude-sonnet": "Baseline-Sonnet",
-  "baseline_gemini-3.0-flash": "Baseline-Gemini 3.0 Flash",
-  "baseline_gemini-3.1-pro": "Baseline-Gemini 3.1 Pro",
-  "baseline_gpt-5.3": "Baseline-GPT 5.3",
-  "baseline_gpt-5.4-thinking": "Baseline-GPT 5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Baseline-Cogito 2.1",
-  "baseline_ollama_deepseek-v3.1-671b-cloud": "Baseline-DeepSeek v3.1",
-  "baseline_ollama_glm-5-cloud": "Baseline-GLM 5",
-  "baseline_ollama_gpt-oss-120b-cloud": "Baseline-GPT-OSS",
-  "baseline_ollama_kimi-k2.5-cloud": "Baseline-Kimi K2.5",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Baseline-Mistral Large 3",
-  "baseline_ollama_nemotron-3-super-cloud": "Baseline-Nemotron 3 Super",
-  "baseline_ollama_qwen3-next-80b-cloud": "Baseline-Qwen3 Next",
-  "baseline_ollama_qwen3.5-397b-cloud": "Baseline-Qwen3.5",
-  "opensource_afg_v11_5": "Open-A1",
-  "opensource_afg_v11_5_no_react": "Open-A2",
-  "opensource_afg_v11_5_no_afg": "Open-A3",
-  "opensource_afg_v11_5_writer_nemotron_super": "Open-B1",
-  "opensource_afg_v11_5_no_react_writer_nemotron_super": "Open-B2",
-  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "Open-B3"
+  "baseline_claude-haiku": "Claude Haiku 4.5",
+  "baseline_claude-sonnet": "Claude Sonnet 4.6",
+  "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
+  "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
+  "baseline_gpt-5.3": "GPT-5.3 Instant",
+  "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
+  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
+  "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
+  "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
+  "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
+  "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
+  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
+  "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
+  "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
+  "opensource_afg_v11_5": "LENS-GPT-OSS-A",
+  "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
+  "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
+  "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
+  "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
+  "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -193,5 +193,440 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based": {
+   "citation_rate": 0.5952380952380952,
+   "date_f1": 0.5714285714285715,
+   "num_f1": 0.4444444444444445,
+   "verdict_match": 1.0,
+   "institution_attr": 1.0,
+   "hallucination_rate_rule": 1.0,
+   "compression_ratio": 0.8986,
+   "gt_length_ratio": 0.2192,
+   "avg": 0.9325
+  },
+  "fact_recall": {
+   "overall": 0.843,
+   "metrics": {
+    "timeline_recall": {
+     "score": 0.846,
+     "found": 11,
+     "total": 13,
+     "missing": [
+      "event 4 (critical): 急診心電圖時法醫研究所觀點——應懷疑有陳舊性心肌梗塞存在（facts段未提及，僅在opinions段出現）"
+     ],
+     "details": [
+      {
+       "event_id": 1,
+       "description": "95年5月21日下午5時許，陳萬恭因胸痛由陳舜正陪同至署立彰化醫院急診處掛號",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 2,
+       "description": "95年5月21日下午5時20分許，彭楷瑜對陳萬恭進行問診、身體理學檢查、心電圖及胸部X光攝影檢查",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 3,
+       "description": "95年5月21日急診時，心電圖電腦判讀疑似心肌梗塞（ST波段上升、T波高尖、R波未隨導極逐漸變大，出現警示文字建議會診）",
+       "critical_decision": true,
+       "weight": 2,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 4,
+       "description": "95年5月21日，法醫研究所觀點：急診心電圖表現應懷疑有陳舊性心肌梗塞存在",
+       "critical_decision": true,
+       "weight": 2,
+       "found": false,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 5,
+       "description": "95年5月21日下午5時20分許，彭楷瑜診斷陳萬恭為肌肉筋膜發炎，給予一劑消炎止痛藥（Keto）",
+       "critical_decision": true,
+       "weight": 2,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 6,
+       "description": "95年5月21日下午5時35分許，彭楷瑜同意陳萬恭出院，未安排留院觀察、抽血檢測心肌酵素，亦未照會心臟科醫師或安排追蹤",
+       "critical_decision": true,
+       "weight": 2,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 7,
+       "description": "95年5月23日下午某時許，陳萬恭外出工作後未返家",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 8,
+       "description": "95年5月23日下午6時30分許，陳萬恭被發現倒臥在田邊溝渠猝死",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      },
+      {
+       "event_id": 9,
+       "description": "解剖後，判定陳萬恭死因為急性心肌梗塞導致心臟破裂致死",
+       "critical_decision": false,
+       "weight": 1,
+       "found": true,
+       "in_section": "facts"
+      }
+     ],
+     "scoring_note": "總計分母 = 5（non-critical）+ 4×2（4個critical events）= 13；分子 = 5（non-critical found）+ 3×2（3個critical found）= 11"
+    },
+    "entity_recall": {
+     "score": 1.0,
+     "found": 5,
+     "total": 5,
+     "missing": [],
+     "details": [
+      {
+       "entity_id": "DEF_1",
+       "name": "彭楷瑜",
+       "type": "defendant",
+       "found": true,
+       "matched_as": "被告甲",
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "VIC_1",
+       "name": "陳萬恭",
+       "type": "victim",
+       "found": true,
+       "matched_as": "病患X",
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_1",
+       "name": "行政院衛生署彰化醫院",
+       "type": "hospital",
+       "found": true,
+       "matched_as": "A醫院",
+       "in_section": "facts"
+      },
+      {
+       "entity_id": "INST_4",
+       "name": "行政院衛生署醫事審議委員會",
+       "type": "medical_review",
+       "found": true,
+       "matched_as": "醫審會",
+       "in_section": "opinions"
+      },
+      {
+       "entity_id": "INST_6",
+       "name": "法務部法醫研究所",
+       "type": "committee/forensic",
+       "found": true,
+       "matched_as": "法務部法醫研究所",
+       "in_section": "opinions"
+      }
+     ]
+    },
+    "allegation_coverage": {
+     "score": 1.0,
+     "found": 1,
+     "total": 1,
+     "missing": [],
+     "details": [
+      {
+       "allegation_id": 1,
+       "content": "被告明知心電圖異常警示，未抽血/留院觀察/照會心臟科醫師，逕自排除急性心肌梗塞可能性，導致出院後死亡",
+       "found": true,
+       "in_section": "facts"
+      }
+     ]
+    },
+    "defense_recall": {
+     "score": 1.0,
+     "found": 3,
+     "total": 3,
+     "missing": [],
+     "details": [
+      {
+       "argument_id": 1,
+       "content": "依主訴/理學檢查/止痛藥反應診斷筋膜發炎；無典型心肌梗塞症狀；法醫解剖顯示心肌梗塞在死亡前24小時發生",
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "argument_id": 2,
+       "content": "無胸痛劇烈/呼吸困難等症狀，按急診程序診治，症狀緩解後離院",
+       "found": true,
+       "in_section": "defense"
+      },
+      {
+       "argument_id": 3,
+       "content": "心肌梗塞發作在離院24小時後，留院6小時亦無診斷可能；被告診斷與心臟破裂無直接因果關係",
+       "found": true,
+       "in_section": "defense",
+       "note": "因果關係辯護主張（心臟破裂無直接因果關係）在摘要中未明確論述，但核心時序主張（急診時未發生心肌梗塞）已涵蓋"
+      }
+     ]
+    },
+    "expert_opinion_recall": {
+     "score": 0.5625,
+     "found": 9,
+     "total": 16,
+     "missing": [
+      "Opinion 1 (醫審會第一次) core_conclusion: 心電圖電腦判讀疑似心肌梗塞係屬合理，但須配合臨床資訊；心電圖變化與心臟破裂死亡無直接因果關係；即使確診住院也未必能避免心臟破裂",
+      "Opinion 1 (醫審會第一次) breach_assessment: 程序上無錯誤，診斷邏輯合理",
+      "Opinion 1 (醫審會第一次) causation_assessment: 心電圖變化與心臟破裂死亡無直接因果關係，因果判定困難",
+      "Opinion 3 (醫審會第三次) core_conclusion: 彰化醫院水準可接受；疑似心因性胸痛通常觀察6至8小時；病人死亡與彭醫師無因果關係",
+      "Opinion 3 (醫審會第三次) breach_assessment: 心電圖已疑似心肌梗塞，急診醫師更宜謹慎，應留觀或抽血檢測心肌酶（摘要與第二次鑑定混合描述，未區分第三次鑑定）",
+      "Opinion 3 (醫審會第三次) causation_assessment: 病人死亡與彭醫師之醫療行為無因果關係；即使當日診斷住院也無法完全預防心臟破裂",
+      "Opinion 2 (醫審會第二次) causation_assessment: 左心室破裂為急性心肌梗塞突然且高致死率併發症，即使留院未必能避免死亡"
+     ],
+     "details": [
+      {
+       "opinion_id": 1,
+       "institution": "行政院衛生署醫事審議委員會（第一次）",
+       "subfields": {
+        "institution_mentioned": {
+         "found": true,
+         "note": "以「醫審會鑑定書共3份」整體提及"
+        },
+        "core_conclusion": {
+         "found": false,
+         "note": "摘要未提及第一次鑑定認為診斷邏輯合理且無直接因果關係的結論"
+        },
+        "breach_assessment": {
+         "found": false,
+         "note": "摘要未提及第一次鑑定認為程序無錯誤的評估"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "摘要未提及第一次鑑定關於心電圖變化與死亡無直接因果的判斷"
+        }
+       },
+       "subfields_found": 1,
+       "subfields_total": 4
+      },
+      {
+       "opinion_id": 2,
+       "institution": "行政院衛生署醫事審議委員會（第二次）",
+       "subfields": {
+        "institution_mentioned": {
+         "found": true,
+         "note": "包含在「醫審會鑑定書共3份」中"
+        },
+        "core_conclusion": {
+         "found": true,
+         "note": "「應留院觀察4至6小時及抽血檢驗心肌酵素」「與醫療常規稍有未符」"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "「被告未為此處置，與醫療常規稍有未符」"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "左心室破裂高致死率、即使留院未必能避免死亡——摘要中未提及"
+        }
+       },
+       "subfields_found": 3,
+       "subfields_total": 4
+      },
+      {
+       "opinion_id": 3,
+       "institution": "行政院衛生署醫事審議委員會（第三次）",
+       "subfields": {
+        "institution_mentioned": {
+         "found": true,
+         "note": "包含在「醫審會鑑定書共3份」中"
+        },
+        "core_conclusion": {
+         "found": false,
+         "note": "摘要未區分第三次鑑定的具體結論（6-8小時觀察期、無因果關係）"
+        },
+        "breach_assessment": {
+         "found": false,
+         "note": "摘要中的疏失描述混合了第二次與第三次鑑定，未特指第三次鑑定的評估"
+        },
+        "causation_assessment": {
+         "found": false,
+         "note": "病人死亡與彭醫師行為無因果關係——摘要中未提及"
+        }
+       },
+       "subfields_found": 1,
+       "subfields_total": 4
+      },
+      {
+       "opinion_id": 4,
+       "institution": "法務部法醫研究所",
+       "subfields": {
+        "institution_mentioned": {
+         "found": true,
+         "note": "「法務部法醫研究所鑑定意見」"
+        },
+        "core_conclusion": {
+         "found": true,
+         "note": "「診斷時未先排除心肌梗塞存在，在考量上具有瑕疵，若能留院觀察有可能降低死亡之機率」"
+        },
+        "breach_assessment": {
+         "found": true,
+         "note": "「在考量上具有瑕疵」"
+        },
+        "causation_assessment": {
+         "found": true,
+         "note": "「若能留院觀察有可能降低死亡之機率」（前半「心肌破裂無法因此避免」未提，但留院可降低死亡已涵蓋核心因果判斷）"
+        }
+       },
+       "subfields_found": 4,
+       "subfields_total": 4
+      }
+     ]
+    },
+    "reasoning_coverage": {
+     "score": 0.4,
+     "found": 4,
+     "total": 10,
+     "missing": [
+      "factual_finding 2: 無法排除被害人於急診診療時即已有心肌梗塞存在之可能性（reasoning段未明確論述）",
+      "legal_analysis 1 court_position: 應以醫療當時臨床醫療實踐之醫療水準判斷，醫學中心>區域醫院>地區醫院分層標準（reasoning段未明確說明此法律標準）",
+      "aggravating_factor 1: 肇致被害人死亡之結果，所生危害非輕",
+      "aggravating_factor 2: 迄今尚未與被害人家屬達成和解",
+      "mitigating_factor 1: 無任何犯罪紀錄，素行良好",
+      "mitigating_factor 2: 並無不良意圖"
+     ],
+     "details": [
+      {
+       "item_id": "factual_finding_1",
+       "content": "心電圖顯示ST波段上升、T波高尖、R波未隨導極逐漸變大等變化，出現警示文字建議與心臟專科醫生會診",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "factual_finding_2",
+       "content": "無法排除被害人於急診診療時即已有心肌梗塞存在之可能性",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "factual_finding_3",
+       "content": "依醫療常規應留院觀察並檢驗心肌酶至少4至6小時；被告未為此，與醫療常規有違",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "factual_finding_4",
+       "content": "署立彰化醫院為區域醫院，心臟科醫師on call 30分鐘內可到急診，被告無不能注意之情事",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "legal_analysis_1",
+       "content": "醫療過失注意義務應以醫療當時臨床醫療實踐之醫療水準判斷；區域醫院高於地區醫院，不得一律以醫學中心水準為判斷標準",
+       "found": false,
+       "in_section": "reasoning",
+       "note": "reasoning段雖提及「A醫院為區域型醫院」，但未論及醫療水準分層的法律標準"
+      },
+      {
+       "item_id": "legal_analysis_2",
+       "content": "被告之疏失與被害人之死亡間有相當因果關係",
+       "found": true,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "aggravating_factor_1",
+       "content": "肇致被害人死亡之結果，所生危害非輕",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "aggravating_factor_2",
+       "content": "迄今尚未與被害人家屬達成和解",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "mitigating_factor_1",
+       "content": "無任何犯罪紀錄，素行良好",
+       "found": false,
+       "in_section": "reasoning"
+      },
+      {
+       "item_id": "mitigating_factor_2",
+       "content": "並無不良意圖",
+       "found": false,
+       "in_section": "reasoning"
+      }
+     ]
+    },
+    "causation_chain_recall": {
+     "score": 1.0,
+     "found": 0,
+     "total": 0,
+     "missing": [],
+     "details": [],
+     "note": "extraction 中 causation_chain 為空陣列，無需評估，score 記為 1.0"
+    },
+    "sentence_accuracy": {
+     "score": 1.0,
+     "correct": 4,
+     "total": 4,
+     "errors": [],
+     "details": [
+      {
+       "defendant": "彭楷瑜（摘要中：被告甲）",
+       "field": "verdict_type",
+       "expected": "guilty",
+       "actual": "guilty（成立業務過失致死罪）",
+       "correct": true
+      },
+      {
+       "defendant": "彭楷瑜（摘要中：被告甲）",
+       "field": "sentence_type",
+       "expected": "有期徒刑",
+       "actual": "有期徒刑伍月",
+       "correct": true
+      },
+      {
+       "defendant": "彭楷瑜（摘要中：被告甲）",
+       "field": "duration_months",
+       "expected": 5,
+       "actual": "伍月（摘要正確記載，並提及減為貳月又拾伍日）",
+       "correct": true
+      },
+      {
+       "defendant": "彭楷瑜（摘要中：被告甲）",
+       "field": "probation_years",
+       "expected": null,
+       "actual": null,
+       "correct": true
+      }
+     ]
+    }
+   }
+  },
+  "quality": {
+   "overall": 3.99
+  },
+  "faithfulness": {
+   "score": 0.75,
+   "total_statements": 29,
+   "graded_statements": 21,
+   "grade_distribution": {
+    "A": 11,
+    "B": 5,
+    "C": 4,
+    "D": 1
+   }
+  }
+ }
 }
