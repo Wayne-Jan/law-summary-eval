@@ -120,10 +120,6 @@
       border-top: 1px solid #eef2f7;
       border-bottom: 1px solid #eef2f7;
     }
-    .overview-case-row td:nth-child(2),
-    .overview-case-row td:last-child {
-      text-align: center;
-    }
     .overview-case-row:last-of-type td {
       border-bottom: none;
     }
@@ -188,6 +184,13 @@
     .overview-preview-toggle:hover { background: #dbe4ff; }
     .overview-preview-toggle::after { content: '▾'; font-size: 11px; line-height: 1; }
     .overview-preview-toggle[aria-expanded="true"]::after { content: '▴'; }
+    .overview-expand-footer td {
+      padding: 12px 16px 14px;
+      background: #eef2ff;
+      border-top: 1px solid #dbe4ff;
+      border-bottom: none;
+      text-align: center;
+    }
     .overview-table .cond-name { font-weight: 600; color: var(--slate-900); }
     .table-notes {
       font-size: 11px; color: var(--slate-500); padding: 8px 14px; line-height: 1.8;
@@ -928,11 +931,9 @@
     if (!hasMore) return rowsHtml;
     const label = showAll ? '收起完整列表' : `顯示全部 ${orderedRows.length} 案`;
     return `${rowsHtml}
-      <tr class="overview-expand-row">
-        <td colspan="9" style="padding:0 0 14px;background:transparent;border-bottom:none;">
-          <div style="display:flex;justify-content:center;padding-top:8px;">
-            <button class="overview-preview-toggle" type="button" onclick="toggleExpandShowAll('${esc(condKey)}')" aria-expanded="${showAll ? 'true' : 'false'}">${label}</button>
-          </div>
+      <tr class="overview-expand-row overview-expand-footer">
+        <td colspan="9">
+          <button class="overview-preview-toggle" type="button" onclick="toggleExpandShowAll('${esc(condKey)}')" aria-expanded="${showAll ? 'true' : 'false'}">${label}</button>
         </td>
       </tr>`;
   }
