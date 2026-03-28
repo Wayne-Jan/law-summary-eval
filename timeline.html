@@ -6,7 +6,7 @@
   <title>時間軸檢視 — 醫療糾紛事件時間軸</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    :root { --toolbar-h: 52px; --subbar-h: 44px; }
+    :root { --toolbar-h: 52px; --subbar-h: 0px; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f8f9fa;
@@ -33,16 +33,6 @@
     .toolbar a.nav-link:hover { background: #eef2ff; color: #4f46e5; text-decoration: none; }
     .toolbar a.nav-link.active { background: #4f46e5; color: #fff; }
 
-    .progress-subbar {
-      position: fixed; top: var(--toolbar-h); left: 0; right: 0; height: var(--subbar-h);
-      background: white; border-bottom: 1px solid #e2e8f0;
-      display: flex; align-items: center; justify-content: flex-start;
-      padding: 0 16px; z-index: 99;
-    }
-    .subbar-line {
-      display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    }
-    .subbar-label { font-size: 13px; color: #64748b; font-weight: 500; }
     .volume-pill {
       font-family: inherit; font-size: 13px; font-weight: 500;
       padding: 6px 16px; border: 1px solid #cbd5e1; border-radius: 20px;
@@ -50,8 +40,6 @@
     }
     .volume-pill:hover { border-color: #4f46e5; color: #4f46e5; }
     .volume-pill.active { background: #4f46e5; color: white; border-color: #4f46e5; }
-    .volume-pill.source-pill.active { background: #0f766e; border-color: #0f766e; }
-    .volume-pill.source-pill:hover { border-color: #0f766e; color: #0f766e; }
     .volume-pill-count { font-size: 11px; opacity: 0.75; margin-left: 4px; }
     #volModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:9000; align-items:center; justify-content:center; }
     #volModal.show { display:flex; }
@@ -448,7 +436,6 @@
         font-weight: 500; text-decoration: none !important;
       }
 
-      .progress-subbar { top: var(--toolbar-h); }
       .main { flex-direction: column; margin-top: calc(var(--toolbar-h) + var(--subbar-h)) !important; height: auto; min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)) !important; }
       .content-area { padding: 0; flex: 1; }
       .content-inner { padding: 16px 12px; }
@@ -488,12 +475,6 @@
         <a id="evalLink" class="nav-link" href="eval.html?v=20260328a">專家評估</a>
         <a class="nav-link" href="index.html?v=20260328a">首頁</a>
       </div>
-    </div>
-  </div>
-  <div class="progress-subbar" id="progressSubbar">
-    <div class="subbar-line">
-      <span class="subbar-label">來源：</span>
-      <span class="volume-pill source-pill active">v3.10.4</span>
     </div>
   </div>
   <div class="mobile-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
