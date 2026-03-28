@@ -79,7 +79,36 @@
     }
     .toolbar-shortcut-panel.show { display: block; }
     .toolbar-shortcut-title { font-size: 13px; font-weight: 700; color: var(--slate-900); margin-bottom: 8px; }
-    .toolbar-shortcut-line { font-size: 12px; color: var(--slate-500); line-height: 1.6; }
+    .toolbar-shortcut-list {
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .toolbar-shortcut-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .toolbar-shortcut-keys {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    }
+    .toolbar-shortcut-plus {
+      font-size: 11px; font-weight: 700; color: var(--slate-400);
+    }
+    .toolbar-shortcut-desc {
+      flex: 1; min-width: 0;
+      font-size: 12px; color: var(--slate-500); text-align: right; line-height: 1.4;
+    }
+    .kbd-key {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 26px; height: 26px; padding: 0 8px;
+      border-radius: 8px; border: 1px solid var(--slate-300);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.9), 0 2px 8px rgba(15,23,42,0.06);
+      font-size: 12px; font-weight: 700; color: var(--slate-700);
+      white-space: nowrap;
+    }
+    .kbd-key.wide { min-width: 58px; }
+    .toolbar-shortcut-note {
+      margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--slate-100);
+      font-size: 11px; color: var(--slate-400); line-height: 1.5;
+    }
     .toolbar-menu-wrap { position: relative; display: inline-flex; align-items: center; }
     .toolbar-menu {
       position: absolute; top: calc(100% + 8px); right: 0; min-width: 180px;
@@ -928,12 +957,47 @@
     </button>
     <div class="toolbar-shortcut-panel" id="shortcutHelpPanel">
       <div class="toolbar-shortcut-title">評分快捷鍵</div>
-      <div class="toolbar-shortcut-line">↑ / ↓：切換目前評分題目</div>
-      <div class="toolbar-shortcut-line">1-5：給目前題目打分</div>
-      <div class="toolbar-shortcut-line">Space：展開或摺疊評分說明</div>
-      <div class="toolbar-shortcut-line">Tab / Shift+Tab：切換版本</div>
-      <div class="toolbar-shortcut-line">S：完成目前階段</div>
-      <div class="toolbar-shortcut-line">在輸入文字時快捷鍵會暫停</div>
+      <div class="toolbar-shortcut-list">
+        <div class="toolbar-shortcut-row">
+          <div class="toolbar-shortcut-keys">
+            <span class="kbd-key">↑</span>
+            <span class="kbd-key">↓</span>
+          </div>
+          <div class="toolbar-shortcut-desc">切換目前評分題目</div>
+        </div>
+        <div class="toolbar-shortcut-row">
+          <div class="toolbar-shortcut-keys">
+            <span class="kbd-key">1</span>
+            <span class="kbd-key">2</span>
+            <span class="kbd-key">3</span>
+            <span class="kbd-key">4</span>
+            <span class="kbd-key">5</span>
+          </div>
+          <div class="toolbar-shortcut-desc">給目前題目打分</div>
+        </div>
+        <div class="toolbar-shortcut-row">
+          <div class="toolbar-shortcut-keys">
+            <span class="kbd-key wide">Space</span>
+          </div>
+          <div class="toolbar-shortcut-desc">展開或摺疊評分說明</div>
+        </div>
+        <div class="toolbar-shortcut-row">
+          <div class="toolbar-shortcut-keys">
+            <span class="kbd-key">Tab</span>
+            <span class="toolbar-shortcut-plus">/</span>
+            <span class="kbd-key">Shift</span>
+            <span class="kbd-key">Tab</span>
+          </div>
+          <div class="toolbar-shortcut-desc">切換版本</div>
+        </div>
+        <div class="toolbar-shortcut-row">
+          <div class="toolbar-shortcut-keys">
+            <span class="kbd-key">S</span>
+          </div>
+          <div class="toolbar-shortcut-desc">完成目前階段</div>
+        </div>
+      </div>
+      <div class="toolbar-shortcut-note">在輸入文字時，快捷鍵會暫停。</div>
     </div>
   </div>
   <div class="toolbar-menu-wrap admin-only">
