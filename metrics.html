@@ -115,40 +115,41 @@
       background: white;
       box-shadow: 0 8px 22px rgba(15,23,42,0.06);
     }
-    .overview-preview-head {
-      display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
-      padding: 14px 16px; background: linear-gradient(135deg, rgba(79,70,229,0.04), rgba(79,70,229,0.015));
+    .overview-preview-meta {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 12px 16px; background: linear-gradient(135deg, rgba(79,70,229,0.035), rgba(79,70,229,0.012));
       border-bottom: 1px solid #e5e7eb;
     }
-    .overview-preview-title {
-      font-size: 14px; font-weight: 700; color: var(--slate-900);
+    .overview-preview-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
     }
-    .overview-preview-sub {
-      font-size: 12px; color: var(--slate-500); white-space: nowrap;
+    .overview-preview-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      max-width: 360px;
+      padding: 6px 10px; border-radius: 999px;
+      background: #fff; border: 1px solid #e5e7eb;
+      color: var(--slate-700); font-size: 12px; line-height: 1.2;
+      box-shadow: 0 1px 2px rgba(15,23,42,0.03);
     }
-    .overview-preview-summary {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-      gap: 10px; padding: 14px 16px 8px;
+    .overview-preview-tag-label {
+      color: var(--slate-500); font-weight: 600; flex-shrink: 0;
     }
-    .overview-preview-stat {
-      background: var(--slate-50); border: 1px solid #e5e7eb; border-radius: 12px;
-      padding: 10px 12px;
-    }
-    .overview-preview-stat-label {
-      font-size: 11px; color: var(--slate-500); margin-bottom: 4px; font-weight: 600;
-    }
-    .overview-preview-stat-value {
-      font-size: 14px; font-weight: 700; color: var(--slate-900); line-height: 1.35;
+    .overview-preview-tag-value {
+      font-weight: 700; color: var(--slate-900);
       overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
+    .overview-preview-count {
+      font-size: 12px; color: var(--slate-500); white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
     .overview-preview-list {
-      padding: 8px 16px 2px;
+      padding: 12px 16px 4px;
       display: grid; gap: 8px;
     }
     .overview-preview-row {
       display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, auto) auto;
       gap: 10px; align-items: center;
-      padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff;
+      padding: 12px 14px; border: 1px solid #e5e7eb; border-radius: 14px; background: #fff;
       box-shadow: 0 1px 2px rgba(15,23,42,0.03);
     }
     .overview-preview-row:hover {
@@ -552,8 +553,8 @@
       .dim-bar-cond { width: 90px; font-size: 11px; }
       [data-tip]::after { max-width: 220px; font-size: 11px; }
       .tab-btn { font-size: 12px; padding: 6px 12px; }
-      .overview-preview-head { flex-direction: column; align-items: flex-start; }
-      .overview-preview-summary { grid-template-columns: 1fr; }
+      .overview-preview-meta { flex-direction: column; align-items: flex-start; }
+      .overview-preview-tag { max-width: 100%; }
       .overview-preview-row { grid-template-columns: minmax(0, 1fr); }
       .overview-preview-action { grid-column: 1 / -1; justify-self: start; }
     }
@@ -847,20 +848,23 @@
     const displayRows = showAll ? ranking.rows : ranking.rows.slice(0, EXPAND_DEFAULT_LIMIT);
     const hasMore = ranking.rows.length > EXPAND_DEFAULT_LIMIT;
 
-    const summary = `
-      <div class="overview-preview-summary">
-        <div class="overview-preview-stat">
-          <div class="overview-preview-stat-label">最強案例</div>
-          <div class="overview-preview-stat-value">${ranking.best ? esc(resolveCaseDisplay(ranking.best.caseName)) : '--'}</div>
+    const meta = `
+      <div class="overview-preview-meta">
+        <div class="overview-preview-tags">
+          <div class="overview-preview-tag">
+            <span class="overview-preview-tag-label">最強</span>
+            <span class="overview-preview-tag-value">${ranking.best ? esc(resolveCaseDisplay(ranking.best.caseName)) : '--'}</span>
+          </div>
+          <div class="overview-preview-tag">
+            <span class="overview-preview-tag-label">最弱</span>
+            <span class="overview-preview-tag-value">${ranking.worst ? esc(resolveCaseDisplay(ranking.worst.caseName)) : '--'}</span>
+          </div>
+          <div class="overview-preview-tag">
+            <span class="overview-preview-tag-label">偏差最大</span>
+            <span class="overview-preview-tag-value">${ranking.dev ? esc(resolveCaseDisplay(ranking.dev.caseName)) : '--'}</span>
+          </div>
         </div>
-        <div class="overview-preview-stat">
-          <div class="overview-preview-stat-label">最弱案例</div>
-          <div class="overview-preview-stat-value">${ranking.worst ? esc(resolveCaseDisplay(ranking.worst.caseName)) : '--'}</div>
-        </div>
-        <div class="overview-preview-stat">
-          <div class="overview-preview-stat-label">平均偏差最大</div>
-          <div class="overview-preview-stat-value">${ranking.dev ? esc(resolveCaseDisplay(ranking.dev.caseName)) : '--'}</div>
-        </div>
+        <div class="overview-preview-count">${displayRows.length}/${ranking.rows.length}</div>
       </div>
     `;
 
@@ -892,14 +896,7 @@
       <tr class="overview-expand-row">
         <td colspan="9">
           <div class="overview-expand-shell">
-            <div class="overview-preview-head">
-              <div>
-                <div class="overview-preview-title">單案預覽</div>
-                <div class="overview-preview-sub">先看代表案例，再決定要不要展開全部</div>
-              </div>
-              <div class="overview-preview-sub">${displayRows.length}/${ranking.rows.length} 預覽</div>
-            </div>
-            ${summary}
+            ${meta}
             <div class="overview-preview-list">
               ${rowsHtml}
             </div>
