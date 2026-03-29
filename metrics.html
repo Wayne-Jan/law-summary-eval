@@ -167,6 +167,19 @@
     .overview-case-link:hover {
       color: var(--indigo);
     }
+    .overview-case-verdict {
+      display: inline-flex; align-items: center;
+      padding: 2px 8px; border-radius: 999px;
+      border: 1px solid #e2e8f0; background: #f8fafc;
+      color: #475569; font-size: 11px; font-weight: 700;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .overview-case-verdict.guilty {
+      color: #b91c1c; background: #fef2f2; border-color: #fecaca;
+    }
+    .overview-case-verdict.not-guilty {
+      color: #0369a1; background: #f0f9ff; border-color: #bae6fd;
+    }
     .overview-case-volume {
       display: inline-flex; align-items: center;
       padding: 3px 9px; border-radius: 999px;
@@ -1118,6 +1131,19 @@
     return num ? `${num}・${title}` : title;
   }
 
+  function getCaseVerdict(caseId) {
+    const verdict = getCaseMeta(caseId).verdict;
+    if (verdict === '有罪' || verdict === '無罪') return verdict;
+    return '';
+  }
+
+  function buildCaseVerdictBadge(caseId) {
+    const verdict = getCaseVerdict(caseId);
+    if (!verdict) return '';
+    const cls = verdict === '有罪' ? 'guilty' : 'not-guilty';
+    return `<span class="overview-case-verdict ${cls}">${verdict}</span>`;
+  }
+
   function formatVolumePill(caseId) {
     const vol = getCaseMeta(caseId).volume;
     if (vol === '上冊') return '上冊';
@@ -1241,6 +1267,7 @@
     const q = c.quality || {};
     const rougeBert = c.rouge_bertscore || {};
     const href = buildCaseViewHref(condKey, row.caseName);
+    const verdictHtml = buildCaseVerdictBadge(row.caseName);
     const nameHtml = href
       ? `<a class="overview-case-link" href="${esc(href)}" target="_blank" rel="noopener">${esc(formatCompactCaseLabel(row.caseName))}</a>`
       : `<span class="overview-case-link">${esc(formatCompactCaseLabel(row.caseName))}</span>`;
@@ -1253,6 +1280,7 @@
         <div class="overview-case-main">
           ${rankHtml}
           ${nameHtml}
+          ${verdictHtml}
         </div>
       </td>
       <td><span class="overview-case-volume ${esc(volumePillClass(row.caseName))}">${esc(formatVolumePill(row.caseName))}</span></td>
