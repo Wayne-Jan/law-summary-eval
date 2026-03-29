@@ -235,6 +235,14 @@
       padding: 8px 12px; border-radius: 999px; background: #f8fafc;
       border: 1px solid #e2e8f0; color: #334155;
     }
+    .tl-summary-icon {
+      width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: currentColor;
+    }
+    .tl-summary-icon svg {
+      width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8;
+      stroke-linecap: round; stroke-linejoin: round;
+    }
     .tl-summary-chip.events {
       background: #f8fafc;
       border-color: #cbd5e1;
@@ -265,7 +273,7 @@
       color: #60a5fa;
     }
     .tl-summary-label {
-      font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;
+      font-size: 11px; color: #94a3b8; letter-spacing: 0.01em; font-weight: 700;
     }
     .tl-summary-value { font-size: 13px; font-weight: 700; color: #0f172a; }
     .tl-summary-value.small { font-size: 13px; font-weight: 600; }
@@ -882,8 +890,8 @@
 
       // Summary banner
       html += '<div class="tl-summary">';
-      html += `<div class="tl-summary-chip events"><span class="tl-summary-label">事件數</span><span class="tl-summary-value">${events.length}</span></div>`;
-      html += `<div class="tl-summary-chip critical"><span class="tl-summary-label">關鍵決策</span><span class="tl-summary-value">${criticalCount}</span></div>`;
+      html += `<div class="tl-summary-chip events"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 6h13"/><path d="M7 12h13"/><path d="M7 18h13"/><path d="M4 6h.01"/><path d="M4 12h.01"/><path d="M4 18h.01"/></svg></span><span class="tl-summary-label">事件數</span><span class="tl-summary-value">${events.length}</span></div>`;
+      html += `<div class="tl-summary-chip critical"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 19h16L12 3Z"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg></span><span class="tl-summary-label">關鍵決策</span><span class="tl-summary-value">${criticalCount}</span></div>`;
       const spanStart = span.start_date || span.start || '';
       const spanEnd = span.end_date || span.end || '';
       if (spanStart) {
@@ -895,9 +903,9 @@
           const h = (d2 - d1) / 3600000;
           if (h > 0) label += `（共 ${h >= 24 ? Math.round(h/24)+' 天' : Math.round(h)+' 小時'}）`;
         }
-        html += `<div class="tl-summary-chip duration"><span class="tl-summary-label">時間跨度</span><span class="tl-summary-value small">${esc(label)}</span></div>`;
+        html += `<div class="tl-summary-chip duration"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 8v5l3 2"/><circle cx="12" cy="12" r="9"/></svg></span><span class="tl-summary-label">時間跨度</span><span class="tl-summary-value small">${esc(label)}</span></div>`;
       }
-      html += `<div class="tl-summary-chip span"><span class="tl-summary-label">原文片段</span><span class="tl-summary-value">${chunks.length}</span></div>`;
+      html += `<div class="tl-summary-chip span"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4h8a2 2 0 0 1 2 2v14l-4-3-4 3-4-3-4 3V6a2 2 0 0 1 2-2Z"/></svg></span><span class="tl-summary-label">原文片段</span><span class="tl-summary-value">${chunks.length}</span></div>`;
       html += '</div>';
 
       // Workbench
