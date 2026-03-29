@@ -807,7 +807,7 @@
             }
 
             listEl.innerHTML = aliases.map(alias => {
-                const content = chunks[alias] || '';
+                const content = sanitizeSourceText(chunks[alias] || '');
                 return `<div class="chunk-region" id="src_${alias}" data-alias="${alias}">` +
                     `<span class="chunk-label">${alias}</span>` +
                     `<mark>${escapeHtml(content)}</mark>` +
@@ -869,6 +869,12 @@
         function sanitizeSummaryText(content) {
             return String(content || '')
                 .replace(/\n?\s*\[Image of[^\]]*\]\s*\n?/gi, '\n')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
+        }
+
+        function sanitizeSourceText(content) {
+            return String(content || '')
                 .replace(/\n{3,}/g, '\n\n')
                 .trim();
         }
