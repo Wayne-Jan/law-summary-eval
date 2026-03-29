@@ -1173,6 +1173,7 @@
     body.mobile-eval-restricted .main,
     body.mobile-eval-restricted .footer,
     body.mobile-eval-restricted .admin-page { display: none !important; }
+    body.mobile-eval-restricted .login-overlay { display: none !important; }
     body.mobile-eval-restricted .mobile-eval-notice { display: block; }
     body.mobile-eval-restricted .eval-only,
     body.mobile-eval-restricted .save-indicator,
@@ -1358,7 +1359,7 @@
       <div class="mobile-eval-notice-text">本系統的評估流程包含原文、摘要與評分欄位的同步對照，以及快捷鍵與較大量的文字輸入。為維持判讀一致性與操作準確度，手機版不提供一般評估作業。</div>
       <div class="mobile-eval-notice-points">
         <div>1. 請改以電腦開啟本頁，以取得完整原文、摘要與評分區的對照視野。</div>
-        <div>2. 若需正式填寫評估結果，請於電腦版登入後再進行操作。</div>
+        <div>2. 若需正式進行評估作業，請改於電腦版開啟本系統。</div>
       </div>
       <div class="mobile-eval-notice-actions">
         <a href="index.html" class="mobile-eval-notice-link">
@@ -1371,16 +1372,6 @@
           </span>
           <span>返回首頁</span>
         </a>
-        <button class="mobile-eval-notice-btn" type="button" onclick="logout()">
-          <span class="login-mini-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
-              <path d="M10 17 15 12 10 7"></path>
-              <path d="M15 12H3"></path>
-            </svg>
-          </span>
-          <span>登出</span>
-        </button>
       </div>
     </div>
   </div>
@@ -1905,8 +1896,12 @@ function handleAuthStateChanged(user) {
     clearLocalSessionProfile();
     document.body.classList.remove('is-admin');
     document.body.classList.remove('admin-inspect');
-    document.body.classList.remove('mobile-eval-restricted');
     setCloudStatus('雲端待命', '');
+    applyMobileEvalAccess();
+    if (shouldRestrictMobileEval('medical')) {
+      hideLoginOverlay();
+      return;
+    }
     showLoginOverlay();
     return;
   }
