@@ -111,9 +111,9 @@
       white-space: nowrap;
     }
     .overview-table tr:last-child td { border-bottom: none; }
-    .overview-table tr:hover td { background: #fafbfc; }
+    .overview-row:hover > td { background: #f8fafc; }
     .overview-row { cursor: pointer; }
-    .overview-row .cond-name {
+    .overview-row .cond-name-inner {
       display: inline-flex; align-items: center; gap: 6px;
     }
     .overview-row-toggle {
@@ -438,12 +438,12 @@
     .page-tab-btn {
       font-family: var(--sans); font-size: 13px; font-weight: 600;
       padding: 8px 16px; border-radius: 999px; border: none; cursor: pointer;
-      background: transparent; color: var(--slate-500); transition: all 0.15s;
+      background: transparent; color: var(--slate-500); transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
     }
-    .page-tab-btn:hover { color: var(--indigo); background: var(--indigo-light); }
+    .page-tab-btn:hover { color: var(--indigo); background: #f5f3ff; }
     .page-tab-btn.active {
       background: var(--indigo); color: white;
-      box-shadow: 0 6px 18px rgba(79,70,229,0.24);
+      box-shadow: 0 4px 12px rgba(79,70,229,0.18);
     }
     .page-panel { display: none; }
     .page-panel.active { display: block; }
@@ -477,9 +477,9 @@
       background: white; border-radius: 14px; padding: 18px 18px 16px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06); border: 1px solid #e5e7eb;
       border-top: 3px solid var(--indigo); overflow: hidden; cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+      transition: box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
     }
-    .model-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,0.08); }
+    .model-card:hover { background: #fcfcff; box-shadow: 0 6px 18px rgba(15,23,42,0.08); }
     .model-card.opensource { border-top-color: var(--emerald); }
     .model-card.active {
       border-color: rgba(79,70,229,0.34);
@@ -2278,7 +2278,7 @@
 
       rows.push(`
         <tr class="overview-row${expanded ? ' expanded' : ''}" data-cond-key="${esc(condKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
-          <td class="cond-name"><span class="overview-row-toggle">${expanded ? '▾' : '▸'}</span>${formatOverviewModelLabel(condKey, cond.label)}</td>
+          <td class="cond-name"><span class="cond-name-inner"><span class="overview-row-toggle">${expanded ? '▾' : '▸'}</span>${formatOverviewModelLabel(condKey, cond.label)}</span></td>
           <td><span class="badge ${badgeClass}">${cond.group}</span></td>
           <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg) || '--'}</td>
           <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg) || '--'}</td>
