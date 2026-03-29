@@ -60,6 +60,10 @@
 
     /* ─── MOBILE TOOLBAR ELEMENTS (hidden on desktop) ─── */
     .mobile-case-badge, .mobile-menu-btn, .mobile-backdrop { display: none; }
+    .mobile-case-badge .case-badge-icon { flex: 0 0 auto; }
+    .mobile-case-badge .case-badge-text {
+      min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
     .toolbar-controls { display: contents; }
     .ctrl-label { display: none; }
     .ctrl-row, .ctrl-row-nav { display: contents; }
@@ -367,12 +371,12 @@
       .toolbar .condition-select { min-width: 0; width: 100%; font-size: 15px; padding: 10px 12px; }
 
       .mobile-case-badge {
-        display: flex; align-items: center;
+        display: flex; align-items: center; gap: 6px;
         font-size: 12px; font-weight: 600; color: #4f46e5;
         background: #eef2ff; padding: 4px 10px; border-radius: 20px;
         white-space: nowrap; cursor: pointer; flex-shrink: 1;
         min-width: 0; overflow: hidden; text-overflow: ellipsis;
-        max-width: 45vw;
+        max-width: 52vw;
       }
       .mobile-menu-btn {
         display: flex; align-items: center; justify-content: center;
@@ -412,15 +416,30 @@
         font-weight: 500; text-decoration: none !important;
       }
       .ctrl-row-nav a.active {
-        background: #fff; border-color: #818cf8; color: #4338ca !important;
-        box-shadow: inset 3px 0 0 #4f46e5;
+        background: #4f46e5; border-color: #4f46e5; color: #fff !important;
+        box-shadow: none;
       }
 
       .main { flex-direction: column; margin-top: calc(var(--toolbar-h) + var(--subbar-h)) !important; height: auto; min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h)) !important; }
       .content-area { padding: 0; flex: 1; }
       .content-inner { padding: 16px 12px; }
-      .tl-summary { gap: 8px; padding: 10px; }
-      .tl-summary-chip { width: 100%; justify-content: space-between; }
+      .tl-summary { gap: 10px; padding: 0; }
+      .tl-summary-chip {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        background: #fff;
+      }
+      .tl-summary-chip + .tl-summary-chip {
+        padding-left: 12px;
+        border-left: none;
+      }
+      .tl-summary-label { opacity: 0.9; }
       .tl-summary-value { font-size: 13px; }
       .tl-event { padding: 12px 14px; cursor: default; }
       .tl-desc { font-size: 12px; }
@@ -524,6 +543,18 @@
     function getCaseDisplay(name) {
       const info = caseInfo[name] || {};
       return info.display || name;
+    }
+
+    function formatMobileCaseBadge() {
+      const info = caseInfo[currentCase] || {};
+      const volume = info.volume || '';
+      const display = getCaseDisplay(currentCase) || '選擇案件';
+      const iconMap = { '上冊': '📘', '中冊': '📗', '下冊': '📙' };
+      const compact = display.replace(/^[上中下]-/, '').replace(/・/g, '‧');
+      return {
+        icon: iconMap[volume] || '📘',
+        text: compact
+      };
     }
 
     async function init() {
@@ -1205,8 +1236,13 @@
     }
     function updateMobileCaseBadge() {
       const badge = document.getElementById('mobileCaseBadge');
-      const display = currentCase ? getCaseDisplay(currentCase) : '選擇案件';
-      if (badge) badge.textContent = display;
+      if (!badge) return;
+      if (!currentCase) {
+        badge.textContent = '選擇案件';
+        return;
+      }
+      const { icon, text } = formatMobileCaseBadge();
+      badge.innerHTML = `<span class="case-badge-icon" aria-hidden="true">${icon}</span><span class="case-badge-text">${esc(text)}</span>`;
     }
 
     window.addEventListener('resize', () => {
