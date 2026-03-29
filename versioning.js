@@ -54,7 +54,6 @@
 
   async function fetchLatestVersionFromGitHub() {
     const cached = readVersionCache();
-    if (cached) return cached;
     try {
       const res = await fetch(GITHUB_LATEST_COMMIT_URL, {
         cache: 'no-store',
@@ -70,7 +69,7 @@
     } catch {
       // Fall back below.
     }
-    return '';
+    return cached || '';
   }
 
   function syncVersionedLinks(root = document) {
