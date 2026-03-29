@@ -1465,6 +1465,7 @@ function setCloudStatus(text, state) {
 
 function formatBackupStatus(status, isEmpty) {
   if (status === 'empty' || isEmpty) return { label: '空備份', tone: '#92400e', bg: '#fffbeb', border: '#fcd34d' };
+  if (status === 'unchanged') return { label: '未變更', tone: '#1d4ed8', bg: '#eff6ff', border: '#93c5fd' };
   if (status === 'stale') return { label: '延遲', tone: '#b91c1c', bg: '#fef2f2', border: '#fca5a5' };
   return { label: '正常', tone: '#047857', bg: '#ecfdf5', border: '#a7f3d0' };
 }
@@ -1505,6 +1506,16 @@ function buildBackupHealthSummary(backups) {
       bg: '#fef2f2',
       border: '#fca5a5',
       detail: `最近快照 ${formatSnapshotDateLabel(latestDate)}，已超過 36 小時`,
+    };
+  }
+  if (latest.status === 'unchanged' || latest.same_as_previous) {
+    const prev = latest.previous_snapshot_id ? `，與 ${formatSnapshotDateLabel(latest.previous_snapshot_id)} 內容相同` : '，內容與前次相同';
+    return {
+      label: '正常',
+      tone: '#047857',
+      bg: '#ecfdf5',
+      border: '#a7f3d0',
+      detail: `最近快照 ${formatSnapshotDateLabel(latestDate)} 已寫入${prev}`,
     };
   }
   return {
@@ -4512,6 +4523,8 @@ async function renderAdminContent() {
       const tone = formatBackupStatus(item.status, inferredEmpty);
       const summary = inferredEmpty
         ? '此快照為空備份'
+        : (item.status === 'unchanged' || item.same_as_previous)
+          ? `已建立每日快照，內容與 ${item.previous_snapshot_id || '前一次'} 相同`
         : `${Number(item.evaluator_count || 0)} 位評估者 / ${Number(item.case_count || 0)} 案`;
       html += `<tr>`;
       html += `<td>${esc(item.snapshot_date || item.snapshot_id || item.id)}</td>`;

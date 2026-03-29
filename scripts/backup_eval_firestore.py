@@ -9,8 +9,9 @@ snapshot data to:
   eval_backups_daily/{YYYY-MM-DD}
   eval_backups_daily/{YYYY-MM-DD}/evaluators/{evaluator}
 
-If the newest existing snapshot has the same content hash, the script skips
-writing a new snapshot unless --force is used.
+Each calendar day writes its own immutable snapshot document. Content hashes are
+stored for change detection, but duplicate content does not suppress the daily
+write.
 """
 
 from __future__ import annotations
@@ -67,13 +68,16 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--local-dir",
-        default="",
-        help="Optional local backup root directory.",
+        default=os.environ.get(
+            "LAW_SUMMARY_EVAL_BACKUP_DIR",
+            r"D:\law-summary-eval-backups" if os.name == "nt" else "/mnt/d/law-summary-eval-backups",
+        ),
+        help="Local backup root directory. Default: D:\\law-summary-eval-backups.",
     )
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Write snapshot even if content hash matches the latest snapshot.",
+        help="Reserved compatibility flag. Daily snapshots are always written.",
     )
     return parser.parse_args()
 
@@ -250,21 +254,29 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
     return all_data
 
 
-def get_latest_snapshot_meta(db) -> Dict[str, Any] | None:
+def get_latest_snapshot_meta(db, exclude_snapshot_id: str = "") -> Dict[str, Any] | None:
     docs = (
         db.collection("eval_backups_daily")
         .order_by("snapshot_date", direction=firestore.Query.DESCENDING)
-        .limit(1)
+        .limit(5)
         .stream()
     )
     for doc in docs:
         data = doc.to_dict() or {}
+        if exclude_snapshot_id and doc.id == exclude_snapshot_id:
+            continue
         data["_id"] = doc.id
         return data
     return None
 
 
-def write_snapshot(db, snapshot_id: str, payload: Dict[str, Any], payload_hash: str) -> None:
+def write_snapshot(
+    db,
+    snapshot_id: str,
+    payload: Dict[str, Any],
+    payload_hash: str,
+    previous_snapshot: Dict[str, Any] | None = None,
+) -> None:
     today_ref = db.collection("eval_backups_daily").document(snapshot_id)
     evaluator_count = len(payload)
     case_count = sum(len(item.get("cases") or {}) for item in payload.values())
@@ -282,16 +294,23 @@ def write_snapshot(db, snapshot_id: str, payload: Dict[str, Any], payload_hash: 
             record_count += len(phase_tl)
             record_count += 1 if phase3 is not None else 0
     is_empty = evaluator_count == 0 or case_count == 0
+    previous_snapshot_id = previous_snapshot.get("_id") if previous_snapshot else ""
+    previous_content_hash = previous_snapshot.get("content_hash") if previous_snapshot else ""
+    same_as_previous = bool(previous_snapshot_id) and previous_content_hash == payload_hash
+    status = "empty" if is_empty else ("unchanged" if same_as_previous else "ok")
     meta = {
         "snapshot_id": snapshot_id,
         "snapshot_date": snapshot_id,
         "created_at": firestore.SERVER_TIMESTAMP,
         "content_hash": payload_hash,
+        "same_as_previous": same_as_previous,
+        "previous_snapshot_id": previous_snapshot_id,
+        "previous_content_hash": previous_content_hash,
         "evaluator_count": evaluator_count,
         "case_count": case_count,
         "record_count": record_count,
         "is_empty": is_empty,
-        "status": "empty" if is_empty else "ok",
+        "status": status,
         "schema_version": "eval_v2_daily_backup_v1",
     }
     batch = db.batch()
@@ -323,10 +342,32 @@ def write_local_snapshot(local_dir: str, snapshot_id: str, payload: Dict[str, An
     snapshot_dir = root / snapshot_id
     snapshot_dir.mkdir(parents=True, exist_ok=True)
     (snapshot_dir / "all.json").write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    latest_manifest = None
+    previous_snapshot_id = ""
+    previous_content_hash = ""
+    same_as_previous = False
+    if root.exists():
+        candidates = sorted(
+            [
+                p for p in root.iterdir()
+                if p.is_dir() and p.name != snapshot_id and (p / "manifest.json").exists()
+            ],
+            key=lambda p: p.name,
+            reverse=True,
+        )
+        if candidates:
+            latest_manifest = json.loads((candidates[0] / "manifest.json").read_text(encoding="utf-8"))
+            previous_snapshot_id = str(latest_manifest.get("snapshot_id") or candidates[0].name)
+            previous_content_hash = str(latest_manifest.get("content_hash") or "")
+            same_as_previous = previous_content_hash == payload_hash
+    is_empty = len(payload) == 0 or all(not (item.get("cases") or {}) for item in payload.values())
     manifest = {
         "snapshot_id": snapshot_id,
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "content_hash": payload_hash,
+        "same_as_previous": same_as_previous,
+        "previous_snapshot_id": previous_snapshot_id,
+        "previous_content_hash": previous_content_hash,
         "evaluator_count": len(payload),
         "case_count": sum(len(item.get("cases") or {}) for item in payload.values()),
         "record_count": sum(
@@ -337,8 +378,8 @@ def write_local_snapshot(local_dir: str, snapshot_id: str, payload: Dict[str, An
             for item in payload.values()
             for case_data in (item.get("cases") or {}).values()
         ),
-        "is_empty": len(payload) == 0 or all(not (item.get("cases") or {}) for item in payload.values()),
-        "status": "empty" if (len(payload) == 0 or all(not (item.get("cases") or {}) for item in payload.values())) else "ok",
+        "is_empty": is_empty,
+        "status": "empty" if is_empty else ("unchanged" if same_as_previous else "ok"),
     }
     (snapshot_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     eval_dir = snapshot_dir / "evaluators"
@@ -356,21 +397,16 @@ def main() -> int:
     snapshot_timestamp = dt.datetime.now(dt.timezone.utc).isoformat()
     payload = build_export_payload(db, snapshot_timestamp)
     payload_hash = content_hash(payload)
-    latest = get_latest_snapshot_meta(db)
+    latest = get_latest_snapshot_meta(db, exclude_snapshot_id=args.snapshot_id)
 
-    if latest and latest.get("content_hash") == payload_hash and not args.force:
-        print(
-            f"Skip backup: latest snapshot {latest.get('_id')} has identical content hash {payload_hash[:12]}..."
-        )
-        return 0
-
-    write_snapshot(db, args.snapshot_id, payload, payload_hash)
+    write_snapshot(db, args.snapshot_id, payload, payload_hash, previous_snapshot=latest)
     if args.local_dir:
         write_local_snapshot(args.local_dir, args.snapshot_id, payload, payload_hash)
 
     print(
         f"Backup written: snapshot={args.snapshot_id} evaluators={len(payload)} "
-        f"cases={sum(len(item.get('cases') or {}) for item in payload.values())} hash={payload_hash[:12]}..."
+        f"cases={sum(len(item.get('cases') or {}) for item in payload.values())} "
+        f"hash={payload_hash[:12]}... same_as_previous={bool(latest and latest.get('content_hash') == payload_hash)}"
     )
     return 0
 
