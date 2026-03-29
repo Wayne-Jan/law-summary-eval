@@ -159,12 +159,22 @@
         .content-panel { flex: 1 1 auto; min-width: 0; min-height: 0; padding: 0; overflow: hidden; background: #fafafa; height: 100%; }
         body.full-summary-layout .content-panel { order: 2; flex: 0 0 calc((100% - 6px) / 2); }
         .single-panel { height: 100%; min-height: 0; display: flex; flex-direction: column; background: #fff; }
-        .content-panel-body { padding: 14px 18px; flex: 1; min-height: 0; overflow-y: auto; background: #fff; }
+        .content-panel-body { padding: 16px 18px 20px; flex: 1; min-height: 0; overflow-y: auto; background: #f8fafc; }
         .summary-shell {
             max-width: 760px;
             margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
         }
         body.full-summary-layout .summary-shell { max-width: none; }
+        .summary-section-block {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            padding: 18px 20px 20px;
+        }
 
         .section-title {
             font-size: 15px; font-weight: 600; color: #333;
@@ -373,7 +383,6 @@
             }
             body.mobile-full-mode .nav-panel { display: none; }
             body.mobile-full-mode #singlePanel > .panel-head { display: none; }
-            body.mobile-full-mode .summary-section-block + .summary-section-block { margin-top: 22px; }
             body.mobile-full-mode .summary-section-block .section-title {
                 font-size: 15px;
                 margin-bottom: 10px;
@@ -398,6 +407,7 @@
 
             .content-panel { flex: 1; padding: 16px; overflow-y: auto; }
             .summary-shell { max-width: none; }
+            .summary-section-block { padding: 16px; border-radius: 12px; }
             .section-title { font-size: 16px; margin-bottom: 12px; }
             .section-content { font-size: 14px; line-height: 1.7; }
 
@@ -430,6 +440,7 @@
             .toolbar h1 { font-size: 13px; }
             .content-panel { padding: 12px 10px; }
             .summary-shell { max-width: none; }
+            .summary-section-block { padding: 14px; }
             .section-content { font-size: 13px; line-height: 1.65; }
             .nav-panel { width: 240px; }
         }
@@ -839,10 +850,10 @@
         function renderSingleContent(section) {
             const singlePanel = document.getElementById('contentPanelBody');
             if (!section.content) {
-                singlePanel.innerHTML = `<div class="summary-shell"><div class="section-title section-title-ai">${section.title}</div><div class="empty-content">本章節無內容</div></div>`;
+                singlePanel.innerHTML = `<div class="summary-shell"><section class="summary-section-block"><div class="section-title section-title-ai">${section.title}</div><div class="empty-content">本章節無內容</div></section></div>`;
                 return;
             }
-            singlePanel.innerHTML = `<div class="summary-shell"><div class="section-title section-title-ai">${section.title}</div><div class="section-content">${withCitationMarkup(section.content)}</div></div>`;
+            singlePanel.innerHTML = `<div class="summary-shell"><section class="summary-section-block"><div class="section-title section-title-ai">${section.title}</div><div class="section-content">${withCitationMarkup(section.content)}</div></section></div>`;
         }
 
         function renderFullSummaryContent() {
