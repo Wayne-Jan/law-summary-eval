@@ -1137,6 +1137,13 @@
     return '';
   }
 
+  function caseVerdictPriority(caseId) {
+    const verdict = getCaseVerdict(caseId);
+    if (verdict === '有罪') return 0;
+    if (verdict === '無罪') return 1;
+    return 2;
+  }
+
   function buildCaseVerdictBadge(caseId) {
     const verdict = getCaseVerdict(caseId);
     if (!verdict) return '';
@@ -1233,6 +1240,9 @@
     rows.sort((a, b) => {
       const metaA = getCaseMeta(a.caseName);
       const metaB = getCaseMeta(b.caseName);
+      const verdictA = caseVerdictPriority(a.caseName);
+      const verdictB = caseVerdictPriority(b.caseName);
+      if (verdictA !== verdictB) return verdictA - verdictB;
       const numA = Number(metaA.number);
       const numB = Number(metaB.number);
       const hasNumA = Number.isFinite(numA);
@@ -1279,8 +1289,8 @@
       <td>
         <div class="overview-case-main">
           ${rankHtml}
-          ${nameHtml}
           ${verdictHtml}
+          ${nameHtml}
         </div>
       </td>
       <td><span class="overview-case-volume ${esc(volumePillClass(row.caseName))}">${esc(formatVolumePill(row.caseName))}</span></td>
