@@ -1085,28 +1085,44 @@
       border-radius: 24px;
       box-shadow: 0 24px 60px rgba(79,70,229,0.10);
       padding: 28px 22px;
-      text-align: center;
+      text-align: left;
     }
-    .mobile-eval-notice-icon {
-      width: 56px;
-      height: 56px;
-      margin: 0 auto 14px;
-      border-radius: 18px;
-      background: linear-gradient(135deg, #eef2ff 0%, #ddd6fe 100%);
-      color: #4f46e5;
+    .mobile-eval-notice-head {
       display: flex;
       align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .mobile-eval-notice-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #eef2ff 0%, #ddd6fe 100%);
+      color: #4f46e5;
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      font-size: 26px;
-      font-weight: 700;
       box-shadow: inset 0 0 0 1px rgba(79,70,229,0.10);
+      flex: 0 0 52px;
+    }
+    .mobile-eval-notice-icon svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+    .mobile-eval-notice-kicker {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #4f46e5;
+      margin-bottom: 4px;
     }
     .mobile-eval-notice-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--slate-900);
       letter-spacing: -0.02em;
-      margin-bottom: 10px;
     }
     .mobile-eval-notice-text {
       font-size: 15px;
@@ -1130,7 +1146,7 @@
     .mobile-eval-notice-actions {
       display: flex;
       gap: 10px;
-      justify-content: center;
+      justify-content: flex-start;
       flex-wrap: wrap;
     }
     body.mobile-eval-restricted .progress-subbar,
@@ -1306,12 +1322,23 @@
 <div class="mobile-eval-notice" id="mobileEvalNotice">
   <div class="mobile-eval-notice-shell">
     <div class="mobile-eval-notice-card">
-      <div class="mobile-eval-notice-icon" aria-hidden="true">電</div>
-      <div class="mobile-eval-notice-title">建議改用電腦進行評估</div>
-      <div class="mobile-eval-notice-text">這個評估頁包含多欄對照、快捷鍵與大量文字輸入。手機上容易影響判讀與操作準確度。</div>
+      <div class="mobile-eval-notice-head">
+        <div class="mobile-eval-notice-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3.5" y="4.5" width="17" height="11" rx="2"></rect>
+            <path d="M2.5 18.5h19"></path>
+            <path d="M9 18.5h6"></path>
+          </svg>
+        </div>
+        <div>
+          <div class="mobile-eval-notice-kicker">Evaluation Notice</div>
+          <div class="mobile-eval-notice-title">此頁面建議以電腦完成評估作業</div>
+        </div>
+      </div>
+      <div class="mobile-eval-notice-text">本系統的評估流程包含原文、摘要與評分欄位的同步對照，以及快捷鍵與較大量的文字輸入。為維持判讀一致性與操作準確度，手機版不提供一般評估作業。</div>
       <div class="mobile-eval-notice-points">
-        <div>1. 建議使用電腦開啟，以獲得完整原文、摘要與評分區的對照視野。</div>
-        <div>2. 若需要正式進行評估，請改用電腦登入後操作。</div>
+        <div>1. 請改以電腦開啟本頁，以取得完整原文、摘要與評分區的對照視野。</div>
+        <div>2. 若需正式填寫評估結果，請於電腦版登入後再進行操作。</div>
       </div>
       <div class="mobile-eval-notice-actions">
         <a href="index.html" class="btn btn-ghost">返回首頁</a>
