@@ -538,6 +538,12 @@
       .save-indicator, .cloud-status, #userBadge, #adminInspectBanner { display: none !important; }
       .toolbar-help { margin-left: auto; }
       .toolbar > .admin-only.btn-ghost { display: none; }
+      .admin-page { padding: 18px 12px 28px; }
+      .admin-page-inner { width: min(100vw - 24px, 100%); }
+      .admin-panel { padding: 18px 14px; border-radius: 18px; }
+      .admin-panel-head { flex-direction: column; align-items: stretch; }
+      .admin-panel-actions { justify-content: stretch; }
+      .admin-panel-actions .btn { width: 100%; justify-content: center; }
     }
 
     /* ─── PHASE TL: Timeline Evaluation (three-column) ─── */
@@ -934,6 +940,111 @@
       line-height:1; cursor:pointer; transition:background .15s, border-color .15s, transform .15s;
     }
     .admin-panel .admin-version-delete:hover { background:#fef2f2; border-color:#fca5a5; transform:translateY(-1px); }
+    .admin-mobile-list,
+    .admin-mobile-backups { display:grid; gap:12px; }
+    .admin-mobile-card {
+      border:1px solid var(--slate-300);
+      border-radius:16px;
+      background:#fff;
+      padding:14px;
+      box-shadow:0 10px 30px rgba(15,23,42,0.05);
+    }
+    .admin-mobile-card-head {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:12px;
+    }
+    .admin-mobile-card-title {
+      font-size:14px;
+      font-weight:700;
+      color:var(--slate-900);
+      line-height:1.5;
+    }
+    .admin-mobile-card-sub {
+      margin-top:4px;
+      font-size:12px;
+      color:var(--slate-500);
+      line-height:1.6;
+    }
+    .admin-mobile-evaluator-list { display:grid; gap:10px; }
+    .admin-mobile-evaluator {
+      border:1px solid var(--slate-200);
+      border-radius:14px;
+      background:var(--slate-50);
+      padding:10px 12px;
+    }
+    .admin-mobile-evaluator.done { border-color:#a7f3d0; background:#ecfdf5; }
+    .admin-mobile-evaluator.partial { border-color:#fcd34d; background:#fffbeb; }
+    .admin-mobile-evaluator-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .admin-mobile-evaluator-name {
+      font-size:13px;
+      font-weight:700;
+      color:var(--slate-900);
+    }
+    .admin-mobile-evaluator-role {
+      font-size:11px;
+      color:var(--slate-500);
+      font-weight:600;
+    }
+    .admin-mobile-version-row {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:8px;
+      margin-bottom:8px;
+    }
+    .admin-mobile-version-row:last-child { margin-bottom:0; }
+    .admin-mobile-version-label {
+      min-width:18px;
+      font-size:12px;
+      font-weight:700;
+      color:var(--slate-600);
+      padding-top:4px;
+    }
+    .admin-mobile-actions {
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .admin-mobile-backup-meta {
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+      margin-top:10px;
+    }
+    .admin-mobile-backup-stat {
+      border-radius:12px;
+      background:var(--slate-50);
+      border:1px solid var(--slate-200);
+      padding:8px 10px;
+      text-align:center;
+    }
+    .admin-mobile-backup-stat-label {
+      font-size:11px;
+      color:var(--slate-500);
+      margin-bottom:2px;
+    }
+    .admin-mobile-backup-stat-value {
+      font-size:14px;
+      font-weight:700;
+      color:var(--slate-900);
+      font-variant-numeric:tabular-nums;
+    }
+    .admin-mobile-card .backup-detail-panel {
+      display:none;
+      gap:8px;
+      padding-top:10px;
+    }
+    .admin-mobile-card .backup-detail-panel.open { display:grid; }
     .admin-inspect-banner {
       display:none; align-items:center; gap:8px; padding:6px 12px; border-radius:999px;
       background:#eff6ff; color:#1d4ed8; font-size:12px; font-weight:700; white-space:nowrap;
@@ -1560,13 +1671,14 @@ async function adminToggleBackupDetails(snapshotId) {
   const target = document.getElementById(`backupDetails-${snapshotId}`);
   const row = document.getElementById(`backupDetailsRow-${snapshotId}`);
   if (!target) return;
-  if (!row) return;
   if (target.dataset.loaded === '1') {
-    row.classList.toggle('open');
+    if (row) row.classList.toggle('open');
+    else target.classList.toggle('open');
     return;
   }
   target.innerHTML = '<div style="font-size:12px;color:var(--slate-500);">載入中...</div>';
-  row.classList.add('open');
+  if (row) row.classList.add('open');
+  else target.classList.add('open');
   try {
     const rows = await fetchBackupEvaluatorSummaries(snapshotId);
     if (!rows.length) {
@@ -3735,6 +3847,10 @@ window.addEventListener('resize', () => {
   updateLayoutHeights();
   const activeTab = document.querySelector('.tl-mobile-tab.active')?.dataset.tab || 'events';
   setTLMobileTab(activeTab);
+  const adminPage = document.getElementById('adminPage');
+  if (document.body.classList.contains('is-admin') && adminPage && !adminPage.classList.contains('hidden')) {
+    renderAdminContent();
+  }
 });
 
 // ═══════════════════════════════════════════════════════════════
@@ -4433,6 +4549,191 @@ function hideAdminPanel() {
   document.getElementById('adminPage').classList.add('hidden');
 }
 
+function isMobileAdminView() {
+  return window.innerWidth <= 900;
+}
+
+function buildAdminVersionGrid(ev, caseName, display, layout = 'desktop') {
+  const condLetters = ANON_LABELS.map(l => l.replace('版本 ', ''));
+  if (layout === 'mobile') {
+    let rows = '';
+    for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
+      const cs = getEvaluatorCondStatus(ev, caseName, i);
+      const letter = condLetters[i] || String.fromCharCode(65 + i);
+      let symbol = '–';
+      let cls = 'status-empty';
+      if (cs === 'done') { symbol = '✓'; cls = 'status-done'; }
+      else if (cs === 'partial') { symbol = '·'; cls = 'status-partial'; }
+      const href = buildAdminInspectHref(ev, caseName, letter, getDefaultPhaseForEvaluatorCondition(ev, caseName, i));
+      const del = cs !== 'empty'
+        ? `<button class="admin-version-delete" type="button" onclick='adminDeleteVersionData(${JSON.stringify(ev)}, ${JSON.stringify(caseName)}, ${i})' title="刪除版本 ${letter}">×</button>`
+        : '';
+      rows += `<div class="admin-mobile-version-row"><div class="admin-mobile-version-label">${letter}</div><div class="admin-version-item"><a class="admin-version-chip ${cls}" href="${href}" title="檢視 ${ev} / ${display} / 版本 ${letter}">${letter}${symbol}</a>${del}</div></div>`;
+    }
+    return rows;
+  }
+
+  let pills = '<div class="admin-version-grid">';
+  for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
+    const cs = getEvaluatorCondStatus(ev, caseName, i);
+    const letter = condLetters[i] || String.fromCharCode(65 + i);
+    let symbol = '–';
+    let cls = 'status-empty';
+    if (cs === 'done') { symbol = '✓'; cls = 'status-done'; }
+    else if (cs === 'partial') { symbol = '·'; cls = 'status-partial'; }
+    const href = buildAdminInspectHref(ev, caseName, letter, getDefaultPhaseForEvaluatorCondition(ev, caseName, i));
+    const del = cs !== 'empty'
+      ? `<button class="admin-version-delete" type="button" onclick='adminDeleteVersionData(${JSON.stringify(ev)}, ${JSON.stringify(caseName)}, ${i})' title="刪除版本 ${letter}">×</button>`
+      : '';
+    pills += `<div class="admin-version-item"><a class="admin-version-chip ${cls}" href="${href}" title="檢視 ${ev} / ${display} / 版本 ${letter}">${letter}${symbol}</a>${del}</div>`;
+  }
+  pills += '</div>';
+  return pills;
+}
+
+function buildAdminCaseActions(ev, caseName, overall, mobile = false) {
+  const inspectHref = buildAdminInspectHref(ev, caseName, null, null);
+  const deleteBtn = overall !== 'empty'
+    ? `<button class="admin-mini-btn danger" onclick='adminDeleteCaseData(${JSON.stringify(ev)}, ${JSON.stringify(caseName)})'>刪整案</button>`
+    : '';
+  const p3 = loadLocalJSON(`eval_v2_${ev}_${caseName}_phase3`);
+  const p3badge = p3 && p3._complete ? `<span style="font-size:11px;font-weight:700;color:var(--indigo);">★ 已排序</span>` : '';
+  const cls = mobile ? 'admin-mobile-actions' : 'admin-cell-actions';
+  return `<div class="${cls}"><a class="admin-mini-btn jump-link" href="${inspectHref}">檢視整案</a>${deleteBtn}${p3badge}</div>`;
+}
+
+function buildAdminProgressDesktop(cases, evaluators) {
+  let html = '<div style="overflow-x:auto;"><table>';
+  html += '<thead><tr><th style="text-align:left;">案件</th>';
+  evaluators.forEach(ev => {
+    const role = USERS[ev].role;
+    html += `<th>${esc(ev)}<br><span style="font-size:11px;font-weight:400;color:var(--slate-500);">${role}</span></th>`;
+  });
+  html += '</tr></thead><tbody>';
+  cases.forEach(c => {
+    const display = getCaseDisplayName(c);
+    html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;">${esc(display)}</td>`;
+    evaluators.forEach(ev => {
+      const overall = getEvaluatorCaseStatus(ev, c);
+      let cellStyle = '';
+      if (overall === 'complete') cellStyle = 'background:var(--emerald-light);';
+      else if (overall === 'partial') cellStyle = 'background:#fffbeb;';
+      const statusHtml = buildAdminVersionGrid(ev, c, display, 'desktop') || `<span style="font-size:11px;color:var(--slate-400);">尚無資料</span>`;
+      html += `<td style="padding:6px 8px;${cellStyle}"><div class="admin-cell">${statusHtml}${buildAdminCaseActions(ev, c, overall, false)}</div></td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+  return html;
+}
+
+function buildAdminProgressMobile(cases, evaluators) {
+  const cards = cases.map(caseName => {
+    const display = getCaseDisplayName(caseName);
+    const evaluatorsHtml = evaluators.map(ev => {
+      const overall = getEvaluatorCaseStatus(ev, caseName);
+      const tone = overall === 'complete' ? 'done' : (overall === 'partial' ? 'partial' : '');
+      return `<div class="admin-mobile-evaluator ${tone}">
+        <div class="admin-mobile-evaluator-head">
+          <div>
+            <div class="admin-mobile-evaluator-name">${esc(ev)}</div>
+            <div class="admin-mobile-evaluator-role">${esc(USERS[ev].role)}</div>
+          </div>
+          <span class="admin-version-chip ${overall === 'complete' ? 'status-done' : (overall === 'partial' ? 'status-partial' : 'status-empty')}">${overall === 'complete' ? '完成' : (overall === 'partial' ? '部分' : '未填')}</span>
+        </div>
+        ${buildAdminVersionGrid(ev, caseName, display, 'mobile')}
+        ${buildAdminCaseActions(ev, caseName, overall, true)}
+      </div>`;
+    }).join('');
+    return `<div class="admin-mobile-card">
+      <div class="admin-mobile-card-head">
+        <div>
+          <div class="admin-mobile-card-title">${esc(display)}</div>
+          <div class="admin-mobile-card-sub">逐位評估者檢視版本完成度與管理操作</div>
+        </div>
+      </div>
+      <div class="admin-mobile-evaluator-list">${evaluatorsHtml}</div>
+    </div>`;
+  }).join('');
+  return `<div class="admin-mobile-list">${cards}</div>`;
+}
+
+function buildAdminBackupOverview(backups, backupSummary) {
+  let html = `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">`;
+  html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
+  html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);margin-bottom:8px;">同步狀態</div>`;
+  html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">Firebase Auth / Firestore 已啟用。<br>評分資料會自動寫入雲端 latest records，可於工具列手動觸發全量同步。</div>`;
+  html += `</div>`;
+  html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
+  html += `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap;">`;
+  html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);">歷史備份</div>`;
+  html += `<span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;border:1px solid ${backupSummary.border};background:${backupSummary.bg};color:${backupSummary.tone};font-size:12px;font-weight:700;">${backupSummary.label}</span>`;
+  html += `</div>`;
+  html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">${esc(backupSummary.detail)}<br>每日排程：03:00，來源 collection：<code>eval_backups_daily</code></div>`;
+  html += `</div></div>`;
+  return html;
+}
+
+function buildAdminBackupHistory(backups, mobile = false) {
+  if (!backups.length) {
+    return `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">目前沒有可顯示的歷史備份資料。</div>`;
+  }
+  if (mobile) {
+    const cards = backups.map(item => {
+      const inferredEmpty = !!item.is_empty || Number(item.evaluator_count || 0) === 0 || Number(item.case_count || 0) === 0;
+      const tone = formatBackupStatus(item.status, inferredEmpty);
+      const summary = inferredEmpty
+        ? '此快照為空備份'
+        : (item.status === 'unchanged' || item.same_as_previous)
+          ? `已建立每日快照，內容與 ${item.previous_snapshot_id || '前一次'} 相同`
+          : `${Number(item.evaluator_count || 0)} 位評估者 / ${Number(item.case_count || 0)} 案`;
+      const id = item.snapshot_id || item.id;
+      return `<div class="admin-mobile-card">
+        <div class="admin-mobile-card-head">
+          <div>
+            <div class="admin-mobile-card-title">${esc(item.snapshot_date || id)}</div>
+            <div class="admin-mobile-card-sub">${esc(summary)}</div>
+          </div>
+          <span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:12px;font-weight:700;">${tone.label}</span>
+        </div>
+        <div class="admin-mobile-backup-meta">
+          <div class="admin-mobile-backup-stat"><div class="admin-mobile-backup-stat-label">評估者</div><div class="admin-mobile-backup-stat-value">${Number(item.evaluator_count || 0)}</div></div>
+          <div class="admin-mobile-backup-stat"><div class="admin-mobile-backup-stat-label">案件</div><div class="admin-mobile-backup-stat-value">${Number(item.case_count || 0)}</div></div>
+          <div class="admin-mobile-backup-stat"><div class="admin-mobile-backup-stat-label">記錄</div><div class="admin-mobile-backup-stat-value">${Number(item.record_count || 0)}</div></div>
+        </div>
+        <div class="admin-mobile-actions"><button class="admin-mini-btn" type="button" onclick='adminToggleBackupDetails(${JSON.stringify(id)})'>查看摘要</button></div>
+        <div id="backupDetails-${esc(id)}" class="backup-detail-panel"></div>
+      </div>`;
+    }).join('');
+    return `<div class="admin-mobile-backups">${cards}</div>`;
+  }
+
+  let html = `<div style="overflow-x:auto;"><table>`;
+  html += `<thead><tr><th>日期</th><th>狀態</th><th>評估者</th><th>案件</th><th>記錄</th><th>摘要</th><th>動作</th></tr></thead><tbody>`;
+  backups.forEach(item => {
+    const inferredEmpty = !!item.is_empty || Number(item.evaluator_count || 0) === 0 || Number(item.case_count || 0) === 0;
+    const tone = formatBackupStatus(item.status, inferredEmpty);
+    const summary = inferredEmpty
+      ? '此快照為空備份'
+      : (item.status === 'unchanged' || item.same_as_previous)
+        ? `已建立每日快照，內容與 ${item.previous_snapshot_id || '前一次'} 相同`
+        : `${Number(item.evaluator_count || 0)} 位評估者 / ${Number(item.case_count || 0)} 案`;
+    const id = item.snapshot_id || item.id;
+    html += `<tr>`;
+    html += `<td>${esc(item.snapshot_date || id)}</td>`;
+    html += `<td><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:11px;font-weight:700;">${tone.label}</span></td>`;
+    html += `<td>${Number(item.evaluator_count || 0)}</td>`;
+    html += `<td>${Number(item.case_count || 0)}</td>`;
+    html += `<td>${Number(item.record_count || 0)}</td>`;
+    html += `<td style="text-align:left;color:var(--slate-500);font-size:12px;">${esc(summary)}</td>`;
+    html += `<td><button class="admin-mini-btn" type="button" onclick='adminToggleBackupDetails(${JSON.stringify(id)})'>查看摘要</button></td>`;
+    html += `</tr>`;
+    html += `<tr id="backupDetailsRow-${esc(id)}" class="backup-detail-row"><td colspan="7" class="backup-detail-cell"><div id="backupDetails-${esc(id)}" class="backup-detail-panel"></div></td></tr>`;
+  });
+  html += `</tbody></table></div>`;
+  return html;
+}
+
 async function renderAdminContent() {
   const container = document.getElementById('adminContent');
   const evaluators = Object.keys(USERS).filter(u => u !== 'admin');
@@ -4443,120 +4744,26 @@ async function renderAdminContent() {
     return;
   }
 
-  let html = '<div style="margin-bottom:14px;font-size:13px;color:var(--slate-500);line-height:1.6;">點版本可直接進入老師評估頁的唯讀管理檢視；可刪除單一版本，或刪除整案資料。</div>';
-  html += '<div style="overflow-x:auto;"><table>';
-  html += '<thead><tr><th style="text-align:left;">案件</th>';
-  evaluators.forEach(ev => {
-    const role = USERS[ev].role;
-    html += `<th>${esc(ev)}<br><span style="font-size:11px;font-weight:400;color:var(--slate-500);">${role}</span></th>`;
-  });
-  html += '</tr></thead><tbody>';
-
-  const condLetters = ANON_LABELS.map(l => l.replace('版本 ', ''));
-
-  cases.forEach(c => {
-    const display = getCaseDisplayName(c);
-    html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;">${esc(display)}</td>`;
-    evaluators.forEach(ev => {
-      const overall = getEvaluatorCaseStatus(ev, c);
-      let cellStyle = '';
-      if (overall === 'complete') cellStyle = 'background:var(--emerald-light);';
-      else if (overall === 'partial') cellStyle = 'background:#fffbeb;';
-
-      // Per-condition pills
-      let pills = '<div class="admin-version-grid">';
-      for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
-        const cs = getEvaluatorCondStatus(ev, c, i);
-        const letter = condLetters[i] || String.fromCharCode(65 + i);
-        let symbol = '–';
-        let cls = 'status-empty';
-        if (cs === 'done') { symbol = '✓'; cls = 'status-done'; }
-        else if (cs === 'partial') { symbol = '·'; cls = 'status-partial'; }
-        const href = buildAdminInspectHref(ev, c, letter, getDefaultPhaseForEvaluatorCondition(ev, c, i));
-        const del = cs !== 'empty'
-          ? `<button class="admin-version-delete" type="button" onclick='adminDeleteVersionData(${JSON.stringify(ev)}, ${JSON.stringify(c)}, ${i})' title="刪除版本 ${letter}">×</button>`
-          : '';
-        pills += `<div class="admin-version-item"><a class="admin-version-chip ${cls}" href="${href}" title="檢視 ${ev} / ${display} / 版本 ${letter}">${letter}${symbol}</a>${del}</div>`;
-      }
-      pills += '</div>';
-
-      // Phase 3 indicator
-      const p3Key = `eval_v2_${ev}_${c}_phase3`;
-      let p3done = false;
-      const p3 = loadLocalJSON(p3Key);
-      p3done = !!(p3 && p3._complete);
-
-      const statusHtml = pills || `<span style="font-size:11px;color:var(--slate-400);">尚無資料</span>`;
-      const deleteBtn = overall !== 'empty'
-        ? `<button class="admin-mini-btn danger" onclick='adminDeleteCaseData(${JSON.stringify(ev)}, ${JSON.stringify(c)})'>刪整案</button>`
-        : '';
-      const inspectHref = buildAdminInspectHref(ev, c, null, null);
-      const p3badge = p3done ? `<span style="font-size:11px;font-weight:700;color:var(--indigo);">★ 已排序</span>` : '';
-      html += `<td style="padding:6px 8px;${cellStyle}"><div class="admin-cell">${statusHtml}<div class="admin-cell-actions"><a class="admin-mini-btn jump-link" href="${inspectHref}">檢視整案</a>${deleteBtn}${p3badge}</div></div></td>`;
-    });
-    html += '</tr>';
-  });
-
-  html += '</tbody></table></div>';
-
   let backups = [];
   try {
     backups = await fetchBackupSnapshots(30);
   } catch (err) {
     console.error('Failed to load backup snapshots:', err);
   }
-  const backupSummary = buildBackupHealthSummary(backups);
-  html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--slate-300);display:grid;gap:14px;">`;
-  html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;">`;
-  html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
-  html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);margin-bottom:8px;">同步狀態</div>`;
-  html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">`;
-  html += `Firebase Auth / Firestore 已啟用。<br>`;
-  html += `評分資料會自動寫入雲端 latest records，可於工具列手動觸發全量同步。</div>`;
-  html += `</div>`;
-  html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
-  html += `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px;">`;
-  html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);">歷史備份</div>`;
-  html += `<span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;border:1px solid ${backupSummary.border};background:${backupSummary.bg};color:${backupSummary.tone};font-size:12px;font-weight:700;">${backupSummary.label}</span>`;
-  html += `</div>`;
-  html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">${esc(backupSummary.detail)}<br>每日排程：03:00，來源 collection：<code>eval_backups_daily</code></div>`;
-  html += `</div>`;
-  html += `</div>`;
 
+  const mobile = isMobileAdminView();
+  const backupSummary = buildBackupHealthSummary(backups);
+  let html = '<div style="margin-bottom:14px;font-size:13px;color:var(--slate-500);line-height:1.6;">點版本可直接進入老師評估頁的唯讀管理檢視；可刪除單一版本，或刪除整案資料。</div>';
+  html += mobile ? buildAdminProgressMobile(cases, evaluators) : buildAdminProgressDesktop(cases, evaluators);
+  html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--slate-300);display:grid;gap:14px;">`;
+  html += buildAdminBackupOverview(backups, backupSummary);
   html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
   html += `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">`;
   html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);">備份歷程</div>`;
   html += `<div style="font-size:12px;color:var(--slate-500);">最近 30 筆快照</div>`;
   html += `</div>`;
-  if (!backups.length) {
-    html += `<div style="font-size:13px;color:var(--slate-500);line-height:1.7;">目前沒有可顯示的歷史備份資料。</div>`;
-  } else {
-    html += `<div style="overflow-x:auto;"><table>`;
-    html += `<thead><tr><th>日期</th><th>狀態</th><th>評估者</th><th>案件</th><th>記錄</th><th>摘要</th><th>動作</th></tr></thead><tbody>`;
-    backups.forEach(item => {
-      const inferredEmpty = !!item.is_empty || Number(item.evaluator_count || 0) === 0 || Number(item.case_count || 0) === 0;
-      const tone = formatBackupStatus(item.status, inferredEmpty);
-      const summary = inferredEmpty
-        ? '此快照為空備份'
-        : (item.status === 'unchanged' || item.same_as_previous)
-          ? `已建立每日快照，內容與 ${item.previous_snapshot_id || '前一次'} 相同`
-        : `${Number(item.evaluator_count || 0)} 位評估者 / ${Number(item.case_count || 0)} 案`;
-      html += `<tr>`;
-      html += `<td>${esc(item.snapshot_date || item.snapshot_id || item.id)}</td>`;
-      html += `<td><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:11px;font-weight:700;">${tone.label}</span></td>`;
-      html += `<td>${Number(item.evaluator_count || 0)}</td>`;
-      html += `<td>${Number(item.case_count || 0)}</td>`;
-      html += `<td>${Number(item.record_count || 0)}</td>`;
-      html += `<td style="text-align:left;color:var(--slate-500);font-size:12px;">${esc(summary)}</td>`;
-      html += `<td><button class="admin-mini-btn" type="button" onclick='adminToggleBackupDetails(${JSON.stringify(item.snapshot_id || item.id)})'>查看摘要</button></td>`;
-      html += `</tr>`;
-      html += `<tr id="backupDetailsRow-${esc(item.snapshot_id || item.id)}" class="backup-detail-row"><td colspan="7" class="backup-detail-cell"><div id="backupDetails-${esc(item.snapshot_id || item.id)}" class="backup-detail-panel"></div></td></tr>`;
-    });
-    html += `</tbody></table></div>`;
-  }
-  html += `</div>`;
-  html += `</div>`;
-
+  html += buildAdminBackupHistory(backups, mobile);
+  html += `</div></div>`;
   container.innerHTML = html;
 }
 

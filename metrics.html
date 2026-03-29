@@ -83,6 +83,18 @@
       padding: 8px 10px;
     }
     .mobile-metrics-overview { display: none; }
+    .mobile-relative-note {
+      display: none;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #dbeafe;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 12.5px;
+      font-weight: 600;
+      line-height: 1.6;
+    }
     .mobile-table-toggle { display: none; }
     .overview-table {
       width: 100%; border-collapse: collapse; font-size: 14px;
@@ -819,7 +831,10 @@
       .model-detail-grid { grid-template-columns: 1fr; }
       .model-detail-row { grid-template-columns: 88px minmax(0,1fr) 42px; gap: 8px; }
       .model-detail-label { text-align: left; }
-      .page-tab-bar { display: flex; width: 100%; border-radius: 16px; }
+      #pagePanel_overview,
+      #pagePanel_cases { display: none !important; }
+      .mobile-relative-note { display: block; }
+      .page-tab-bar { display: none; width: 100%; border-radius: 16px; }
       .page-tab-btn { flex: 1; text-align: center; padding: 9px 10px; }
       .panel-title { font-size: 19px; }
       .panel-desc { font-size: 13px; line-height: 1.6; }
@@ -941,6 +956,7 @@
       <div class="panel-kicker">模型輪廓</div>
       <div class="panel-title">用相對位置看各模型的能力輪廓</div>
       <div class="panel-desc">這裡保留原始分數卡片，但雷達圖改成同冊內的相對位置視覺化。<br>圖上標示 P0 到 P100，方便比較不同量級指標在目前冊別中的相對強弱。</div>
+      <div class="mobile-relative-note">手機版聚焦模型輪廓比較，只保留最直觀的相對位置視圖。完整表格與逐案比較請改用桌面版查看。</div>
     </div>
     <div id="relativeCardGrid" class="model-card-grid"></div>
   </div>
@@ -1560,6 +1576,7 @@
   };
 
   window.setMainTab = function(tab) {
+    if (isMobileMetricsView()) tab = 'relative';
     currentMainTab = tab;
     document.querySelectorAll('.page-tab-btn').forEach(b => b.classList.toggle('active', b.dataset.mainTab === tab));
     document.querySelectorAll('.page-panel').forEach(p => p.classList.toggle('active', p.id === 'pagePanel_' + tab));
@@ -1579,6 +1596,10 @@
 
   function isMobileMetricsView() {
     return window.innerWidth <= 768;
+  }
+
+  function getPreferredMainTab() {
+    return isMobileMetricsView() ? 'relative' : currentMainTab;
   }
 
   const MOBILE_METRIC_OPTIONS = [
@@ -2586,7 +2607,7 @@
         buildOverview();
         buildCaseSelector();
         resetCaseDetail();
-        setMainTab(currentMainTab);
+        setMainTab(getPreferredMainTab());
         renderMobileMetricsOverview(getSortedEntries());
       })
       .catch(err => {
@@ -2601,6 +2622,7 @@
   loadVolumeData(currentVolume);
   window.addEventListener('resize', () => {
     if (!DATA) return;
+    if (isMobileMetricsView() && currentMainTab !== 'relative') setMainTab('relative');
     renderMobileMetricsOverview(getSortedEntries());
   });
 
