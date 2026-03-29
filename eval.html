@@ -1149,6 +1149,25 @@
       justify-content: flex-start;
       flex-wrap: wrap;
     }
+    .mobile-eval-notice-link,
+    .mobile-eval-notice-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0;
+      border: none;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.5;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: var(--sans);
+    }
+    .mobile-eval-notice-link { color: var(--indigo); }
+    .mobile-eval-notice-link:hover { color: var(--indigo-dark); }
+    .mobile-eval-notice-btn { color: var(--slate-500); }
+    .mobile-eval-notice-btn:hover { color: var(--slate-700); }
     body.mobile-eval-restricted .progress-subbar,
     body.mobile-eval-restricted .main,
     body.mobile-eval-restricted .footer,
@@ -1332,7 +1351,7 @@
         </div>
         <div>
           <div class="mobile-eval-notice-kicker">Evaluation Notice</div>
-          <div class="mobile-eval-notice-title">此頁面建議以電腦完成評估作業</div>
+          <div class="mobile-eval-notice-title">建議以電腦完成評估作業</div>
         </div>
       </div>
       <div class="mobile-eval-notice-text">本系統的評估流程包含原文、摘要與評分欄位的同步對照，以及快捷鍵與較大量的文字輸入。為維持判讀一致性與操作準確度，手機版不提供一般評估作業。</div>
@@ -1341,8 +1360,26 @@
         <div>2. 若需正式填寫評估結果，請於電腦版登入後再進行操作。</div>
       </div>
       <div class="mobile-eval-notice-actions">
-        <a href="index.html" class="btn btn-ghost">返回首頁</a>
-        <button class="btn btn-primary" type="button" onclick="logout()">登出</button>
+        <a href="index.html" class="mobile-eval-notice-link">
+          <span class="login-mini-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 11.5 12 4l9 7.5"></path>
+              <path d="M6 10.5V20h12v-9.5"></path>
+              <path d="M10 20v-5h4v5"></path>
+            </svg>
+          </span>
+          <span>返回首頁</span>
+        </a>
+        <button class="mobile-eval-notice-btn" type="button" onclick="logout()">
+          <span class="login-mini-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <path d="M10 17 15 12 10 7"></path>
+              <path d="M15 12H3"></path>
+            </svg>
+          </span>
+          <span>登出</span>
+        </button>
       </div>
     </div>
   </div>
