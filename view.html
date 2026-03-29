@@ -365,6 +365,14 @@
             }
             body.mobile-full-mode .nav-panel { display: none; }
             body.mobile-full-mode #singlePanel > .panel-head { display: none; }
+            body.mobile-full-mode .summary-section-block + .summary-section-block { margin-top: 22px; }
+            body.mobile-full-mode .summary-section-block .section-title {
+                font-size: 15px;
+                margin-bottom: 10px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid #ddd6fe;
+                color: #312e81;
+            }
             body.nav-open .nav-panel { transform: translateX(0); }
             body.nav-collapsed .nav-panel { width: 260px; }
             body.nav-collapsed .nav-item { font-size: 13px; padding: 10px 16px; text-align: left; }
@@ -824,12 +832,17 @@
             const singlePanel = document.getElementById('contentPanelBody');
             const parts = (viewData.sections || [])
                 .filter((section) => section.content)
-                .map((section) => withCitationMarkup(section.content));
+                .map((section) => (
+                    `<section class="summary-section-block">` +
+                    `<div class="section-title section-title-ai">${escapeHtml(section.title)}</div>` +
+                    `<div class="section-content">${withCitationMarkup(section.content)}</div>` +
+                    `</section>`
+                ));
             if (!parts.length) {
                 singlePanel.innerHTML = '<div class="summary-shell"><div class="empty-content">目前無可顯示摘要</div></div>';
                 return;
             }
-            singlePanel.innerHTML = `<div class="summary-shell"><div class="section-content">${parts.join('\n\n')}</div></div>`;
+            singlePanel.innerHTML = `<div class="summary-shell">${parts.join('')}</div>`;
         }
 
         // Normalize CH_1 → CH_01 (pad to 2 digits to match chunk keys)
