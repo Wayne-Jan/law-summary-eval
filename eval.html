@@ -852,6 +852,19 @@
     .admin-panel th, .admin-panel td { padding: 6px 8px; border: 1px solid var(--slate-300); text-align: center; vertical-align: top; }
     .admin-panel th { background: var(--slate-100); font-weight: 600; color: var(--slate-700); position: sticky; top: 0; }
     .admin-panel th:first-child, .admin-panel td:first-child { width: 285px; min-width: 285px; }
+    .admin-panel tr.backup-detail-row { display: none; }
+    .admin-panel tr.backup-detail-row.open { display: table-row; }
+    .admin-panel td.backup-detail-cell {
+      padding: 0 10px;
+      background: #f8fafc;
+      border-top: none;
+    }
+    .admin-panel .backup-detail-panel {
+      display: none;
+      gap: 8px;
+      padding: 12px 0 14px;
+    }
+    .admin-panel tr.backup-detail-row.open .backup-detail-panel { display: grid; }
     .admin-panel .status-done { color: var(--emerald); font-weight: 700; }
     .admin-panel .status-partial { color: var(--amber); }
     .admin-panel .status-empty { color: var(--slate-300); }
@@ -1545,13 +1558,15 @@ async function fetchBackupEvaluatorSummaries(snapshotId) {
 
 async function adminToggleBackupDetails(snapshotId) {
   const target = document.getElementById(`backupDetails-${snapshotId}`);
+  const row = document.getElementById(`backupDetailsRow-${snapshotId}`);
   if (!target) return;
+  if (!row) return;
   if (target.dataset.loaded === '1') {
-    target.style.display = target.style.display === 'none' ? 'grid' : 'none';
+    row.classList.toggle('open');
     return;
   }
   target.innerHTML = '<div style="font-size:12px;color:var(--slate-500);">載入中...</div>';
-  target.style.display = 'grid';
+  row.classList.add('open');
   try {
     const rows = await fetchBackupEvaluatorSummaries(snapshotId);
     if (!rows.length) {
@@ -4535,7 +4550,7 @@ async function renderAdminContent() {
       html += `<td style="text-align:left;color:var(--slate-500);font-size:12px;">${esc(summary)}</td>`;
       html += `<td><button class="admin-mini-btn" type="button" onclick='adminToggleBackupDetails(${JSON.stringify(item.snapshot_id || item.id)})'>查看摘要</button></td>`;
       html += `</tr>`;
-      html += `<tr><td colspan="7" style="background:#f8fafc;"><div id="backupDetails-${esc(item.snapshot_id || item.id)}" style="display:none;gap:8px;padding:10px 0;"></div></td></tr>`;
+      html += `<tr id="backupDetailsRow-${esc(item.snapshot_id || item.id)}" class="backup-detail-row"><td colspan="7" class="backup-detail-cell"><div id="backupDetails-${esc(item.snapshot_id || item.id)}" class="backup-detail-panel"></div></td></tr>`;
     });
     html += `</tbody></table></div>`;
   }
