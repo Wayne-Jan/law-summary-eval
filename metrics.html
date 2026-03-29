@@ -152,35 +152,6 @@
       display: flex; align-items: center; gap: 10px;
       min-width: 0;
     }
-    .overview-case-rank {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 0;
-      border: none;
-      background: transparent;
-      color: #4f46e5; font-size: 12px; font-weight: 700;
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .overview-case-rank svg {
-      width: 11px;
-      height: 11px;
-      display: block;
-      flex: 0 0 11px;
-    }
-    .overview-case-rank.rank-high {
-      color: #7c3aed;
-    }
-    .overview-case-rank.rank-mid {
-      color: #475569;
-    }
-    .overview-case-rank.rank-low {
-      color: #0f766e;
-    }
-    .overview-case-rank::after {
-      content: "|";
-      margin-left: 6px;
-      color: #cbd5e1;
-      font-weight: 500;
-    }
     .overview-case-link {
       min-width: 0;
       font-size: 13px; font-weight: 600; color: var(--slate-900); text-decoration: none;
@@ -1306,7 +1277,7 @@
     const actionHtml = href
       ? `<a class="overview-case-action" href="${esc(href)}" target="_blank" rel="noopener">檢視摘要</a>`
       : '';
-    const rankHtml = buildOverviewRankBadge(rankLabel);
+    const rankHtml = '';
     return `<tr class="overview-case-row">
       <td>
         <div class="overview-case-main">
@@ -1324,26 +1295,6 @@
       <td class="score-cell ${scoreClass01(rougeBert.bertscore_f1)}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
       <td>${actionHtml}</td>
     </tr>`;
-  }
-
-  function buildOverviewRankBadge(rankLabel = '') {
-    const map = {
-      '最高': {
-        cls: 'rank-high',
-        icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 2.5l3.5 4.25H9.25v6.75h-2.5V6.75H4.5L8 2.5z" fill="currentColor"/></svg>'
-      },
-      '平均': {
-        cls: 'rank-mid',
-        icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="3" y="7.1" width="10" height="1.8" rx="0.9" fill="currentColor"/></svg>'
-      },
-      '最低': {
-        cls: 'rank-low',
-        icon: '<svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 13.5l-3.5-4.25h2.25V2.5h2.5v6.75h2.25L8 13.5z" fill="currentColor"/></svg>'
-      }
-    };
-    const config = map[rankLabel];
-    if (!config) return '';
-    return `<span class="overview-case-rank ${config.cls}">${config.icon}<span>${esc(rankLabel)}</span></span>`;
   }
 
   function getPreviewCaseRows(cond) {
