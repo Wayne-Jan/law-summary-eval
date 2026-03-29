@@ -34,13 +34,6 @@
         }
 
         .toolbar .spacer { flex: 1; }
-        .toolbar .metrics-quick-link {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 6px 12px; border-radius: 999px; border: 1px solid rgba(79,70,229,0.18);
-            background: #eef2ff; color: #4338ca; text-decoration: none; font-size: 13px;
-            font-weight: 600; white-space: nowrap; flex-shrink: 0;
-        }
-        .toolbar .metrics-quick-link:hover { background: #e0e7ff; text-decoration: none; }
         .toolbar a.nav-link {
             color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
             padding: 6px 12px; border-radius: 8px; transition: all 0.15s;
@@ -121,6 +114,9 @@
             width: 210px; background: white; border-right: 1px solid #e0e0e0;
             overflow-y: auto; transition: width 0.2s; position: relative;
         }
+        body.full-summary-layout .nav-panel,
+        body.full-summary-layout #resizerLeft,
+        body.full-summary-layout #resizerRight { display: none; }
         .nav-panel-body { padding: 8px 0 18px; }
         .panel-head {
             min-height: 48px; padding: 10px 16px; border-bottom: 1px solid #f3f4f6; background: #fafafa;
@@ -142,12 +138,14 @@
 
         /* Middle: Content panel */
         .content-panel { flex: 1 1 auto; min-width: 0; padding: 0; overflow-y: auto; background: #fafafa; }
+        body.full-summary-layout .content-panel { order: 2; flex: 0 0 56%; }
         .single-panel { height: 100%; display: flex; flex-direction: column; }
         .content-panel-body { padding: 14px 18px; }
         .summary-shell {
             max-width: 760px;
             margin: 0 auto;
         }
+        body.full-summary-layout .summary-shell { max-width: none; }
 
         .section-title {
             font-size: 15px; font-weight: 600; color: #333;
@@ -176,6 +174,13 @@
         .source-panel {
             width: 360px; background: white; border-left: 1px solid #e0e0e0;
             display: flex; flex-direction: column; transition: width 0.2s; position: relative;
+        }
+        body.full-summary-layout .source-panel {
+            order: 1;
+            flex: 0 0 44%;
+            width: auto;
+            border-left: none;
+            border-right: 1px solid #e0e0e0;
         }
 
         .source-panel-header {
@@ -250,17 +255,6 @@
         .source-list::-webkit-scrollbar-track { background: transparent; }
         .source-list::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
 
-        /* Footer stats */
-        .footer-stats {
-            position: fixed; bottom: 0; left: 0; right: 0; height: 36px;
-            background: white; border-top: 1px solid #e0e0e0;
-            display: flex; align-items: center; padding: 0 20px; gap: 24px;
-            font-size: 12px; color: #666;
-        }
-        .stat-item { display: flex; align-items: center; gap: 6px; }
-        .stat-label { color: #999; }
-        .stat-value { font-weight: 500; color: #333; }
-
         /* Loading */
         .loading { display: flex; align-items: center; justify-content: center; height: 100%; color: #999; }
         .loading::after {
@@ -296,11 +290,6 @@
                 justify-content: space-between; padding: 0 12px; gap: 8px;
             }
             .toolbar h1 { font-size: 15px; flex-shrink: 0; }
-            .toolbar .metrics-quick-link {
-                font-size: 12px; padding: 5px 10px; margin-left: auto; margin-right: 8px;
-            }
-            .toolbar .metrics-quick-link { display: none; }
-
             .mobile-case-badge {
                 display: flex; align-items: center; gap: 6px;
                 font-size: 12px; font-weight: 600; color: #4f46e5;
@@ -393,8 +382,6 @@
             .section-title { font-size: 16px; margin-bottom: 12px; }
             .section-content { font-size: 14px; line-height: 1.7; }
 
-            .footer-stats { position: relative; height: auto; padding: 8px 12px; gap: 12px; flex-wrap: wrap; }
-
             .mobile-fab {
                 display: flex; position: fixed; bottom: 16px;
                 width: 44px; height: 44px; border-radius: 50%;
@@ -429,7 +416,6 @@
     <div class="toolbar">
         <h1>摘要檢視</h1>
         <span class="mobile-case-badge" id="mobileCaseBadge" onclick="toggleMobileDrawer()">選擇案件</span>
-        <a class="metrics-quick-link" href="metrics.html">評估指標</a>
         <button class="mobile-menu-btn" id="mobileMenuBtn" onclick="toggleMobileDrawer()">&#9776;</button>
         <div class="toolbar-controls" id="toolbarControls">
             <div class="ctrl-row">
@@ -524,8 +510,7 @@
         <div class="content-panel" id="contentPanel">
             <div class="single-panel" id="singlePanel">
                 <div class="panel-head">
-                    <div class="panel-kicker">AI</div>
-                    <div class="panel-title">AI 摘要</div>
+                    <div class="panel-title">摘要</div>
                 </div>
                 <div class="content-panel-body" id="contentPanelBody">
                     <div class="loading">載入中</div>
@@ -549,12 +534,6 @@
     <button class="mobile-fab fab-nav" id="fabNav" title="章節導航" onclick="toggleMobileNav()">&#9776;</button>
     <button class="mobile-fab fab-cite" id="fabCite" title="原文" onclick="toggleMobileSource()">&#128196;</button>
     <div class="drawer-overlay" id="drawerOverlay" onclick="closeAllDrawers()"></div>
-
-    <div class="footer-stats">
-        <div class="stat-item"><span class="stat-label">複雜度:</span><span class="stat-value" id="statComplexity">-</span></div>
-        <div class="stat-item"><span class="stat-label">章節數:</span><span class="stat-value" id="statSections">-</span></div>
-        <div class="stat-item"><span class="stat-label">引用數:</span><span class="stat-value" id="statCitations">-</span></div>
-    </div>
 
     <script src="versioning.js"></script>
     <script>
@@ -684,8 +663,6 @@
                 updateMobileCaseBadge();
                 renderConditionSelector();
                 renderGroupSelector();
-                renderNav();
-                renderStats();
                 renderSourcePanel();
                 updateUrlState();
 
@@ -714,6 +691,10 @@
 
         function syncMobileSummaryMode() {
             document.body.classList.toggle('mobile-full-mode', isMobileSummaryLayout());
+        }
+
+        function syncDesktopSummaryLayout() {
+            document.body.classList.toggle('full-summary-layout', !isMobileSummaryLayout());
         }
 
         function renderNav() {
@@ -765,14 +746,6 @@
             }
         }
 
-        function renderStats() {
-            document.getElementById('statComplexity').textContent = (viewData.complexity_score || 0).toFixed(1);
-            document.getElementById('statSections').textContent = `${viewData.sections.filter((s) => s.content).length}/${viewData.sections.length}`;
-            let totalCitations = 0;
-            viewData.sections.forEach((s) => { totalCitations += (s.content.match(/\[CH_\d+(?:,\s*CH_\d+)*\]/g) || []).length; });
-            document.getElementById('statCitations').textContent = totalCitations;
-        }
-
         // ─── SOURCE PANEL: Full text with chunk regions ───
 
         function renderSourcePanel() {
@@ -803,19 +776,10 @@
         function selectSection(sectionId) {
             currentSection = sectionId;
             activeChunkAlias = null;
-            if (isMobileSummaryLayout()) {
-                renderFullMobileContent();
-                document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
-                return;
-            }
+            renderFullSummaryContent();
             document.querySelectorAll('.nav-item').forEach((item) => {
                 item.classList.toggle('active', item.dataset.section === sectionId);
             });
-            const section = viewData.sections.find((s) => s.id === sectionId);
-            if (!section) return;
-
-            renderSingleContent(section);
-            // Clear source highlights
             document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
         }
 
@@ -828,7 +792,7 @@
             singlePanel.innerHTML = `<div class="summary-shell"><div class="section-title section-title-ai">${section.title}</div><div class="section-content">${withCitationMarkup(section.content)}</div></div>`;
         }
 
-        function renderFullMobileContent() {
+        function renderFullSummaryContent() {
             const singlePanel = document.getElementById('contentPanelBody');
             const parts = (viewData.sections || [])
                 .filter((section) => section.content)
@@ -1035,18 +999,19 @@
         // Init resizers
         document.addEventListener('DOMContentLoaded', () => {
             syncMobileSummaryMode();
+            syncDesktopSummaryLayout();
             initResizers();
         });
 
         window.addEventListener('resize', () => {
             const wasMobile = document.body.classList.contains('mobile-full-mode');
             syncMobileSummaryMode();
+            syncDesktopSummaryLayout();
             if (!viewData) return;
             const isMobile = isMobileSummaryLayout();
-            if (isMobile) renderFullMobileContent();
+            if (isMobile) renderFullSummaryContent();
             else if (wasMobile && currentSection) {
-                const section = viewData.sections.find((s) => s.id === currentSection) || viewData.sections.find((s) => s.content) || viewData.sections[0];
-                if (section) renderSingleContent(section);
+                renderFullSummaryContent();
             }
         });
 
