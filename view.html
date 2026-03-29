@@ -843,7 +843,7 @@
                 .map((section) => (
                     `<section class="summary-section-block">` +
                     `<div class="section-title section-title-ai">${escapeHtml(section.title)}</div>` +
-                    `<div class="section-content">${withCitationMarkup(section.content)}</div>` +
+                    `<div class="section-content">${withCitationMarkup(sanitizeSummaryText(section.content))}</div>` +
                     `</section>`
                 ));
             if (!parts.length) {
@@ -864,6 +864,13 @@
                 const normalized = aliases.map(normAlias);
                 return `<span class="citation" data-aliases="${normalized.join(',')}" onclick="highlightCitation(this)">${match}</span>`;
             });
+        }
+
+        function sanitizeSummaryText(content) {
+            return String(content || '')
+                .replace(/\n?\s*\[Image of[^\]]*\]\s*\n?/gi, '\n')
+                .replace(/\n{3,}/g, '\n\n')
+                .trim();
         }
 
         // ─── HIGHLIGHT: Click citation → scroll + marker pen in source panel ───
