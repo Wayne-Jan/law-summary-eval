@@ -694,7 +694,18 @@
         }
 
         function syncDesktopSummaryLayout() {
-            document.body.classList.toggle('full-summary-layout', !isMobileSummaryLayout());
+            const enabled = !isMobileSummaryLayout();
+            document.body.classList.toggle('full-summary-layout', enabled);
+            if (!enabled) return;
+            ['contentPanel', 'sourcePanel'].forEach((id) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.style.width = '';
+                el.style.flex = '';
+            });
+            try {
+                localStorage.removeItem('viewPanelWidths');
+            } catch {}
         }
 
         function renderNav() {
@@ -986,6 +997,7 @@
             });
 
             try {
+                if (document.body.classList.contains('full-summary-layout')) return;
                 const saved = JSON.parse(localStorage.getItem('viewPanelWidths'));
                 if (saved) {
                     Object.entries(saved).forEach(([id, w]) => {
