@@ -82,6 +82,8 @@
       background: white; border: 1px solid #e2e8f0; border-radius: 10px;
       padding: 8px 10px;
     }
+    .mobile-metrics-overview { display: none; }
+    .mobile-table-toggle { display: none; }
     .overview-table {
       width: 100%; border-collapse: collapse; font-size: 14px;
       background: white; border-radius: 8px;
@@ -608,7 +610,206 @@
 
     @media (max-width: 768px) {
       .content { padding: 16px 12px 40px; }
-      .mobile-scroll-hint { display: block; }
+      .mobile-metrics-overview {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .mobile-metrics-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .mobile-metrics-stat {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 12px 12px 11px;
+      }
+      .mobile-metrics-stat-label {
+        font-size: 11px;
+        color: var(--slate-500);
+        margin-bottom: 6px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+      }
+      .mobile-metrics-stat-value {
+        font-size: 15px;
+        line-height: 1.35;
+        color: var(--slate-900);
+        font-weight: 700;
+        word-break: break-word;
+      }
+      .mobile-metrics-stat-sub {
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--slate-500);
+      }
+      .mobile-metrics-panel {
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 16px;
+        padding: 14px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      }
+      .mobile-metrics-panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .mobile-metrics-panel-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--slate-900);
+      }
+      .mobile-metrics-panel-note {
+        font-size: 12px;
+        color: var(--slate-500);
+        line-height: 1.6;
+      }
+      .mobile-metrics-chips {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        margin: 10px -2px 2px;
+        scrollbar-width: none;
+      }
+      .mobile-metrics-chips::-webkit-scrollbar { display: none; }
+      .mobile-metrics-chip {
+        flex: 0 0 auto;
+        border: 1px solid var(--slate-300);
+        background: white;
+        color: var(--slate-700);
+        border-radius: 999px;
+        padding: 7px 12px;
+        font-size: 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .mobile-metrics-chip.active {
+        background: var(--indigo);
+        border-color: var(--indigo);
+        color: white;
+        box-shadow: 0 8px 20px rgba(79,70,229,0.18);
+      }
+      .mobile-metrics-cards {
+        display: grid;
+        gap: 10px;
+      }
+      .mobile-metrics-card {
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        background: #fff;
+        padding: 12px;
+      }
+      .mobile-metrics-card-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+      .mobile-metrics-rank {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: var(--indigo-light);
+        color: var(--indigo);
+        font-size: 12px;
+        font-weight: 800;
+        flex: 0 0 auto;
+      }
+      .mobile-metrics-model {
+        min-width: 0;
+        flex: 1;
+      }
+      .mobile-metrics-model-title {
+        font-size: 14px;
+        line-height: 1.4;
+        font-weight: 700;
+        color: var(--slate-900);
+      }
+      .mobile-metrics-model-sub {
+        margin-top: 4px;
+        font-size: 11px;
+        color: var(--slate-500);
+      }
+      .mobile-metrics-primary {
+        text-align: right;
+        flex: 0 0 auto;
+      }
+      .mobile-metrics-primary-label {
+        font-size: 11px;
+        color: var(--slate-500);
+        margin-bottom: 4px;
+      }
+      .mobile-metrics-primary-value {
+        font-size: 22px;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .mobile-metrics-mini-list {
+        display: grid;
+        gap: 8px;
+      }
+      .mobile-metrics-mini-row {
+        display: grid;
+        grid-template-columns: 68px minmax(0, 1fr) 42px;
+        align-items: center;
+        gap: 8px;
+      }
+      .mobile-metrics-mini-label {
+        font-size: 11px;
+        color: var(--slate-500);
+      }
+      .mobile-metrics-mini-track {
+        height: 8px;
+        border-radius: 999px;
+        background: var(--slate-100);
+        overflow: hidden;
+      }
+      .mobile-metrics-mini-fill {
+        height: 100%;
+        border-radius: 999px;
+        min-width: 2px;
+      }
+      .mobile-metrics-mini-value {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--slate-700);
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .mobile-table-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin: 0 0 10px;
+        border: 1px solid #e5e7eb;
+        background: white;
+        color: var(--slate-700);
+        border-radius: 12px;
+        padding: 10px 12px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .mobile-table-toggle::after {
+        content: '展開';
+        font-size: 12px;
+        color: var(--slate-500);
+      }
+      .mobile-table-toggle.open::after { content: '收起'; }
+      .mobile-scroll-hint { display: none; }
+      .overview-table-wrap { display: none; }
+      .overview-table-wrap.mobile-open { display: block; }
       .overview-cards-grid { grid-template-columns: 1fr; }
       .overview-card-scores { grid-template-columns: repeat(2, 1fr); }
       .model-card-grid { grid-template-columns: 1fr; }
@@ -633,6 +834,7 @@
       .overview-case-link { white-space: normal; }
       .overview-case-row td:first-child { border-radius: 12px 12px 0 0; }
       .overview-case-row td:last-child { border-radius: 0 0 12px 12px; }
+      .mobile-metrics-summary { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -692,6 +894,8 @@
     <div class="panel-title">同一冊別下的整體表現比較</div>
     <div class="panel-desc">用表格做精確比較最適合看排序、缺值與樣本數。<br>這裡聚焦各模型在目前冊別下的整體指標，方便直接橫向比較。</div>
     </div>
+    <div class="mobile-metrics-overview" id="mobileMetricsOverview"></div>
+    <button class="mobile-table-toggle" id="mobileTableToggle" type="button" onclick="toggleMobileMetricsTable()">完整表格</button>
     <div class="mobile-scroll-hint">手機上可左右滑動表格查看完整欄位。</div>
     <div class="overview-table-wrap">
       <table class="overview-table" id="overviewTable">
@@ -1279,6 +1483,8 @@
   let currentFilter = 'all';
   let currentVolume = '上冊';
   let currentMainTab = 'overview';
+  let currentMobileMetric = 'rule';
+  let mobileTableOpen = false;
   let currentModelDetail = null;
   const METRICS_DISPLAY_LABELS = {
     'claude_afg_v5.1': 'LENS-Haiku 4.5-A',
@@ -1371,6 +1577,162 @@
     return entries.filter(([, cond]) => cond.group === currentFilter);
   }
 
+  function isMobileMetricsView() {
+    return window.innerWidth <= 768;
+  }
+
+  const MOBILE_METRIC_OPTIONS = [
+    { key: 'rule', label: 'Rule-Based', short: 'Rule', value: cond => cond.averages?.rule_based_avg, scale: '01' },
+    { key: 'fact', label: 'Fact Recall', short: 'Fact', value: cond => cond.averages?.fact_recall_avg, scale: '01' },
+    { key: 'quality', label: 'Quality', short: 'Quality', value: cond => cond.averages?.quality_avg, scale: '5' },
+    { key: 'faith', label: 'Faithfulness', short: 'Faith', value: cond => cond.averages?.faithfulness_avg, scale: '01' },
+    { key: 'rougeL', label: 'ROUGE-L', short: 'ROUGE-L', value: cond => cond.averages?.rouge_bertscore?.rougeL, scale: '01' },
+    { key: 'bert', label: 'BERTScore F1', short: 'BERT', value: cond => cond.averages?.rouge_bertscore?.bertscore_f1, scale: '01' },
+  ];
+
+  function scoreTextForScale(value, scale) {
+    if (value == null) return '--';
+    return scale === '5' ? fmt(value, 2) : fmt(value);
+  }
+
+  function scoreClassForScale(value, scale) {
+    return scale === '5' ? scoreClass5(value) : scoreClass01(value);
+  }
+
+  function barClassForScale(value, scale) {
+    return scale === '5' ? barClass5(value) : barClass01(value);
+  }
+
+  function normalizeByScale(value, scale) {
+    if (value == null) return null;
+    return scale === '5' ? value / 5 : value;
+  }
+
+  function compositeOverviewScore(cond) {
+    const values = MOBILE_METRIC_OPTIONS
+      .map(metric => normalizeByScale(metric.value(cond), metric.scale))
+      .filter(v => v != null);
+    if (!values.length) return null;
+    return values.reduce((sum, v) => sum + v, 0) / values.length;
+  }
+
+  function renderMobileMetricsOverview(entries) {
+    const root = document.getElementById('mobileMetricsOverview');
+    const tableWrap = document.querySelector('.overview-table-wrap');
+    const tableToggle = document.getElementById('mobileTableToggle');
+    if (!root || !tableWrap || !tableToggle) return;
+
+    if (!isMobileMetricsView()) {
+      root.innerHTML = '';
+      tableWrap.classList.remove('mobile-open');
+      tableToggle.classList.remove('open');
+      return;
+    }
+
+    if (!entries.length) {
+      root.innerHTML = `<div class="mobile-metrics-panel"><div class="mobile-metrics-panel-title">手機版模型比較</div><div class="mobile-metrics-panel-note">此篩選下目前沒有可顯示的模型資料。</div></div>`;
+      tableWrap.classList.toggle('mobile-open', mobileTableOpen);
+      tableToggle.classList.toggle('open', mobileTableOpen);
+      return;
+    }
+
+    const metric = MOBILE_METRIC_OPTIONS.find(item => item.key === currentMobileMetric) || MOBILE_METRIC_OPTIONS[0];
+    const ranked = [...entries]
+      .map(([key, cond]) => ({ key, cond, value: metric.value(cond), overall: compositeOverviewScore(cond) }))
+      .sort((a, b) => {
+        const va = a.value ?? -1;
+        const vb = b.value ?? -1;
+        if (vb !== va) return vb - va;
+        return plainModelLabel(a.cond.label).localeCompare(plainModelLabel(b.cond.label), 'zh-Hant');
+      });
+
+    const best = [...ranked]
+      .filter(item => item.overall != null)
+      .sort((a, b) => b.overall - a.overall)[0] || null;
+    const avgOverall = ranked
+      .map(item => item.overall)
+      .filter(v => v != null);
+    const avgOverallText = avgOverall.length ? fmt(avgOverall.reduce((s, v) => s + v, 0) / avgOverall.length) : '--';
+    const widestGapMetric = [...MOBILE_METRIC_OPTIONS]
+      .map(option => {
+        const vals = entries.map(([, cond]) => normalizeByScale(option.value(cond), option.scale)).filter(v => v != null);
+        const gap = vals.length ? Math.max(...vals) - Math.min(...vals) : -1;
+        return { option, gap };
+      })
+      .sort((a, b) => b.gap - a.gap)[0];
+
+    root.innerHTML = `
+      <div class="mobile-metrics-summary">
+        <div class="mobile-metrics-stat">
+          <div class="mobile-metrics-stat-label">最佳模型</div>
+          <div class="mobile-metrics-stat-value">${best ? formatModelLabel(best.cond.label) : '--'}</div>
+          <div class="mobile-metrics-stat-sub">${best ? `整體綜合分數 ${fmt(best.overall)}` : '目前無資料'}</div>
+        </div>
+        <div class="mobile-metrics-stat">
+          <div class="mobile-metrics-stat-label">平均表現</div>
+          <div class="mobile-metrics-stat-value">${avgOverallText}</div>
+          <div class="mobile-metrics-stat-sub">${entries.length} 個模型</div>
+        </div>
+        <div class="mobile-metrics-stat">
+          <div class="mobile-metrics-stat-label">差異最大</div>
+          <div class="mobile-metrics-stat-value">${widestGapMetric?.option?.short || '--'}</div>
+          <div class="mobile-metrics-stat-sub">最能拉開模型差距的維度</div>
+        </div>
+      </div>
+      <div class="mobile-metrics-panel">
+        <div class="mobile-metrics-panel-head">
+          <div class="mobile-metrics-panel-title">手機版模型比較</div>
+        </div>
+        <div class="mobile-metrics-panel-note">先選一個維度，再看各模型排行。完整欄位表格可另外展開。</div>
+        <div class="mobile-metrics-chips">
+          ${MOBILE_METRIC_OPTIONS.map(option => `<button class="mobile-metrics-chip ${option.key === metric.key ? 'active' : ''}" type="button" onclick="setMobileMetric('${option.key}')">${option.short}</button>`).join('')}
+        </div>
+        <div class="mobile-metrics-cards">
+          ${ranked.map((item, idx) => {
+            const value = item.value;
+            const normalizedWidth = normalizeByScale(value, metric.scale);
+            const miniMetrics = MOBILE_METRIC_OPTIONS.slice(0, 3).map(option => {
+              const subValue = option.value(item.cond);
+              const width = normalizeByScale(subValue, option.scale);
+              return `<div class="mobile-metrics-mini-row">
+                <div class="mobile-metrics-mini-label">${option.short}</div>
+                <div class="mobile-metrics-mini-track"><div class="mobile-metrics-mini-fill ${barClassForScale(subValue, option.scale)}" style="width:${subValue == null ? 0 : Math.max(2, (width * 100))}%"></div></div>
+                <div class="mobile-metrics-mini-value">${scoreTextForScale(subValue, option.scale)}</div>
+              </div>`;
+            }).join('');
+            return `<div class="mobile-metrics-card">
+              <div class="mobile-metrics-card-head">
+                <div class="mobile-metrics-rank">#${idx + 1}</div>
+                <div class="mobile-metrics-model">
+                  <div class="mobile-metrics-model-title">${formatModelLabel(item.cond.label)}</div>
+                  <div class="mobile-metrics-model-sub">${item.cond.group} · ${item.cond.eval_count ?? '--'} 案</div>
+                </div>
+                <div class="mobile-metrics-primary">
+                  <div class="mobile-metrics-primary-label">${metric.short}</div>
+                  <div class="mobile-metrics-primary-value ${scoreClassForScale(value, metric.scale)}">${scoreTextForScale(value, metric.scale)}</div>
+                </div>
+              </div>
+              <div class="mobile-metrics-mini-list">${miniMetrics}</div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>
+    `;
+
+    tableWrap.classList.toggle('mobile-open', mobileTableOpen);
+    tableToggle.classList.toggle('open', mobileTableOpen);
+  }
+
+  window.setMobileMetric = function(metricKey) {
+    currentMobileMetric = metricKey;
+    renderMobileMetricsOverview(getSortedEntries());
+  };
+
+  window.toggleMobileMetricsTable = function() {
+    mobileTableOpen = !mobileTableOpen;
+    renderMobileMetricsOverview(getSortedEntries());
+  };
+
   function getSortedEntries() {
     const entries = getFilteredEntries();
     const activeSort = document.querySelector('.sort-btn.asc, .sort-btn.desc');
@@ -1385,6 +1747,7 @@
   function rebuildTable() {
     const entries = getSortedEntries();
     renderOverviewRows(entries);
+    renderMobileMetricsOverview(entries);
     buildModelCards(entries);
     buildRelativeModelCards(entries);
     if (currentModelDetail && !entries.some(([key]) => key === currentModelDetail)) {
@@ -1919,7 +2282,9 @@
   let currentOverviewDetail = null;
   window.toggleOverviewDetail = function(condKey) {
     currentOverviewDetail = currentOverviewDetail === condKey ? null : condKey;
-    renderOverviewRows(getSortedEntries());
+    const entries = getSortedEntries();
+    renderOverviewRows(entries);
+    renderMobileMetricsOverview(entries);
     renderModelDetail(getFilteredEntries());
   };
 
@@ -1938,6 +2303,7 @@
       const entries = getFilteredEntries();
       sortEntries(entries, col, dir);
       renderOverviewRows(entries);
+      renderMobileMetricsOverview(entries);
       buildModelCards(entries);
       buildRelativeModelCards(entries);
       renderModelDetail(entries);
@@ -2221,6 +2587,7 @@
         buildCaseSelector();
         resetCaseDetail();
         setMainTab(currentMainTab);
+        renderMobileMetricsOverview(getSortedEntries());
       })
       .catch(err => {
         console.error(`Failed to load ${path}:`, err);
@@ -2232,6 +2599,10 @@
   // ─── Load data ───
   loadSiteVersion();
   loadVolumeData(currentVolume);
+  window.addEventListener('resize', () => {
+    if (!DATA) return;
+    renderMobileMetricsOverview(getSortedEntries());
+  });
 
 })();
 </script>
