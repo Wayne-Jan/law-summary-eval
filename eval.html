@@ -1063,6 +1063,85 @@
     body.is-admin.admin-inspect .toolbar-help,
     body.is-admin.admin-inspect .save-indicator,
     body.is-admin.admin-inspect #cloudStatus { display: none; }
+    .mobile-eval-notice {
+      display: none;
+      margin-top: var(--toolbar-h);
+      min-height: calc(100vh - var(--toolbar-h));
+      background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+      padding: 24px 16px 32px;
+    }
+    .mobile-eval-notice-shell {
+      max-width: 560px;
+      margin: 0 auto;
+      min-height: calc(100vh - var(--toolbar-h) - 56px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mobile-eval-notice-card {
+      width: 100%;
+      background: rgba(255,255,255,0.96);
+      border: 1px solid #dbe4f0;
+      border-radius: 24px;
+      box-shadow: 0 24px 60px rgba(79,70,229,0.10);
+      padding: 28px 22px;
+      text-align: center;
+    }
+    .mobile-eval-notice-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 14px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #eef2ff 0%, #ddd6fe 100%);
+      color: #4f46e5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 700;
+      box-shadow: inset 0 0 0 1px rgba(79,70,229,0.10);
+    }
+    .mobile-eval-notice-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--slate-900);
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .mobile-eval-notice-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--slate-600);
+      margin-bottom: 18px;
+    }
+    .mobile-eval-notice-points {
+      text-align: left;
+      display: grid;
+      gap: 10px;
+      margin: 0 0 20px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: var(--slate-700);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .mobile-eval-notice-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    body.mobile-eval-restricted .progress-subbar,
+    body.mobile-eval-restricted .main,
+    body.mobile-eval-restricted .footer,
+    body.mobile-eval-restricted .admin-page { display: none !important; }
+    body.mobile-eval-restricted .mobile-eval-notice { display: block; }
+    body.mobile-eval-restricted .eval-only,
+    body.mobile-eval-restricted .save-indicator,
+    body.mobile-eval-restricted #cloudStatus,
+    body.mobile-eval-restricted .toolbar-help { display: none !important; }
   </style>
   <!-- Firebase compat (works with regular scripts, no bundler needed) -->
   <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -1220,6 +1299,24 @@
         </div>
       </div>
       <div id="adminContent"></div>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-eval-notice" id="mobileEvalNotice">
+  <div class="mobile-eval-notice-shell">
+    <div class="mobile-eval-notice-card">
+      <div class="mobile-eval-notice-icon" aria-hidden="true">電</div>
+      <div class="mobile-eval-notice-title">建議改用電腦進行評估</div>
+      <div class="mobile-eval-notice-text">這個評估頁包含多欄對照、快捷鍵與大量文字輸入。手機上容易影響判讀與操作準確度。</div>
+      <div class="mobile-eval-notice-points">
+        <div>1. 建議使用電腦開啟，以獲得完整原文、摘要與評分區的對照視野。</div>
+        <div>2. 若需要正式進行評估，請改用電腦登入後操作。</div>
+      </div>
+      <div class="mobile-eval-notice-actions">
+        <a href="index.html" class="btn btn-ghost">返回首頁</a>
+        <button class="btn btn-primary" type="button" onclick="logout()">登出</button>
+      </div>
     </div>
   </div>
 </div>
@@ -1743,6 +1840,7 @@ function handleAuthStateChanged(user) {
     clearLocalSessionProfile();
     document.body.classList.remove('is-admin');
     document.body.classList.remove('admin-inspect');
+    document.body.classList.remove('mobile-eval-restricted');
     setCloudStatus('雲端待命', '');
     showLoginOverlay();
     return;
@@ -1809,6 +1907,14 @@ function hideLoginOverlay() {
   document.getElementById('loginOverlay').classList.add('hidden');
 }
 
+function shouldRestrictMobileEval(role = getSessionRole()) {
+  return window.innerWidth <= 900 && role !== 'admin';
+}
+
+function applyMobileEvalAccess() {
+  document.body.classList.toggle('mobile-eval-restricted', shouldRestrictMobileEval());
+}
+
 function applyAuth() {
   const user = getSessionUser();
   const role = getSessionRole();
@@ -1823,6 +1929,7 @@ function applyAuth() {
     document.body.classList.remove('is-admin');
     hideAdminPanel();
   }
+  applyMobileEvalAccess();
 }
 
 function getSessionUser() {
@@ -3847,6 +3954,7 @@ window.addEventListener('resize', () => {
   updateLayoutHeights();
   const activeTab = document.querySelector('.tl-mobile-tab.active')?.dataset.tab || 'events';
   setTLMobileTab(activeTab);
+  applyMobileEvalAccess();
   const adminPage = document.getElementById('adminPage');
   if (document.body.classList.contains('is-admin') && adminPage && !adminPage.classList.contains('hidden')) {
     renderAdminContent();
