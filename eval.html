@@ -3815,7 +3815,15 @@ function showTLEventSource(idx) {
   });
 
   const selectedAnchorId = activeTLSpanId ? getTLSpanAnchorId(idx, activeTLSpanId) : '';
-  const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
+  let selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
+  // If the selected mark is an empty anchor (absorbed span), highlight the adjacent visible mark
+  if (selectedMark && !selectedMark.textContent) {
+    const sibling = selectedMark.previousElementSibling || selectedMark.nextElementSibling;
+    if (sibling && sibling.classList.contains('evt-highlight')) {
+      sibling.classList.add('active', 'selected');
+      selectedMark = sibling;
+    }
+  }
   const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
   if (isTLMobileLayout()) setTLMobileTab('source');
   if (scrollTarget && shouldAutoScrollTLEvalSource()) {
