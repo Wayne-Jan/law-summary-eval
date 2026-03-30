@@ -3261,6 +3261,52 @@ function getTLActiveSpan(evt) {
   return spans.find(sp => sp.role === 'primary') || spans[0];
 }
 
+function mergeTLDisplaySpans(spans) {
+  if (!Array.isArray(spans) || spans.length === 0) return [];
+
+  const sorted = spans
+    .map((sp, order) => ({ ...sp, _order: order }))
+    .sort((a, b) => a.relStart - b.relStart || a.relEnd - b.relEnd || a.evtIdx - b.evtIdx || a._order - b._order);
+
+  const merged = [];
+  sorted.forEach((sp) => {
+    const last = merged[merged.length - 1];
+    if (!last || sp.relStart >= last.relEnd) {
+      merged.push({
+        relStart: sp.relStart,
+        relEnd: sp.relEnd,
+        evtIdxs: [sp.evtIdx],
+        spanIds: [String(sp.spanId || '')],
+        primaryEvtIdx: sp.evtIdx,
+        primarySpanId: String(sp.spanId || ''),
+        _primaryStart: sp.relStart,
+        _primaryEnd: sp.relEnd,
+        _primaryOrder: sp._order,
+      });
+      return;
+    }
+
+    last.relEnd = Math.max(last.relEnd, sp.relEnd);
+    if (!last.evtIdxs.includes(sp.evtIdx)) last.evtIdxs.push(sp.evtIdx);
+    const spanId = String(sp.spanId || '');
+    if (!last.spanIds.includes(spanId)) last.spanIds.push(spanId);
+
+    const shouldReplacePrimary =
+      sp.relStart < last._primaryStart ||
+      (sp.relStart === last._primaryStart && sp.relEnd > last._primaryEnd) ||
+      (sp.relStart === last._primaryStart && sp.relEnd === last._primaryEnd && sp._order < last._primaryOrder);
+    if (shouldReplacePrimary) {
+      last.primaryEvtIdx = sp.evtIdx;
+      last.primarySpanId = spanId;
+      last._primaryStart = sp.relStart;
+      last._primaryEnd = sp.relEnd;
+      last._primaryOrder = sp._order;
+    }
+  });
+
+  return merged.map(({ _primaryStart, _primaryEnd, _primaryOrder, ...seg }) => seg);
+}
+
 function isTLMobileLayout() {
   return window.innerWidth <= 900;
 }
@@ -3697,14 +3743,16 @@ function renderTLSourcePanel() {
       });
     });
     evtSpans.sort((a, b) => a.relStart - b.relStart);
+    const mergedSpans = mergeTLDisplaySpans(evtSpans);
 
     const content = chunk.content || '';
     let chunkHtml = '';
     let cursor = 0;
-    evtSpans.forEach(sp => {
-      if (sp.relStart > cursor) chunkHtml += esc(content.substring(cursor, sp.relStart));
-      chunkHtml += `<mark id="${esc(sp.anchorId)}" class="evt-highlight" data-evt="${sp.evtIdx}" data-role="${esc(sp.role)}" data-status="${esc(sp.status)}" data-span-id="${esc(sp.spanId)}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
-      cursor = sp.relEnd;
+    mergedSpans.forEach(seg => {
+      if (seg.relStart > cursor) chunkHtml += esc(content.substring(cursor, seg.relStart));
+      const anchorId = getTLSpanAnchorId(seg.primaryEvtIdx, seg.primarySpanId);
+      chunkHtml += `<mark id="${esc(anchorId)}" class="evt-highlight" data-evt-ids="${esc(seg.evtIdxs.join(','))}" data-span-ids="${esc(seg.spanIds.join(','))}" data-primary-evt="${esc(seg.primaryEvtIdx)}" data-primary-span-id="${esc(seg.primarySpanId)}">${esc(content.substring(seg.relStart, seg.relEnd))}</mark>`;
+      cursor = seg.relEnd;
     });
     if (cursor < content.length) chunkHtml += esc(content.substring(cursor));
 
@@ -3753,13 +3801,21 @@ function showTLEventSource(idx) {
   }
 
   // Highlight only the specific event's marks across all chunks
-  const evtMarks = Array.from(document.querySelectorAll(`#tlSourceBody .evt-highlight[data-evt="${idx}"]`));
+  const evtMarks = Array.from(document.querySelectorAll('#tlSourceBody .evt-highlight')).filter((el) => {
+    const evtIds = String(el.dataset.evtIds || '')
+      .split(',')
+      .map((v) => Number(v))
+      .filter((v) => Number.isFinite(v));
+    return evtIds.includes(idx);
+  });
   evtMarks.forEach(m => {
     m.classList.add('active');
-    if (activeTLSpanId && m.dataset.spanId === activeTLSpanId) m.classList.add('selected');
+    const spanIds = String(m.dataset.spanIds || '').split(',').filter(Boolean);
+    if (activeTLSpanId && spanIds.includes(String(activeTLSpanId))) m.classList.add('selected');
   });
-  const selectedAnchorId = activeTLSpanId ? getTLSpanAnchorId(idx, activeTLSpanId) : '';
-  const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
+  const selectedMark = activeTLSpanId
+    ? evtMarks.find((m) => String(m.dataset.spanIds || '').split(',').filter(Boolean).includes(String(activeTLSpanId)))
+    : null;
   const scrollTarget = selectedMark || evtMarks[0];
   if (isTLMobileLayout()) setTLMobileTab('source');
   if (scrollTarget && shouldAutoScrollTLEvalSource()) {
