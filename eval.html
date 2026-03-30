@@ -566,6 +566,151 @@
     .panel-tl-eval {
       flex: 30 0 0; background: var(--slate-50); overflow-y: auto; padding: 10px 12px;
     }
+    .tl-head-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .tl-head-main {
+      min-width: 0;
+      flex: 1;
+    }
+    .tl-left-mode-switch {
+      display: inline-flex;
+      gap: 4px;
+      padding: 4px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      flex-shrink: 0;
+    }
+    .tl-left-mode-btn {
+      border: none;
+      background: transparent;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 5px 11px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .tl-left-mode-btn.active {
+      background: #4f46e5;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.18);
+    }
+    .tl-left-mode-btn:hover {
+      color: #4338ca;
+    }
+    .tl-entity-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 16px 0;
+      padding: 10px 12px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      align-items: center;
+    }
+    .tl-entity-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid #e2e8f0;
+      background: #f8fafc;
+      color: #334155;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .tl-entity-chip strong {
+      color: #111827;
+      font-size: 13px;
+    }
+    .tl-entity-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 14px;
+    }
+    .tl-entity-group {
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .tl-entity-group-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #fafafa;
+      border-bottom: 1px solid #f1f5f9;
+    }
+    .tl-entity-group-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #111827;
+    }
+    .tl-entity-group-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: #64748b;
+    }
+    .tl-entity-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 10px;
+      padding: 12px;
+    }
+    .tl-entity-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background: #fff;
+      padding: 13px 14px 12px;
+    }
+    .tl-entity-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: #111827;
+      line-height: 1.45;
+    }
+    .tl-entity-role {
+      margin-top: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4f46e5;
+      line-height: 1.5;
+    }
+    .tl-entity-meta {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #64748b;
+      line-height: 1.65;
+    }
+    .tl-entity-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 12px;
+    }
+    .tl-entity-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #eef2ff;
+      border: 1px solid #c7d2fe;
+      color: #4338ca;
+      font-size: 12px;
+      font-weight: 700;
+    }
 
     /* Timeline / Source workbench aligned with timeline.html */
     .panel-head {
@@ -778,6 +923,8 @@
       .panel-tl-source.mobile-active,
       .panel-tl-eval.mobile-active { display: block; }
       .panel-tl-eval { padding-bottom: 84px; }
+      .tl-head-row { flex-direction: column; }
+      .tl-left-mode-switch { display: none; }
       #phaseTLView .panel-body, #phaseTLView .timeline-panel-body { max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h) - 132px); overflow-y: auto; }
       .tl-eval-group-title { margin-bottom: 10px; }
     }
@@ -1559,15 +1706,24 @@
   <div class="view" id="phaseTLView">
     <div class="tl-mobile-tabs" id="tlMobileTabs">
       <button type="button" class="tl-mobile-tab active" data-tab="events" onclick="setTLMobileTab('events')">事件</button>
+      <button type="button" class="tl-mobile-tab" data-tab="entities" onclick="setTLMobileTab('entities')">實體</button>
       <button type="button" class="tl-mobile-tab" data-tab="source" onclick="setTLMobileTab('source')">原文</button>
       <button type="button" class="tl-mobile-tab" data-tab="eval" onclick="setTLMobileTab('eval')">評分</button>
     </div>
     <!-- Left: Timeline Events -->
     <div class="panel panel-timeline" id="tlTimeline">
       <div class="panel-head">
-        <div class="panel-kicker">TIMELINE</div>
-        <div class="panel-title">事件時間軸</div>
-        <div class="panel-meta" id="tlEventCount"></div>
+        <div class="tl-head-row">
+          <div class="tl-head-main">
+            <div class="panel-kicker">TIMELINE</div>
+            <div class="panel-title" id="tlTimelineTitle">事件時間軸</div>
+            <div class="panel-meta" id="tlEventCount"></div>
+          </div>
+          <div class="tl-left-mode-switch" role="tablist" aria-label="時間軸與實體切換">
+            <button type="button" class="tl-left-mode-btn active" data-mode="events" onclick="setTLLeftMode('events')">事件</button>
+            <button type="button" class="tl-left-mode-btn" data-mode="entities" onclick="setTLLeftMode('entities')">實體</button>
+          </div>
+        </div>
       </div>
       <div id="tlSummaryBar" class="tl-summary"></div>
       <div class="timeline-panel-body">
@@ -2334,6 +2490,7 @@ let tlDataCache = null; // timeline data for current case
 let activeChunk = null;
 let activeTLEventIdx = -1;
 let activeTLSpanId = null;
+let tlLeftMode = 'events';
 let autoSaveTimer = null;
 let keyboardFocusIndex = 0;
 let adminInspect = {
@@ -2598,22 +2755,24 @@ function renderCondPills() {
   const el = document.getElementById('condPills');
   let html = '';
   const locked = isCaseLocked(currentCase);
+  const timelineLocked = currentPhase === 'tl';
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAnonLabel(i);
     const done = isCondComplete(currentCase, i);
     const isCurrent = (i === currentCondIdx);
     let cls = 'cond-pill';
     let icon = '';
-    if (locked) { cls += ' locked'; icon = ' &#x2713;'; }
+    if (locked || timelineLocked) { cls += ' locked'; }
     else if (done) { cls += ' done'; icon = ' &#x2713;'; }
     else if (isCurrent) { cls += ' active'; icon = ' &#x2192;'; }
-    html += `<span class="${cls}" onclick="switchCondition(${i})">${esc(label)}${icon}</span>`;
+    const onClick = (locked || timelineLocked) ? '' : ` onclick="switchCondition(${i})"`;
+    html += `<span class="${cls}"${onClick}>${esc(label)}${icon}</span>`;
   }
   el.innerHTML = html;
 }
 
 function switchCondition(idx) {
-  if (isCaseLocked(currentCase)) return;
+  if (isCaseLocked(currentCase) || currentPhase === 'tl') return;
   saveCurrentState();
   currentCondIdx = idx;
   // If in fb but target condition hasn't finished phase 1, go to phase 1
@@ -3030,6 +3189,7 @@ async function loadPhaseTL() {
 
   activeTLEventIdx = -1;
   activeTLSpanId = null;
+  tlLeftMode = 'events';
 
   // Render source text (middle panel)
   renderTLSourcePanel();
@@ -3041,6 +3201,7 @@ async function loadPhaseTL() {
   renderTLEvalForm();
   restorePhaseTL();
   updateTLProgress();
+  renderTimelinePanel();
   setTLMobileTab('events');
 
   const locked = isCaseLocked(currentCase);
@@ -3105,20 +3266,41 @@ function isTLMobileLayout() {
   return window.innerWidth <= 900;
 }
 
+function syncTLLeftModeButtons() {
+  document.querySelectorAll('.tl-left-mode-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.mode === tlLeftMode);
+  });
+}
+
+function setTLLeftMode(mode, options = {}) {
+  const nextMode = mode === 'entities' ? 'entities' : 'events';
+  tlLeftMode = nextMode;
+  syncTLLeftModeButtons();
+  if (options.render !== false) {
+    renderTimelinePanel();
+  }
+}
+
 function setTLMobileTab(tab) {
-  const nextTab = ['events', 'source', 'eval'].includes(tab) ? tab : 'events';
+  const nextTab = ['events', 'entities', 'source', 'eval'].includes(tab) ? tab : 'events';
   document.querySelectorAll('.tl-mobile-tab').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.tab === nextTab);
   });
-  const panelMap = {
-    events: document.getElementById('tlTimeline'),
-    source: document.getElementById('tlSourcePanel'),
-    eval: document.getElementById('tlEvalPanel'),
-  };
-  Object.entries(panelMap).forEach(([key, el]) => {
-    if (!el) return;
-    el.classList.toggle('mobile-active', key === nextTab || !isTLMobileLayout());
-  });
+  if (nextTab === 'events' || nextTab === 'entities') {
+    setTLLeftMode(nextTab, { render: true });
+  }
+  const timelinePanel = document.getElementById('tlTimeline');
+  if (timelinePanel) {
+    timelinePanel.classList.toggle('mobile-active', nextTab === 'events' || nextTab === 'entities' || !isTLMobileLayout());
+  }
+  const sourcePanel = document.getElementById('tlSourcePanel');
+  if (sourcePanel) {
+    sourcePanel.classList.toggle('mobile-active', nextTab === 'source' || !isTLMobileLayout());
+  }
+  const evalPanel = document.getElementById('tlEvalPanel');
+  if (evalPanel) {
+    evalPanel.classList.toggle('mobile-active', nextTab === 'eval' || !isTLMobileLayout());
+  }
 }
 
 function renderTLEventSpanSwitcher(evt, evtIdx) {
@@ -3240,18 +3422,132 @@ function isoToMinguoTL(iso, refIso) {
   return `民國${y}年${m}月${day}日`;
 }
 
+function getTLEntityData() {
+  return (tlDataCache && tlDataCache.entities) || {};
+}
+
+function getTLEntityLabel(entity, fallback = '未知') {
+  if (!entity) return fallback;
+  return entity.name || entity.standard_name || fallback;
+}
+
+function getTLEntityMetaLines(entity, groupName) {
+  if (!entity) return [];
+  const lines = [];
+  if (groupName === 'defendants') {
+    if (entity.role) lines.push(entity.role);
+    if (entity.institution) lines.push(entity.institution);
+    if (entity.specialty) lines.push(`專科：${entity.specialty}`);
+  } else if (groupName === 'victims') {
+    if (entity.cause_of_death) lines.push(`死亡原因：${entity.cause_of_death}`);
+    if (entity.primary_injury) lines.push(`主要傷勢：${entity.primary_injury}`);
+  } else if (groupName === 'other_actors') {
+    if (entity.role) lines.push(entity.role);
+    if (entity.institution) lines.push(entity.institution);
+  } else if (groupName === 'institutions') {
+    if (entity.type) lines.push(`類型：${entity.type}`);
+    if (Array.isArray(entity.related_actors) && entity.related_actors.length) {
+      lines.push(`相關人物：${entity.related_actors.length} 位`);
+    }
+  }
+  return lines.filter(Boolean);
+}
+
+function buildTLEntityCardHtml(entity, groupName) {
+  const aliases = Array.isArray(entity.aliases) ? entity.aliases.filter(Boolean) : [];
+  const metaLines = getTLEntityMetaLines(entity, groupName);
+  let html = `<div class="tl-entity-card">`;
+  html += `<div class="tl-entity-name">${esc(getTLEntityLabel(entity))}</div>`;
+  if (metaLines.length) {
+    html += `<div class="tl-entity-role">${esc(metaLines[0])}</div>`;
+    if (metaLines.length > 1) {
+      html += `<div class="tl-entity-meta">${esc(metaLines.slice(1).join(' ・ '))}</div>`;
+    }
+  }
+  if (aliases.length) {
+    html += `<div class="tl-entity-meta">別名：${esc(aliases.join('、'))}</div>`;
+  }
+  if (groupName === 'victims' && entity.cause_of_death && entity.primary_injury) {
+    html += `<div class="tl-entity-meta">死亡與傷勢資訊已整理</div>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
+function buildTLEntityGroupsHtml() {
+  const entities = getTLEntityData();
+  const groups = [
+    ['defendants', '被告', entities.defendants || []],
+    ['victims', '被害人', entities.victims || []],
+    ['other_actors', '其他角色', entities.other_actors || []],
+    ['institutions', '機構', entities.institutions || []],
+    ['all_actor_names', '全部人物名稱', Array.isArray(entities.all_actor_names) ? entities.all_actor_names : []],
+  ];
+  const rendered = groups.filter(([, , items]) => items && items.length);
+  if (!rendered.length) {
+    return {
+      summaryHtml: '',
+      countText: '',
+      listHtml: '<div class="tl-no-data">此案件無實體資料</div>',
+    };
+  }
+
+  const totalCount = rendered.reduce((sum, [, , items]) => sum + items.length, 0);
+  const summaryHtml = rendered.map(([key, label, items]) => (
+    `<div class="tl-entity-chip"><strong>${esc(label)}</strong><span>${items.length}</span></div>`
+  )).join('');
+  const countText = `${totalCount} 筆實體，${rendered.length} 類`;
+  let listHtml = '<div class="tl-entity-stack">';
+  rendered.forEach(([groupName, label, items]) => {
+    listHtml += `<div class="tl-entity-group">`;
+    listHtml += `<div class="tl-entity-group-head"><div class="tl-entity-group-title">${esc(label)}</div><div class="tl-entity-group-count">${items.length} 筆</div></div>`;
+    if (groupName === 'all_actor_names') {
+      listHtml += `<div class="tl-entity-tags">`;
+      items.forEach((name) => {
+        listHtml += `<span class="tl-entity-tag">${esc(String(name || '未知'))}</span>`;
+      });
+      listHtml += `</div>`;
+    } else {
+      listHtml += `<div class="tl-entity-grid">`;
+      items.forEach((item) => {
+        listHtml += buildTLEntityCardHtml(item || {}, groupName);
+      });
+      listHtml += `</div>`;
+    }
+    listHtml += `</div>`;
+  });
+  listHtml += `</div>`;
+  return { summaryHtml, countText, listHtml };
+}
+
 function renderTimelinePanel() {
+  const titleEl = document.getElementById('tlTimelineTitle');
+  const countEl = document.getElementById('tlEventCount');
+  const barEl = document.getElementById('tlSummaryBar');
+  const listEl = document.getElementById('tlEventList');
+  if (!titleEl || !countEl || !barEl || !listEl) return;
+
+  if (tlLeftMode === 'entities') {
+    titleEl.textContent = '實體檢視';
+    const { summaryHtml, countText, listHtml } = buildTLEntityGroupsHtml();
+    countEl.textContent = countText;
+    barEl.innerHTML = summaryHtml;
+    listEl.innerHTML = listHtml;
+    syncTLLeftModeButtons();
+    return;
+  }
+
   const events = (tlDataCache && tlDataCache.events) || [];
   const summary = (tlDataCache && tlDataCache.timeline_summary) || {};
 
-  // Event count
-  document.getElementById('tlEventCount').textContent = events.length ? `${events.length} 個事件，點擊事件可同步查看原文` : '';
+  titleEl.textContent = '事件時間軸';
+  countEl.textContent = events.length ? `${events.length} 個事件，點擊事件可同步查看原文` : '';
 
   // Summary bar
-  const barEl = document.getElementById('tlSummaryBar');
   if (events.length === 0) {
     barEl.innerHTML = '';
-    document.getElementById('tlEventList').innerHTML = '<div class="tl-no-data">此案件無時間軸資料</div>';
+    listEl.innerHTML = '<div class="tl-no-data">此案件無時間軸資料</div>';
+    syncTLLeftModeButtons();
     return;
   }
 
@@ -3284,7 +3580,6 @@ function renderTimelinePanel() {
   `;
 
   // Event cards
-  const listEl = document.getElementById('tlEventList');
   listEl.innerHTML = events.map((evt, idx) => {
     const isCritical = evt.critical_decision;
     const typeCls = evt.event_type || '';
@@ -3307,6 +3602,7 @@ function renderTimelinePanel() {
   }).join('');
 
   updateTLEventSpanPills();
+  syncTLLeftModeButtons();
 }
 
 function renderTLEvalForm() {
