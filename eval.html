@@ -792,6 +792,7 @@
     .tl-event-type.initial_contact { background: #ecfdf5; color: #047857; }
     .tl-event-type.final_outcome { background: #fefce8; color: #a16207; }
     .tl-event-type.deterioration { background: #fff7ed; color: #c2410c; }
+    .badge.critical { font-size: 10px; padding: 2px 8px; border-radius: 4px; background: #fef2f2; color: #b91c1c; font-weight: 500; }
     .tl-desc { font-size: 13px; color: #333; line-height: 1.6; }
     .tl-meta { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
     .tl-meta-item { font-size: 11px; color: #9ca3af; }
@@ -885,6 +886,18 @@
       outline: 1px dashed rgba(37, 99, 235, 0.24);
     }
     .evt-highlight[data-status="UNRESOLVED"] { text-decoration: underline dotted #ef4444; }
+    .chunk-region.focus-pulse { animation: tlSourcePulse 1.25s ease; }
+    .tl-event.focus-pulse { animation: tlEventPulse 0.9s ease; }
+    @keyframes tlSourcePulse {
+      0% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.0); }
+      25% { box-shadow: 0 0 0 8px rgba(234, 179, 8, 0.18); }
+      100% { box-shadow: 0 0 0 0 rgba(234, 179, 8, 0.0); }
+    }
+    @keyframes tlEventPulse {
+      0% { transform: translateX(0); }
+      35% { transform: translateX(-2px); box-shadow: 0 4px 16px rgba(79,70,229,0.18); }
+      100% { transform: translateX(0); }
+    }
 
     /* TL eval items (reuse Phase 1 eval-item pattern) */
     .tl-eval-group-title {
@@ -3596,12 +3609,18 @@ function renderTimelinePanel() {
     let html = `<div class="tl-event ${isCritical ? 'critical' : ''}" data-idx="${idx}" onclick="showTLEventSource(${idx})">`;
     html += `<div class="tl-event-header">`;
     html += `<span class="tl-date">${esc(evt.timestamp || '')}</span>`;
-    html += `<span class="tl-event-type ${typeCls}">${esc(typeLabel)}</span>`;
+    if (typeLabel) html += `<span class="tl-event-type ${esc(typeCls)}">${esc(typeLabel)}</span>`;
+    if (isCritical) html += '<span class="badge critical">關鍵決策</span>';
     html += `</div>`;
     html += `<div class="tl-desc">${esc(evt.description || '')}</div>`;
-    if (evt.actors && evt.actors.length) {
-      html += `<div class="tl-meta"><span class="tl-meta-item">${esc(evt.actors.join('、'))}</span></div>`;
+    const meta = [];
+    if (evt.actors && evt.actors.length) meta.push(`<span class="tl-meta-item"><strong>相關人員:</strong> ${esc(evt.actors.join('、'))}</span>`);
+    if (evt.location) meta.push(`<span class="tl-meta-item"><strong>地點:</strong> ${esc(evt.location)}</span>`);
+    if (evt.vital_signs && Object.keys(evt.vital_signs).length) {
+      const vs = Object.entries(evt.vital_signs).map(([k,v])=>`${k}: ${v}`).join(', ');
+      meta.push(`<span class="tl-meta-item"><strong>生命體徵:</strong> ${esc(vs)}</span>`);
     }
+    if (meta.length) html += `<div class="tl-meta">${meta.join('')}</div>`;
     if (isCritical && evt.decision_content) {
       html += `<div class="tl-decision"><div class="tl-decision-label">決策內容</div>${esc(evt.decision_content)}</div>`;
     }
@@ -3751,33 +3770,44 @@ function showTLEventSource(idx) {
     activeTLSpanId = String(activeTLSpanId);
   }
 
-  // Highlight active event card
+  // Highlight active event card + focus pulse
   document.querySelectorAll('.tl-event').forEach(el => {
     el.classList.toggle('active-source', parseInt(el.dataset.idx) === idx);
+    el.classList.remove('focus-pulse');
   });
+  const activeCard = document.querySelector(`.tl-event[data-idx="${idx}"]`);
+  if (activeCard) { void activeCard.offsetWidth; activeCard.classList.add('focus-pulse'); }
 
   // Clear previous highlights
-  document.querySelectorAll('#tlSourceBody .chunk-region.active').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('#tlSourceBody .chunk-region.active').forEach(el => { el.classList.remove('active'); el.classList.remove('focus-pulse'); });
   document.querySelectorAll('#tlSourceBody .evt-highlight.active').forEach(el => el.classList.remove('active'));
   document.querySelectorAll('#tlSourceBody .evt-highlight.selected').forEach(el => el.classList.remove('selected'));
 
-  // Find the chunk containing this event and activate it
-  const chunk = findTLChunkForEvent(evt);
-  if (chunk) {
-    const cid = chunk.chunk_id || '';
-    const regionEl = document.getElementById('tl_chunk_' + cid);
-    if (regionEl) regionEl.classList.add('active');
-  }
-
-  // Highlight only the specific event's marks across all chunks
+  // Find chunks containing this event's marks and activate them
   const evtMarks = Array.from(document.querySelectorAll(`#tlSourceBody .evt-highlight[data-evt="${idx}"]`));
-  evtMarks.forEach(m => {
-    m.classList.add('active');
-    if (activeTLSpanId && m.dataset.spanId === activeTLSpanId) m.classList.add('selected');
+  const activeRegions = new Set();
+  evtMarks.forEach(mark => {
+    mark.classList.add('active');
+    if (activeTLSpanId && mark.dataset.spanId === activeTLSpanId) mark.classList.add('selected');
+    const region = mark.closest('.chunk-region');
+    if (region) activeRegions.add(region);
   });
+  if (!evtMarks.length) {
+    const chunk = findTLChunkForEvent(evt);
+    if (chunk) {
+      const regionEl = document.getElementById('tl_chunk_' + (chunk.chunk_id || ''));
+      if (regionEl) activeRegions.add(regionEl);
+    }
+  }
+  activeRegions.forEach(regionEl => {
+    regionEl.classList.add('active');
+    void regionEl.offsetWidth;
+    regionEl.classList.add('focus-pulse');
+  });
+
   const selectedAnchorId = activeTLSpanId ? getTLSpanAnchorId(idx, activeTLSpanId) : '';
   const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
-  const scrollTarget = selectedMark || evtMarks[0];
+  const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
   if (isTLMobileLayout()) setTLMobileTab('source');
   if (scrollTarget && shouldAutoScrollTLEvalSource()) {
     requestAnimationFrame(() => {
