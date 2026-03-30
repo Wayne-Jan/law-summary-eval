@@ -3485,17 +3485,10 @@ function buildTLEntityGroupsHtml() {
   const rendered = groups.filter(([, , items]) => items && items.length);
   if (!rendered.length) {
     return {
-      summaryHtml: '',
-      countText: '',
       listHtml: '<div class="tl-no-data">此案件無實體資料</div>',
     };
   }
 
-  const totalCount = rendered.reduce((sum, [, , items]) => sum + items.length, 0);
-  const summaryHtml = rendered.map(([key, label, items]) => (
-    `<div class="tl-entity-chip"><strong>${esc(label)}</strong><span>${items.length}</span></div>`
-  )).join('');
-  const countText = `${totalCount} 筆實體，${rendered.length} 類`;
   let listHtml = '<div class="tl-entity-stack">';
   rendered.forEach(([groupName, label, items]) => {
     listHtml += `<div class="tl-entity-group">`;
@@ -3516,7 +3509,7 @@ function buildTLEntityGroupsHtml() {
     listHtml += `</div>`;
   });
   listHtml += `</div>`;
-  return { summaryHtml, countText, listHtml };
+  return { listHtml };
 }
 
 function renderTimelinePanel() {
@@ -3528,9 +3521,9 @@ function renderTimelinePanel() {
 
   if (tlLeftMode === 'entities') {
     titleEl.textContent = '實體檢視';
-    const { summaryHtml, countText, listHtml } = buildTLEntityGroupsHtml();
-    countEl.textContent = countText;
-    barEl.innerHTML = summaryHtml;
+    const { listHtml } = buildTLEntityGroupsHtml();
+    countEl.textContent = '';
+    barEl.innerHTML = '';
     listEl.innerHTML = listHtml;
     syncTLLeftModeButtons();
     return;
