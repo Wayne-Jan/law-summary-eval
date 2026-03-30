@@ -620,11 +620,32 @@ def normalize_v310_entities(master):
         value = entities.get(key, [])
         return value if isinstance(value, list) else []
 
+    institutions = normalize_list("institutions")
+    institution_lookup = {}
+    for inst in institutions:
+        if isinstance(inst, dict) and inst.get("id"):
+            institution_lookup[inst["id"]] = inst.get("name") or inst["id"]
+
+    def normalize_actor_list(key):
+        value = normalize_list(key)
+        normalized = []
+        for item in value:
+            if not isinstance(item, dict):
+                normalized.append(item)
+                continue
+            cloned = dict(item)
+            institution = cloned.get("institution")
+            if isinstance(institution, str) and institution in institution_lookup:
+                cloned["institution"] = institution_lookup[institution]
+                cloned.setdefault("institution_id", institution)
+            normalized.append(cloned)
+        return normalized
+
     return {
-        "defendants": normalize_list("defendants"),
+        "defendants": normalize_actor_list("defendants"),
         "victims": normalize_list("victims"),
-        "other_actors": normalize_list("other_actors"),
-        "institutions": normalize_list("institutions"),
+        "other_actors": normalize_actor_list("other_actors"),
+        "institutions": institutions,
         "all_actor_names": normalize_list("all_actor_names"),
     }
 
