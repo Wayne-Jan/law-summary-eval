@@ -3772,14 +3772,12 @@ function showTLEventSource(idx) {
   const prevIdx = activeTLEventIdx;
   activeTLEventIdx = idx;
   const evtSpans = getTLEventSpans(evt);
-  console.log('[TL] showTLEventSource called', { idx, prevIdx, activeTLSpanId_before: activeTLSpanId, evtSpanIds: evtSpans.map(s => s.span_id + '(' + s.role + ')') });
   if (!evtSpans.length) activeTLSpanId = null;
   else if (idx !== prevIdx || !activeTLSpanId || !evtSpans.some(sp => sp.span_id === String(activeTLSpanId))) {
-    activeTLSpanId = (getTLActiveSpan(evt) || evtSpans[0]).span_id;
-    console.log('[TL] → RESET to primary:', activeTLSpanId);
+    const primary = evtSpans.find(sp => sp.role === 'primary') || evtSpans[0];
+    activeTLSpanId = primary.span_id;
   } else {
     activeTLSpanId = String(activeTLSpanId);
-    console.log('[TL] → KEEP span:', activeTLSpanId);
   }
 
   // Highlight active event card + focus pulse
@@ -3868,7 +3866,6 @@ function findTLChunkForEvent(evt) {
 
 function selectTLSpan(evtIdx, spanId) {
   if (!tlDataCache || evtIdx < 0) return;
-  console.log('[TL] selectTLSpan called', { evtIdx, spanId });
   activeTLSpanId = spanId == null ? null : String(spanId);
   showTLEventSource(evtIdx);
 }

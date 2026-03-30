@@ -1338,7 +1338,7 @@
       activeEventIdx = idx;
       const evtSpans = getEventSpans(evt);
       if (!evtSpans.length) activeSpanId = null;
-      else if (idx !== prevIdx || !activeSpanId || !evtSpans.some(sp => sp.span_id === String(activeSpanId))) activeSpanId = (getActiveSpan(evt) || evtSpans[0]).span_id;
+      else if (idx !== prevIdx || !activeSpanId || !evtSpans.some(sp => sp.span_id === String(activeSpanId))) activeSpanId = (evtSpans.find(sp => sp.role === 'primary') || evtSpans[0]).span_id;
       else activeSpanId = String(activeSpanId);
 
       // Highlight active event card (no scroll — only visual)
