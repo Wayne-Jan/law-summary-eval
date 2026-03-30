@@ -309,14 +309,10 @@
     }
     .entity-card {
       text-align: left; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff;
-      padding: 14px 14px 13px; cursor: pointer; transition: all 0.15s ease;
+      padding: 14px 14px 13px; cursor: default; transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
     .entity-card:hover {
-      border-color: #c7d2fe; box-shadow: 0 8px 18px rgba(79,70,229,0.08);
-      transform: translateY(-1px);
-    }
-    .entity-card.active {
-      border-color: #4f46e5; box-shadow: 0 10px 22px rgba(79,70,229,0.14);
+      border-color: #d7defd; box-shadow: 0 6px 14px rgba(79,70,229,0.06);
     }
     .entity-name {
       font-size: 15px; font-weight: 700; color: #111827; line-height: 1.4;
@@ -613,10 +609,8 @@
     let activeEventIdx = -1;
     let activeSpanId = null;
     let timelineViewMode = 'timeline';
-    let activeEntityKey = null;
     let lastScrolledEventIdx = -1;
     let sourceScrollTimer = null;
-    let entityIndex = {};
 
     function isMobileTimelineLayout() {
       return window.innerWidth <= 768;
@@ -661,12 +655,6 @@
         contentArea.dataset.boundSpanPills = '1';
       }
       if (contentArea && !contentArea.dataset.boundEntityCards) {
-        contentArea.addEventListener('click', (event) => {
-          const card = event.target.closest('.entity-card[data-entity-key]');
-          if (!card) return;
-          event.stopPropagation();
-          showEntitySource(card.dataset.entityKey, card);
-        });
         contentArea.dataset.boundEntityCards = '1';
       }
       renderCaseSelector();
@@ -740,7 +728,6 @@
       activeEventIdx = -1;
       activeSpanId = null;
       timelineViewMode = 'timeline';
-      activeEntityKey = null;
       const select = document.getElementById('caseSelect');
       if (select) select.value = caseName;
       const url = new URL(location.href);
@@ -1084,22 +1071,6 @@
       return html;
     }
 
-    function buildEntitiesIndex(entities) {
-      entityIndex = {};
-      const groups = [
-        ['defendants', entities?.defendants || []],
-        ['victims', entities?.victims || []],
-        ['other_actors', entities?.other_actors || []],
-        ['institutions', entities?.institutions || []],
-      ];
-      groups.forEach(([groupName, items]) => {
-        items.forEach((item, idx) => {
-          const key = `${groupName}:${item.id || item.name || idx}`;
-          entityIndex[key] = { group: groupName, item };
-        });
-      });
-    }
-
     function getEntityLabel(entity, fallback = '未知') {
       if (!entity) return fallback;
       return entity.name || entity.standard_name || fallback;
@@ -1128,11 +1099,9 @@
     }
 
     function buildEntityCardHtml(entity, groupName, idx) {
-      const key = `${groupName}:${entity.id || entity.name || idx}`;
       const aliases = Array.isArray(entity.aliases) ? entity.aliases.filter(Boolean) : [];
       const metaLines = getEntityMetaLines(entity, groupName);
-      const activeCls = key === activeEntityKey ? ' active' : '';
-      let html = `<div class="entity-card${activeCls}" data-entity-key="${esc(key)}">`;
+      let html = `<div class="entity-card">`;
       html += `<div class="entity-name">${esc(getEntityLabel(entity))}</div>`;
       if (metaLines.length) {
         html += `<div class="entity-role">${esc(metaLines[0])}</div>`;
@@ -1142,11 +1111,6 @@
       }
       if (aliases.length) {
         html += `<div class="entity-aliases">別名：${esc(aliases.join('、'))}</div>`;
-      }
-      if (groupName === 'victims' && entity.cause_of_death && entity.primary_injury) {
-        html += `<div class="entity-note">可點擊定位原文</div>`;
-      } else {
-        html += `<div class="entity-note">可點擊定位原文</div>`;
       }
       html += '</div>';
       return html;
@@ -1326,13 +1290,11 @@
     function renderEntitiesView() {
       const d = timelineData || {};
       const entities = d.entities || {};
-      buildEntitiesIndex(entities);
       const leftPanelHtml = buildEntitiesLeftPanelHtml(entities);
       renderWorkbench(leftPanelHtml);
       activeEventIdx = -1;
       activeSpanId = null;
       updateEventSpanPills();
-      updateEntityCardSelection();
     }
 
     function switchTimelineView(mode) {
@@ -1348,68 +1310,10 @@
         if (!hasEntities) return;
       }
       timelineViewMode = mode;
-      activeEntityKey = null;
       if (mode === 'timeline') {
         renderEvents();
       } else {
         renderEntitiesView();
-      }
-    }
-
-    function updateEntityCardSelection() {
-      document.querySelectorAll('.entity-card').forEach(el => {
-        el.classList.toggle('active', el.dataset.entityKey === activeEntityKey);
-      });
-    }
-
-    function findChunkForEntity(entity) {
-      if (!timelineData || !entity) return null;
-      const chunks = timelineData.chunks || [];
-      const terms = [];
-      if (entity.name) terms.push(entity.name);
-      if (Array.isArray(entity.aliases)) terms.push(...entity.aliases);
-      if (entity.institution) terms.push(entity.institution);
-      if (entity.role) terms.push(entity.role);
-      const normalizedTerms = terms
-        .map(t => normalizeLooseText(t))
-        .filter(Boolean);
-      for (const term of normalizedTerms) {
-        for (const chunk of chunks) {
-          const content = normalizeLooseText(chunk.content || '');
-          if (content.includes(term)) return chunk;
-        }
-      }
-      return null;
-    }
-
-    function showEntitySource(entityKey, cardEl) {
-      const ref = entityIndex[entityKey];
-      if (!ref) return;
-      activeEntityKey = entityKey;
-      activeEventIdx = -1;
-      activeSpanId = null;
-      updateEntityCardSelection();
-      updateEventSpanPills();
-      const entity = ref.item;
-      const chunk = findChunkForEntity(entity);
-      document.querySelectorAll('.chunk-region.active').forEach(el => {
-        el.classList.remove('active');
-        el.classList.remove('focus-pulse');
-      });
-      document.querySelectorAll('.evt-highlight.active').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.evt-highlight.selected').forEach(el => el.classList.remove('selected'));
-      if (isMobileTimelineLayout()) openMobileSourceSheet();
-      if (chunk) {
-        const regionEl = document.getElementById('chunk_' + (chunk.chunk_id || ''));
-        if (regionEl) {
-          regionEl.classList.add('active');
-          void regionEl.offsetWidth;
-          regionEl.classList.add('focus-pulse');
-          scrollTimelineSourceBodyToTarget(regionEl);
-        }
-      }
-      if (cardEl) {
-        cardEl.classList.add('active');
       }
     }
 
