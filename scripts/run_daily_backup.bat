@@ -37,20 +37,20 @@ if "%PYTHON_EXE%"=="" (
 )
 
 if "%PYTHON_EXE%"=="" (
-  echo [ERROR] 找不到 Python。
-  echo         請安裝 Python，或設定 LAW_SUMMARY_EVAL_PYTHON，或建立 %DEFAULT_VENV_PY%
+  echo [ERROR] Python not found.
+  echo         Install Python, set LAW_SUMMARY_EVAL_PYTHON, or create %DEFAULT_VENV_PY%
   exit /b 1
 )
 
 if "%GOOGLE_APPLICATION_CREDENTIALS%"=="" (
-  echo [ERROR] 找不到 Firebase service account JSON。
-  echo         請設定 GOOGLE_APPLICATION_CREDENTIALS，或把檔案放在：
+  echo [ERROR] Firebase service account JSON not found.
+  echo         Set GOOGLE_APPLICATION_CREDENTIALS or place the file at:
   echo         %DEFAULT_SERVICE_ACCOUNT%
   exit /b 1
 )
 
 if not exist "%GOOGLE_APPLICATION_CREDENTIALS%" (
-  echo [ERROR] service account 不存在：
+  echo [ERROR] Service account file does not exist:
   echo         %GOOGLE_APPLICATION_CREDENTIALS%
   exit /b 1
 )
@@ -70,9 +70,9 @@ set "EXIT_CODE=%ERRORLEVEL%"
 popd
 
 if not "%EXIT_CODE%"=="0" (
-  echo [ERROR] 每日快照執行失敗，exit code=%EXIT_CODE%
+  echo [ERROR] Daily snapshot failed, exit code=%EXIT_CODE%
   exit /b %EXIT_CODE%
 )
 
-echo [OK] 每日快照完成
+echo [OK] Daily snapshot completed
 exit /b 0
