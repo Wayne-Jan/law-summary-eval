@@ -3769,10 +3769,11 @@ function showTLEventSource(idx) {
   const events = tlDataCache.events || [];
   const evt = events[idx];
   if (!evt) return;
+  const prevIdx = activeTLEventIdx;
   activeTLEventIdx = idx;
   const evtSpans = getTLEventSpans(evt);
   if (!evtSpans.length) activeTLSpanId = null;
-  else if (!activeTLSpanId || !evtSpans.some(sp => sp.span_id === String(activeTLSpanId))) {
+  else if (idx !== prevIdx || !activeTLSpanId || !evtSpans.some(sp => sp.span_id === String(activeTLSpanId))) {
     activeTLSpanId = (getTLActiveSpan(evt) || evtSpans[0]).span_id;
   } else {
     activeTLSpanId = String(activeTLSpanId);
