@@ -3430,19 +3430,35 @@ function getTLEntityLabel(entity, fallback = '未知') {
   return entity.name || entity.standard_name || fallback;
 }
 
-function getTLEntityMetaLines(entity, groupName) {
+function buildTLEntityInstitutionLookup(entities) {
+  const lookup = {};
+  (entities?.institutions || []).forEach(inst => {
+    if (inst && inst.id) lookup[inst.id] = inst.name || inst.id;
+  });
+  return lookup;
+}
+
+function resolveTLEntityInstitutionLabel(value, lookup) {
+  if (!value) return '';
+  if (lookup && lookup[value]) return lookup[value];
+  return value;
+}
+
+function getTLEntityMetaLines(entity, groupName, institutionLookup = {}) {
   if (!entity) return [];
   const lines = [];
   if (groupName === 'defendants') {
     if (entity.role) lines.push(entity.role);
-    if (entity.institution) lines.push(entity.institution);
+    const institutionLabel = resolveTLEntityInstitutionLabel(entity.institution, institutionLookup);
+    if (institutionLabel) lines.push(institutionLabel);
     if (entity.specialty) lines.push(`專科：${entity.specialty}`);
   } else if (groupName === 'victims') {
     if (entity.cause_of_death) lines.push(`死亡原因：${entity.cause_of_death}`);
     if (entity.primary_injury) lines.push(`主要傷勢：${entity.primary_injury}`);
   } else if (groupName === 'other_actors') {
     if (entity.role) lines.push(entity.role);
-    if (entity.institution) lines.push(entity.institution);
+    const institutionLabel = resolveTLEntityInstitutionLabel(entity.institution, institutionLookup);
+    if (institutionLabel) lines.push(institutionLabel);
   } else if (groupName === 'institutions') {
     if (entity.type) lines.push(`類型：${entity.type}`);
     if (Array.isArray(entity.related_actors) && entity.related_actors.length) {
@@ -3452,9 +3468,9 @@ function getTLEntityMetaLines(entity, groupName) {
   return lines.filter(Boolean);
 }
 
-function buildTLEntityCardHtml(entity, groupName) {
+function buildTLEntityCardHtml(entity, groupName, institutionLookup = {}) {
   const aliases = Array.isArray(entity.aliases) ? entity.aliases.filter(Boolean) : [];
-  const metaLines = getTLEntityMetaLines(entity, groupName);
+  const metaLines = getTLEntityMetaLines(entity, groupName, institutionLookup);
   let html = `<div class="tl-entity-card">`;
   html += `<div class="tl-entity-name">${esc(getTLEntityLabel(entity))}</div>`;
   if (metaLines.length) {
@@ -3475,6 +3491,7 @@ function buildTLEntityCardHtml(entity, groupName) {
 
 function buildTLEntityGroupsHtml() {
   const entities = getTLEntityData();
+  const institutionLookup = buildTLEntityInstitutionLookup(entities);
   const groups = [
     ['defendants', '被告', entities.defendants || []],
     ['victims', '被害人', entities.victims || []],
@@ -3502,7 +3519,7 @@ function buildTLEntityGroupsHtml() {
     } else {
       listHtml += `<div class="tl-entity-grid">`;
       items.forEach((item) => {
-        listHtml += buildTLEntityCardHtml(item || {}, groupName);
+        listHtml += buildTLEntityCardHtml(item || {}, groupName, institutionLookup);
       });
       listHtml += `</div>`;
     }
