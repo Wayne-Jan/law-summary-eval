@@ -726,56 +726,37 @@
     }
     .panel-meta { font-size: 13px; color: var(--slate-500); }
     .tl-summary {
-      display: grid;
-      grid-template-columns: repeat(3, max-content);
-      gap: 10px;
-      margin: 12px 16px 0;
-      padding: 10px 12px;
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      align-items: center;
-      justify-content: start;
+      display: flex; gap: 16px; margin: 12px 16px 18px; flex-wrap: wrap;
+      padding: 2px 0 6px; background: transparent; border: none;
     }
     .tl-summary-chip {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 12px; border-radius: 999px; background: #f8fafc;
-      border: 1px solid #e2e8f0; color: #334155;
+      padding: 0; border-radius: 0; background: transparent;
+      border: none; color: #334155;
     }
-    .tl-summary-chip.events {
-      background: #f8fafc;
-      border-color: #cbd5e1;
+    .tl-summary-chip.events { color: #475569; }
+    .tl-summary-chip.critical { color: #dc2626; }
+    .tl-summary-chip.duration { color: #2563eb; }
+    .tl-summary-chip.span { color: #7c3aed; }
+    .tl-summary-icon {
+      width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: currentColor;
     }
-    .tl-summary-chip.critical {
-      background: #fef2f2;
-      border-color: #fecaca;
-      color: #991b1b;
+    .tl-summary-icon svg {
+      width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8;
+      stroke-linecap: round; stroke-linejoin: round;
     }
-    .tl-summary-chip.critical .tl-summary-label,
-    .tl-summary-chip.critical .tl-summary-value {
-      color: #dc2626;
+    .tl-summary-chip + .tl-summary-chip {
+      padding-left: 16px;
+      border-left: 1px solid #e5e7eb;
     }
-    .tl-summary-chip.span {
-      background: #faf5ff;
-      border-color: #ddd6fe;
-      color: #5b21b6;
-    }
-    .tl-summary-chip.span .tl-summary-label {
-      color: #8b5cf6;
-    }
-    .tl-summary-chip.duration {
-      background: #eff6ff;
-      border-color: #bfdbfe;
-      color: #1d4ed8;
-    }
-    .tl-summary-chip.duration .tl-summary-label {
-      color: #60a5fa;
-    }
-    .tl-summary-chip.span-chip { grid-column: 1 / -1; width: fit-content; }
     .tl-summary-label {
-      font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 700;
+      font-size: 12px; color: currentColor; opacity: 0.72; letter-spacing: 0.01em; font-weight: 700;
     }
-    .tl-summary-value { font-size: 13px; font-weight: 700; color: #0f172a; }
+    .tl-summary-value {
+      font-size: 13px; font-weight: 700; color: currentColor;
+      line-height: 1.35;
+    }
     .tl-summary-value.small { font-size: 13px; font-weight: 600; }
     .timeline-panel-body { padding: 14px 14px 14px 28px; }
     .timeline { position: relative; padding-left: 28px; }
@@ -925,6 +906,24 @@
       .panel-tl-eval { padding-bottom: 84px; }
       .tl-head-row { flex-direction: column; }
       .tl-left-mode-switch { display: none; }
+      .tl-summary { gap: 10px; padding: 0; }
+      .tl-summary-chip {
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        background: #fff;
+      }
+      .tl-summary-chip + .tl-summary-chip {
+        padding-left: 12px;
+        border-left: none;
+      }
+      .tl-summary-label { opacity: 0.9; }
+      .tl-summary-value { font-size: 13px; }
       #phaseTLView .panel-body, #phaseTLView .timeline-panel-body { max-height: calc(100vh - var(--toolbar-h) - var(--subbar-h) - 132px); overflow-y: auto; }
       .tl-eval-group-title { margin-bottom: 10px; }
     }
@@ -3573,10 +3572,10 @@ function renderTimelinePanel() {
     }
   }
   barEl.innerHTML = `
-    <div class="tl-summary-chip events"><span class="tl-summary-label">事件數</span><span class="tl-summary-value">${events.length}</span></div>
-    <div class="tl-summary-chip critical"><span class="tl-summary-label">關鍵決策</span><span class="tl-summary-value">${critCount}</span></div>
-    <div class="tl-summary-chip span"><span class="tl-summary-label">原文片段</span><span class="tl-summary-value">${(tlDataCache && tlDataCache.chunks ? tlDataCache.chunks.length : 0)}</span></div>
-    ${spanText ? `<div class="tl-summary-chip duration span-chip"><span class="tl-summary-label">時間跨度</span><span class="tl-summary-value small">${spanText}</span></div>` : ''}
+    <div class="tl-summary-chip events"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 6h13"/><path d="M7 12h13"/><path d="M7 18h13"/><path d="M4 6h.01"/><path d="M4 12h.01"/><path d="M4 18h.01"/></svg></span><span class="tl-summary-label">事件數</span><span class="tl-summary-value">${events.length}</span></div>
+    <div class="tl-summary-chip critical"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 19h16L12 3Z"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg></span><span class="tl-summary-label">關鍵決策</span><span class="tl-summary-value">${critCount}</span></div>
+    ${spanText ? `<div class="tl-summary-chip duration"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 8v5l3 2"/><circle cx="12" cy="12" r="9"/></svg></span><span class="tl-summary-label">時間跨度</span><span class="tl-summary-value small">${spanText}</span></div>` : ''}
+    <div class="tl-summary-chip span"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4h8a2 2 0 0 1 2 2v14l-4-3-4 3-4-3-4 3V6a2 2 0 0 1 2-2Z"/></svg></span><span class="tl-summary-label">原文片段</span><span class="tl-summary-value">${(tlDataCache && tlDataCache.chunks ? tlDataCache.chunks.length : 0)}</span></div>
   `;
 
   // Event cards
