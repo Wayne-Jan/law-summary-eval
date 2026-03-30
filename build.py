@@ -606,6 +606,26 @@ def load_v310_timeline(case_name, volume):
         "time_gaps": time_gaps,
         "causation_chain": tl_result.get("causation_chain", []),
         "chunks": chunks,
+        "entities": normalize_v310_entities(master),
+    }
+
+
+def normalize_v310_entities(master):
+    """Extract a stable entity payload for the static viewer."""
+    entities = master.get("entities", {})
+    if not isinstance(entities, dict):
+        return {}
+
+    def normalize_list(key):
+        value = entities.get(key, [])
+        return value if isinstance(value, list) else []
+
+    return {
+        "defendants": normalize_list("defendants"),
+        "victims": normalize_list("victims"),
+        "other_actors": normalize_list("other_actors"),
+        "institutions": normalize_list("institutions"),
+        "all_actor_names": normalize_list("all_actor_names"),
     }
 
 

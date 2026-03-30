@@ -264,6 +264,81 @@
     }
     .tl-summary-value.small { font-size: 13px; font-weight: 600; }
 
+    /* ─── TIMELINE SUB-VIEWS ─── */
+    .tl-view-switcher {
+      display: flex; gap: 8px; margin: 0 0 16px; padding: 0 0 2px; flex-wrap: wrap;
+    }
+    .tl-view-tab {
+      appearance: none; -webkit-appearance: none;
+      font-family: inherit; font-size: 13px; font-weight: 600;
+      padding: 8px 14px; border-radius: 12px; border: 1px solid #dbe4ee;
+      background: #fff; color: #64748b; cursor: pointer; transition: all 0.15s ease;
+    }
+    .tl-view-tab:hover { border-color: #c7d2fe; color: #4f46e5; }
+    .tl-view-tab.active {
+      background: #4f46e5; border-color: #4f46e5; color: #fff;
+      box-shadow: 0 8px 18px rgba(79,70,229,0.16);
+    }
+    .tl-view-tab:disabled {
+      opacity: 0.45; cursor: not-allowed; box-shadow: none;
+    }
+
+    .entity-panel-card {
+      flex: 1; min-height: 0; display: flex; flex-direction: column;
+    }
+    .entity-panel-body {
+      padding: 20px 22px 24px; overflow-y: auto; flex: 1; min-height: 0;
+    }
+    .entity-stack { display: flex; flex-direction: column; gap: 16px; }
+    .entity-group {
+      background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; overflow: hidden;
+    }
+    .entity-group-head {
+      padding: 12px 16px; background: #fafafa; border-bottom: 1px solid #f3f4f6;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .entity-group-title {
+      font-size: 14px; font-weight: 700; color: #111827; display: flex; align-items: center; gap: 8px;
+    }
+    .entity-group-count {
+      font-size: 12px; color: #64748b; font-weight: 600;
+    }
+    .entity-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px; padding: 14px;
+    }
+    .entity-card {
+      text-align: left; border: 1px solid #e5e7eb; border-radius: 12px; background: #fff;
+      padding: 14px 14px 13px; cursor: pointer; transition: all 0.15s ease;
+    }
+    .entity-card:hover {
+      border-color: #c7d2fe; box-shadow: 0 8px 18px rgba(79,70,229,0.08);
+      transform: translateY(-1px);
+    }
+    .entity-card.active {
+      border-color: #4f46e5; box-shadow: 0 10px 22px rgba(79,70,229,0.14);
+    }
+    .entity-name {
+      font-size: 15px; font-weight: 700; color: #111827; line-height: 1.4;
+    }
+    .entity-role {
+      margin-top: 4px; font-size: 12px; font-weight: 600; color: #4f46e5;
+      line-height: 1.45;
+    }
+    .entity-meta {
+      margin-top: 8px; font-size: 12px; color: #64748b; line-height: 1.65;
+    }
+    .entity-aliases {
+      margin-top: 8px; font-size: 12px; color: #94a3b8; line-height: 1.55;
+    }
+    .entity-note {
+      margin-top: 8px; font-size: 12px; color: #94a3b8; line-height: 1.55;
+    }
+    .entity-empty {
+      padding: 36px 20px; color: #94a3b8; text-align: center; font-size: 13px;
+      border: 1px dashed #e2e8f0; border-radius: 12px; background: #fff;
+    }
+
     /* ─── TIMELINE ─── */
     .timeline { position: relative; padding-left: 28px; }
     .timeline::before {
@@ -441,6 +516,8 @@
       }
       .tl-summary-label { opacity: 0.9; }
       .tl-summary-value { font-size: 13px; }
+      .tl-view-switcher { gap: 8px; margin: 0 0 14px; }
+      .tl-view-tab { flex: 1 1 0; text-align: center; }
       .tl-event { padding: 12px 14px; cursor: default; }
       .tl-desc { font-size: 12px; }
       .tl-meta { gap: 8px; }
@@ -449,6 +526,8 @@
       .tl-col-left { flex: 1; position: static; max-height: none; width: 100%; }
       .tl-col-right { flex: 1; position: static; max-height: none; width: 100%; display: contents; }
       .timeline-panel-body { overflow: visible; }
+      .entity-panel-body { padding: 16px 12px 18px; }
+      .entity-grid { grid-template-columns: 1fr; padding: 12px 0 0; }
       .tl-source-toggle, .tl-source-text { display: none !important; }
       .source-panel {
         position: fixed; left: 0; right: 0; bottom: 0;
@@ -533,8 +612,11 @@
     let timelineData = null;
     let activeEventIdx = -1;
     let activeSpanId = null;
+    let timelineViewMode = 'timeline';
+    let activeEntityKey = null;
     let lastScrolledEventIdx = -1;
     let sourceScrollTimer = null;
+    let entityIndex = {};
 
     function isMobileTimelineLayout() {
       return window.innerWidth <= 768;
@@ -577,6 +659,15 @@
           selectSpan(evtIdx, spanId);
         });
         contentArea.dataset.boundSpanPills = '1';
+      }
+      if (contentArea && !contentArea.dataset.boundEntityCards) {
+        contentArea.addEventListener('click', (event) => {
+          const card = event.target.closest('.entity-card[data-entity-key]');
+          if (!card) return;
+          event.stopPropagation();
+          showEntitySource(card.dataset.entityKey, card);
+        });
+        contentArea.dataset.boundEntityCards = '1';
       }
       renderCaseSelector();
       const params = new URLSearchParams(location.search);
@@ -648,6 +739,8 @@
       timelineData = null;
       activeEventIdx = -1;
       activeSpanId = null;
+      timelineViewMode = 'timeline';
+      activeEntityKey = null;
       const select = document.getElementById('caseSelect');
       if (select) select.value = caseName;
       const url = new URL(location.href);
@@ -891,18 +984,14 @@
       return escaped;
     }
 
-    function renderEvents() {
-      const d = timelineData;
+    function buildTimelineSummaryHtml(d) {
       const events = d.events || [];
       const chunks = d.chunks || [];
       const summary = d.timeline_summary || {};
       const span = summary.time_span || {};
       const criticalCount = events.filter(e => e.critical_decision).length;
 
-      let html = '<div class="content-inner">';
-
-      // Summary banner
-      html += '<div class="tl-summary">';
+      let html = '<div class="tl-summary">';
       html += `<div class="tl-summary-chip events"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 6h13"/><path d="M7 12h13"/><path d="M7 18h13"/><path d="M4 6h.01"/><path d="M4 12h.01"/><path d="M4 18h.01"/></svg></span><span class="tl-summary-label">事件數</span><span class="tl-summary-value">${events.length}</span></div>`;
       html += `<div class="tl-summary-chip critical"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4 19h16L12 3Z"/><path d="M12 9v4"/><path d="M12 16h.01"/></svg></span><span class="tl-summary-label">關鍵決策</span><span class="tl-summary-value">${criticalCount}</span></div>`;
       const spanStart = span.start_date || span.start || '';
@@ -920,13 +1009,27 @@
       }
       html += `<div class="tl-summary-chip span"><span class="tl-summary-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4h8a2 2 0 0 1 2 2v14l-4-3-4 3-4-3-4 3V6a2 2 0 0 1 2-2Z"/></svg></span><span class="tl-summary-label">原文片段</span><span class="tl-summary-value">${chunks.length}</span></div>`;
       html += '</div>';
+      return html;
+    }
 
-      // Workbench
-      html += '<div class="tl-columns">';
+    function buildTimelineViewSwitcherHtml() {
+      const entities = timelineData && timelineData.entities ? timelineData.entities : null;
+      const hasEntities = !!(entities && (
+        (entities.defendants && entities.defendants.length) ||
+        (entities.victims && entities.victims.length) ||
+        (entities.other_actors && entities.other_actors.length) ||
+        (entities.institutions && entities.institutions.length)
+      ));
+      return `
+        <div class="tl-view-switcher">
+          <button class="tl-view-tab ${timelineViewMode === 'timeline' ? 'active' : ''}" type="button" onclick="switchTimelineView('timeline')">時間軸</button>
+          <button class="tl-view-tab ${timelineViewMode === 'entities' ? 'active' : ''}" type="button" onclick="switchTimelineView('entities')" ${hasEntities ? '' : 'disabled'}>實體</button>
+        </div>
+      `;
+    }
 
-      // Left column: timeline events
-      html += '<div class="tl-col-left">';
-      html += '<div class="panel-card timeline-panel-card">';
+    function buildTimelineLeftPanelHtml(events) {
+      let html = '<div class="panel-card timeline-panel-card">';
       html += '<div class="panel-head">';
       html += '<div class="panel-kicker">TIMELINE</div>';
       html += '<div class="panel-title">事件時間軸</div>';
@@ -963,7 +1066,6 @@
         html += renderEventSpanSwitcher(evt, idx);
         html += '</div>';
 
-        // Mobile-only collapsible (shows chunk with highlight)
         if (evt.extraction_text) {
           const chunk = findChunkForEvent(evt);
           const mobileContent = chunk
@@ -978,12 +1080,126 @@
         html += '</div>';
       });
 
-      html += '</div></div></div>'; // .timeline / padding / .panel-card
-      html += '</div>'; // tl-col-left
+      html += '</div></div></div>';
+      return html;
+    }
 
-      // Right column: source only
-      html += '<div class="tl-col-right">';
-      html += '<div class="source-stack">';
+    function buildEntitiesIndex(entities) {
+      entityIndex = {};
+      const groups = [
+        ['defendants', entities?.defendants || []],
+        ['victims', entities?.victims || []],
+        ['other_actors', entities?.other_actors || []],
+        ['institutions', entities?.institutions || []],
+      ];
+      groups.forEach(([groupName, items]) => {
+        items.forEach((item, idx) => {
+          const key = `${groupName}:${item.id || item.name || idx}`;
+          entityIndex[key] = { group: groupName, item };
+        });
+      });
+    }
+
+    function getEntityLabel(entity, fallback = '未知') {
+      if (!entity) return fallback;
+      return entity.name || entity.standard_name || fallback;
+    }
+
+    function getEntityMetaLines(entity, groupName) {
+      const lines = [];
+      if (!entity) return lines;
+      if (groupName === 'defendants') {
+        if (entity.role) lines.push(entity.role);
+        if (entity.institution) lines.push(entity.institution);
+        if (entity.specialty) lines.push(`專科：${entity.specialty}`);
+      } else if (groupName === 'victims') {
+        if (entity.primary_injury) lines.push(`主要傷勢：${entity.primary_injury}`);
+        if (entity.cause_of_death) lines.push(`死因：${entity.cause_of_death}`);
+      } else if (groupName === 'other_actors') {
+        if (entity.role) lines.push(entity.role);
+        if (entity.institution) lines.push(entity.institution);
+      } else if (groupName === 'institutions') {
+        if (entity.type) lines.push(`類型：${entity.type}`);
+        if (Array.isArray(entity.related_actors) && entity.related_actors.length) {
+          lines.push(`相關人物：${entity.related_actors.length} 位`);
+        }
+      }
+      return lines;
+    }
+
+    function buildEntityCardHtml(entity, groupName, idx) {
+      const key = `${groupName}:${entity.id || entity.name || idx}`;
+      const aliases = Array.isArray(entity.aliases) ? entity.aliases.filter(Boolean) : [];
+      const metaLines = getEntityMetaLines(entity, groupName);
+      const activeCls = key === activeEntityKey ? ' active' : '';
+      let html = `<div class="entity-card${activeCls}" data-entity-key="${esc(key)}">`;
+      html += `<div class="entity-name">${esc(getEntityLabel(entity))}</div>`;
+      if (metaLines.length) {
+        html += `<div class="entity-role">${esc(metaLines[0])}</div>`;
+        if (metaLines.length > 1) {
+          html += `<div class="entity-meta">${esc(metaLines.slice(1).join(' ・ '))}</div>`;
+        }
+      }
+      if (aliases.length) {
+        html += `<div class="entity-aliases">別名：${esc(aliases.join('、'))}</div>`;
+      }
+      if (groupName === 'victims' && entity.cause_of_death && entity.primary_injury) {
+        html += `<div class="entity-note">可點擊定位原文</div>`;
+      } else {
+        html += `<div class="entity-note">可點擊定位原文</div>`;
+      }
+      html += '</div>';
+      return html;
+    }
+
+    function buildEntitiesLeftPanelHtml(entities) {
+      const defendants = entities?.defendants || [];
+      const victims = entities?.victims || [];
+      const otherActors = entities?.other_actors || [];
+      const institutions = entities?.institutions || [];
+      const allNames = entities?.all_actor_names || [];
+      const total = defendants.length + victims.length + otherActors.length + institutions.length;
+
+      let html = '<div class="panel-card entity-panel-card">';
+      html += '<div class="panel-head">';
+      html += '<div class="panel-kicker">ENTITIES</div>';
+      html += '<div class="panel-title">實體檢視</div>';
+      html += `<div class="panel-meta">被告 ${defendants.length}、被害人 ${victims.length}、其他角色 ${otherActors.length}、機構 ${institutions.length}，共 ${total} 筆實體・可辨識名稱 ${allNames.length} 個</div>`;
+      html += '</div>';
+      html += '<div class="entity-panel-body">';
+      html += '<div class="entity-stack">';
+
+      const sections = [
+        ['被告', 'defendants', defendants, '👤'],
+        ['被害人', 'victims', victims, '🏥'],
+        ['其他角色', 'other_actors', otherActors, '🧩'],
+        ['機構', 'institutions', institutions, '🏛️'],
+      ];
+
+      sections.forEach(([title, groupName, items, icon]) => {
+        if (!items.length) return;
+        html += '<div class="entity-group">';
+        html += '<div class="entity-group-head">';
+        html += `<div class="entity-group-title"><span aria-hidden="true">${icon}</span>${esc(title)}</div>`;
+        html += `<div class="entity-group-count">${items.length}</div>`;
+        html += '</div>';
+        html += '<div class="entity-grid">';
+        items.forEach((item, idx) => {
+          html += buildEntityCardHtml(item, groupName, idx);
+        });
+        html += '</div></div>';
+      });
+
+      if (total === 0) {
+        html += '<div class="entity-empty">此案件沒有可用的實體資料</div>';
+      }
+
+      html += '</div></div></div>';
+      return html;
+    }
+
+    function buildSourcePanelHtml(events, chunks) {
+      let html = '';
       html += '<div class="source-panel" id="sourcePanel">';
       html += '<div class="panel-head">';
       html += '<div class="panel-kicker">SOURCE</div>';
@@ -1031,7 +1247,6 @@
             });
           });
           evtSpans.sort((a, b) => a.relStart - b.relStart || a.relEnd - b.relEnd);
-          // Merge overlapping spans to prevent duplicated text
           const merged = [];
           evtSpans.forEach(sp => {
             if (!merged.length || sp.relStart >= merged[merged.length - 1].relEnd) {
@@ -1047,14 +1262,12 @@
           let cursor = 0;
           merged.forEach(m => {
             if (m.relStart > cursor) chunkHtml += esc(content.substring(cursor, m.relStart));
-            // Render sub-segments: split merged region so each source span gets its own <mark>
             const segments = [];
             const cuts = new Set([m.relStart, m.relEnd]);
             m.sources.forEach(sp => { cuts.add(Math.max(sp.relStart, m.relStart)); cuts.add(Math.min(sp.relEnd, m.relEnd)); });
             const sortedCuts = [...cuts].sort((a, b) => a - b);
             for (let i = 0; i < sortedCuts.length - 1; i++) {
               const segStart = sortedCuts[i], segEnd = sortedCuts[i + 1];
-              // Find the best source for this segment (prefer primary, then first)
               const covering = m.sources.filter(sp => sp.relStart <= segStart && sp.relEnd >= segEnd);
               const best = covering.find(sp => sp.role === 'primary') || covering[0] || m.sources[0];
               segments.push({ start: segStart, end: segEnd, sp: best });
@@ -1077,14 +1290,127 @@
         html += '<div class="source-panel-empty"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg><span>此案件無段落資料</span></div>';
       }
 
-      html += '</div></div></div>';
+      html += '</div></div>';
+      return html;
+    }
 
-      html += '</div></div>'; // .tl-columns .content-inner
+    function renderWorkbench(leftPanelHtml) {
+      const d = timelineData;
+      const events = d.events || [];
+      const chunks = d.chunks || [];
+      let html = '<div class="content-inner">';
+      html += buildTimelineSummaryHtml(d);
+      html += buildTimelineViewSwitcherHtml();
+      html += '<div class="tl-columns">';
+      html += '<div class="tl-col-left">';
+      html += leftPanelHtml;
+      html += '</div>';
+      html += '<div class="tl-col-right"><div class="source-stack">';
+      html += buildSourcePanelHtml(events, chunks);
+      html += '</div></div>';
+      html += '</div></div>';
       document.getElementById('contentArea').innerHTML = html;
       closeMobileSourceSheet();
+    }
+
+    function renderEvents() {
+      timelineViewMode = 'timeline';
+      const d = timelineData;
+      const events = d.events || [];
+      const leftPanelHtml = buildTimelineLeftPanelHtml(events);
+      renderWorkbench(leftPanelHtml);
       if (events.length > 0 && activeEventIdx >= 0) showSource(activeEventIdx, false);
       else updateEventSpanPills();
+    }
 
+    function renderEntitiesView() {
+      const d = timelineData || {};
+      const entities = d.entities || {};
+      buildEntitiesIndex(entities);
+      const leftPanelHtml = buildEntitiesLeftPanelHtml(entities);
+      renderWorkbench(leftPanelHtml);
+      activeEventIdx = -1;
+      activeSpanId = null;
+      updateEventSpanPills();
+      updateEntityCardSelection();
+    }
+
+    function switchTimelineView(mode) {
+      if (mode === timelineViewMode) return;
+      if (mode === 'entities') {
+        const entities = timelineData && timelineData.entities ? timelineData.entities : null;
+        const hasEntities = !!(entities && (
+          (entities.defendants && entities.defendants.length) ||
+          (entities.victims && entities.victims.length) ||
+          (entities.other_actors && entities.other_actors.length) ||
+          (entities.institutions && entities.institutions.length)
+        ));
+        if (!hasEntities) return;
+      }
+      timelineViewMode = mode;
+      activeEntityKey = null;
+      if (mode === 'timeline') {
+        renderEvents();
+      } else {
+        renderEntitiesView();
+      }
+    }
+
+    function updateEntityCardSelection() {
+      document.querySelectorAll('.entity-card').forEach(el => {
+        el.classList.toggle('active', el.dataset.entityKey === activeEntityKey);
+      });
+    }
+
+    function findChunkForEntity(entity) {
+      if (!timelineData || !entity) return null;
+      const chunks = timelineData.chunks || [];
+      const terms = [];
+      if (entity.name) terms.push(entity.name);
+      if (Array.isArray(entity.aliases)) terms.push(...entity.aliases);
+      if (entity.institution) terms.push(entity.institution);
+      if (entity.role) terms.push(entity.role);
+      const normalizedTerms = terms
+        .map(t => normalizeLooseText(t))
+        .filter(Boolean);
+      for (const term of normalizedTerms) {
+        for (const chunk of chunks) {
+          const content = normalizeLooseText(chunk.content || '');
+          if (content.includes(term)) return chunk;
+        }
+      }
+      return null;
+    }
+
+    function showEntitySource(entityKey, cardEl) {
+      const ref = entityIndex[entityKey];
+      if (!ref) return;
+      activeEntityKey = entityKey;
+      activeEventIdx = -1;
+      activeSpanId = null;
+      updateEntityCardSelection();
+      updateEventSpanPills();
+      const entity = ref.item;
+      const chunk = findChunkForEntity(entity);
+      document.querySelectorAll('.chunk-region.active').forEach(el => {
+        el.classList.remove('active');
+        el.classList.remove('focus-pulse');
+      });
+      document.querySelectorAll('.evt-highlight.active').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.evt-highlight.selected').forEach(el => el.classList.remove('selected'));
+      if (isMobileTimelineLayout()) openMobileSourceSheet();
+      if (chunk) {
+        const regionEl = document.getElementById('chunk_' + (chunk.chunk_id || ''));
+        if (regionEl) {
+          regionEl.classList.add('active');
+          void regionEl.offsetWidth;
+          regionEl.classList.add('focus-pulse');
+          scrollTimelineSourceBodyToTarget(regionEl);
+        }
+      }
+      if (cardEl) {
+        cardEl.classList.add('active');
+      }
     }
 
     function showSource(idx, scrollEvent = true) {
