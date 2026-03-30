@@ -3696,14 +3696,32 @@ function renderTLSourcePanel() {
         }
       });
     });
-    evtSpans.sort((a, b) => a.relStart - b.relStart);
+    evtSpans.sort((a, b) => a.relStart - b.relStart || a.relEnd - b.relEnd);
+    const merged = [];
+    evtSpans.forEach(sp => {
+      if (!merged.length || sp.relStart >= merged[merged.length - 1].relEnd) {
+        merged.push({ relStart: sp.relStart, relEnd: sp.relEnd, sources: [sp] });
+      } else {
+        const last = merged[merged.length - 1];
+        last.relEnd = Math.max(last.relEnd, sp.relEnd);
+        last.sources.push(sp);
+      }
+    });
     const content = chunk.content || '';
     let chunkHtml = '';
     let cursor = 0;
-    evtSpans.forEach(sp => {
-      if (sp.relStart > cursor) chunkHtml += esc(content.substring(cursor, sp.relStart));
-      chunkHtml += `<mark id="${esc(sp.anchorId)}" class="evt-highlight" data-evt="${sp.evtIdx}" data-role="${esc(sp.role)}" data-status="${esc(sp.status)}" data-span-id="${esc(sp.spanId)}">${esc(content.substring(sp.relStart, sp.relEnd))}</mark>`;
-      cursor = sp.relEnd;
+    merged.forEach(m => {
+      if (m.relStart > cursor) chunkHtml += esc(content.substring(cursor, m.relStart));
+      const cuts = new Set([m.relStart, m.relEnd]);
+      m.sources.forEach(sp => { cuts.add(Math.max(sp.relStart, m.relStart)); cuts.add(Math.min(sp.relEnd, m.relEnd)); });
+      const sortedCuts = [...cuts].sort((a, b) => a - b);
+      for (let i = 0; i < sortedCuts.length - 1; i++) {
+        const segStart = sortedCuts[i], segEnd = sortedCuts[i + 1];
+        const covering = m.sources.filter(sp => sp.relStart <= segStart && sp.relEnd >= segEnd);
+        const best = covering.find(sp => sp.role === 'primary') || covering[0] || m.sources[0];
+        chunkHtml += `<mark id="${esc(best.anchorId)}" class="evt-highlight" data-evt="${best.evtIdx}" data-role="${esc(best.role)}" data-status="${esc(best.status)}" data-span-id="${esc(best.spanId)}">${esc(content.substring(segStart, segEnd))}</mark>`;
+      }
+      cursor = m.relEnd;
     });
     if (cursor < content.length) chunkHtml += esc(content.substring(cursor));
 
