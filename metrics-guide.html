@@ -239,13 +239,22 @@
     .pill.b { background: #eef2ff; color: #4338ca; }
 
     /* ─── FOOTER ─── */
-    .footer { background: #fff; border-top: 1px solid #e2e8f0; padding: 24px; }
-    .footer-inner {
-      max-width: 1080px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-      font-size: 12px; color: var(--slate-500);
+    .footer { background: #fff; border-top: 1px solid #e2e8f0; padding: 28px 24px 18px; }
+    .footer-shell { width: min(1080px, calc(100vw - 48px)); margin: 0 auto; }
+    .footer-contact-row {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px; align-items: center;
     }
-    .footer-inner a { color: var(--indigo); text-decoration: none; }
+    .footer-contact-item { display: flex; align-items: center; gap: 14px; min-height: 48px; }
+    .footer-icon {
+      width: 36px; height: 36px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #f8fafc; border: 1px solid #e2e8f0; color: var(--slate-700); flex-shrink: 0;
+    }
+    .footer-icon svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .footer-item-value { font-size: 15px; color: var(--slate-900); font-weight: 500; line-height: 1.7; }
+    .footer-item-value a { color: inherit; text-decoration: none; }
+    .footer-item-value a:hover { color: var(--indigo); }
 
     /* ─── ANIMATIONS ─── */
     @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
@@ -267,7 +276,8 @@
       .metric-grid { grid-template-columns: 1fr; }
       .quality-list li { grid-template-columns: 1fr; gap: 2px; }
       .grade-bar { display: none; }
-      .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+      .footer-contact-row { grid-template-columns: 1fr; gap: 12px; }
+      .footer-item-value { font-size: 14px; }
     }
     @media (max-width: 480px) {
       .hero h1 { font-size: 24px; }
@@ -293,7 +303,7 @@
   <div class="hero-bg"></div>
   <div class="hero-content">
     <h1>我們如何衡量<br>一份摘要的品質？</h1>
-    <p class="hero-sub">透過三種互補的評估方法，全方位捕捉摘要品質的不同面向。</p>
+    <p class="hero-sub">本研究採用規則式自動檢查、大語言模型多維度評審、以及與標準摘要的文字與語意比對三類方法，從不同面向評估自動摘要的品質。</p>
     <div class="hero-methods">
       <a class="hero-method" href="#rule-based">
         <div class="hero-method-icon rule">
@@ -333,45 +343,45 @@
       <div class="feat-img"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80" alt="精確檢核"></div>
       <div class="feat-text">
         <h3>規則式自動指標</h3>
-        <p>日期、數字、判決結果、機構名稱——這些有明確答案的項目，由程式自動比對，不涉及主觀判斷，結果完全可重現。</p>
+        <p>針對日期、數字、判決結果、機構名稱等具有明確標準答案的客觀事實，以程式自動擷取並比對。所有指標均為確定性計算，不涉及模型推論，結果完全可重現。</p>
       </div>
     </div>
     <div class="metric-grid reveal">
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon rule">📎</div><div><div class="metric-card-title">引用率</div><div class="metric-card-en">Citation Rate</div></div></div>
-        <div class="metric-card-body">摘要中有多少句標註了 [CH_XX] 原文出處？越高代表越有據可查。</div>
+        <div class="metric-card-body">計算摘要中標註 [CH_XX] 原文出處的陳述句佔比，反映摘要的可追溯性。</div>
         <div class="metric-card-detail"><div class="metric-card-detail-inner">
           <div class="detail-item"><div class="detail-label">計算方式</div><div class="detail-desc">帶有 [CH_XX] 標記的陳述句數 ÷ 全部陳述句數</div></div>
         </div></div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon rule">📅</div><div><div class="metric-card-title">日期正確率</div><div class="metric-card-en">Date F1</div></div></div>
-        <div class="metric-card-body">就醫、手術、死亡等日期是否正確？民國/西元統一轉換後雙向比對。</div>
+        <div class="metric-card-body">將摘要中的日期正規化（民國/西元統一），與標準答案雙向比對後計算 F1。</div>
         <div class="metric-card-detail"><div class="metric-card-detail-inner">
           <div class="detail-item"><div class="detail-label">計算方式</div><div class="detail-desc">Precision × Recall 的調和平均（F1 分數）</div></div>
         </div></div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon rule">#️</div><div><div class="metric-card-title">數值正確率</div><div class="metric-card-en">Num F1</div></div></div>
-        <div class="metric-card-body">刑期、罰金、檢驗數值是否正確？「三年」寫成「二年」就是嚴重錯誤。</div>
+        <div class="metric-card-body">擷取刑期、罰金、檢驗數值等關鍵數字，經單位正規化後與標準答案比對。</div>
         <div class="metric-card-detail"><div class="metric-card-detail-inner">
           <div class="detail-item"><div class="detail-label">檢查項目</div><div class="detail-desc">刑期月數、緩刑年數、罰金金額、實驗室數值等，含單位正規化</div></div>
         </div></div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon rule">⚖</div><div><div class="metric-card-title">判決結果吻合</div><div class="metric-card-en">Verdict Match</div></div></div>
-        <div class="metric-card-body">有罪/無罪、刑期長度、緩刑年數——判決核心結論是否正確。</div>
+        <div class="metric-card-body">比對有罪/無罪、刑期長度、緩刑年數三項判決核心結論。</div>
         <div class="metric-card-detail"><div class="metric-card-detail-inner">
           <div class="detail-item"><div class="detail-label">檢查欄位</div><div class="detail-desc">verdict_type、sentence_months、probation_years 三欄位精確比對</div></div>
         </div></div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon rule">🏛</div><div><div class="metric-card-title">機構歸屬覆蓋</div><div class="metric-card-en">Institution Attribution</div></div></div>
-        <div class="metric-card-body">法院、醫審會、醫院等關鍵機構是否都有提及？鑑定意見的出處攸關證據力。</div>
+        <div class="metric-card-body">衡量摘要對案件相關機構（法院、醫審會、醫療院所等）的提及覆蓋率。</div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon rule">👻</div><div><div class="metric-card-title">幻覺率</div><div class="metric-card-en">Hallucination Rate</div></div></div>
-        <div class="metric-card-body">有沒有憑空捏造原文不存在的人名、機構或數據？法律文件零容忍。</div>
+        <div class="metric-card-body">偵測摘要中不存在於原文或標準答案的虛構實體（人名、機構、數據）比率。</div>
       </div>
     </div>
   </div>
@@ -381,26 +391,26 @@
 <section class="section" id="llm-judge">
   <div class="section-inner">
     <div class="feat reverse reveal">
-      <div class="feat-img"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80" alt="法律文件分析"></div>
+      <div class="feat-img"><img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=800&q=80" alt="結構化評估"></div>
       <div class="feat-text">
         <h3>大語言模型評審</h3>
-        <p>由 Claude Sonnet 依據結構化評分標準，從事實涵蓋率、寫作品質、引用忠實度三個面向進行深度評估。每個維度都有錨定量表，確保標準一致。</p>
+        <p>以結構化萃取的事實資料作為評分基準，由 Claude Sonnet 模型就事實涵蓋率、寫作品質與引用忠實度三個面向逐項評估。各維度均採錨定量表（Anchored Likert Scale），降低評分的主觀變異。</p>
       </div>
     </div>
 
     <!-- Fact Recall -->
     <div class="reveal">
       <h3 class="section-title" style="font-size:20px;margin-top:0;">事實涵蓋率 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Fact Recall</span></h3>
-      <p class="section-desc" style="text-align:left;">摘要涵蓋了多少關鍵事實？以結構化萃取的 8 類事實欄位為基準逐項確認。</p>
+      <p class="section-desc" style="text-align:left;">衡量摘要對判決書關鍵事實的涵蓋程度。以結構化萃取的 8 類事實欄位（時間軸、實體、指控、辯護、鑑定意見、判決理由、因果鏈、量刑）為基準，逐項核對。</p>
     </div>
     <div class="metric-grid reveal">
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon llm">📆</div><div><div class="metric-card-title">時間線事件</div><div class="metric-card-en">Timeline Recall</div></div></div>
-        <div class="metric-card-body">就醫、手術、併發症、死亡等時間節點。關鍵決策點加權 2 倍。</div>
+        <div class="metric-card-body">就醫、手術、併發症、死亡等關鍵時間節點是否記錄。涉及醫療決策的轉折點加權計算。</div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon llm">👤</div><div><div class="metric-card-title">關鍵人物</div><div class="metric-card-en">Entity Recall</div></div></div>
-        <div class="metric-card-body">被告、被害人、醫療人員、鑑定機構等重要角色。支援匿名化對應。</div>
+        <div class="metric-card-body">被告、被害人、醫療人員、鑑定機構等案件關鍵角色是否出現在摘要中。</div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon llm">⚔</div><div><div class="metric-card-title">起訴指控</div><div class="metric-card-en">Allegation Coverage</div></div></div>
@@ -412,7 +422,7 @@
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon llm">🔬</div><div><div class="metric-card-title">鑑定意見</div><div class="metric-card-en">Expert Opinion Recall</div></div></div>
-        <div class="metric-card-body">醫審會等機構的核心結論、注意義務與因果判斷。加權 1.5 倍。</div>
+        <div class="metric-card-body">醫審會等鑑定機構的核心結論、注意義務判斷與因果關係評估是否完整呈現。因其為判決核心證據，加權 1.5 倍計算。</div>
         <div class="metric-card-detail"><div class="metric-card-detail-inner">
           <div class="detail-item"><div class="detail-label">子欄位檢查</div><div class="detail-desc">鑑定機構、核心結論、注意義務違反評估、因果關係評估，逐項確認。</div></div>
         </div></div>
@@ -423,18 +433,18 @@
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon llm">🔗</div><div><div class="metric-card-title">因果鏈</div><div class="metric-card-en">Causation Chain</div></div></div>
-        <div class="metric-card-body">從過失行為到死亡結果的推論鏈條，每個環節是否交代。</div>
+        <div class="metric-card-body">從醫療過失行為到被害人死亡結果之間的因果推論鏈，各環節是否完整交代。</div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon llm">⚖</div><div><div class="metric-card-title">量刑正確性</div><div class="metric-card-en">Sentence Accuracy</div></div></div>
-        <div class="metric-card-body">每位被告的刑種、刑期、緩刑是否正確。加權 1.5 倍。</div>
+        <div class="metric-card-body">逐位被告比對刑種、刑期月數、緩刑年數等量刑細節是否正確。加權 1.5 倍計算。</div>
       </div>
     </div>
 
     <!-- Quality 14 dims -->
     <div class="reveal" style="margin-top:48px;">
       <h3 class="section-title" style="font-size:20px;">寫作品質 14 維度 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Quality · 1-5 分</span></h3>
-      <p class="section-desc" style="text-align:left;">從基礎寫作、內容正確性、法律專業三個層面評估。每個維度使用 1-5 分錨定量表。</p>
+      <p class="section-desc" style="text-align:left;">從基礎寫作、內容正確性、法律專業三個層面，以 14 個維度評估摘要的寫作品質。各維度採 1-5 分 Likert 量表，並針對特定維度引入計數式錨定（count-before-score）以降低評分波動。</p>
     </div>
     <div class="reveal">
       <div class="quality-group">
@@ -471,7 +481,7 @@
     <!-- Faithfulness -->
     <div class="reveal" style="margin-top:48px;">
       <h3 class="section-title" style="font-size:20px;">引用忠實度 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Faithfulness</span></h3>
-      <p class="section-desc" style="text-align:left;">摘要中標記 [CH_XX] 引用的每一句話，逐句比對原文段落，依支持程度分為四級。</p>
+      <p class="section-desc" style="text-align:left;">逐句驗證摘要中每一個 [CH_XX] 引用標記所對應的原文段落，確認引用是否確實支持該陳述。依支持程度分為四級。</p>
     </div>
     <div class="reveal" style="max-width:640px;">
       <div class="grade-row">
@@ -507,20 +517,20 @@
 <section class="section" id="nlp-ref" style="background:var(--slate-50);">
   <div class="section-inner">
     <div class="feat reveal">
-      <div class="feat-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="文字比對"></div>
+      <div class="feat-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="文字比對分析"></div>
       <div class="feat-text">
         <h3>參考式比對指標</h3>
-        <p>將 AI 摘要與法學教授撰寫的標準摘要進行文字與語意比對。不判斷對錯，只衡量相似程度。兩者互補：ROUGE 看文字重疊，BERTScore 看語意相似。</p>
+        <p>以法學教授撰寫的標準摘要為參照，從文字層面（ROUGE-L）與語意層面（BERTScore）衡量自動摘要與參考摘要的相似程度。兩者互補：前者偵測用詞差異，後者容許合理的同義改寫。</p>
       </div>
     </div>
     <div class="metric-grid reveal">
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon nlp">R</div><div><div class="metric-card-title">ROUGE-L</div><div class="metric-card-en">Longest Common Subsequence</div></div></div>
-        <div class="metric-card-body">最長共同子序列比對。用詞越接近標準摘要分數越高，但無法捕捉同義替換。</div>
+        <div class="metric-card-body">比較自動摘要與標準摘要之間共用了多少相同的文字片段，用詞越接近分數越高。</div>
       </div>
       <div class="metric-card" onclick="toggleCard(this)">
         <div class="metric-card-header"><div class="metric-card-icon nlp">B</div><div><div class="metric-card-title">BERTScore F1</div><div class="metric-card-en">Contextual Embedding Similarity</div></div></div>
-        <div class="metric-card-body">語意向量相似度。即使換了說法，意思相近就得高分。對繁體中文支援較英文弱。</div>
+        <div class="metric-card-body">透過預訓練語言模型比較語意相似度，即使用了不同的詞彙，只要表達的意思相近就能獲得高分。</div>
       </div>
     </div>
   </div>
@@ -530,7 +540,7 @@
 <section class="section centered" id="score-guide">
   <div class="section-inner reveal">
     <div class="section-title">分數解讀指南</div>
-    <p class="section-desc">基於 100 案評估結果的經驗值，幫助快速判斷摘要表現。</p>
+    <p class="section-desc">以下區間為本研究 100 案評估結果的經驗分佈，供快速判讀參考。不同案件的複雜度差異可能影響個案分數。</p>
     <div style="overflow-x:auto;">
       <table class="score-guide">
         <thead><tr>
@@ -554,9 +564,27 @@
 </section>
 
 <footer class="footer">
-  <div class="footer-inner">
-    <span>醫療糾紛刑事判決摘要評估平台</span>
-    <a href="metrics.html">← 回到 AI 評估指標</a>
+  <div class="footer-shell">
+    <div class="footer-contact-row">
+      <div class="footer-contact-item">
+        <div class="footer-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h10"/></svg>
+        </div>
+        <div class="footer-item-value">醫療糾紛刑事判決摘要平台</div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 4 3 8.5 12 13l9-4.5L12 4Z"/><path d="M6 10.5V15c0 1.7 2.7 3 6 3s6-1.3 6-3v-4.5"/><path d="M21 8.5v6"/></svg>
+        </div>
+        <div class="footer-item-value">詹元嘉 · 國立中興大學博士生</div>
+      </div>
+      <div class="footer-contact-item">
+        <div class="footer-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="m4 8 8 6 8-6"/></svg>
+        </div>
+        <div class="footer-item-value"><a href="mailto:koala8104@email.nchu.edu.tw">koala8104@email.nchu.edu.tw</a></div>
+      </div>
+    </div>
   </div>
 </footer>
 
