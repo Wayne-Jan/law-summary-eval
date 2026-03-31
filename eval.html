@@ -2546,6 +2546,9 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initApp() {
+  // Restore condition orders from Firestore before anything else
+  await restoreConditionOrdersFromCloud();
+
   // Load manifest
   try {
     const resp = await fetch('./data/manifest.json');
@@ -2655,6 +2658,29 @@ function getConditionOrder(caseName) {
     writeCloudRecord(key, order).catch(e => console.warn('Firestore condorder write failed:', e));
   }
   return order;
+}
+
+// Restore condition orders from Firestore on login (fills localStorage before any getConditionOrder call)
+async function restoreConditionOrdersFromCloud() {
+  const cloudEv = getCloudEvaluatorId();
+  if (!cloudEv || cloudEv === 'default') return;
+  try {
+    const snap = await db.collection('evals').doc(cloudEv).collection('records')
+      .where('key', '>=', 'eval_v2_condorder_')
+      .where('key', '<', 'eval_v2_condorder_\uffff')
+      .get();
+    snap.forEach(doc => {
+      const { key, data } = doc.data();
+      if (key && Array.isArray(data) && data.length === EVAL_CONDITIONS.length) {
+        const existing = loadStoredJSON(key);
+        if (!existing || !Array.isArray(existing) || existing.length !== EVAL_CONDITIONS.length) {
+          localStorage.setItem(key, JSON.stringify(data));
+        }
+      }
+    });
+  } catch (e) {
+    console.warn('Failed to restore condorder from Firestore:', e);
+  }
 }
 
 function getAnonLabel(idx) { return ANON_LABELS[idx] || `版本 ${String.fromCharCode(65 + idx)}`; }
