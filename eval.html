@@ -792,7 +792,44 @@
     .tl-event-type.initial_contact { background: #ecfdf5; color: #047857; }
     .tl-event-type.final_outcome { background: #fefce8; color: #a16207; }
     .tl-event-type.deterioration { background: #fff7ed; color: #c2410c; }
-    .badge.critical { font-size: 10px; padding: 2px 8px; border-radius: 4px; background: #fef2f2; color: #b91c1c; font-weight: 500; }
+
+    /* ─── MEDICAL INTERVENTION BADGES ─── */
+    .mi-badge {
+      font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 500;
+      cursor: default; position: relative;
+    }
+    .mi-badge.surgery { background: #fdf2f8; color: #be185d; }
+    .mi-badge.invasive { background: #faf5ff; color: #7c3aed; }
+    .mi-badge.resuscitation { background: #fef2f2; color: #dc2626; }
+    .mi-badge.medication { background: #eff6ff; color: #1d4ed8; }
+    .mi-badge:hover .mi-tooltip { display: block; }
+    .mi-tooltip {
+      display: none; position: absolute; left: 0; top: calc(100% + 6px);
+      background: #1e293b; color: #f1f5f9; font-size: 12px; line-height: 1.8;
+      padding: 10px 14px; border-radius: 8px; z-index: 50;
+      box-shadow: 0 4px 12px rgba(0,0,0,.2); pointer-events: none;
+      max-width: 480px; white-space: normal; width: max-content;
+    }
+    .mi-tooltip::before {
+      content: ''; position: absolute; top: -4px; left: 12px;
+      width: 8px; height: 8px; background: #1e293b; transform: rotate(45deg);
+    }
+
+    /* ─── MI TAB CARDS ─── */
+    .mi-panel-body { padding: 20px 22px 24px; overflow-y: auto; flex: 1; min-height: 0; }
+    .mi-card {
+      border: 1px solid #e5e7eb; border-radius: 12px; background: #fff;
+      padding: 14px; cursor: default;
+    }
+    .mi-card-name { font-size: 14px; font-weight: 700; color: #111827; line-height: 1.4; }
+    .mi-card-row { margin-top: 6px; font-size: 12px; color: #64748b; line-height: 1.65; }
+    .mi-card-row strong { color: #374151; font-weight: 600; }
+    .mi-card-link {
+      display: inline-block; margin-top: 8px; font-size: 11px; color: #4f46e5;
+      cursor: pointer; font-weight: 500;
+    }
+    .mi-card-link:hover { text-decoration: underline; }
+
     .tl-desc { font-size: 13px; color: #333; line-height: 1.6; }
     .tl-meta { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
     .tl-meta-item { font-size: 11px; color: #9ca3af; }
@@ -1733,6 +1770,7 @@
           </div>
           <div class="tl-left-mode-switch" role="tablist" aria-label="時間軸與實體切換">
             <button type="button" class="tl-left-mode-btn active" data-mode="events" onclick="setTLLeftMode('events')">事件</button>
+            <button type="button" class="tl-left-mode-btn" data-mode="interventions" onclick="setTLLeftMode('interventions')">醫療處置</button>
             <button type="button" class="tl-left-mode-btn" data-mode="entities" onclick="setTLLeftMode('entities')">實體</button>
           </div>
         </div>
@@ -3285,7 +3323,7 @@ function syncTLLeftModeButtons() {
 }
 
 function setTLLeftMode(mode, options = {}) {
-  const nextMode = mode === 'entities' ? 'entities' : 'events';
+  const nextMode = (mode === 'entities' || mode === 'interventions') ? mode : 'events';
   tlLeftMode = nextMode;
   syncTLLeftModeButtons();
   if (options.render !== false) {
@@ -3542,6 +3580,122 @@ function buildTLEntityGroupsHtml() {
   return { listHtml };
 }
 
+// ─── MEDICAL INTERVENTIONS ───
+
+function getTLMIForEvent(eventId) {
+  const mi = tlDataCache && tlDataCache.medical_interventions;
+  if (!mi) return { procedures: [], medications: [] };
+  return {
+    procedures: (mi.procedures || []).filter(p => p.event_id === eventId),
+    medications: (mi.medications || []).filter(m => m.event_id === eventId),
+  };
+}
+
+function buildTLMIBadges(eventId) {
+  const { procedures, medications } = getTLMIForEvent(eventId);
+  let html = '';
+  const surgeries = procedures.filter(p => p.category === 'surgery');
+  const invasive = procedures.filter(p => p.category === 'invasive_procedure');
+  const resus = procedures.filter(p => p.category === 'resuscitation');
+
+  if (surgeries.length) {
+    const tip = surgeries.map(p => p.name + (p.note ? `（${p.note}）` : '')).join('<br>');
+    html += `<span class="mi-badge surgery">🔪 手術<span class="mi-tooltip">${tip}</span></span>`;
+  }
+  if (invasive.length) {
+    const tip = invasive.map(p => p.name + (p.note ? `（${p.note}）` : '')).join('<br>');
+    html += `<span class="mi-badge invasive">🔩 處置<span class="mi-tooltip">${tip}</span></span>`;
+  }
+  if (resus.length) {
+    const tip = resus.map(p => p.name).join('<br>');
+    html += `<span class="mi-badge resuscitation">⚡ 急救<span class="mi-tooltip">${tip}</span></span>`;
+  }
+  if (medications.length) {
+    const tip = medications.map(m => {
+      let s = m.name;
+      if (m.dosage) s += ` ${m.dosage}`;
+      if (m.route) s += `（${m.route}）`;
+      if (m.indication) s += ` — ${m.indication}`;
+      return s;
+    }).join('<br>');
+    html += `<span class="mi-badge medication">💊 用藥<span class="mi-tooltip">${tip}</span></span>`;
+  }
+  return html;
+}
+
+function buildTLInterventionsHtml() {
+  const mi = tlDataCache && tlDataCache.medical_interventions;
+  if (!mi) return '<div class="tl-no-data">此案件無醫療處置資料</div>';
+  const events = (tlDataCache && tlDataCache.events) || [];
+
+  let html = '<div style="display:flex;flex-direction:column;gap:16px;">';
+
+  const catDefs = [
+    { key: 'surgery', icon: '🔪', label: '手術' },
+    { key: 'invasive_procedure', icon: '🔩', label: '侵入性處置' },
+    { key: 'resuscitation', icon: '⚡', label: '急救處置' },
+  ];
+
+  for (const cat of catDefs) {
+    const items = (mi.procedures || []).filter(p => p.category === cat.key);
+    if (!items.length) continue;
+    html += '<div class="tl-entity-group">';
+    html += '<div class="tl-entity-group-head">';
+    html += `<div class="tl-entity-group-title"><span aria-hidden="true">${cat.icon}</span> ${esc(cat.label)}</div>`;
+    html += `<div class="tl-entity-group-count">${items.length}</div>`;
+    html += '</div>';
+    html += '<div class="tl-entity-grid">';
+    for (const p of items) {
+      const evtIdx = events.findIndex(e => e.event_id === p.event_id);
+      const evt = evtIdx >= 0 ? events[evtIdx] : null;
+      html += '<div class="mi-card">';
+      html += `<div class="mi-card-name">${cat.icon} ${esc(p.name)}</div>`;
+      if (p.body_part) html += `<div class="mi-card-row"><strong>部位：</strong>${esc(p.body_part)}</div>`;
+      if (p.note) html += `<div class="mi-card-row"><strong>備註：</strong>${esc(p.note)}</div>`;
+      if (evt) {
+        html += `<div class="mi-card-row"><strong>時間：</strong>${esc(evt.timestamp || evt.timestamp_normalized || '')}</div>`;
+        html += `<span class="mi-card-link" onclick="setTLLeftMode('events'); setTimeout(()=>showTLEventSource(${evtIdx}),100)">→ 查看事件</span>`;
+      }
+      html += '</div>';
+    }
+    html += '</div></div>';
+  }
+
+  const meds = mi.medications || [];
+  if (meds.length) {
+    html += '<div class="tl-entity-group">';
+    html += '<div class="tl-entity-group-head">';
+    html += '<div class="tl-entity-group-title"><span aria-hidden="true">💊</span> 用藥與輸液</div>';
+    html += `<div class="tl-entity-group-count">${meds.length}</div>`;
+    html += '</div>';
+    html += '<div class="tl-entity-grid">';
+    for (const m of meds) {
+      const evtIdx = events.findIndex(e => e.event_id === m.event_id);
+      const evt = evtIdx >= 0 ? events[evtIdx] : null;
+      html += '<div class="mi-card">';
+      html += `<div class="mi-card-name">💊 ${esc(m.name)}</div>`;
+      if (m.generic_name) html += `<div class="mi-card-row"><strong>學名：</strong>${esc(m.generic_name)}</div>`;
+      if (m.dosage) html += `<div class="mi-card-row"><strong>劑量：</strong>${esc(m.dosage)}</div>`;
+      if (m.route) html += `<div class="mi-card-row"><strong>途徑：</strong>${esc(m.route)}</div>`;
+      if (m.indication) html += `<div class="mi-card-row"><strong>用途：</strong>${esc(m.indication)}</div>`;
+      if (m.note) html += `<div class="mi-card-row"><strong>備註：</strong>${esc(m.note)}</div>`;
+      if (evt) {
+        html += `<div class="mi-card-row"><strong>時間：</strong>${esc(evt.timestamp || evt.timestamp_normalized || '')}</div>`;
+        html += `<span class="mi-card-link" onclick="setTLLeftMode('events'); setTimeout(()=>showTLEventSource(${evtIdx}),100)">→ 查看事件</span>`;
+      }
+      html += '</div>';
+    }
+    html += '</div></div>';
+  }
+
+  if (!(mi.procedures||[]).length && !meds.length) {
+    html += '<div class="tl-no-data">此案件沒有萃取到醫療處置資料</div>';
+  }
+
+  html += '</div>';
+  return html;
+}
+
 function renderTimelinePanel() {
   const titleEl = document.getElementById('tlTimelineTitle');
   const countEl = document.getElementById('tlEventCount');
@@ -3555,6 +3709,15 @@ function renderTimelinePanel() {
     countEl.textContent = '';
     barEl.innerHTML = '';
     listEl.innerHTML = listHtml;
+    syncTLLeftModeButtons();
+    return;
+  }
+
+  if (tlLeftMode === 'interventions') {
+    titleEl.textContent = '醫療處置';
+    countEl.textContent = '';
+    barEl.innerHTML = '';
+    listEl.innerHTML = buildTLInterventionsHtml();
     syncTLLeftModeButtons();
     return;
   }
@@ -3610,7 +3773,7 @@ function renderTimelinePanel() {
     html += `<div class="tl-event-header">`;
     html += `<span class="tl-date">${esc(evt.timestamp || '')}</span>`;
     if (typeLabel) html += `<span class="tl-event-type ${esc(typeCls)}">${esc(typeLabel)}</span>`;
-    if (isCritical) html += '<span class="badge critical">關鍵決策</span>';
+    html += buildTLMIBadges(evt.event_id);
     html += `</div>`;
     html += `<div class="tl-desc">${esc(evt.description || '')}</div>`;
     const meta = [];
