@@ -3949,7 +3949,7 @@ function showTLEventSource(idx) {
     el.classList.remove('focus-pulse');
   });
   const activeCard = document.querySelector(`.tl-event[data-idx="${idx}"]`);
-  if (activeCard) { void activeCard.offsetWidth; activeCard.classList.add('focus-pulse'); }
+  if (activeCard) { void activeCard.offsetWidth; activeCard.classList.add('focus-pulse'); activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
 
   // Clear previous highlights
   document.querySelectorAll('#tlSourceBody .chunk-region.active').forEach(el => { el.classList.remove('active'); el.classList.remove('focus-pulse'); });
