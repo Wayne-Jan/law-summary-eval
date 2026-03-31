@@ -184,8 +184,7 @@
     .panel-summary { flex: 33 0 0; border-right: 1px solid #e2e8f0; background: white; }
     .panel-eval { flex: 38 0 0; background: var(--slate-50); padding: 14px; overflow-y: auto; }
 
-    /* ─── PHASE FB: Section Feedback (same three-panel layout as Phase 1) ─── */
-    #phaseFBView { flex-direction: row; }
+    /* ─── PHASE FB CSS kept for backward compat, phase removed from UI ─── */
     .fb-section-item { margin-bottom: 10px; }
     .fb-section-item {
       padding: 12px; border-radius: 10px; background: white; border: 1px solid #e2e8f0;
@@ -198,6 +197,13 @@
     }
     .fb-section-textarea:focus { outline: none; border-color: var(--indigo); }
     .fb-intro { font-size: 13px; color: var(--slate-500); margin-bottom: 12px; line-height: 1.5; }
+
+    /* ─── Medical role: Phase 1 read-only (hide eval panel) ─── */
+    body.medical-role #p1Eval { display: none; }
+    body.medical-role #phase1View .panel-summary { flex: 50 0 0; }
+    body.medical-role #phase1View .panel-source { flex: 50 0 0; }
+    body.medical-role #p1MedicalContinue { display: flex !important; }
+
     /* ─── PROGRESS SUBBAR ─── */
     .progress-subbar {
       position: fixed; top: var(--toolbar-h); left: 0; right: 0; height: var(--subbar-h);
@@ -373,7 +379,6 @@
       transition: background 0.3s;
     }
     #phase1View .chunk-region.active mark,
-    #phaseFBView .chunk-region.active mark,
     #phase3View .chunk-region.active mark { background: #fef9c3; }
     .chunk-label {
       display: none; font-size: 11px; font-weight: 700; color: var(--amber);
@@ -381,10 +386,8 @@
       vertical-align: middle; margin-right: 4px; letter-spacing: 0.3px;
     }
     #phase1View .chunk-region.active .chunk-label,
-    #phaseFBView .chunk-region.active .chunk-label,
     #phase3View .chunk-region.active .chunk-label { display: inline; }
     #phase1View .chunk-region.active,
-    #phaseFBView .chunk-region.active,
     #phase3View .chunk-region.active { border-left: 3px solid var(--amber); padding-left: 12px; margin-left: -15px; }
 
     /* Section blocks */
@@ -522,20 +525,10 @@
       .cond-pills::-webkit-scrollbar, .phase-indicators::-webkit-scrollbar { display: none; }
       .toolbar .sep { display: none; }
       .cloud-status { order: 8; }
-      #phaseFBView { flex-direction: column; }
-      #phaseFBView .panel-source, #phaseFBView .panel-summary, #phaseFBView .panel-eval {
-        flex: none !important; width: 100% !important;
-      }
-      #phaseFBView .panel-source, #phaseFBView .panel-summary { max-height: 26vh; }
-      #fbEval { padding: 12px 12px 88px; }
       .fb-intro { margin-bottom: 10px; }
       .fb-section-item { margin-bottom: 12px; padding: 12px; }
       .fb-section-label { font-size: 13px; margin-bottom: 6px; }
       .fb-section-textarea { min-height: 112px; font-size: 14px; }
-      #phaseFBView .action-bar {
-        position: sticky; bottom: 0; background: rgba(248,250,252,0.96);
-        backdrop-filter: blur(8px); padding: 10px 0 0; margin-top: 12px;
-      }
       #phase1View { flex-direction: column; }
       .panel-source, .panel-summary, .panel-eval { flex: none !important; width: 100% !important; height: auto; max-height: 40vh; }
       .phase3-columns { flex-direction: column; }
@@ -1668,6 +1661,11 @@
         <span class="panel-header-sub" id="p1CondLabel"></span>
       </div>
       <div id="p1SummaryBody" style="padding:12px 16px;"><span class="empty-text">載入中...</span></div>
+      <!-- Medical role: continue button (visible only when #p1Eval is hidden) -->
+      <div id="p1MedicalContinue" class="action-bar" style="display:none;border-top:1px solid #e2e8f0;padding:8px 16px;">
+        <div class="spacer"></div>
+        <button class="btn btn-primary" onclick="completePhase1()">繼續 &#x2192;</button>
+      </div>
     </div>
     <div class="resizer"></div>
     <div class="panel panel-eval" id="p1Eval">
@@ -1686,70 +1684,7 @@
     </div>
   </div>
 
-  <!-- ─── PHASE FB: Section Feedback ─── -->
-  <div class="view" id="phaseFBView">
-    <div class="panel panel-source" id="fbSource">
-      <div class="panel-header">
-        <div class="panel-header-icon" style="background:#f5f5f4;color:#78716c;">&#x1F4C4;</div>
-        <span class="panel-header-text">原文</span>
-        <span class="panel-header-sub" id="fbChunkCount"></span>
-      </div>
-      <div class="panel-body" id="fbSourceBody"><span class="empty-text">載入中...</span></div>
-    </div>
-    <div class="resizer"></div>
-    <div class="panel panel-summary" id="fbSummaryPanel">
-      <div class="panel-header">
-        <div class="panel-header-icon ai-summary" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none">
-            <defs>
-              <linearGradient id="evalAiSparkGradientFb" x1="4" y1="4" x2="20" y2="20" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#7c3aed"/>
-                <stop offset="0.62" stop-color="#4f46e5"/>
-                <stop offset="1" stop-color="#f59e0b"/>
-              </linearGradient>
-            </defs>
-            <path d="M12 3.5l1.35 3.58L17 8.43l-3.65 1.35L12 13.5l-1.35-3.72L7 8.43l3.65-1.35L12 3.5z" fill="url(#evalAiSparkGradientFb)"/>
-            <path d="M18.2 12.7l.72 1.93 1.93.72-1.93.72-.72 1.93-.72-1.93-1.93-.72 1.93-.72.72-1.93z" fill="url(#evalAiSparkGradientFb)" opacity="0.9"/>
-            <path d="M8.1 14.9l.57 1.52 1.52.57-1.52.57-.57 1.52-.57-1.52-1.52-.57 1.52-.57.57-1.52z" fill="url(#evalAiSparkGradientFb)" opacity="0.72"/>
-          </svg>
-        </div>
-        <span class="panel-header-text">AI 摘要</span>
-        <span class="panel-header-sub" id="fbCondLabel"></span>
-      </div>
-      <div id="fbSummaryBody" style="padding:12px 16px;"><span class="empty-text">載入中...</span></div>
-    </div>
-    <div class="resizer"></div>
-    <div class="panel panel-eval" id="fbEval">
-      <p class="fb-intro">以下為選填欄位。如有需要，可針對各章節留下文字意見；若無意見，請直接點擊「略過」。</p>
-      <div id="fbSectionForm">
-        <div class="fb-section-item">
-          <div class="fb-section-label">（一）公訴事實與起訴意旨</div>
-          <textarea class="fb-section-textarea" id="fb_facts" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
-        </div>
-        <div class="fb-section-item">
-          <div class="fb-section-label">（二）被告回應</div>
-          <textarea class="fb-section-textarea" id="fb_defense" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
-        </div>
-        <div class="fb-section-item">
-          <div class="fb-section-label">（三）鑑定意見</div>
-          <textarea class="fb-section-textarea" id="fb_opinions" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
-        </div>
-        <div class="fb-section-item">
-          <div class="fb-section-label">（四）判決結果</div>
-          <textarea class="fb-section-textarea" id="fb_verdict" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
-        </div>
-        <div class="fb-section-item">
-          <div class="fb-section-label">（五）判決理由</div>
-          <textarea class="fb-section-textarea" id="fb_reasoning" placeholder="對此章節的意見（選填）..." oninput="debounceSave()"></textarea>
-        </div>
-      </div>
-      <div class="action-bar" style="border-top:none;padding:8px 0;margin-top:8px;">
-        <div class="spacer"></div>
-        <button class="btn btn-ghost" id="fbSkipBtn" onclick="skipPhaseFB()">略過</button>
-        <button class="btn btn-primary" id="fbSaveBtn" onclick="completePhaseFB()">儲存並繼續 &#x2192;</button>
-      </div>
-    </div>
-  </div>
+  <!-- Phase FB removed from UI; data kept in storage for backward compatibility -->
 
   <!-- ─── PHASE TL: Timeline Evaluation ─── -->
   <div class="view" id="phaseTLView">
@@ -2230,6 +2165,8 @@ function applyAuth() {
     document.body.classList.remove('is-admin');
     hideAdminPanel();
   }
+  // Medical role: Phase 1 read-only
+  document.body.classList.toggle('medical-role', role === 'medical');
   applyMobileEvalAccess();
 }
 
@@ -2714,7 +2651,9 @@ function setPhaseData(caseName, condIdx, phase, data) {
 
 function isPhase1Complete(caseName, condIdx) {
   const d = getPhaseData(caseName, condIdx, 1);
-  if (!d || !d.scores) return false;
+  if (!d) return false;
+  if (d._viewOnly) return true; // medical role: read-only view counts as complete
+  if (!d.scores) return false;
   return DIMENSIONS.every(g => g.items.every(item => d.scores[item.id] != null));
 }
 
@@ -2727,13 +2666,8 @@ function isPhaseTLComplete(caseName, condIdx) {
   return d && d._complete === true;
 }
 
-function isPhaseFBComplete(caseName, condIdx) {
-  const d = getPhaseData(caseName, condIdx, 'FB');
-  return d && d._complete === true;
-}
-
 function isCondComplete(caseName, condIdx) {
-  return isPhase1Complete(caseName, condIdx) && isPhaseFBComplete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
+  return isPhase1Complete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
 }
 
 function areAllCondsComplete(caseName) {
@@ -2780,8 +2714,6 @@ async function onCaseChange() {
         currentCondIdx = i;
         if (!isPhase1Complete(currentCase, i)) {
           currentPhase = 1;
-        } else if (!isPhaseFBComplete(currentCase, i)) {
-          currentPhase = 'fb';
         } else {
           currentPhase = 'tl';
         }
@@ -2825,10 +2757,6 @@ function switchCondition(idx) {
   if (isCaseLocked(currentCase) || currentPhase === 'tl') return;
   saveCurrentState();
   currentCondIdx = idx;
-  // If in fb but target condition hasn't finished phase 1, go to phase 1
-  if (currentPhase === 'fb' && !isPhase1Complete(currentCase, idx)) {
-    currentPhase = 1;
-  }
   // Stay on the current phase — don't auto-jump
   renderCondPills();
   renderPhaseIndicators();
@@ -2845,18 +2773,16 @@ function renderPhaseIndicators() {
   const locked = isCaseLocked(currentCase);
   const allDone = areAllCondsComplete(currentCase);
 
-  const phases = [
-    { num: 1, label: '品質評分' },
-    { num: 'fb', label: '章節意見' },
-    { num: 'tl', label: '時間軸評估' }
-  ];
+  const isMedical = getSessionRole() === 'medical';
+  const phases = isMedical
+    ? [{ num: 1, label: '摘要檢視' }, { num: 'tl', label: '時間軸評估' }]
+    : [{ num: 1, label: '品質評分' }, { num: 'tl', label: '時間軸評估' }];
 
   let html = '';
   phases.forEach(p => {
     let cls = 'phase-dot';
     if (p.num === currentPhase) cls += ' active';
     else if (p.num === 1 && isPhase1Frozen(currentCase, currentCondIdx)) cls += ' done';
-    else if (p.num === 'fb' && isPhaseFBComplete(currentCase, currentCondIdx)) cls += ' done';
     else if (p.num === 'tl' && isPhaseTLComplete(currentCase, currentCondIdx)) cls += ' done';
     const phaseArg = typeof p.num === 'string' ? `'${p.num}'` : p.num;
     html += `<span class="${cls}" onclick="switchPhase(${phaseArg})">${p.label}</span>`;
@@ -2886,9 +2812,6 @@ async function loadCurrentView() {
   if (currentPhase === 1) {
     document.getElementById('phase1View').classList.add('active');
     await loadPhase1();
-  } else if (currentPhase === 'fb') {
-    document.getElementById('phaseFBView').classList.add('active');
-    await loadPhaseFB();
   } else if (currentPhase === 'tl') {
     document.getElementById('phaseTLView').classList.add('active');
     await loadPhaseTL();
@@ -3009,9 +2932,13 @@ async function loadPhase1() {
   document.querySelectorAll('#p1EvalForm .eval-item').forEach(el => {
     el.classList.toggle('frozen', frozen);
   });
+  const isMedical = getSessionRole() === 'medical';
   if (frozen) {
     document.getElementById('p1CompleteBtn').disabled = true;
     document.getElementById('p1CompleteBtn').textContent = '已凍結';
+  } else if (isMedical) {
+    document.getElementById('p1CompleteBtn').disabled = false;
+    document.getElementById('p1CompleteBtn').textContent = '繼續 \u2192';
   } else {
     document.getElementById('p1CompleteBtn').disabled = false;
     document.getElementById('p1CompleteBtn').textContent = '完成評分 \u2192';
@@ -3019,7 +2946,7 @@ async function loadPhase1() {
 
   // Restore saved data
   restorePhase1();
-  updatePhase1Progress();
+  if (!isMedical) updatePhase1Progress();
 }
 
 function renderEvalForm() {
@@ -3049,6 +2976,7 @@ function renderEvalForm() {
         html += `<label><input type="radio" name="p1_${dim.id}" value="${s}" onchange="onPhase1Change()"><span>${s}</span></label>`;
       }
       html += `</div>`;
+      html += `<textarea class="fb-section-textarea" name="p1_comment_${dim.id}" placeholder="對此題的意見（選填）..." oninput="debounceSave()"></textarea>`;
       html += `</div>`;
     });
   });
@@ -3058,15 +2986,19 @@ function renderEvalForm() {
 
 function collectPhase1Data() {
   const scores = {};
+  const comments = {};
   DIMENSIONS.forEach(g => g.items.forEach(dim => {
     const checked = document.querySelector(`input[name="p1_${dim.id}"]:checked`);
     if (checked) scores[dim.id] = parseInt(checked.value);
+    const ta = document.querySelector(`textarea[name="p1_comment_${dim.id}"]`);
+    if (ta && ta.value.trim()) comments[dim.id] = ta.value.trim();
   }));
   const existing = getPhaseData(currentCase, currentCondIdx, 1) || {};
   return {
     ...existing,
     real_condition: getRealCondition(currentCase, currentCondIdx),
     scores,
+    comments,
     revision_count: (existing.revision_count || 0)
   };
 }
@@ -3075,6 +3007,8 @@ function restorePhase1() {
   // Clear all first
   DIMENSIONS.forEach(g => g.items.forEach(dim => {
     document.querySelectorAll(`input[name="p1_${dim.id}"]`).forEach(r => r.checked = false);
+    const ta = document.querySelector(`textarea[name="p1_comment_${dim.id}"]`);
+    if (ta) ta.value = '';
   }));
 
   const data = getPhaseData(currentCase, currentCondIdx, 1);
@@ -3083,6 +3017,12 @@ function restorePhase1() {
     Object.entries(data.scores).forEach(([id, val]) => {
       const radio = document.querySelector(`input[name="p1_${id}"][value="${val}"]`);
       if (radio) radio.checked = true;
+    });
+  }
+  if (data.comments) {
+    Object.entries(data.comments).forEach(([id, text]) => {
+      const ta = document.querySelector(`textarea[name="p1_comment_${id}"]`);
+      if (ta) ta.value = text;
     });
   }
 }
@@ -3108,104 +3048,25 @@ function completePhase1() {
   if (isAdminInspectMode()) return;
   // TODO: re-enable freeze check before production
   // if (isPhase1Frozen(currentCase, currentCondIdx)) return;
-  // Validate all 11 items
-  const data = collectPhase1Data();
-  const filledCount = Object.keys(data.scores).length;
-  const totalCount = DIMENSIONS.reduce((sum, g) => sum + g.items.length, 0);
-  if (filledCount < totalCount) {
-    showToast(`尚有 ${totalCount - filledCount} 項未評分`, 'error');
-    return;
-  }
-  setPhaseData(currentCase, currentCondIdx, 1, data);
-  showToast('品質評分完成，進入章節意見', 'success');
-  currentPhase = 'fb';
-  renderCondPills();
-  renderPhaseIndicators();
-  loadCurrentView();
-}
-
-// ═══════════════════════════════════════════════════════════════
-// PHASE FB: Section Feedback
-// ═══════════════════════════════════════════════════════════════
-
-const FB_SECTION_IDS = ['facts', 'defense', 'opinions', 'verdict', 'reasoning'];
-
-async function loadPhaseFB() {
-  const cond = getRealCondition(currentCase, currentCondIdx);
-  const slug = getSlug(currentCase);
-
-  if (!aiDataCache[cond]) {
-    try {
-      const resp = await fetch(`./data/${cond}/${slug}.json`);
-      if (resp.ok) aiDataCache[cond] = await resp.json();
-    } catch {}
-  }
-  const aiData = aiDataCache[cond];
-
-  renderSourcePanel('fbSourceBody', 'fbChunkCount', aiData);
-
-  const label = getAnonLabel(currentCondIdx);
-  document.getElementById('fbCondLabel').textContent = label;
-
-  const fbSummaryBody = document.getElementById('fbSummaryBody');
-  if (aiData && aiData.sections) {
-    fbSummaryBody.innerHTML = aiData.sections.map(s =>
-      `<div class="section-block">` +
-      `<div class="section-title section-title-ai">${esc(SECTION_NAMES[s.id] || s.title || s.id)}</div>` +
-      `<div class="section-body">${renderCitations(s.content || '')}</div>` +
-      `</div>`
-    ).join('');
-    fbSummaryBody.querySelectorAll('.citation-tag').forEach(tag => {
-      tag.addEventListener('click', () => highlightChunk(tag.dataset.alias, 'fbSourceBody'));
-    });
+  const isMedical = getSessionRole() === 'medical';
+  if (isMedical) {
+    // Medical role: read-only, just mark complete and move on
+    const existing = getPhaseData(currentCase, currentCondIdx, 1) || {};
+    const data = { ...existing, real_condition: getRealCondition(currentCase, currentCondIdx), scores: {}, _viewOnly: true };
+    setPhaseData(currentCase, currentCondIdx, 1, data);
+    showToast('摘要檢視完成，進入時間軸評估', 'success');
   } else {
-    fbSummaryBody.innerHTML = '<span class="empty-text">無法載入 AI 摘要</span>';
+    // Legal/admin: validate all items
+    const data = collectPhase1Data();
+    const filledCount = Object.keys(data.scores).length;
+    const totalCount = DIMENSIONS.reduce((sum, g) => sum + g.items.length, 0);
+    if (filledCount < totalCount) {
+      showToast(`尚有 ${totalCount - filledCount} 項未評分`, 'error');
+      return;
+    }
+    setPhaseData(currentCase, currentCondIdx, 1, data);
+    showToast('品質評分完成，進入時間軸評估', 'success');
   }
-
-  restorePhaseFB();
-  initResizers();
-}
-
-function collectPhaseFBData() {
-  const sections = {};
-  FB_SECTION_IDS.forEach(id => {
-    const el = document.getElementById(`fb_${id}`);
-    if (el) sections[id] = el.value.trim();
-  });
-  const existing = getPhaseData(currentCase, currentCondIdx, 'FB') || {};
-  return { ...existing, real_condition: getRealCondition(currentCase, currentCondIdx), sections };
-}
-
-function restorePhaseFB() {
-  FB_SECTION_IDS.forEach(id => {
-    const el = document.getElementById(`fb_${id}`);
-    if (el) el.value = '';
-  });
-  const data = getPhaseData(currentCase, currentCondIdx, 'FB');
-  if (!data || !data.sections) return;
-  FB_SECTION_IDS.forEach(id => {
-    const el = document.getElementById(`fb_${id}`);
-    if (el && data.sections[id]) el.value = data.sections[id];
-  });
-}
-
-function completePhaseFB() {
-  if (isAdminInspectMode()) return;
-  const data = collectPhaseFBData();
-  data._complete = true;
-  setPhaseData(currentCase, currentCondIdx, 'FB', data);
-  showToast('章節意見已儲存，進入時間軸評估', 'success');
-  currentPhase = 'tl';
-  renderCondPills();
-  renderPhaseIndicators();
-  loadCurrentView();
-}
-
-function skipPhaseFB() {
-  if (isAdminInspectMode()) return;
-  const data = { real_condition: getRealCondition(currentCase, currentCondIdx), sections: {}, _complete: true };
-  setPhaseData(currentCase, currentCondIdx, 'FB', data);
-  showToast('已略過章節意見，進入時間軸評估', 'success');
   currentPhase = 'tl';
   renderCondPills();
   renderPhaseIndicators();
@@ -4102,8 +3963,6 @@ function completePhaseTL() {
         currentCondIdx = i;
         if (!isPhase1Complete(currentCase, i)) {
           currentPhase = 1;
-        } else if (!isPhaseFBComplete(currentCase, i)) {
-          currentPhase = 'fb';
         } else {
           currentPhase = 'tl';
         }
@@ -4481,13 +4340,9 @@ function saveCurrentState() {
 
   if (currentPhase === 1 && !isPhase1Frozen(currentCase, currentCondIdx)) {
     const data = collectPhase1Data();
-    if (Object.keys(data.scores).length > 0) {
+    if (Object.keys(data.scores).length > 0 || (data.comments && Object.keys(data.comments).length > 0)) {
       setPhaseData(currentCase, currentCondIdx, 1, data);
     }
-  } else if (currentPhase === 'fb') {
-    const data = collectPhaseFBData();
-    const hasContent = FB_SECTION_IDS.some(id => data.sections[id]);
-    if (hasContent) setPhaseData(currentCase, currentCondIdx, 'FB', data);
   } else if (currentPhase === 'tl') {
     const data = collectPhaseTLData();
     if (Object.keys(data.scores).length > 0 || data.comment) {
@@ -4516,8 +4371,7 @@ document.addEventListener('change', (e) => {
   }
 });
 document.addEventListener('input', (e) => {
-  if (e.target.id === 'tlComment' || (SHOW_PHASE3_UI && e.target.id === 'p3RankingReason') ||
-      e.target.closest('#fbSectionForm')) {
+  if (e.target.id === 'tlComment' || (SHOW_PHASE3_UI && e.target.id === 'p3RankingReason')) {
     debounceSave();
   }
 });
@@ -4543,7 +4397,6 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 's' || e.key === 'S') {
     e.preventDefault();
     if (currentPhase === 1) completePhase1();
-    else if (currentPhase === 'fb') completePhaseFB();
     else if (currentPhase === 'tl') completePhaseTL();
     else if (currentPhase === 3 && SHOW_PHASE3_UI) completePhase3();
     return;
@@ -4618,6 +4471,7 @@ function exportJSON() {
     result.phase1[label] = {
       real_condition: cond,
       scores: p1 ? p1.scores || {} : {},
+      comments: p1 ? p1.comments || {} : {},
       overall_comment: p1 ? p1.overall_comment || '' : '',
       revision_count: p1 ? p1.revision_count || 0 : 0
     };
@@ -4679,6 +4533,7 @@ function buildCaseExportData(caseName) {
     result.phase1[label] = {
       real_condition: cond,
       scores: p1 ? p1.scores || {} : {},
+      comments: p1 ? p1.comments || {} : {},
       overall_comment: p1 ? p1.overall_comment || '' : '',
       revision_count: p1 ? p1.revision_count || 0 : 0
     };
@@ -4960,7 +4815,6 @@ async function jumpToCaseFromVolModal(caseName) {
 
 function getDefaultPhaseForCondition(caseName, condIdx) {
   if (!isPhase1Complete(caseName, condIdx)) return 1;
-  if (!isPhaseFBComplete(caseName, condIdx)) return 'fb';
   if (!isPhaseTLComplete(caseName, condIdx)) return 'tl';
   return 1;
 }
@@ -5143,7 +4997,7 @@ async function initAdminInspectFromURL() {
   if (/^[A-E]$/.test(version)) currentCondIdx = version.charCodeAt(0) - 65;
 
   const phase = params.get('phase');
-  if (phase === 'fb' || phase === 'tl') currentPhase = phase;
+  if (phase === 'tl') currentPhase = phase;
   else if (phase === '1') currentPhase = 1;
   else if (phase === '3') currentPhase = SHOW_PHASE3_UI ? 3 : 'tl';
 
@@ -5166,7 +5020,7 @@ async function applyAdminInspectRouteFromURL() {
   }
 
   const phase = params.get('phase');
-  if (phase === 'fb' || phase === 'tl') currentPhase = phase;
+  if (phase === 'tl') currentPhase = phase;
   else if (phase === '1') currentPhase = 1;
   else if (phase === '3') currentPhase = SHOW_PHASE3_UI ? 3 : 'tl';
   else if (/^[A-E]$/.test(version)) currentPhase = getDefaultPhaseForCondition(currentCase, currentCondIdx);
@@ -5573,10 +5427,8 @@ function getDefaultPhaseForEvaluatorCondition(evaluator, caseName, condIdx) {
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
   const prefix = `eval_v2_${evaluator}_${caseName}_${cond}_phase`;
   const p1 = loadLocalJSON(prefix + '1');
-  const fb = loadLocalJSON(prefix + 'FB');
   const tl = loadLocalJSON(prefix + 'TL');
   if (!(p1 && p1.scores && Object.keys(p1.scores).length >= 9)) return 1;
-  if (!(fb && fb._complete)) return 'fb';
   if (!(tl && tl._complete)) return 'tl';
   return 1;
 }
