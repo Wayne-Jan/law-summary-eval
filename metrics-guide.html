@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>指標說明 — 醫療糾紛判決書摘要評估平台</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --serif: 'Noto Serif TC', serif;
+      --sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --indigo: #4f46e5; --indigo-soft: #818cf8; --indigo-light: #eef2ff;
+      --emerald: #059669; --emerald-soft: #34d399; --emerald-light: #ecfdf5;
+      --amber: #d97706; --amber-soft: #fbbf24; --amber-light: #fffbeb;
+      --rose: #e11d48; --rose-light: #fff1f2;
+      --slate-900: #0f172a; --slate-700: #334155; --slate-500: #64748b;
+      --slate-300: #cbd5e1; --slate-100: #f1f5f9; --slate-50: #f8fafc;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--sans); background: #fff; color: var(--slate-700); overflow-x: hidden; }
+
+    /* ─── NAV ─── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; height: 56px;
+      display: flex; align-items: center; padding: 0 32px; gap: 20px;
+      z-index: 200;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .nav-logo { font-family: var(--serif); font-size: 15px; font-weight: 700; color: var(--slate-900); text-decoration: none; }
+    .nav-spacer { flex: 1; }
+    .nav a { font-size: 13px; color: var(--slate-500); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+    .nav a:hover { color: var(--indigo); }
+    .nav a.active { color: var(--indigo); font-weight: 700; }
+    .nav-cta {
+      background: var(--indigo); color: #fff !important; padding: 7px 18px;
+      border-radius: 8px; font-size: 12px; font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,0.35); }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative; min-height: 520px;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; background: #0f172a;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 25% 30%, rgba(99,102,241,0.25), transparent 50%),
+        radial-gradient(ellipse at 75% 60%, rgba(16,185,129,0.18), transparent 45%),
+        radial-gradient(ellipse at 50% 80%, rgba(217,119,6,0.12), transparent 40%),
+        linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px);
+      background-size: auto, auto, auto, 64px 64px, 64px 64px;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: auto 0 0 0; height: 120px;
+      background: linear-gradient(to bottom, transparent, #0f172a);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 2; text-align: center;
+      width: min(900px, calc(100vw - 32px));
+      padding: 120px 0 80px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px; padding: 6px 18px;
+      font-size: 12px; color: rgba(255,255,255,0.65); font-weight: 500;
+      margin-bottom: 28px;
+      animation: fadeUp 0.7s ease both;
+    }
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 5vw, 52px);
+      font-weight: 900; color: #fff; line-height: 1.25;
+      letter-spacing: -0.5px; margin-bottom: 20px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+    .hero h1 .accent-indigo { color: #a5b4fc; }
+    .hero h1 .accent-emerald { color: #6ee7b7; }
+    .hero h1 .accent-amber { color: #fcd34d; }
+    .hero-sub {
+      font-size: clamp(14px, 1.6vw, 16px);
+      color: rgba(255,255,255,0.6); line-height: 1.9;
+      max-width: 680px; margin: 0 auto 40px; font-weight: 300;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    /* ─── Three Method Badges in Hero ─── */
+    .hero-methods {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.35s both;
+    }
+    .hero-method {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 24px; border-radius: 14px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer; transition: all 0.25s;
+      text-decoration: none;
+    }
+    .hero-method:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+    .hero-method-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .hero-method-icon svg { width: 20px; height: 20px; }
+    .hero-method-icon.rule { background: rgba(99,102,241,0.2); }
+    .hero-method-icon.rule svg { stroke: #a5b4fc; fill: none; }
+    .hero-method-icon.llm { background: rgba(16,185,129,0.2); }
+    .hero-method-icon.llm svg { stroke: #6ee7b7; fill: none; }
+    .hero-method-icon.nlp { background: rgba(217,119,6,0.2); }
+    .hero-method-icon.nlp svg { stroke: #fcd34d; fill: none; }
+    .hero-method-text { text-align: left; }
+    .hero-method-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
+    .hero-method-desc { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+    /* ─── SCROLL HINT ─── */
+    .scroll-hint {
+      position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.2); font-size: 11px; text-align: center; z-index: 2;
+      animation: float 3s ease-in-out infinite;
+    }
+    .scroll-hint svg { display: block; margin: 3px auto 0; }
+
+    /* ─── SHARED SECTION ─── */
+    .section { padding: 80px 24px; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; margin-bottom: 12px; text-align: center;
+    }
+    .section-label.indigo { color: var(--indigo); }
+    .section-label.emerald { color: var(--emerald); }
+    .section-label.amber { color: var(--amber); }
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3.2vw, 34px);
+      font-weight: 700; color: var(--slate-900); text-align: center;
+      letter-spacing: -0.3px; margin-bottom: 12px; line-height: 1.35;
+    }
+    .section-desc {
+      text-align: center; font-size: 15px; color: var(--slate-500);
+      max-width: 600px; margin: 0 auto 48px; line-height: 1.8;
+    }
+
+    /* ─── METHOD BANNER ─── */
+    .method-banner {
+      display: flex; align-items: center; gap: 16px;
+      padding: 20px 28px; border-radius: 16px; margin-bottom: 36px;
+    }
+    .method-banner.rule { background: var(--indigo-light); border: 1px solid #c7d2fe; }
+    .method-banner.llm { background: var(--emerald-light); border: 1px solid #a7f3d0; }
+    .method-banner.nlp { background: var(--amber-light); border: 1px solid #fde68a; }
+    .method-banner-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .method-banner-icon.rule { background: var(--indigo); }
+    .method-banner-icon.llm { background: var(--emerald); }
+    .method-banner-icon.nlp { background: var(--amber); }
+    .method-banner-icon svg { width: 24px; height: 24px; stroke: #fff; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .method-banner-text h3 { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--slate-900); margin-bottom: 4px; }
+    .method-banner-text p { font-size: 13px; color: var(--slate-500); line-height: 1.6; }
+
+    /* ─── METRIC CARDS ─── */
+    .metric-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px; margin-bottom: 20px;
+    }
+    .metric-card {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+      padding: 24px; cursor: pointer;
+      transition: all 0.25s; position: relative; overflow: hidden;
+    }
+    .metric-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+    .metric-card-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px; }
+    .metric-card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 18px;
+    }
+    .metric-card-icon.rule { background: var(--indigo-light); color: var(--indigo); }
+    .metric-card-icon.llm { background: var(--emerald-light); color: var(--emerald); }
+    .metric-card-icon.nlp { background: var(--amber-light); color: var(--amber); }
+    .metric-card-title { font-size: 15px; font-weight: 700; color: var(--slate-900); }
+    .metric-card-en { font-size: 11px; color: var(--slate-500); font-weight: 400; margin-top: 2px; }
+    .metric-card-body { font-size: 13px; color: var(--slate-500); line-height: 1.8; }
+    .metric-card-scale {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; font-size: 11px; font-weight: 600; color: var(--slate-500);
+      background: var(--slate-100); padding: 4px 10px; border-radius: 6px;
+    }
+
+    /* ─── EXPANDABLE DETAIL ─── */
+    .metric-card-detail {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, margin-top 0.3s ease;
+      margin-top: 0;
+    }
+    .metric-card.open .metric-card-detail { max-height: 800px; margin-top: 16px; }
+    .metric-card-detail-inner {
+      border-top: 1px solid #f1f5f9; padding-top: 16px;
+    }
+    .detail-item { margin-bottom: 12px; }
+    .detail-item:last-child { margin-bottom: 0; }
+    .detail-label {
+      font-size: 12px; font-weight: 600; color: var(--slate-700); margin-bottom: 4px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .detail-desc { font-size: 12px; color: var(--slate-500); line-height: 1.7; }
+    .detail-anchor-bar {
+      display: flex; gap: 4px; align-items: center; margin-top: 8px;
+    }
+    .anchor-seg {
+      height: 6px; border-radius: 3px; flex: 1; transition: opacity 0.2s;
+    }
+
+    /* ─── EXPAND ARROW ─── */
+    .metric-card-arrow {
+      position: absolute; top: 24px; right: 20px;
+      width: 20px; height: 20px; color: var(--slate-300);
+      transition: transform 0.3s, color 0.2s;
+    }
+    .metric-card:hover .metric-card-arrow { color: var(--slate-500); }
+    .metric-card.open .metric-card-arrow { transform: rotate(180deg); color: var(--indigo); }
+
+    /* ─── QUALITY DIMENSION GROUPS ─── */
+    .dim-group { margin-bottom: 32px; }
+    .dim-group:last-child { margin-bottom: 0; }
+    .dim-group-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .dim-group-tag {
+      font-size: 11px; font-weight: 600; padding: 4px 12px;
+      border-radius: 6px; white-space: nowrap;
+    }
+    .dim-group-tag.free { background: #ecfdf5; color: #047857; }
+    .dim-group-tag.ref { background: #eef2ff; color: #4338ca; }
+    .dim-group-tag.spec { background: #fef3c7; color: #92400e; }
+    .dim-group-title { font-size: 14px; font-weight: 600; color: var(--slate-900); }
+
+    /* ─── FAITHFULNESS GRADES ─── */
+    .grade-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; border-radius: 10px; margin-bottom: 8px;
+      border: 1px solid #f1f5f9; transition: background 0.15s;
+    }
+    .grade-row:hover { background: var(--slate-50); }
+    .grade-letter {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 18px; font-weight: 900; color: #fff;
+      flex-shrink: 0;
+    }
+    .grade-A { background: #059669; }
+    .grade-B { background: #0284c7; }
+    .grade-C { background: #d97706; }
+    .grade-D { background: #dc2626; }
+    .grade-info { flex: 1; }
+    .grade-name { font-size: 14px; font-weight: 600; color: var(--slate-900); }
+    .grade-desc { font-size: 12px; color: var(--slate-500); line-height: 1.6; margin-top: 2px; }
+    .grade-score {
+      font-size: 13px; font-weight: 700; color: var(--slate-500);
+      min-width: 48px; text-align: right;
+    }
+    .grade-bar {
+      width: 80px; height: 6px; background: #f1f5f9; border-radius: 3px;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .grade-bar-fill { height: 100%; border-radius: 3px; }
+
+    /* ─── SCORE GUIDE TABLE ─── */
+    .score-guide {
+      width: 100%; border-collapse: separate; border-spacing: 0;
+      border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0;
+      background: #fff;
+    }
+    .score-guide th {
+      background: var(--slate-50); padding: 12px 16px;
+      font-size: 12px; font-weight: 600; color: var(--slate-500);
+      text-align: center; border-bottom: 1px solid #e2e8f0;
+    }
+    .score-guide th:first-child { text-align: left; }
+    .score-guide td {
+      padding: 14px 16px; font-size: 13px; text-align: center;
+      border-bottom: 1px solid #f3f4f6; color: var(--slate-700);
+    }
+    .score-guide td:first-child {
+      text-align: left; font-weight: 600; color: var(--slate-900);
+    }
+    .score-guide tbody tr:last-child td { border-bottom: none; }
+    .score-guide tbody tr:hover { background: var(--slate-50); }
+    .score-pill {
+      display: inline-block; padding: 2px 10px; border-radius: 999px;
+      font-size: 12px; font-weight: 600;
+    }
+    .score-pill.poor { background: #fef2f2; color: #b91c1c; }
+    .score-pill.fair { background: #fffbeb; color: #92400e; }
+    .score-pill.good { background: #ecfdf5; color: #047857; }
+    .score-pill.excellent { background: #eef2ff; color: #4338ca; }
+
+    /* ─── FOOTER ─── */
+    .footer {
+      background: #fff; border-top: 1px solid #e2e8f0;
+      padding: 28px 24px 18px;
+    }
+    .footer-inner {
+      max-width: 1080px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 12px; color: var(--slate-500);
+    }
+    .footer-inner a { color: var(--indigo); text-decoration: none; }
+    .footer-inner a:hover { text-decoration: underline; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(6px); } }
+    .reveal { opacity: 1; transform: translateY(0); }
+    body.js-ready .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; will-change: opacity, transform; }
+    body.js-ready .reveal.vis { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .nav { padding: 0 16px; gap: 12px; }
+      .nav a:not(.nav-cta):not(.nav-logo) { display: none; }
+      .hero { min-height: auto; }
+      .hero-content { padding: 96px 0 64px; width: min(100%, calc(100vw - 24px)); }
+      .hero-methods { flex-direction: column; align-items: center; }
+      .hero-method { width: 100%; max-width: 320px; }
+      .section { padding: 48px 16px; }
+      .metric-grid { grid-template-columns: 1fr; }
+      .method-banner { flex-direction: column; text-align: center; padding: 20px; }
+      .grade-bar { display: none; }
+      .score-guide { font-size: 12px; }
+      .score-guide th, .score-guide td { padding: 10px 8px; }
+      .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 24px; }
+      .hero-sub { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-logo" href="index.html">LegalSummary Eval</a>
+  <span class="nav-spacer"></span>
+  <a href="view.html">摘要檢視</a>
+  <a href="timeline.html">時間軸檢視</a>
+  <a href="metrics.html">AI 評估指標</a>
+  <a href="metrics-guide.html" class="active">指標說明</a>
+  <a href="eval.html">專家評估</a>
+  <a href="metrics.html" class="nav-cta">查看結果</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Evaluation Framework</div>
+    <h1>我們如何衡量<br>一份摘要的<span class="accent-indigo">品質</span>？</h1>
+    <p class="hero-sub">
+      透過三種互補的評估方法——規則式自動檢查、大語言模型多維度評審、<br>以及與標準摘要的文字與語意比對——全方位捕捉摘要品質。
+    </p>
+
+    <div class="hero-methods">
+      <a class="hero-method" href="#rule-based">
+        <div class="hero-method-icon rule">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m-9-11h2m18 0h2"/><path d="M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42"/><path d="M19.78 4.22l-1.42 1.42M5.64 18.36l-1.42 1.42"/>
+          </svg>
+        </div>
+        <div class="hero-method-text">
+          <div class="hero-method-label">Rule-Based 規則式</div>
+          <div class="hero-method-desc">程式自動計算，確定性結果</div>
+        </div>
+      </a>
+      <a class="hero-method" href="#llm-judge">
+        <div class="hero-method-icon llm">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M10 21h4"/><path d="M9 17h6"/>
+          </svg>
+        </div>
+        <div class="hero-method-text">
+          <div class="hero-method-label">LLM-Judge 模型評審</div>
+          <div class="hero-method-desc">Claude Sonnet 依結構化標準評分</div>
+        </div>
+      </a>
+      <a class="hero-method" href="#nlp-ref">
+        <div class="hero-method-icon nlp">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 6h18"/><path d="M7 12h10"/><path d="M5 18h14"/><circle cx="17" cy="6" r="2"/><circle cx="7" cy="18" r="2"/>
+          </svg>
+        </div>
+        <div class="hero-method-text">
+          <div class="hero-method-label">NLP Reference 參考式</div>
+          <div class="hero-method-desc">與標準摘要文字 / 語意比對</div>
+        </div>
+      </a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    往下瀏覽
+    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 7l4 4 4-4"/></svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 1: RULE-BASED -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="rule-based" style="background: var(--slate-50);">
+  <div class="section-inner reveal">
+    <div class="section-label indigo">RULE-BASED METRICS</div>
+    <div class="section-title">規則式自動指標</div>
+    <p class="section-desc">程式自動比對日期、數字、判決結果等客觀事實，<br>不涉及主觀判斷，結果完全可重現。</p>
+
+    <div class="method-banner rule">
+      <div class="method-banner-icon rule">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m-9-11h2m18 0h2"/><path d="M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42"/><path d="M19.78 4.22l-1.42 1.42M5.64 18.36l-1.42 1.42"/></svg>
+      </div>
+      <div class="method-banner-text">
+        <h3>運作方式</h3>
+        <p>從摘要中擷取日期、數字、判決結果、機構名稱等客觀資訊，與原文及標準答案逐一比對。每項指標都有明確的計算公式，不依賴任何模型判斷。</p>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+
+      <!-- CitationRate -->
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon rule">📎</div>
+          <div>
+            <div class="metric-card-title">引用率</div>
+            <div class="metric-card-en">Citation Rate</div>
+          </div>
+        </div>
+        <div class="metric-card-body">
+          摘要中有多少比例的陳述標註了 [CH_XX] 原文引用？引用率越高，代表摘要的每句話越有據可查。
+        </div>
+        <div class="metric-card-scale">0 – 1（比率）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item">
+            <div class="detail-label">計算方式</div>
+            <div class="detail-desc">帶有 [CH_XX] 標記的陳述句數 ÷ 全部陳述句數</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">為什麼重要</div>
+            <div class="detail-desc">沒有標註引用的句子無法追溯至原文，讀者無從驗證其正確性。高引用率是「可查核」摘要的基本條件。</div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- DateF1 -->
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon rule">📅</div>
+          <div>
+            <div class="metric-card-title">日期正確率</div>
+            <div class="metric-card-en">Date F1</div>
+          </div>
+        </div>
+        <div class="metric-card-body">
+          摘要中提到的日期是否正確？系統將民國/西元日期統一轉換後，與標準答案雙向比對（Precision + Recall）。
+        </div>
+        <div class="metric-card-scale">0 – 1（F1 分數）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item">
+            <div class="detail-label">計算方式</div>
+            <div class="detail-desc">Precision（摘要中日期的正確比率）× Recall（標準答案中日期的涵蓋比率）的調和平均</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">為什麼重要</div>
+            <div class="detail-desc">醫療糾紛案件中，就醫日期、手術日期、死亡日期等時間資訊對判決認定至關重要，日期錯誤可能改變整個案件的理解。</div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- NumF1 -->
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon rule">#</div>
+          <div>
+            <div class="metric-card-title">數值正確率</div>
+            <div class="metric-card-en">Num F1</div>
+          </div>
+        </div>
+        <div class="metric-card-body">
+          刑期、罰金、檢驗數值等關鍵數字是否正確？系統進行單位正規化後比對。
+        </div>
+        <div class="metric-card-scale">0 – 1（F1 分數）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item">
+            <div class="detail-label">檢查項目</div>
+            <div class="detail-desc">刑期月數、緩刑年數、罰金金額、實驗室數值（如 CPK 198 U/L）等，含單位正規化</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">為什麼重要</div>
+            <div class="detail-desc">「有期徒刑三年」寫成「有期徒刑二年」是嚴重的事實錯誤，數字精確度直接影響摘要的可信度。</div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- VerdictMatch -->
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon rule">⚖</div>
+          <div>
+            <div class="metric-card-title">判決結果吻合</div>
+            <div class="metric-card-en">Verdict Match</div>
+          </div>
+        </div>
+        <div class="metric-card-body">
+          摘要是否正確記載判決結果？包含有罪/無罪、刑期長度、緩刑年數三個欄位的精確比對。
+        </div>
+        <div class="metric-card-scale">0 – 1（吻合率）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item">
+            <div class="detail-label">檢查欄位</div>
+            <div class="detail-desc">verdict_type（有罪/無罪）、sentence_months（刑期月數）、probation_years（緩刑年數）</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">為什麼重要</div>
+            <div class="detail-desc">判決結果是整份摘要最核心的結論，寫錯有罪/無罪或刑期是最嚴重的摘要錯誤。</div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- InstitutionAttr -->
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon rule">🏛</div>
+          <div>
+            <div class="metric-card-title">機構歸屬覆蓋</div>
+            <div class="metric-card-en">Institution Attribution</div>
+          </div>
+        </div>
+        <div class="metric-card-body">
+          法院、醫審會、醫院等關鍵機構是否都有提及？衡量摘要對案件相關單位的涵蓋程度。
+        </div>
+        <div class="metric-card-scale">0 – 1（涵蓋率）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item">
+            <div class="detail-label">計算方式</div>
+            <div class="detail-desc">摘要中正確提及的機構數 ÷ 標準答案中的機構總數</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">為什麼重要</div>
+            <div class="detail-desc">鑑定意見的出處（行政院衛生署醫事審議委員會 vs 法醫研究所）對判決的證據力判斷至關重要。</div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- HallucinationRate -->
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon rule">👻</div>
+          <div>
+            <div class="metric-card-title">幻覺率</div>
+            <div class="metric-card-en">Hallucination Rate (Rule)</div>
+          </div>
+        </div>
+        <div class="metric-card-body">
+          摘要中是否出現原文完全沒有的虛構資訊？偵測不存在於原文或標準答案中的實體（人名、機構、數據）。
+        </div>
+        <div class="metric-card-scale">0 – 1（越高越好，= 1 - 幻覺比率）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item">
+            <div class="detail-label">計算方式</div>
+            <div class="detail-desc">可驗證的實體數 ÷ 摘要中全部實體數。被認定為「幻覺」的實體不存在於原文或標準答案中。</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">為什麼重要</div>
+            <div class="detail-desc">AI 模型有時會「憑空捏造」事實——例如虛構一個不存在的鑑定機構或錯誤的診斷名稱。這在法律文件中是絕對不可接受的。</div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 2: LLM-JUDGE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="llm-judge">
+  <div class="section-inner reveal">
+    <div class="section-label emerald">LLM-JUDGE METRICS</div>
+    <div class="section-title">大語言模型評審指標</div>
+    <p class="section-desc">由 Claude Sonnet 依據結構化評分標準，<br>從事實涵蓋率、寫作品質、引用忠實度三個面向進行深度評估。</p>
+
+    <div class="method-banner llm">
+      <div class="method-banner-icon llm">
+        <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M10 21h4"/><path d="M9 17h6"/></svg>
+      </div>
+      <div class="method-banner-text">
+        <h3>運作方式</h3>
+        <p>以結構化萃取的事實資料（時間軸、人物、論證等）作為評分基準，由 Claude Sonnet 模型逐項核對摘要內容。每個維度都有錨定量表（Anchored Likert Scale），確保評分標準一致。</p>
+      </div>
+    </div>
+
+    <!-- ── 2A: Fact Recall ── -->
+    <h3 style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--slate-900);margin-bottom:8px;margin-top:8px;">事實涵蓋率 <span style="font-weight:400;font-size:14px;color:var(--slate-500)">Fact Recall</span></h3>
+    <p style="font-size:14px;color:var(--slate-500);line-height:1.8;margin-bottom:24px;">AI 產生的摘要涵蓋了多少關鍵事實？以結構化萃取的 8 類事實欄位為基準，逐項確認摘要是否提及。</p>
+
+    <div class="metric-grid">
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon llm">📆</div>
+          <div><div class="metric-card-title">時間線事件</div><div class="metric-card-en">Timeline Recall</div></div>
+        </div>
+        <div class="metric-card-body">案件的關鍵事件是否都有記錄？就醫、手術、併發症、死亡等時間節點。關鍵決策點加權 2 倍。</div>
+        <div class="metric-card-scale">0 – 1（加權涵蓋率）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">加權機制</div><div class="detail-desc">標記為 critical_decision 的事件（如「決定轉院」「實施手術」）權重為 2 倍，確保關鍵轉折點不被遺漏。</div></div>
+        </div></div>
+      </div>
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon llm">👤</div>
+          <div><div class="metric-card-title">關鍵人物</div><div class="metric-card-en">Entity Recall</div></div>
+        </div>
+        <div class="metric-card-body">被告、被害人、關鍵醫療人員、鑑定機構等重要角色是否都有提及？支援匿名化對應（甲 = 戊○○）。</div>
+        <div class="metric-card-scale">0 – 1（涵蓋率）</div>
+      </div>
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon llm">⚔</div>
+          <div><div class="metric-card-title">起訴指控</div><div class="metric-card-en">Allegation Coverage</div></div>
+        </div>
+        <div class="metric-card-body">檢察官的起訴要旨是否被完整記錄？包含指控的具體過失行為與法律依據。</div>
+        <div class="metric-card-scale">0 – 1（涵蓋率）</div>
+      </div>
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon llm">🛡</div>
+          <div><div class="metric-card-title">被告辯護</div><div class="metric-card-en">Defense Recall</div></div>
+        </div>
+        <div class="metric-card-body">被告的辯護主張是否被記錄？包括醫療行為合理性的論述與抗辯理由。</div>
+        <div class="metric-card-scale">0 – 1（涵蓋率）</div>
+      </div>
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon llm">🔬</div>
+          <div><div class="metric-card-title">鑑定意見</div><div class="metric-card-en">Expert Opinion Recall</div></div>
+        </div>
+        <div class="metric-card-body">醫審會、法醫研究所等鑑定機構的意見是否完整呈現？含核心結論、注意義務違反判斷、因果關係評估。權重 1.5 倍。</div>
+        <div class="metric-card-scale">0 – 1（加權涵蓋率）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">子欄位檢查</div><div class="detail-desc">每份鑑定意見拆分為：鑑定機構、核心結論、注意義務違反評估、因果關係評估，逐項確認。</div></div>
+          <div class="detail-item"><div class="detail-label">為什麼加權</div><div class="detail-desc">鑑定意見是法院判決的核心證據依據，遺漏將嚴重影響摘要的完整性。</div></div>
+        </div></div>
+      </div>
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon llm">📋</div>
+          <div><div class="metric-card-title">判決理由</div><div class="metric-card-en">Reasoning Coverage</div></div>
+        </div>
+        <div class="metric-card-body">法院的認定事實、法律分析、加重/減輕量刑因素是否被涵蓋？</div>
+        <div class="metric-card-scale">0 – 1（涵蓋率）</div>
+      </div>
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon llm">🔗</div>
+          <div><div class="metric-card-title">因果鏈</div><div class="metric-card-en">Causation Chain Recall</div></div>
+        </div>
+        <div class="metric-card-body">從過失行為到被害人死亡的因果推論鏈條，是否每個環節都有交代？</div>
+        <div class="metric-card-scale">0 – 1（涵蓋率）</div>
+      </div>
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon llm">⚖</div>
+          <div><div class="metric-card-title">量刑正確性</div><div class="metric-card-en">Sentence Accuracy</div></div>
+        </div>
+        <div class="metric-card-body">每位被告的刑期、緩刑等量刑細節是否正確？權重 1.5 倍。</div>
+        <div class="metric-card-scale">0 – 1（加權正確率）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">檢查欄位</div><div class="detail-desc">逐位被告比對：刑種（有期徒刑/拘役）、刑期月數、緩刑年數、有罪/無罪</div></div>
+        </div></div>
+      </div>
+
+    </div>
+
+    <!-- ── 2B: Quality ── -->
+    <h3 style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--slate-900);margin:40px 0 8px;">寫作品質 <span style="font-weight:400;font-size:14px;color:var(--slate-500)">Quality — 14 維度 × 1-5 分</span></h3>
+    <p style="font-size:14px;color:var(--slate-500);line-height:1.8;margin-bottom:24px;">從基礎寫作、內容正確性、法律專業三個層面，以 14 個維度全面評估摘要品質。每個維度使用錨定量表（1-5 分），確保評分標準明確一致。</p>
+
+    <!-- Group 1: 基礎寫作 -->
+    <div class="dim-group">
+      <div class="dim-group-header">
+        <span class="dim-group-tag free">免參考</span>
+        <span class="dim-group-title">基礎寫作品質（適用全部 5 段）</span>
+      </div>
+      <div class="metric-grid">
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">✏</div><div><div class="metric-card-title">語句通順度</div><div class="metric-card-en">Fluency</div></div></div>
+          <div class="metric-card-body">文句是否通順、文法是否正確？</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">5 分</div><div class="detail-desc">所有句子文法正確，行文自然流暢</div></div>
+            <div class="detail-item"><div class="detail-label">3 分</div><div class="detail-desc">有 2-3 處文法或表達問題</div></div>
+            <div class="detail-item"><div class="detail-label">1 分</div><div class="detail-desc">嚴重文法錯誤，嚴重影響閱讀</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">🔄</div><div><div class="metric-card-title">冗餘度</div><div class="metric-card-en">Redundancy</div></div></div>
+          <div class="metric-card-body">是否有重複陳述或冗餘資訊？每句話是否都貢獻了獨特的資訊？</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">5 分</div><div class="detail-desc">零冗餘，每句話都有獨特貢獻</div></div>
+            <div class="detail-item"><div class="detail-label">3 分</div><div class="detail-desc">2-3 處重複或冗餘表述</div></div>
+            <div class="detail-item"><div class="detail-label">1 分</div><div class="detail-desc">大量重複，明顯灌水</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">🔗</div><div><div class="metric-card-title">邏輯連貫性</div><div class="metric-card-en">Coherence</div></div></div>
+          <div class="metric-card-body">段落之間是否有清晰的邏輯進展？轉場是否流暢？</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">5 分</div><div class="detail-desc">邏輯清晰、銜接流暢、時序正確</div></div>
+            <div class="detail-item"><div class="detail-label">3 分</div><div class="detail-desc">大致連貫，但有 2-3 處邏輯跳躍</div></div>
+            <div class="detail-item"><div class="detail-label">1 分</div><div class="detail-desc">完全無結構，無法閱讀</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">👁</div><div><div class="metric-card-title">可理解性</div><div class="metric-card-en">Accessibility</div></div></div>
+          <div class="metric-card-body">大學教育程度的非專業讀者能否理解？專業術語是否造成閱讀障礙？</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">5 分</div><div class="detail-desc">一般讀者完全可理解，無需查詢術語</div></div>
+            <div class="detail-item"><div class="detail-label">3 分</div><div class="detail-desc">部分可理解，3-5 個專業術語造成障礙</div></div>
+            <div class="detail-item"><div class="detail-label">1 分</div><div class="detail-desc">一般讀者完全無法理解</div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Group 2: 內容正確性 -->
+    <div class="dim-group">
+      <div class="dim-group-header">
+        <span class="dim-group-tag ref">需對照標準答案</span>
+        <span class="dim-group-title">內容正確性（適用全部 5 段）</span>
+      </div>
+      <div class="metric-grid">
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">📊</div><div><div class="metric-card-title">要點涵蓋率</div><div class="metric-card-en">Coverage</div></div></div>
+          <div class="metric-card-body">標準答案中的關鍵要點是否都被涵蓋？</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">5 分</div><div class="detail-desc">標準答案的所有關鍵要點都有涵蓋</div></div>
+            <div class="detail-item"><div class="detail-label">3 分</div><div class="detail-desc">遺漏 1 個重要要點或 2-3 個次要要點</div></div>
+            <div class="detail-item"><div class="detail-label">1 分</div><div class="detail-desc">大部分關鍵要點遺漏</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">🎯</div><div><div class="metric-card-title">資訊精確度</div><div class="metric-card-en">Precision</div></div></div>
+          <div class="metric-card-body">日期、數字、人名等事實細節是否與標準答案一致？</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">5 分</div><div class="detail-desc">所有資訊與標準答案完全吻合</div></div>
+            <div class="detail-item"><div class="detail-label">3 分</div><div class="detail-desc">1-2 處事實偏差（日期、數字、人名）</div></div>
+            <div class="detail-item"><div class="detail-label">1 分</div><div class="detail-desc">大量事實錯誤，不可信</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">📖</div><div><div class="metric-card-title">術語一致性</div><div class="metric-card-en">Terminology</div></div></div>
+          <div class="metric-card-body">法律與醫學術語的使用是否與標準答案一致？</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">5 分</div><div class="detail-desc">法律/醫學術語與標準答案完全一致</div></div>
+            <div class="detail-item"><div class="detail-label">3 分</div><div class="detail-desc">2-3 處術語不一致</div></div>
+            <div class="detail-item"><div class="detail-label">1 分</div><div class="detail-desc">術語嚴重混亂</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">🏗</div><div><div class="metric-card-title">結構忠實度</div><div class="metric-card-en">Structure</div></div></div>
+          <div class="metric-card-body">段落標題、編號方式、章節劃分是否與標準答案相近？</div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">📐</div><div><div class="metric-card-title">段落範疇合規</div><div class="metric-card-en">Scope</div></div></div>
+          <div class="metric-card-body">每個段落是否只包含該段落應有的內容？有無跨段落的內容錯置？</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Group 3: 法律專業 -->
+    <div class="dim-group">
+      <div class="dim-group-header">
+        <span class="dim-group-tag spec">法律專業</span>
+        <span class="dim-group-title">法律專業維度（特定段落適用）</span>
+      </div>
+      <div class="metric-grid">
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">⚖</div><div><div class="metric-card-title">法律論證結構</div><div class="metric-card-en">Reasoning</div></div></div>
+          <div class="metric-card-body">法院的法律論證是否被完整、準確地呈現？僅適用於「法院認定與判決理由」段落。</div>
+          <div class="metric-card-scale">僅限判決理由段落</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">評估方式</div><div class="detail-desc">先列出標準答案中的法律論證要點，逐一核對摘要是否涵蓋，再依缺漏數量對應到 1-5 分。</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">⏱</div><div><div class="metric-card-title">時間軸清晰度</div><div class="metric-card-en">Timeline Clarity</div></div></div>
+          <div class="metric-card-body">讀者能否從摘要重建事件的時間順序？時間標記是否清楚？僅適用於「案件事實」段落。</div>
+          <div class="metric-card-scale">僅限案件事實段落</div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">🧩</div><div><div class="metric-card-title">推理結構完整性</div><div class="metric-card-en">Reasoning Completeness</div></div></div>
+          <div class="metric-card-body">判決推理的四步架構（注意義務標準→違反→因果關係→量刑）是否完整？僅適用於「判決理由」段落。</div>
+          <div class="metric-card-scale">僅限判決理由段落</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">四步檢核（診斷過失）</div><div class="detail-desc">① 注意義務標準 → ② 違反義務 → ③ 因果關係 → ④ 量刑因素。完成 4/4 = 5 分，3/4 = 4 分，2/4 = 3 分。</div></div>
+            <div class="detail-item"><div class="detail-label">兩步檢核（操作過失）</div><div class="detail-desc">操作過失型案件簡化為兩步：① 操作違反 → ② 因果與量刑。完成 2/2 = 5 分，1/2 = 3 分。</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">⚠</div><div><div class="metric-card-title">不確定性標示</div><div class="metric-card-en">Uncertainty Calibration</div></div></div>
+          <div class="metric-card-body">摘要是否正確區分「法院認定事實」「鑑定意見」「被告辯稱」「可能推論」四種來源？適用全部 5 段。</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">硬規則</div><div class="detail-desc">若將被告辯稱誤述為法院認定事實，該段上限為 3 分。</div></div>
+          </div></div>
+        </div>
+        <div class="metric-card" onclick="toggleCard(this)">
+          <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+          <div class="metric-card-header"><div class="metric-card-icon llm">✅</div><div><div class="metric-card-title">風格規範合規</div><div class="metric-card-en">Compliance</div></div></div>
+          <div class="metric-card-body">引用格式、數字格式、繁簡體、個資保護等 5 項合規檢查。適用全部 5 段。</div>
+          <div class="metric-card-detail"><div class="metric-card-detail-inner">
+            <div class="detail-item"><div class="detail-label">5 項檢核點</div><div class="detail-desc">CP1 引用格式 [CH_XX] · CP2 數字格式（中文/阿拉伯數字分場景）· CP3 無簡體字 · CP4 無越權評論 · CP5 無真實姓名外洩</div></div>
+            <div class="detail-item"><div class="detail-label">硬規則</div><div class="detail-desc">若 CP5 違反（外洩真實姓名），該段上限為 2 分。</div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── 2C: Faithfulness ── -->
+    <h3 style="font-family:var(--serif);font-size:20px;font-weight:700;color:var(--slate-900);margin:40px 0 8px;">引用忠實度 <span style="font-weight:400;font-size:14px;color:var(--slate-500)">Faithfulness</span></h3>
+    <p style="font-size:14px;color:var(--slate-500);line-height:1.8;margin-bottom:24px;">摘要中每一句標記了 [CH_XX] 引用的陳述，是否真的被原文段落支持？逐句驗證，依支持程度分為 A-D 四級。</p>
+
+    <div style="max-width:640px;">
+      <div class="grade-row">
+        <div class="grade-letter grade-A">A</div>
+        <div class="grade-info">
+          <div class="grade-name">完全支持</div>
+          <div class="grade-desc">核心主張明確出現在引用段落中，事實、數字、因果關係都正確</div>
+        </div>
+        <div class="grade-score">× 1.0</div>
+        <div class="grade-bar"><div class="grade-bar-fill" style="width:100%;background:var(--emerald);"></div></div>
+      </div>
+      <div class="grade-row">
+        <div class="grade-letter grade-B">B</div>
+        <div class="grade-info">
+          <div class="grade-name">實質支持</div>
+          <div class="grade-desc">核心主張有依據，但摘要做了合理的改寫、濃縮或推論</div>
+        </div>
+        <div class="grade-score">× 0.75</div>
+        <div class="grade-bar"><div class="grade-bar-fill" style="width:75%;background:#0284c7;"></div></div>
+      </div>
+      <div class="grade-row">
+        <div class="grade-letter grade-C">C</div>
+        <div class="grade-info">
+          <div class="grade-name">弱支持</div>
+          <div class="grade-desc">引用段落提到相關主題，但具體主張無法直接從中推導</div>
+        </div>
+        <div class="grade-score">× 0.25</div>
+        <div class="grade-bar"><div class="grade-bar-fill" style="width:25%;background:var(--amber);"></div></div>
+      </div>
+      <div class="grade-row">
+        <div class="grade-letter grade-D">D</div>
+        <div class="grade-info">
+          <div class="grade-name">不支持</div>
+          <div class="grade-desc">引用段落完全無相關資訊，或摘要內容與引用段落矛盾</div>
+        </div>
+        <div class="grade-score">× 0.0</div>
+        <div class="grade-bar"><div class="grade-bar-fill" style="width:0%;background:var(--rose);"></div></div>
+      </div>
+      <p style="font-size:12px;color:var(--slate-500);margin-top:16px;line-height:1.7;">
+        <strong>最終分數</strong> = (A×1.0 + B×0.75 + C×0.25 + D×0.0) ÷ 總評分句數<br>
+        跳過無引用的句子與標題行，不計入分母。
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SECTION 3: NLP REFERENCE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="nlp-ref" style="background: var(--slate-50);">
+  <div class="section-inner reveal">
+    <div class="section-label amber">NLP REFERENCE-BASED METRICS</div>
+    <div class="section-title">參考式比對指標</div>
+    <p class="section-desc">將 AI 摘要與法學教授撰寫的標準摘要進行文字與語意比對，<br>衡量兩者的相似程度。</p>
+
+    <div class="method-banner nlp">
+      <div class="method-banner-icon nlp">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M5 18h14"/><circle cx="17" cy="6" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+      </div>
+      <div class="method-banner-text">
+        <h3>運作方式</h3>
+        <p>這類指標不判斷「摘要對不對」，而是衡量「AI 摘要跟標準摘要有多像」。ROUGE 看文字層面的重疊，BERTScore 看語意層面的相似度。兩者互補：ROUGE 抓用詞差異，BERTScore 容忍合理的換句話說。</p>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon nlp">R</div>
+          <div>
+            <div class="metric-card-title">ROUGE-L</div>
+            <div class="metric-card-en">Longest Common Subsequence</div>
+          </div>
+        </div>
+        <div class="metric-card-body">AI 摘要與標準摘要之間最長共同子序列的比率。用詞越接近標準摘要，分數越高。</div>
+        <div class="metric-card-scale">0 – 1（F1 分數）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">優點</div><div class="detail-desc">計算簡單、可重現、是文本摘要領域最通用的基準指標</div></div>
+          <div class="detail-item"><div class="detail-label">限制</div><div class="detail-desc">只看字面重疊，無法捕捉同義替換（如「死亡」vs「過世」），對中文分詞敏感</div></div>
+        </div></div>
+      </div>
+
+      <div class="metric-card" onclick="toggleCard(this)">
+        <svg class="metric-card-arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 8l5 5 5-5"/></svg>
+        <div class="metric-card-header">
+          <div class="metric-card-icon nlp">B</div>
+          <div>
+            <div class="metric-card-title">BERTScore F1</div>
+            <div class="metric-card-en">Contextual Embedding Similarity</div>
+          </div>
+        </div>
+        <div class="metric-card-body">使用預訓練語言模型計算語意向量的相似度。即使用詞不同，只要意思相近就會得高分。</div>
+        <div class="metric-card-scale">0 – 1（F1 分數）</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">優點</div><div class="detail-desc">能捕捉語意相似性，容忍合理的改寫與同義替換</div></div>
+          <div class="detail-item"><div class="detail-label">限制</div><div class="detail-desc">依賴預訓練模型品質，對繁體中文的支援較英文弱，且分數分佈範圍較窄（多集中在 0.6-0.8）</div></div>
+        </div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SCORE INTERPRETATION GUIDE -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<section class="section" id="score-guide">
+  <div class="section-inner reveal">
+    <div class="section-label indigo">SCORE INTERPRETATION</div>
+    <div class="section-title">分數解讀指南</div>
+    <p class="section-desc">各指標的分數範圍與大致對應的品質水準，<br>幫助您快速判斷一份摘要的表現。</p>
+
+    <div style="overflow-x:auto;">
+      <table class="score-guide">
+        <thead>
+          <tr>
+            <th>指標</th>
+            <th><span class="score-pill poor">待改進</span></th>
+            <th><span class="score-pill fair">尚可</span></th>
+            <th><span class="score-pill good">良好</span></th>
+            <th><span class="score-pill excellent">優秀</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Rule-Based (0-1)</td><td>&lt; 0.60</td><td>0.60 – 0.75</td><td>0.75 – 0.90</td><td>&gt; 0.90</td></tr>
+          <tr><td>Fact Recall (0-1)</td><td>&lt; 0.70</td><td>0.70 – 0.80</td><td>0.80 – 0.90</td><td>&gt; 0.90</td></tr>
+          <tr><td>Quality (1-5)</td><td>&lt; 3.0</td><td>3.0 – 3.5</td><td>3.5 – 4.2</td><td>&gt; 4.2</td></tr>
+          <tr><td>Faithfulness (0-1)</td><td>&lt; 0.60</td><td>0.60 – 0.75</td><td>0.75 – 0.90</td><td>&gt; 0.90</td></tr>
+          <tr><td>ROUGE-L (0-1)</td><td>&lt; 0.15</td><td>0.15 – 0.25</td><td>0.25 – 0.35</td><td>&gt; 0.35</td></tr>
+          <tr><td>BERTScore F1 (0-1)</td><td>&lt; 0.60</td><td>0.60 – 0.68</td><td>0.68 – 0.75</td><td>&gt; 0.75</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--slate-500);margin-top:16px;line-height:1.7;text-align:center;">
+      上述區間為基於目前 100 案評估結果的經驗值，僅供參考。不同案件的難度差異可能影響分數分佈。
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <span>醫療糾紛刑事判決摘要評估平台</span>
+    <span><a href="metrics.html">← 回到 AI 評估指標</a></span>
+  </div>
+</footer>
+
+<script>
+document.body.classList.add('js-ready');
+
+// Scroll reveal
+const obs = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// Card expand/collapse
+function toggleCard(card) {
+  card.classList.toggle('open');
+}
+
+// Smooth scroll for hero method links
+document.querySelectorAll('.hero-method').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+</script>
+
+</body>
+</html>
