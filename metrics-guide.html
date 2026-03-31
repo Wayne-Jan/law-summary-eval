@@ -48,56 +48,80 @@
     .hero-bg {
       position: absolute; inset: 0;
       background:
-        radial-gradient(ellipse at 30% 40%, rgba(99,102,241,0.2), transparent 50%),
-        radial-gradient(ellipse at 70% 60%, rgba(16,185,129,0.15), transparent 45%),
-        linear-gradient(rgba(148,163,184,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(148,163,184,0.05) 1px, transparent 1px);
-      background-size: auto, auto, 64px 64px, 64px 64px;
+        radial-gradient(ellipse at 25% 30%, rgba(99,102,241,0.25), transparent 50%),
+        radial-gradient(ellipse at 75% 60%, rgba(16,185,129,0.18), transparent 45%),
+        radial-gradient(ellipse at 50% 80%, rgba(217,119,6,0.12), transparent 40%),
+        linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px);
+      background-size: auto, auto, auto, 64px 64px, 64px 64px;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: auto 0 0 0; height: 120px;
+      background: linear-gradient(to bottom, transparent, #0f172a); pointer-events: none;
     }
     .hero-content {
       position: relative; z-index: 2; text-align: center;
-      width: min(800px, calc(100vw - 32px)); padding: 120px 0 72px;
+      width: min(860px, calc(100vw - 32px)); padding: 112px 0 72px;
     }
     .hero h1 {
       font-family: var(--serif);
       font-size: clamp(28px, 4.5vw, 48px);
       font-weight: 900; color: #fff; line-height: 1.3;
-      letter-spacing: -0.5px; margin-bottom: 18px;
-      animation: fadeUp 0.7s ease 0.1s both;
+      margin-bottom: 18px; animation: fadeUp 0.7s ease 0.1s both;
     }
     .hero-sub {
       font-size: clamp(14px, 1.5vw, 16px);
       color: rgba(255,255,255,0.55); line-height: 1.9;
-      max-width: 560px; margin: 0 auto; font-weight: 300;
+      max-width: 600px; margin: 0 auto 36px; font-weight: 300;
       animation: fadeUp 0.7s ease 0.2s both;
     }
-
-    /* ─── SHARED ─── */
-    .section { padding: 88px 24px; }
-    .container { max-width: 960px; margin: 0 auto; }
-    .section-label {
-      font-size: 11px; font-weight: 700; letter-spacing: 2px;
-      margin-bottom: 10px; text-transform: uppercase;
+    .hero-methods {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+      animation: fadeUp 0.7s ease 0.35s both;
     }
+    .hero-method {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 24px; border-radius: 14px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer; transition: all 0.25s; text-decoration: none;
+    }
+    .hero-method:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+    .hero-method-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .hero-method-icon svg { width: 20px; height: 20px; }
+    .hero-method-icon.rule { background: rgba(99,102,241,0.2); }
+    .hero-method-icon.rule svg { stroke: #a5b4fc; fill: none; }
+    .hero-method-icon.llm { background: rgba(16,185,129,0.2); }
+    .hero-method-icon.llm svg { stroke: #6ee7b7; fill: none; }
+    .hero-method-icon.nlp { background: rgba(217,119,6,0.2); }
+    .hero-method-icon.nlp svg { stroke: #fcd34d; fill: none; }
+    .hero-method-text { text-align: left; }
+    .hero-method-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
+    .hero-method-desc { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+
+    /* ─── SECTIONS ─── */
+    .section { padding: 80px 24px; }
+    .section-inner { max-width: 1080px; margin: 0 auto; }
     .section-title {
       font-family: var(--serif);
       font-size: clamp(22px, 3vw, 32px);
       font-weight: 700; color: var(--slate-900);
-      letter-spacing: -0.3px; margin-bottom: 14px; line-height: 1.35;
+      margin-bottom: 12px; line-height: 1.35;
     }
     .section-desc {
       font-size: 15px; color: var(--slate-500);
-      max-width: 540px; line-height: 1.8; margin-bottom: 48px;
+      max-width: 600px; line-height: 1.8; margin-bottom: 40px;
     }
     .centered { text-align: center; }
     .centered .section-desc { margin-left: auto; margin-right: auto; }
 
-    /* ─── FEAT (image + text) ─── */
+    /* ─── FEAT ─── */
     .feat {
       display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
-      align-items: center; margin-bottom: 80px;
+      align-items: center; margin-bottom: 48px;
     }
-    .feat:last-child { margin-bottom: 0; }
     .feat.reverse { direction: rtl; }
     .feat.reverse > * { direction: ltr; }
     .feat-img {
@@ -107,69 +131,107 @@
     .feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .feat-text h3 {
       font-family: var(--serif); font-size: 22px; font-weight: 700;
-      color: var(--slate-900); margin-bottom: 14px; letter-spacing: -0.3px; line-height: 1.4;
+      color: var(--slate-900); margin-bottom: 14px; line-height: 1.4;
     }
     .feat-text p { font-size: 14px; color: var(--slate-500); line-height: 1.9; }
-    .feat-text .feat-tag {
-      display: inline-block; font-size: 11px; font-weight: 600;
-      padding: 4px 12px; border-radius: 6px; margin-bottom: 14px;
-    }
-    .feat-tag.indigo { color: var(--indigo); background: var(--indigo-light); }
-    .feat-tag.emerald { color: var(--emerald); background: var(--emerald-light); }
-    .feat-tag.amber { color: var(--amber); background: var(--amber-light); }
 
-    /* ─── DIMENSION LIST ─── */
-    .dim-list { list-style: none; margin-top: 20px; }
-    .dim-list li {
-      padding: 14px 0; border-bottom: 1px solid #f1f5f9;
-      display: grid; grid-template-columns: 140px 1fr; gap: 12px;
-      font-size: 13px; line-height: 1.7;
+    /* ─── METRIC CARDS ─── */
+    .metric-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px; margin-bottom: 20px;
     }
-    .dim-list li:last-child { border-bottom: none; }
-    .dim-name { font-weight: 600; color: var(--slate-900); }
-    .dim-desc { color: var(--slate-500); }
+    .metric-card {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 14px;
+      padding: 24px; cursor: pointer;
+      transition: all 0.25s; position: relative; overflow: hidden;
+    }
+    .metric-card:hover {
+      border-color: #cbd5e1;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+    .metric-card-header { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 10px; }
+    .metric-card-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 18px;
+    }
+    .metric-card-icon.rule { background: var(--indigo-light); color: var(--indigo); }
+    .metric-card-icon.llm { background: var(--emerald-light); color: var(--emerald); }
+    .metric-card-icon.nlp { background: var(--amber-light); color: var(--amber); }
+    .metric-card-title { font-size: 15px; font-weight: 700; color: var(--slate-900); }
+    .metric-card-en { font-size: 11px; color: var(--slate-500); font-weight: 400; margin-top: 2px; }
+    .metric-card-body { font-size: 13px; color: var(--slate-500); line-height: 1.8; }
 
-    /* ─── FAITH GRADES ─── */
-    .grade-strip {
-      display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap;
+    /* ─── EXPANDABLE ─── */
+    .metric-card-detail {
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease, margin-top 0.3s ease;
+      margin-top: 0;
     }
-    .grade-card {
-      flex: 1; min-width: 140px;
-      padding: 18px; border-radius: 12px; border: 1px solid #f1f5f9;
-      text-align: center;
+    .metric-card.open .metric-card-detail { max-height: 600px; margin-top: 14px; }
+    .metric-card-detail-inner { border-top: 1px solid #f1f5f9; padding-top: 14px; }
+    .detail-item { margin-bottom: 10px; }
+    .detail-item:last-child { margin-bottom: 0; }
+    .detail-label { font-size: 12px; font-weight: 600; color: var(--slate-700); margin-bottom: 3px; }
+    .detail-desc { font-size: 12px; color: var(--slate-500); line-height: 1.7; }
+
+    /* ─── QUALITY DIMS ─── */
+    .quality-group { margin-bottom: 28px; }
+    .quality-group:last-child { margin-bottom: 0; }
+    .quality-group-title {
+      font-size: 14px; font-weight: 600; color: var(--slate-900);
+      margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9;
     }
-    .grade-card:hover { background: var(--slate-50); }
+    .quality-list { list-style: none; }
+    .quality-list li {
+      display: grid; grid-template-columns: 130px 1fr; gap: 10px;
+      padding: 10px 0; border-bottom: 1px solid #f8fafc; font-size: 13px;
+    }
+    .quality-list li:last-child { border-bottom: none; }
+    .q-name { font-weight: 600; color: var(--slate-900); line-height: 1.5; }
+    .q-desc { color: var(--slate-500); line-height: 1.7; }
+
+    /* ─── FAITHFULNESS ─── */
+    .grade-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 18px; border-radius: 10px; margin-bottom: 8px;
+      border: 1px solid #f1f5f9; transition: background 0.15s;
+    }
+    .grade-row:hover { background: var(--slate-50); }
     .grade-letter {
       width: 36px; height: 36px; border-radius: 8px;
-      display: inline-flex; align-items: center; justify-content: center;
-      font-family: var(--serif); font-size: 18px; font-weight: 900; color: #fff;
-      margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0;
     }
     .grade-A { background: #059669; }
     .grade-B { background: #0284c7; }
     .grade-C { background: #d97706; }
     .grade-D { background: #dc2626; }
-    .grade-name { font-size: 13px; font-weight: 600; color: var(--slate-900); margin-bottom: 4px; }
-    .grade-desc { font-size: 11px; color: var(--slate-500); line-height: 1.6; }
+    .grade-info { flex: 1; }
+    .grade-name { font-size: 14px; font-weight: 600; color: var(--slate-900); }
+    .grade-desc { font-size: 12px; color: var(--slate-500); line-height: 1.6; margin-top: 2px; }
+    .grade-score { font-size: 13px; font-weight: 700; color: var(--slate-500); min-width: 48px; text-align: right; }
+    .grade-bar { width: 80px; height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden; flex-shrink: 0; }
+    .grade-bar-fill { height: 100%; border-radius: 3px; }
 
     /* ─── SCORE TABLE ─── */
-    .score-table {
+    .score-guide {
       width: 100%; border-collapse: separate; border-spacing: 0;
-      border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0;
-      background: #fff; font-size: 13px;
+      border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #fff;
     }
-    .score-table th {
+    .score-guide th {
       background: var(--slate-50); padding: 12px 16px;
       font-size: 11px; font-weight: 600; color: var(--slate-500);
       text-align: center; border-bottom: 1px solid #e2e8f0;
     }
-    .score-table th:first-child { text-align: left; }
-    .score-table td {
-      padding: 12px 16px; text-align: center;
+    .score-guide th:first-child { text-align: left; }
+    .score-guide td {
+      padding: 12px 16px; font-size: 13px; text-align: center;
       border-bottom: 1px solid #f3f4f6; color: var(--slate-700);
     }
-    .score-table td:first-child { text-align: left; font-weight: 600; color: var(--slate-900); }
-    .score-table tbody tr:last-child td { border-bottom: none; }
+    .score-guide td:first-child { text-align: left; font-weight: 600; color: var(--slate-900); }
+    .score-guide tbody tr:last-child td { border-bottom: none; }
+    .score-guide tbody tr:hover { background: var(--slate-50); }
     .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
     .pill.r { background: #fef2f2; color: #b91c1c; }
     .pill.y { background: #fffbeb; color: #92400e; }
@@ -179,7 +241,7 @@
     /* ─── FOOTER ─── */
     .footer { background: #fff; border-top: 1px solid #e2e8f0; padding: 24px; }
     .footer-inner {
-      max-width: 960px; margin: 0 auto;
+      max-width: 1080px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
       font-size: 12px; color: var(--slate-500);
     }
@@ -196,13 +258,20 @@
       .nav { padding: 0 16px; gap: 12px; }
       .nav a:not(.nav-cta):not(.nav-logo) { display: none; }
       .hero-content { padding: 96px 0 56px; }
-      .section { padding: 56px 16px; }
+      .hero-methods { flex-direction: column; align-items: center; }
+      .hero-method { width: 100%; max-width: 320px; }
+      .section { padding: 48px 16px; }
       .feat { grid-template-columns: 1fr; gap: 24px; }
       .feat.reverse { direction: ltr; }
       .feat-img { aspect-ratio: 16/9; }
-      .dim-list li { grid-template-columns: 1fr; gap: 2px; }
-      .grade-strip { flex-direction: column; }
+      .metric-grid { grid-template-columns: 1fr; }
+      .quality-list li { grid-template-columns: 1fr; gap: 2px; }
+      .grade-bar { display: none; }
       .footer-inner { flex-direction: column; gap: 8px; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 24px; }
+      .hero-sub { font-size: 13px; }
     }
   </style>
 </head>
@@ -224,180 +293,246 @@
   <div class="hero-bg"></div>
   <div class="hero-content">
     <h1>我們如何衡量<br>一份摘要的品質？</h1>
-    <p class="hero-sub">透過規則式檢查、模型深度評審、與標準摘要比對，三種方法互補，全面捕捉摘要品質的不同面向。</p>
+    <p class="hero-sub">透過三種互補的評估方法，全方位捕捉摘要品質的不同面向。</p>
+    <div class="hero-methods">
+      <a class="hero-method" href="#rule-based">
+        <div class="hero-method-icon rule">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m-9-11h2m18 0h2"/><path d="M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42"/><path d="M19.78 4.22l-1.42 1.42M5.64 18.36l-1.42 1.42"/></svg>
+        </div>
+        <div class="hero-method-text">
+          <div class="hero-method-label">Rule-Based 規則式</div>
+          <div class="hero-method-desc">程式自動計算，確定性結果</div>
+        </div>
+      </a>
+      <a class="hero-method" href="#llm-judge">
+        <div class="hero-method-icon llm">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M10 21h4"/><path d="M9 17h6"/></svg>
+        </div>
+        <div class="hero-method-text">
+          <div class="hero-method-label">LLM-Judge 模型評審</div>
+          <div class="hero-method-desc">Claude Sonnet 依結構化標準評分</div>
+        </div>
+      </a>
+      <a class="hero-method" href="#nlp-ref">
+        <div class="hero-method-icon nlp">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M5 18h14"/><circle cx="17" cy="6" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+        </div>
+        <div class="hero-method-text">
+          <div class="hero-method-label">NLP Reference 參考式</div>
+          <div class="hero-method-desc">與標準摘要文字 / 語意比對</div>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
 
 <!-- ═══════ 1. RULE-BASED ═══════ -->
-<section class="section" id="rule-based">
-  <div class="container">
+<section class="section" id="rule-based" style="background:var(--slate-50);">
+  <div class="section-inner">
     <div class="feat reveal">
-      <div class="feat-img">
-        <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80" alt="精確檢核">
-      </div>
+      <div class="feat-img"><img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80" alt="精確檢核"></div>
       <div class="feat-text">
-        <span class="feat-tag indigo">Rule-Based</span>
-        <h3>規則式自動檢查<br>客觀事實，程式說了算</h3>
-        <p>日期、數字、判決結果、機構名稱——這些有明確答案的項目，由程式自動比對。不涉及主觀判斷，結果完全可重現。</p>
+        <h3>規則式自動指標</h3>
+        <p>日期、數字、判決結果、機構名稱——這些有明確答案的項目，由程式自動比對，不涉及主觀判斷，結果完全可重現。</p>
       </div>
     </div>
-    <div class="reveal">
-      <ul class="dim-list">
-        <li><div class="dim-name">引用率<br><small>Citation Rate</small></div><div class="dim-desc">摘要中有多少句標註了原文出處 [CH_XX]？越高代表越有據可查。</div></li>
-        <li><div class="dim-name">日期正確率<br><small>Date F1</small></div><div class="dim-desc">就醫、手術、死亡等日期是否正確？民國/西元統一轉換後雙向比對。</div></li>
-        <li><div class="dim-name">數值正確率<br><small>Num F1</small></div><div class="dim-desc">刑期、罰金、檢驗數值是否正確？「三年」寫成「二年」就是嚴重錯誤。</div></li>
-        <li><div class="dim-name">判決結果吻合<br><small>Verdict Match</small></div><div class="dim-desc">有罪/無罪、刑期長度、緩刑年數——判決核心結論是否正確。</div></li>
-        <li><div class="dim-name">機構歸屬覆蓋<br><small>Institution Attr.</small></div><div class="dim-desc">法院、醫審會、醫院等關鍵機構是否都有提及？鑑定意見的出處攸關證據力。</div></li>
-        <li><div class="dim-name">幻覺率<br><small>Hallucination Rate</small></div><div class="dim-desc">有沒有憑空捏造原文不存在的人名、機構或數據？法律文件零容忍。</div></li>
-      </ul>
+    <div class="metric-grid reveal">
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon rule">📎</div><div><div class="metric-card-title">引用率</div><div class="metric-card-en">Citation Rate</div></div></div>
+        <div class="metric-card-body">摘要中有多少句標註了 [CH_XX] 原文出處？越高代表越有據可查。</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">計算方式</div><div class="detail-desc">帶有 [CH_XX] 標記的陳述句數 ÷ 全部陳述句數</div></div>
+        </div></div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon rule">📅</div><div><div class="metric-card-title">日期正確率</div><div class="metric-card-en">Date F1</div></div></div>
+        <div class="metric-card-body">就醫、手術、死亡等日期是否正確？民國/西元統一轉換後雙向比對。</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">計算方式</div><div class="detail-desc">Precision × Recall 的調和平均（F1 分數）</div></div>
+        </div></div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon rule">#️</div><div><div class="metric-card-title">數值正確率</div><div class="metric-card-en">Num F1</div></div></div>
+        <div class="metric-card-body">刑期、罰金、檢驗數值是否正確？「三年」寫成「二年」就是嚴重錯誤。</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">檢查項目</div><div class="detail-desc">刑期月數、緩刑年數、罰金金額、實驗室數值等，含單位正規化</div></div>
+        </div></div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon rule">⚖</div><div><div class="metric-card-title">判決結果吻合</div><div class="metric-card-en">Verdict Match</div></div></div>
+        <div class="metric-card-body">有罪/無罪、刑期長度、緩刑年數——判決核心結論是否正確。</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">檢查欄位</div><div class="detail-desc">verdict_type、sentence_months、probation_years 三欄位精確比對</div></div>
+        </div></div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon rule">🏛</div><div><div class="metric-card-title">機構歸屬覆蓋</div><div class="metric-card-en">Institution Attribution</div></div></div>
+        <div class="metric-card-body">法院、醫審會、醫院等關鍵機構是否都有提及？鑑定意見的出處攸關證據力。</div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon rule">👻</div><div><div class="metric-card-title">幻覺率</div><div class="metric-card-en">Hallucination Rate</div></div></div>
+        <div class="metric-card-body">有沒有憑空捏造原文不存在的人名、機構或數據？法律文件零容忍。</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════ 2. LLM-JUDGE: FACT RECALL ═══════ -->
-<section class="section" id="fact-recall" style="background:var(--slate-50);">
-  <div class="container">
+<!-- ═══════ 2. LLM-JUDGE ═══════ -->
+<section class="section" id="llm-judge">
+  <div class="section-inner">
     <div class="feat reverse reveal">
-      <div class="feat-img">
-        <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80" alt="法律文件分析">
-      </div>
+      <div class="feat-img"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80" alt="法律文件分析"></div>
       <div class="feat-text">
-        <span class="feat-tag emerald">LLM-Judge</span>
-        <h3>事實涵蓋率<br>關鍵事實，一件都不能少</h3>
-        <p>以結構化萃取的事實資料為基準，由 Claude Sonnet 逐項確認摘要是否涵蓋了判決書中的 8 類關鍵事實。</p>
+        <h3>大語言模型評審</h3>
+        <p>由 Claude Sonnet 依據結構化評分標準，從事實涵蓋率、寫作品質、引用忠實度三個面向進行深度評估。每個維度都有錨定量表，確保標準一致。</p>
       </div>
     </div>
+
+    <!-- Fact Recall -->
     <div class="reveal">
-      <ul class="dim-list">
-        <li><div class="dim-name">時間線事件<br><small>Timeline</small></div><div class="dim-desc">就醫、手術、併發症、死亡等時間節點。關鍵決策點加權 2 倍。</div></li>
-        <li><div class="dim-name">關鍵人物<br><small>Entities</small></div><div class="dim-desc">被告、被害人、醫療人員、鑑定機構。支援匿名化對應。</div></li>
-        <li><div class="dim-name">起訴指控<br><small>Allegations</small></div><div class="dim-desc">檢察官指控的具體過失行為與法律依據。</div></li>
-        <li><div class="dim-name">被告辯護<br><small>Defense</small></div><div class="dim-desc">被告的抗辯理由與醫療行為合理性論述。</div></li>
-        <li><div class="dim-name">鑑定意見<br><small>Expert Opinions</small></div><div class="dim-desc">醫審會等機構的核心結論、注意義務與因果關係判斷。加權 1.5 倍。</div></li>
-        <li><div class="dim-name">判決理由<br><small>Reasoning</small></div><div class="dim-desc">法院的認定事實、法律分析、加重/減輕量刑因素。</div></li>
-        <li><div class="dim-name">因果鏈<br><small>Causation Chain</small></div><div class="dim-desc">從過失行為到死亡結果的推論鏈條，每個環節是否交代。</div></li>
-        <li><div class="dim-name">量刑正確性<br><small>Sentence Accuracy</small></div><div class="dim-desc">每位被告的刑種、刑期、緩刑是否正確。加權 1.5 倍。</div></li>
-      </ul>
+      <h3 class="section-title" style="font-size:20px;margin-top:0;">事實涵蓋率 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Fact Recall</span></h3>
+      <p class="section-desc" style="text-align:left;">摘要涵蓋了多少關鍵事實？以結構化萃取的 8 類事實欄位為基準逐項確認。</p>
+    </div>
+    <div class="metric-grid reveal">
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon llm">📆</div><div><div class="metric-card-title">時間線事件</div><div class="metric-card-en">Timeline Recall</div></div></div>
+        <div class="metric-card-body">就醫、手術、併發症、死亡等時間節點。關鍵決策點加權 2 倍。</div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon llm">👤</div><div><div class="metric-card-title">關鍵人物</div><div class="metric-card-en">Entity Recall</div></div></div>
+        <div class="metric-card-body">被告、被害人、醫療人員、鑑定機構等重要角色。支援匿名化對應。</div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon llm">⚔</div><div><div class="metric-card-title">起訴指控</div><div class="metric-card-en">Allegation Coverage</div></div></div>
+        <div class="metric-card-body">檢察官指控的具體過失行為與法律依據。</div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon llm">🛡</div><div><div class="metric-card-title">被告辯護</div><div class="metric-card-en">Defense Recall</div></div></div>
+        <div class="metric-card-body">被告的抗辯理由與醫療行為合理性論述。</div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon llm">🔬</div><div><div class="metric-card-title">鑑定意見</div><div class="metric-card-en">Expert Opinion Recall</div></div></div>
+        <div class="metric-card-body">醫審會等機構的核心結論、注意義務與因果判斷。加權 1.5 倍。</div>
+        <div class="metric-card-detail"><div class="metric-card-detail-inner">
+          <div class="detail-item"><div class="detail-label">子欄位檢查</div><div class="detail-desc">鑑定機構、核心結論、注意義務違反評估、因果關係評估，逐項確認。</div></div>
+        </div></div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon llm">📋</div><div><div class="metric-card-title">判決理由</div><div class="metric-card-en">Reasoning Coverage</div></div></div>
+        <div class="metric-card-body">法院的認定事實、法律分析、加重/減輕量刑因素。</div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon llm">🔗</div><div><div class="metric-card-title">因果鏈</div><div class="metric-card-en">Causation Chain</div></div></div>
+        <div class="metric-card-body">從過失行為到死亡結果的推論鏈條，每個環節是否交代。</div>
+      </div>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon llm">⚖</div><div><div class="metric-card-title">量刑正確性</div><div class="metric-card-en">Sentence Accuracy</div></div></div>
+        <div class="metric-card-body">每位被告的刑種、刑期、緩刑是否正確。加權 1.5 倍。</div>
+      </div>
+    </div>
+
+    <!-- Quality 14 dims -->
+    <div class="reveal" style="margin-top:48px;">
+      <h3 class="section-title" style="font-size:20px;">寫作品質 14 維度 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Quality · 1-5 分</span></h3>
+      <p class="section-desc" style="text-align:left;">從基礎寫作、內容正確性、法律專業三個層面評估。每個維度使用 1-5 分錨定量表。</p>
+    </div>
+    <div class="reveal">
+      <div class="quality-group">
+        <div class="quality-group-title">基礎寫作品質</div>
+        <ul class="quality-list">
+          <li><div class="q-name">語句通順度</div><div class="q-desc">文法正確、行文自然流暢</div></li>
+          <li><div class="q-name">冗餘度</div><div class="q-desc">有無重複陳述，每句是否都有獨特貢獻</div></li>
+          <li><div class="q-name">邏輯連貫性</div><div class="q-desc">段落間的邏輯進展與轉場是否流暢</div></li>
+          <li><div class="q-name">可理解性</div><div class="q-desc">非專業讀者能否理解，專業術語是否造成障礙</div></li>
+        </ul>
+      </div>
+      <div class="quality-group">
+        <div class="quality-group-title">內容正確性</div>
+        <ul class="quality-list">
+          <li><div class="q-name">要點涵蓋率</div><div class="q-desc">標準答案中的關鍵要點是否被涵蓋</div></li>
+          <li><div class="q-name">資訊精確度</div><div class="q-desc">日期、數字、人名等細節是否與標準答案一致</div></li>
+          <li><div class="q-name">術語一致性</div><div class="q-desc">法律與醫學術語的使用是否正確</div></li>
+          <li><div class="q-name">結構忠實度</div><div class="q-desc">段落標題、編號、章節劃分是否合理</div></li>
+          <li><div class="q-name">段落範疇合規</div><div class="q-desc">每段是否只包含該段應有的內容</div></li>
+        </ul>
+      </div>
+      <div class="quality-group">
+        <div class="quality-group-title">法律專業</div>
+        <ul class="quality-list">
+          <li><div class="q-name">法律論證結構</div><div class="q-desc">法院論證是否完整呈現</div></li>
+          <li><div class="q-name">時間軸清晰度</div><div class="q-desc">事件時序是否清楚可重建</div></li>
+          <li><div class="q-name">推理結構完整性</div><div class="q-desc">注意義務 → 違反 → 因果 → 量刑的四步架構是否完整</div></li>
+          <li><div class="q-name">不確定性標示</div><div class="q-desc">法院認定、鑑定意見、被告辯稱、可能推論四種來源是否正確區分</div></li>
+          <li><div class="q-name">風格規範合規</div><div class="q-desc">引用格式、數字格式、繁簡體、個資保護等 5 項檢核</div></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Faithfulness -->
+    <div class="reveal" style="margin-top:48px;">
+      <h3 class="section-title" style="font-size:20px;">引用忠實度 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Faithfulness</span></h3>
+      <p class="section-desc" style="text-align:left;">摘要中標記 [CH_XX] 引用的每一句話，逐句比對原文段落，依支持程度分為四級。</p>
+    </div>
+    <div class="reveal" style="max-width:640px;">
+      <div class="grade-row">
+        <div class="grade-letter grade-A">A</div>
+        <div class="grade-info"><div class="grade-name">完全支持</div><div class="grade-desc">核心主張明確出現在引用段落中</div></div>
+        <div class="grade-score">× 1.0</div>
+        <div class="grade-bar"><div class="grade-bar-fill" style="width:100%;background:#059669;"></div></div>
+      </div>
+      <div class="grade-row">
+        <div class="grade-letter grade-B">B</div>
+        <div class="grade-info"><div class="grade-name">實質支持</div><div class="grade-desc">有依據，但經過合理改寫或推論</div></div>
+        <div class="grade-score">× 0.75</div>
+        <div class="grade-bar"><div class="grade-bar-fill" style="width:75%;background:#0284c7;"></div></div>
+      </div>
+      <div class="grade-row">
+        <div class="grade-letter grade-C">C</div>
+        <div class="grade-info"><div class="grade-name">弱支持</div><div class="grade-desc">引用段落提到相關主題，但無法直接推導</div></div>
+        <div class="grade-score">× 0.25</div>
+        <div class="grade-bar"><div class="grade-bar-fill" style="width:25%;background:#d97706;"></div></div>
+      </div>
+      <div class="grade-row">
+        <div class="grade-letter grade-D">D</div>
+        <div class="grade-info"><div class="grade-name">不支持</div><div class="grade-desc">引用段落無相關資訊或與內容矛盾</div></div>
+        <div class="grade-score">× 0.0</div>
+        <div class="grade-bar"><div class="grade-bar-fill" style="width:0%;"></div></div>
+      </div>
+      <p style="font-size:12px;color:var(--slate-500);margin-top:16px;line-height:1.7;">最終分數 = (A×1.0 + B×0.75 + C×0.25 + D×0.0) ÷ 總評分句數</p>
     </div>
   </div>
 </section>
 
-<!-- ═══════ 3. LLM-JUDGE: QUALITY ═══════ -->
-<section class="section" id="quality">
-  <div class="container">
+<!-- ═══════ 3. NLP REFERENCE ═══════ -->
+<section class="section" id="nlp-ref" style="background:var(--slate-50);">
+  <div class="section-inner">
     <div class="feat reveal">
-      <div class="feat-img">
-        <img src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=800&q=80" alt="寫作品質">
-      </div>
+      <div class="feat-img"><img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="文字比對"></div>
       <div class="feat-text">
-        <span class="feat-tag emerald">LLM-Judge</span>
-        <h3>寫作品質 14 維度<br>不只看對錯，更看寫得好不好</h3>
-        <p>從語句通順到法律論證完整性，14 個維度各以 1-5 分量表評分。維度分三層：基礎寫作、內容正確性、法律專業。</p>
+        <h3>參考式比對指標</h3>
+        <p>將 AI 摘要與法學教授撰寫的標準摘要進行文字與語意比對。不判斷對錯，只衡量相似程度。兩者互補：ROUGE 看文字重疊，BERTScore 看語意相似。</p>
       </div>
     </div>
-    <div class="reveal">
-      <p style="font-size:13px;color:var(--slate-500);margin-bottom:20px;line-height:1.7;"><strong style="color:var(--slate-700);">基礎寫作</strong>——不需對照標準答案，評估文章本身的可讀性</p>
-      <ul class="dim-list">
-        <li><div class="dim-name">語句通順度</div><div class="dim-desc">文法正確、行文自然</div></li>
-        <li><div class="dim-name">冗餘度</div><div class="dim-desc">有無重複陳述，每句是否都有獨特貢獻</div></li>
-        <li><div class="dim-name">邏輯連貫性</div><div class="dim-desc">段落間的邏輯進展與轉場是否流暢</div></li>
-        <li><div class="dim-name">可理解性</div><div class="dim-desc">非專業讀者能否理解，專業術語是否造成障礙</div></li>
-      </ul>
-
-      <p style="font-size:13px;color:var(--slate-500);margin:28px 0 20px;line-height:1.7;"><strong style="color:var(--slate-700);">內容正確性</strong>——對照標準答案，檢驗事實與結構</p>
-      <ul class="dim-list">
-        <li><div class="dim-name">要點涵蓋率</div><div class="dim-desc">標準答案中的關鍵要點是否被涵蓋</div></li>
-        <li><div class="dim-name">資訊精確度</div><div class="dim-desc">日期、數字、人名等細節是否與標準答案一致</div></li>
-        <li><div class="dim-name">術語一致性</div><div class="dim-desc">法律與醫學術語的使用是否正確</div></li>
-        <li><div class="dim-name">結構忠實度</div><div class="dim-desc">段落標題、編號、章節劃分是否合理</div></li>
-        <li><div class="dim-name">段落範疇合規</div><div class="dim-desc">每段是否只包含該段應有的內容</div></li>
-      </ul>
-
-      <p style="font-size:13px;color:var(--slate-500);margin:28px 0 20px;line-height:1.7;"><strong style="color:var(--slate-700);">法律專業</strong>——針對特定段落的深度檢驗</p>
-      <ul class="dim-list">
-        <li><div class="dim-name">法律論證結構</div><div class="dim-desc">法院論證是否完整呈現（僅判決理由段落）</div></li>
-        <li><div class="dim-name">時間軸清晰度</div><div class="dim-desc">事件時序是否清楚可重建（僅案件事實段落）</div></li>
-        <li><div class="dim-name">推理結構完整性</div><div class="dim-desc">注意義務→違反→因果→量刑的四步架構是否完整（僅判決理由段落）</div></li>
-        <li><div class="dim-name">不確定性標示</div><div class="dim-desc">法院認定、鑑定意見、被告辯稱、可能推論四種來源是否正確區分</div></li>
-        <li><div class="dim-name">風格規範合規</div><div class="dim-desc">引用格式、數字格式、繁簡體、個資保護等 5 項檢核</div></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 4. LLM-JUDGE: FAITHFULNESS ═══════ -->
-<section class="section" id="faithfulness" style="background:var(--slate-50);">
-  <div class="container">
-    <div class="feat reverse reveal">
-      <div class="feat-img">
-        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80" alt="引用查核">
+    <div class="metric-grid reveal">
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon nlp">R</div><div><div class="metric-card-title">ROUGE-L</div><div class="metric-card-en">Longest Common Subsequence</div></div></div>
+        <div class="metric-card-body">最長共同子序列比對。用詞越接近標準摘要分數越高，但無法捕捉同義替換。</div>
       </div>
-      <div class="feat-text">
-        <span class="feat-tag emerald">LLM-Judge</span>
-        <h3>引用忠實度<br>每句引用，都要有據可查</h3>
-        <p>摘要中標記了 [CH_XX] 的每一句話，逐句比對引用的原文段落，依支持程度分為四級。</p>
+      <div class="metric-card" onclick="toggleCard(this)">
+        <div class="metric-card-header"><div class="metric-card-icon nlp">B</div><div><div class="metric-card-title">BERTScore F1</div><div class="metric-card-en">Contextual Embedding Similarity</div></div></div>
+        <div class="metric-card-body">語意向量相似度。即使換了說法，意思相近就得高分。對繁體中文支援較英文弱。</div>
       </div>
-    </div>
-    <div class="reveal">
-      <div class="grade-strip">
-        <div class="grade-card">
-          <div class="grade-letter grade-A">A</div>
-          <div class="grade-name">完全支持</div>
-          <div class="grade-desc">核心主張明確出現在引用段落中</div>
-        </div>
-        <div class="grade-card">
-          <div class="grade-letter grade-B">B</div>
-          <div class="grade-name">實質支持</div>
-          <div class="grade-desc">有依據，但經過合理改寫或推論</div>
-        </div>
-        <div class="grade-card">
-          <div class="grade-letter grade-C">C</div>
-          <div class="grade-name">弱支持</div>
-          <div class="grade-desc">引用段落提到相關主題，但無法直接推導</div>
-        </div>
-        <div class="grade-card">
-          <div class="grade-letter grade-D">D</div>
-          <div class="grade-name">不支持</div>
-          <div class="grade-desc">引用段落無相關資訊或與內容矛盾</div>
-        </div>
-      </div>
-      <p style="font-size:12px;color:var(--slate-500);margin-top:20px;line-height:1.7;">
-        最終分數 = (A×1.0 + B×0.75 + C×0.25 + D×0.0) ÷ 總評分句數
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ 5. NLP REFERENCE ═══════ -->
-<section class="section" id="nlp-ref">
-  <div class="container">
-    <div class="feat reveal">
-      <div class="feat-img">
-        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="文字比對">
-      </div>
-      <div class="feat-text">
-        <span class="feat-tag amber">NLP Reference</span>
-        <h3>參考式比對<br>跟標準摘要有多像？</h3>
-        <p>將 AI 摘要與法學教授撰寫的標準摘要進行文字與語意比對。不判斷對錯，只衡量相似程度。</p>
-      </div>
-    </div>
-    <div class="reveal">
-      <ul class="dim-list">
-        <li><div class="dim-name">ROUGE-L</div><div class="dim-desc">最長共同子序列比對。用詞越接近標準摘要，分數越高。純文字層面，無法捕捉同義替換。</div></li>
-        <li><div class="dim-name">BERTScore F1</div><div class="dim-desc">語意向量相似度。即使換了說法，只要意思相近就會得高分。但對繁體中文支援較英文弱。</div></li>
-      </ul>
     </div>
   </div>
 </section>
 
 <!-- ═══════ SCORE GUIDE ═══════ -->
-<section class="section centered" id="score-guide" style="background:var(--slate-50);">
-  <div class="container reveal">
-    <div class="section-label" style="color:var(--indigo);">SCORE INTERPRETATION</div>
+<section class="section centered" id="score-guide">
+  <div class="section-inner reveal">
     <div class="section-title">分數解讀指南</div>
-    <p class="section-desc">各指標的大致品質區間，幫助快速判斷摘要表現。區間為基於 100 案評估結果的經驗值。</p>
+    <p class="section-desc">基於 100 案評估結果的經驗值，幫助快速判斷摘要表現。</p>
     <div style="overflow-x:auto;">
-      <table class="score-table">
+      <table class="score-guide">
         <thead><tr>
           <th>指標</th>
           <th><span class="pill r">待改進</span></th>
@@ -431,6 +566,16 @@ const obs = new IntersectionObserver(es => {
   es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
 }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+function toggleCard(card) { card.classList.toggle('open'); }
+
+document.querySelectorAll('.hero-method').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
 </script>
 
 </body>
