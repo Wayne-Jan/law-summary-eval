@@ -368,6 +368,61 @@
     .tl-event-type.final_outcome { background: #fefce8; color: #a16207; }
     .tl-event-type.deterioration { background: #fff7ed; color: #c2410c; }
 
+    /* ─── MEDICAL INTERVENTION BADGES ─── */
+    .mi-badge {
+      font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 500;
+      cursor: default; position: relative;
+    }
+    .mi-badge.surgery { background: #fdf2f8; color: #be185d; }
+    .mi-badge.invasive { background: #faf5ff; color: #7c3aed; }
+    .mi-badge.resuscitation { background: #fef2f2; color: #dc2626; }
+    .mi-badge.medication { background: #eff6ff; color: #1d4ed8; }
+    .mi-badge:hover .mi-tooltip { display: block; }
+    .mi-tooltip {
+      display: none; position: absolute; left: 0; top: calc(100% + 6px);
+      background: #1e293b; color: #f1f5f9; font-size: 11px; line-height: 1.5;
+      padding: 8px 12px; border-radius: 8px; white-space: nowrap; z-index: 50;
+      box-shadow: 0 4px 12px rgba(0,0,0,.2); pointer-events: none; max-width: 320px;
+      white-space: normal;
+    }
+    .mi-tooltip::before {
+      content: ''; position: absolute; top: -4px; left: 12px;
+      width: 8px; height: 8px; background: #1e293b;
+      transform: rotate(45deg);
+    }
+
+    /* ─── FILTER BAR ─── */
+    .mi-filter-bar {
+      display: flex; gap: 6px; flex-wrap: wrap; padding: 10px 22px;
+      border-bottom: 1px solid #f3f4f6; background: #fafafa;
+    }
+    .mi-filter-pill {
+      font-size: 11px; padding: 4px 12px; border-radius: 20px;
+      border: 1px solid #e5e7eb; background: white; cursor: pointer;
+      font-weight: 500; color: #6b7280; transition: all 0.15s;
+      font-family: inherit;
+    }
+    .mi-filter-pill:hover { border-color: #4f46e5; color: #4f46e5; }
+    .mi-filter-pill.active { background: #4f46e5; color: white; border-color: #4f46e5; }
+    .mi-filter-pill .pill-count { font-size: 10px; opacity: 0.75; margin-left: 3px; }
+
+    /* ─── INTERVENTIONS TAB VIEW ─── */
+    .mi-section { margin-bottom: 20px; }
+    .mi-section-title {
+      font-size: 12px; font-weight: 700; color: #374151; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .mi-section-count { font-size: 11px; color: #9ca3af; font-weight: 400; }
+    .mi-item {
+      display: flex; align-items: baseline; gap: 8px; padding: 6px 10px;
+      border-radius: 6px; font-size: 12px; cursor: pointer; transition: background 0.1s;
+    }
+    .mi-item:hover { background: #f3f4f6; }
+    .mi-item-icon { flex: 0 0 16px; text-align: center; }
+    .mi-item-name { font-weight: 600; color: #111827; }
+    .mi-item-detail { color: #6b7280; }
+    .mi-item-event { font-size: 10px; color: #a5b4fc; margin-left: auto; white-space: nowrap; }
+
     .tl-desc { font-size: 13px; color: #333; line-height: 1.6; }
     .tl-meta { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
     .tl-meta-item { font-size: 11px; color: #9ca3af; }
@@ -725,6 +780,7 @@
       activeEventIdx = -1;
       activeSpanId = null;
       timelineViewMode = 'timeline';
+      miFilter = 'all';
       const select = document.getElementById('caseSelect');
       if (select) select.value = caseName;
       const url = new URL(location.href);
@@ -1004,10 +1060,13 @@
         (entities.other_actors && entities.other_actors.length) ||
         (entities.institutions && entities.institutions.length)
       ));
+      const hasMI = !!(timelineData && timelineData.medical_interventions &&
+        (timelineData.medical_interventions.procedures.length || timelineData.medical_interventions.medications.length));
       return `
         <div class="tl-view-switcher">
           <button class="tl-view-tab ${timelineViewMode === 'timeline' ? 'active' : ''}" type="button" onclick="switchTimelineView('timeline')">時間軸</button>
           <button class="tl-view-tab ${timelineViewMode === 'entities' ? 'active' : ''}" type="button" onclick="switchTimelineView('entities')" ${hasEntities ? '' : 'disabled'}>實體</button>
+          <button class="tl-view-tab ${timelineViewMode === 'interventions' ? 'active' : ''}" type="button" onclick="switchTimelineView('interventions')" ${hasMI ? '' : 'disabled'}>醫療處置</button>
         </div>
       `;
     }
@@ -1019,10 +1078,12 @@
       html += '<div class="panel-title">事件時間軸</div>';
       html += `<div class="panel-meta">${events.length} 個事件，點擊事件可同步查看原文</div>`;
       html += '</div>';
+      html += buildFilterBar(events);
       html += '<div class="timeline-panel-body">';
       html += '<div class="timeline">';
 
       events.forEach((evt, idx) => {
+        if (!eventPassesMIFilter(evt, idx)) return;
         const isCritical = evt.critical_decision;
         const typeClass = isCritical ? 'critical_decision' : (evt.event_type || '');
 
@@ -1031,6 +1092,7 @@
         html += `<span class="tl-date">${esc(evt.timestamp || evt.timestamp_normalized || '日期不明')}</span>`;
         if (evt.event_type) html += `<span class="tl-event-type ${esc(typeClass)}">${esc(formatEventType(evt.event_type))}</span>`;
         if (isCritical) html += '<span class="badge critical">關鍵決策</span>';
+        html += buildMIBadges(evt.event_id);
         html += '</div>';
         html += `<div class="tl-desc">${esc(evt.description || '')}</div>`;
 
@@ -1321,9 +1383,15 @@
         ));
         if (!hasEntities) return;
       }
+      if (mode === 'interventions') {
+        const mi = timelineData && timelineData.medical_interventions;
+        if (!mi || (!mi.procedures.length && !mi.medications.length)) return;
+      }
       timelineViewMode = mode;
       if (mode === 'timeline') {
         renderEvents();
+      } else if (mode === 'interventions') {
+        renderInterventionsView();
       } else {
         renderEntitiesView();
       }
@@ -1420,6 +1488,156 @@
         }
       }
       return `民國${y}年${m}月${day}日`;
+    }
+
+    // ─── MEDICAL INTERVENTIONS ───
+
+    let miFilter = 'all'; // 'all' | 'surgery' | 'medication' | 'critical' | 'deterioration'
+
+    function getMIForEvent(eventId) {
+      const mi = timelineData && timelineData.medical_interventions;
+      if (!mi) return { procedures: [], medications: [] };
+      return {
+        procedures: (mi.procedures || []).filter(p => p.event_id === eventId),
+        medications: (mi.medications || []).filter(m => m.event_id === eventId),
+      };
+    }
+
+    function buildMIBadges(eventId) {
+      const { procedures, medications } = getMIForEvent(eventId);
+      let html = '';
+      const surgeries = procedures.filter(p => p.category === 'surgery');
+      const invasive = procedures.filter(p => p.category === 'invasive_procedure');
+      const resus = procedures.filter(p => p.category === 'resuscitation');
+
+      if (surgeries.length) {
+        const tip = surgeries.map(p => p.name + (p.note ? `（${p.note}）` : '')).join('<br>');
+        html += `<span class="mi-badge surgery">手術<span class="mi-tooltip">${tip}</span></span>`;
+      }
+      if (invasive.length) {
+        const tip = invasive.map(p => p.name + (p.note ? `（${p.note}）` : '')).join('<br>');
+        html += `<span class="mi-badge invasive">處置<span class="mi-tooltip">${tip}</span></span>`;
+      }
+      if (resus.length) {
+        const tip = resus.map(p => p.name).join('<br>');
+        html += `<span class="mi-badge resuscitation">急救<span class="mi-tooltip">${tip}</span></span>`;
+      }
+      if (medications.length) {
+        const tip = medications.map(m => {
+          let s = m.name;
+          if (m.dosage) s += ` ${m.dosage}`;
+          if (m.route) s += `（${m.route}）`;
+          if (m.indication) s += ` — ${m.indication}`;
+          return s;
+        }).join('<br>');
+        html += `<span class="mi-badge medication">用藥<span class="mi-tooltip">${tip}</span></span>`;
+      }
+      return html;
+    }
+
+    function eventPassesMIFilter(evt, idx) {
+      if (miFilter === 'all') return true;
+      if (miFilter === 'critical') return !!evt.critical_decision;
+      if (miFilter === 'deterioration') return evt.event_type === 'deterioration';
+      const { procedures, medications } = getMIForEvent(evt.event_id);
+      if (miFilter === 'surgery') return procedures.some(p => p.category === 'surgery' || p.category === 'invasive_procedure');
+      if (miFilter === 'medication') return medications.length > 0;
+      if (miFilter === 'resuscitation') return procedures.some(p => p.category === 'resuscitation');
+      return true;
+    }
+
+    function setMIFilter(f) {
+      miFilter = f;
+      renderEvents();
+    }
+
+    function buildFilterBar(events) {
+      const mi = timelineData && timelineData.medical_interventions;
+      if (!mi) return '';
+      const np = mi.procedures ? mi.procedures.length : 0;
+      const nm = mi.medications ? mi.medications.length : 0;
+      if (np === 0 && nm === 0) return '';
+
+      const surgCount = new Set((mi.procedures || []).filter(p => p.category === 'surgery' || p.category === 'invasive_procedure').map(p => p.event_id)).size;
+      const medCount = new Set((mi.medications || []).map(m => m.event_id)).size;
+      const resusCount = new Set((mi.procedures || []).filter(p => p.category === 'resuscitation').map(p => p.event_id)).size;
+      const critCount = events.filter(e => e.critical_decision).length;
+      const detCount = events.filter(e => e.event_type === 'deterioration').length;
+
+      let html = '<div class="mi-filter-bar">';
+      html += `<button class="mi-filter-pill ${miFilter === 'all' ? 'active' : ''}" onclick="setMIFilter('all')">全部<span class="pill-count">${events.length}</span></button>`;
+      if (surgCount) html += `<button class="mi-filter-pill ${miFilter === 'surgery' ? 'active' : ''}" onclick="setMIFilter('surgery')">手術/處置<span class="pill-count">${surgCount}</span></button>`;
+      if (medCount) html += `<button class="mi-filter-pill ${miFilter === 'medication' ? 'active' : ''}" onclick="setMIFilter('medication')">用藥<span class="pill-count">${medCount}</span></button>`;
+      if (resusCount) html += `<button class="mi-filter-pill ${miFilter === 'resuscitation' ? 'active' : ''}" onclick="setMIFilter('resuscitation')">急救<span class="pill-count">${resusCount}</span></button>`;
+      if (critCount) html += `<button class="mi-filter-pill ${miFilter === 'critical' ? 'active' : ''}" onclick="setMIFilter('critical')">關鍵決策<span class="pill-count">${critCount}</span></button>`;
+      if (detCount) html += `<button class="mi-filter-pill ${miFilter === 'deterioration' ? 'active' : ''}" onclick="setMIFilter('deterioration')">病情惡化<span class="pill-count">${detCount}</span></button>`;
+      html += '</div>';
+      return html;
+    }
+
+    function renderInterventionsView() {
+      timelineViewMode = 'interventions';
+      const mi = timelineData && timelineData.medical_interventions;
+      if (!mi) return;
+      const events = timelineData.events || [];
+
+      let html = '<div class="panel-card timeline-panel-card">';
+      html += '<div class="panel-head">';
+      html += '<div class="panel-kicker">INTERVENTIONS</div>';
+      html += '<div class="panel-title">醫療處置一覽</div>';
+      html += `<div class="panel-meta">${(mi.procedures||[]).length} 項處置，${(mi.medications||[]).length} 項用藥</div>`;
+      html += '</div>';
+      html += '<div class="timeline-panel-body">';
+
+      // Group procedures by category
+      const cats = [
+        { key: 'surgery', icon: '🔪', label: '手術' },
+        { key: 'invasive_procedure', icon: '🔩', label: '侵入性處置' },
+        { key: 'resuscitation', icon: '⚡', label: '急救處置' },
+      ];
+      for (const cat of cats) {
+        const items = (mi.procedures || []).filter(p => p.category === cat.key);
+        if (!items.length) continue;
+        html += '<div class="mi-section">';
+        html += `<div class="mi-section-title">${cat.icon} ${cat.label}<span class="mi-section-count">(${items.length})</span></div>`;
+        for (const p of items) {
+          const evtIdx = events.findIndex(e => e.event_id === p.event_id);
+          const evtLabel = evtIdx >= 0 ? `Event ${p.event_id}` : '';
+          html += `<div class="mi-item" onclick="${evtIdx >= 0 ? `switchTimelineView('timeline'); setTimeout(()=>showSource(${evtIdx}),100)` : ''}">`;
+          html += `<span class="mi-item-icon">${cat.icon}</span>`;
+          html += `<span class="mi-item-name">${esc(p.name)}</span>`;
+          const details = [p.body_part, p.note].filter(Boolean).join(' · ');
+          if (details) html += `<span class="mi-item-detail">${esc(details)}</span>`;
+          if (evtLabel) html += `<span class="mi-item-event">${esc(evtLabel)}</span>`;
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+
+      // Medications
+      const meds = mi.medications || [];
+      if (meds.length) {
+        html += '<div class="mi-section">';
+        html += `<div class="mi-section-title">💊 用藥與輸液<span class="mi-section-count">(${meds.length})</span></div>`;
+        for (const m of meds) {
+          const evtIdx = events.findIndex(e => e.event_id === m.event_id);
+          const evtLabel = evtIdx >= 0 ? `Event ${m.event_id}` : '';
+          html += `<div class="mi-item" onclick="${evtIdx >= 0 ? `switchTimelineView('timeline'); setTimeout(()=>showSource(${evtIdx}),100)` : ''}">`;
+          html += '<span class="mi-item-icon">💊</span>';
+          html += `<span class="mi-item-name">${esc(m.name)}</span>`;
+          const details = [m.dosage, m.route, m.indication].filter(Boolean).join(' · ');
+          if (details) html += `<span class="mi-item-detail">${esc(details)}</span>`;
+          if (evtLabel) html += `<span class="mi-item-event">${esc(evtLabel)}</span>`;
+          html += '</div>';
+        }
+        html += '</div>';
+      }
+
+      html += '</div></div>';
+      renderWorkbench(html);
+      activeEventIdx = -1;
+      activeSpanId = null;
+      updateEventSpanPills();
     }
 
     function formatEventType(type) {
