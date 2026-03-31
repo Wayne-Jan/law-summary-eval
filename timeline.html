@@ -397,7 +397,7 @@
       background: #1e293b; color: #f1f5f9; font-size: 12px; line-height: 1.8;
       padding: 10px 14px; border-radius: 8px; z-index: 50;
       box-shadow: 0 4px 12px rgba(0,0,0,.2); pointer-events: none;
-      min-width: 280px; max-width: 480px; white-space: normal; width: max-content;
+      max-width: 480px; white-space: normal; width: max-content;
     }
     .mi-tooltip::before {
       content: ''; position: absolute; top: -4px; left: 12px;
@@ -1070,7 +1070,6 @@
         html += '<div class="tl-event-header">';
         html += `<span class="tl-date">${esc(evt.timestamp || evt.timestamp_normalized || '日期不明')}</span>`;
         if (evt.event_type) html += `<span class="tl-event-type ${esc(typeClass)}">${esc(formatEventType(evt.event_type))}</span>`;
-        if (isCritical) html += '<span class="badge critical">關鍵決策</span>';
         html += buildMIBadges(evt.event_id);
         html += '</div>';
         html += `<div class="tl-desc">${esc(evt.description || '')}</div>`;
