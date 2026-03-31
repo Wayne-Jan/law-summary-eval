@@ -2546,8 +2546,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function initApp() {
-  // Restore condition orders from Firestore before anything else
-  await restoreConditionOrdersFromCloud();
+  // Restore all data from Firestore before anything else (ensures condorder + scores are up to date)
+  if (!isAdminInspectMode()) await autoRestoreFromFirestore();
 
   // Load manifest
   try {
@@ -2612,7 +2612,6 @@ async function initApp() {
   if (isAdminInspectMode()) await applyAdminInspectRouteFromURL();
   initResizers();
   updateLayoutHeights();
-  if (!isAdminInspectMode()) autoRestoreFromFirestore(); // silently pull cloud data on login
   if (getSessionRole() === 'admin' && !isAdminInspectMode()) showAdminPanel();
 }
 
@@ -2624,8 +2623,27 @@ async function autoRestoreFromFirestore() {
     if (snapshot.empty) return;
     let merged = 0;
     snapshot.forEach(doc => {
-      const { key, data } = doc.data();
-      if (key && data !== undefined && !localStorage.getItem(key)) {
+      const docData = doc.data();
+      const { key, data, updated } = docData;
+      if (!key || data === undefined) return;
+
+      const local = localStorage.getItem(key);
+      if (!local) {
+        // No local data — use cloud
+        localStorage.setItem(key, JSON.stringify(data));
+        merged++;
+        return;
+      }
+
+      // Compare timestamps: cloud updated vs local _saved
+      const cloudTs = updated && updated.toDate ? updated.toDate().getTime() : 0;
+      let localTs = 0;
+      try {
+        const parsed = JSON.parse(local);
+        if (parsed && parsed._saved) localTs = new Date(parsed._saved).getTime();
+      } catch {}
+
+      if (cloudTs > localTs) {
         localStorage.setItem(key, JSON.stringify(data));
         merged++;
       }
@@ -2635,7 +2653,9 @@ async function autoRestoreFromFirestore() {
       onCaseChange();
       updateFooter();
     }
-  } catch (e) { /* silently ignore network errors */ }
+  } catch (e) {
+    console.warn('autoRestoreFromFirestore failed:', e);
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -2660,28 +2680,6 @@ function getConditionOrder(caseName) {
   return order;
 }
 
-// Restore condition orders from Firestore on login (fills localStorage before any getConditionOrder call)
-async function restoreConditionOrdersFromCloud() {
-  const cloudEv = getCloudEvaluatorId();
-  if (!cloudEv || cloudEv === 'default') return;
-  try {
-    const snap = await db.collection('evals').doc(cloudEv).collection('records')
-      .where('key', '>=', 'eval_v2_condorder_')
-      .where('key', '<', 'eval_v2_condorder_\uffff')
-      .get();
-    snap.forEach(doc => {
-      const { key, data } = doc.data();
-      if (key && Array.isArray(data) && data.length === EVAL_CONDITIONS.length) {
-        const existing = loadStoredJSON(key);
-        if (!existing || !Array.isArray(existing) || existing.length !== EVAL_CONDITIONS.length) {
-          localStorage.setItem(key, JSON.stringify(data));
-        }
-      }
-    });
-  } catch (e) {
-    console.warn('Failed to restore condorder from Firestore:', e);
-  }
-}
 
 function getAnonLabel(idx) { return ANON_LABELS[idx] || `版本 ${String.fromCharCode(65 + idx)}`; }
 
