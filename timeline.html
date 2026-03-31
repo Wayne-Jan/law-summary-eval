@@ -397,7 +397,7 @@
       background: #1e293b; color: #f1f5f9; font-size: 12px; line-height: 1.8;
       padding: 10px 14px; border-radius: 8px; z-index: 50;
       box-shadow: 0 4px 12px rgba(0,0,0,.2); pointer-events: none;
-      max-width: 360px; white-space: normal;
+      min-width: 280px; max-width: 480px; white-space: normal; width: max-content;
     }
     .mi-tooltip::before {
       content: ''; position: absolute; top: -4px; left: 12px;
@@ -1046,8 +1046,8 @@
       return `
         <div class="tl-view-switcher">
           <button class="tl-view-tab ${timelineViewMode === 'timeline' ? 'active' : ''}" type="button" onclick="switchTimelineView('timeline')">時間軸</button>
-          <button class="tl-view-tab ${timelineViewMode === 'entities' ? 'active' : ''}" type="button" onclick="switchTimelineView('entities')" ${hasEntities ? '' : 'disabled'}>實體</button>
           <button class="tl-view-tab ${timelineViewMode === 'interventions' ? 'active' : ''}" type="button" onclick="switchTimelineView('interventions')" ${hasMI ? '' : 'disabled'}>醫療處置</button>
+          <button class="tl-view-tab ${timelineViewMode === 'entities' ? 'active' : ''}" type="button" onclick="switchTimelineView('entities')" ${hasEntities ? '' : 'disabled'}>實體</button>
         </div>
       `;
     }
