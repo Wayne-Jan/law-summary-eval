@@ -327,6 +327,20 @@
     .entity-note {
       margin-top: 8px; font-size: 12px; color: #94a3b8; line-height: 1.55;
     }
+    .entity-panel-card, .mi-panel-card { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+    .mi-panel-body { padding: 20px 22px 24px; overflow-y: auto; flex: 1; min-height: 0; }
+    .mi-card {
+      border: 1px solid #e5e7eb; border-radius: 12px; background: #fff;
+      padding: 14px; cursor: default;
+    }
+    .mi-card-name { font-size: 14px; font-weight: 700; color: #111827; line-height: 1.4; }
+    .mi-card-row { margin-top: 6px; font-size: 12px; color: #64748b; line-height: 1.65; }
+    .mi-card-row strong { color: #374151; font-weight: 600; }
+    .mi-card-link {
+      display: inline-block; margin-top: 8px; font-size: 11px; color: #4f46e5;
+      cursor: pointer; font-weight: 500;
+    }
+    .mi-card-link:hover { text-decoration: underline; }
     .entity-empty {
       padding: 36px 20px; color: #94a3b8; text-align: center; font-size: 13px;
       border: 1px dashed #e2e8f0; border-radius: 12px; background: #fff;
@@ -380,10 +394,10 @@
     .mi-badge:hover .mi-tooltip { display: block; }
     .mi-tooltip {
       display: none; position: absolute; left: 0; top: calc(100% + 6px);
-      background: #1e293b; color: #f1f5f9; font-size: 11px; line-height: 1.5;
-      padding: 8px 12px; border-radius: 8px; white-space: nowrap; z-index: 50;
-      box-shadow: 0 4px 12px rgba(0,0,0,.2); pointer-events: none; max-width: 320px;
-      white-space: normal;
+      background: #1e293b; color: #f1f5f9; font-size: 12px; line-height: 1.8;
+      padding: 10px 14px; border-radius: 8px; z-index: 50;
+      box-shadow: 0 4px 12px rgba(0,0,0,.2); pointer-events: none;
+      max-width: 360px; white-space: normal;
     }
     .mi-tooltip::before {
       content: ''; position: absolute; top: -4px; left: 12px;
@@ -1027,10 +1041,13 @@
         (entities.other_actors && entities.other_actors.length) ||
         (entities.institutions && entities.institutions.length)
       ));
+      const mi = timelineData && timelineData.medical_interventions;
+      const hasMI = !!(mi && ((mi.procedures && mi.procedures.length) || (mi.medications && mi.medications.length)));
       return `
         <div class="tl-view-switcher">
           <button class="tl-view-tab ${timelineViewMode === 'timeline' ? 'active' : ''}" type="button" onclick="switchTimelineView('timeline')">時間軸</button>
           <button class="tl-view-tab ${timelineViewMode === 'entities' ? 'active' : ''}" type="button" onclick="switchTimelineView('entities')" ${hasEntities ? '' : 'disabled'}>實體</button>
+          <button class="tl-view-tab ${timelineViewMode === 'interventions' ? 'active' : ''}" type="button" onclick="switchTimelineView('interventions')" ${hasMI ? '' : 'disabled'}>醫療處置</button>
         </div>
       `;
     }
@@ -1345,9 +1362,15 @@
         ));
         if (!hasEntities) return;
       }
+      if (mode === 'interventions') {
+        const mi = timelineData && timelineData.medical_interventions;
+        if (!mi || (!(mi.procedures||[]).length && !(mi.medications||[]).length)) return;
+      }
       timelineViewMode = mode;
       if (mode === 'timeline') {
         renderEvents();
+      } else if (mode === 'interventions') {
+        renderInterventionsView();
       } else {
         renderEntitiesView();
       }
@@ -1487,6 +1510,88 @@
         html += `<span class="mi-badge medication">💊 用藥<span class="mi-tooltip">${tip}</span></span>`;
       }
       return html;
+    }
+
+    function renderInterventionsView() {
+      timelineViewMode = 'interventions';
+      const mi = timelineData && timelineData.medical_interventions;
+      if (!mi) return;
+      const events = timelineData.events || [];
+
+      let html = '<div class="panel-card mi-panel-card">';
+      html += '<div class="panel-head">';
+      html += '<div class="panel-kicker">INTERVENTIONS</div>';
+      html += '<div class="panel-title">醫療處置</div>';
+      html += '</div>';
+      html += '<div class="mi-panel-body"><div class="entity-stack">';
+
+      const catDefs = [
+        { key: 'surgery', icon: '🔪', label: '手術' },
+        { key: 'invasive_procedure', icon: '🔩', label: '侵入性處置' },
+        { key: 'resuscitation', icon: '⚡', label: '急救處置' },
+      ];
+
+      for (const cat of catDefs) {
+        const items = (mi.procedures || []).filter(p => p.category === cat.key);
+        if (!items.length) continue;
+        html += '<div class="entity-group">';
+        html += '<div class="entity-group-head">';
+        html += `<div class="entity-group-title"><span aria-hidden="true">${cat.icon}</span>${esc(cat.label)}</div>`;
+        html += `<div class="entity-group-count">${items.length}</div>`;
+        html += '</div>';
+        html += '<div class="entity-grid">';
+        for (const p of items) {
+          const evtIdx = events.findIndex(e => e.event_id === p.event_id);
+          const evt = evtIdx >= 0 ? events[evtIdx] : null;
+          html += '<div class="mi-card">';
+          html += `<div class="mi-card-name">${cat.icon} ${esc(p.name)}</div>`;
+          if (p.body_part) html += `<div class="mi-card-row"><strong>部位：</strong>${esc(p.body_part)}</div>`;
+          if (p.note) html += `<div class="mi-card-row"><strong>備註：</strong>${esc(p.note)}</div>`;
+          if (evt) {
+            html += `<div class="mi-card-row"><strong>時間：</strong>${esc(evt.timestamp || evt.timestamp_normalized || '')}</div>`;
+            html += `<span class="mi-card-link" onclick="switchTimelineView('timeline'); setTimeout(()=>showSource(${evtIdx}),100)">→ 查看事件</span>`;
+          }
+          html += '</div>';
+        }
+        html += '</div></div>';
+      }
+
+      const meds = mi.medications || [];
+      if (meds.length) {
+        html += '<div class="entity-group">';
+        html += '<div class="entity-group-head">';
+        html += '<div class="entity-group-title"><span aria-hidden="true">💊</span>用藥與輸液</div>';
+        html += `<div class="entity-group-count">${meds.length}</div>`;
+        html += '</div>';
+        html += '<div class="entity-grid">';
+        for (const m of meds) {
+          const evtIdx = events.findIndex(e => e.event_id === m.event_id);
+          const evt = evtIdx >= 0 ? events[evtIdx] : null;
+          html += '<div class="mi-card">';
+          html += `<div class="mi-card-name">💊 ${esc(m.name)}</div>`;
+          if (m.generic_name) html += `<div class="mi-card-row"><strong>學名：</strong>${esc(m.generic_name)}</div>`;
+          if (m.dosage) html += `<div class="mi-card-row"><strong>劑量：</strong>${esc(m.dosage)}</div>`;
+          if (m.route) html += `<div class="mi-card-row"><strong>途徑：</strong>${esc(m.route)}</div>`;
+          if (m.indication) html += `<div class="mi-card-row"><strong>用途：</strong>${esc(m.indication)}</div>`;
+          if (m.note) html += `<div class="mi-card-row"><strong>備註：</strong>${esc(m.note)}</div>`;
+          if (evt) {
+            html += `<div class="mi-card-row"><strong>時間：</strong>${esc(evt.timestamp || evt.timestamp_normalized || '')}</div>`;
+            html += `<span class="mi-card-link" onclick="switchTimelineView('timeline'); setTimeout(()=>showSource(${evtIdx}),100)">→ 查看事件</span>`;
+          }
+          html += '</div>';
+        }
+        html += '</div></div>';
+      }
+
+      if (!(mi.procedures||[]).length && !meds.length) {
+        html += '<div class="entity-empty">此案件沒有萃取到醫療處置資料</div>';
+      }
+
+      html += '</div></div></div>';
+      renderWorkbench(html);
+      activeEventIdx = -1;
+      activeSpanId = null;
+      updateEventSpanPills();
     }
 
     function formatEventType(type) {
