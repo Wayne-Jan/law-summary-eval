@@ -365,6 +365,31 @@
     .panel-header-text { font-size: 15px; font-weight: 600; color: var(--slate-900); }
     .panel-header-sub { font-size: 12px; color: var(--slate-500); margin-left: auto; }
 
+    /* ─── PANEL SEARCH ─── */
+    .panel-search {
+      margin-left: auto; display: flex; align-items: center; gap: 0;
+      background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+      padding: 0 2px; transition: border-color 0.15s, box-shadow 0.15s;
+      height: 30px; max-width: 180px;
+    }
+    .panel-search:focus-within { border-color: var(--indigo); box-shadow: 0 0 0 2px rgba(79,70,229,0.08); }
+    .panel-search input {
+      border: none; outline: none; font-size: 12px; font-family: var(--sans);
+      padding: 4px 8px; background: transparent; color: var(--slate-700);
+      width: 100%; min-width: 0;
+    }
+    .panel-search input::placeholder { color: #c4c9d4; }
+    .panel-search-count {
+      font-size: 10px; color: var(--slate-400); white-space: nowrap; padding-right: 4px;
+    }
+    .panel-search-nav {
+      border: none; background: transparent; cursor: pointer; padding: 2px 4px;
+      color: var(--slate-400); font-size: 12px; line-height: 1; border-radius: 4px;
+    }
+    .panel-search-nav:hover { color: var(--indigo); background: var(--indigo-light); }
+    .search-hit { background: #fef08a; border-radius: 2px; }
+    .search-hit.current { background: #fb923c; color: #fff; border-radius: 2px; }
+
     .panel-body {
       padding: 14px 18px; font-size: 14px; line-height: 1.85;
       color: var(--slate-700); white-space: pre-wrap; word-break: break-all;
@@ -1637,6 +1662,12 @@
         <div class="panel-header-icon" style="background:#f5f5f4;color:#78716c;">&#x1F4C4;</div>
         <span class="panel-header-text">原文</span>
         <span class="panel-header-sub" id="p1ChunkCount"></span>
+        <div class="panel-search">
+          <input type="text" placeholder="搜尋原文..." oninput="panelSearch(this, 'p1SourceBody')" onkeydown="panelSearchKey(event, this, 'p1SourceBody')">
+          <span class="panel-search-count" data-target="p1SourceBody"></span>
+          <button class="panel-search-nav" onclick="panelSearchNav(this, 'p1SourceBody', -1)">&#x25B2;</button>
+          <button class="panel-search-nav" onclick="panelSearchNav(this, 'p1SourceBody', 1)">&#x25BC;</button>
+        </div>
       </div>
       <div class="panel-body" id="p1SourceBody"><span class="empty-text">載入中...</span></div>
     </div>
@@ -1659,6 +1690,12 @@
         </div>
         <span class="panel-header-text">AI 摘要</span>
         <span class="panel-header-sub" id="p1CondLabel"></span>
+        <div class="panel-search">
+          <input type="text" placeholder="搜尋摘要..." oninput="panelSearch(this, 'p1SummaryBody')" onkeydown="panelSearchKey(event, this, 'p1SummaryBody')">
+          <span class="panel-search-count" data-target="p1SummaryBody"></span>
+          <button class="panel-search-nav" onclick="panelSearchNav(this, 'p1SummaryBody', -1)">&#x25B2;</button>
+          <button class="panel-search-nav" onclick="panelSearchNav(this, 'p1SummaryBody', 1)">&#x25BC;</button>
+        </div>
       </div>
       <div id="p1SummaryBody" style="padding:12px 16px;"><span class="empty-text">載入中...</span></div>
       <!-- Medical role: continue button (visible only when #p1Eval is hidden) -->
@@ -4838,6 +4875,92 @@ async function jumpToCaseConditionFromVolModal(caseName, condIdx) {
 // ═══════════════════════════════════════════════════════════════
 // UTILS
 // ═══════════════════════════════════════════════════════════════
+
+// ─── PANEL SEARCH ───
+
+const _searchState = {};
+
+function panelSearch(input, bodyId) {
+  const query = input.value.trim();
+  const body = document.getElementById(bodyId);
+  if (!body) return;
+
+  // Clear previous highlights
+  body.querySelectorAll('.search-hit').forEach(el => {
+    const parent = el.parentNode;
+    parent.replaceChild(document.createTextNode(el.textContent), el);
+    parent.normalize();
+  });
+
+  const countEl = document.querySelector(`.panel-search-count[data-target="${bodyId}"]`);
+
+  if (!query) {
+    _searchState[bodyId] = { hits: 0, current: -1 };
+    if (countEl) countEl.textContent = '';
+    return;
+  }
+
+  // Walk text nodes and wrap matches
+  const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT, null);
+  const textNodes = [];
+  while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+  let total = 0;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(escaped, 'gi');
+
+  textNodes.forEach(node => {
+    const text = node.textContent;
+    if (!regex.test(text)) return;
+    regex.lastIndex = 0;
+    const frag = document.createDocumentFragment();
+    let lastIdx = 0;
+    let match;
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > lastIdx) frag.appendChild(document.createTextNode(text.slice(lastIdx, match.index)));
+      const span = document.createElement('span');
+      span.className = 'search-hit';
+      span.textContent = match[0];
+      span.dataset.searchIdx = total++;
+      frag.appendChild(span);
+      lastIdx = regex.lastIndex;
+    }
+    if (lastIdx < text.length) frag.appendChild(document.createTextNode(text.slice(lastIdx)));
+    node.parentNode.replaceChild(frag, node);
+  });
+
+  _searchState[bodyId] = { hits: total, current: total > 0 ? 0 : -1 };
+  if (countEl) countEl.textContent = total > 0 ? `${1}/${total}` : '0';
+
+  if (total > 0) _scrollToSearchHit(bodyId, 0);
+}
+
+function panelSearchNav(btn, bodyId, dir) {
+  const state = _searchState[bodyId];
+  if (!state || state.hits === 0) return;
+  state.current = (state.current + dir + state.hits) % state.hits;
+  const countEl = document.querySelector(`.panel-search-count[data-target="${bodyId}"]`);
+  if (countEl) countEl.textContent = `${state.current + 1}/${state.hits}`;
+  _scrollToSearchHit(bodyId, state.current);
+}
+
+function panelSearchKey(event, input, bodyId) {
+  if (event.key === 'Enter') {
+    event.preventDefault();
+    panelSearchNav(input, bodyId, event.shiftKey ? -1 : 1);
+  }
+}
+
+function _scrollToSearchHit(bodyId, idx) {
+  const body = document.getElementById(bodyId);
+  if (!body) return;
+  body.querySelectorAll('.search-hit.current').forEach(el => el.classList.remove('current'));
+  const hit = body.querySelector(`.search-hit[data-search-idx="${idx}"]`);
+  if (hit) {
+    hit.classList.add('current');
+    hit.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
 
 function esc(s) {
   if (!s) return '';
