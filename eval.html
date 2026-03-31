@@ -3374,8 +3374,8 @@ function renderTLEventSpanSwitcher(evt, evtIdx) {
   renderSpans.forEach(sp => {
     const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
     const title = sp.role === 'primary'
-      ? '主證據'
-      : (supportingTotal <= 1 ? '補充證據' : `補充證據 ${++supportingIndex}`);
+      ? '直接出處'
+      : (supportingTotal <= 1 ? '間接出處' : `間接出處 ${++supportingIndex}`);
     const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
     html += `<button type="button" class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}" onclick="event.stopPropagation(); selectTLSpan(${evtIdx}, ${JSON.stringify(String(sp.span_id))})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
   });
