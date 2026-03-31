@@ -3368,14 +3368,10 @@ function renderTLEventSpanSwitcher(evt, evtIdx) {
         alignment_status: evt.alignment_status || 'UNRESOLVED',
       }] : []);
   if (!renderSpans.length) return '';
-  const supportingTotal = renderSpans.filter(sp => sp.role !== 'primary').length;
-  let supportingIndex = 0;
   let html = '<div class="tl-event-evidence"><div class="tl-evidence-row">';
-  renderSpans.forEach(sp => {
+  renderSpans.forEach((sp, i) => {
     const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
-    const title = sp.role === 'primary'
-      ? '直接出處'
-      : (supportingTotal <= 1 ? '間接出處' : `間接出處 ${++supportingIndex}`);
+    const title = renderSpans.length <= 1 ? '來源' : `來源 ${i + 1}`;
     const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
     html += `<button type="button" class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}" onclick="event.stopPropagation(); selectTLSpan(${evtIdx}, ${JSON.stringify(String(sp.span_id))})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
   });

@@ -850,14 +850,10 @@
       const spans = getEventSpans(evt);
       if (!shouldRenderEventSpanSwitcher(evt)) return '';
       const activeForEvent = activeEventIdx === evtIdx ? getActiveSpan(evt) : null;
-      const supportingTotal = spans.filter(sp => sp.role !== 'primary').length;
-      let supportingIndex = 0;
       let html = '<div class="tl-evidence-row">';
-      spans.forEach(sp => {
+      spans.forEach((sp, i) => {
         const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
-        const title = sp.role === 'primary'
-          ? '直接出處'
-          : (supportingTotal <= 1 ? '間接出處' : `間接出處 ${++supportingIndex}`);
+        const title = spans.length <= 1 ? '來源' : `來源 ${i + 1}`;
         const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
         html += `<button class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
       });
