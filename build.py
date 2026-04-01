@@ -108,6 +108,7 @@ CONDITION_LABELS = {
     "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
     "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
     "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C",
+    "LENS-Full-DeepSeek_v31": "LENS-Full (DeepSeek V3.1)",
 }
 
 # Display order: Claude → OpenSource → Baselines
@@ -139,6 +140,7 @@ CONDITION_ORDER = [
     "opensource_afg_v11_5_writer_nemotron_super",
     "opensource_afg_v11_5_no_react_writer_nemotron_super",
     "opensource_afg_v11_5_no_afg_writer_nemotron_super",
+    "LENS-Full-DeepSeek_v31",
 ]
 
 CONDITION_GROUPS = {
@@ -169,6 +171,7 @@ CONDITION_GROUPS = {
     "opensource_afg_v11_5_writer_nemotron_super": "開源模型",
     "opensource_afg_v11_5_no_react_writer_nemotron_super": "開源模型",
     "opensource_afg_v11_5_no_afg_writer_nemotron_super": "開源模型",
+    "LENS-Full-DeepSeek_v31": "開源模型",
 }
 
 SECTION_FILES = [
