@@ -111,16 +111,38 @@ def normalize_complete_flag(data: Dict[str, Any], score_keys_min: int = 0) -> bo
     return len(scores) >= score_keys_min
 
 
+def resolve_evaluator_name(uid: str, records: Dict[str, Any]) -> str:
+    """Extract the evaluator display name from record keys (keys use name, not UID)."""
+    for key in records:
+        if key.startswith("eval_v2_condorder_"):
+            # eval_v2_condorder_{name}_{caseName}
+            rest = key[len("eval_v2_condorder_"):]
+            for name in USER_ROLES:
+                if rest.startswith(name + "_"):
+                    return name
+        elif key.startswith("eval_v2_"):
+            rest = key[len("eval_v2_"):]
+            for name in USER_ROLES:
+                if rest.startswith(name + "_"):
+                    return name
+    return uid
+
+
 def iter_evaluator_records(db) -> Iterable[Tuple[str, Dict[str, Dict[str, Any]]]]:
-    for evaluator_doc in db.collection("evals").stream():
-        evaluator = evaluator_doc.id
+    # Use list_documents() to include virtual parent docs (only subcollections exist)
+    for evaluator_ref in db.collection("evals").list_documents():
+        uid = evaluator_ref.id
         records: Dict[str, Dict[str, Any]] = {}
-        for rec_doc in evaluator_doc.reference.collection("records").stream():
+        for rec_doc in evaluator_ref.collection("records").stream():
             payload = rec_doc.to_dict() or {}
             key = payload.get("key")
             if not key:
                 continue
             records[key] = payload.get("data") or {}
+        if not records:
+            continue
+        # Resolve display name from keys (UID → name mapping)
+        evaluator = resolve_evaluator_name(uid, records)
         yield evaluator, records
 
 
