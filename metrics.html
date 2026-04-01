@@ -113,8 +113,6 @@
     .overview-table tr:last-child td { border-bottom: none; }
     .overview-row:hover > td { background: #f8fafc; }
     .overview-row { cursor: pointer; }
-    .overview-row.baseline-row > td { color: #92400e; }
-    .overview-row.baseline-row > td.cond-name { border-left: 3px solid #d97706; }
     .overview-row .cond-name-inner {
       display: inline-flex; align-items: center; gap: 6px;
     }
@@ -1817,18 +1815,15 @@
       'claude_afg_v5.1': 0,
       'ablation_no_afg': 1,
       'ablation_no_react': 2,
+      'LENS-Full-DeepSeek_v31': 3,
+      'LENS-NoReact-DeepSeek_v31': 4,
+      'LENS-NoAFG-DeepSeek_v31': 5,
       'baseline_claude-sonnet': 10,
       'baseline_claude-haiku': 11,
       'baseline_gpt-5.4-thinking': 12,
       'baseline_gpt-5.3': 13,
       'baseline_gemini-3.1-pro': 14,
       'baseline_gemini-3.0-flash': 15,
-      'opensource_afg_v11_5': 30,
-      'opensource_afg_v11_5_no_react': 31,
-      'opensource_afg_v11_5_no_afg': 32,
-      'opensource_afg_v11_5_writer_nemotron_super': 33,
-      'opensource_afg_v11_5_no_react_writer_nemotron_super': 34,
-      'opensource_afg_v11_5_no_afg_writer_nemotron_super': 35,
     };
     if (fixed[key] != null) return fixed[key];
     if (cond.group === '開源模型' && key.startsWith('baseline_ollama_')) return 200;
@@ -2309,11 +2304,10 @@
       const rb = a.rouge_bertscore || {};
       const evalN = cond.eval_count;
       const badgeClass = cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource';
-      const isBaseline = condKey.startsWith('baseline_');
       const expanded = currentOverviewDetail === condKey;
 
       rows.push(`
-        <tr class="overview-row${expanded ? ' expanded' : ''}${isBaseline ? ' baseline-row' : ''}" data-cond-key="${esc(condKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
+        <tr class="overview-row${expanded ? ' expanded' : ''}" data-cond-key="${esc(condKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
           <td class="cond-name"><span class="cond-name-inner"><span class="overview-row-toggle">${expanded ? '▾' : '▸'}</span>${formatOverviewModelLabel(condKey, cond.label)}</span></td>
           <td><span class="badge ${badgeClass}">${cond.group}</span></td>
           <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg) || '--'}</td>
