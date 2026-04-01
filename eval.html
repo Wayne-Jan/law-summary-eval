@@ -1902,6 +1902,7 @@ const USER_BY_EMAIL = Object.fromEntries(
 let cloudStatusTimer = null;
 let adminUserIndexCache = new Map();
 const adminBackupDetailsCache = new Map();
+const backupSnapshotPrevMap = {};
 
 function setLocalSessionProfile(name, role) {
   localStorage.setItem('eval_v2_auth_user', name);
@@ -2037,6 +2038,97 @@ async function fetchBackupEvaluatorSummaries(snapshotId) {
   return rows;
 }
 
+function buildBackupDiffHtml(currentRows, prevRows) {
+  const prevMap = {};
+  prevRows.forEach(r => {
+    const name = r.evaluator || r.id;
+    prevMap[name] = { cases: Number(r.case_count || 0), records: Number(r.record_count || 0), data: r.data };
+  });
+
+  return currentRows.map(row => {
+    const name = row.evaluator || row.id;
+    const cases = Number(row.case_count || 0);
+    const records = Number(row.record_count || 0);
+    const prev = prevMap[name] || { cases: 0, records: 0, data: null };
+    const caseDiff = cases - prev.cases;
+    const recDiff = records - prev.records;
+    const tone = formatBackupStatus(cases === 0 ? 'empty' : 'ok', cases === 0);
+
+    // Build per-case diff details
+    let caseDetails = '';
+    const curData = (row.data && row.data.cases) || {};
+    const prevData = (prev.data && prev.data.cases) || {};
+    const allCases = new Set([...Object.keys(curData), ...Object.keys(prevData)]);
+    const changes = [];
+    allCases.forEach(caseName => {
+      const cur = curData[caseName];
+      const prv = prevData[caseName];
+      if (!cur && prv) {
+        changes.push({ case: caseName, type: 'removed' });
+        return;
+      }
+      if (cur && !prv) {
+        // Count filled phases
+        const phases = countFilledPhases(cur);
+        changes.push({ case: caseName, type: 'new', phases });
+        return;
+      }
+      // Both exist — check if content changed
+      const curPhases = countFilledPhases(cur);
+      const prvPhases = countFilledPhases(prv);
+      if (curPhases !== prvPhases) {
+        changes.push({ case: caseName, type: 'updated', from: prvPhases, to: curPhases });
+      }
+    });
+
+    if (changes.length > 0) {
+      caseDetails = '<div style="margin-top:6px;padding-left:4px;">' + changes.map(c => {
+        const display = getCaseDisplayName(c.case) || c.case;
+        const short = display.length > 25 ? display.substring(0, 25) + '…' : display;
+        if (c.type === 'new') return `<div style="font-size:11px;color:#047857;">+ ${esc(short)} <span style="color:var(--slate-400);">(${c.phases} 項)</span></div>`;
+        if (c.type === 'updated') return `<div style="font-size:11px;color:#1d4ed8;">△ ${esc(short)} <span style="color:var(--slate-400);">${c.from}→${c.to} 項</span></div>`;
+        if (c.type === 'removed') return `<div style="font-size:11px;color:#b91c1c;">- ${esc(short)}</div>`;
+        return '';
+      }).join('') + '</div>';
+    }
+
+    const diffBadge = (caseDiff === 0 && recDiff === 0)
+      ? '<span style="font-size:10px;color:var(--slate-400);">無變更</span>'
+      : `<span style="font-size:10px;color:#047857;font-weight:600;">${caseDiff > 0 ? '+' + caseDiff + ' 案' : ''}${caseDiff > 0 && recDiff > 0 ? ' / ' : ''}${recDiff > 0 ? '+' + recDiff + ' 筆' : ''}</span>`;
+
+    return `<div style="padding:8px 10px;border:1px solid var(--slate-200);border-radius:10px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
+        <div style="font-size:12px;color:var(--slate-700);">
+          <strong>${esc(name)}</strong>
+          <span style="color:var(--slate-500);margin-left:6px;">${esc(row.role || '')}</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
+          <span style="font-size:11px;color:var(--slate-500);">${cases} 案 / ${records} 筆</span>
+          ${diffBadge}
+          <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:11px;font-weight:700;">${tone.label}</span>
+        </div>
+      </div>
+      ${caseDetails}
+    </div>`;
+  }).join('');
+}
+
+function countFilledPhases(caseData) {
+  if (!caseData) return 0;
+  let count = 0;
+  ['phase1', 'phaseFB', 'phaseTL'].forEach(phase => {
+    const phaseObj = caseData[phase] || {};
+    Object.values(phaseObj).forEach(v => {
+      if (!v) return;
+      if (v.scores && Object.keys(v.scores).length > 0) count++;
+      else if (v.sections && Object.values(v.sections).some(s => (s || '').trim())) count++;
+      else if (v._complete) count++;
+    });
+  });
+  if (caseData.phase3 && caseData.phase3._complete) count++;
+  return count;
+}
+
 async function adminToggleBackupDetails(snapshotId) {
   const target = document.getElementById(`backupDetails-${snapshotId}`);
   const row = document.getElementById(`backupDetailsRow-${snapshotId}`);
@@ -2050,24 +2142,17 @@ async function adminToggleBackupDetails(snapshotId) {
   if (row) row.classList.add('open');
   else target.classList.add('open');
   try {
-    const rows = await fetchBackupEvaluatorSummaries(snapshotId);
-    if (!rows.length) {
+    const currentRows = await fetchBackupEvaluatorSummaries(snapshotId);
+    if (!currentRows.length) {
       target.innerHTML = '<div style="font-size:12px;color:var(--slate-500);">此快照沒有 evaluator 明細</div>';
     } else {
-      target.innerHTML = rows.map(row => {
-        const tone = formatBackupStatus(row.case_count === 0 ? 'empty' : 'ok', row.case_count === 0);
-        return `<div style="display:flex;justify-content:space-between;gap:12px;padding:8px 10px;border:1px solid var(--slate-200);border-radius:10px;background:#fff;">
-          <div style="font-size:12px;color:var(--slate-700);">
-            <strong>${esc(row.evaluator || row.id)}</strong>
-            <span style="color:var(--slate-500);margin-left:6px;">${esc(row.role || 'unknown')}</span>
-          </div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
-            <span style="font-size:11px;color:var(--slate-500);">${Number(row.case_count || 0)} 案</span>
-            <span style="font-size:11px;color:var(--slate-500);">${Number(row.record_count || 0)} 筆</span>
-            <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:11px;font-weight:700;">${tone.label}</span>
-          </div>
-        </div>`;
-      }).join('');
+      // Find previous snapshot for diff
+      let prevRows = [];
+      const prevId = currentRows[0] && backupSnapshotPrevMap[snapshotId];
+      if (prevId) {
+        try { prevRows = await fetchBackupEvaluatorSummaries(prevId); } catch {}
+      }
+      target.innerHTML = buildBackupDiffHtml(currentRows, prevRows);
     }
     target.dataset.loaded = '1';
   } catch (err) {
@@ -5481,6 +5566,12 @@ async function renderAdminContent() {
   let backups = [];
   try {
     backups = await fetchBackupSnapshots(30);
+    // Build prev-snapshot map for diff
+    for (let i = 0; i < backups.length; i++) {
+      const id = backups[i].snapshot_id || backups[i].id;
+      const prevId = backups[i].previous_snapshot_id || (backups[i + 1] ? (backups[i + 1].snapshot_id || backups[i + 1].id) : '');
+      if (prevId) backupSnapshotPrevMap[id] = prevId;
+    }
   } catch (err) {
     console.error('Failed to load backup snapshots:', err);
   }
