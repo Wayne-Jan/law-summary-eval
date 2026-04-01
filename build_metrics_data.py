@@ -34,13 +34,9 @@ VOLUME_TO_FILE = {
 }
 EXTRA_CONDITIONS = OrderedDict(
     [
-        ("opensource_afg_v11_5", {"label": "LENS-GPT-OSS-A", "group": "開源模型"}),
-        ("opensource_afg_v11_5_no_react", {"label": "LENS-GPT-OSS-B", "group": "開源模型"}),
-        ("opensource_afg_v11_5_no_afg", {"label": "LENS-GPT-OSS-C", "group": "開源模型"}),
-        ("opensource_afg_v11_5_writer_nemotron_super", {"label": "LENS-Nemotron Super-A", "group": "開源模型"}),
-        ("opensource_afg_v11_5_no_react_writer_nemotron_super", {"label": "LENS-Nemotron Super-B", "group": "開源模型"}),
-        ("opensource_afg_v11_5_no_afg_writer_nemotron_super", {"label": "LENS-Nemotron Super-C", "group": "開源模型"}),
-        ("baseline_ollama_nemotron-3-super-cloud", {"label": "Nemotron 3 Super (120B / 12A)", "group": "開源模型"}),
+        ("LENS-Full-DeepSeek_v31", {"label": "LENS-Full-DeepSeek v3.1", "group": "開源模型"}),
+        ("LENS-NoReact-DeepSeek_v31", {"label": "LENS-NoReact-DeepSeek v3.1", "group": "開源模型"}),
+        ("LENS-NoAFG-DeepSeek_v31", {"label": "LENS-NoAFG-DeepSeek v3.1", "group": "開源模型"}),
     ]
 )
 
@@ -48,12 +44,9 @@ DISPLAY_LABELS = {
     "claude_afg_v5.1": "LENS-Haiku 4.5-A",
     "ablation_no_afg": "LENS-Haiku 4.5-B",
     "ablation_no_react": "LENS-Haiku 4.5-C",
-    "opensource_afg_v11_5": "LENS-GPT-OSS-A",
-    "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
-    "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
-    "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
-    "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
-    "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C",
+    "LENS-Full-DeepSeek_v31": "LENS-Full-DeepSeek v3.1",
+    "LENS-NoReact-DeepSeek_v31": "LENS-NoReact-DeepSeek v3.1",
+    "LENS-NoAFG-DeepSeek_v31": "LENS-NoAFG-DeepSeek v3.1",
     "baseline_claude-haiku": "Claude Haiku 4.5",
     "baseline_claude-sonnet": "Claude Sonnet 4.6",
     "baseline_gpt-5.3": "GPT-5.3 Instant",
@@ -66,7 +59,6 @@ DISPLAY_LABELS = {
     "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
     "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
     "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
-    "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
     "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
 }

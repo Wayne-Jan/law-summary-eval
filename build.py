@@ -108,7 +108,7 @@ CONDITION_LABELS = {
     "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
     "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
     "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C",
-    "LENS-Full-DeepSeek_v31": "LENS-Full (DeepSeek V3.1)",
+    "LENS-Full-DeepSeek_v31": "LENS-Full-DeepSeek v3.1",
 }
 
 # Display order: Claude → OpenSource → Baselines
