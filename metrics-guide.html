@@ -119,21 +119,21 @@
 
     /* ─── FEAT ─── */
     .feat {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+      display: grid; grid-template-columns: 2fr 3fr; gap: 48px;
       align-items: center; margin-bottom: 48px;
     }
     .feat.reverse { direction: rtl; }
     .feat.reverse > * { direction: ltr; }
     .feat-img {
-      border-radius: 16px; overflow: hidden; aspect-ratio: 4/3;
+      border-radius: 16px; overflow: hidden; aspect-ratio: 3/2;
       box-shadow: 0 8px 40px rgba(0,0,0,0.1);
     }
     .feat-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .feat-text h3 {
-      font-family: var(--serif); font-size: 22px; font-weight: 700;
+      font-family: var(--serif); font-size: 24px; font-weight: 700;
       color: var(--slate-900); margin-bottom: 14px; line-height: 1.4;
     }
-    .feat-text p { font-size: 14px; color: var(--slate-500); line-height: 1.9; }
+    .feat-text p { font-size: 15px; color: var(--slate-500); line-height: 1.9; }
 
     /* ─── METRIC CARDS ─── */
     .metric-grid {
@@ -176,16 +176,18 @@
     .detail-desc { font-size: 12px; color: var(--slate-500); line-height: 1.7; }
 
     /* ─── QUALITY DIMS ─── */
-    .quality-group { margin-bottom: 28px; }
-    .quality-group:last-child { margin-bottom: 0; }
+    .quality-groups {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+    }
+    .quality-group { margin-bottom: 0; }
     .quality-group-title {
       font-size: 14px; font-weight: 600; color: var(--slate-900);
       margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #f1f5f9;
     }
     .quality-list { list-style: none; }
     .quality-list li {
-      display: grid; grid-template-columns: 130px 1fr; gap: 10px;
-      padding: 10px 0; border-bottom: 1px solid #f8fafc; font-size: 13px;
+      display: grid; grid-template-columns: 120px 1fr; gap: 8px;
+      padding: 8px 0; border-bottom: 1px solid #f8fafc; font-size: 13px;
     }
     .quality-list li:last-child { border-bottom: none; }
     .q-name { font-weight: 600; color: var(--slate-900); line-height: 1.5; }
@@ -213,30 +215,6 @@
     .grade-score { font-size: 13px; font-weight: 700; color: var(--slate-500); min-width: 48px; text-align: right; }
     .grade-bar { width: 80px; height: 6px; background: #f1f5f9; border-radius: 3px; overflow: hidden; flex-shrink: 0; }
     .grade-bar-fill { height: 100%; border-radius: 3px; }
-
-    /* ─── SCORE TABLE ─── */
-    .score-guide {
-      width: 100%; border-collapse: separate; border-spacing: 0;
-      border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; background: #fff;
-    }
-    .score-guide th {
-      background: var(--slate-50); padding: 12px 16px;
-      font-size: 11px; font-weight: 600; color: var(--slate-500);
-      text-align: center; border-bottom: 1px solid #e2e8f0;
-    }
-    .score-guide th:first-child { text-align: left; }
-    .score-guide td {
-      padding: 12px 16px; font-size: 13px; text-align: center;
-      border-bottom: 1px solid #f3f4f6; color: var(--slate-700);
-    }
-    .score-guide td:first-child { text-align: left; font-weight: 600; color: var(--slate-900); }
-    .score-guide tbody tr:last-child td { border-bottom: none; }
-    .score-guide tbody tr:hover { background: var(--slate-50); }
-    .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
-    .pill.r { background: #fef2f2; color: #b91c1c; }
-    .pill.y { background: #fffbeb; color: #92400e; }
-    .pill.g { background: #ecfdf5; color: #047857; }
-    .pill.b { background: #eef2ff; color: #4338ca; }
 
     /* ─── FOOTER ─── */
     .footer { background: #fff; border-top: 1px solid #e2e8f0; padding: 28px 24px 18px; }
@@ -274,6 +252,7 @@
       .feat.reverse { direction: ltr; }
       .feat-img { aspect-ratio: 16/9; }
       .metric-grid { grid-template-columns: 1fr; }
+      .quality-groups { grid-template-columns: 1fr; gap: 20px; }
       .quality-list li { grid-template-columns: 1fr; gap: 2px; }
       .grade-bar { display: none; }
       .footer-contact-row { grid-template-columns: 1fr; gap: 12px; }
@@ -451,34 +430,40 @@
       <p class="section-desc" style="text-align:left;">從基礎寫作、內容正確性、法律專業三個層面，以 14 個維度評估摘要的寫作品質。各維度採 1-5 分 Likert 量表，並針對特定維度引入計數式錨定（count-before-score）以降低評分波動。</p>
     </div>
     <div class="reveal">
-      <div class="quality-group">
-        <div class="quality-group-title">基礎寫作品質</div>
-        <ul class="quality-list">
-          <li><div class="q-name">語句通順度</div><div class="q-desc">文法正確、行文自然流暢</div></li>
-          <li><div class="q-name">冗餘度</div><div class="q-desc">有無重複陳述，每句是否都有獨特貢獻</div></li>
-          <li><div class="q-name">邏輯連貫性</div><div class="q-desc">段落間的邏輯進展與轉場是否流暢</div></li>
-          <li><div class="q-name">可理解性</div><div class="q-desc">非專業讀者能否理解，專業術語是否造成障礙</div></li>
-        </ul>
+      <div class="quality-groups">
+        <div class="quality-group">
+          <div class="quality-group-title">基礎寫作品質</div>
+          <ul class="quality-list">
+            <li><div class="q-name">語句通順度</div><div class="q-desc">文法正確、行文自然流暢</div></li>
+            <li><div class="q-name">冗餘度</div><div class="q-desc">有無重複陳述，每句是否都有獨特貢獻</div></li>
+            <li><div class="q-name">邏輯連貫性</div><div class="q-desc">段落間的邏輯進展與轉場是否流暢</div></li>
+            <li><div class="q-name">可理解性</div><div class="q-desc">非專業讀者能否理解，專業術語是否造成障礙</div></li>
+          </ul>
+        </div>
+        <div class="quality-group">
+          <div class="quality-group-title">內容正確性</div>
+          <ul class="quality-list">
+            <li><div class="q-name">要點涵蓋率</div><div class="q-desc">標準答案中的關鍵要點是否被涵蓋</div></li>
+            <li><div class="q-name">資訊精確度</div><div class="q-desc">日期、數字、人名等細節是否與標準答案一致</div></li>
+            <li><div class="q-name">術語一致性</div><div class="q-desc">法律與醫學術語的使用是否正確</div></li>
+            <li><div class="q-name">結構忠實度</div><div class="q-desc">段落標題、編號、章節劃分是否合理</div></li>
+            <li><div class="q-name">段落範疇合規</div><div class="q-desc">每段是否只包含該段應有的內容</div></li>
+          </ul>
+        </div>
       </div>
-      <div class="quality-group">
-        <div class="quality-group-title">內容正確性</div>
-        <ul class="quality-list">
-          <li><div class="q-name">要點涵蓋率</div><div class="q-desc">標準答案中的關鍵要點是否被涵蓋</div></li>
-          <li><div class="q-name">資訊精確度</div><div class="q-desc">日期、數字、人名等細節是否與標準答案一致</div></li>
-          <li><div class="q-name">術語一致性</div><div class="q-desc">法律與醫學術語的使用是否正確</div></li>
-          <li><div class="q-name">結構忠實度</div><div class="q-desc">段落標題、編號、章節劃分是否合理</div></li>
-          <li><div class="q-name">段落範疇合規</div><div class="q-desc">每段是否只包含該段應有的內容</div></li>
-        </ul>
-      </div>
-      <div class="quality-group">
+      <div class="quality-group" style="margin-top:24px;">
         <div class="quality-group-title">法律專業</div>
-        <ul class="quality-list">
-          <li><div class="q-name">法律論證結構</div><div class="q-desc">法院論證是否完整呈現</div></li>
-          <li><div class="q-name">時間軸清晰度</div><div class="q-desc">事件時序是否清楚可重建</div></li>
-          <li><div class="q-name">推理結構完整性</div><div class="q-desc">注意義務 → 違反 → 因果 → 量刑的四步架構是否完整</div></li>
-          <li><div class="q-name">不確定性標示</div><div class="q-desc">法院認定、鑑定意見、被告辯稱、可能推論四種來源是否正確區分</div></li>
-          <li><div class="q-name">風格規範合規</div><div class="q-desc">引用格式、數字格式、繁簡體、個資保護等 5 項檢核</div></li>
-        </ul>
+        <div class="quality-groups">
+          <ul class="quality-list">
+            <li><div class="q-name">法律論證結構</div><div class="q-desc">法院論證是否完整呈現</div></li>
+            <li><div class="q-name">時間軸清晰度</div><div class="q-desc">事件時序是否清楚可重建</div></li>
+            <li><div class="q-name">推理完整性</div><div class="q-desc">注意義務→違反→因果→量刑的四步架構是否完整</div></li>
+          </ul>
+          <ul class="quality-list">
+            <li><div class="q-name">不確定性標示</div><div class="q-desc">法院認定、鑑定意見、被告辯稱、推論四種來源是否區分</div></li>
+            <li><div class="q-name">風格規範合規</div><div class="q-desc">引用格式、數字格式、繁簡體、個資保護等 5 項檢核</div></li>
+          </ul>
+        </div>
       </div>
     </div>
 
@@ -521,7 +506,7 @@
 <section class="section" id="nlp-ref" style="background:var(--slate-50);">
   <div class="section-inner">
     <div class="feat reveal">
-      <div class="feat-img"><img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="文字比對分析"></div>
+      <div class="feat-img"><img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80" alt="文本比對"></div>
       <div class="feat-text">
         <h3>文本相似度比對 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Reference-Based</span></h3>
         <p>以法學教授撰寫的標準摘要為參照，從文字層面（ROUGE-L）與語意層面（BERTScore）衡量自動摘要與參考摘要的相似程度。兩者互補：前者偵測用詞差異，後者容許合理的同義改寫。</p>
@@ -536,33 +521,6 @@
         <div class="metric-card-header"><div class="metric-card-icon nlp">B</div><div><div class="metric-card-title">BERTScore F1</div><div class="metric-card-en">Contextual Embedding Similarity</div></div></div>
         <div class="metric-card-body">透過預訓練語言模型比較語意相似度，即使用了不同的詞彙，只要表達的意思相近就能獲得高分。</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════ SCORE GUIDE ═══════ -->
-<section class="section centered" id="score-guide">
-  <div class="section-inner reveal">
-    <div class="section-title">分數解讀指南</div>
-    <p class="section-desc">以下區間為本研究 100 案評估結果的經驗分佈，供快速判讀參考。不同案件的複雜度差異可能影響個案分數。</p>
-    <div style="overflow-x:auto;">
-      <table class="score-guide">
-        <thead><tr>
-          <th>指標</th>
-          <th><span class="pill r">待改進</span></th>
-          <th><span class="pill y">尚可</span></th>
-          <th><span class="pill g">良好</span></th>
-          <th><span class="pill b">優秀</span></th>
-        </tr></thead>
-        <tbody>
-          <tr><td>Rule-Based</td><td>&lt; 0.60</td><td>0.60 – 0.75</td><td>0.75 – 0.90</td><td>&gt; 0.90</td></tr>
-          <tr><td>Fact Recall</td><td>&lt; 0.70</td><td>0.70 – 0.80</td><td>0.80 – 0.90</td><td>&gt; 0.90</td></tr>
-          <tr><td>Quality</td><td>&lt; 3.0</td><td>3.0 – 3.5</td><td>3.5 – 4.2</td><td>&gt; 4.2</td></tr>
-          <tr><td>Faithfulness</td><td>&lt; 0.60</td><td>0.60 – 0.75</td><td>0.75 – 0.90</td><td>&gt; 0.90</td></tr>
-          <tr><td>ROUGE-L</td><td>&lt; 0.15</td><td>0.15 – 0.25</td><td>0.25 – 0.35</td><td>&gt; 0.35</td></tr>
-          <tr><td>BERTScore F1</td><td>&lt; 0.60</td><td>0.60 – 0.68</td><td>0.68 – 0.75</td><td>&gt; 0.75</td></tr>
-        </tbody>
-      </table>
     </div>
   </div>
 </section>
