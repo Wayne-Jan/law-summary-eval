@@ -2649,21 +2649,19 @@ async function autoRestoreFromFirestore() {
 // ═══════════════════════════════════════════════════════════════
 
 function getConditionOrder(caseName) {
+  // Admin always sees fixed order (no blind, no condorder storage)
+  if (getSessionRole() === 'admin' || isAdminInspectMode()) return EVAL_CONDITIONS.slice();
   const ev = getEvaluator();
   const key = `eval_v2_condorder_${ev}_${caseName}`;
   let order = loadStoredJSON(key);
   if (order && Array.isArray(order) && order.length === EVAL_CONDITIONS.length) return order;
-  if (isAdminInspectMode()) return EVAL_CONDITIONS.slice();
-  // No local condorder — try to recover from existing eval data keys
-  // If any phase data exists for this case, we can infer the condorder was lost
-  // but data is safe (keyed by real condition name). Generate fresh order.
+  // Generate random permutation for evaluators
   order = [...EVAL_CONDITIONS];
   for (let i = order.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [order[i], order[j]] = [order[j], order[i]];
   }
   localStorage.setItem(key, JSON.stringify(order));
-  // Ensure condorder is persisted to cloud immediately (await, not fire-and-forget)
   writeCloudRecord(key, order).catch(e => {
     console.error('CRITICAL: condorder cloud write failed:', e);
     showToast('條件排序同步失敗，請檢查網路', 'error');
