@@ -1852,21 +1852,28 @@ function shouldSyncKeyForEvaluator(key, evaluator) {
   return key.startsWith(`eval_v2_${evaluator}_`) || key.startsWith(`eval_v2_condorder_${evaluator}_`);
 }
 
-function writeCloudRecord(key, data) {
+async function writeCloudRecord(key, data) {
   const ev = getCloudEvaluatorId();
-  if (!ev || ev === 'default') return Promise.resolve();
+  if (!ev || ev === 'default') return;
   setCloudStatus('同步中', 'syncing');
   clearTimeout(cloudStatusTimer);
-  return cloudRecordRef(ev, key)
-    .set({ key, data, updated: firebase.firestore.FieldValue.serverTimestamp() })
-    .then(() => {
+  const maxRetries = 2;
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      await cloudRecordRef(ev, key)
+        .set({ key, data, updated: firebase.firestore.FieldValue.serverTimestamp() });
       setCloudStatus('已同步', 'synced');
       cloudStatusTimer = setTimeout(() => setCloudStatus('雲端待命', ''), 2500);
-    })
-    .catch((e) => {
-      setCloudStatus('同步失敗', 'error');
-      throw e;
-    });
+      return;
+    } catch (e) {
+      if (attempt === maxRetries) {
+        setCloudStatus('同步失敗', 'error');
+        showToast('雲端同步失敗，請檢查網路連線', 'error');
+        throw e;
+      }
+      await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+    }
+  }
 }
 
 const USERS = {
@@ -2618,35 +2625,17 @@ async function autoRestoreFromFirestore() {
   try {
     const snapshot = await db.collection('evals').doc(ev).collection('records').get();
     if (snapshot.empty) return;
-    let merged = 0;
+    let restored = 0;
     snapshot.forEach(doc => {
       const docData = doc.data();
-      const { key, data, updated } = docData;
+      const { key, data } = docData;
       if (!key || data === undefined) return;
-
-      const local = localStorage.getItem(key);
-      if (!local) {
-        // No local data — use cloud
-        localStorage.setItem(key, JSON.stringify(data));
-        merged++;
-        return;
-      }
-
-      // Compare timestamps: cloud updated vs local _saved
-      const cloudTs = updated && updated.toDate ? updated.toDate().getTime() : 0;
-      let localTs = 0;
-      try {
-        const parsed = JSON.parse(local);
-        if (parsed && parsed._saved) localTs = new Date(parsed._saved).getTime();
-      } catch {}
-
-      if (cloudTs > localTs) {
-        localStorage.setItem(key, JSON.stringify(data));
-        merged++;
-      }
+      // Cloud is the single source of truth — always overwrite local
+      localStorage.setItem(key, JSON.stringify(data));
+      restored++;
     });
-    if (merged > 0) {
-      showToast(`已從雲端同步 ${merged} 筆資料`, 'success');
+    if (restored > 0) {
+      showToast(`已從雲端載入 ${restored} 筆資料`, 'success');
       onCaseChange();
       updateFooter();
     }
@@ -2703,8 +2692,8 @@ function setPhaseData(caseName, condIdx, phase, data) {
   const key = stateKey(caseName, condIdx, phase);
   localStorage.setItem(key, JSON.stringify(data));
   showSaveIndicator();
-  // Async write to Firestore (fire-and-forget)
-  writeCloudRecord(key, data).catch(e => console.warn('Firestore write failed:', e));
+  // Write to Firestore with retry — don't silently swallow failures
+  writeCloudRecord(key, data).catch(e => console.error('Firestore write failed after retries:', e));
 }
 
 function isPhase1Complete(caseName, condIdx) {
