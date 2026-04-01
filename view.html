@@ -874,7 +874,7 @@
             );
 
             const totalChars = aliases.reduce((sum, alias) => sum + (chunks[alias] || '').length, 0);
-            countEl.textContent = totalChars > 0 ? `${totalChars.toLocaleString()} 字` : '';
+            countEl.textContent = totalChars > 0 ? `📄 ${totalChars.toLocaleString()} 字` : '';
             if (aliases.length === 0) {
                 listEl.innerHTML = '<div class="empty-content">無原文資料</div>';
                 return;
@@ -933,7 +933,7 @@
                 const chunks = viewData.chunks || {};
                 const sourceChars = Object.values(chunks).reduce((sum, c) => sum + (c || '').length, 0);
                 const ratio = sourceChars > 0 ? ((1 - summaryChars / sourceChars) * 100).toFixed(0) : 0;
-                metaEl.textContent = summaryChars > 0 ? `${summaryChars.toLocaleString()} 字（壓縮 ${ratio}%）` : '';
+                metaEl.textContent = summaryChars > 0 ? `${summaryChars.toLocaleString()} 字（✂ 壓縮 ${ratio}%）` : '';
             }
         }
 

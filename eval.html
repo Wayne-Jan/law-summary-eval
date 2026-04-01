@@ -3135,7 +3135,7 @@ async function loadPhase1() {
     : 0;
   const ratio = sourceChars > 0 ? ((1 - summaryChars / sourceChars) * 100).toFixed(0) : 0;
   document.getElementById('p1CondLabel').textContent = summaryChars > 0
-    ? `${summaryChars.toLocaleString()} 字（壓縮 ${ratio}%）`
+    ? `${summaryChars.toLocaleString()} 字（✂ 壓縮 ${ratio}%）`
     : '';
 
   // Frozen state (temporarily disabled for preview)
@@ -4497,7 +4497,7 @@ function renderSourcePanel(bodyId, countId, aiData) {
 
   if (countId) {
     const totalChars = chunkAliases.reduce((sum, alias) => sum + (aiData.chunks[alias] || '').length, 0);
-    document.getElementById(countId).textContent = `${totalChars.toLocaleString()} 字`;
+    document.getElementById(countId).textContent = `📄 ${totalChars.toLocaleString()} 字`;
   }
 
   let html = '';
