@@ -3125,8 +3125,18 @@ async function loadPhase1() {
 
   // Render AI summary
   const label = getAnonLabel(currentCondIdx);
-  document.getElementById('p1CondLabel').textContent = label;
   renderAISummary('p1SummaryBody', aiData);
+  // Show word count + compression ratio
+  const summaryChars = aiData && aiData.sections
+    ? aiData.sections.reduce((sum, s) => sum + (s.content || '').replace(/\[CH_\d+(?:,\s*CH_\d+)*\]/g, '').length, 0)
+    : 0;
+  const sourceChars = aiData && aiData.chunks
+    ? Object.values(aiData.chunks).reduce((sum, c) => sum + (c || '').length, 0)
+    : 0;
+  const ratio = sourceChars > 0 ? ((1 - summaryChars / sourceChars) * 100).toFixed(0) : 0;
+  document.getElementById('p1CondLabel').textContent = summaryChars > 0
+    ? `${label} · ${summaryChars.toLocaleString()} 字（壓縮 ${ratio}%）`
+    : label;
 
   // Frozen state (temporarily disabled for preview)
   const frozen = false; // isPhase1Frozen(currentCase, currentCondIdx);
@@ -4485,7 +4495,10 @@ function renderSourcePanel(bodyId, countId, aiData) {
     return parseInt(a.replace('CH_', ''), 10) - parseInt(b.replace('CH_', ''), 10);
   });
 
-  if (countId) document.getElementById(countId).textContent = `${chunkAliases.length} 段`;
+  if (countId) {
+    const totalChars = chunkAliases.reduce((sum, alias) => sum + (aiData.chunks[alias] || '').length, 0);
+    document.getElementById(countId).textContent = `${totalChars.toLocaleString()} 字`;
+  }
 
   let html = '';
   chunkAliases.forEach(alias => {
