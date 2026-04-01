@@ -41,65 +41,65 @@
 
     /* ─── HERO ─── */
     .hero {
-      position: relative; min-height: 480px;
-      display: flex; align-items: center; justify-content: center;
-      overflow: hidden; background: #0f172a;
+      margin-top: 56px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 520px; background: #fff;
     }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(ellipse at 25% 30%, rgba(99,102,241,0.25), transparent 50%),
-        radial-gradient(ellipse at 75% 60%, rgba(16,185,129,0.18), transparent 45%),
-        radial-gradient(ellipse at 50% 80%, rgba(217,119,6,0.12), transparent 40%),
-        linear-gradient(rgba(148,163,184,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(148,163,184,0.06) 1px, transparent 1px);
-      background-size: auto, auto, auto, 64px 64px, 64px 64px;
+    .hero-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 72px 48px 72px 0;
+      max-width: 600px; margin-left: auto;
+      animation: fadeUp 0.7s ease 0.1s both;
     }
-    .hero::after {
-      content: ''; position: absolute; inset: auto 0 0 0; height: 120px;
-      background: linear-gradient(to bottom, transparent, #0f172a); pointer-events: none;
-    }
-    .hero-content {
-      position: relative; z-index: 2; text-align: center;
-      width: min(860px, calc(100vw - 32px)); padding: 112px 0 72px;
+    .hero-kicker {
+      font-size: 11px; font-weight: 700; color: var(--indigo);
+      letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
     }
     .hero h1 {
       font-family: var(--serif);
-      font-size: clamp(28px, 4.5vw, 48px);
-      font-weight: 900; color: #fff; line-height: 1.3;
-      margin-bottom: 18px; animation: fadeUp 0.7s ease 0.1s both;
+      font-size: clamp(26px, 3.5vw, 42px);
+      font-weight: 900; color: var(--slate-900); line-height: 1.3;
+      letter-spacing: -0.5px; margin-bottom: 20px;
     }
     .hero-sub {
-      font-size: clamp(14px, 1.5vw, 16px);
-      color: rgba(255,255,255,0.55); line-height: 1.9;
-      max-width: 600px; margin: 0 auto 36px; font-weight: 300;
-      animation: fadeUp 0.7s ease 0.2s both;
+      font-size: 15px; color: var(--slate-500); line-height: 1.9;
+      margin-bottom: 36px; font-weight: 300;
     }
     .hero-methods {
-      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-      animation: fadeUp 0.7s ease 0.35s both;
+      display: flex; flex-direction: column; gap: 10px;
     }
     .hero-method {
-      display: flex; align-items: center; gap: 10px;
-      padding: 14px 24px; border-radius: 14px;
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-      cursor: pointer; transition: all 0.25s; text-decoration: none;
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 18px; border-radius: 12px;
+      background: var(--slate-50); border: 1px solid #e2e8f0;
+      cursor: pointer; transition: all 0.2s; text-decoration: none;
     }
-    .hero-method:hover { background: rgba(255,255,255,0.12); transform: translateY(-2px); }
+    .hero-method:hover { background: var(--indigo-light); border-color: #c7d2fe; transform: translateX(4px); }
     .hero-method-icon {
       width: 36px; height: 36px; border-radius: 10px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .hero-method-icon svg { width: 20px; height: 20px; }
-    .hero-method-icon.rule { background: rgba(99,102,241,0.2); }
-    .hero-method-icon.rule svg { stroke: #a5b4fc; fill: none; }
-    .hero-method-icon.llm { background: rgba(16,185,129,0.2); }
-    .hero-method-icon.llm svg { stroke: #6ee7b7; fill: none; }
-    .hero-method-icon.nlp { background: rgba(217,119,6,0.2); }
-    .hero-method-icon.nlp svg { stroke: #fcd34d; fill: none; }
+    .hero-method-icon svg { width: 18px; height: 18px; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .hero-method-icon.rule { background: var(--indigo-light); }
+    .hero-method-icon.rule svg { stroke: var(--indigo); }
+    .hero-method-icon.llm { background: var(--emerald-light); }
+    .hero-method-icon.llm svg { stroke: var(--emerald); }
+    .hero-method-icon.nlp { background: var(--amber-light); }
+    .hero-method-icon.nlp svg { stroke: var(--amber); }
     .hero-method-text { text-align: left; }
-    .hero-method-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); }
-    .hero-method-desc { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 2px; }
+    .hero-method-label { font-size: 13px; font-weight: 600; color: var(--slate-900); }
+    .hero-method-desc { font-size: 11px; color: var(--slate-500); margin-top: 1px; }
+    .hero-img-wrap {
+      position: relative; overflow: hidden;
+    }
+    .hero-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .hero-img-wrap::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(255,255,255,0.15), transparent 30%);
+      pointer-events: none;
+    }
 
     /* ─── SECTIONS ─── */
     .section { padding: 80px 24px; }
@@ -266,9 +266,9 @@
     @media (max-width: 768px) {
       .nav { padding: 0 16px; gap: 12px; }
       .nav a:not(.nav-cta):not(.nav-logo) { display: none; }
-      .hero-content { padding: 96px 0 56px; }
-      .hero-methods { flex-direction: column; align-items: center; }
-      .hero-method { width: 100%; max-width: 320px; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-text { padding: 88px 24px 40px; max-width: none; margin: 0; }
+      .hero-img-wrap { height: 280px; }
       .section { padding: 48px 16px; }
       .feat { grid-template-columns: 1fr; gap: 24px; }
       .feat.reverse { direction: ltr; }
@@ -282,6 +282,7 @@
     @media (max-width: 480px) {
       .hero h1 { font-size: 24px; }
       .hero-sub { font-size: 13px; }
+      .hero-img-wrap { height: 220px; }
     }
   </style>
 </head>
@@ -300,39 +301,42 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-content">
+  <div class="hero-text">
+    <div class="hero-kicker">Evaluation Framework</div>
     <h1>我們如何衡量<br>一份摘要的品質？</h1>
-    <p class="hero-sub">本研究採用規則式自動檢查、大語言模型多維度評審、以及與標準摘要的文字與語意比對三類方法，從不同面向評估自動摘要的品質。</p>
+    <p class="hero-sub">本研究採用三類互補的評估方法，從客觀事實正確性、內容完整度與寫作品質等面向，系統性地衡量自動摘要的品質。</p>
     <div class="hero-methods">
       <a class="hero-method" href="#rule-based">
         <div class="hero-method-icon rule">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m-9-11h2m18 0h2"/><path d="M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42"/><path d="M19.78 4.22l-1.42 1.42M5.64 18.36l-1.42 1.42"/></svg>
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m-9-11h2m18 0h2"/><path d="M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42"/><path d="M19.78 4.22l-1.42 1.42M5.64 18.36l-1.42 1.42"/></svg>
         </div>
         <div class="hero-method-text">
-          <div class="hero-method-label">Rule-Based 規則式</div>
-          <div class="hero-method-desc">程式自動計算，確定性結果</div>
+          <div class="hero-method-label">Rule-Based 規則式自動檢查</div>
+          <div class="hero-method-desc">日期、數字、判決結果等客觀事實的程式化比對</div>
         </div>
       </a>
       <a class="hero-method" href="#llm-judge">
         <div class="hero-method-icon llm">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M10 21h4"/><path d="M9 17h6"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M10 21h4"/><path d="M9 17h6"/></svg>
         </div>
         <div class="hero-method-text">
-          <div class="hero-method-label">LLM-Judge 模型評審</div>
-          <div class="hero-method-desc">Claude Sonnet 依結構化標準評分</div>
+          <div class="hero-method-label">LLM-Judge 模型多維度評審</div>
+          <div class="hero-method-desc">事實涵蓋率、寫作品質 14 維度、引用忠實度</div>
         </div>
       </a>
       <a class="hero-method" href="#nlp-ref">
         <div class="hero-method-icon nlp">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M5 18h14"/><circle cx="17" cy="6" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M5 18h14"/><circle cx="17" cy="6" r="2"/><circle cx="7" cy="18" r="2"/></svg>
         </div>
         <div class="hero-method-text">
-          <div class="hero-method-label">NLP Reference 參考式</div>
-          <div class="hero-method-desc">與標準摘要文字 / 語意比對</div>
+          <div class="hero-method-label">NLP Reference 參考式比對</div>
+          <div class="hero-method-desc">與法學教授標準摘要的文字及語意相似度</div>
         </div>
       </a>
     </div>
+  </div>
+  <div class="hero-img-wrap">
+    <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=960&q=80" alt="研究評估">
   </div>
 </section>
 
