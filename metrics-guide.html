@@ -41,47 +41,55 @@
 
     /* ─── HERO ─── */
     .hero {
-      margin-top: 56px; background: #fff;
+      margin-top: 56px; position: relative; overflow: hidden;
+      background: #0f172a;
     }
-    .hero-inner {
-      max-width: 1080px; margin: 0 auto; padding: 0 24px;
-      display: grid; grid-template-columns: 3fr 2fr; gap: 40px;
-      align-items: center; min-height: 480px;
+    .hero-banner {
+      width: 100%; height: 320px; object-fit: cover; display: block;
+      filter: brightness(0.45) saturate(0.7);
     }
-    .hero-text {
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 72px 0;
+    .hero-overlay {
+      position: absolute; top: 0; left: 0; right: 0; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 0 24px;
+    }
+    .hero-overlay-inner {
+      max-width: 720px;
       animation: fadeUp 0.7s ease 0.1s both;
     }
     .hero-kicker {
-      font-size: 11px; font-weight: 700; color: var(--indigo);
+      font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);
       letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px;
     }
     .hero h1 {
       font-family: var(--serif);
       font-size: clamp(26px, 3.5vw, 42px);
-      font-weight: 900; color: var(--slate-900); line-height: 1.3;
-      letter-spacing: -0.5px; margin-bottom: 20px;
+      font-weight: 900; color: #fff; line-height: 1.3;
+      letter-spacing: -0.5px; margin-bottom: 16px;
     }
     .hero-sub {
-      font-size: 15px; color: var(--slate-500); line-height: 1.9;
-      margin-bottom: 36px; font-weight: 300;
+      font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.9;
+      font-weight: 300;
     }
     .hero-methods {
-      display: flex; flex-direction: column; gap: 10px;
+      position: relative; z-index: 2;
+      max-width: 1080px; margin: -48px auto 0; padding: 0 24px 48px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+      animation: fadeUp 0.7s ease 0.3s both;
     }
     .hero-method {
-      display: flex; align-items: center; gap: 12px;
-      padding: 12px 18px; border-radius: 12px;
-      background: var(--slate-50); border: 1px solid #e2e8f0;
+      display: flex; flex-direction: column; gap: 12px;
+      padding: 20px; border-radius: 14px;
+      background: #fff; border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
       cursor: pointer; transition: all 0.2s; text-decoration: none;
     }
-    .hero-method:hover { background: var(--indigo-light); border-color: #c7d2fe; transform: translateX(4px); }
+    .hero-method:hover { border-color: #c7d2fe; box-shadow: 0 8px 32px rgba(0,0,0,0.1); transform: translateY(-3px); }
     .hero-method-icon {
-      width: 36px; height: 36px; border-radius: 10px;
+      width: 40px; height: 40px; border-radius: 10px;
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
-    .hero-method-icon svg { width: 18px; height: 18px; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .hero-method-icon svg { width: 20px; height: 20px; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; }
     .hero-method-icon.rule { background: var(--indigo-light); }
     .hero-method-icon.rule svg { stroke: var(--indigo); }
     .hero-method-icon.llm { background: var(--emerald-light); }
@@ -91,18 +99,9 @@
     .hero-method-icon.expert { background: #f5f3ff; }
     .hero-method-icon.expert svg { stroke: #7c3aed; }
     .metric-card-icon.nlp-b { background: #fef3c7; color: #b45309; }
-    .hero-method-text { text-align: left; }
-    .hero-method-label { font-size: 13px; font-weight: 600; color: var(--slate-900); }
-    .hero-method-desc { font-size: 11px; color: var(--slate-500); margin-top: 1px; }
-    .hero-img-wrap {
-      position: relative; overflow: hidden;
-      border-radius: 16px;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.08);
-    }
-    .hero-img-wrap img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      aspect-ratio: 4/3;
-    }
+    .hero-method-text { }
+    .hero-method-label { font-size: 14px; font-weight: 700; color: var(--slate-900); margin-bottom: 4px; }
+    .hero-method-desc { font-size: 12px; color: var(--slate-500); line-height: 1.6; }
 
     /* ─── SECTIONS ─── */
     .section { padding: 80px 24px; }
@@ -247,9 +246,8 @@
     @media (max-width: 768px) {
       .nav { padding: 0 16px; gap: 12px; }
       .nav a:not(.nav-cta):not(.nav-logo) { display: none; }
-      .hero-inner { grid-template-columns: 1fr; min-height: auto; gap: 24px; }
-      .hero-text { padding: 72px 0 0; }
-      .hero-img-wrap { border-radius: 12px; }
+      .hero-banner { height: 240px; }
+      .hero-methods { grid-template-columns: 1fr 1fr; margin-top: -32px; padding: 0 16px 32px; }
       .section { padding: 48px 16px; }
       .feat { grid-template-columns: 1fr; gap: 24px; }
       .feat.reverse { direction: ltr; }
@@ -264,6 +262,7 @@
     @media (max-width: 480px) {
       .hero h1 { font-size: 24px; }
       .hero-sub { font-size: 13px; }
+      .hero-methods { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -282,53 +281,51 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-inner">
-  <div class="hero-text">
-    <div class="hero-kicker">Evaluation Framework</div>
-    <h1>我們如何衡量<br>一份摘要的品質？</h1>
-    <p class="hero-sub">本研究結合專家多維度評分與三類自動化指標，從不同面向評估摘要品質，並驗證兩者的一致性。</p>
-    <div class="hero-methods">
-      <a class="hero-method" href="eval.html">
-        <div class="hero-method-icon expert">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        </div>
-        <div class="hero-method-text">
-          <div class="hero-method-label">專家多維度評分</div>
-          <div class="hero-method-desc">由法學與醫學領域專家進行量表評分與逐段評語</div>
-        </div>
-      </a>
-      <a class="hero-method" href="#rule-based">
-        <div class="hero-method-icon rule">
-          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m-9-11h2m18 0h2"/><path d="M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42"/><path d="M19.78 4.22l-1.42 1.42M5.64 18.36l-1.42 1.42"/></svg>
-        </div>
-        <div class="hero-method-text">
-          <div class="hero-method-label">規則式自動檢查</div>
-          <div class="hero-method-desc">以程式自動比對日期、數字、判決結果等客觀事實是否正確</div>
-        </div>
-      </a>
-      <a class="hero-method" href="#llm-judge">
-        <div class="hero-method-icon llm">
-          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M10 21h4"/><path d="M9 17h6"/></svg>
-        </div>
-        <div class="hero-method-text">
-          <div class="hero-method-label">模型多維度評審</div>
-          <div class="hero-method-desc">由語言模型就事實完整性、寫作品質與引用正確性進行多維度評分</div>
-        </div>
-      </a>
-      <a class="hero-method" href="#nlp-ref">
-        <div class="hero-method-icon nlp">
-          <svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M5 18h14"/><circle cx="17" cy="6" r="2"/><circle cx="7" cy="18" r="2"/></svg>
-        </div>
-        <div class="hero-method-text">
-          <div class="hero-method-label">文本相似度比對</div>
-          <div class="hero-method-desc">衡量自動摘要與法學教授標準摘要在文字及語意上的接近程度</div>
-        </div>
-      </a>
+  <img class="hero-banner" src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=1920&q=80" alt="">
+  <div class="hero-overlay">
+    <div class="hero-overlay-inner">
+      <div class="hero-kicker">Evaluation Framework</div>
+      <h1>我們如何衡量<br>一份摘要的品質？</h1>
+      <p class="hero-sub">本研究結合專家多維度評分與三類自動化指標，從不同面向評估摘要品質，並驗證兩者的一致性。</p>
     </div>
   </div>
-  <div class="hero-img-wrap">
-    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=960&q=80" alt="研究評估">
-  </div>
+  <div class="hero-methods">
+    <a class="hero-method" href="eval.html">
+      <div class="hero-method-icon expert">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="hero-method-text">
+        <div class="hero-method-label">專家多維度評分</div>
+        <div class="hero-method-desc">由法學與醫學領域專家進行量表評分與逐段評語</div>
+      </div>
+    </a>
+    <a class="hero-method" href="#rule-based">
+      <div class="hero-method-icon rule">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v2m0 18v2m-9-11h2m18 0h2"/><path d="M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42"/><path d="M19.78 4.22l-1.42 1.42M5.64 18.36l-1.42 1.42"/></svg>
+      </div>
+      <div class="hero-method-text">
+        <div class="hero-method-label">規則式自動檢查</div>
+        <div class="hero-method-desc">以程式自動比對日期、數字、判決結果等客觀事實是否正確</div>
+      </div>
+    </a>
+    <a class="hero-method" href="#llm-judge">
+      <div class="hero-method-icon llm">
+        <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 4 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"/><path d="M10 21h4"/><path d="M9 17h6"/></svg>
+      </div>
+      <div class="hero-method-text">
+        <div class="hero-method-label">模型多維度評審</div>
+        <div class="hero-method-desc">由語言模型就事實完整性、寫作品質與引用正確性進行多維度評分</div>
+      </div>
+    </a>
+    <a class="hero-method" href="#nlp-ref">
+      <div class="hero-method-icon nlp">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M7 12h10"/><path d="M5 18h14"/><circle cx="17" cy="6" r="2"/><circle cx="7" cy="18" r="2"/></svg>
+      </div>
+      <div class="hero-method-text">
+        <div class="hero-method-label">文本相似度比對</div>
+        <div class="hero-method-desc">衡量自動摘要與法學教授標準摘要在文字及語意上的接近程度</div>
+      </div>
+    </a>
   </div>
 </section>
 
