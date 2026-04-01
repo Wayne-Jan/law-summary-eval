@@ -40,13 +40,15 @@
   }
 
   function versionedHref(href) {
+    // Never add ?v= to URLs — version is internal state only
     if (!href) return href;
     try {
       const url = new URL(href, window.location.href);
       if (url.origin !== window.location.origin) return href;
-      if (!url.pathname.endsWith('.html')) return href;
-      if (state.version) url.searchParams.set('v', state.version);
-      return url.pathname + url.search + url.hash;
+      // Strip any existing ?v= param
+      url.searchParams.delete('v');
+      const search = url.search || '';
+      return url.pathname + search + url.hash;
     } catch {
       return href;
     }
