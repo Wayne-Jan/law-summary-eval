@@ -113,6 +113,8 @@
     .overview-table tr:last-child td { border-bottom: none; }
     .overview-row:hover > td { background: #f8fafc; }
     .overview-row { cursor: pointer; }
+    .overview-row.baseline-row > td { color: #92400e; }
+    .overview-row.baseline-row > td.cond-name { border-left: 3px solid #d97706; }
     .overview-row .cond-name-inner {
       display: inline-flex; align-items: center; gap: 6px;
     }
@@ -2307,10 +2309,11 @@
       const rb = a.rouge_bertscore || {};
       const evalN = cond.eval_count;
       const badgeClass = cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource';
+      const isBaseline = condKey.startsWith('baseline_');
       const expanded = currentOverviewDetail === condKey;
 
       rows.push(`
-        <tr class="overview-row${expanded ? ' expanded' : ''}" data-cond-key="${esc(condKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
+        <tr class="overview-row${expanded ? ' expanded' : ''}${isBaseline ? ' baseline-row' : ''}" data-cond-key="${esc(condKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
           <td class="cond-name"><span class="cond-name-inner"><span class="overview-row-toggle">${expanded ? '▾' : '▸'}</span>${formatOverviewModelLabel(condKey, cond.label)}</span></td>
           <td><span class="badge ${badgeClass}">${cond.group}</span></td>
           <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg) || '--'}</td>

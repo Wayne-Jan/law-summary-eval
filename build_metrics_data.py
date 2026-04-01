@@ -34,9 +34,9 @@ VOLUME_TO_FILE = {
 }
 EXTRA_CONDITIONS = OrderedDict(
     [
-        ("LENS-Full-DeepSeek_v31", {"label": "LENS-Full-DeepSeek v3.1", "group": "開源模型"}),
-        ("LENS-NoReact-DeepSeek_v31", {"label": "LENS-NoReact-DeepSeek v3.1", "group": "開源模型"}),
-        ("LENS-NoAFG-DeepSeek_v31", {"label": "LENS-NoAFG-DeepSeek v3.1", "group": "開源模型"}),
+        ("LENS-Full-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-A", "group": "開源模型"}),
+        ("LENS-NoReact-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-B", "group": "開源模型"}),
+        ("LENS-NoAFG-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-C", "group": "開源模型"}),
     ]
 )
 
@@ -44,9 +44,9 @@ DISPLAY_LABELS = {
     "claude_afg_v5.1": "LENS-Haiku 4.5-A",
     "ablation_no_afg": "LENS-Haiku 4.5-B",
     "ablation_no_react": "LENS-Haiku 4.5-C",
-    "LENS-Full-DeepSeek_v31": "LENS-Full-DeepSeek v3.1",
-    "LENS-NoReact-DeepSeek_v31": "LENS-NoReact-DeepSeek v3.1",
-    "LENS-NoAFG-DeepSeek_v31": "LENS-NoAFG-DeepSeek v3.1",
+    "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
+    "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
+    "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
     "baseline_claude-haiku": "Claude Haiku 4.5",
     "baseline_claude-sonnet": "Claude Sonnet 4.6",
     "baseline_gpt-5.3": "GPT-5.3 Instant",
