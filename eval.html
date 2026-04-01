@@ -2161,6 +2161,74 @@ async function adminToggleBackupDetails(snapshotId) {
   }
 }
 
+async function loadBackupRow(snapshotId) {
+  const cells = document.querySelectorAll(`.backup-ev-cell[data-snapshot="${snapshotId}"]`);
+  if (!cells.length) return;
+  const evNames = Object.keys(USERS).filter(u => u !== 'admin');
+  cells.forEach(c => { c.textContent = '…'; c.style.color = 'var(--slate-400)'; });
+  try {
+    const currentRows = await fetchBackupEvaluatorSummaries(snapshotId);
+    let prevRows = [];
+    const prevId = backupSnapshotPrevMap[snapshotId];
+    if (prevId) { try { prevRows = await fetchBackupEvaluatorSummaries(prevId); } catch {} }
+    const prevMap = {};
+    prevRows.forEach(r => { prevMap[r.evaluator || r.id] = r; });
+    const curMap = {};
+    currentRows.forEach(r => { curMap[r.evaluator || r.id] = r; });
+
+    evNames.forEach((name, idx) => {
+      const cell = cells[idx];
+      if (!cell) return;
+      const cur = curMap[name];
+      const prev = prevMap[name];
+      if (!cur || Number(cur.case_count || 0) === 0) {
+        cell.innerHTML = '<span style="color:var(--slate-300);">—</span>';
+        return;
+      }
+      const cases = Number(cur.case_count || 0);
+      const records = Number(cur.record_count || 0);
+      const prevCases = prev ? Number(prev.case_count || 0) : 0;
+      const prevRecords = prev ? Number(prev.record_count || 0) : 0;
+      const caseDiff = cases - prevCases;
+      const recDiff = records - prevRecords;
+
+      // Per-case changes
+      const curData = (cur.data && cur.data.cases) || {};
+      const prevData = (prev && prev.data && prev.data.cases) || {};
+      const changes = [];
+      Object.keys(curData).forEach(caseName => {
+        const curPhases = countFilledPhases(curData[caseName]);
+        const prvPhases = prevData[caseName] ? countFilledPhases(prevData[caseName]) : 0;
+        if (curPhases > 0 && prvPhases === 0) {
+          const short = (getCaseDisplayName(caseName) || caseName);
+          const display = short.length > 20 ? short.substring(0, 20) + '…' : short;
+          changes.push(`<div style="color:#047857;">+ ${esc(display)} (${curPhases})</div>`);
+        } else if (curPhases > prvPhases) {
+          const short = (getCaseDisplayName(caseName) || caseName);
+          const display = short.length > 20 ? short.substring(0, 20) + '…' : short;
+          changes.push(`<div style="color:#1d4ed8;">△ ${esc(display)} ${prvPhases}→${curPhases}</div>`);
+        }
+      });
+
+      let diffHtml = `<div style="font-weight:600;color:var(--slate-700);">${cases} 案</div>`;
+      if (caseDiff > 0 || recDiff > 0) {
+        const parts = [];
+        if (caseDiff > 0) parts.push(`+${caseDiff} 案`);
+        if (recDiff > 0) parts.push(`+${recDiff} 筆`);
+        diffHtml += `<div style="color:#047857;font-weight:600;">${parts.join(' ')}</div>`;
+      }
+      if (changes.length > 0) {
+        diffHtml += `<div style="margin-top:4px;font-size:10px;line-height:1.5;">${changes.join('')}</div>`;
+      }
+      cell.innerHTML = diffHtml;
+      cell.style.color = '';
+    });
+  } catch (err) {
+    console.error('loadBackupRow failed:', err);
+    cells.forEach(c => { c.innerHTML = '<span style="color:#b91c1c;">錯誤</span>'; });
+  }
+}
+
 async function doLogin() {
   const userSel = document.getElementById('loginUser');
   const passInput = document.getElementById('loginPassword');
@@ -5527,27 +5595,26 @@ function buildAdminBackupHistory(backups, mobile = false) {
     return `<div class="admin-mobile-backups">${cards}</div>`;
   }
 
+  const evNames = Object.keys(USERS).filter(u => u !== 'admin');
   let html = `<div style="overflow-x:auto;"><table>`;
-  html += `<thead><tr><th>日期</th><th>狀態</th><th>評估者</th><th>案件</th><th>記錄</th><th>摘要</th><th>動作</th></tr></thead><tbody>`;
+  html += `<thead><tr><th>日期</th><th>狀態</th>`;
+  evNames.forEach(name => {
+    const role = USERS[name].role;
+    html += `<th>${esc(name)}<br><span style="font-size:10px;font-weight:400;color:var(--slate-500);">${role}</span></th>`;
+  });
+  html += `<th></th></tr></thead><tbody>`;
   backups.forEach(item => {
     const inferredEmpty = !!item.is_empty || Number(item.evaluator_count || 0) === 0 || Number(item.case_count || 0) === 0;
     const tone = formatBackupStatus(item.status, inferredEmpty);
-    const summary = inferredEmpty
-      ? '此快照為空備份'
-      : (item.status === 'unchanged' || item.same_as_previous)
-        ? `已建立每日快照，內容與 ${item.previous_snapshot_id || '前一次'} 相同`
-        : `${Number(item.evaluator_count || 0)} 位評估者 / ${Number(item.case_count || 0)} 案`;
     const id = item.snapshot_id || item.id;
     html += `<tr>`;
-    html += `<td>${esc(item.snapshot_date || id)}</td>`;
+    html += `<td style="white-space:nowrap;">${esc(item.snapshot_date || id)}</td>`;
     html += `<td><span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:11px;font-weight:700;">${tone.label}</span></td>`;
-    html += `<td>${Number(item.evaluator_count || 0)}</td>`;
-    html += `<td>${Number(item.case_count || 0)}</td>`;
-    html += `<td>${Number(item.record_count || 0)}</td>`;
-    html += `<td style="text-align:left;color:var(--slate-500);font-size:12px;">${esc(summary)}</td>`;
-    html += `<td><button class="admin-mini-btn" type="button" onclick='adminToggleBackupDetails(${JSON.stringify(id)})'>查看摘要</button></td>`;
+    evNames.forEach(() => {
+      html += `<td class="backup-ev-cell" data-snapshot="${esc(id)}" style="font-size:11px;color:var(--slate-400);vertical-align:top;">—</td>`;
+    });
+    html += `<td><button class="admin-mini-btn" type="button" onclick='loadBackupRow(${JSON.stringify(id)})'>載入</button></td>`;
     html += `</tr>`;
-    html += `<tr id="backupDetailsRow-${esc(id)}" class="backup-detail-row"><td colspan="7" class="backup-detail-cell"><div id="backupDetails-${esc(id)}" class="backup-detail-panel"></div></td></tr>`;
   });
   html += `</tbody></table></div>`;
   return html;
