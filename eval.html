@@ -2038,95 +2038,57 @@ async function fetchBackupEvaluatorSummaries(snapshotId) {
   return rows;
 }
 
-function buildBackupDiffHtml(currentRows, prevRows) {
-  const prevMap = {};
-  prevRows.forEach(r => {
-    const name = r.evaluator || r.id;
-    prevMap[name] = { cases: Number(r.case_count || 0), records: Number(r.record_count || 0), data: r.data };
-  });
-
-  return currentRows.map(row => {
-    const name = row.evaluator || row.id;
-    const cases = Number(row.case_count || 0);
-    const records = Number(row.record_count || 0);
-    const prev = prevMap[name] || { cases: 0, records: 0, data: null };
-    const caseDiff = cases - prev.cases;
-    const recDiff = records - prev.records;
-    const tone = formatBackupStatus(cases === 0 ? 'empty' : 'ok', cases === 0);
-
-    // Build per-case diff details
-    let caseDetails = '';
-    const curData = (row.data && row.data.cases) || {};
-    const prevData = (prev.data && prev.data.cases) || {};
-    const allCases = new Set([...Object.keys(curData), ...Object.keys(prevData)]);
-    const changes = [];
-    allCases.forEach(caseName => {
-      const cur = curData[caseName];
-      const prv = prevData[caseName];
-      if (!cur && prv) {
-        changes.push({ case: caseName, type: 'removed' });
-        return;
-      }
-      if (cur && !prv) {
-        // Count filled phases
-        const phases = countFilledPhases(cur);
-        changes.push({ case: caseName, type: 'new', phases });
-        return;
-      }
-      // Both exist — check if content changed
-      const curPhases = countFilledPhases(cur);
-      const prvPhases = countFilledPhases(prv);
-      if (curPhases !== prvPhases) {
-        changes.push({ case: caseName, type: 'updated', from: prvPhases, to: curPhases });
-      }
-    });
-
-    if (changes.length > 0) {
-      caseDetails = '<div style="margin-top:6px;padding-left:4px;">' + changes.map(c => {
-        const display = getCaseDisplayName(c.case) || c.case;
-        const short = display.length > 25 ? display.substring(0, 25) + '…' : display;
-        if (c.type === 'new') return `<div style="font-size:11px;color:#047857;">+ ${esc(short)} <span style="color:var(--slate-400);">(${c.phases} 項)</span></div>`;
-        if (c.type === 'updated') return `<div style="font-size:11px;color:#1d4ed8;">△ ${esc(short)} <span style="color:var(--slate-400);">${c.from}→${c.to} 項</span></div>`;
-        if (c.type === 'removed') return `<div style="font-size:11px;color:#b91c1c;">- ${esc(short)}</div>`;
-        return '';
-      }).join('') + '</div>';
-    }
-
-    const diffBadge = (caseDiff === 0 && recDiff === 0)
-      ? '<span style="font-size:10px;color:var(--slate-400);">無變更</span>'
-      : `<span style="font-size:10px;color:#047857;font-weight:600;">${caseDiff > 0 ? '+' + caseDiff + ' 案' : ''}${caseDiff > 0 && recDiff > 0 ? ' / ' : ''}${recDiff > 0 ? '+' + recDiff + ' 筆' : ''}</span>`;
-
-    return `<div style="padding:8px 10px;border:1px solid var(--slate-200);border-radius:10px;background:#fff;">
-      <div style="display:flex;justify-content:space-between;gap:12px;align-items:center;">
-        <div style="font-size:12px;color:var(--slate-700);">
-          <strong>${esc(name)}</strong>
-          <span style="color:var(--slate-500);margin-left:6px;">${esc(row.role || '')}</span>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end;">
-          <span style="font-size:11px;color:var(--slate-500);">${cases} 案 / ${records} 筆</span>
-          ${diffBadge}
-          <span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;border:1px solid ${tone.border};background:${tone.bg};color:${tone.tone};font-size:11px;font-weight:700;">${tone.label}</span>
-        </div>
-      </div>
-      ${caseDetails}
-    </div>`;
-  }).join('');
+function describePhaseStatus(versionData) {
+  if (!versionData) return null;
+  const parts = [];
+  const scores = versionData.scores || {};
+  const scoreCount = Object.keys(scores).length;
+  if (scoreCount >= 9) parts.push('量表完成');
+  else if (scoreCount > 0) parts.push(`量表 ${scoreCount}/9`);
+  if (versionData.sections && Object.values(versionData.sections).some(s => (s || '').trim())) parts.push('有評語');
+  if (versionData._complete) parts.push('已完成');
+  return parts.length > 0 ? parts.join('、') : null;
 }
 
-function countFilledPhases(caseData) {
-  if (!caseData) return 0;
-  let count = 0;
+function diffCasePhases(curCase, prevCase) {
+  const actions = [];
+  const PHASE_NAMES = { phase1: '量表', phaseFB: '評語', phaseTL: '時間軸' };
   ['phase1', 'phaseFB', 'phaseTL'].forEach(phase => {
-    const phaseObj = caseData[phase] || {};
-    Object.values(phaseObj).forEach(v => {
-      if (!v) return;
-      if (v.scores && Object.keys(v.scores).length > 0) count++;
-      else if (v.sections && Object.values(v.sections).some(s => (s || '').trim())) count++;
-      else if (v._complete) count++;
+    const curPhase = (curCase && curCase[phase]) || {};
+    const prevPhase = (prevCase && prevCase[phase]) || {};
+    Object.keys(curPhase).forEach(versionLabel => {
+      const cur = curPhase[versionLabel];
+      const prev = prevPhase[versionLabel];
+      if (!cur) return;
+      const curDesc = describePhaseStatus(cur);
+      const prevDesc = describePhaseStatus(prev);
+      if (!curDesc) return;
+      if (curDesc !== prevDesc) {
+        const version = versionLabel.replace('版本 ', '');
+        actions.push(`${version} ${PHASE_NAMES[phase] || phase}：${curDesc}`);
+      }
     });
   });
-  if (caseData.phase3 && caseData.phase3._complete) count++;
-  return count;
+  if (curCase && curCase.phase3 && curCase.phase3._complete) {
+    const prevP3 = prevCase && prevCase.phase3;
+    if (!prevP3 || !prevP3._complete) actions.push('整體排序完成');
+  }
+  return actions;
+}
+
+function buildBackupDiffForEvaluator(cur, prev) {
+  const curCases = (cur && cur.data && cur.data.cases) || {};
+  const prevCases = (prev && prev.data && prev.data.cases) || {};
+  const actions = [];
+  Object.keys(curCases).forEach(caseName => {
+    const diffs = diffCasePhases(curCases[caseName], prevCases[caseName]);
+    if (diffs.length > 0) {
+      const display = getCaseDisplayName(caseName) || caseName;
+      const short = display.length > 22 ? display.substring(0, 22) + '…' : display;
+      diffs.forEach(d => actions.push({ case: short, action: d }));
+    }
+  });
+  return actions;
 }
 
 async function adminToggleBackupDetails(snapshotId) {
@@ -2182,43 +2144,17 @@ async function loadBackupRow(snapshotId) {
       const cur = curMap[name];
       const prev = prevMap[name];
       if (!cur || Number(cur.case_count || 0) === 0) {
-        cell.innerHTML = '<span style="color:var(--slate-300);">—</span>';
+        cell.innerHTML = '<span style="color:var(--slate-300);">尚未開始</span>';
         return;
       }
-      const cases = Number(cur.case_count || 0);
-      const records = Number(cur.record_count || 0);
-      const prevCases = prev ? Number(prev.case_count || 0) : 0;
-      const prevRecords = prev ? Number(prev.record_count || 0) : 0;
-      const caseDiff = cases - prevCases;
-      const recDiff = records - prevRecords;
-
-      // Per-case changes
-      const curData = (cur.data && cur.data.cases) || {};
-      const prevData = (prev && prev.data && prev.data.cases) || {};
-      const changes = [];
-      Object.keys(curData).forEach(caseName => {
-        const curPhases = countFilledPhases(curData[caseName]);
-        const prvPhases = prevData[caseName] ? countFilledPhases(prevData[caseName]) : 0;
-        if (curPhases > 0 && prvPhases === 0) {
-          const short = (getCaseDisplayName(caseName) || caseName);
-          const display = short.length > 20 ? short.substring(0, 20) + '…' : short;
-          changes.push(`<div style="color:#047857;">+ ${esc(display)} (${curPhases})</div>`);
-        } else if (curPhases > prvPhases) {
-          const short = (getCaseDisplayName(caseName) || caseName);
-          const display = short.length > 20 ? short.substring(0, 20) + '…' : short;
-          changes.push(`<div style="color:#1d4ed8;">△ ${esc(display)} ${prvPhases}→${curPhases}</div>`);
-        }
-      });
-
-      let diffHtml = `<div style="font-weight:600;color:var(--slate-700);">${cases} 案</div>`;
-      if (caseDiff > 0 || recDiff > 0) {
-        const parts = [];
-        if (caseDiff > 0) parts.push(`+${caseDiff} 案`);
-        if (recDiff > 0) parts.push(`+${recDiff} 筆`);
-        diffHtml += `<div style="color:#047857;font-weight:600;">${parts.join(' ')}</div>`;
-      }
-      if (changes.length > 0) {
-        diffHtml += `<div style="margin-top:4px;font-size:10px;line-height:1.5;">${changes.join('')}</div>`;
+      const actions = buildBackupDiffForEvaluator(cur, prev);
+      let diffHtml = '';
+      if (actions.length === 0) {
+        diffHtml = '<span style="color:var(--slate-400);">無變更</span>';
+      } else {
+        diffHtml = actions.map(a =>
+          `<div style="font-size:11px;line-height:1.6;color:var(--slate-700);">${esc(a.case)} <span style="color:var(--slate-500);">${esc(a.action)}</span></div>`
+        ).join('');
       }
       cell.innerHTML = diffHtml;
       cell.style.color = '';
