@@ -239,7 +239,7 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
                 case_name = key[len(cond_prefix):]
                 order = data if isinstance(data, list) else []
                 cond_orders[case_name] = [c for c in order if isinstance(c, str)] or list(EVAL_CONDITIONS)
-                case_names.add(case_name)
+                # Don't add to case_names — condorder alone doesn't count as eval data
                 continue
 
             if key.startswith(base_prefix) and key.endswith("_phase3"):
