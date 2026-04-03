@@ -67,7 +67,7 @@ TIMELINE_ALIGN_CACHE_VERSION = 1
 VIEW_BUILD_CACHE_PATH = os.path.join(
     TIMELINE_ALIGN_CACHE_DIR, "view_build_cache.json"
 )
-VIEW_BUILD_CACHE_VERSION = 1
+VIEW_BUILD_CACHE_VERSION = 2
 TIMELINE_V310_BUILD_CACHE_PATH = os.path.join(
     TIMELINE_ALIGN_CACHE_DIR, "timeline_v310_build_cache.json"
 )
@@ -204,6 +204,55 @@ def write_json_if_changed(path, obj):
     with open(path, "w", encoding="utf-8") as f:
         f.write(payload)
     return True
+
+
+def remove_stale_case_jsons(directory, valid_slugs):
+    if not os.path.isdir(directory):
+        return 0
+    removed = 0
+    valid_names = {f"{slug}.json" for slug in valid_slugs}
+    for fname in os.listdir(directory):
+        if not re.fullmatch(r"case_\d+\.json", fname):
+            continue
+        if fname in valid_names:
+            continue
+        os.remove(os.path.join(directory, fname))
+        removed += 1
+    return removed
+
+
+def build_fallback_chunks_from_source(source_text, max_chars=1200):
+    if not source_text:
+        return {}
+    normalized = source_text.replace("\r\n", "\n").replace("\r", "\n").strip()
+    if not normalized:
+        return {}
+
+    paragraphs = [part.strip() for part in re.split(r"\n{2,}", normalized) if part.strip()]
+    if not paragraphs:
+        paragraphs = [line.strip() for line in normalized.split("\n") if line.strip()]
+    if not paragraphs:
+        return {}
+
+    chunks = {}
+    current = []
+    current_len = 0
+    idx = 1
+
+    for para in paragraphs:
+        para_len = len(para)
+        if current and current_len + para_len + 2 > max_chars:
+            chunks[f"CH_{idx:02d}"] = "\n\n".join(current).strip()
+            idx += 1
+            current = [para]
+            current_len = para_len
+            continue
+        current.append(para)
+        current_len += para_len + (2 if current_len else 0)
+
+    if current:
+        chunks[f"CH_{idx:02d}"] = "\n\n".join(current).strip()
+    return chunks
 
 
 def get_build_version():
@@ -547,6 +596,16 @@ def load_chunks_for_case(case_name, case_dir, volume):
         for idx, chunk in enumerate(chunk_list, start=1):
             chunks[f"CH_{idx:02d}"] = chunk.get("content", "")
 
+    # 6. Final fallback: split the source judgment into coarse chunks so
+    # the evaluator can still read the original text even when extraction
+    # artifacts are missing in the source repo.
+    if not chunks:
+        source_path = os.path.join(SOURCE_TEXT_DIR, volume, f"{case_name}.txt")
+        source_text = read_text(source_path)
+        chunks = build_fallback_chunks_from_source(source_text)
+        if chunks and not citations_map:
+            citations_map = {alias: alias for alias in chunks.keys()}
+
     return chunks, citations_map
 
 
@@ -882,6 +941,8 @@ def build():
 
         cond_out_dir = os.path.join(SITE_DATA, cond)
         os.makedirs(cond_out_dir, exist_ok=True)
+        valid_cond_slugs = {case_slugs[case] for case in cases.keys() if case in case_slugs}
+        rewritten_outputs += remove_stale_case_jsons(cond_out_dir, valid_cond_slugs)
 
         for case, info in cases.items():
             case_dir = info["dir"]
@@ -894,6 +955,7 @@ def build():
             if (
                 isinstance(cached, dict)
                 and cached.get("fingerprint") == fingerprint
+                and cached.get("slug") == slug
                 and os.path.exists(out_path)
             ):
                 if cached.get("has_llm"):
@@ -946,6 +1008,7 @@ def build():
             view_build_cases[cache_key] = {
                 "fingerprint": fingerprint,
                 "has_llm": has_llm,
+                "slug": slug,
             }
 
         manifest_conditions[cond] = {
@@ -968,6 +1031,8 @@ def build():
     if os.path.isdir(GT_SUMMARY_DIR):
         gt_out_dir = os.path.join(SITE_DATA, "gt")
         os.makedirs(gt_out_dir, exist_ok=True)
+        valid_gt_slugs = {case_slugs[gt_case] for gt_case in gt_case_names if gt_case in case_slugs}
+        rewritten_outputs += remove_stale_case_jsons(gt_out_dir, valid_gt_slugs)
         gt_count = 0
         for gt_case in gt_case_names:
             vol = gt_case_volume.get(gt_case, "")
