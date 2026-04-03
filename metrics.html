@@ -1079,6 +1079,14 @@
     if (v == null) return '';
     return v >= 0.8 ? 'score-high' : v >= 0.6 ? 'score-mid' : 'score-low';
   }
+  function scoreClassRouge(v) {
+    if (v == null) return '';
+    return v >= 0.40 ? 'score-high' : v >= 0.30 ? 'score-mid' : 'score-low';
+  }
+  function scoreClassBert(v) {
+    if (v == null) return '';
+    return v >= 0.55 ? 'score-high' : v >= 0.47 ? 'score-mid' : 'score-low';
+  }
   function scoreClass5(v) {
     if (v == null) return '';
     return v >= 4.0 ? 'score-high' : v >= 3.0 ? 'score-mid' : 'score-low';
@@ -1086,6 +1094,14 @@
   function barClass01(v) {
     if (v == null) return 'dim-bar-fill-mid';
     return v >= 0.8 ? 'dim-bar-fill-high' : v >= 0.6 ? 'dim-bar-fill-mid' : 'dim-bar-fill-low';
+  }
+  function barClassRouge(v) {
+    if (v == null) return 'dim-bar-fill-mid';
+    return v >= 0.40 ? 'dim-bar-fill-high' : v >= 0.30 ? 'dim-bar-fill-mid' : 'dim-bar-fill-low';
+  }
+  function barClassBert(v) {
+    if (v == null) return 'dim-bar-fill-mid';
+    return v >= 0.55 ? 'dim-bar-fill-high' : v >= 0.47 ? 'dim-bar-fill-mid' : 'dim-bar-fill-low';
   }
   function barClass5(v) {
     if (v == null) return 'dim-bar-fill-mid';
@@ -1255,7 +1271,10 @@
 
   function expandScoreCell(v, scale) {
     if (v == null) return '<td class="score-cell" style="color:var(--slate-400)">--</td>';
-    const cls = scale === '5' ? scoreClass5(v) : scoreClass01(v);
+    const cls = scale === '5' ? scoreClass5(v)
+              : scale === 'rouge' ? scoreClassRouge(v)
+              : scale === 'bert' ? scoreClassBert(v)
+              : scoreClass01(v);
     const digits = scale === '5' ? 2 : 3;
     return `<td class="score-cell ${cls}">${fmt(v, digits)}</td>`;
   }
@@ -1293,8 +1312,8 @@
       <td class="score-cell ${scoreClass01(fr.avg)}">${fmt(fr.avg) || '--'}</td>
       <td class="score-cell ${scoreClass5(q.avg)}">${fmt(q.avg, 2) || '--'}</td>
       <td class="score-cell ${scoreClass01(c.faithfulness)}">${fmt(c.faithfulness) || '--'}</td>
-      <td class="score-cell ${scoreClass01(rougeBert.rougeL)}">${fmt(rougeBert.rougeL) || '--'}</td>
-      <td class="score-cell ${scoreClass01(rougeBert.bertscore_f1)}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
+      <td class="score-cell ${scoreClassRouge(rougeBert.rougeL)}">${fmt(rougeBert.rougeL) || '--'}</td>
+      <td class="score-cell ${scoreClassBert(rougeBert.bertscore_f1)}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
       <td>${actionHtml}</td>
     </tr>`;
   }
@@ -1396,7 +1415,7 @@
         : esc(resolveCaseDisplay(row.caseName));
       return `<tr>
         <td style="text-align:left;font-weight:600;color:var(--slate-900);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameHtml}</td>
-        ${expandScoreCell(rb.avg, '01')}${expandScoreCell(fr.avg, '01')}${expandScoreCell(q.avg, '5')}${expandScoreCell(c.faithfulness, '01')}${expandScoreCell(rougeBert.rougeL, '01')}${expandScoreCell(rougeBert.bertscore_f1, '01')}
+        ${expandScoreCell(rb.avg, '01')}${expandScoreCell(fr.avg, '01')}${expandScoreCell(q.avg, '5')}${expandScoreCell(c.faithfulness, '01')}${expandScoreCell(rougeBert.rougeL, 'rouge')}${expandScoreCell(rougeBert.bertscore_f1, 'bert')}
       </tr>`;
     }).join('');
     const showMoreHtml = hasMore ? `<tr><td colspan="7" style="text-align:center;padding:8px">
@@ -1652,8 +1671,8 @@
     { key: 'fact', label: 'Fact Recall', short: 'Fact', value: cond => cond.averages?.fact_recall_avg, scale: '01' },
     { key: 'quality', label: 'Quality', short: 'Quality', value: cond => cond.averages?.quality_avg, scale: '5' },
     { key: 'faith', label: 'Faithfulness', short: 'Faith', value: cond => cond.averages?.faithfulness_avg, scale: '01' },
-    { key: 'rougeL', label: 'ROUGE-L', short: 'ROUGE-L', value: cond => cond.averages?.rouge_bertscore?.rougeL, scale: '01' },
-    { key: 'bert', label: 'BERTScore F1', short: 'BERT', value: cond => cond.averages?.rouge_bertscore?.bertscore_f1, scale: '01' },
+    { key: 'rougeL', label: 'ROUGE-L', short: 'ROUGE-L', value: cond => cond.averages?.rouge_bertscore?.rougeL, scale: 'rouge' },
+    { key: 'bert', label: 'BERTScore F1', short: 'BERT', value: cond => cond.averages?.rouge_bertscore?.bertscore_f1, scale: 'bert' },
   ];
 
   function scoreTextForScale(value, scale) {
@@ -1662,11 +1681,17 @@
   }
 
   function scoreClassForScale(value, scale) {
-    return scale === '5' ? scoreClass5(value) : scoreClass01(value);
+    return scale === '5' ? scoreClass5(value)
+         : scale === 'rouge' ? scoreClassRouge(value)
+         : scale === 'bert' ? scoreClassBert(value)
+         : scoreClass01(value);
   }
 
   function barClassForScale(value, scale) {
-    return scale === '5' ? barClass5(value) : barClass01(value);
+    return scale === '5' ? barClass5(value)
+         : scale === 'rouge' ? barClassRouge(value)
+         : scale === 'bert' ? barClassBert(value)
+         : barClass01(value);
   }
 
   function normalizeByScale(value, scale) {
@@ -2019,8 +2044,8 @@
         { label: 'Fact Recall', value: a.fact_recall_avg, scale: '01' },
         { label: 'Quality', value: a.quality_avg, scale: '5' },
         { label: 'Faithfulness', value: a.faithfulness_avg, scale: '01' },
-        { label: 'ROUGE-L', value: (a.rouge_bertscore || {}).rougeL, scale: '01' },
-        { label: 'BERTScore F1', value: (a.rouge_bertscore || {}).bertscore_f1, scale: '01' },
+        { label: 'ROUGE-L', value: (a.rouge_bertscore || {}).rougeL, scale: 'rouge' },
+        { label: 'BERTScore F1', value: (a.rouge_bertscore || {}).bertscore_f1, scale: 'bert' },
       ];
       card.innerHTML = `
         <div class="model-card-head">
@@ -2073,8 +2098,8 @@
         { label: 'Fact Recall', value: a.fact_recall_avg, scale: '01' },
         { label: 'Quality', value: a.quality_avg, scale: '5' },
         { label: 'Faithfulness', value: a.faithfulness_avg, scale: '01' },
-        { label: 'ROUGE-L', value: (a.rouge_bertscore || {}).rougeL, scale: '01' },
-        { label: 'BERTScore F1', value: (a.rouge_bertscore || {}).bertscore_f1, scale: '01' },
+        { label: 'ROUGE-L', value: (a.rouge_bertscore || {}).rougeL, scale: 'rouge' },
+        { label: 'BERTScore F1', value: (a.rouge_bertscore || {}).bertscore_f1, scale: 'bert' },
       ];
       card.innerHTML = `
         <div class="model-card-head">
@@ -2114,9 +2139,10 @@
         ? avgFromCases(cond, 'rouge_bertscore', item.key)
         : avgFromCases(cond, dataKey, item.key);
       if (value == null) return '';
-      const pct = scale === '5' ? (value / 5) * 100 : value * 100;
-      const cls = scale === '5' ? barClass5(value) : barClass01(value);
-      const fmtVal = scale === '5' ? fmt(value, 2) : fmt(value);
+      const s = item.scale || scale;
+      const pct = s === '5' ? (value / 5) * 100 : value * 100;
+      const cls = barClassForScale(value, s);
+      const fmtVal = s === '5' ? fmt(value, 2) : fmt(value);
       return `<div class="model-detail-row">
         <div class="model-detail-label" data-tip="${item.tip || ''}">${item.label}</div>
         <div class="model-detail-track"><div class="model-detail-fill ${cls}" style="width:${pct}%"></div></div>
@@ -2128,6 +2154,8 @@
   function capabilityTone(value, scale) {
     if (value == null) return 'mid';
     if (scale === '5') return value >= 4.0 ? 'high' : value >= 3.0 ? 'mid' : 'low';
+    if (scale === 'rouge') return value >= 0.40 ? 'high' : value >= 0.30 ? 'mid' : 'low';
+    if (scale === 'bert') return value >= 0.55 ? 'high' : value >= 0.47 ? 'mid' : 'low';
     return value >= 0.8 ? 'high' : value >= 0.6 ? 'mid' : 'low';
   }
 
@@ -2179,8 +2207,8 @@
       { key: 'fact', label: '事實涵蓋', value: a.fact_recall_avg, scale: '01', display: fmt(a.fact_recall_avg) || '--' },
       { key: 'quality', label: '寫作品質', value: a.quality_avg, scale: '5', display: fmt(a.quality_avg, 2) || '--' },
       { key: 'faith', label: '忠實性', value: a.faithfulness_avg, scale: '01', display: fmt(a.faithfulness_avg) || '--' },
-      { key: 'rougeL', label: '文字貼合', value: (a.rouge_bertscore || {}).rougeL, scale: '01', display: fmt((a.rouge_bertscore || {}).rougeL) || '--' },
-      { key: 'bert', label: '語義對齊', value: (a.rouge_bertscore || {}).bertscore_f1, scale: '01', display: fmt((a.rouge_bertscore || {}).bertscore_f1) || '--' },
+      { key: 'rougeL', label: '文字貼合', value: (a.rouge_bertscore || {}).rougeL, scale: 'rouge', display: fmt((a.rouge_bertscore || {}).rougeL) || '--' },
+      { key: 'bert', label: '語義對齊', value: (a.rouge_bertscore || {}).bertscore_f1, scale: 'bert', display: fmt((a.rouge_bertscore || {}).bertscore_f1) || '--' },
     ];
     return items.map(item => {
       const tone = capabilityTone(item.value, item.scale);
@@ -2202,8 +2230,8 @@
       { label: '事實涵蓋', value: a.fact_recall_avg, scale: '01' },
       { label: '寫作品質', value: a.quality_avg, scale: '5' },
       { label: '忠實性', value: a.faithfulness_avg, scale: '01' },
-      { label: '文字貼合', value: (a.rouge_bertscore || {}).rougeL, scale: '01' },
-      { label: '語義對齊', value: (a.rouge_bertscore || {}).bertscore_f1, scale: '01' },
+      { label: '文字貼合', value: (a.rouge_bertscore || {}).rougeL, scale: 'rouge' },
+      { label: '語義對齊', value: (a.rouge_bertscore || {}).bertscore_f1, scale: 'bert' },
     ].filter(x => x.value != null);
     if (!traits.length) return `${currentVolume} 目前只有部分可用指標，適合先當參考卡看整體輪廓。`;
     const sorted = [...traits].sort((x, y) => y.value - x.value);
@@ -2235,12 +2263,12 @@
     const factItems = Object.entries(FACT_LABELS).map(([key, label]) => ({ key, label, tip: FACT_TIPS[key] || '' }));
     const qualityItems = Object.entries(QUALITY_LABELS).map(([key, label]) => ({ key, label, tip: QUALITY_TIPS[key] || '' }));
     const rougeItems = [
-      { key: 'rouge1', label: 'ROUGE-1', tip: ROUGE_BERT_TIPS.rouge1 },
-      { key: 'rouge2', label: 'ROUGE-2', tip: ROUGE_BERT_TIPS.rouge2 },
-      { key: 'rougeL', label: 'ROUGE-L', tip: ROUGE_BERT_TIPS.rougeL },
-      { key: 'bertscore_p', label: 'BERT P', tip: ROUGE_BERT_TIPS.bertscore_p },
-      { key: 'bertscore_r', label: 'BERT R', tip: ROUGE_BERT_TIPS.bertscore_r },
-      { key: 'bertscore_f1', label: 'BERT F1', tip: ROUGE_BERT_TIPS.bertscore_f1 },
+      { key: 'rouge1', label: 'ROUGE-1', tip: ROUGE_BERT_TIPS.rouge1, scale: 'rouge' },
+      { key: 'rouge2', label: 'ROUGE-2', tip: ROUGE_BERT_TIPS.rouge2, scale: 'rouge' },
+      { key: 'rougeL', label: 'ROUGE-L', tip: ROUGE_BERT_TIPS.rougeL, scale: 'rouge' },
+      { key: 'bertscore_p', label: 'BERT P', tip: ROUGE_BERT_TIPS.bertscore_p, scale: 'bert' },
+      { key: 'bertscore_r', label: 'BERT R', tip: ROUGE_BERT_TIPS.bertscore_r, scale: 'bert' },
+      { key: 'bertscore_f1', label: 'BERT F1', tip: ROUGE_BERT_TIPS.bertscore_f1, scale: 'bert' },
     ];
     panel.innerHTML = `
       <div class="model-detail-head">
