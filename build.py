@@ -54,6 +54,9 @@ EXTRACTIONS_DIR_V3104_PATCHED = os.path.join(
     DATA_PROJECT, "data", "extractions_v3.10.4_patched_claude_manual_fix"
 )
 EXTRACTIONS_DIR_V3104 = os.path.join(DATA_PROJECT, "data", "extractions_v3.10.4")
+EXTRACTIONS_LEGACY_DIR = os.path.join(
+    DATA_PROJECT, "data", "extractions", "LENS-Extraction-v1"
+)
 SOURCE_TEXT_DIR = os.path.join(DATA_PROJECT, "原始判決書")
 GT_SUMMARY_DIR = os.path.join(DATA_PROJECT, "摘要 (ground_truth)")
 SITE_DATA = os.path.join(SCRIPT_DIR, "data")
@@ -385,12 +388,41 @@ def find_v310_master_path(case_name):
     return None
 
 
+def find_legacy_medical_interventions_path(case_name, volume):
+    candidates = [
+        os.path.join(EXTRACTIONS_LEGACY_DIR, volume, case_name, "workspace", "medical_interventions.json"),
+        os.path.join(EXTRACTIONS_LEGACY_DIR, volume, case_name, "master.json"),
+    ]
+    for path in candidates:
+        if os.path.exists(path):
+            return path
+    return None
+
+
+def load_medical_interventions(case_name, volume, master):
+    current = master.get("medical_interventions")
+    if isinstance(current, dict):
+        return current
+
+    legacy_path = find_legacy_medical_interventions_path(case_name, volume)
+    if not legacy_path:
+        return None
+
+    legacy_obj = read_json(legacy_path)
+    if isinstance(legacy_obj, dict):
+        if isinstance(legacy_obj.get("medical_interventions"), dict):
+            return legacy_obj.get("medical_interventions")
+        if "procedures" in legacy_obj or "medications" in legacy_obj:
+            return legacy_obj
+    return None
+
+
 def compute_v310_timeline_fingerprint(case_name, volume):
     master_path = find_v310_master_path(case_name)
     if not master_path:
         return None
     parts = [
-        "timeline_v310_v1",
+        "timeline_v310_v2",
         case_name,
         volume,
         master_path,
@@ -398,6 +430,8 @@ def compute_v310_timeline_fingerprint(case_name, volume):
     ]
     chunk_path = os.path.join(CHUNKS_DIR, volume, f"{case_name}.json")
     parts.extend([chunk_path, _stat_sig(chunk_path)])
+    legacy_mi_path = find_legacy_medical_interventions_path(case_name, volume)
+    parts.extend([legacy_mi_path or "-", _stat_sig(legacy_mi_path)])
     return _hash_parts(parts)
 
 
@@ -628,6 +662,7 @@ def load_v310_timeline(case_name, volume):
     events = tl_result.get("timeline", tl_result.get("events", []))
     if not events:
         return None
+    medical_interventions = load_medical_interventions(case_name, volume, master)
 
     chunks = []
     chunk_path = os.path.join(CHUNKS_DIR, volume, f"{case_name}.json")
@@ -657,6 +692,7 @@ def load_v310_timeline(case_name, volume):
         "volume": volume,
         "source": "v3.10.4",
         "events": events,
+        "medical_interventions": medical_interventions,
         "timeline_summary": tl_summary,
         "time_gaps": time_gaps,
         "causation_chain": tl_result.get("causation_chain", []),
