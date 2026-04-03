@@ -37,12 +37,15 @@ except ImportError as exc:  # pragma: no cover
     raise SystemExit(2) from exc
 
 
+EVAL_STORAGE_VERSION = "v3"
+EVAL_STORAGE_PREFIX = f"eval_{EVAL_STORAGE_VERSION}"
+EVAL_CAMPAIGN_ID = "human_eval_claude_afg_vs_deepseek_full_20260403"
 EVAL_CONDITIONS = [
     "claude_afg_v5.1",
     "ablation_no_afg",
     "ablation_no_react",
     "baseline_claude-haiku",
-    "baseline_claude-sonnet",
+    "LENS-Full-DeepSeek_v31",
 ]
 
 USER_ROLES = {
@@ -114,18 +117,29 @@ def normalize_complete_flag(data: Dict[str, Any], score_keys_min: int = 0) -> bo
 def resolve_evaluator_name(uid: str, records: Dict[str, Any]) -> str:
     """Extract the evaluator display name from record keys (keys use name, not UID)."""
     for key in records:
-        if key.startswith("eval_v2_condorder_"):
-            # eval_v2_condorder_{name}_{caseName}
-            rest = key[len("eval_v2_condorder_"):]
+        if key.startswith(f"{EVAL_STORAGE_PREFIX}_condorder_"):
+            rest = key[len(f"{EVAL_STORAGE_PREFIX}_condorder_"):]
             for name in USER_ROLES:
                 if rest.startswith(name + "_"):
                     return name
-        elif key.startswith("eval_v2_"):
-            rest = key[len("eval_v2_"):]
+        elif key.startswith(f"{EVAL_STORAGE_PREFIX}_"):
+            rest = key[len(f"{EVAL_STORAGE_PREFIX}_"):]
             for name in USER_ROLES:
                 if rest.startswith(name + "_"):
                     return name
     return uid
+
+
+def extract_cond_order(data: Any) -> list[str]:
+    if isinstance(data, list):
+        return [c for c in data if isinstance(c, str)]
+    if isinstance(data, dict):
+        if data.get("campaign_id") != EVAL_CAMPAIGN_ID:
+            return []
+        order = data.get("order")
+        if isinstance(order, list):
+            return [c for c in order if isinstance(c, str)]
+    return []
 
 
 def iter_evaluator_records(db) -> Iterable[Tuple[str, Dict[str, Dict[str, Any]]]]:
@@ -147,7 +161,7 @@ def iter_evaluator_records(db) -> Iterable[Tuple[str, Dict[str, Dict[str, Any]]]
 
 
 def split_phase_key(evaluator: str, key: str) -> Tuple[str, str, str] | None:
-    prefix = f"eval_v2_{evaluator}_"
+    prefix = f"{EVAL_STORAGE_PREFIX}_{evaluator}_"
     if not key.startswith(prefix):
         return None
     middle = key[len(prefix):]
@@ -182,6 +196,8 @@ def build_case_export(
             "timestamp": snapshot_timestamp,
             "condition_order": cond_order,
             "rubric_version": "v2.1",
+            "storage_version": EVAL_STORAGE_VERSION,
+            "campaign_id": EVAL_CAMPAIGN_ID,
         },
         "phase1": {},
         "phaseFB": {},
@@ -231,26 +247,29 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
         phase_records: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
         case_names: set[str] = set()
 
-        cond_prefix = f"eval_v2_condorder_{evaluator}_"
-        base_prefix = f"eval_v2_{evaluator}_"
+        cond_prefix = f"{EVAL_STORAGE_PREFIX}_condorder_{evaluator}_"
+        base_prefix = f"{EVAL_STORAGE_PREFIX}_{evaluator}_"
 
         for key, data in records.items():
             if key.startswith(cond_prefix):
                 case_name = key[len(cond_prefix):]
-                order = data if isinstance(data, list) else []
-                cond_orders[case_name] = [c for c in order if isinstance(c, str)] or list(EVAL_CONDITIONS)
+                order = extract_cond_order(data)
+                cond_orders[case_name] = order or list(EVAL_CONDITIONS)
                 # Don't add to case_names — condorder alone doesn't count as eval data
                 continue
 
             if key.startswith(base_prefix) and key.endswith("_phase3"):
                 case_name = key[len(base_prefix): -len("_phase3")]
-                phase3_by_case[case_name] = data
+                if isinstance(data, dict) and data.get("_campaign_id") == EVAL_CAMPAIGN_ID:
+                    phase3_by_case[case_name] = data
                 case_names.add(case_name)
                 continue
 
             split = split_phase_key(evaluator, key)
             if split:
                 case_name, cond, phase_name = split
+                if not isinstance(data, dict) or data.get("_campaign_id") != EVAL_CAMPAIGN_ID:
+                    continue
                 phase_records[(case_name, cond, phase_name)] = data
                 case_names.add(case_name)
 
@@ -333,10 +352,17 @@ def write_snapshot(
         "record_count": record_count,
         "is_empty": is_empty,
         "status": status,
-        "schema_version": "eval_v2_daily_backup_v1",
+        "schema_version": "eval_v3_daily_backup_v1",
+        "storage_version": EVAL_STORAGE_VERSION,
+        "campaign_id": EVAL_CAMPAIGN_ID,
     }
+    existing_evaluator_docs = list(today_ref.collection("evaluators").stream())
     batch = db.batch()
     batch.set(today_ref, meta)
+    live_evaluators = set(payload.keys())
+    for doc in existing_evaluator_docs:
+        if doc.id not in live_evaluators:
+            batch.delete(doc.reference)
     for evaluator, data in payload.items():
         ref = today_ref.collection("evaluators").document(evaluator)
         batch.set(
@@ -353,6 +379,8 @@ def write_snapshot(
                     for case_data in (data.get("cases") or {}).values()
                 ),
                 "content_hash": content_hash(data),
+                "storage_version": EVAL_STORAGE_VERSION,
+                "campaign_id": EVAL_CAMPAIGN_ID,
                 "data": data,
             },
         )
@@ -402,10 +430,15 @@ def write_local_snapshot(local_dir: str, snapshot_id: str, payload: Dict[str, An
         ),
         "is_empty": is_empty,
         "status": "empty" if is_empty else ("unchanged" if same_as_previous else "ok"),
+        "storage_version": EVAL_STORAGE_VERSION,
+        "campaign_id": EVAL_CAMPAIGN_ID,
     }
     (snapshot_dir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     eval_dir = snapshot_dir / "evaluators"
     eval_dir.mkdir(exist_ok=True)
+    for old_file in eval_dir.glob("*.json"):
+        if old_file.stem not in payload:
+            old_file.unlink()
     for evaluator, data in payload.items():
         (eval_dir / f"{evaluator}.json").write_text(
             json.dumps({evaluator: data}, ensure_ascii=False, indent=2),

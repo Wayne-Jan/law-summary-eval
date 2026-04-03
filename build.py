@@ -18,7 +18,7 @@ Volume-aware: scans predictions/{cond}/{volume}/{case}/ where volume
 is one of 上冊, 中冊, 下冊.
 
 LLM-eval refresh workflow:
-    1. Generate or update evaluation JSONs in Law_extraction_refactor
+    1. Generate or update evaluation JSONs in lens-opensource
        under data/predictions/{cond}/{volume}/{case}/eval/.
     2. Run this script from law-summary-eval:
            python3 build.py
@@ -42,19 +42,20 @@ import subprocess
 from pathlib import Path
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-SOURCE_PROJECT = os.environ.get("LAW_PROJECT_ROOT", "/mnt/d/Law_extraction_refactor")
-sys.path.insert(0, SOURCE_PROJECT)
+DATA_PROJECT = os.environ.get("LAW_PROJECT_ROOT", "/mnt/d/lens-opensource")
+TOOLING_PROJECT = os.environ.get("LAW_TOOLING_ROOT", "/mnt/d/Law_extraction_refactor")
+sys.path.insert(0, TOOLING_PROJECT)
 from modules.extraction_v3_8.alignment_engine import smart_align
 
-PREDICTIONS = os.path.join(SOURCE_PROJECT, "data", "predictions")
-CHUNKS_DIR = os.path.join(SOURCE_PROJECT, "data", "chunks_20260105")
-EXTRACTIONS_DIR_V39 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.9")
+PREDICTIONS = os.path.join(DATA_PROJECT, "data", "predictions")
+CHUNKS_DIR = os.path.join(DATA_PROJECT, "data", "chunks_20260105")
+EXTRACTIONS_DIR_V39 = os.path.join(DATA_PROJECT, "data", "extractions_v3.9")
 EXTRACTIONS_DIR_V3104_PATCHED = os.path.join(
-    SOURCE_PROJECT, "data", "extractions_v3.10.4_patched_claude_manual_fix"
+    DATA_PROJECT, "data", "extractions_v3.10.4_patched_claude_manual_fix"
 )
-EXTRACTIONS_DIR_V3104 = os.path.join(SOURCE_PROJECT, "data", "extractions_v3.10.4")
-SOURCE_TEXT_DIR = os.path.join(SOURCE_PROJECT, "原始判決書")
-GT_SUMMARY_DIR = os.path.join(SOURCE_PROJECT, "摘要 (ground_truth)")
+EXTRACTIONS_DIR_V3104 = os.path.join(DATA_PROJECT, "data", "extractions_v3.10.4")
+SOURCE_TEXT_DIR = os.path.join(DATA_PROJECT, "原始判決書")
+GT_SUMMARY_DIR = os.path.join(DATA_PROJECT, "摘要 (ground_truth)")
 SITE_DATA = os.path.join(SCRIPT_DIR, "data")
 TIMELINE_ALIGN_CACHE_DIR = os.path.join(
     tempfile.gettempdir(), "law-summary-eval-build-cache"
@@ -80,13 +81,23 @@ def log_stage(start_ts, message):
     print(f"[{elapsed:6.1f}s] {message}", flush=True)
 
 # Must match server.py VIEWER_CONDITION_LABELS / VIEWER_CONDITION_GROUPS
+EXCLUDED_CONDITIONS = {
+    "LENS-Full-GPT_v1",
+    "opensource_afg_v11",
+    "opensource_afg_v11_no_react",
+    "opensource_afg_v11_no_afg",
+    "opensource_afg_v11_5",
+    "opensource_afg_v11_5_no_react",
+    "opensource_afg_v11_5_no_afg",
+    "opensource_afg_v11_5_writer_nemotron_super",
+    "opensource_afg_v11_5_no_react_writer_nemotron_super",
+    "opensource_afg_v11_5_no_afg_writer_nemotron_super",
+}
+
 CONDITION_LABELS = {
     "claude_afg_v5.1": "LENS-Haiku 4.5-A",
     "ablation_no_afg": "LENS-Haiku 4.5-B",
     "ablation_no_react": "LENS-Haiku 4.5-C",
-    "opensource_afg_v11": "Open-L1",
-    "opensource_afg_v11_no_react": "Open-L2",
-    "opensource_afg_v11_no_afg": "Open-L3",
     "baseline_claude-haiku": "Claude Haiku 4.5",
     "baseline_claude-sonnet": "Claude Sonnet 4.6",
     "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
@@ -102,25 +113,16 @@ CONDITION_LABELS = {
     "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
     "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
-    "opensource_afg_v11_5": "LENS-GPT-OSS-A",
-    "opensource_afg_v11_5_no_react": "LENS-GPT-OSS-B",
-    "opensource_afg_v11_5_no_afg": "LENS-GPT-OSS-C",
-    "opensource_afg_v11_5_writer_nemotron_super": "LENS-Nemotron Super-A",
-    "opensource_afg_v11_5_no_react_writer_nemotron_super": "LENS-Nemotron Super-B",
-    "opensource_afg_v11_5_no_afg_writer_nemotron_super": "LENS-Nemotron Super-C",
     "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
     "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
     "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
 }
 
-# Display order: Claude → OpenSource → Baselines
+# Display order: Claude → Baselines → DeepSeek variants
 CONDITION_ORDER = [
     "claude_afg_v5.1",
     "ablation_no_afg",
     "ablation_no_react",
-    "opensource_afg_v11",
-    "opensource_afg_v11_no_afg",
-    "opensource_afg_v11_no_react",
     "baseline_claude-haiku",
     "baseline_claude-sonnet",
     "baseline_gemini-3.0-flash",
@@ -139,12 +141,6 @@ CONDITION_ORDER = [
     "LENS-Full-DeepSeek_v31",
     "LENS-NoReact-DeepSeek_v31",
     "LENS-NoAFG-DeepSeek_v31",
-    "opensource_afg_v11_5",
-    "opensource_afg_v11_5_no_afg",
-    "opensource_afg_v11_5_no_react",
-    "opensource_afg_v11_5_writer_nemotron_super",
-    "opensource_afg_v11_5_no_react_writer_nemotron_super",
-    "opensource_afg_v11_5_no_afg_writer_nemotron_super",
 ]
 
 CONDITION_GROUPS = {
@@ -166,15 +162,6 @@ CONDITION_GROUPS = {
     "baseline_ollama_nemotron-3-super-cloud": "開源模型",
     "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
     "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
-    "opensource_afg_v11": "開源模型",
-    "opensource_afg_v11_no_afg": "開源模型",
-    "opensource_afg_v11_no_react": "開源模型",
-    "opensource_afg_v11_5": "開源模型",
-    "opensource_afg_v11_5_no_afg": "開源模型",
-    "opensource_afg_v11_5_no_react": "開源模型",
-    "opensource_afg_v11_5_writer_nemotron_super": "開源模型",
-    "opensource_afg_v11_5_no_react_writer_nemotron_super": "開源模型",
-    "opensource_afg_v11_5_no_afg_writer_nemotron_super": "開源模型",
     "LENS-Full-DeepSeek_v31": "開源模型",
     "LENS-NoReact-DeepSeek_v31": "開源模型",
     "LENS-NoAFG-DeepSeek_v31": "開源模型",
@@ -782,7 +769,12 @@ def build():
 
     for cond in sorted(os.listdir(PREDICTIONS)):
         cond_dir = os.path.join(PREDICTIONS, cond)
-        if not os.path.isdir(cond_dir) or cond.startswith(".") or cond in ("Old",):
+        if (
+            not os.path.isdir(cond_dir)
+            or cond.startswith(".")
+            or cond in ("Old",)
+            or cond in EXCLUDED_CONDITIONS
+        ):
             continue
         cases = {}
         for vol in VOLUMES:
@@ -792,6 +784,8 @@ def build():
             for case in sorted(os.listdir(vol_dir)):
                 case_dir = os.path.join(vol_dir, case)
                 if not os.path.isdir(case_dir):
+                    continue
+                if case.startswith("_"):
                     continue
                 if not os.path.exists(os.path.join(case_dir, "summary_clean.txt")):
                     continue
@@ -1170,7 +1164,7 @@ def build():
 
     log_stage(build_started, "Stage 7/7: writing eval whitelist and manifest")
     # Load human eval 30-case whitelist
-    eval_candidates_path = os.path.join(SOURCE_PROJECT, "data", "human_eval_30_candidates.json")
+    eval_candidates_path = os.path.join(DATA_PROJECT, "data", "human_eval_30_candidates.json")
     eval_case_set = {}   # case_name -> {"volume": vol, "short_name": str}
     if os.path.exists(eval_candidates_path):
         with open(eval_candidates_path, encoding="utf-8") as f:

@@ -7,7 +7,7 @@ This keeps the existing frontend schema intact and emits:
   - data/eval_metrics_lower.json
 
 All three volumes are rebuilt from the source evaluation artifacts in
-Law_extraction_refactor.
+lens-opensource.
 """
 
 from __future__ import annotations
@@ -23,7 +23,7 @@ from statistics import mean
 REPO_ROOT = Path(__file__).resolve().parent
 DATA_DIR = REPO_ROOT / "data"
 CURRENT_METRICS = DATA_DIR / "eval_metrics.json"
-SOURCE_ROOT = Path("/mnt/d/Law_extraction_refactor")
+SOURCE_ROOT = Path("/mnt/d/lens-opensource")
 PREDICTIONS_ROOT = SOURCE_ROOT / "data" / "predictions"
 METRIC_EVAL_ROOT = SOURCE_ROOT / "experiments" / "metric_eval_pilot" / "outputs"
 VOLUMES = ("上冊", "中冊", "下冊")
@@ -32,6 +32,19 @@ VOLUME_TO_FILE = {
     "中冊": "eval_metrics_middle.json",
     "下冊": "eval_metrics_lower.json",
 }
+EXCLUDED_CONDITIONS = {
+    "LENS-Full-GPT_v1",
+    "opensource_afg_v11",
+    "opensource_afg_v11_no_react",
+    "opensource_afg_v11_no_afg",
+    "opensource_afg_v11_5",
+    "opensource_afg_v11_5_no_react",
+    "opensource_afg_v11_5_no_afg",
+    "opensource_afg_v11_5_writer_nemotron_super",
+    "opensource_afg_v11_5_no_react_writer_nemotron_super",
+    "opensource_afg_v11_5_no_afg_writer_nemotron_super",
+}
+
 EXTRA_CONDITIONS = OrderedDict(
     [
         ("LENS-Full-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-A", "group": "開源模型"}),
@@ -149,8 +162,11 @@ def load_existing_template():
             },
         )
         for key, value in data["conditions"].items()
+        if key not in EXCLUDED_CONDITIONS
     )
     for key, value in EXTRA_CONDITIONS.items():
+        if key in EXCLUDED_CONDITIONS:
+            continue
         conditions.setdefault(key, value)
     return data, list(conditions.items())
 
@@ -247,6 +263,8 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
     raw_cases = []
     for case_dir in sorted(p for p in pred_dir.iterdir() if p.is_dir()):
         case_name = case_dir.name
+        if case_name.startswith("_"):
+            continue
         eval_dir = case_dir / "eval"
         rule = extract_rule(eval_dir / "rule_metrics.json")
         fact = extract_fact(eval_dir / "fact_recall.json")

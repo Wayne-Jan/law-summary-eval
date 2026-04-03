@@ -1838,6 +1838,9 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+const EVAL_STORAGE_VERSION = 'v3';
+const EVAL_STORAGE_PREFIX = `eval_${EVAL_STORAGE_VERSION}`;
+const EVAL_CAMPAIGN_ID = 'human_eval_claude_afg_vs_deepseek_full_20260403';
 
 function fsDocId(key) {
   // Encode key for use as Firestore document ID (no forward slashes allowed)
@@ -1848,8 +1851,105 @@ function cloudRecordRef(evaluator, key) {
   return db.collection('evals').doc(evaluator).collection('records').doc(fsDocId(key));
 }
 
+function getEvalDataPrefix(evaluator) {
+  return `${EVAL_STORAGE_PREFIX}_${evaluator}_`;
+}
+
+function getCondOrderKeyPrefix(evaluator) {
+  return `${EVAL_STORAGE_PREFIX}_condorder_${evaluator}_`;
+}
+
+function getCondOrderStorageKey(evaluator, caseName) {
+  return `${getCondOrderKeyPrefix(evaluator)}${caseName}`;
+}
+
+function getPhaseStorageKey(evaluator, caseName, cond, phase) {
+  return `${getEvalDataPrefix(evaluator)}${caseName}_${cond}_phase${phase}`;
+}
+
+function getPhase3StorageKey(evaluator, caseName) {
+  return `${getEvalDataPrefix(evaluator)}${caseName}_phase3`;
+}
+
+function cloneJSON(value) {
+  return value == null ? null : JSON.parse(JSON.stringify(value));
+}
+
+function isValidConditionOrder(order) {
+  if (!Array.isArray(order) || order.length !== EVAL_CONDITIONS.length) return false;
+  const expected = [...EVAL_CONDITIONS].sort();
+  const actual = [...order].sort();
+  return expected.every((cond, idx) => cond === actual[idx]);
+}
+
+function stampEvalData(data) {
+  return {
+    ...(data || {}),
+    _campaign_id: EVAL_CAMPAIGN_ID,
+    _storage_version: EVAL_STORAGE_VERSION,
+  };
+}
+
+function isCurrentCampaignData(data) {
+  return !!(data && typeof data === 'object' && data._campaign_id === EVAL_CAMPAIGN_ID);
+}
+
+function normalizeCondOrderRecord(record) {
+  if (Array.isArray(record)) {
+    return {
+      order: record,
+      campaign_id: null,
+      storage_version: 'legacy',
+    };
+  }
+  if (record && typeof record === 'object' && Array.isArray(record.order)) {
+    return record;
+  }
+  return null;
+}
+
+function getValidCondOrderFromRecord(record) {
+  const normalized = normalizeCondOrderRecord(record);
+  if (!normalized) return null;
+  if (normalized.campaign_id !== EVAL_CAMPAIGN_ID) return null;
+  if (!isValidConditionOrder(normalized.order)) return null;
+  return normalized.order.slice();
+}
+
+function makeCondOrderRecord(order) {
+  return {
+    order: order.slice(),
+    campaign_id: EVAL_CAMPAIGN_ID,
+    storage_version: EVAL_STORAGE_VERSION,
+    updated_at: new Date().toISOString(),
+  };
+}
+
+function isCurrentEvalStorageKeyForEvaluator(key, evaluator) {
+  return key.startsWith(getEvalDataPrefix(evaluator)) || key.startsWith(getCondOrderKeyPrefix(evaluator));
+}
+
+function isAcceptedCloudRecord(key, data, evaluator) {
+  if (key.startsWith(getCondOrderKeyPrefix(evaluator))) {
+    return !!getValidCondOrderFromRecord(data);
+  }
+  if (key.startsWith(getEvalDataPrefix(evaluator))) {
+    return isCurrentCampaignData(data);
+  }
+  return false;
+}
+
+function clearCurrentEvalStorageForEvaluator(evaluator) {
+  const keys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (isCurrentEvalStorageKeyForEvaluator(key, evaluator)) keys.push(key);
+  }
+  keys.forEach((key) => localStorage.removeItem(key));
+}
+
 function shouldSyncKeyForEvaluator(key, evaluator) {
-  return key.startsWith(`eval_v2_${evaluator}_`) || key.startsWith(`eval_v2_condorder_${evaluator}_`);
+  return isCurrentEvalStorageKeyForEvaluator(key, evaluator);
 }
 
 async function writeCloudRecord(key, data) {
@@ -2709,24 +2809,25 @@ async function initApp() {
 }
 
 async function autoRestoreFromFirestore() {
-  const ev = getCloudEvaluatorId();
-  if (!ev || ev === 'default') return;
+  const cloudEv = getCloudEvaluatorId();
+  const evaluator = getEvaluator();
+  if (!cloudEv || cloudEv === 'default' || !evaluator || evaluator === 'default') return;
   try {
-    const snapshot = await db.collection('evals').doc(ev).collection('records').get();
+    const snapshot = await db.collection('evals').doc(cloudEv).collection('records').get();
+    clearCurrentEvalStorageForEvaluator(evaluator);
     if (snapshot.empty) return;
     let restored = 0;
     snapshot.forEach(doc => {
       const docData = doc.data();
       const { key, data } = docData;
       if (!key || data === undefined) return;
+      if (!isAcceptedCloudRecord(key, data, evaluator)) return;
       // Cloud is the single source of truth — always overwrite local
       localStorage.setItem(key, JSON.stringify(data));
       restored++;
     });
     if (restored > 0) {
       showToast(`已從雲端載入 ${restored} 筆資料`, 'success');
-      onCaseChange();
-      updateFooter();
     }
   } catch (e) {
     console.warn('autoRestoreFromFirestore failed:', e);
@@ -2738,20 +2839,22 @@ async function autoRestoreFromFirestore() {
 // ═══════════════════════════════════════════════════════════════
 
 function getConditionOrder(caseName) {
-  // Admin always sees fixed order (no blind, no condorder storage)
-  if (getSessionRole() === 'admin' || isAdminInspectMode()) return EVAL_CONDITIONS.slice();
+  // Admin panel uses fixed order, but admin inspect should follow the evaluator's blind order.
+  if (getSessionRole() === 'admin' && !isAdminInspectMode()) return EVAL_CONDITIONS.slice();
   const ev = getEvaluator();
-  const key = `eval_v2_condorder_${ev}_${caseName}`;
-  let order = loadStoredJSON(key);
-  if (order && Array.isArray(order) && order.length === EVAL_CONDITIONS.length) return order;
+  const key = getCondOrderStorageKey(ev, caseName);
+  const record = loadStoredJSON(key);
+  let order = getValidCondOrderFromRecord(record);
+  if (order) return order;
   // Generate random permutation for evaluators
   order = [...EVAL_CONDITIONS];
   for (let i = order.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [order[i], order[j]] = [order[j], order[i]];
   }
-  localStorage.setItem(key, JSON.stringify(order));
-  writeCloudRecord(key, order).catch(e => {
+  const stamped = makeCondOrderRecord(order);
+  localStorage.setItem(key, JSON.stringify(stamped));
+  writeCloudRecord(key, stamped).catch(e => {
     console.error('CRITICAL: condorder cloud write failed:', e);
     showToast('條件排序同步失敗，請檢查網路', 'error');
   });
@@ -2772,7 +2875,7 @@ function getRealCondition(caseName, anonIdx) {
 function stateKey(caseName, condIdx, phase) {
   const ev = getEvaluator();
   const cond = getRealCondition(caseName, condIdx);
-  return `eval_v2_${ev}_${caseName}_${cond}_phase${phase}`;
+  return getPhaseStorageKey(ev, caseName, cond, phase);
 }
 
 function getPhaseData(caseName, condIdx, phase) {
@@ -2780,6 +2883,7 @@ function getPhaseData(caseName, condIdx, phase) {
 }
 
 function setPhaseData(caseName, condIdx, phase, data) {
+  data = stampEvalData(data);
   data._saved = new Date().toISOString();
   const key = stateKey(caseName, condIdx, phase);
   localStorage.setItem(key, JSON.stringify(data));
@@ -2818,7 +2922,7 @@ function areAllCondsComplete(caseName) {
 
 function isPhase3Complete(caseName) {
   const ev = getEvaluator();
-  const key = `eval_v2_${ev}_${caseName}_phase3`;
+  const key = getPhase3StorageKey(ev, caseName);
   const d = loadStoredJSON(key);
   return !!(d && d._complete === true);
 }
@@ -4327,19 +4431,20 @@ function renderPhase3Summary() {
 function savePhase3State() {
   if (isAdminInspectMode()) return;
   const ev = getEvaluator();
-  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  const key = getPhase3StorageKey(ev, currentCase);
   let existing = loadStoredJSON(key) || {};
   const ranking = p3Ranking.map(idx => getAnonLabel(idx));
   const reason = document.getElementById('p3RankingReason');
   existing.ranking = ranking;
   if (reason) existing.ranking_reason = reason.value.trim();
+  existing = stampEvalData(existing);
   localStorage.setItem(key, JSON.stringify(existing));
   writeCloudRecord(key, existing).catch(e => console.warn('Firestore phase3 write failed:', e));
 }
 
 function collectPhase3Data() {
   const ev = getEvaluator();
-  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  const key = getPhase3StorageKey(ev, currentCase);
   let existing = loadStoredJSON(key) || {};
   return {
     ...existing,
@@ -4351,7 +4456,7 @@ function collectPhase3Data() {
 
 function restorePhase3() {
   const ev = getEvaluator();
-  const key = `eval_v2_${ev}_${currentCase}_phase3`;
+  const key = getPhase3StorageKey(ev, currentCase);
   let data = loadStoredJSON(key);
   if (!data || !data.ranking || !Array.isArray(data.ranking)) return;
 
@@ -4393,10 +4498,11 @@ function completePhase3() {
   const data = collectPhase3Data();
   data._complete = true;
   data._saved = new Date().toISOString();
+  const stamped = stampEvalData(data);
   const ev = getEvaluator();
-  const key = `eval_v2_${ev}_${currentCase}_phase3`;
-  localStorage.setItem(key, JSON.stringify(data));
-  writeCloudRecord(key, data).catch(e => console.warn('Firestore phase3 write failed:', e));
+  const key = getPhase3StorageKey(ev, currentCase);
+  localStorage.setItem(key, JSON.stringify(stamped));
+  writeCloudRecord(key, stamped).catch(e => console.warn('Firestore phase3 write failed:', e));
 
   showToast('此案評估完成！', 'success');
   renderCondPills();
@@ -4516,10 +4622,11 @@ function saveCurrentState() {
   } else if (currentPhase === 3 && SHOW_PHASE3_UI) {
     const data = collectPhase3Data();
     const ev = getEvaluator();
-    const key = `eval_v2_${ev}_${currentCase}_phase3`;
-    data._saved = new Date().toISOString();
-    localStorage.setItem(key, JSON.stringify(data));
-    writeCloudRecord(key, data).catch(e => console.warn('Firestore phase3 write failed:', e));
+    const key = getPhase3StorageKey(ev, currentCase);
+    const stamped = stampEvalData(data);
+    stamped._saved = new Date().toISOString();
+    localStorage.setItem(key, JSON.stringify(stamped));
+    writeCloudRecord(key, stamped).catch(e => console.warn('Firestore phase3 write failed:', e));
   }
 }
 
@@ -4618,7 +4725,9 @@ function exportJSON() {
       case_name: currentCase,
       timestamp: new Date().toISOString(),
       condition_order: condOrder,
-      rubric_version: 'v2.1'
+      rubric_version: 'v2.1',
+      storage_version: EVAL_STORAGE_VERSION,
+      campaign_id: EVAL_CAMPAIGN_ID
     },
     phase1: {},
     phaseFB: {},
@@ -4661,7 +4770,7 @@ function exportJSON() {
 
   // Phase 3
   const ev = evaluator;
-  const p3Key = `eval_v2_${ev}_${currentCase}_phase3`;
+  const p3Key = getPhase3StorageKey(ev, currentCase);
   try {
     const p3 = JSON.parse(localStorage.getItem(p3Key));
     if (p3) {
@@ -4678,7 +4787,7 @@ function exportJSON() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `eval_v2_${evaluator}_${currentCase}.json`;
+  a.download = `${EVAL_STORAGE_PREFIX}_${evaluator}_${currentCase}.json`;
   a.click();
   URL.revokeObjectURL(url);
   showToast('已匯出此案 JSON', 'info');
@@ -4688,7 +4797,16 @@ function buildCaseExportData(caseName) {
   const evaluator = getEvaluator() || 'anonymous';
   const condOrder = getConditionOrder(caseName);
   const result = {
-    meta: { evaluator, role: getCurrentRole(), case_name: caseName, timestamp: new Date().toISOString(), condition_order: condOrder, rubric_version: 'v2.1' },
+    meta: {
+      evaluator,
+      role: getCurrentRole(),
+      case_name: caseName,
+      timestamp: new Date().toISOString(),
+      condition_order: condOrder,
+      rubric_version: 'v2.1',
+      storage_version: EVAL_STORAGE_VERSION,
+      campaign_id: EVAL_CAMPAIGN_ID
+    },
     phase1: {}, phaseFB: {}, phaseTL: {}, phase3: null
   };
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
@@ -4717,7 +4835,7 @@ function buildCaseExportData(caseName) {
     };
   }
   try {
-    const p3 = JSON.parse(localStorage.getItem(`eval_v2_${evaluator}_${caseName}_phase3`));
+    const p3 = JSON.parse(localStorage.getItem(getPhase3StorageKey(evaluator, caseName)));
     if (p3) result.phase3 = { ranking: p3.ranking || [], ranking_reason: p3.ranking_reason || '', revision_count: p3.revision_count || 0, _complete: !!p3._complete };
   } catch {}
   return result;
@@ -4738,7 +4856,7 @@ function exportAllJSON() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `eval_v2_${evaluator}_all_${new Date().toISOString().slice(0,10)}.json`;
+  a.download = `${EVAL_STORAGE_PREFIX}_${evaluator}_all_${new Date().toISOString().slice(0,10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
   showToast(`已匯出 ${count} 案`, 'info');
@@ -4777,21 +4895,28 @@ function importSingleCase(data) {
   const evaluator = data.meta.evaluator || getEvaluator() || 'anonymous';
   const role = data.meta.role || 'medical';
   const caseName = data.meta.case_name;
-  if (data.meta.condition_order) {
-    localStorage.setItem(`eval_v2_condorder_${evaluator}_${caseName}`, JSON.stringify(data.meta.condition_order));
+  if (data.meta.condition_order && isValidConditionOrder(data.meta.condition_order)) {
+    localStorage.setItem(
+      getCondOrderStorageKey(evaluator, caseName),
+      JSON.stringify(makeCondOrderRecord(data.meta.condition_order))
+    );
   }
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAnonLabel(i);
     const cond = (data.meta.condition_order && data.meta.condition_order[i]) || EVAL_CONDITIONS[i];
     if (data.phase1 && data.phase1[label]) {
-      const key = `eval_v2_${evaluator}_${caseName}_${cond}_phase1`;
+      const key = getPhaseStorageKey(evaluator, caseName, cond, '1');
       const p1 = data.phase1[label];
-      localStorage.setItem(key, JSON.stringify({ scores: p1.scores || {}, overall_comment: p1.overall_comment || '', revision_count: p1.revision_count || 0 }));
+      localStorage.setItem(key, JSON.stringify(stampEvalData({
+        scores: p1.scores || {},
+        overall_comment: p1.overall_comment || '',
+        revision_count: p1.revision_count || 0
+      })));
     }
     if (data.phaseFB && data.phaseFB[label]) {
-      const key = `eval_v2_${evaluator}_${caseName}_${cond}_phaseFB`;
+      const key = getPhaseStorageKey(evaluator, caseName, cond, 'FB');
       const pfb = data.phaseFB[label];
-      localStorage.setItem(key, JSON.stringify({ sections: pfb.sections || {}, _complete: !!pfb._complete }));
+      localStorage.setItem(key, JSON.stringify(stampEvalData({ sections: pfb.sections || {}, _complete: !!pfb._complete })));
     }
   }
   // Phase TL
@@ -4800,21 +4925,21 @@ function importSingleCase(data) {
       const label = getAnonLabel(i);
       if (data.phaseTL[label]) {
         const cond = (data.meta.condition_order && data.meta.condition_order[i]) || EVAL_CONDITIONS[i];
-        const key = `eval_v2_${evaluator}_${caseName}_${cond}_phaseTL`;
+        const key = getPhaseStorageKey(evaluator, caseName, cond, 'TL');
         const ptl = data.phaseTL[label];
         const stored = { scores: ptl.scores || {}, comment: ptl.comment || '' };
         if (ptl._complete || Object.keys(stored.scores).length >= getTLExpectedCountForRole(role)) stored._complete = true;
-        localStorage.setItem(key, JSON.stringify(stored));
+        localStorage.setItem(key, JSON.stringify(stampEvalData(stored)));
       }
     }
   }
   if (data.phase3) {
-    localStorage.setItem(`eval_v2_${evaluator}_${caseName}_phase3`, JSON.stringify({
+    localStorage.setItem(getPhase3StorageKey(evaluator, caseName), JSON.stringify(stampEvalData({
       ranking: data.phase3.ranking || [],
       ranking_reason: data.phase3.ranking_reason || '',
       revision_count: data.phase3.revision_count || 0,
       _complete: !!data.phase3._complete
-    }));
+    })));
   }
 }
 
@@ -4829,8 +4954,9 @@ function importSingleCase(data) {
 // ─── FIRESTORE SYNC ───
 
 async function syncToFirestore() {
-  const ev = getCloudEvaluatorId();
-  if (!ev || ev === 'default') return;
+  const cloudEv = getCloudEvaluatorId();
+  const evaluator = getEvaluator();
+  if (!cloudEv || cloudEv === 'default' || !evaluator || evaluator === 'default') return;
   const syncBtn = document.getElementById('cloudSyncBtn');
   if (syncBtn) { syncBtn.disabled = true; syncBtn.textContent = '同步中...'; }
   try {
@@ -4840,10 +4966,10 @@ async function syncToFirestore() {
     let writes = 0;
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i);
-      if (!shouldSyncKeyForEvaluator(key, ev)) continue;
+      if (!shouldSyncKeyForEvaluator(key, evaluator)) continue;
       try {
         const data = JSON.parse(localStorage.getItem(key));
-        const ref = cloudRecordRef(ev, key);
+        const ref = cloudRecordRef(cloudEv, key);
         batch.set(ref, { key, data, updated: firebase.firestore.FieldValue.serverTimestamp() });
         writes++;
         if (writes >= MAX_BATCH_WRITES) {
@@ -4870,21 +4996,27 @@ async function restoreFromFirestore() {
     showToast('只有管理員可使用雲端還原', 'error');
     return;
   }
-  const ev = getCloudEvaluatorId();
-  if (!ev || ev === 'default') return;
+  const cloudEv = getCloudEvaluatorId();
+  const evaluator = getEvaluator();
+  if (!cloudEv || cloudEv === 'default' || !evaluator || evaluator === 'default') return;
   const profile = getAuthProfile();
   const label = profile ? profile.name : '目前使用者';
   if (!confirm(`從雲端還原 ${label} 的全部資料？（會覆蓋本機現有資料）`)) return;
   try {
     setCloudStatus('同步中', 'syncing');
-    const snapshot = await db.collection('evals').doc(ev).collection('records').get();
+    const snapshot = await db.collection('evals').doc(cloudEv).collection('records').get();
+    clearCurrentEvalStorageForEvaluator(evaluator);
     if (snapshot.empty) { setCloudStatus('雲端待命', ''); showToast('雲端尚無備份資料', 'error'); return; }
+    let restored = 0;
     snapshot.forEach(doc => {
       const { key, data } = doc.data();
-      if (key && data !== undefined) localStorage.setItem(key, JSON.stringify(data));
+      if (!key || data === undefined) return;
+      if (!isAcceptedCloudRecord(key, data, evaluator)) return;
+      localStorage.setItem(key, JSON.stringify(data));
+      restored++;
     });
     setCloudStatus('已同步', 'synced');
-    showToast(`已還原 ${snapshot.size} 筆資料`, 'success');
+    showToast(`已還原 ${restored} 筆資料`, 'success');
     onCaseChange();
     updateFooter();
   } catch (e) {
@@ -5432,7 +5564,7 @@ function buildAdminCaseActions(ev, caseName, overall, mobile = false) {
   const deleteBtn = overall !== 'empty'
     ? `<button class="admin-mini-btn danger" onclick='adminDeleteCaseData(${JSON.stringify(ev)}, ${JSON.stringify(caseName)})'>刪整案</button>`
     : '';
-  const p3 = loadLocalJSON(`eval_v2_${ev}_${caseName}_phase3`);
+  const p3 = loadLocalJSON(getPhase3StorageKey(ev, caseName));
   const p3badge = p3 && p3._complete ? `<span style="font-size:11px;font-weight:700;color:var(--indigo);">★ 已排序</span>` : '';
   const cls = mobile ? 'admin-mobile-actions' : 'admin-cell-actions';
   return `<div class="${cls}"><a class="admin-mini-btn jump-link" href="${inspectHref}">檢視整案</a>${deleteBtn}${p3badge}</div>`;
@@ -5610,8 +5742,11 @@ async function renderAdminContent() {
 
 
 function getEvCondOrderFor(evaluator, caseName) {
-  const key = `eval_v2_condorder_${evaluator}_${caseName}`;
-  try { const o = JSON.parse(localStorage.getItem(key)); if (Array.isArray(o)) return o; } catch {}
+  const key = getCondOrderStorageKey(evaluator, caseName);
+  try {
+    const order = getValidCondOrderFromRecord(JSON.parse(localStorage.getItem(key)));
+    if (order) return order;
+  } catch {}
   return EVAL_CONDITIONS.slice();
 }
 
@@ -5619,31 +5754,26 @@ function getEvCondOrderFor(evaluator, caseName) {
 function getEvaluatorCondStatus(evaluator, caseName, condIdx) {
   const condOrder = getEvCondOrderFor(evaluator, caseName);
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
-  const prefix = `eval_v2_${evaluator}_${caseName}_${cond}_phase`;
-  let p1done = false, fbdone = false, tldone = false;
-  let p1partial = false, fbpartial = false, tlpartial = false;
+  const prefix = getPhaseStorageKey(evaluator, caseName, cond, '');
+  let p1done = false, tldone = false;
+  let p1partial = false, tlpartial = false;
   try {
     const p1 = JSON.parse(localStorage.getItem(prefix + '1'));
     p1done = !!(p1 && p1.scores && Object.keys(p1.scores).length >= 9);
     p1partial = !!(p1 && p1.scores && Object.keys(p1.scores).length > 0);
   } catch {}
   try {
-    const fb = JSON.parse(localStorage.getItem(prefix + 'FB'));
-    fbdone = !!(fb && fb._complete);
-    fbpartial = !!(fb && fb.sections && Object.values(fb.sections).some(v => (v || '').trim()));
-  } catch {}
-  try {
     const tl = JSON.parse(localStorage.getItem(prefix + 'TL'));
     tldone = !!(tl && tl._complete);
     tlpartial = !!(tl && ((tl.scores && Object.keys(tl.scores).length > 0) || (tl.comment || '').trim()));
   } catch {}
-  if (p1done && fbdone && tldone) return 'done';
-  if (p1partial || fbpartial || tlpartial || p1done || fbdone || tldone) return 'partial';
+  if (p1done && tldone) return 'done';
+  if (p1partial || tlpartial || p1done || tldone) return 'partial';
   return 'empty';
 }
 
 function getEvaluatorCaseStatus(evaluator, caseName) {
-  const p3Key = `eval_v2_${evaluator}_${caseName}_phase3`;
+  const p3Key = getPhase3StorageKey(evaluator, caseName);
   try {
     const p3 = JSON.parse(localStorage.getItem(p3Key));
     if (p3 && p3._complete) return 'complete';
@@ -5655,8 +5785,8 @@ function getEvaluatorCaseStatus(evaluator, caseName) {
 }
 
 function getEvaluatorCaseKeys(evaluator, caseName) {
-  const prefix = `eval_v2_${evaluator}_${caseName}_`;
-  const condOrderKey = `eval_v2_condorder_${evaluator}_${caseName}`;
+  const prefix = `${getEvalDataPrefix(evaluator)}${caseName}_`;
+  const condOrderKey = getCondOrderStorageKey(evaluator, caseName);
   const keys = [];
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
@@ -5670,10 +5800,10 @@ function getEvaluatorVersionKeys(evaluator, caseName, condIdx) {
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
   const keys = [];
   ['1', 'FB', 'TL'].forEach(phase => {
-    const key = `eval_v2_${evaluator}_${caseName}_${cond}_phase${phase}`;
+    const key = getPhaseStorageKey(evaluator, caseName, cond, phase);
     if (localStorage.getItem(key)) keys.push(key);
   });
-  const phase3Key = `eval_v2_${evaluator}_${caseName}_phase3`;
+  const phase3Key = getPhase3StorageKey(evaluator, caseName);
   if (localStorage.getItem(phase3Key)) keys.push(phase3Key);
   return keys;
 }
@@ -5681,7 +5811,7 @@ function getEvaluatorVersionKeys(evaluator, caseName, condIdx) {
 function getDefaultPhaseForEvaluatorCondition(evaluator, caseName, condIdx) {
   const condOrder = getEvCondOrderFor(evaluator, caseName);
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
-  const prefix = `eval_v2_${evaluator}_${caseName}_${cond}_phase`;
+  const prefix = getPhaseStorageKey(evaluator, caseName, cond, '');
   const p1 = loadLocalJSON(prefix + '1');
   const tl = loadLocalJSON(prefix + 'TL');
   if (!(p1 && p1.scores && Object.keys(p1.scores).length >= 9)) return 1;
@@ -5817,7 +5947,7 @@ function adminExportAll() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `eval_v2_admin_all_${new Date().toISOString().slice(0,10)}.json`;
+  a.download = `${EVAL_STORAGE_PREFIX}_admin_all_${new Date().toISOString().slice(0,10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
   showToast(`已匯出 ${Object.keys(allData).length} 位評估者的資料`, 'info');
