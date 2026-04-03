@@ -218,8 +218,19 @@ def load_rouge_by_case(cond: str, volume: str):
     volume_dir = METRIC_EVAL_ROOT / cond / volume
     summary = read_json(volume_dir / "summary.json")
     per_case = {}
-    for row in read_csv_rows(volume_dir / "per_case_scores.csv"):
+    csv_path = volume_dir / "per_case_scores.csv"
+
+    # Fallback: if per-volume CSV doesn't exist, use all_volumes and filter
+    if not csv_path.exists():
+        csv_path = METRIC_EVAL_ROOT / cond / "all_volumes" / "per_case_scores.csv"
+        summary = read_json(METRIC_EVAL_ROOT / cond / "all_volumes" / "summary.json")
+
+    for row in read_csv_rows(csv_path):
         if row.get("status") != "ok":
+            continue
+        # When using all_volumes fallback, filter by volume column
+        row_volume = row.get("volume", "")
+        if row_volume and row_volume != volume:
             continue
         case_name = row.get("case")
         if not case_name:
@@ -233,7 +244,9 @@ def load_rouge_by_case(cond: str, volume: str):
             "bertscore_f1": safe_float(row.get("bertscore_f1")),
         }
     averages = None
-    if summary:
+    # When using all_volumes fallback, don't use the global summary averages
+    # (they cover all volumes); recompute from filtered cases instead.
+    if summary and (METRIC_EVAL_ROOT / cond / volume).exists():
         averages = {
             "rouge1": safe_float(summary.get("rouge1_f_mean")),
             "rouge2": safe_float(summary.get("rouge2_f_mean")),
@@ -246,7 +259,7 @@ def load_rouge_by_case(cond: str, volume: str):
         keys = ("rouge1", "rouge2", "rougeL", "bertscore_p", "bertscore_r", "bertscore_f1")
         averages = {k: mean_or_none(v.get(k) for v in per_case.values()) for k in keys}
     n = None
-    if summary:
+    if summary and (METRIC_EVAL_ROOT / cond / volume).exists():
         n = summary.get("n_cases_ok")
     elif per_case:
         n = len(per_case)
