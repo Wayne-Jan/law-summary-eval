@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LENS Arena — 盲測比較</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --toolbar-h: 52px;
+            --votebar-h: 160px;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        /* ─── Toolbar ─── */
+        .toolbar {
+            position: fixed;
+            top: 0; left: 0; right: 0; height: var(--toolbar-h);
+            background: white; border-bottom: 1px solid #e0e0e0;
+            display: flex; align-items: center;
+            padding: 0 20px; gap: 12px; z-index: 100;
+        }
+        .toolbar h1 { font-size: 18px; font-weight: 700; color: #333; white-space: nowrap; }
+        .toolbar .spacer { flex: 1; }
+
+        .progress-badge {
+            font-size: 13px; color: #6b7280; background: #f3f4f6;
+            padding: 4px 12px; border-radius: 10px; font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .toolbar select {
+            font-size: 14px; color: #374151; background: #f3f4f6;
+            border: 1px solid #e5e7eb; border-radius: 12px;
+            padding: 4px 10px; font-family: inherit;
+        }
+
+        .toolbar .eval-label {
+            font-size: 13px; color: #6b7280; font-weight: 500;
+        }
+
+        .toolbar a.nav-link {
+            color: #64748b; text-decoration: none; font-size: 13px; font-weight: 500;
+            padding: 6px 12px; border-radius: 8px; transition: all 0.15s;
+        }
+        .toolbar a.nav-link:hover { background: #eef2ff; color: #4f46e5; }
+
+        .toolbar .btn-sm {
+            font-size: 12px; color: #6b7280; background: #f9fafb;
+            border: 1px solid #e5e7eb; border-radius: 8px;
+            padding: 4px 10px; cursor: pointer; font-family: inherit;
+            transition: all 0.15s;
+        }
+        .toolbar .btn-sm:hover { background: #f3f4f6; color: #374151; }
+        .toolbar .btn-timeline {
+            background: #fef9c3; color: #92400e; border-color: #fde68a;
+        }
+        .toolbar .btn-timeline:hover { background: #fde68a; }
+
+        /* ─── Main Area ─── */
+        .main {
+            position: fixed;
+            top: var(--toolbar-h);
+            left: 0; right: 0;
+            bottom: var(--votebar-h);
+            display: flex; gap: 12px;
+            padding: 16px 24px;
+            background: #fafafa;
+            overflow: hidden;
+        }
+
+        /* ─── Dual Panels ─── */
+        .panel {
+            flex: 1; min-width: 0;
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+            display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+
+        .panel-head {
+            min-height: 44px; padding: 10px 16px;
+            border-bottom: 1px solid #f3f4f6; background: #fafafa;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .panel-kicker {
+            font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+            color: #8b5cf6;
+        }
+        .panel-title {
+            font-size: 14px; font-weight: 600; color: #111827;
+        }
+        .panel-meta {
+            margin-left: auto; font-size: 12px; color: #9ca3af; font-weight: 400;
+            white-space: nowrap;
+        }
+        .panel-meta .compress-pct {
+            display: inline-block; background: #f0fdf4; color: #16a34a;
+            padding: 1px 6px; border-radius: 4px; font-weight: 600; font-size: 11px;
+            margin-left: 4px;
+        }
+
+        .panel-body {
+            flex: 1; min-height: 0; overflow-y: auto;
+            padding: 16px 18px 40px;
+        }
+
+        .section-block + .section-block { margin-top: 24px; }
+        .section-title {
+            font-size: 15px; font-weight: 600; color: #333;
+            margin-bottom: 14px; padding-bottom: 10px;
+            border-bottom: 2px solid #ede9fe;
+        }
+        .section-content {
+            font-size: 14px; line-height: 1.85; color: #333;
+            white-space: pre-wrap; word-break: break-word;
+        }
+
+        .section-content .citation {
+            display: inline; background: #ede9fe; color: #6d28d9;
+            padding: 1px 6px; border-radius: 3px; font-size: 12px;
+            font-weight: 500; margin: 0 2px;
+        }
+
+        .empty-content {
+            color: #9ca3af; font-style: italic; padding: 40px;
+            text-align: center;
+        }
+
+        /* ─── Timeline Modal ─── */
+        .tl-modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 9000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .tl-modal-overlay.hidden { display: none; }
+        .tl-modal-box {
+            width: calc(100vw - 32px);
+            height: calc(100vh - 32px);
+            background: #fff; border-radius: 12px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+        .tl-modal-header {
+            display: flex; align-items: center; padding: 12px 20px;
+            border-bottom: 1px solid #e5e7eb; background: #fafafa;
+        }
+        .tl-modal-header h3 {
+            font-size: 15px; font-weight: 600; color: #333; flex: 1;
+        }
+        .tl-modal-close {
+            width: 32px; height: 32px; border-radius: 8px;
+            border: 1px solid #e2e8f0; background: #fff;
+            font-size: 18px; color: #64748b; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.15s;
+        }
+        .tl-modal-close:hover { background: #f3f4f6; color: #111; }
+        .tl-modal-iframe {
+            flex: 1; border: none; width: 100%;
+        }
+
+        /* ─── Vote Bar ─── */
+        .vote-bar {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            height: var(--votebar-h);
+            background: white; border-top: 1px solid #e0e0e0;
+            padding: 12px 24px;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 10px; z-index: 100;
+        }
+
+        .vote-buttons {
+            display: flex; gap: 12px; align-items: center;
+        }
+
+        .vote-btn {
+            padding: 10px 28px; border-radius: 10px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            transition: all 0.15s; border: 1px solid #d1d5db;
+            background: white; color: #374151;
+            font-family: inherit;
+        }
+        .vote-btn:hover { border-color: #9ca3af; }
+        .vote-btn.selected-a, .vote-btn.selected-b {
+            background: var(--primary); color: white; border-color: var(--primary);
+        }
+        .vote-btn.selected-tie {
+            background: #6b7280; color: white; border-color: #6b7280;
+        }
+
+        .vote-reason {
+            width: 100%; max-width: 600px;
+        }
+        .vote-reason textarea {
+            width: 100%; height: 36px; border: 1px solid #e5e7eb;
+            border-radius: 8px; padding: 6px 12px; font-size: 13px;
+            font-family: inherit; resize: none; color: #374151;
+        }
+        .vote-reason textarea:focus { outline: none; border-color: var(--primary); }
+
+        .submit-row {
+            display: flex; align-items: center; gap: 16px;
+        }
+
+        .submit-btn {
+            padding: 10px 24px; border-radius: 10px; border: none;
+            background: var(--primary); color: white;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            font-family: inherit; transition: all 0.15s;
+        }
+        .submit-btn:hover { background: var(--primary-hover); }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .success-flash {
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: #10b981; color: white;
+            padding: 16px 32px; border-radius: 12px;
+            font-size: 16px; font-weight: 600;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            z-index: 9999; display: none;
+            animation: flashIn 0.3s ease;
+        }
+        @keyframes flashIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* ─── Evaluator Modal ─── */
+        .modal-overlay {
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 9000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal-overlay.hidden { display: none; }
+
+        .modal-card {
+            background: #fff; border-radius: 12px;
+            padding: 28px 32px; width: 360px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            text-align: center;
+        }
+        .modal-card h2 {
+            font-size: 18px; font-weight: 700; color: #111827;
+            margin-bottom: 6px;
+        }
+        .modal-card p {
+            font-size: 14px; color: #6b7280; margin-bottom: 20px;
+        }
+        .modal-radios {
+            display: flex; justify-content: center; gap: 16px;
+            margin-bottom: 24px;
+        }
+        .modal-radios label {
+            display: flex; align-items: center; gap: 6px;
+            font-size: 16px; font-weight: 600; color: #374151;
+            cursor: pointer;
+        }
+        .modal-radios input[type="radio"] {
+            accent-color: var(--primary);
+            width: 18px; height: 18px;
+        }
+        .modal-confirm {
+            padding: 10px 36px; border-radius: 10px; border: none;
+            background: var(--primary); color: white;
+            font-size: 15px; font-weight: 600; cursor: pointer;
+            font-family: inherit; transition: all 0.15s;
+        }
+        .modal-confirm:hover { background: var(--primary-hover); }
+        .modal-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* ─── Leaderboard ─── */
+        .leaderboard-toggle {
+            position: fixed; bottom: var(--votebar-h); right: 24px;
+            z-index: 101;
+        }
+        .leaderboard-toggle button {
+            padding: 6px 14px; border-radius: 8px 8px 0 0;
+            border: 1px solid #e0e0e0; border-bottom: none;
+            background: white; color: #6b7280; font-size: 12px;
+            font-weight: 600; cursor: pointer; font-family: inherit;
+            transition: all 0.15s;
+        }
+        .leaderboard-toggle button:hover { color: var(--primary); }
+
+        .leaderboard-panel {
+            position: fixed; bottom: var(--votebar-h); right: 24px;
+            width: 480px; max-height: 360px;
+            background: white; border: 1px solid #e5e7eb;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 -4px 20px rgba(15,23,42,0.08);
+            z-index: 102; overflow: hidden;
+            display: none; flex-direction: column;
+        }
+        .leaderboard-panel.show { display: flex; }
+
+        .leaderboard-header {
+            padding: 12px 16px; border-bottom: 1px solid #f3f4f6;
+            display: flex; align-items: center; justify-content: space-between;
+            background: #fafafa;
+        }
+        .leaderboard-header h3 {
+            font-size: 14px; font-weight: 700; color: #111827;
+        }
+        .leaderboard-header button {
+            background: none; border: none; cursor: pointer;
+            font-size: 18px; color: #9ca3af; line-height: 1;
+        }
+
+        .leaderboard-body {
+            flex: 1; overflow-y: auto; padding: 8px 0;
+        }
+
+        .lb-table {
+            width: 100%; border-collapse: collapse; font-size: 13px;
+        }
+        .lb-table th {
+            text-align: left; padding: 6px 14px;
+            font-size: 11px; font-weight: 700; color: #9ca3af;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            border-bottom: 1px solid #f3f4f6;
+        }
+        .lb-table td {
+            padding: 8px 14px; border-bottom: 1px solid #f9fafb;
+            color: #374151;
+        }
+        .lb-table tr:hover td { background: #f9fafb; }
+        .lb-rank { font-weight: 700; color: var(--primary); width: 40px; }
+        .lb-elo { font-weight: 700; font-variant-numeric: tabular-nums; }
+        .lb-record { color: #6b7280; font-size: 12px; font-variant-numeric: tabular-nums; }
+
+        .lb-empty {
+            text-align: center; padding: 32px; color: #9ca3af; font-size: 13px;
+        }
+
+        /* ─── All Done State ─── */
+        .all-done {
+            display: none; flex-direction: column; align-items: center;
+            justify-content: center; text-align: center; padding: 60px 24px;
+            color: #6b7280;
+        }
+        .all-done h2 { font-size: 22px; color: #111827; margin-bottom: 8px; }
+        .all-done p { font-size: 14px; margin-bottom: 20px; }
+
+        /* ─── Mobile ─── */
+        @media (max-width: 768px) {
+            .main {
+                flex-direction: column;
+                gap: 8px;
+                padding: 10px 12px;
+            }
+            .panel { flex: none; height: 50%; }
+            .vote-buttons { flex-direction: column; width: 100%; }
+            .vote-btn { width: 100%; }
+            .vote-bar {
+                height: auto;
+                padding: 10px 16px;
+            }
+            .main { bottom: auto; }
+            .toolbar .spacer { display: none; }
+            .toolbar { padding: 0 12px; gap: 8px; flex-wrap: nowrap; overflow-x: auto; }
+            .leaderboard-panel { width: calc(100% - 24px); right: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Evaluator selection modal -->
+<div class="modal-overlay" id="evalModal">
+    <div class="modal-card">
+        <h2>選擇評審代號</h2>
+        <p>你的投票紀錄將依代號分別儲存</p>
+        <div class="modal-radios" id="evalRadios"></div>
+        <button class="modal-confirm" id="evalConfirm" disabled>開始評估</button>
+    </div>
+</div>
+
+<!-- Toolbar -->
+<div class="toolbar">
+    <h1>LENS Arena</h1>
+    <span class="progress-badge" id="progressBadge">載入中...</span>
+    <span class="spacer"></span>
+    <span class="eval-label">評審：</span>
+    <select id="evalSelect"></select>
+    <button class="btn-sm btn-timeline" id="btnTimeline">案件時間軸</button>
+    <a class="nav-link" href="index.html">首頁</a>
+    <button class="btn-sm" id="btnExport">匯出 JSON</button>
+    <button class="btn-sm" id="btnClear">清除紀錄</button>
+</div>
+
+<!-- Dual panels -->
+<div class="main" id="mainArea">
+    <div class="panel" id="panelA">
+        <div class="panel-head">
+            <span class="panel-kicker">SUMMARY</span>
+            <span class="panel-title">摘要 A</span>
+            <span class="panel-meta" id="metaA"></span>
+        </div>
+        <div class="panel-body" id="bodyA"></div>
+    </div>
+    <div class="panel" id="panelB">
+        <div class="panel-head">
+            <span class="panel-kicker">SUMMARY</span>
+            <span class="panel-title">摘要 B</span>
+            <span class="panel-meta" id="metaB"></span>
+        </div>
+        <div class="panel-body" id="bodyB"></div>
+    </div>
+    <div class="all-done" id="allDone">
+        <h2>所有配對已完成投票</h2>
+        <p>感謝你的評估！可開啟排行榜查看目前結果。</p>
+    </div>
+</div>
+
+<!-- Vote bar -->
+<div class="vote-bar" id="voteBar">
+    <div class="vote-buttons">
+        <button class="vote-btn" data-vote="a">A 較好</button>
+        <button class="vote-btn" data-vote="tie">難分高下</button>
+        <button class="vote-btn" data-vote="b">B 較好</button>
+    </div>
+    <div class="vote-reason">
+        <textarea id="reasonText" placeholder="簡述你的判斷依據..."></textarea>
+    </div>
+    <div class="submit-row">
+        <button class="submit-btn" id="submitBtn" disabled>送出並看下一組 →</button>
+        <span id="caseName" style="font-size:13px;color:#9ca3af;"></span>
+    </div>
+</div>
+
+<!-- Leaderboard toggle -->
+<div class="leaderboard-toggle">
+    <button id="lbToggle">排行榜 ▲</button>
+</div>
+
+<!-- Leaderboard panel -->
+<div class="leaderboard-panel" id="lbPanel">
+    <div class="leaderboard-header">
+        <h3>Elo 排行榜</h3>
+        <button id="lbClose">&times;</button>
+    </div>
+    <div class="leaderboard-body" id="lbBody"></div>
+</div>
+
+<!-- Timeline modal -->
+<div class="tl-modal-overlay hidden" id="tlModal" onclick="closeTlModal(event)">
+    <div class="tl-modal-box">
+        <div class="tl-modal-header">
+            <h3 id="tlModalTitle">案件時間軸</h3>
+            <button class="tl-modal-close" onclick="closeTlModal()">&times;</button>
+        </div>
+        <iframe id="tlIframe" class="tl-modal-iframe"></iframe>
+    </div>
+</div>
+
+<!-- Success flash -->
+<div class="success-flash" id="successFlash">已記錄！</div>
+
+<script>
+(function() {
+    'use strict';
+
+    /* ─── State ─── */
+    let config = null;
+    let currentEvaluator = null;
+    let currentPair = null; // { case_id, condA, condB, displayOrder, loadedAt }
+    let selectedVote = null;
+    let dataA = null, dataB = null;
+
+    const STORAGE_KEY = 'arena_data';
+
+    /* ─── Storage helpers ─── */
+    function loadStorage() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) return JSON.parse(raw);
+        } catch(e) { /* ignore */ }
+        return { current_evaluator: null, votes: [] };
+    }
+
+    function saveStorage(data) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    function getVotes(evaluator) {
+        const store = loadStorage();
+        return store.votes.filter(v => v.evaluator === evaluator);
+    }
+
+    function addVote(vote) {
+        const store = loadStorage();
+        store.votes.push(vote);
+        store.current_evaluator = currentEvaluator;
+        saveStorage(store);
+    }
+
+    function setEvaluator(ev) {
+        currentEvaluator = ev;
+        const store = loadStorage();
+        store.current_evaluator = ev;
+        saveStorage(store);
+    }
+
+    /* ─── Escape HTML ─── */
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /* ─── Render citations ─── */
+    function renderContent(text) {
+        if (!text) return '<div class="empty-content">此版本無此章節內容</div>';
+        const escaped = escapeHtml(text);
+        return escaped.replace(/\[CH_(\d+)\]/g, '<span class="citation">[CH_$1]</span>');
+    }
+
+    /* ─── Pairing logic ─── */
+    function getAllPairs() {
+        const conds = config.conditions;
+        const pairs = [];
+        for (let i = 0; i < conds.length; i++) {
+            for (let j = i + 1; j < conds.length; j++) {
+                pairs.push([conds[i], conds[j]]);
+            }
+        }
+        return pairs;
+    }
+
+    function getPairWeight(condA, condB) {
+        const backA = config.backbone_map[condA], backB = config.backbone_map[condB];
+        const roleA = config.role_map[condA], roleB = config.role_map[condB];
+        const sameBB = backA === backB;
+        const roles = [roleA, roleB].sort().join('_');
+
+        if (sameBB) {
+            if (roles === 'baseline_full') return config.pair_weights.same_backbone_full_vs_baseline;
+            if (roles === 'ablation_full') return config.pair_weights.same_backbone_full_vs_ablation;
+            if (roles === 'ablation_ablation') return config.pair_weights.same_backbone_ablation_vs_ablation;
+            if (roles === 'ablation_baseline') return config.pair_weights.same_backbone_ablation_vs_baseline;
+        } else {
+            if (roles === 'full_full') return config.pair_weights.cross_backbone_full_vs_full;
+            if (roles === 'baseline_baseline') return config.pair_weights.cross_backbone_baseline_vs_baseline;
+            return config.pair_weights.cross_backbone_other;
+        }
+        return 1;
+    }
+
+    function buildPool() {
+        const pairs = getAllPairs();
+        const votes = getVotes(currentEvaluator);
+        const voted = new Set(votes.map(v => {
+            const cs = [v.condition_a, v.condition_b].sort().join('||');
+            return v.case_id + '||' + cs;
+        }));
+
+        const pool = [];
+        for (const c of config.cases) {
+            for (const [condA, condB] of pairs) {
+                const cs = [condA, condB].sort().join('||');
+                const key = c.case_id + '||' + cs;
+                if (voted.has(key)) continue;
+                const w = getPairWeight(condA, condB);
+                pool.push({ case_id: c.case_id, condA, condB, weight: w });
+            }
+        }
+        return pool;
+    }
+
+    function weightedRandomPick(pool) {
+        if (pool.length === 0) return null;
+        const totalW = pool.reduce((s, p) => s + p.weight, 0);
+        let r = Math.random() * totalW;
+        for (const item of pool) {
+            r -= item.weight;
+            if (r <= 0) return item;
+        }
+        return pool[pool.length - 1];
+    }
+
+    function pickNextPair() {
+        const pool = buildPool();
+        const pick = weightedRandomPick(pool);
+        if (!pick) return null;
+
+        // Randomly assign left/right
+        const swap = Math.random() < 0.5;
+        return {
+            case_id: pick.case_id,
+            condA: swap ? pick.condB : pick.condA,
+            condB: swap ? pick.condA : pick.condB,
+            displayOrder: swap ? 'b_left' : 'a_left',
+            loadedAt: Date.now()
+        };
+    }
+
+    /* ─── Data fetching ─── */
+    async function fetchJson(url) {
+        const resp = await fetch(url);
+        if (!resp.ok) throw new Error('fetch failed: ' + url);
+        return resp.json();
+    }
+
+    async function loadPairData(pair) {
+        const [a, b] = await Promise.all([
+            fetchJson('./data/' + pair.condA + '/' + pair.case_id + '.json'),
+            fetchJson('./data/' + pair.condB + '/' + pair.case_id + '.json')
+        ]);
+        return { a, b };
+    }
+
+    /* ─── UI Updates ─── */
+    function updateProgress() {
+        const votes = getVotes(currentEvaluator);
+        const casesWithVotes = new Set(votes.map(v => v.case_id));
+        const totalCases = config.cases.length;
+        const badge = document.getElementById('progressBadge');
+        badge.textContent = '案件 ' + casesWithVotes.size + '/' + totalCases + ' \u00b7 已投票 ' + votes.length;
+    }
+
+    function renderAllSections(sections) {
+        if (!sections || sections.length === 0) return '<div class="empty-content">無摘要內容</div>';
+        return sections.map(s => {
+            const title = escapeHtml(s.title || s.id);
+            const body = renderContent(s.content);
+            return '<div class="section-block"><div class="section-title">' + title + '</div>' +
+                '<div class="section-content">' + body + '</div></div>';
+        }).join('');
+    }
+
+    function calcCompressionMeta(data) {
+        const chunks = data.chunks || {};
+        const origChars = Object.values(chunks).reduce((s, t) => s + t.length, 0);
+        const sumChars = (data.sections || []).reduce((s, sec) => s + (sec.content || '').length, 0);
+        if (origChars === 0) return '';
+        const pct = Math.round((1 - sumChars / origChars) * 100);
+        return origChars.toLocaleString() + ' → ' + sumChars.toLocaleString() + ' 字' +
+            '<span class="compress-pct">縮減 ' + pct + '%</span>';
+    }
+
+    function renderPanels() {
+        if (!dataA || !dataB) return;
+        document.getElementById('bodyA').innerHTML = renderAllSections(dataA.sections);
+        document.getElementById('bodyB').innerHTML = renderAllSections(dataB.sections);
+        document.getElementById('metaA').innerHTML = calcCompressionMeta(dataA);
+        document.getElementById('metaB').innerHTML = calcCompressionMeta(dataB);
+    }
+
+    let currentCaseName = '';
+
+    window.closeTlModal = function(event) {
+        if (event && event.target !== event.currentTarget) return;
+        document.getElementById('tlModal').classList.add('hidden');
+        document.getElementById('tlIframe').src = '';
+    };
+
+    function openTlModal() {
+        if (!currentCaseName) return;
+        document.getElementById('tlModalTitle').textContent = '案件時間軸 — ' + currentCaseName;
+        document.getElementById('tlIframe').src = 'timeline.html?case=' + encodeURIComponent(currentCaseName) + '&embed=1';
+        document.getElementById('tlModal').classList.remove('hidden');
+    }
+
+    function resetVoteUI() {
+        selectedVote = null;
+        document.querySelectorAll('.vote-btn').forEach(b => {
+            b.classList.remove('selected-a', 'selected-b', 'selected-tie');
+        });
+        document.getElementById('reasonText').value = '';
+        document.getElementById('submitBtn').disabled = true;
+    }
+
+    function showAllDone() {
+        document.getElementById('mainArea').querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+        document.getElementById('allDone').style.display = 'flex';
+        document.getElementById('voteBar').style.display = 'none';
+    }
+
+    function showPairUI() {
+        document.getElementById('mainArea').querySelectorAll('.panel').forEach(p => p.style.display = 'flex');
+        document.getElementById('allDone').style.display = 'none';
+        document.getElementById('voteBar').style.display = 'flex';
+    }
+
+    async function loadNextPair() {
+        const pair = pickNextPair();
+        if (!pair) {
+            showAllDone();
+            updateProgress();
+            return;
+        }
+
+        showPairUI();
+        currentPair = pair;
+        resetVoteUI();
+
+        // Show case name
+        const caseInfo = config.cases.find(c => c.case_id === pair.case_id);
+        document.getElementById('caseName').textContent = caseInfo ? caseInfo.short_name : pair.case_id;
+
+        try {
+            const { a, b } = await loadPairData(pair);
+            dataA = a;
+            dataB = b;
+            renderPanels();
+        } catch(e) {
+            console.error('Failed to load pair data:', e);
+            document.getElementById('bodyA').innerHTML = '<div class="empty-content">載入失敗</div>';
+            document.getElementById('bodyB').innerHTML = '<div class="empty-content">載入失敗</div>';
+        }
+
+        currentCaseName = (dataA && dataA.case_name) || (caseInfo && caseInfo.short_name) || pair.case_id;
+
+        updateProgress();
+    }
+
+    /* ─── Vote handling ─── */
+    function initVoteButtons() {
+        document.querySelectorAll('.vote-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const vote = btn.dataset.vote;
+                selectedVote = vote;
+
+                document.querySelectorAll('.vote-btn').forEach(b => {
+                    b.classList.remove('selected-a', 'selected-b', 'selected-tie');
+                });
+
+                if (vote === 'a') btn.classList.add('selected-a');
+                else if (vote === 'b') btn.classList.add('selected-b');
+                else btn.classList.add('selected-tie');
+
+                document.getElementById('submitBtn').disabled = false;
+            });
+        });
+
+        document.getElementById('submitBtn').addEventListener('click', submitVote);
+    }
+
+    function submitVote() {
+        if (!selectedVote || !currentPair) return;
+
+        const durationSec = Math.round((Date.now() - currentPair.loadedAt) / 1000);
+        const vote = {
+            evaluator: currentEvaluator,
+            case_id: currentPair.case_id,
+            condition_a: currentPair.condA,
+            condition_b: currentPair.condB,
+            display_order: currentPair.displayOrder,
+            winner: selectedVote,
+            reason: document.getElementById('reasonText').value.trim(),
+            timestamp: new Date().toISOString(),
+            duration_sec: durationSec
+        };
+
+        addVote(vote);
+        showFlash();
+    }
+
+    function showFlash() {
+        const flash = document.getElementById('successFlash');
+        flash.style.display = 'block';
+        setTimeout(() => {
+            flash.style.display = 'none';
+            loadNextPair();
+        }, 600);
+    }
+
+    /* ─── Leaderboard / Elo ─── */
+    function calcElo() {
+        const votes = getVotes(currentEvaluator);
+        const elo = {};
+        for (const c of config.conditions) elo[c] = { rating: 1000, wins: 0, draws: 0, losses: 0 };
+
+        for (const v of votes) {
+            const a = v.condition_a, b = v.condition_b;
+            if (!elo[a] || !elo[b]) continue;
+
+            const ea = 1 / (1 + Math.pow(10, (elo[b].rating - elo[a].rating) / 400));
+            const eb = 1 - ea;
+            const K = 32;
+
+            let sa, sb;
+            if (v.winner === 'a') { sa = 1; sb = 0; elo[a].wins++; elo[b].losses++; }
+            else if (v.winner === 'b') { sa = 0; sb = 1; elo[b].wins++; elo[a].losses++; }
+            else { sa = 0.5; sb = 0.5; elo[a].draws++; elo[b].draws++; }
+
+            elo[a].rating += K * (sa - ea);
+            elo[b].rating += K * (sb - eb);
+        }
+
+        return Object.entries(elo)
+            .map(([cond, d]) => ({
+                condition: cond,
+                label: config.condition_labels[cond] || cond,
+                rating: Math.round(d.rating),
+                wins: d.wins, draws: d.draws, losses: d.losses
+            }))
+            .sort((x, y) => y.rating - x.rating);
+    }
+
+    function renderLeaderboard() {
+        const body = document.getElementById('lbBody');
+        const rankings = calcElo();
+        const votes = getVotes(currentEvaluator);
+
+        if (votes.length === 0) {
+            body.innerHTML = '<div class="lb-empty">尚無投票紀錄</div>';
+            return;
+        }
+
+        let html = '<table class="lb-table"><thead><tr>';
+        html += '<th>#</th><th>Condition</th><th>Elo</th><th>戰績</th>';
+        html += '</tr></thead><tbody>';
+
+        rankings.forEach((r, i) => {
+            html += '<tr>';
+            html += '<td class="lb-rank">' + (i + 1) + '</td>';
+            html += '<td>' + escapeHtml(r.label) + '</td>';
+            html += '<td class="lb-elo">' + r.rating + '</td>';
+            html += '<td class="lb-record">' + r.wins + 'W / ' + r.draws + 'D / ' + r.losses + 'L</td>';
+            html += '</tr>';
+        });
+
+        html += '</tbody></table>';
+        body.innerHTML = html;
+    }
+
+    function initLeaderboard() {
+        const toggle = document.getElementById('lbToggle');
+        const panel = document.getElementById('lbPanel');
+        const close = document.getElementById('lbClose');
+
+        toggle.addEventListener('click', () => {
+            const showing = panel.classList.toggle('show');
+            toggle.textContent = showing ? '排行榜 ▼' : '排行榜 ▲';
+            if (showing) renderLeaderboard();
+        });
+        close.addEventListener('click', () => {
+            panel.classList.remove('show');
+            toggle.textContent = '排行榜 ▲';
+        });
+    }
+
+    /* ─── Export / Clear ─── */
+    function initTimeline() {
+        document.getElementById('btnTimeline').addEventListener('click', openTlModal);
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeTlModal();
+        });
+    }
+
+    function initExportClear() {
+        document.getElementById('btnExport').addEventListener('click', () => {
+            const store = loadStorage();
+            const blob = new Blob([JSON.stringify(store.votes, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'arena_votes_' + (currentEvaluator || 'all') + '_' + new Date().toISOString().slice(0,10) + '.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        document.getElementById('btnClear').addEventListener('click', () => {
+            if (confirm('確定要清除所有投票紀錄嗎？此操作無法復原。')) {
+                localStorage.removeItem(STORAGE_KEY);
+                currentEvaluator = null;
+                showModal();
+            }
+        });
+    }
+
+    /* ─── Evaluator selector (toolbar) ─── */
+    function initEvalSelector() {
+        const select = document.getElementById('evalSelect');
+        select.addEventListener('change', () => {
+            setEvaluator(select.value);
+            loadNextPair();
+        });
+    }
+
+    function populateEvalSelector() {
+        const select = document.getElementById('evalSelect');
+        select.innerHTML = '';
+        for (const ev of config.evaluators) {
+            const opt = document.createElement('option');
+            opt.value = ev;
+            opt.textContent = '評審 ' + ev;
+            if (ev === currentEvaluator) opt.selected = true;
+            select.appendChild(opt);
+        }
+    }
+
+    /* ─── Modal ─── */
+    function showModal() {
+        const overlay = document.getElementById('evalModal');
+        overlay.classList.remove('hidden');
+
+        const radios = document.getElementById('evalRadios');
+        radios.innerHTML = '';
+        for (const ev of config.evaluators) {
+            const label = document.createElement('label');
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = 'evalChoice';
+            input.value = ev;
+            input.addEventListener('change', () => {
+                document.getElementById('evalConfirm').disabled = false;
+            });
+            label.appendChild(input);
+            label.appendChild(document.createTextNode(' ' + ev));
+            radios.appendChild(label);
+        }
+
+        document.getElementById('evalConfirm').disabled = true;
+        document.getElementById('evalConfirm').onclick = () => {
+            const chosen = document.querySelector('input[name="evalChoice"]:checked');
+            if (!chosen) return;
+            setEvaluator(chosen.value);
+            overlay.classList.add('hidden');
+            populateEvalSelector();
+            loadNextPair();
+        };
+    }
+
+    /* ─── Init ─── */
+    async function init() {
+        try {
+            config = await fetchJson('./data/arena_config.json');
+        } catch(e) {
+            document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#ef4444;">無法載入 arena_config.json</div>';
+            return;
+        }
+
+        initVoteButtons();
+        initLeaderboard();
+        initExportClear();
+        initEvalSelector();
+        initTimeline();
+
+        // Check existing evaluator
+        const store = loadStorage();
+        if (store.current_evaluator && config.evaluators.includes(store.current_evaluator)) {
+            currentEvaluator = store.current_evaluator;
+            document.getElementById('evalModal').classList.add('hidden');
+            populateEvalSelector();
+            loadNextPair();
+        } else {
+            showModal();
+        }
+    }
+
+    init();
+})();
+</script>
+</body>
+</html>
