@@ -22,7 +22,8 @@
   "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud",
   "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,63 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7904,
+  "fact_recall": 0.9655,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9823,
+  "quality_overall": 4.55,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9143,
+  "uncited_rate": 0.13,
+  "faithfulness_combined": {
+   "score": 0.922,
+   "citation_fidelity": 0.87,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9828,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 1,
+   "details": [
+    {
+     "gt_claim_id": 41,
+     "severity": "important",
+     "text": "本案係簡式審判程序",
+     "reason": "審判程序類型影響對判決背景及正當性的完整理解，屬制度性重要資訊，雖非核心事實但具相當重要性"
+    },
+    {
+     "gt_claim_id": 53,
+     "severity": "minor",
+     "text": "被告、檢察官於法定上訴期間未上訴，本案判決即確定",
+     "reason": "屬程序性/背景性事實，說明判決生效狀態，不影響醫療過失案情核心理解"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.55,
+   "quality_overall": 4.55,
+   "gt_length_ratio": 1.0828,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 58,
+   "pred_total": 54,
+   "matched": 56,
+   "partial": 0,
+   "missing": 2,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 0.8917,
+  "section_balance": 1.0
+ }
 }

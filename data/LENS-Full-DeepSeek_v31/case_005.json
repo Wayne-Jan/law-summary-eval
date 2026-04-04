@@ -22,7 +22,8 @@
   "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud",
   "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -123,5 +124,69 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8031,
+  "fact_recall": 0.894,
+  "fact_precision": 0.993,
+  "fact_f1": 0.941,
+  "quality_overall": 4.9286,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0339,
+  "uncited_rate": 0.007,
+  "faithfulness_combined": {
+   "score": 0.993,
+   "citation_fidelity": 0.993,
+   "fact_precision": 0.993,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.981,
+  "weighted_recall": 0.9853,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 1,
+   "details": [
+    {
+     "gt_claim_id": 49,
+     "severity": "important",
+     "text": "相驗屍體證明書開立之死亡原因為糖尿病併發滲出性腦出血",
+     "reason": "死因認定是判決核心爭點，法院最終認定為肝昏迷及出血性休克，但相驗證明書記載不同死因，此差異影響對判決理由的理解"
+    },
+    {
+     "gt_claim_id": 79,
+     "severity": "important",
+     "text": "臺灣彰化地方法院檢察署相驗屍體證明書開立之死亡原因為糖尿病併發滲出性腦出血",
+     "reason": "與 claim 49 為同一事實，檢察署相驗結果與法院最終認定死因不一致，屬重要事實"
+    },
+    {
+     "gt_claim_id": 84,
+     "severity": "minor",
+     "text": "本案判決即確定",
+     "reason": "程序性事實，摘要已完整記載判決內容，是否確定不影響案情理解"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 3.4945,
+   "quality_overall": 4.9286,
+   "gt_length_ratio": 1.8335,
+   "length_penalty": 0.709,
+   "zone": "too_long"
+  },
+  "fact_detail": {
+   "gt_total": 113,
+   "pred_total": 150,
+   "matched": 97,
+   "partial": 8,
+   "missing": 5,
+   "hallucinated": 1
+  },
+  "fact_recall_efficiency": 0.4876,
+  "section_balance": 1.0
+ }
 }

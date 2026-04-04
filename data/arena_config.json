@@ -1,0 +1,66 @@
+{
+  "description": "Arena POC 設定：7 conditions × 15 cases",
+  "evaluators": ["A", "B", "C"],
+  "conditions": [
+    "claude_afg_v5.1",
+    "ablation_no_afg",
+    "ablation_no_react",
+    "baseline_claude-haiku",
+    "LENS-Full-DeepSeek_v31",
+    "LENS-NoReact-DeepSeek_v31",
+    "baseline_ollama_deepseek-v3.1-671b-cloud"
+  ],
+  "condition_labels": {
+    "claude_afg_v5.1": "LENS-Haiku-Full",
+    "ablation_no_afg": "LENS-Haiku-NoAFG",
+    "ablation_no_react": "LENS-Haiku-NoReact",
+    "baseline_claude-haiku": "Haiku Baseline",
+    "LENS-Full-DeepSeek_v31": "LENS-DeepSeek-Full",
+    "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek-NoReact",
+    "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek Baseline"
+  },
+  "cases": [
+    {"case_id": "case_012", "short_name": "車禍腹痛延誤治療案", "volume": "上冊", "verdict": "有罪"},
+    {"case_id": "case_020", "short_name": "總膽管取石術腹痛未照會案", "volume": "上冊", "verdict": "有罪"},
+    {"case_id": "case_037", "short_name": "心肌梗塞急救時機案", "volume": "上冊", "verdict": "無罪"},
+    {"case_id": "case_070", "short_name": "肝臟切除術後出血案", "volume": "中冊", "verdict": "無罪"},
+    {"case_id": "case_069", "short_name": "抽脂術後併發症休克案", "volume": "中冊", "verdict": "無罪"},
+    {"case_id": "case_068", "short_name": "子宮外孕未為必要處置案", "volume": "中冊", "verdict": "無罪"},
+    {"case_id": "case_059", "short_name": "連續插管失敗遲未照會案", "volume": "中冊", "verdict": "無罪"},
+    {"case_id": "case_053", "short_name": "福尼爾氏壞死症未擴創手術案", "volume": "中冊", "verdict": "無罪"},
+    {"case_id": "case_065", "short_name": "主動脈剝離鑑別診斷案", "volume": "中冊", "verdict": "無罪"},
+    {"case_id": "case_083", "short_name": "試管嬰兒子宮外孕案", "volume": "下冊", "verdict": "無罪"},
+    {"case_id": "case_076", "short_name": "Tegretol藥物治療案", "volume": "下冊", "verdict": "無罪"},
+    {"case_id": "case_094", "short_name": "活體腎臟移植手術案", "volume": "下冊", "verdict": "無罪"},
+    {"case_id": "case_075", "short_name": "車禍手術麻醉案", "volume": "下冊", "verdict": "無罪"},
+    {"case_id": "case_088", "short_name": "筋膜切開術後截肢案", "volume": "下冊", "verdict": "無罪"},
+    {"case_id": "case_081", "short_name": "健檢中心Inderal藥物案", "volume": "下冊", "verdict": "無罪"}
+  ],
+  "pair_weights": {
+    "same_backbone_full_vs_baseline": 3,
+    "same_backbone_full_vs_ablation": 3,
+    "same_backbone_ablation_vs_ablation": 2,
+    "same_backbone_ablation_vs_baseline": 2,
+    "cross_backbone_full_vs_full": 2,
+    "cross_backbone_baseline_vs_baseline": 1,
+    "cross_backbone_other": 1
+  },
+  "backbone_map": {
+    "claude_afg_v5.1": "haiku",
+    "ablation_no_afg": "haiku",
+    "ablation_no_react": "haiku",
+    "baseline_claude-haiku": "haiku",
+    "LENS-Full-DeepSeek_v31": "deepseek",
+    "LENS-NoReact-DeepSeek_v31": "deepseek",
+    "baseline_ollama_deepseek-v3.1-671b-cloud": "deepseek"
+  },
+  "role_map": {
+    "claude_afg_v5.1": "full",
+    "ablation_no_afg": "ablation",
+    "ablation_no_react": "ablation",
+    "baseline_claude-haiku": "baseline",
+    "LENS-Full-DeepSeek_v31": "full",
+    "LENS-NoReact-DeepSeek_v31": "ablation",
+    "baseline_ollama_deepseek-v3.1-671b-cloud": "baseline"
+  }
+}

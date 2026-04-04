@@ -1019,6 +1019,8 @@ def build():
                         has_llm = True
                 elif eval_scores.get("quality_avg") is not None:
                     has_llm = True
+                elif eval_scores.get("quality_overall") is not None:
+                    has_llm = True
             if has_llm:
                 eval_count += 1
 

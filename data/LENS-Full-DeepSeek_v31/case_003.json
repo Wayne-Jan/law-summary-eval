@@ -22,7 +22,8 @@
   "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud",
   "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -125,5 +126,87 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7952,
+  "fact_recall": 0.85,
+  "fact_precision": 0.99,
+  "fact_f1": 0.91,
+  "quality_overall": 4.8554,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.975,
+  "uncited_rate": 0.029,
+  "faithfulness_combined": {
+   "score": 0.9786,
+   "citation_fidelity": 0.971,
+   "fact_precision": 0.99,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.947,
+  "weighted_recall": 0.9701,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 43,
+     "severity": "important",
+     "text": "死亡前十小時期間均無任何症狀，可供醫師作診斷及依據之機率殆無",
+     "reason": "被告核心抗辯論點，雖法院駁斥但未於摘要中呈現被告之具體主張，影響辯方論點完整性"
+    },
+    {
+     "gt_claim_id": 33,
+     "severity": "minor",
+     "text": "相驗屍體證明書、驗斷書、法醫解剖鑑報告等在卷為憑",
+     "reason": "證據文件列舉，屬證據細節，不影響死因事實理解"
+    },
+    {
+     "gt_claim_id": 39,
+     "severity": "minor",
+     "text": "急性呼吸窘迫症候群死亡率有降低之趨勢",
+     "reason": "鑑定意見背景描述，非核心存活率數據"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "本案病患初期並未呈現休克現象",
+     "reason": "醫學時間軸細節，摘要已提及休克症狀"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "minor",
+     "text": "被告、檢察官於法定上訴期間未上訴",
+     "reason": "程序性事實，不影響判決實體內容理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "本案判決即確定",
+     "reason": "程序狀態說明，屬程序性資訊"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.8554,
+   "quality_overall": 4.8554,
+   "gt_length_ratio": 0.8758,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 78,
+   "pred_total": 70,
+   "matched": 65,
+   "partial": 3,
+   "missing": 10,
+   "hallucinated": 1
+  },
+  "fact_recall_efficiency": 0.9705,
+  "section_balance": 1.0
+ }
 }

@@ -187,12 +187,25 @@ def extract_fact(fact_path: Path):
     obj = read_json(fact_path)
     if not obj:
         return None
+    # Old format: metrics.{key}.score + overall_fact_recall
     metrics = obj.get("metrics", {})
-    result = OrderedDict()
-    for out_key, src_key in FACT_KEYS.items():
-        result[out_key] = safe_float((metrics.get(src_key) or {}).get("score"))
-    result["avg"] = safe_float(obj.get("overall_fact_recall"))
-    return result
+    if metrics:
+        result = OrderedDict()
+        for out_key, src_key in FACT_KEYS.items():
+            result[out_key] = safe_float((metrics.get(src_key) or {}).get("score"))
+        result["avg"] = safe_float(obj.get("overall_fact_recall"))
+        return result
+    # New format: summary.recall/precision/f1 (no per-dimension breakdown)
+    summary = obj.get("summary", {})
+    if summary and summary.get("recall") is not None:
+        result = OrderedDict()
+        for out_key in FACT_KEYS:
+            result[out_key] = None
+        result["avg"] = safe_float(summary.get("recall"))
+        result["precision"] = safe_float(summary.get("precision"))
+        result["f1"] = safe_float(summary.get("f1"))
+        return result
+    return None
 
 
 def extract_quality(quality_path: Path):
@@ -209,9 +222,17 @@ def extract_quality(quality_path: Path):
 
 def extract_faithfulness(path: Path):
     obj = read_json(path)
-    if not obj:
-        return None
-    return safe_float(obj.get("faithfulness_score"))
+    if obj:
+        return safe_float(obj.get("faithfulness_score"))
+    # New format: no faithfulness.json, read from report.json
+    report_path = path.parent / "report.json"
+    report = read_json(report_path)
+    if report:
+        scores = report.get("scores", {})
+        fc = scores.get("faithfulness_combined")
+        if isinstance(fc, dict):
+            return safe_float(fc.get("score"))
+    return None
 
 
 def load_rouge_by_case(cond: str, volume: str):

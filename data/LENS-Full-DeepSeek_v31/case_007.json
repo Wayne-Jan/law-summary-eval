@@ -22,7 +22,8 @@
   "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud",
   "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,87 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7573,
+  "fact_recall": 0.785,
+  "fact_precision": 0.985,
+  "fact_f1": 0.874,
+  "quality_overall": 4.7,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0175,
+  "uncited_rate": 0.031,
+  "faithfulness_combined": {
+   "score": 0.9754,
+   "citation_fidelity": 0.969,
+   "fact_precision": 0.985,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": null,
+  "weighted_recall": 0.98,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "有L醫院診斷證明一紙",
+     "reason": "程序性文件事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "minor",
+     "text": "臺灣新竹地方法院檢察署檢察官督同法醫師相驗屬實",
+     "reason": "程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 63,
+     "severity": "minor",
+     "text": "製有勘驗筆錄、相驗屍體證明書、驗斷書各一紙在卷可查",
+     "reason": "程序性文件清單，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "severity": "minor",
+     "text": "被告、檢察官於法定上訴期間未上訴",
+     "reason": "程序性事實，不影響判決本體理解"
+    },
+    {
+     "gt_claim_id": 68,
+     "severity": "minor",
+     "text": "本案判決即確定",
+     "reason": "程序性結論，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "severity": "minor",
+     "text": "頭部外傷的死亡率約為32%",
+     "reason": "統計數據細節，摘要已提及『相當高之機率死亡』，具體數字屬次要資訊"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.7,
+   "quality_overall": 4.7,
+   "gt_length_ratio": 1.0867,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 100,
+   "pred_total": 130,
+   "matched": 71,
+   "partial": 15,
+   "missing": 7,
+   "hallucinated": 2
+  },
+  "fact_recall_efficiency": 0.7224,
+  "section_balance": 1.0
+ }
 }
