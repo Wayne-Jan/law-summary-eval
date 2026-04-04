@@ -929,11 +929,11 @@
             <th class="sort-btn" data-col="rule" data-dir=""
                 data-tip="自動計算的 6 項基本指標：引用率、日期正確率、數字正確率、判決結果吻合、機構歸屬正確、無中生有比例">Rule-Based<sup>†</sup></th>
             <th class="sort-btn" data-col="fact" data-dir=""
-                data-tip="摘要涵蓋了多少關鍵事實，以結構萃取出的時間軸、人物、主張、鑑定意見與判決理由等 8 類事實欄位為基準">Fact Recall<sup>‡</sup></th>
+                data-tip="摘要涵蓋了多少關鍵事實，從生成摘要與標準摘要各提取事實聲明，逐項比對涵蓋程度">Fact Recall<sup>‡</sup></th>
             <th class="sort-btn" data-col="quality" data-dir=""
-                data-tip="寫作品質：以 14 個維度評分（1-5 分），涵蓋流暢度、精確度、連貫性、術語正確等">Quality<sup>‡</sup></th>
+                data-tip="寫作品質：以 14 個維度評分（1-5 分），多模型共同評審取中位數，涵蓋流暢度、精確度、連貫性、術語正確等">Quality<sup>‡</sup></th>
             <th class="sort-btn" data-col="faith" data-dir=""
-                data-tip="忠實度：摘要中每一句引用原文的地方，是否真的被原文支持">Faithfulness<sup>‡</sup></th>
+                data-tip="忠實度：綜合引用正確性與事實精確率，衡量摘要是否忠於原文且無捏造">Faithfulness<sup>‡</sup></th>
             <th class="sort-btn" data-col="rougeL" data-dir=""
                 data-tip="AI生成摘要與標準摘要的文字重疊程度，越高代表用詞越接近">ROUGE-L<sup>§</sup></th>
             <th class="sort-btn" data-col="bertscore" data-dir=""
@@ -1469,7 +1469,11 @@
     compression_ratio: '摘要相對原文的壓縮程度，越高代表壓縮越多',
     gt_length_ratio: '摘要字數與標準摘要字數的比值，接近 1.0 代表長度相近'
   };
+  // Fact Recall: support both old (8 sub-dimensions) and new (claim-level) formats
   const FACT_LABELS = {
+    avg: '召回率',
+    precision: '精確率',
+    f1: 'F1',
     timeline_recall: '時間軸',
     entity_recall: '實體',
     allegation_coverage: '控訴涵蓋',
@@ -1480,6 +1484,9 @@
     sentence_accuracy: '量刑準確'
   };
   const FACT_TIPS = {
+    avg: 'GT claims 中被摘要涵蓋的比例（matched + partial / total）',
+    precision: '摘要 claims 中有 GT 依據的比例（無 hallucination 越高）',
+    f1: '召回率與精確率的調和平均',
     timeline_recall: '關鍵時間事件（就診、手術、轉診、死亡等）的召回率',
     entity_recall: '涉案人物、機構、藥物等實體的召回率',
     allegation_coverage: '起訴書/自訴狀中控訴要點的涵蓋比例',
@@ -2260,7 +2267,13 @@
     const [condKey, cond] = found;
     const ranking = getCaseRanking(cond);
     const ruleItems = Object.entries(RULE_LABELS).map(([key, label]) => ({ key, label, tip: RULE_TIPS[key] || '' }));
-    const factItems = Object.entries(FACT_LABELS).map(([key, label]) => ({ key, label, tip: FACT_TIPS[key] || '' }));
+    // Build factItems: detect which format this condition uses (new claim-level or old 8-dim)
+    const factSample = Object.values(cond.cases || {})[0]?.fact_recall || {};
+    const isNewFactFormat = factSample.precision != null || factSample.f1 != null;
+    const factKeys = isNewFactFormat
+      ? ['avg', 'precision', 'f1']
+      : ['timeline_recall', 'entity_recall', 'allegation_coverage', 'defense_recall', 'expert_opinion_recall', 'reasoning_coverage', 'causation_chain_recall', 'sentence_accuracy'];
+    const factItems = factKeys.map(key => ({ key, label: FACT_LABELS[key] || key, tip: FACT_TIPS[key] || '' }));
     const qualityItems = Object.entries(QUALITY_LABELS).map(([key, label]) => ({ key, label, tip: QUALITY_TIPS[key] || '' }));
     const rougeItems = [
       { key: 'rouge1', label: 'ROUGE-1', tip: ROUGE_BERT_TIPS.rouge1, scale: 'rouge' },
