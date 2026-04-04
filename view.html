@@ -656,6 +656,41 @@
         let currentGroup = initialGroup;
         let currentSection = null;
         let activeChunkAlias = null;
+        const VIEW_DISPLAY_LABELS = {
+            'claude_afg_v5.1': 'LENS-Haiku 4.5-A',
+            'ablation_no_afg': 'LENS-Haiku 4.5-B',
+            'ablation_no_react': 'LENS-Haiku 4.5-C',
+            'LENS-Full-DeepSeek_v31': 'LENS-DeepSeek v3.1-A',
+            'LENS-NoAFG-DeepSeek_v31': 'LENS-DeepSeek v3.1-B',
+            'LENS-NoReact-DeepSeek_v31': 'LENS-DeepSeek v3.1-C',
+        };
+        const CONDITION_PRIORITY = {
+            'claude_afg_v5.1': 10,
+            'ablation_no_afg': 11,
+            'ablation_no_react': 12,
+            'baseline_claude-haiku': 20,
+            'baseline_claude-sonnet': 21,
+            'baseline_gemini-3.0-flash': 22,
+            'baseline_gemini-3.1-pro': 23,
+            'baseline_gpt-5.3': 24,
+            'baseline_gpt-5.4-thinking': 25,
+            'LENS-Full-DeepSeek_v31': 30,
+            'LENS-NoAFG-DeepSeek_v31': 31,
+            'LENS-NoReact-DeepSeek_v31': 32,
+        };
+
+        function displayConditionLabel(cond, labels = {}) {
+            return VIEW_DISPLAY_LABELS[cond] || labels[cond] || cond;
+        }
+
+        function sortConditions(conditions, labels = {}) {
+            return [...conditions].sort((a, b) => {
+                const pa = CONDITION_PRIORITY[a] ?? 1000;
+                const pb = CONDITION_PRIORITY[b] ?? 1000;
+                if (pa !== pb) return pa - pb;
+                return displayConditionLabel(a, labels).localeCompare(displayConditionLabel(b, labels), 'zh-Hant');
+            });
+        }
 
         function getSlug(caseName) { return caseSlugs[caseName] || encodeURIComponent(caseName); }
 
@@ -759,7 +794,10 @@
 
                 const groups = viewData.condition_groups || {};
                 const available = viewData.available_conditions || [];
-                const groupOptions = available.filter((cond) => currentGroup === 'all' || groups[cond] === currentGroup);
+                const groupOptions = sortConditions(
+                    available.filter((cond) => currentGroup === 'all' || groups[cond] === currentGroup),
+                    viewData.condition_labels || {}
+                );
                 if (groupOptions.length > 0 && !groupOptions.includes(currentCondition)) {
                     currentCondition = groupOptions[0]; await loadData(); return;
                 }
@@ -833,11 +871,14 @@
             const available = viewData.available_conditions || [];
             const labels = viewData.condition_labels || {};
             const groups = viewData.condition_groups || {};
-            const filtered = available.filter((cond) => currentGroup === 'all' || groups[cond] === currentGroup);
+            const filtered = sortConditions(
+                available.filter((cond) => currentGroup === 'all' || groups[cond] === currentGroup),
+                labels
+            );
             const options = filtered.length > 0 ? filtered : available;
             if (!options.includes(currentCondition) && options.length > 0) currentCondition = options[0];
             select.innerHTML = options.map((cond) => {
-                const label = labels[cond] || cond;
+                const label = displayConditionLabel(cond, labels);
                 const selected = cond === currentCondition ? 'selected' : '';
                 return `<option value="${escapeHtml(cond)}" ${selected}>${escapeHtml(label)}</option>`;
             }).join('');
