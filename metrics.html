@@ -1077,7 +1077,8 @@
   // ─── Score color helpers (percentile-based) ───
   // Thresholds are recomputed each time the volume/filter changes.
   let _pctThresholds = {}; // { metricKey: { p25, p75 } }
-  let _casePctThresholds = {}; // { caseName: { metricKey: { p25, p75 } } }
+  let _casePctThresholds = {}; // { slug: { metricKey: { p25, p75 } } }
+  let _caseNameToSlug = {}; // { originalName: slug }
 
   function _quartiles(vals) {
     const sorted = vals.filter(v => v != null).sort((a, b) => a - b);
@@ -1113,29 +1114,35 @@
       rougeL: c => (c.rouge_bertscore || {}).rougeL,
       bertscore_f1: c => (c.rouge_bertscore || {}).bertscore_f1,
     };
-    // Collect all case names
-    const allCases = new Set();
+    // Collect all case slugs AND map original names to slugs
+    const allSlugs = new Set();
+    _caseNameToSlug = {};
+    const slugs = DATA?.case_slugs || {};
+    for (const [name, slug] of Object.entries(slugs)) {
+      _caseNameToSlug[name] = slug;
+    }
     for (const [, cond] of entries) {
-      for (const caseName of Object.keys(cond.cases || {})) allCases.add(caseName);
+      for (const slug of Object.keys(cond.cases || {})) allSlugs.add(slug);
     }
     const caseResult = {};
-    for (const caseName of allCases) {
+    for (const slug of allSlugs) {
       const perMetric = {};
       for (const [key, getter] of Object.entries(caseMetricGetters)) {
         const vals = entries.map(([, cond]) => {
-          const cd = (cond.cases || {})[caseName];
+          const cd = (cond.cases || {})[slug];
           return cd ? getter(cd) : null;
         });
         perMetric[key] = _quartiles(vals);
       }
-      caseResult[caseName] = perMetric;
+      caseResult[slug] = perMetric;
     }
     _casePctThresholds = caseResult;
   }
 
   function _caseScoreClass(v, caseName, key) {
     if (v == null) return '';
-    const t = (_casePctThresholds[caseName] || {})[key];
+    const slug = _caseNameToSlug[caseName] || caseName;
+    const t = (_casePctThresholds[slug] || {})[key];
     if (!t) return '';
     return v >= t.p75 ? 'score-high' : v >= t.p25 ? 'score-mid' : 'score-low';
   }
