@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --toolbar-h: 52px;
-            --votebar-h: 160px;
+            --votebar-h: 52px;
             --primary: #4f46e5;
             --primary-hover: #4338ca;
         }
@@ -177,18 +177,14 @@
             position: fixed; bottom: 0; left: 0; right: 0;
             height: var(--votebar-h);
             background: white; border-top: 1px solid #e0e0e0;
-            padding: 12px 24px;
-            display: flex; flex-direction: column; align-items: center;
+            padding: 0 24px;
+            display: flex; align-items: center; justify-content: center;
             gap: 10px; z-index: 100;
         }
 
-        .vote-buttons {
-            display: flex; gap: 12px; align-items: center;
-        }
-
         .vote-btn {
-            padding: 10px 28px; border-radius: 10px;
-            font-size: 14px; font-weight: 600; cursor: pointer;
+            padding: 7px 20px; border-radius: 8px;
+            font-size: 13px; font-weight: 600; cursor: pointer;
             transition: all 0.15s; border: 1px solid #d1d5db;
             background: white; color: #374151;
             font-family: inherit;
@@ -198,38 +194,29 @@
         .vote-a:hover { border-color: #4f46e5; background: #eef2ff; }
         .vote-b { color: #ea580c; border-color: #fed7aa; }
         .vote-b:hover { border-color: #ea580c; background: #fff7ed; }
-        .vote-btn.selected-a {
-            background: #4f46e5; color: white; border-color: #4f46e5;
-        }
-        .vote-btn.selected-b {
-            background: #ea580c; color: white; border-color: #ea580c;
-        }
-        .vote-btn.selected-tie {
-            background: #6b7280; color: white; border-color: #6b7280;
-        }
+        .vote-btn.selected-a { background: #4f46e5; color: white; border-color: #4f46e5; }
+        .vote-btn.selected-b { background: #ea580c; color: white; border-color: #ea580c; }
+        .vote-btn.selected-tie { background: #6b7280; color: white; border-color: #6b7280; }
 
-        .vote-reason {
-            width: 100%; max-width: 600px;
-        }
         .vote-reason textarea {
-            width: 100%; height: 36px; border: 1px solid #e5e7eb;
-            border-radius: 8px; padding: 6px 12px; font-size: 13px;
+            width: 220px; height: 32px; border: 1px solid #e5e7eb;
+            border-radius: 8px; padding: 5px 10px; font-size: 12px;
             font-family: inherit; resize: none; color: #374151;
         }
         .vote-reason textarea:focus { outline: none; border-color: var(--primary); }
 
-        .submit-row {
-            display: flex; align-items: center; gap: 16px;
-        }
-
         .submit-btn {
-            padding: 10px 24px; border-radius: 10px; border: none;
+            padding: 7px 18px; border-radius: 8px; border: none;
             background: var(--primary); color: white;
-            font-size: 14px; font-weight: 600; cursor: pointer;
+            font-size: 13px; font-weight: 600; cursor: pointer;
             font-family: inherit; transition: all 0.15s;
         }
         .submit-btn:hover { background: var(--primary-hover); }
         .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .case-label {
+            font-size: 12px; color: #9ca3af;
+        }
 
         .success-flash {
             position: fixed; top: 50%; left: 50%;
@@ -371,12 +358,11 @@
                 padding: 10px 12px;
             }
             .panel { flex: none; height: 50%; }
-            .vote-buttons { flex-direction: column; width: 100%; }
-            .vote-btn { width: 100%; }
             .vote-bar {
-                height: auto;
-                padding: 10px 16px;
+                height: auto; flex-wrap: wrap; justify-content: center;
+                padding: 8px 12px; gap: 6px;
             }
+            .vote-reason textarea { width: 100%; }
             .main { bottom: auto; }
             .toolbar .spacer { display: none; }
             .toolbar { padding: 0 12px; gap: 8px; flex-wrap: nowrap; overflow-x: auto; }
@@ -435,18 +421,14 @@
 
 <!-- Vote bar -->
 <div class="vote-bar" id="voteBar">
-    <div class="vote-buttons">
-        <button class="vote-btn vote-a" data-vote="a">A 較好</button>
-        <button class="vote-btn" data-vote="tie">難分高下</button>
-        <button class="vote-btn vote-b" data-vote="b">B 較好</button>
-    </div>
+    <span id="caseName" class="case-label"></span>
+    <button class="vote-btn vote-a" data-vote="a">A 較好</button>
+    <button class="vote-btn" data-vote="tie">難分高下</button>
+    <button class="vote-btn vote-b" data-vote="b">B 較好</button>
     <div class="vote-reason">
-        <textarea id="reasonText" placeholder="簡述你的判斷依據..."></textarea>
+        <textarea id="reasonText" placeholder="理由（選填）"></textarea>
     </div>
-    <div class="submit-row">
-        <button class="submit-btn" id="submitBtn" disabled>送出並看下一組 →</button>
-        <span id="caseName" style="font-size:13px;color:#9ca3af;"></span>
-    </div>
+    <button class="submit-btn" id="submitBtn" disabled>送出 →</button>
 </div>
 
 <!-- Leaderboard toggle -->
