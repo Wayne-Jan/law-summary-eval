@@ -185,39 +185,62 @@ def extract_rule(rule_path: Path):
 
 def extract_fact(fact_path: Path):
     obj = read_json(fact_path)
-    if not obj:
-        return None
-    # Old format: metrics.{key}.score + overall_fact_recall
-    metrics = obj.get("metrics", {})
-    if metrics:
-        result = OrderedDict()
-        for out_key, src_key in FACT_KEYS.items():
-            result[out_key] = safe_float((metrics.get(src_key) or {}).get("score"))
-        result["avg"] = safe_float(obj.get("overall_fact_recall"))
-        return result
-    # New format: summary.recall/precision/f1 (no per-dimension breakdown)
-    summary = obj.get("summary", {})
-    if summary and summary.get("recall") is not None:
-        result = OrderedDict()
-        for out_key in FACT_KEYS:
-            result[out_key] = None
-        result["avg"] = safe_float(summary.get("recall"))
-        result["precision"] = safe_float(summary.get("precision"))
-        result["f1"] = safe_float(summary.get("f1"))
-        return result
+    if obj:
+        # Old format: metrics.{key}.score + overall_fact_recall
+        metrics = obj.get("metrics", {})
+        if metrics:
+            result = OrderedDict()
+            for out_key, src_key in FACT_KEYS.items():
+                result[out_key] = safe_float((metrics.get(src_key) or {}).get("score"))
+            result["avg"] = safe_float(obj.get("overall_fact_recall"))
+            return result
+        # Newer fact_recall.json format: summary.recall/precision/f1
+        summary = obj.get("summary", {})
+        if summary and summary.get("recall") is not None:
+            result = OrderedDict()
+            for out_key in FACT_KEYS:
+                result[out_key] = None
+            result["avg"] = safe_float(summary.get("recall"))
+            result["precision"] = safe_float(summary.get("precision"))
+            result["f1"] = safe_float(summary.get("f1"))
+            return result
+
+    # Fallback: report.json scores
+    report = read_json(fact_path.parent / "report.json")
+    if report:
+        scores = report.get("scores", {})
+        if scores.get("fact_recall") is not None:
+            result = OrderedDict()
+            for out_key in FACT_KEYS:
+                result[out_key] = None
+            result["avg"] = safe_float(scores.get("fact_recall"))
+            result["precision"] = safe_float(scores.get("fact_precision"))
+            result["f1"] = safe_float(scores.get("fact_f1"))
+            return result
     return None
 
 
 def extract_quality(quality_path: Path):
     obj = read_json(quality_path)
-    if not obj:
-        return None
-    overall = obj.get("overall", {})
-    result = OrderedDict()
-    for out_key, src_key in QUALITY_KEYS.items():
-        result[out_key] = safe_float(overall.get(src_key))
-    result["avg"] = safe_float(overall.get("overall_quality"))
-    return result
+    if obj:
+        overall = obj.get("overall", {})
+        result = OrderedDict()
+        for out_key, src_key in QUALITY_KEYS.items():
+            result[out_key] = safe_float(overall.get(src_key))
+        result["avg"] = safe_float(overall.get("overall_quality"))
+        return result
+
+    # Fallback: report.json scores. Only avg is guaranteed in the new summary schema.
+    report = read_json(quality_path.parent / "report.json")
+    if report:
+        scores = report.get("scores", {})
+        if scores.get("quality_overall") is not None:
+            result = OrderedDict()
+            for out_key in QUALITY_KEYS:
+                result[out_key] = None
+            result["avg"] = safe_float(scores.get("quality_overall"))
+            return result
+    return None
 
 
 def extract_faithfulness(path: Path):

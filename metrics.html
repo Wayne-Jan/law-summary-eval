@@ -2131,7 +2131,7 @@
         <div class="model-card-radar-wrap">${buildModelCardRadar(cond, color)}</div>
         <div class="model-card-metrics">
           ${metrics.map(m => {
-            const cls = m.scale === '5' ? scoreClass5(m.value) : scoreClass01(m.value);
+            const cls = scoreClassForScale(m.value, m.scale);
             const value = m.value != null ? (m.scale === '5' ? fmt(m.value, 2) : fmt(m.value)) : '--';
             return `<div class="model-card-metric">
               <div class="model-card-metric-label">${m.label}</div>
@@ -2185,7 +2185,7 @@
         <div class="model-card-radar-wrap">${buildRelativeCardRadar(condKey, sorted, color)}</div>
         <div class="model-card-metrics">
           ${metrics.map(m => {
-            const cls = m.scale === '5' ? scoreClass5(m.value) : scoreClass01(m.value);
+            const cls = scoreClassForScale(m.value, m.scale);
             const value = m.value != null ? (m.scale === '5' ? fmt(m.value, 2) : fmt(m.value)) : '--';
             return `<div class="model-card-metric">
               <div class="model-card-metric-label">${m.label}</div>
@@ -2293,7 +2293,7 @@
       return `
         <div class="capability-card">
           <div class="capability-label">${item.label}</div>
-          <div class="capability-score ${item.scale === '5' ? scoreClass5(item.value) : scoreClass01(item.value)}">${item.display}</div>
+          <div class="capability-score ${scoreClassForScale(item.value, item.scale)}">${item.display}</div>
           <div class="capability-chip ${tone}">${capabilityBadge(item.value, item.scale)}</div>
           <div class="capability-note">${capabilityCopy(item.key, tone)}</div>
         </div>
@@ -2697,11 +2697,11 @@
           fmtVal = fmt(v, 2);
         } else if (scale === '5') {
           pct = v / 5 * 100;
-          cls = 'dim-bar-fill-' + (v >= 4.0 ? 'high' : v >= 3.0 ? 'mid' : 'low');
+          cls = barClassForScale(v, scale);
           fmtVal = fmt(v, 1);
         } else {
           pct = v * 100;
-          cls = 'dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low');
+          cls = barClassForScale(v, scale);
           fmtVal = fmt(v);
         }
         html += `<div class="dim-bar-row">
@@ -2733,7 +2733,7 @@
         if (!rb || rb[k] == null) continue;
         const v = rb[k];
         const pct = v * 100;
-        const cls = 'dim-bar-fill-' + (v >= 0.8 ? 'high' : v >= 0.6 ? 'mid' : 'low');
+        const cls = barClassForScale(v, k.startsWith('bert') ? 'bert' : 'rouge');
         html += `<div class="dim-bar-row">
           <span class="dim-bar-cond">${formatModelLabel(cond.label)}</span>
           <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
