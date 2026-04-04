@@ -2592,7 +2592,25 @@
   }
 
   // ─── Tab 1: Overview ───
+  function _matchesQuartiles(matches, getter) {
+    return _quartiles(matches.map(m => getter(m.caseData)).filter(v => v != null));
+  }
   function buildOverviewTab(matches) {
+    // Compute cross-condition percentile for this case
+    const caseThresholds = {
+      rule: _matchesQuartiles(matches, cd => (cd.rule_based || {}).avg),
+      fact: _matchesQuartiles(matches, cd => (cd.fact_recall || {}).avg),
+      quality: _matchesQuartiles(matches, cd => (cd.quality || {}).avg),
+      faith: _matchesQuartiles(matches, cd => cd.faithfulness),
+      rougeL: _matchesQuartiles(matches, cd => (cd.rouge_bertscore || {}).rougeL),
+      bertscore: _matchesQuartiles(matches, cd => (cd.rouge_bertscore || {}).bertscore_f1),
+    };
+    function caseCls(v, key) {
+      if (v == null) return '';
+      const t = caseThresholds[key];
+      return v >= t.p75 ? 'score-high' : v >= t.p25 ? 'score-mid' : 'score-low';
+    }
+
     let html = '<div class="overview-cards-grid">';
     for (const { condKey, cond, caseData } of matches) {
       const rb = caseData.rule_based || {};
@@ -2603,16 +2621,16 @@
       const badgeClass = cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource';
 
       const scores = [
-        { label: 'Rule-Based', value: rb.avg, scale: '01', tip: '規則式指標平均' },
-        { label: 'Fact Recall', value: fr.avg, scale: '01', tip: '事實召回率' },
-        { label: 'Quality', value: q.avg, scale: '5', tip: '14 維度寫作品質平均' },
-        { label: 'Faithfulness', value: faith, scale: '01', tip: '忠實度' },
+        { label: 'Rule-Based', value: rb.avg, key: 'rule', scale: '01', tip: '規則式指標平均' },
+        { label: 'Fact Recall', value: fr.avg, key: 'fact', scale: '01', tip: '事實召回率' },
+        { label: 'Quality', value: q.avg, key: 'quality', scale: '5', tip: '14 維度寫作品質平均' },
+        { label: 'Faithfulness', value: faith, key: 'faith', scale: '01', tip: '忠實度' },
       ];
       if (rbt.rougeL != null) {
-        scores.push({ label: 'ROUGE-L', value: rbt.rougeL, scale: '01', tip: 'ROUGE-L F-score' });
+        scores.push({ label: 'ROUGE-L', value: rbt.rougeL, key: 'rougeL', scale: '01', tip: 'ROUGE-L F-score' });
       }
       if (rbt.bertscore_f1 != null) {
-        scores.push({ label: 'BERTScore F1', value: rbt.bertscore_f1, scale: '01', tip: 'BERTScore F1' });
+        scores.push({ label: 'BERTScore F1', value: rbt.bertscore_f1, key: 'bertscore', scale: '01', tip: 'BERTScore F1' });
       }
 
       html += `<div class="overview-card">
@@ -2623,7 +2641,7 @@
         <div class="overview-card-scores" style="grid-template-columns: repeat(${scores.length <= 4 ? 2 : 3}, 1fr);">`;
 
       for (const s of scores) {
-        const cls = s.scale === '5' ? scoreClass5(s.value) : scoreClass01(s.value);
+        const cls = caseCls(s.value, s.key);
         const fmtVal = s.value != null ? (s.scale === '5' ? fmt(s.value, 2) : fmt(s.value)) : null;
         if (fmtVal == null) continue;
         html += `<div class="score-box" data-tip="${s.tip}">

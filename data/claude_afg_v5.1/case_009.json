@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -130,5 +130,87 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7345,
+  "fact_recall": 0.84,
+  "fact_precision": 0.85,
+  "fact_f1": 0.85,
+  "quality_overall": 4.0167,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9571,
+  "uncited_rate": 0,
+  "faithfulness_combined": {
+   "score": 0.94,
+   "citation_fidelity": 1.0,
+   "fact_precision": 0.85,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9189,
+  "missing_severity": {
+   "critical": 1,
+   "important": 1,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 37,
+     "severity": "critical",
+     "text": "判決書內文無判決理由",
+     "reason": "影響判決結論理解的核心事實：協商判決書無判決理由，但預測摘要卻撰寫了詳細理由"
+    },
+    {
+     "gt_claim_id": 18,
+     "severity": "important",
+     "text": "因為協商判決，鑑定內容未明載",
+     "reason": "影響案情完整理解：協商判決導致專業鑑定內容未被明確記載"
+    },
+    {
+     "gt_claim_id": 2,
+     "severity": "minor",
+     "text": "丙、戊之女即病患K",
+     "reason": "程序性/背景性事實：親子關係具體細節，匿名化後以『父、母』表示已足夠"
+    },
+    {
+     "gt_claim_id": 25,
+     "severity": "minor",
+     "text": "法院於民國97年4月30日作出協商判決",
+     "reason": "程序性日期事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "severity": "minor",
+     "text": "被告、檢察官於法定上訴期間未上訴",
+     "reason": "程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "severity": "minor",
+     "text": "本案判決即確定",
+     "reason": "程序性結果，不影響案情理解"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.0167,
+   "quality_overall": 4.0167,
+   "gt_length_ratio": 0.8733,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 37,
+   "pred_total": 27,
+   "matched": 29,
+   "partial": 4,
+   "missing": 4,
+   "hallucinated": 4
+  },
+  "fact_recall_efficiency": 0.9619,
+  "section_balance": 1.0
+ }
 }

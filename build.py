@@ -121,7 +121,7 @@ CONDITION_LABELS = {
     "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
 }
 
-# Display order: Claude → Baselines → DeepSeek variants
+# Display order: LENS-Haiku → 商用 baseline → LENS-DeepSeek → 開源 baseline
 CONDITION_ORDER = [
     "claude_afg_v5.1",
     "ablation_no_afg",
@@ -132,6 +132,9 @@ CONDITION_ORDER = [
     "baseline_gemini-3.1-pro",
     "baseline_gpt-5.3",
     "baseline_gpt-5.4-thinking",
+    "LENS-Full-DeepSeek_v31",
+    "LENS-NoReact-DeepSeek_v31",
+    "LENS-NoAFG-DeepSeek_v31",
     "baseline_ollama_cogito-2.1-671b-cloud",
     "baseline_ollama_deepseek-v3.1-671b-cloud",
     "baseline_ollama_glm-5-cloud",
@@ -141,9 +144,6 @@ CONDITION_ORDER = [
     "baseline_ollama_nemotron-3-super-cloud",
     "baseline_ollama_qwen3-next-80b-cloud",
     "baseline_ollama_qwen3.5-397b-cloud",
-    "LENS-Full-DeepSeek_v31",
-    "LENS-NoReact-DeepSeek_v31",
-    "LENS-NoAFG-DeepSeek_v31",
 ]
 
 CONDITION_GROUPS = {
