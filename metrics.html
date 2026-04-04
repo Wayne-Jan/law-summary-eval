@@ -1077,9 +1077,20 @@
   // ─── Score color helpers (percentile-based) ───
   // Thresholds are recomputed each time the volume/filter changes.
   let _pctThresholds = {}; // { metricKey: { p25, p75 } }
+  let _casePctThresholds = {}; // { caseName: { metricKey: { p25, p75 } } }
+
+  function _quartiles(vals) {
+    const sorted = vals.filter(v => v != null).sort((a, b) => a - b);
+    if (sorted.length < 2) return { p25: -Infinity, p75: Infinity };
+    return {
+      p25: sorted[Math.floor(sorted.length * 0.25)],
+      p75: sorted[Math.floor(sorted.length * 0.75)],
+    };
+  }
 
   function _computePercentileThresholds(entries) {
-    const metrics = {
+    // Condition-level percentiles (for overview row averages)
+    const condMetrics = {
       rule_based_avg: e => e.averages?.rule_based_avg,
       fact_recall_avg: e => e.averages?.fact_recall_avg,
       quality_avg: e => e.averages?.quality_avg,
@@ -1088,17 +1099,45 @@
       bertscore_f1: e => (e.averages?.rouge_bertscore || {}).bertscore_f1,
     };
     const result = {};
-    for (const [key, getter] of Object.entries(metrics)) {
-      const vals = entries.map(([, cond]) => getter(cond)).filter(v => v != null).sort((a, b) => a - b);
-      if (vals.length < 2) {
-        result[key] = { p25: -Infinity, p75: Infinity };
-      } else {
-        const p25idx = Math.floor(vals.length * 0.25);
-        const p75idx = Math.floor(vals.length * 0.75);
-        result[key] = { p25: vals[p25idx], p75: vals[p75idx] };
-      }
+    for (const [key, getter] of Object.entries(condMetrics)) {
+      result[key] = _quartiles(entries.map(([, cond]) => getter(cond)));
     }
     _pctThresholds = result;
+
+    // Case-level percentiles (same case across conditions)
+    const caseMetricGetters = {
+      rule_based_avg: c => (c.rule_based || {}).avg,
+      fact_recall_avg: c => (c.fact_recall || {}).avg,
+      quality_avg: c => (c.quality || {}).avg,
+      faithfulness_avg: c => c.faithfulness,
+      rougeL: c => (c.rouge_bertscore || {}).rougeL,
+      bertscore_f1: c => (c.rouge_bertscore || {}).bertscore_f1,
+    };
+    // Collect all case names
+    const allCases = new Set();
+    for (const [, cond] of entries) {
+      for (const caseName of Object.keys(cond.cases || {})) allCases.add(caseName);
+    }
+    const caseResult = {};
+    for (const caseName of allCases) {
+      const perMetric = {};
+      for (const [key, getter] of Object.entries(caseMetricGetters)) {
+        const vals = entries.map(([, cond]) => {
+          const cd = (cond.cases || {})[caseName];
+          return cd ? getter(cd) : null;
+        });
+        perMetric[key] = _quartiles(vals);
+      }
+      caseResult[caseName] = perMetric;
+    }
+    _casePctThresholds = caseResult;
+  }
+
+  function _caseScoreClass(v, caseName, key) {
+    if (v == null) return '';
+    const t = (_casePctThresholds[caseName] || {})[key];
+    if (!t) return '';
+    return v >= t.p75 ? 'score-high' : v >= t.p25 ? 'score-mid' : 'score-low';
   }
 
   function _pctScoreClass(v, key) {
@@ -1285,12 +1324,11 @@
   const EXPAND_DEFAULT_LIMIT = 10;
   let caseListModalCondKey = null;
 
-  function expandScoreCell(v, scale) {
+  function expandScoreCell(v, scale, caseName) {
     if (v == null) return '<td class="score-cell" style="color:var(--slate-400)">--</td>';
-    const cls = scale === '5' ? scoreClass5(v)
-              : scale === 'rouge' ? scoreClassRouge(v)
-              : scale === 'bert' ? scoreClassBert(v)
-              : scoreClass01(v);
+    const scaleToKey = { '5': 'quality_avg', 'rouge': 'rougeL', 'bert': 'bertscore_f1', '01': 'rule_based_avg', 'fact': 'fact_recall_avg', 'faith': 'faithfulness_avg' };
+    const key = scaleToKey[scale] || 'rule_based_avg';
+    const cls = caseName ? _caseScoreClass(v, caseName, key) : scoreClassForScale(v, scale);
     const digits = scale === '5' ? 2 : 3;
     return `<td class="score-cell ${cls}">${fmt(v, digits)}</td>`;
   }
@@ -1324,12 +1362,12 @@
         </div>
       </td>
       <td><span class="overview-case-volume ${esc(volumePillClass(row.caseName))}">${esc(formatVolumePill(row.caseName))}</span></td>
-      <td class="score-cell ${scoreClass01(rb.avg)}">${fmt(rb.avg) || '--'}</td>
-      <td class="score-cell ${scoreClass01(fr.avg)}">${fmt(fr.avg) || '--'}</td>
-      <td class="score-cell ${scoreClass5(q.avg)}">${fmt(q.avg, 2) || '--'}</td>
-      <td class="score-cell ${scoreClass01(c.faithfulness)}">${fmt(c.faithfulness) || '--'}</td>
-      <td class="score-cell ${scoreClassRouge(rougeBert.rougeL)}">${fmt(rougeBert.rougeL) || '--'}</td>
-      <td class="score-cell ${scoreClassBert(rougeBert.bertscore_f1)}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
+      <td class="score-cell ${_caseScoreClass(rb.avg, row.caseName, 'rule_based_avg')}">${fmt(rb.avg) || '--'}</td>
+      <td class="score-cell ${_caseScoreClass(fr.avg, row.caseName, 'fact_recall_avg')}">${fmt(fr.avg) || '--'}</td>
+      <td class="score-cell ${_caseScoreClass(q.avg, row.caseName, 'quality_avg')}">${fmt(q.avg, 2) || '--'}</td>
+      <td class="score-cell ${_caseScoreClass(c.faithfulness, row.caseName, 'faithfulness_avg')}">${fmt(c.faithfulness) || '--'}</td>
+      <td class="score-cell ${_caseScoreClass(rougeBert.rougeL, row.caseName, 'rougeL')}">${fmt(rougeBert.rougeL) || '--'}</td>
+      <td class="score-cell ${_caseScoreClass(rougeBert.bertscore_f1, row.caseName, 'bertscore_f1')}">${fmt(rougeBert.bertscore_f1) || '--'}</td>
       <td>${actionHtml}</td>
     </tr>`;
   }
@@ -1431,7 +1469,7 @@
         : esc(resolveCaseDisplay(row.caseName));
       return `<tr>
         <td style="text-align:left;font-weight:600;color:var(--slate-900);max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${nameHtml}</td>
-        ${expandScoreCell(rb.avg, '01')}${expandScoreCell(fr.avg, '01')}${expandScoreCell(q.avg, '5')}${expandScoreCell(c.faithfulness, '01')}${expandScoreCell(rougeBert.rougeL, 'rouge')}${expandScoreCell(rougeBert.bertscore_f1, 'bert')}
+        ${expandScoreCell(rb.avg, '01', row.caseName)}${expandScoreCell(fr.avg, 'fact', row.caseName)}${expandScoreCell(q.avg, '5', row.caseName)}${expandScoreCell(c.faithfulness, 'faith', row.caseName)}${expandScoreCell(rougeBert.rougeL, 'rouge', row.caseName)}${expandScoreCell(rougeBert.bertscore_f1, 'bert', row.caseName)}
       </tr>`;
     }).join('');
     const showMoreHtml = hasMore ? `<tr><td colspan="7" style="text-align:center;padding:8px">
