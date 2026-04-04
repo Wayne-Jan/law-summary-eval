@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -126,5 +126,63 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8206,
+  "fact_recall": 0.942,
+  "fact_precision": 1.0,
+  "fact_f1": 0.97,
+  "quality_overall": 4.85,
+  "citation_accuracy": 0.9756,
+  "citation_support_score": 0.9829,
+  "uncited_rate": 0.043,
+  "faithfulness_combined": {
+   "score": 0.9602,
+   "citation_fidelity": 0.9336,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": null,
+  "weighted_recall": 0.9915,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 33,
+     "severity": "minor",
+     "text": "相驗屍體證明書、驗斷書、法醫解剖鑑報告等在卷為憑",
+     "reason": "程序性證據細節，僅列舉證明死因之文件類型，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 39,
+     "severity": "minor",
+     "text": "急性呼吸窘迫症候群死亡率有降低之趨勢",
+     "reason": "醫學背景資訊，屬於治療技術進步的延伸背景描述，非判決核心事實"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.6336,
+   "quality_overall": 4.85,
+   "gt_length_ratio": 1.3607,
+   "length_penalty": 0.9554,
+   "zone": "too_long"
+  },
+  "fact_detail": {
+   "gt_total": 78,
+   "pred_total": 93,
+   "matched": 72,
+   "partial": 3,
+   "missing": 3,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 0.6923,
+  "section_balance": 1.0
+ }
 }

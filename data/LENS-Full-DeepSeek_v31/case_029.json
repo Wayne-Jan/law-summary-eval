@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -129,5 +130,75 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7834,
+  "fact_recall": 0.957,
+  "fact_precision": 1.0,
+  "fact_f1": 0.978,
+  "quality_overall": 4.9071,
+  "citation_accuracy": 0.9762,
+  "citation_support_score": 0.9705,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9857,
+   "citation_fidelity": 0.9762,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9821,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 70,
+     "severity": "minor",
+     "text": "自訴人於法定上訴期間未上訴",
+     "reason": "程序性事實，雖「判決確定」已提及，但未明確說明「未上訴」，對案情理解影響較小"
+    },
+    {
+     "gt_claim_id": 83,
+     "severity": "important",
+     "text": "病患有任何醫師無法預見之突發狀況，導致死亡，亦難謂醫師有誤判病情，或懈怠、疏忽可言，自不得課以過失罪責",
+     "reason": "法院重要法理論述，關乎過失責任之免責要件，影響對判決理由之完整理解"
+    },
+    {
+     "gt_claim_id": 84,
+     "severity": "minor",
+     "text": "醫師動輒得咎，視疑難之病例為畏途，終非病患之福",
+     "reason": "法院政策考量論述，屬輔助性法理闡述，非核心判決理由"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "minor",
+     "text": "有該護理紀錄附卷可稽",
+     "reason": "單純證據程序性表述，病歷記載內容已於 claims 中充分涵蓋"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.9071,
+   "quality_overall": 4.9071,
+   "gt_length_ratio": 1.2046,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 107,
+   "matched": 87,
+   "partial": 2,
+   "missing": 4,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 0.7945,
+  "section_balance": 1.0
+ }
 }

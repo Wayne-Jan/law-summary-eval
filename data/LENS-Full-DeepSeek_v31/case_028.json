@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,81 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7647,
+  "fact_recall": 0.77,
+  "fact_precision": 1.0,
+  "fact_f1": 0.87,
+  "quality_overall": 4.8429,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.167,
+  "faithfulness_combined": {
+   "score": 0.8998,
+   "citation_fidelity": 0.833,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": null,
+  "weighted_recall": 0.9314,
+  "missing_severity": {
+   "critical": 1,
+   "important": 4,
+   "minor": 17,
+   "details": [
+    {
+     "gt_claim_id": 95,
+     "severity": "critical",
+     "text": "本案關鍵在於被告是否因疏失而誤判、或未立即檢查，且其誤判及未檢查是否為造成本件新生兒死亡之原因",
+     "reason": "涉及法院論證結構的關鍵問題：誤判與未檢查是否為死因，此為判決結論的重要前提"
+    },
+    {
+     "gt_claim_id": 51,
+     "severity": "important",
+     "text": "當時送G醫院後,G醫院也懷疑是嵌入性脫腸",
+     "reason": "涉及法院『不能僅因被告誤判即認有過失』之核心論證基礎，即連G醫院也無法立即正確診斷"
+    },
+    {
+     "gt_claim_id": 52,
+     "severity": "important",
+     "text": "第二天照超音波後才發現是脾臟出血而不是嵌入性脫腸",
+     "reason": "涉及法院論證連設備精良的G醫院都需超音波才能確診，被告受限於診所設備不能認有過失"
+    },
+    {
+     "gt_claim_id": 128,
+     "severity": "important",
+     "text": "G醫院之設備、人力已屬全國醫療界之冠，仍不免於死",
+     "reason": "此為法院重要論證：連設備最好的醫院都無法救活，不能歸責於診所醫師"
+    },
+    {
+     "gt_claim_id": 131,
+     "severity": "important",
+     "text": "上開鑑定書謂被告判斷失真致嬰兒死亡，其未考慮二者間之因果關係即下結論，亦嫌速斷",
+     "reason": "法院對鑑定報告的核心批評：未考慮因果關係即認定被告過失致死，此為判決重要論理基礎"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 3.7512,
+   "quality_overall": 4.8429,
+   "gt_length_ratio": 0.5422,
+   "length_penalty": 0.7746,
+   "zone": "too_short"
+  },
+  "fact_detail": {
+   "gt_total": 136,
+   "pred_total": 96,
+   "matched": 97,
+   "partial": 17,
+   "missing": 22,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 1.4201,
+  "section_balance": 1.0
+ }
 }

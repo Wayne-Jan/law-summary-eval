@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -130,5 +130,93 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7445,
+  "fact_recall": 0.737,
+  "fact_precision": 0.688,
+  "fact_f1": 0.712,
+  "quality_overall": 4.7833,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.075,
+  "faithfulness_combined": {
+   "score": 0.8302,
+   "citation_fidelity": 0.925,
+   "fact_precision": 0.688,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.958,
+  "weighted_recall": 0.9795,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 55,
+     "severity": "minor",
+     "text": "民間救護車正外派出勤，要被告暫候回音",
+     "reason": "救護車求援細節，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "等待二、三十分鐘仍不見救護車到來，只好再次向一一九確認",
+     "reason": "等待救護車細節，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "severity": "minor",
+     "text": "醫師懷疑合併DIC",
+     "reason": "已在其他claims中部分涵蓋"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "minor",
+     "text": "臺灣新北地方法院於民國91年07月31日作出判決（年份有誤）",
+     "reason": "程序性事實，pred 的89年正確"
+    },
+    {
+     "gt_claim_id": 38,
+     "severity": "minor",
+     "text": "本案裂傷係往子宮體方向延伸，從陰道方向難以看到",
+     "reason": "已在 pred_claim_26 中涵蓋"
+    },
+    {
+     "gt_claim_id": 32,
+     "severity": "minor",
+     "text": "當時產婦H狀況均甚良好，僅說腹痛",
+     "reason": "被告辯稱細節"
+    },
+    {
+     "gt_claim_id": 33,
+     "severity": "minor",
+     "text": "被告甲施予子宮按摩後送入病房",
+     "reason": "治療程序細節"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.7833,
+   "quality_overall": 4.7833,
+   "gt_length_ratio": 0.9578,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 114,
+   "pred_total": 93,
+   "matched": 73,
+   "partial": 21,
+   "missing": 20,
+   "hallucinated": 29
+  },
+  "fact_recall_efficiency": 0.7695,
+  "section_balance": 1.0
+ }
 }

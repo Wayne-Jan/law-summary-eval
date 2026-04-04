@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -124,5 +124,75 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8278,
+  "fact_recall": 0.806,
+  "fact_precision": 0.975,
+  "fact_f1": 0.883,
+  "quality_overall": 4.8357,
+  "citation_accuracy": 0.875,
+  "citation_support_score": 0.8824,
+  "uncited_rate": 0.15,
+  "faithfulness_combined": {
+   "score": 0.8362,
+   "citation_fidelity": 0.7438,
+   "fact_precision": 0.975,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9753,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "severity": "minor",
+     "text": "病患S前曾至X醫院求診做相關檢查",
+     "reason": "背景性事實，說明病患病史來源，非核心案情理解所需"
+    },
+    {
+     "gt_claim_id": 32,
+     "severity": "minor",
+     "text": "刑事宣示筆錄內容未載被告回應",
+     "reason": "程序性事實，屬文件格式描述，不影響案情實體內容理解"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "minor",
+     "text": "有郵政劃撥儲金存款收據在卷可參",
+     "reason": "證據細節，屬佐證事實，非核心案情理解所需"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "minor",
+     "text": "被告、檢察官於法定上訴期間未上訴，本案判決即確定",
+     "reason": "程序性事實，屬判決後續程序，不影響判決結論理解"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.8357,
+   "quality_overall": 4.8357,
+   "gt_length_ratio": 0.8258,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 54,
+   "pred_total": 40,
+   "matched": 41,
+   "partial": 5,
+   "missing": 4,
+   "hallucinated": 1
+  },
+  "fact_recall_efficiency": 0.976,
+  "section_balance": 1.0
+ }
 }

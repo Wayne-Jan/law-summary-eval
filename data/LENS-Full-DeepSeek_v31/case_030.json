@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -125,5 +126,69 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8086,
+  "fact_recall": 0.944,
+  "fact_precision": 1.0,
+  "fact_f1": 0.971,
+  "quality_overall": 4.6571,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9688,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9785,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 44,
+     "severity": "important",
+     "text": "病童被送到C醫院，醫師除給於各項醫療處置外，亦曾指示照會社會服務部查詢有無兒童受虐等情況發生",
+     "reason": "屬鑑定意見提及之醫療處置細節，反映醫師之臨床判斷，對案情理解有輔助價值"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "檢察官於法定上訴期間未上訴",
+     "reason": "程序性事實，不影響判決內容理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "本案判決即確定",
+     "reason": "程序性結論，可從無罪判決及未上訴推知"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.5799,
+   "quality_overall": 4.6571,
+   "gt_length_ratio": 1.3219,
+   "length_penalty": 0.9834,
+   "zone": "too_long"
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 73,
+   "matched": 58,
+   "partial": 1,
+   "missing": 3,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 0.7141,
+  "section_balance": 1.0
+ }
 }
