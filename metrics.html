@@ -1074,39 +1074,55 @@
     if (e.key === 'Escape') closeCaseListModal();
   });
 
-  // ─── Score color helpers ───
-  function scoreClass01(v) {
+  // ─── Score color helpers (percentile-based) ───
+  // Thresholds are recomputed each time the volume/filter changes.
+  let _pctThresholds = {}; // { metricKey: { p25, p75 } }
+
+  function _computePercentileThresholds(entries) {
+    const metrics = {
+      rule_based_avg: e => e.averages?.rule_based_avg,
+      fact_recall_avg: e => e.averages?.fact_recall_avg,
+      quality_avg: e => e.averages?.quality_avg,
+      faithfulness_avg: e => e.averages?.faithfulness_avg,
+      rougeL: e => (e.averages?.rouge_bertscore || {}).rougeL,
+      bertscore_f1: e => (e.averages?.rouge_bertscore || {}).bertscore_f1,
+    };
+    const result = {};
+    for (const [key, getter] of Object.entries(metrics)) {
+      const vals = entries.map(([, cond]) => getter(cond)).filter(v => v != null).sort((a, b) => a - b);
+      if (vals.length < 2) {
+        result[key] = { p25: -Infinity, p75: Infinity };
+      } else {
+        const p25idx = Math.floor(vals.length * 0.25);
+        const p75idx = Math.floor(vals.length * 0.75);
+        result[key] = { p25: vals[p25idx], p75: vals[p75idx] };
+      }
+    }
+    _pctThresholds = result;
+  }
+
+  function _pctScoreClass(v, key) {
     if (v == null) return '';
-    return v >= 0.8 ? 'score-high' : v >= 0.6 ? 'score-mid' : 'score-low';
+    const t = _pctThresholds[key];
+    if (!t) return '';
+    return v >= t.p75 ? 'score-high' : v >= t.p25 ? 'score-mid' : 'score-low';
   }
-  function scoreClassRouge(v) {
-    if (v == null) return '';
-    return v >= 0.40 ? 'score-high' : v >= 0.30 ? 'score-mid' : 'score-low';
-  }
-  function scoreClassBert(v) {
-    if (v == null) return '';
-    return v >= 0.55 ? 'score-high' : v >= 0.47 ? 'score-mid' : 'score-low';
-  }
-  function scoreClass5(v) {
-    if (v == null) return '';
-    return v >= 4.0 ? 'score-high' : v >= 3.0 ? 'score-mid' : 'score-low';
-  }
-  function barClass01(v) {
+  function _pctBarClass(v, key) {
     if (v == null) return 'dim-bar-fill-mid';
-    return v >= 0.8 ? 'dim-bar-fill-high' : v >= 0.6 ? 'dim-bar-fill-mid' : 'dim-bar-fill-low';
+    const t = _pctThresholds[key];
+    if (!t) return 'dim-bar-fill-mid';
+    return v >= t.p75 ? 'dim-bar-fill-high' : v >= t.p25 ? 'dim-bar-fill-mid' : 'dim-bar-fill-low';
   }
-  function barClassRouge(v) {
-    if (v == null) return 'dim-bar-fill-mid';
-    return v >= 0.40 ? 'dim-bar-fill-high' : v >= 0.30 ? 'dim-bar-fill-mid' : 'dim-bar-fill-low';
-  }
-  function barClassBert(v) {
-    if (v == null) return 'dim-bar-fill-mid';
-    return v >= 0.55 ? 'dim-bar-fill-high' : v >= 0.47 ? 'dim-bar-fill-mid' : 'dim-bar-fill-low';
-  }
-  function barClass5(v) {
-    if (v == null) return 'dim-bar-fill-mid';
-    return v >= 4.0 ? 'dim-bar-fill-high' : v >= 3.0 ? 'dim-bar-fill-mid' : 'dim-bar-fill-low';
-  }
+
+  // Legacy wrappers — now all delegate to percentile
+  function scoreClass01(v) { return _pctScoreClass(v, 'rule_based_avg'); }
+  function scoreClassRouge(v) { return _pctScoreClass(v, 'rougeL'); }
+  function scoreClassBert(v) { return _pctScoreClass(v, 'bertscore_f1'); }
+  function scoreClass5(v) { return _pctScoreClass(v, 'quality_avg'); }
+  function barClass01(v) { return _pctBarClass(v, 'rule_based_avg'); }
+  function barClassRouge(v) { return _pctBarClass(v, 'rougeL'); }
+  function barClassBert(v) { return _pctBarClass(v, 'bertscore_f1'); }
+  function barClass5(v) { return _pctBarClass(v, 'quality_avg'); }
   function fmt(v, digits) {
     if (v == null) return null;
     return typeof v === 'number' ? v.toFixed(digits === undefined ? 3 : digits) : String(v);
@@ -1688,17 +1704,21 @@
   }
 
   function scoreClassForScale(value, scale) {
-    return scale === '5' ? scoreClass5(value)
-         : scale === 'rouge' ? scoreClassRouge(value)
-         : scale === 'bert' ? scoreClassBert(value)
-         : scoreClass01(value);
+    if (scale === '5') return _pctScoreClass(value, 'quality_avg');
+    if (scale === 'rouge') return _pctScoreClass(value, 'rougeL');
+    if (scale === 'bert') return _pctScoreClass(value, 'bertscore_f1');
+    if (scale === 'fact') return _pctScoreClass(value, 'fact_recall_avg');
+    if (scale === 'faith') return _pctScoreClass(value, 'faithfulness_avg');
+    return _pctScoreClass(value, 'rule_based_avg');
   }
 
   function barClassForScale(value, scale) {
-    return scale === '5' ? barClass5(value)
-         : scale === 'rouge' ? barClassRouge(value)
-         : scale === 'bert' ? barClassBert(value)
-         : barClass01(value);
+    if (scale === '5') return _pctBarClass(value, 'quality_avg');
+    if (scale === 'rouge') return _pctBarClass(value, 'rougeL');
+    if (scale === 'bert') return _pctBarClass(value, 'bertscore_f1');
+    if (scale === 'fact') return _pctBarClass(value, 'fact_recall_avg');
+    if (scale === 'faith') return _pctBarClass(value, 'faithfulness_avg');
+    return _pctBarClass(value, 'rule_based_avg');
   }
 
   function normalizeByScale(value, scale) {
@@ -1844,6 +1864,7 @@
 
   function rebuildTable() {
     const entries = getSortedEntries();
+    _computePercentileThresholds(entries);
     renderOverviewRows(entries);
     renderMobileMetricsOverview(entries);
     buildModelCards(entries);
@@ -2160,10 +2181,15 @@
 
   function capabilityTone(value, scale) {
     if (value == null) return 'mid';
-    if (scale === '5') return value >= 4.0 ? 'high' : value >= 3.0 ? 'mid' : 'low';
-    if (scale === 'rouge') return value >= 0.40 ? 'high' : value >= 0.30 ? 'mid' : 'low';
-    if (scale === 'bert') return value >= 0.55 ? 'high' : value >= 0.47 ? 'mid' : 'low';
-    return value >= 0.8 ? 'high' : value >= 0.6 ? 'mid' : 'low';
+    const key = scale === '5' ? 'quality_avg'
+              : scale === 'rouge' ? 'rougeL'
+              : scale === 'bert' ? 'bertscore_f1'
+              : scale === 'fact' ? 'fact_recall_avg'
+              : scale === 'faith' ? 'faithfulness_avg'
+              : 'rule_based_avg';
+    const t = _pctThresholds[key];
+    if (!t) return 'mid';
+    return value >= t.p75 ? 'high' : value >= t.p25 ? 'mid' : 'low';
   }
 
   function capabilityBadge(value, scale) {
@@ -2363,12 +2389,12 @@
         <tr class="overview-row${expanded ? ' expanded' : ''}" data-cond-key="${esc(condKey)}" aria-expanded="${expanded ? 'true' : 'false'}">
           <td class="cond-name"><span class="cond-name-inner"><span class="overview-row-toggle">${expanded ? '▾' : '▸'}</span>${formatOverviewModelLabel(condKey, cond.label)}</span></td>
           <td><span class="badge ${badgeClass}">${cond.group}</span></td>
-          <td class="score-cell ${scoreClass01(a.rule_based_avg)}">${fmt(a.rule_based_avg) || '--'}</td>
-          <td class="score-cell ${scoreClass01(a.fact_recall_avg)}">${fmt(a.fact_recall_avg) || '--'}</td>
-          <td class="score-cell ${scoreClass5(a.quality_avg)}">${fmt(a.quality_avg, 2) || '--'}</td>
-          <td class="score-cell ${scoreClass01(a.faithfulness_avg)}">${fmt(a.faithfulness_avg) || '--'}</td>
-          <td class="score-cell ${scoreClassRouge(rb.rougeL)}">${fmt(rb.rougeL) || '--'}</td>
-          <td class="score-cell ${scoreClassBert(rb.bertscore_f1)}">${fmt(rb.bertscore_f1) || '--'}</td>
+          <td class="score-cell ${_pctScoreClass(a.rule_based_avg, 'rule_based_avg')}">${fmt(a.rule_based_avg) || '--'}</td>
+          <td class="score-cell ${_pctScoreClass(a.fact_recall_avg, 'fact_recall_avg')}">${fmt(a.fact_recall_avg) || '--'}</td>
+          <td class="score-cell ${_pctScoreClass(a.quality_avg, 'quality_avg')}">${fmt(a.quality_avg, 2) || '--'}</td>
+          <td class="score-cell ${_pctScoreClass(a.faithfulness_avg, 'faithfulness_avg')}">${fmt(a.faithfulness_avg) || '--'}</td>
+          <td class="score-cell ${_pctScoreClass(rb.rougeL, 'rougeL')}">${fmt(rb.rougeL) || '--'}</td>
+          <td class="score-cell ${_pctScoreClass(rb.bertscore_f1, 'bertscore_f1')}">${fmt(rb.bertscore_f1) || '--'}</td>
           <td>${evalN}</td>
         </tr>
         ${expanded ? buildExpandCaseRows(condKey, cond) : ''}
