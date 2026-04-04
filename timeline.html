@@ -917,6 +917,23 @@
       });
     }
 
+    function scoreSelectedMark(mark) {
+      if (!mark) return -1;
+      const text = String(mark.textContent || '');
+      const trimmed = text.replace(/\s+/g, '').replace(/[。、「」『』（）()，,；;：:\-—…．!?！？]/g, '');
+      if (!trimmed) return 0;
+      return trimmed.length;
+    }
+
+    function findBestSelectedMark(evtIdx, spanId) {
+      if (evtIdx == null || !spanId) return null;
+      const marks = Array.from(document.querySelectorAll(`.evt-highlight[data-evt="${evtIdx}"][data-span-id="${CSS.escape(String(spanId))}"]`));
+      if (!marks.length) return null;
+      return marks.reduce((best, mark) => (
+        scoreSelectedMark(mark) > scoreSelectedMark(best) ? mark : best
+      ), marks[0]);
+    }
+
     function normalizeLooseText(text) {
       return String(text || '').replace(/\s+/g, '');
     }
@@ -1443,8 +1460,7 @@
 
       if (isMobileTimelineLayout()) openMobileSourceSheet();
 
-      const selectedAnchorId = activeSpanId ? getSpanAnchorId(idx, activeSpanId) : '';
-      const selectedMark = selectedAnchorId ? document.getElementById(selectedAnchorId) : null;
+      const selectedMark = activeSpanId ? findBestSelectedMark(idx, activeSpanId) : null;
       const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
 
       if (isMobileTimelineLayout()) {
