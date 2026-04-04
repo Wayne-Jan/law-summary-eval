@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -131,5 +132,87 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8009,
+  "fact_recall": 0.8624,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9264,
+  "quality_overall": 4.5643,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9772,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.985,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 65,
+     "severity": "minor",
+     "text": "主動脈剝離屬外科治療疾病，以急診開刀為主",
+     "reason": "屬醫學治療分類背景資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "severity": "minor",
+     "text": "內科治療以維持血壓為主，採用型交感神經阻斷劑及抗血壓劑",
+     "reason": "屬次要治療藥物細節，摘要已提及維持血壓重點"
+    },
+    {
+     "gt_claim_id": 96,
+     "severity": "important",
+     "text": "此時應考慮其他可能之疾病，如主動脈剝離",
+     "reason": "第四次鑑定意見之重要鑑別診斷建議，影響對法院採信鑑定意見之完整理解"
+    },
+    {
+     "gt_claim_id": 117,
+     "severity": "minor",
+     "text": "自訴人於法定上訴期間未上訴",
+     "reason": "屬判決程序性事實，不影響判決無罪之核心結論"
+    },
+    {
+     "gt_claim_id": 118,
+     "severity": "minor",
+     "text": "本案判決即確定",
+     "reason": "屬判決程序性結果，不影響判決無罪之核心結論"
+    },
+    {
+     "gt_claim_id": 167,
+     "severity": "important",
+     "text": "病患所罹患之急性主動脈剝離乃死亡率極高之疾病，且合併大片腦中風，於接受八小時之開刀手術置換升主動脈後，仍呈高度心衰竭而死亡",
+     "reason": "重要醫療結果事實，影響對病患病情嚴重程度及即使診斷也可能死亡之因果關係理解"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.5643,
+   "quality_overall": 4.5643,
+   "gt_length_ratio": 0.945,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 178,
+   "pred_total": 132,
+   "matched": 138,
+   "partial": 31,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 0.9126,
+  "section_balance": 1.0
+ }
 }

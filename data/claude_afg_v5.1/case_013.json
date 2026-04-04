@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -146,5 +146,165 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6613,
+  "fact_recall": 0.672,
+  "fact_precision": 1.0,
+  "fact_f1": 0.804,
+  "quality_overall": 4.8929,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9674,
+  "uncited_rate": 0.034,
+  "faithfulness_combined": {
+   "score": 0.9796,
+   "citation_fidelity": 0.966,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": 0.786,
+  "weighted_recall": 0.928,
+  "missing_severity": {
+   "critical": 0,
+   "important": 9,
+   "minor": 9,
+   "details": [
+    {
+     "gt_claim_id": 38,
+     "severity": "important",
+     "text": "Demerol是止痛",
+     "reason": "藥物性質說明屬專業醫學知識，影響對案件醫療行為的理解"
+    },
+    {
+     "gt_claim_id": 39,
+     "severity": "important",
+     "text": "Diprivan則是麻醉誘導劑",
+     "reason": "藥物性質說明屬專業醫學知識，影響對案件醫療行為的理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "severity": "important",
+     "text": "Diprivan在引起過敏反應時會發生喉頭水腫抑制呼吸",
+     "reason": "具體病理機制描述，與『喉頭痙攣』有區別，影響對醫療過失的理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "severity": "important",
+     "text": "因心肺功能衰竭程度嚴重時，死亡來臨之時刻很短",
+     "reason": "關鍵醫學判斷，影響對急救時效性的理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "severity": "important",
+     "text": "恐未能及時以血液顏色之深淺為察知之方法",
+     "reason": "關鍵醫學判斷，說明目測監測的局限性"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "important",
+     "text": "被告前未曾受有期徒刑以上刑之宣告",
+     "reason": "量刑考量關鍵事實，影響對判決理由的理解"
+    },
+    {
+     "gt_claim_id": 78,
+     "severity": "minor",
+     "text": "法院向法醫研究所函詢鑑定書中有關『急送Z醫院急救顯已來不及』之判斷依據及『意外死亡』之判定是否已就醫療過程有無疏失之因素一併考量",
+     "reason": "程序性事實，雖影響對法院調查過程的理解，但鑑定結果本身已呈現"
+    },
+    {
+     "gt_claim_id": 79,
+     "severity": "minor",
+     "text": "法醫研究所函僅簡略覆以『是』",
+     "reason": "程序性細節，不影響鑑定結論的理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "此兩種藥物使用於上述手術之劑量與給予方式，尚稱妥適",
+     "reason": "榮民總醫院的正面評價，摘要已涵蓋核心過失認定，此為補充性資訊"
+    },
+    {
+     "gt_claim_id": 31,
+     "severity": "minor",
+     "text": "檢察官起訴主張被告甲應注意一旦發現病患有呼吸抑制而缺氧，應儘快採取給予肌肉弛鬆劑建立人工換氣之措施",
+     "reason": "檢察官起訴主張的細節，摘要已涵蓋核心急救措施（氣管內管等）"
+    },
+    {
+     "gt_claim_id": 86,
+     "severity": "minor",
+     "text": "證人A結證稱病患在美國曾使用同樣藥物...故病患應非特殊體質",
+     "reason": "證人證詞細節，摘要已涵蓋『藥物過敏不會當然造成死亡』核心結論"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "minor",
+     "text": "證人C結證稱本案兩種麻藥副作用...故坊間對病患要有特殊醫療處置，即指給予人工面罩式換氣工具",
+     "reason": "證人證詞細節，摘要已涵蓋急救措施不足的認定"
+    },
+    {
+     "gt_claim_id": 94,
+     "severity": "minor",
+     "text": "證人C結證稱這二種藥物同時使用，可能產生呼吸抑制的副作用幾乎百分之百",
+     "reason": "證人證詞細節，摘要已涵蓋『極可能產生呼吸抑制』之核心事實"
+    },
+    {
+     "gt_claim_id": 95,
+     "severity": "minor",
+     "text": "證人B結證稱這二種藥物同時使用時，呼吸抑制的副作用會加強",
+     "reason": "證人證詞細節，可從『極可能產生呼吸抑制』合理推導"
+    },
+    {
+     "gt_claim_id": 96,
+     "severity": "minor",
+     "text": "證人C結證稱因副作用是可以預期的，故被告一開始麻醉，就應將被害人下巴提高...",
+     "reason": "證人證詞細節，摘要已涵蓋『下巴提高、氧氣面罩』等措施，『一開始』時點為細節"
+    },
+    {
+     "gt_claim_id": 97,
+     "severity": "minor",
+     "text": "證人C結證稱如發現呼吸不順，應使用氣管內條及通條",
+     "reason": "證人證詞細節，『通條』為補充性器械描述"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "證人C結證稱施用麻藥的人，必須對施用麻醉藥品的知識要專業，不能一心二用...",
+     "reason": "證人證詞細節，『不能一心二用』為強調性表述"
+    },
+    {
+     "gt_claim_id": 99,
+     "severity": "minor",
+     "text": "證人B結證稱因施打麻藥時，病人的舌頭會阻塞到氣管...",
+     "reason": "證人證詞細節，機制性說明，摘要已涵蓋『下巴提高』之要求"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "證人C結證稱若使用監測系統，就可以馬上有反應及早發現",
+     "reason": "證人證詞細節，摘要已涵蓋監測設備不足的核心過失認定"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.8929,
+   "quality_overall": 4.8929,
+   "gt_length_ratio": 0.7965,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 125,
+   "pred_total": 89,
+   "matched": 75,
+   "partial": 17,
+   "missing": 33,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 0.8437,
+  "section_balance": 1.0
+ }
 }

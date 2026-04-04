@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -132,5 +132,69 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8131,
+  "fact_recall": 0.875,
+  "fact_precision": 0.7647,
+  "fact_f1": 0.8158,
+  "quality_overall": 4.8857,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9059,
+   "citation_fidelity": 1.0,
+   "fact_precision": 0.7647,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9583,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 13,
+     "severity": "minor",
+     "text": "本案經臺南地方法院於民國91年05月31日作成判決",
+     "reason": "程序性日期資訊，不影響過失認定或案情理解"
+    },
+    {
+     "gt_claim_id": 17,
+     "severity": "minor",
+     "text": "被告、檢察官於法定上訴期間未上訴",
+     "reason": "程序性事實，屬判決後續流程，不影響案件實體理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "severity": "minor",
+     "text": "本案判決即確定",
+     "reason": "程序性結論，屬判決最終狀態，不影響案情理解"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.8857,
+   "quality_overall": 4.8857,
+   "gt_length_ratio": 1.225,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 24,
+   "pred_total": 34,
+   "matched": 21,
+   "partial": 0,
+   "missing": 3,
+   "hallucinated": 8
+  },
+  "fact_recall_efficiency": 0.7143,
+  "section_balance": 1.0
+ }
 }

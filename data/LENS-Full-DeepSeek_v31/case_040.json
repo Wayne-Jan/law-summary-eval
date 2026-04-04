@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -143,5 +144,87 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8929,
+  "fact_recall": 0.943,
+  "fact_precision": 1.0,
+  "fact_f1": 0.971,
+  "quality_overall": 4.8607,
+  "citation_accuracy": 0.9219,
+  "citation_support_score": 0.8279,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9531,
+   "citation_fidelity": 0.9219,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9783,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 23,
+     "severity": "important",
+     "text": "被告甲貿然開立立剋咳予告訴人M服用",
+     "reason": "涉及檢方指控之語氣表述，雖非核心事實，但影響對指控強度的理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "severity": "minor",
+     "text": "檢察官認被告甲涉犯刑法第284條第2項前段業務過失傷害罪嫌",
+     "reason": "程序性法條引用，不影響對案情實質內容的理解"
+    },
+    {
+     "gt_claim_id": 48,
+     "severity": "minor",
+     "text": "告訴人於104年1月28日告知高雄V醫院醫師診斷為雙眼視神經病變",
+     "reason": "具體時間點的告知行為細節，非核心事實"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "檢察官於法定上訴期間未上訴，本案判決即確定。",
+     "reason": "純程序性事實（上訴與否），不影響判決內容理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "important",
+     "text": "行為人於行為時有權信賴其他社會生活參與者會盡其規範上之義務，並在此信賴基礎上為行為之反應",
+     "reason": "法律原則（容許信賴原則）之完整定義，影響對法院論證基礎的理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "important",
+     "text": "如果基於此一信賴所為之行為導致利益侵害結果之發生，行為人之行為並非不法，此即容許信賴，又稱信賴原則",
+     "reason": "法律原則之完整定義，影響對阻卻違法性論證的理解"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.8607,
+   "quality_overall": 4.8607,
+   "gt_length_ratio": 1.0279,
+   "length_penalty": 1.0,
+   "zone": "ideal"
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 105,
+   "matched": 115,
+   "partial": 2,
+   "missing": 6,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 0.9174,
+  "section_balance": 1.0
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -134,5 +134,69 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7029,
+  "fact_recall": 0.85,
+  "fact_precision": 1.0,
+  "fact_f1": 0.92,
+  "quality_overall": 4.8071,
+  "citation_accuracy": 0.9778,
+  "citation_support_score": 0.9674,
+  "uncited_rate": 0.04,
+  "faithfulness_combined": {
+   "score": 0.9632,
+   "citation_fidelity": 0.9387,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.964,
+  "weighted_recall": 0.9898,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 11,
+     "severity": "minor",
+     "text": "病患Y之心臟主治醫師駐診於C診所，故要求轉至C診所",
+     "reason": "轉診過程中選擇醫院的背景細節，不影響對被告過失和因果關係的判斷理解"
+    },
+    {
+     "gt_claim_id": 12,
+     "severity": "minor",
+     "text": "C診所以未設專任整型外科醫生為由而婉拒",
+     "reason": "C診所婉拒收治的程序性細節，非核心案情事實"
+    },
+    {
+     "gt_claim_id": 13,
+     "severity": "minor",
+     "text": "病患Y則接受C診所建議改轉至S醫院",
+     "reason": "轉診中介細節，摘要已涵蓋最終轉至S醫院的事實"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.6253,
+   "quality_overall": 4.8071,
+   "gt_length_ratio": 1.3511,
+   "length_penalty": 0.9622,
+   "zone": "too_long"
+  },
+  "fact_detail": {
+   "gt_total": 98,
+   "pred_total": 118,
+   "matched": 73,
+   "partial": 20,
+   "missing": 5,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 0.6291,
+  "section_balance": 1.0
+ }
 }

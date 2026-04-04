@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -142,5 +142,129 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7705,
+  "fact_recall": 0.8507,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9178,
+  "quality_overall": 4.7357,
+  "citation_accuracy": 0.9688,
+  "citation_support_score": 0.9324,
+  "uncited_rate": 0.022,
+  "faithfulness_combined": {
+   "score": 0.9685,
+   "citation_fidelity": 0.9475,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.813,
+  "weighted_recall": 0.9699,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 42,
+     "severity": "minor",
+     "text": "被告使用之止痛劑量並無不當",
+     "reason": "被告辯護要點中的細節主張，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "severity": "minor",
+     "text": "其顱骨底下涵蓋大腦枕葉以及小腦等部位",
+     "reason": "解剖學背景說明，pred 已涵蓋核心病變部位"
+    },
+    {
+     "gt_claim_id": 68,
+     "severity": "minor",
+     "text": "在醫學上後顱窩之受傷病變，本就與大腦部位之外傷病變不同",
+     "reason": "醫學分類說明，pred 已涵蓋後顱窩病變特徵"
+    },
+    {
+     "gt_claim_id": 72,
+     "severity": "minor",
+     "text": "其表徵為(1)瞳孔起初並未散大，有時甚至縮小中到死亡後才放大",
+     "reason": "瞳孔變化細節，pred 已涵蓋神經學檢查正常之核心事實"
+    },
+    {
+     "gt_claim_id": 77,
+     "severity": "minor",
+     "text": "此手術就神經外科醫師而言，算是安全性相當高，並且一般歸類為小型手術",
+     "reason": "腦室外引流手術特性說明，屬補充資訊"
+    },
+    {
+     "gt_claim_id": 86,
+     "severity": "minor",
+     "text": "高檢署法醫中心之解剖報告僅謂死者腦部整體水腫著明，但並未發現有水腦症及第四腦室阻塞與小腦病變之情形",
+     "reason": "解剖報告細節，pred 已涵蓋死因認定及「未週全之處」的核心結論"
+    },
+    {
+     "gt_claim_id": 99,
+     "severity": "minor",
+     "text": "Handbook of Neurosurgery第一二四頁謂小腦扁桃體如穿過枕骨大孔，即會壓迫延腦，造成呼吸的停止，通常會快速致命",
+     "reason": "具體文獻引用頁碼及內容，pred 已概括提及「神經外科文獻」"
+    },
+    {
+     "gt_claim_id": 100,
+     "severity": "minor",
+     "text": "Handbook of Neurosurgery指出上述情形可發生在大腦或小腦的腫瘤或是顱內壓昇高之情況，也可以是因為腰椎穿刺所誘發",
+     "reason": "文獻中誘發因素說明，屬補充醫學背景"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "在大部分病例中，其可僅僅單純的腦幹受到壓迫，而沒有真的小腦扁桃體疝脫，即可致命",
+     "reason": "病理細節補充，pred 已涵蓋「意識清醒不代表小腦無受壓迫」的核心論點"
+    },
+    {
+     "gt_claim_id": 121,
+     "severity": "minor",
+     "text": "水腦症並非本件真正之致命病灶",
+     "reason": "鑑定意見中的細節區分，pred 已涵蓋「小腦腦水腫壓迫腦幹致死」的核心死因"
+    },
+    {
+     "gt_claim_id": 124,
+     "severity": "minor",
+     "text": "健保局之醫療保險給付並無後顱窩切除手術併腦膜整形此項目",
+     "reason": "健保給付程序性資訊，非核心案情"
+    },
+    {
+     "gt_claim_id": 125,
+     "severity": "minor",
+     "text": "被告甲服務之G醫院從未聞見有後顱窩切除手術併腦膜整形手術",
+     "reason": "醫院經驗細節，pred 已涵蓋「非臨床通行作法」的辯護要點"
+    },
+    {
+     "gt_claim_id": 144,
+     "severity": "minor",
+     "text": "被告甲聲請再進行第三次鑑定，經核並無必要",
+     "reason": "程序性事實，判決附帶事項，不影響案情理解"
+    }
+   ]
+  },
+  "information_density": {
+   "score": 4.6234,
+   "quality_overall": 4.7357,
+   "gt_length_ratio": 0.6834,
+   "length_penalty": 0.9763,
+   "zone": "too_short"
+  },
+  "fact_detail": {
+   "gt_total": 144,
+   "pred_total": 91,
+   "matched": 116,
+   "partial": 13,
+   "missing": 15,
+   "hallucinated": 0
+  },
+  "fact_recall_efficiency": 1.2448,
+  "section_balance": 1.0
+ }
 }
