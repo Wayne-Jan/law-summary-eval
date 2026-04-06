@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -130,16 +130,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8796,
-  "fact_recall": 1.0,
+  "fact_recall": 0.9462,
   "fact_precision": 1.0,
-  "fact_f1": 1.0,
+  "fact_f1": 0.9724,
   "quality_overall": 4.9018,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.985,
-  "uncited_rate": 0.009,
+  "uncited_rate": null,
   "faithfulness_combined": {
-   "score": 0.9946,
-   "citation_fidelity": 0.991,
+   "score": 1.0,
+   "citation_fidelity": 1.0,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -149,24 +149,46 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": null,
-  "missing_severity": null,
-  "information_density": {
-   "score": 4.7988,
-   "quality_overall": 4.9018,
-   "gt_length_ratio": 1.3279,
-   "length_penalty": 0.979,
-   "zone": "too_long"
+  "weighted_recall": 0.9821,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "「本件事證明確」為判決書常用程式性用語，屬於程序性表達，不影響案情核心事實理解",
+     "reason": "「本件事證明確」為判決書常用程式性用語，屬於程序性表達，不影響案情核心事實理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "severity": "minor",
+     "text": "「被告、檢察官於法定上訴期間未上訴」為程序性事實，不涉及案情實體內容，不影響判決結論理解",
+     "reason": "「被告、檢察官於法定上訴期間未上訴」為程序性事實，不涉及案情實體內容，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "「本案判決即確定」為判決效力之程序性說明，不涉及定罪量刑等核心判決內容",
+     "reason": "「本案判決即確定」為判決效力之程序性說明，不涉及定罪量刑等核心判決內容"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "important",
+     "text": "「出院時由被告乙開具病名為急性心肌梗塞之診斷證明書」涉及被告乙之具體醫療行為，與認定其過失責任相關，屬於重要事實遺漏",
+     "reason": "「出院時由被告乙開具病名為急性心肌梗塞之診斷證明書」涉及被告乙之具體醫療行為，與認定其過失責任相關，屬於重要事實遺漏"
+    }
+   ]
   },
   "fact_detail": {
    "gt_total": 93,
    "pred_total": 107,
-   "matched": 93,
-   "partial": 0,
-   "missing": 0,
+   "matched": 87,
+   "partial": 2,
+   "missing": 4,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.7531,
   "section_balance": 1.0
  }
 }

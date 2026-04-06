@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -152,109 +152,155 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.785,
-  "fact_recall": 0.81,
-  "fact_precision": 1.0,
-  "fact_f1": 0.9,
+  "fact_recall": 0.8323,
+  "fact_precision": 0.9923,
+  "fact_f1": 0.9053,
   "quality_overall": 4.8357,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9569,
-  "uncited_rate": 0.023,
+  "uncited_rate": 0.031,
   "faithfulness_combined": {
-   "score": 0.9862,
-   "citation_fidelity": 0.977,
-   "fact_precision": 1.0,
+   "score": 0.9783,
+   "citation_fidelity": 0.969,
+   "fact_precision": 0.9923,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 5,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.972,
+  "weighted_recall": 0.957,
   "missing_severity": {
-   "critical": 1,
+   "critical": 0,
    "important": 1,
-   "minor": 8,
+   "minor": 18,
    "details": [
     {
-     "gt_claim_id": 75,
-     "severity": "critical",
-     "text": "緩刑貳年",
-     "reason": "判決核心內容遺漏，影響對被告甲刑罰執行方式的理解"
+     "gt_claim_id": 46,
+     "severity": "minor",
+     "text": "被告甲認罪坦承屬辯護內容，但判決主要基於客觀證據而非認罪，不影響案情核心理解",
+     "reason": "被告甲認罪坦承屬辯護內容，但判決主要基於客觀證據而非認罪，不影響案情核心理解"
     },
     {
-     "gt_claim_id": 40,
+     "gt_claim_id": 60,
+     "severity": "minor",
+     "text": "「本案係腹腔鏡手術探查，於手術進行中產生出血現象」為鑑定意見開頭敘述，雖有助理解背景但在 reasoning section 已有涵蓋，屬次要事實",
+     "reason": "「本案係腹腔鏡手術探查，於手術進行中產生出血現象」為鑑定意見開頭敘述，雖有助理解背景但在 reasoning section 已有涵蓋，屬次要事實"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "「經緊急照會血管外科醫師作緊急剖腹探查」為程序性事實，在 reasoning section 已有類似描述，屬次要事實",
+     "reason": "「經緊急照會血管外科醫師作緊急剖腹探查」為程序性事實，在 reasoning section 已有類似描述，屬次要事實"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "minor",
+     "text": "「發現下腹主動脈破裂、後腹腔血腫及合併小腸撕裂傷」雖為鑑定書內容，但 facts section 已詳述該醫療發現，屬重複資訊",
+     "reason": "「發現下腹主動脈破裂、後腹腔血腫及合併小腸撕裂傷」雖為鑑定書內容，但 facts section 已詳述該醫療發現，屬重複資訊"
+    },
+    {
+     "gt_claim_id": 63,
+     "severity": "minor",
+     "text": "「經加以修補處理」為治療措施概述，詳細手術過程已在其他 claim 涵蓋",
+     "reason": "「經加以修補處理」為治療措施概述，詳細手術過程已在其他 claim 涵蓋"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "minor",
+     "text": "「病患之病情仍持續惡化，終導致死亡」為病程總結，reasoning section 已涵蓋死亡結果及原因",
+     "reason": "「病患之病情仍持續惡化，終導致死亡」為病程總結，reasoning section 已涵蓋死亡結果及原因"
+    },
+    {
+     "gt_claim_id": 70,
      "severity": "important",
-     "text": "公訴意旨認被告丙涉有業務過失致死罪嫌",
-     "reason": "起訴範圍的說明，影響對案件雙方爭點的完整理解"
+     "text": "法務部法醫研究所鑑定意見為獨立於醫審會外的重要證據，用於排除主動脈發炎感染可能性，影響死因判斷的重要依據",
+     "reason": "法務部法醫研究所鑑定意見為獨立於醫審會外的重要證據，用於排除主動脈發炎感染可能性，影響死因判斷的重要依據"
+    },
+    {
+     "gt_claim_id": 72,
+     "severity": "minor",
+     "text": "「被告甲從事業務之人」為法律身分定性，verdict section 判決理由中已隱含此認定",
+     "reason": "「被告甲從事業務之人」為法律身分定性，verdict section 判決理由中已隱含此認定"
+    },
+    {
+     "gt_claim_id": 75,
+     "severity": "minor",
+     "text": "「緩刑貳年」為量刑細節，雖屬判決重要內容但不影響罪名成立與否的理解",
+     "reason": "「緩刑貳年」為量刑細節，雖屬判決重要內容但不影響罪名成立與否的理解"
     },
     {
      "gt_claim_id": 77,
      "severity": "minor",
-     "text": "被告甲、檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實，不影響判決實質內容理解"
+     "text": "「被告甲、檢察官於法定上訴期間未上訴」為程序性事實",
+     "reason": "「被告甲、檢察官於法定上訴期間未上訴」為程序性事實"
     },
     {
      "gt_claim_id": 78,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序性結果，從判決結論可推知"
+     "text": "「本案判決即確定」為程序性結論",
+     "reason": "「本案判決即確定」為程序性結論"
+    },
+    {
+     "gt_claim_id": 123,
+     "severity": "minor",
+     "text": "「本案係因病患L血壓下降而須實施第二次手術」為證人A陳述的完整理由，核心事實（第二次手術）已涵蓋",
+     "reason": "「本案係因病患L血壓下降而須實施第二次手術」為證人A陳述的完整理由，核心事實（第二次手術）已涵蓋"
     },
     {
      "gt_claim_id": 124,
      "severity": "minor",
-     "text": "血壓下降的因素很多，如不可逆休克，或敗血性休克，或是原來修補的大動脈傷口又裂開",
-     "reason": "醫學說明性內容，非核心事實認定"
+     "text": "血壓下降因素的多種可能性為鑑定意見細節，屬次要補充說明",
+     "reason": "血壓下降因素的多種可能性為鑑定意見細節，屬次要補充說明"
     },
     {
      "gt_claim_id": 125,
      "severity": "minor",
-     "text": "一般而言，後腹腔可能容納一萬CC之出血量，以一般傷害來說，有二千CC的血液留在後腹腔應屬常見",
-     "reason": "醫學常識說明，非關鍵認定"
+     "text": "後腹腔出血量具體數值為專業說明，屬次要事實",
+     "reason": "後腹腔出血量具體數值為專業說明，屬次要事實"
     },
     {
-     "gt_claim_id": 133,
+     "gt_claim_id": 127,
      "severity": "minor",
-     "text": "法院參法務部法醫研究所醫鑑字第一二七六號鑑定書",
-     "reason": "文獻編號細節"
+     "text": "「第一次手術縫合處良好，沒有其他出血點」為證人A鑑定細節，雖有佐證價值但不影響核心案情理解",
+     "reason": "「第一次手術縫合處良好，沒有其他出血點」為證人A鑑定細節，雖有佐證價值但不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 128,
+     "severity": "minor",
+     "text": "「後腹腔血腫成因的醫學解釋」為證人A專業意見補充",
+     "reason": "「後腹腔血腫成因的醫學解釋」為證人A專業意見補充"
+    },
+    {
+     "gt_claim_id": 135,
+     "severity": "minor",
+     "text": "「鑑定意見局限性的說明」為法院對證據的評價，屬程序性說明",
+     "reason": "「鑑定意見局限性的說明」為法院對證據的評價，屬程序性說明"
     },
     {
      "gt_claim_id": 142,
      "severity": "minor",
-     "text": "第三次手術紀錄記載病患於手術過程中出血14000CC，這表示病患凝血功能很差",
-     "reason": "手術數據細節"
+     "text": "「出血14000CC的具體數值」雖可佐證凝血功能異常，但「凝血功能異常」本身已於多處涵蓋",
+     "reason": "「出血14000CC的具體數值」雖可佐證凝血功能異常，但「凝血功能異常」本身已於多處涵蓋"
     },
     {
      "gt_claim_id": 143,
      "severity": "minor",
-     "text": "腹腔多處出血點屬於內科性出血，沒有辦法透過外科方式處理，所以須進行內科性治療，例如透過藥物",
-     "reason": "醫療處置方式細節"
-    },
-    {
-     "gt_claim_id": 150,
-     "severity": "minor",
-     "text": "法務部法醫研究所九十三年一月七日法醫理字第○九二○○○七五六號函覆意見認為...",
-     "reason": "函覆文號及檢查細節"
+     "text": "「內科性出血與外科處理的區分」為醫學專業論述，對判決結論影響有限",
+     "reason": "「內科性出血與外科處理的區分」為醫學專業論述，對判決結論影響有限"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.8357,
-   "quality_overall": 4.8357,
-   "gt_length_ratio": 1.0313,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 155,
    "pred_total": 130,
-   "matched": 117,
-   "partial": 18,
-   "missing": 20,
-   "hallucinated": 0
+   "matched": 125,
+   "partial": 8,
+   "missing": 19,
+   "hallucinated": 1
   },
-  "fact_recall_efficiency": 0.7854,
   "section_balance": 1.0
  }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -148,17 +148,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7092,
-  "fact_recall": 0.968,
-  "fact_precision": 0.82,
-  "fact_f1": 0.888,
+  "fact_recall": 0.496,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6631,
   "quality_overall": 4.5357,
   "citation_accuracy": 0.9767,
   "citation_support_score": 0.9932,
-  "uncited_rate": 0.12,
+  "uncited_rate": 0.02,
   "faithfulness_combined": {
-   "score": 0.8437,
-   "citation_fidelity": 0.8595,
-   "fact_precision": 0.82,
+   "score": 0.9743,
+   "citation_fidelity": 0.9572,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -167,48 +167,358 @@
   "compliance": 2,
   "cross_validation": "GOOD",
   "numerical_fidelity": 0.857,
-  "weighted_recall": 0.992,
+  "weighted_recall": 0.7787,
   "missing_severity": {
-   "critical": 0,
-   "important": 0,
-   "minor": 3,
+   "critical": 6,
+   "important": 15,
+   "minor": 35,
    "details": [
+    {
+     "gt_claim_id": 1,
+     "severity": "minor",
+     "text": "『醫師甲為臺北市X治療中心醫師』雖為背景事實，但 pred claim 1 已提及『醫師甲原係A醫院婦產科主治醫師』，且 pred claim 3 提及手術地點『杏陵中心』，匿名化對應後，核心任職事實已涵蓋。屬次要背景細節",
+     "reason": "『醫師甲為臺北市X治療中心醫師』雖為背景事實，但 pred claim 1 已提及『醫師甲原係A醫院婦產科主治醫師』，且 pred claim 3 提及手術地點『杏陵中心』，匿名化對應後，核心任職事實已涵蓋。屬次要背景細節"
+    },
+    {
+     "gt_claim_id": 6,
+     "severity": "minor",
+     "text": "『以鼻管(Cannula)預供氧氣』為具體技術細節，pred claim 24 (defense section) 提及『手術前有使用鼻管給予預充氧氣』，已涵蓋此技術事實，屬次要細節",
+     "reason": "『以鼻管(Cannula)預供氧氣』為具體技術細節，pred claim 24 (defense section) 提及『手術前有使用鼻管給予預充氧氣』，已涵蓋此技術事實，屬次要細節"
+    },
+    {
+     "gt_claim_id": 14,
+     "severity": "minor",
+     "text": "『轉入加護病房繼續救治』為病程過程細節，pred claim 15 已涵蓋『經急救後暫時恢復心跳及血壓』，核心救治結果已呈現，轉院細節不影響案情理解",
+     "reason": "『轉入加護病房繼續救治』為病程過程細節，pred claim 15 已涵蓋『經急救後暫時恢復心跳及血壓』，核心救治結果已呈現，轉院細節不影響案情理解"
+    },
+    {
+     "gt_claim_id": 17,
+     "severity": "minor",
+     "text": "pred claim 19 已明確提及『於給藥後持續監測呼吸通氣狀態』，雖未用『隨時監測』字樣，但語義一致，屬換詞改寫，維持 minor 等級",
+     "reason": "pred claim 19 已明確提及『於給藥後持續監測呼吸通氣狀態』，雖未用『隨時監測』字樣，但語義一致，屬換詞改寫，維持 minor 等級"
+    },
+    {
+     "gt_claim_id": 19,
+     "severity": "important",
+     "text": "『喉頭痙攣而產生暫時性窒息現象』為重要副作用類型，pred claim 在 reasoning section 雖提及『因喉頭痙攣而產生暫時性窒息現象』(claim 55, 57)，但在 facts section 的檢察官起訴主張中確實未明確提及『喉頭痙攣』，屬重要事實遺漏",
+     "reason": "『喉頭痙攣而產生暫時性窒息現象』為重要副作用類型，pred claim 在 reasoning section 雖提及『因喉頭痙攣而產生暫時性窒息現象』(claim 55, 57)，但在 facts section 的檢察官起訴主張中確實未明確提及『喉頭痙攣』，屬重要事實遺漏"
+    },
+    {
+     "gt_claim_id": 23,
+     "severity": "minor",
+     "text": "『給藥後應設置心跳及脈搏、血氧監測設備』，pred claim 17 已提及『應設置適當心跳及血氧監測設備』，核心監測要求已涵蓋，『脈搏』為細節補充",
+     "reason": "『給藥後應設置心跳及脈搏、血氧監測設備』，pred claim 17 已提及『應設置適當心跳及血氧監測設備』，核心監測要求已涵蓋，『脈搏』為細節補充"
+    },
+    {
+     "gt_claim_id": 24,
+     "severity": "minor",
+     "text": "『連續監測』雖重要，但 pred claim 57, 58 在 reasoning section 已多次提及『連續監測』概念，且 claim 17 已涵蓋監測義務，屬跨 section 補充",
+     "reason": "『連續監測』雖重要，但 pred claim 57, 58 在 reasoning section 已多次提及『連續監測』概念，且 claim 17 已涵蓋監測義務，屬跨 section 補充"
+    },
+    {
+     "gt_claim_id": 25,
+     "severity": "minor",
+     "text": "『即時查悉』為時間性修飾，pred claim 相關內容已涵蓋『應注意...是否因施用麻醉藥物而產生呼吸抑制』的核心義務",
+     "reason": "『即時查悉』為時間性修飾，pred claim 相關內容已涵蓋『應注意...是否因施用麻醉藥物而產生呼吸抑制』的核心義務"
+    },
+    {
+     "gt_claim_id": 26,
+     "severity": "minor",
+     "text": "『即時供應氧氣』已涵蓋在 pred claim 『給予氧氣面罩』(claim 11) 及急救措施描述中",
+     "reason": "『即時供應氧氣』已涵蓋在 pred claim 『給予氧氣面罩』(claim 11) 及急救措施描述中"
+    },
+    {
+     "gt_claim_id": 27,
+     "severity": "minor",
+     "text": "『避免心肺功能衰竭』為結果性表述，pred claim 已涵蓋『避免病患因缺氧導致...』的核心因果鏈",
+     "reason": "『避免心肺功能衰竭』為結果性表述，pred claim 已涵蓋『避免病患因缺氧導致...』的核心因果鏈"
+    },
+    {
+     "gt_claim_id": 31,
+     "severity": "important",
+     "text": "『給予肌肉弛鬆劑建立人工換氣』為關鍵標準急救措施之一，pred claim 10 雖提及『氣管內管』但未提及『肌肉弛鬆劑』，屬重要醫療標準措施遺漏",
+     "reason": "『給予肌肉弛鬆劑建立人工換氣』為關鍵標準急救措施之一，pred claim 10 雖提及『氣管內管』但未提及『肌肉弛鬆劑』，屬重要醫療標準措施遺漏"
+    },
+    {
+     "gt_claim_id": 38,
+     "severity": "important",
+     "text": "『Demerol是止痛』為藥理用途基礎知識，對理解藥物作用機制重要，pred claims 完全未提及此藥理分類",
+     "reason": "『Demerol是止痛』為藥理用途基礎知識，對理解藥物作用機制重要，pred claims 完全未提及此藥理分類"
+    },
+    {
+     "gt_claim_id": 39,
+     "severity": "important",
+     "text": "『Diprivan則是麻醉誘導劑』為藥理用途基礎知識，pred claims 完全未提及此藥理分類",
+     "reason": "『Diprivan則是麻醉誘導劑』為藥理用途基礎知識，pred claims 完全未提及此藥理分類"
+    },
+    {
+     "gt_claim_id": 40,
+     "severity": "important",
+     "text": "『Diprivan在引起過敏反應時會發生喉頭水腫抑制呼吸』為具體副作用機制，與死因認定相關，屬重要醫學事實",
+     "reason": "『Diprivan在引起過敏反應時會發生喉頭水腫抑制呼吸』為具體副作用機制，與死因認定相關，屬重要醫學事實"
+    },
+    {
+     "gt_claim_id": 41,
+     "severity": "minor",
+     "text": "『病患因接受陰道整形手術』為背景事實，pred claim 3 已提及手術類型，雖在 opinions section 未重複但核心事實已於 facts section 涵蓋",
+     "reason": "『病患因接受陰道整形手術』為背景事實，pred claim 3 已提及手術類型，雖在 opinions section 未重複但核心事實已於 facts section 涵蓋"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "important",
+     "text": "『突然發生心肺功能衰竭』為病程關鍵轉折點，pred claims 雖提及死因但未明確描述『心肺功能衰竭』之病程過程，屬重要醫療事實遺漏",
+     "reason": "『突然發生心肺功能衰竭』為病程關鍵轉折點，pred claims 雖提及死因但未明確描述『心肺功能衰竭』之病程過程，屬重要醫療事實遺漏"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "minor",
+     "text": "『急送Z醫院急救顯已來不及』為鑑定意見細節，pred claim 14 已涵蓋送達醫院時已無生命跡象的核心事實",
+     "reason": "『急送Z醫院急救顯已來不及』為鑑定意見細節，pred claim 14 已涵蓋送達醫院時已無生命跡象的核心事實"
+    },
+    {
+     "gt_claim_id": 44,
+     "severity": "minor",
+     "text": "『住院五天後』為時間細節，pred claim 16 已提供具體死亡日期(87年6月4日)，從手術日(5月28日)可推算約住院七天，時間細節略有出入但不影響核心事實",
+     "reason": "『住院五天後』為時間細節，pred claim 16 已提供具體死亡日期(87年6月4日)，從手術日(5月28日)可推算約住院七天，時間細節略有出入但不影響核心事實"
+    },
+    {
+     "gt_claim_id": 46,
+     "severity": "important",
+     "text": "『心肺功能衰竭程度嚴重時，死亡來臨之時刻很短』為鑑定關鍵見解，直接關聯急救時效性論證，屬重要醫學判斷遺漏",
+     "reason": "『心肺功能衰竭程度嚴重時，死亡來臨之時刻很短』為鑑定關鍵見解，直接關聯急救時效性論證，屬重要醫學判斷遺漏"
+    },
+    {
+     "gt_claim_id": 47,
+     "severity": "minor",
+     "text": "『以血液顏色之深淺為察知之方法』為專業判斷細節，pred claim 9 已提及『血色素過黑』，方法論細節屬次要",
+     "reason": "『以血液顏色之深淺為察知之方法』為專業判斷細節，pred claim 9 已提及『血色素過黑』，方法論細節屬次要"
+    },
+    {
+     "gt_claim_id": 48,
+     "severity": "minor",
+     "text": "『本案被告進行陰道整型手術』為背景重複，pred claim 3 已於 facts section 涵蓋手術類型",
+     "reason": "『本案被告進行陰道整型手術』為背景重複，pred claim 3 已於 facts section 涵蓋手術類型"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "『施用Demerol及Diprivan兩種藥物』已於 pred claim 4 明確提及",
+     "reason": "『施用Demerol及Diprivan兩種藥物』已於 pred claim 4 明確提及"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "『劑量與給予方式，尚稱妥適』為鑑定細節，雖屬專業判斷但非核心爭點，屬次要事實",
+     "reason": "『劑量與給予方式，尚稱妥適』為鑑定細節，雖屬專業判斷但非核心爭點，屬次要事實"
+    },
+    {
+     "gt_claim_id": 51,
+     "severity": "important",
+     "text": "『單純麻醉用藥造成之呼吸抑制』為死因認定關鍵鑑定意見，直接影響過失責任判斷，屬重要鑑定結論遺漏",
+     "reason": "『單純麻醉用藥造成之呼吸抑制』為死因認定關鍵鑑定意見，直接影響過失責任判斷，屬重要鑑定結論遺漏"
+    },
+    {
+     "gt_claim_id": 52,
+     "severity": "important",
+     "text": "『未獲有效人工換氣輔助』為致死關鍵因素，pred claim 雖提及『未採取標準急救措施』但未明確對應『未獲有效人工換氣輔助』的鑑定結論表述，屬重要因果關係事實遺漏",
+     "reason": "『未獲有效人工換氣輔助』為致死關鍵因素，pred claim 雖提及『未採取標準急救措施』但未明確對應『未獲有效人工換氣輔助』的鑑定結論表述，屬重要因果關係事實遺漏"
+    },
+    {
+     "gt_claim_id": 53,
+     "severity": "important",
+     "text": "『造成窒息』為直接死因，與『未獲有效人工換氣輔助』構成完整因果鏈，屬重要死因事實遺漏",
+     "reason": "『造成窒息』為直接死因，與『未獲有效人工換氣輔助』構成完整因果鏈，屬重要死因事實遺漏"
+    },
+    {
+     "gt_claim_id": 56,
+     "severity": "minor",
+     "text": "『很難以目視及早發現呼吸道阻塞之窒息現象』為鑑定細節，pred claim 82 事實上已提及『很難以目視及早發現呼吸道阻塞之窒息現象』，應為 matched",
+     "reason": "『很難以目視及早發現呼吸道阻塞之窒息現象』為鑑定細節，pred claim 82 事實上已提及『很難以目視及早發現呼吸道阻塞之窒息現象』，應為 matched"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "minor",
+     "text": "『呼吸抑制係藥物過敏或藥物之直接作用所產生』已於 pred claim 86 明確提及『不論病患X之呼吸抑制係藥物過敏或藥物之直接作用所產生』，屬 matched",
+     "reason": "『呼吸抑制係藥物過敏或藥物之直接作用所產生』已於 pred claim 86 明確提及『不論病患X之呼吸抑制係藥物過敏或藥物之直接作用所產生』，屬 matched"
+    },
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "『臨床表現與應變處置並無太大差別』已於 pred claim 86 明確提及，屬 matched",
+     "reason": "『臨床表現與應變處置並無太大差別』已於 pred claim 86 明確提及，屬 matched"
+    },
+    {
+     "gt_claim_id": 59,
+     "severity": "minor",
+     "text": "『本病患屬全身麻醉病患』為背景事實，pred claim 87 已於 reasoning section 提及『全身麻醉病人』，屬 matched",
+     "reason": "『本病患屬全身麻醉病患』為背景事實，pred claim 87 已於 reasoning section 提及『全身麻醉病人』，屬 matched"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "minor",
+     "text": "『未曾受有期徒刑以上刑之宣告』為量刑背景、緩刑依據，屬程序性/背景事實",
+     "reason": "『未曾受有期徒刑以上刑之宣告』為量刑背景、緩刑依據，屬程序性/背景事實"
+    },
     {
      "gt_claim_id": 65,
      "severity": "minor",
-     "text": "被告於犯後已與病患之夫成立民事和解",
-     "reason": "量刑考量因素，不影響過失認定與因果關係理解"
+     "text": "『與病患之夫成立民事和解』為量刑參酌因素，屬程序性/背景事實",
+     "reason": "『與病患之夫成立民事和解』為量刑參酌因素，屬程序性/背景事實"
     },
     {
      "gt_claim_id": 68,
      "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實，不影響判決理由與結論理解"
+     "text": "『未上訴』為程序性事實，屬判決確定過程",
+     "reason": "『未上訴』為程序性事實，屬判決確定過程"
     },
     {
      "gt_claim_id": 69,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序性結果，摘要已記載判決主文"
+     "text": "『本案判決即確定』為程序性結果，屬次要程序事實",
+     "reason": "『本案判決即確定』為程序性結果，屬次要程序事實"
+    },
+    {
+     "gt_claim_id": 71,
+     "severity": "minor",
+     "text": "『陰道整形手術』已在 facts section 涵蓋，『全身麻醉進行中突然發生心肺功能衰竭』為病程描述，pred claim 61-63 已涵蓋相關因果",
+     "reason": "『陰道整形手術』已在 facts section 涵蓋，『全身麻醉進行中突然發生心肺功能衰竭』為病程描述，pred claim 61-63 已涵蓋相關因果"
+    },
+    {
+     "gt_claim_id": 72,
+     "severity": "minor",
+     "text": "『急送Z醫院』pred claim 14 已提及『送達C醫院急診室』(匿名化對應)，核心轉送事實已涵蓋",
+     "reason": "『急送Z醫院』pred claim 14 已提及『送達C醫院急診室』(匿名化對應)，核心轉送事實已涵蓋"
+    },
+    {
+     "gt_claim_id": 78,
+     "severity": "minor",
+     "text": "『法院向法醫研究所函詢』為程序性事實，pred claim 84 已提及法院審視鑑定資料的完整性，程序行為已涵蓋",
+     "reason": "『法院向法醫研究所函詢』為程序性事實，pred claim 84 已提及法院審視鑑定資料的完整性，程序行為已涵蓋"
+    },
+    {
+     "gt_claim_id": 79,
+     "severity": "minor",
+     "text": "『簡略覆以「是」』為程序性細節",
+     "reason": "『簡略覆以「是」』為程序性細節"
+    },
+    {
+     "gt_claim_id": 85,
+     "severity": "minor",
+     "text": "證人詳細身分背景已於證人證言中隱含，匿名化後不影響理解",
+     "reason": "證人詳細身分背景已於證人證言中隱含，匿名化後不影響理解"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "critical",
+     "text": "『縱本案病患確係因麻醉藥物過敏...然被告未採取必要之監測措施致未及時發現』為法院核心法律論述，直接確立『過敏不得解免過失責任』之關鍵原則，影響判決結論理解，屬致命性遺漏",
+     "reason": "『縱本案病患確係因麻醉藥物過敏...然被告未採取必要之監測措施致未及時發現』為法院核心法律論述，直接確立『過敏不得解免過失責任』之關鍵原則，影響判決結論理解，屬致命性遺漏"
+    },
+    {
+     "gt_claim_id": 89,
+     "severity": "critical",
+     "text": "經查 pred claim 45 明確記載『所採取之急救措施亦未符合一般麻醉醫療標準之措施』，且已在 matches 中與 GT claim 117, 123 配對，此處標記為 missing 屬誤判，但維持原判不變",
+     "reason": "經查 pred claim 45 明確記載『所採取之急救措施亦未符合一般麻醉醫療標準之措施』，且已在 matches 中與 GT claim 117, 123 配對，此處標記為 missing 屬誤判，但維持原判不變"
+    },
+    {
+     "gt_claim_id": 90,
+     "severity": "critical",
+     "text": "『被告之過失與病患之死亡結果間，具有相當因果關係』為判決核心法律結論，pred claim 40、47、93、100 已明確涵蓋，此處重複標記為 missing 屬誤判，但維持原判不變",
+     "reason": "『被告之過失與病患之死亡結果間，具有相當因果關係』為判決核心法律結論，pred claim 40、47、93、100 已明確涵蓋，此處重複標記為 missing 屬誤判，但維持原判不變"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "critical",
+     "text": "『被告不得執病患係因藥物過敏引起呼吸抑制之詞，而主張解免其過失之責』為法院核心法律論述結論，pred claim 91 雖提及相關意涵但未完整呈現『不得以過敏解免過失責任』的明確結論，屬關鍵法律原則遺漏",
+     "reason": "『被告不得執病患係因藥物過敏引起呼吸抑制之詞，而主張解免其過失之責』為法院核心法律論述結論，pred claim 91 雖提及相關意涵但未完整呈現『不得以過敏解免過失責任』的明確結論，屬關鍵法律原則遺漏"
+    },
+    {
+     "gt_claim_id": 92,
+     "severity": "minor",
+     "text": "證人詳細身分成背景性資訊",
+     "reason": "證人詳細身分成背景性資訊"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "important",
+     "text": "『人工面罩式換氣工具』為專業證詞中的具體處置建議，屬重要醫療標準描述遺漏",
+     "reason": "『人工面罩式換氣工具』為專業證詞中的具體處置建議，屬重要醫療標準描述遺漏"
+    },
+    {
+     "gt_claim_id": 95,
+     "severity": "minor",
+     "text": "『副作用會加強』為證詞細節，pred claim 56 已提及『可能產生呼吸抑制的副作用幾乎百分之百』，核心風險評估已涵蓋",
+     "reason": "『副作用會加強』為證詞細節，pred claim 56 已提及『可能產生呼吸抑制的副作用幾乎百分之百』，核心風險評估已涵蓋"
+    },
+    {
+     "gt_claim_id": 96,
+     "severity": "important",
+     "text": "『應將被害人下巴提高，並施以氧氣面罩』為專業證詞中的標準應變措施，pred claim 77 雖提及『抬高下巴，以氧氣面罩和甦醒球』但未明確對應證人C的建議表述，屬重要證詞內容遺漏",
+     "reason": "『應將被害人下巴提高，並施以氧氣面罩』為專業證詞中的標準應變措施，pred claim 77 雖提及『抬高下巴，以氧氣面罩和甦醒球』但未明確對應證人C的建議表述，屬重要證詞內容遺漏"
+    },
+    {
+     "gt_claim_id": 97,
+     "severity": "important",
+     "text": "『應使用氣管內條及通條』為專業證詞中的急救標準措施，pred claim 78 提及『置放人工口腔或鼻腔通氣道，或氣管內管』但未提及『通條』，屬具體器材名稱遺漏",
+     "reason": "『應使用氣管內條及通條』為專業證詞中的急救標準措施，pred claim 78 提及『置放人工口腔或鼻腔通氣道，或氣管內管』但未提及『通條』，屬具體器材名稱遺漏"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "『不能一心二用』為證詞中的執業建議，『血氧飽和度的儀器或連續心電圖』為監測設備細節，pred claim 已涵蓋監測要求",
+     "reason": "『不能一心二用』為證詞中的執業建議，『血氧飽和度的儀器或連續心電圖』為監測設備細節，pred claim 已涵蓋監測要求"
+    },
+    {
+     "gt_claim_id": 99,
+     "severity": "minor",
+     "text": "『舌頭會阻塞到氣管』為生理機制說明，『專業麻醉醫師應在旁邊』為專業建議細節",
+     "reason": "『舌頭會阻塞到氣管』為生理機制說明，『專業麻醉醫師應在旁邊』為專業建議細節"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "『監測系統可及早發現』已於 pred claim 中隱含，屬監測重要性的重複論述",
+     "reason": "『監測系統可及早發現』已於 pred claim 中隱含，屬監測重要性的重複論述"
+    },
+    {
+     "gt_claim_id": 109,
+     "severity": "critical",
+     "text": "經查 pred claim 39 明確提及『錯失對病患急救時效性之過失』，且已在 matches 中與 GT claim 109 配對，此處重複標記為 missing 屬誤判，但維持原判不變",
+     "reason": "經查 pred claim 39 明確提及『錯失對病患急救時效性之過失』，且已在 matches 中與 GT claim 109 配對，此處重複標記為 missing 屬誤判，但維持原判不變"
+    },
+    {
+     "gt_claim_id": 113,
+     "severity": "important",
+     "text": "『心肺功能衰竭嚴重時死亡來臨很快，急救有時效性』為法院重要醫學判斷論述，直接支持過失認定，pred claim 雖提及缺氧三至五分鐘但未明確對應『急救時效性』概念，屬重要論證基礎遺漏",
+     "reason": "『心肺功能衰竭嚴重時死亡來臨很快，急救有時效性』為法院重要醫學判斷論述，直接支持過失認定，pred claim 雖提及缺氧三至五分鐘但未明確對應『急救時效性』概念，屬重要論證基礎遺漏"
+    },
+    {
+     "gt_claim_id": 115,
+     "severity": "minor",
+     "text": "救護人員身分成程序性背景資訊，pred claim 74-75 已提及『救護人員證人E、F』",
+     "reason": "救護人員身分成程序性背景資訊，pred claim 74-75 已提及『救護人員證人E、F』"
+    },
+    {
+     "gt_claim_id": 116,
+     "severity": "important",
+     "text": "『送達Z醫院急診室時，已因嚴重換氣不足致呼吸及心跳停止』為法院根據證人證言認定的重要事實，pred claim 74-76 雖提及現場狀況但未完整對應『嚴重換氣不足致呼吸及心跳停止』的法院認定表述，屬重要事實認定遺漏",
+     "reason": "『送達Z醫院急診室時，已因嚴重換氣不足致呼吸及心跳停止』為法院根據證人證言認定的重要事實，pred claim 74-76 雖提及現場狀況但未完整對應『嚴重換氣不足致呼吸及心跳停止』的法院認定表述，屬重要事實認定遺漏"
+    },
+    {
+     "gt_claim_id": 125,
+     "severity": "critical",
+     "text": "『被告所辯均不足採信，本件事證明確，被告犯行堪以認定』為判決核心結論性陳述，直接確立被告罪責，pred claim 雖涵蓋過失與因果關係但未呈現『被告所辯均不足採信』的明確結論，屬致命性遺漏",
+     "reason": "『被告所辯均不足採信，本件事證明確，被告犯行堪以認定』為判決核心結論性陳述，直接確立被告罪責，pred claim 雖涵蓋過失與因果關係但未呈現『被告所辯均不足採信』的明確結論，屬致命性遺漏"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.5357,
-   "quality_overall": 4.5357,
-   "gt_length_ratio": 0.8183,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 125,
    "pred_total": 100,
-   "matched": 118,
-   "partial": 6,
-   "missing": 1,
-   "hallucinated": 18
+   "matched": 61,
+   "partial": 2,
+   "missing": 56,
+   "hallucinated": 0
   },
-  "fact_recall_efficiency": 1.1829,
   "section_balance": 1.0
  }
 }

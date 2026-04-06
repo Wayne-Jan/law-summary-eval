@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -149,5 +150,67 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7442,
+  "fact_recall": 0.9504,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9746,
+  "quality_overall": 4.8095,
+  "citation_accuracy": 0.9688,
+  "citation_support_score": 0.9688,
+  "uncited_rate": 0.077,
+  "faithfulness_combined": {
+   "score": 0.9365,
+   "citation_fidelity": 0.8942,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "INCONSISTENT",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9898,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 93,
+     "severity": "minor",
+     "text": "「病患之妻去急診室找被告甲但被告甲不在」此細節在 reasoning section 未提及，屬背景情節遺漏",
+     "reason": "「病患之妻去急診室找被告甲但被告甲不在」此細節在 reasoning section 未提及，屬背景情節遺漏"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "「13時30分給予NTG」及「被告甲發現異常才做電腦斷層」的具體情節與原文不符（原文為13時35分且電腦斷層為初次檢查非異常後才做），屬細節錯誤遺漏",
+     "reason": "「13時30分給予NTG」及「被告甲發現異常才做電腦斷層」的具體情節與原文不符（原文為13時35分且電腦斷層為初次檢查非異常後才做），屬細節錯誤遺漏"
+    },
+    {
+     "gt_claim_id": 111,
+     "severity": "minor",
+     "text": "「忘記把無不適主訴寫上去...往前寫」的具體證詞內容未於 pred claims 中體現，但屬護理紀錄佐證細節",
+     "reason": "「忘記把無不適主訴寫上去...往前寫」的具體證詞內容未於 pred claims 中體現，但屬護理紀錄佐證細節"
+    },
+    {
+     "gt_claim_id": 116,
+     "severity": "minor",
+     "text": "「19時40分許前接獲通知迴診病患前理應未看過護士戊所為之紀錄」的時間序推論未明確出現於 pred claims，但此為法院推論細節",
+     "reason": "「19時40分許前接獲通知迴診病患前理應未看過護士戊所為之紀錄」的時間序推論未明確出現於 pred claims，但此為法院推論細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 131,
+   "pred_total": 202,
+   "matched": 124,
+   "partial": 1,
+   "missing": 4,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

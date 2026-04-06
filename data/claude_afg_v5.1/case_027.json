@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -123,5 +124,193 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7311,
+  "fact_recall": 0.7452,
+  "fact_precision": 1.0,
+  "fact_f1": 0.854,
+  "quality_overall": 4.8143,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0437,
+  "uncited_rate": 0.05,
+  "faithfulness_combined": {
+   "score": 0.97,
+   "citation_fidelity": 0.95,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": null,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.875,
+  "missing_severity": {
+   "critical": 2,
+   "important": 10,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "severity": "minor",
+     "text": "病患就診時的精神狀況評估係自訴人單方面描述（見 gt_claims），pred 摘要從法院認定角度未納入此細節，屬背景性事實，不影響案情核心理解",
+     "reason": "病患就診時的精神狀況評估係自訴人單方面描述（見 gt_claims），pred 摘要從法院認定角度未納入此細節，屬背景性事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "severity": "minor",
+     "text": "checking claims.json 所有 sections，未發現 '腦部一切正常' 之相關對應。GT 的 gt_claims claim 6 為自訴人主張之初次腦部斷層結果，但 pred 摘要依法院認定呈現，實際首次腦部斷層為 2/3（見 gt_facts timeline TL_8）。此為自訴人指控內容，pred 從法院觀點省略，屬次要事實",
+     "reason": "checking claims.json 所有 sections，未發現 '腦部一切正常' 之相關對應。GT 的 gt_claims claim 6 為自訴人主張之初次腦部斷層結果，但 pred 摘要依法院認定呈現，實際首次腦部斷層為 2/3（見 gt_facts timeline TL_8）。此為自訴人指控內容，pred 從法院觀點省略，屬次要事實"
+    },
+    {
+     "gt_claim_id": 7,
+     "severity": "critical",
+     "text": "此為自訴人核心指控之一（強迫戴呼吸器且無治療行為），但 checking claims.json，pred 在 reasoning section claim 98-99 提到呼吸器係 '經檢驗後本於專業考量' 且 '患者本人不願配戴'，直接反駁自訴人指控。pred 選擇呈現法院認定而非自訴人主張，導致 GT claim 7 的指控視角缺失，屬致命遗漏，因影響對自訴人主張完整性的理解",
+     "reason": "此為自訴人核心指控之一（強迫戴呼吸器且無治療行為），但 checking claims.json，pred 在 reasoning section claim 98-99 提到呼吸器係 '經檢驗後本於專業考量' 且 '患者本人不願配戴'，直接反駁自訴人指控。pred 選擇呈現法院認定而非自訴人主張，導致 GT claim 7 的指控視角缺失，屬致命遗漏，因影響對自訴人主張完整性的理解"
+    },
+    {
+     "gt_claim_id": 8,
+     "severity": "important",
+     "text": "GT claim 8 為自訴人主張被告 '未經診察即...需接受腰椎穿刺手術'。checking claims.json，pred claim 15 提到 '神經內科醫師懷疑中樞神經系統感染，建議腰椎穿刺檢查'，但未提及 '被告甲診斷細菌性心內膜炎'。此為自訴人指控被告延誤診斷的關鍵事實，pred 從醫療專業角度呈現（神經內科建議），未反映自訴人視角，屬重要遺漏",
+     "reason": "GT claim 8 為自訴人主張被告 '未經診察即...需接受腰椎穿刺手術'。checking claims.json，pred claim 15 提到 '神經內科醫師懷疑中樞神經系統感染，建議腰椎穿刺檢查'，但未提及 '被告甲診斷細菌性心內膜炎'。此為自訴人指控被告延誤診斷的關鍵事實，pred 從醫療專業角度呈現（神經內科建議），未反映自訴人視角，屬重要遺漏"
+    },
+    {
+     "gt_claim_id": 9,
+     "severity": "important",
+     "text": "GT claim 9 為自訴人主張被告要求簽署手術同意書。checking claims.json 所有 sections，未見 '手術同意書' 相關記載。pred 摘要中 claim 40 用 '討論決定' 替代 '同意書'，屬自訴人關鍵指控內容的遺漏，影響對醫療過失指控的理解",
+     "reason": "GT claim 9 為自訴人主張被告要求簽署手術同意書。checking claims.json 所有 sections，未見 '手術同意書' 相關記載。pred 摘要中 claim 40 用 '討論決定' 替代 '同意書'，屬自訴人關鍵指控內容的遺漏，影響對醫療過失指控的理解"
+    },
+    {
+     "gt_claim_id": 10,
+     "severity": "important",
+     "text": "GT claim 10 為自訴人主張 '簽署同意書後未施以醫療措施'。checking claims.json，pred 在 reasoning section claim 97 提到 '自訴人指述被告於病患住院期間未為任何治療行為，尚非有據'，反駁此指控但未直接對應 '簽署同意書後' 的時間點。屬自訴人指控細節的遺漏",
+     "reason": "GT claim 10 為自訴人主張 '簽署同意書後未施以醫療措施'。checking claims.json，pred 在 reasoning section claim 97 提到 '自訴人指述被告於病患住院期間未為任何治療行為，尚非有據'，反駁此指控但未直接對應 '簽署同意書後' 的時間點。屬自訴人指控細節的遺漏"
+    },
+    {
+     "gt_claim_id": 11,
+     "severity": "minor",
+     "text": "GT claim 11 為 2月10日上午9時症狀（頭暈、頭痛）。checking claims.json，pred claim 17 提到 2月10日上午進行腦部斷層，claim 67 提到 '意識改變'，但無 '頭暈及頭痛' 細節。此為症狀描述細節，屬次要事實",
+     "reason": "GT claim 11 為 2月10日上午9時症狀（頭暈、頭痛）。checking claims.json，pred claim 17 提到 2月10日上午進行腦部斷層，claim 67 提到 '意識改變'，但無 '頭暈及頭痛' 細節。此為症狀描述細節，屬次要事實"
+    },
+    {
+     "gt_claim_id": 14,
+     "severity": "important",
+     "text": "GT claim 14 為自訴人主張被告要求簽署 '腦部手術之同意書'。checking claims.json，pred 未提及 '腦部手術同意書'，僅在 defense claim 39-40 提及開刀評估和藥物治療決定。此為自訴人延誤治療指控的關鍵證據，pred 遺漏影響指控完整性理解",
+     "reason": "GT claim 14 為自訴人主張被告要求簽署 '腦部手術之同意書'。checking claims.json，pred 未提及 '腦部手術同意書'，僅在 defense claim 39-40 提及開刀評估和藥物治療決定。此為自訴人延誤治療指控的關鍵證據，pred 遺漏影響指控完整性理解"
+    },
+    {
+     "gt_claim_id": 15,
+     "severity": "critical",
+     "text": "GT claim 15 為自訴人核心指控 '取得同意書後拖延手術'。checking claims.json，pred 在 reasoning claim 74 採納醫審會意見 '採用內科療法及相關處置並未失當'，解釋未手術原因為專業評估而非拖延，但未直接對應自訴人的 '拖延' 指控。此為過失認定的核心爭點，屬致命遺漏",
+     "reason": "GT claim 15 為自訴人核心指控 '取得同意書後拖延手術'。checking claims.json，pred 在 reasoning claim 74 採納醫審會意見 '採用內科療法及相關處置並未失當'，解釋未手術原因為專業評估而非拖延，但未直接對應自訴人的 '拖延' 指控。此為過失認定的核心爭點，屬致命遺漏"
+    },
+    {
+     "gt_claim_id": 17,
+     "severity": "minor",
+     "text": "GT claim 17 '自訴人為病患辦理出院手續'。checking claims.json，pred claim 18 提到 '同意病患X之母辦理出院返家'，將主體記載為 '母親' 而非 '自訴人'。GT 中丙○○（自訴人）與病患之母為同一人，pred 以關係描述（母親）替代身份描述（自訴人），匿名化差異不影響核心事實，但嚴格來說未明確提及 '自訴人' 身分，維持 missing 並標為 minor",
+     "reason": "GT claim 17 '自訴人為病患辦理出院手續'。checking claims.json，pred claim 18 提到 '同意病患X之母辦理出院返家'，將主體記載為 '母親' 而非 '自訴人'。GT 中丙○○（自訴人）與病患之母為同一人，pred 以關係描述（母親）替代身份描述（自訴人），匿名化差異不影響核心事實，但嚴格來說未明確提及 '自訴人' 身分，維持 missing 並標為 minor"
+    },
+    {
+     "gt_claim_id": 20,
+     "severity": "important",
+     "text": "GT claim 20 '被告已取得手術同意書'。checking claims.json，pred 未明確提及 '已取得手術同意書'。此與 claim 14、15 構成自訴人連續指控（取得同意書→拖延手術→未救治），pred 在 defense section 以 '討論決定藥物治療' 呈現，未反映自訴人視角的 '同意書'，屬重要遺漏",
+     "reason": "GT claim 20 '被告已取得手術同意書'。checking claims.json，pred 未明確提及 '已取得手術同意書'。此與 claim 14、15 構成自訴人連續指控（取得同意書→拖延手術→未救治），pred 在 defense section 以 '討論決定藥物治療' 呈現，未反映自訴人視角的 '同意書'，屬重要遺漏"
+    },
+    {
+     "gt_claim_id": 24,
+     "severity": "minor",
+     "text": "GT claim 24 為法律論述 '能防止而不防止者與積極行為發生結果者同'。checking claims.json，pred 在 reasoning section 引述相關法律原則（claim 61 '注意義務'、claim 78 '無積極證據'），但未直接引用此條文。屬法律論述細節，不影響案情事實理解",
+     "reason": "GT claim 24 為法律論述 '能防止而不防止者與積極行為發生結果者同'。checking claims.json，pred 在 reasoning section 引述相關法律原則（claim 61 '注意義務'、claim 78 '無積極證據'），但未直接引用此條文。屬法律論述細節，不影響案情事實理解"
+    },
+    {
+     "gt_claim_id": 63,
+     "severity": "minor",
+     "text": "2月3日會診神經內科已由其他claims間接涵蓋，屬次要細節",
+     "reason": "2月3日會診神經內科已由其他claims間接涵蓋，屬次要細節"
+    },
+    {
+     "gt_claim_id": 65,
+     "severity": "minor",
+     "text": "腰椎穿刺建議已由pred claim 15涵蓋，缺少「神經內科醫師懷疑」的直接描述屬次要細節",
+     "reason": "腰椎穿刺建議已由pred claim 15涵蓋，缺少「神經內科醫師懷疑」的直接描述屬次要細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "severity": "important",
+     "text": "法院對病危通知書恰當性的評價未明確出現在facts section，屬法院意見評斷，較為重要",
+     "reason": "法院對病危通知書恰當性的評價未明確出現在facts section，屬法院意見評斷，較為重要"
+    },
+    {
+     "gt_claim_id": 74,
+     "severity": "important",
+     "text": "2月5日血紅素數據未在facts section中明確提及，此為具體醫療數據，屬重要細節",
+     "reason": "2月5日血紅素數據未在facts section中明確提及，此為具體醫療數據，屬重要細節"
+    },
+    {
+     "gt_claim_id": 84,
+     "severity": "minor",
+     "text": "使用升壓劑和低血壓狀況為醫療細節，不影響案情理解，屬次要",
+     "reason": "使用升壓劑和低血壓狀況為醫療細節，不影響案情理解，屬次要"
+    },
+    {
+     "gt_claim_id": 85,
+     "severity": "minor",
+     "text": "家屬要求回家中的具體描述（留一口氣）屬敘述細節，不影響核心案情理解",
+     "reason": "家屬要求回家中的具體描述（留一口氣）屬敘述細節，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 87,
+     "severity": "minor",
+     "text": "與自訴人所述出入的比對屬法院評斷細節，核心事實（自動出院）已涵蓋，屬次要",
+     "reason": "與自訴人所述出入的比對屬法院評斷細節，核心事實（自動出院）已涵蓋，屬次要"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "minor",
+     "text": "自訴人是否上訴屬於判決確定後的程序性事實，生成摘要已完整包含主要判決結果（被告甲無罪），未提及上訴狀態不影響判決結論的理解",
+     "reason": "自訴人是否上訴屬於判決確定後的程序性事實，生成摘要已完整包含主要判決結果（被告甲無罪），未提及上訴狀態不影響判決結論的理解"
+    },
+    {
+     "gt_claim_id": 92,
+     "severity": "minor",
+     "text": "判決確定狀態為程序性程序事實，生成摘要已載明法院作成判決及判決主文（無罪），判決確定與否屬於後續程序細節，非影響案情理解的重要事實",
+     "reason": "判決確定狀態為程序性程序事實，生成摘要已載明法院作成判決及判決主文（無罪），判決確定與否屬於後續程序細節，非影響案情理解的重要事實"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "minor",
+     "text": "生成摘要確實未提及「病患於H醫院診治後自行出院」之事實。此為 B 醫院（H醫院）的背景事實，雖在 opinions section（gt_claim_71）提及病情未完全控制即自動出院，但 reasoning section 未直接引用此點作為論證依據。屬次要背景事實，不影響判決主文理解。",
+     "reason": "生成摘要確實未提及「病患於H醫院診治後自行出院」之事實。此為 B 醫院（H醫院）的背景事實，雖在 opinions section（gt_claim_71）提及病情未完全控制即自動出院，但 reasoning section 未直接引用此點作為論證依據。屬次要背景事實，不影響判決主文理解。"
+    },
+    {
+     "gt_claim_id": 95,
+     "severity": "important",
+     "text": "生成摘要雖提及「醫審會鑑定意見亦認為被告採用內科療法及相關處置並未失當[CH_08]」（pred claim 75），但未明確點出「鑑定報告與被告所辯大致相符」此一法院對於鑑定與辯詞一致性的認定。此為連結鑑定意見與被告辯護的重要論證，影響法院心證形成之理解。",
+     "reason": "生成摘要雖提及「醫審會鑑定意見亦認為被告採用內科療法及相關處置並未失當[CH_08]」（pred claim 75），但未明確點出「鑑定報告與被告所辯大致相符」此一法院對於鑑定與辯詞一致性的認定。此為連結鑑定意見與被告辯護的重要論證，影響法院心證形成之理解。"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "important",
+     "text": "生成摘要完全未提及「配戴呼吸器」之爭點及法院認定。此為自訴人指控要點之一（見 gt_claim_7），法院特別就此做出認定：被告係基於專業考量要求配戴，非屬失當。遺漏此點影響對法院如何回應自訴人指控的理解。",
+     "reason": "生成摘要完全未提及「配戴呼吸器」之爭點及法院認定。此為自訴人指控要點之一（見 gt_claim_7），法院特別就此做出認定：被告係基於專業考量要求配戴，非屬失當。遺漏此點影響對法院如何回應自訴人指控的理解。"
+    },
+    {
+     "gt_claim_id": 99,
+     "severity": "important",
+     "text": "與 gt_claim_98 相關，生成摘要未提及「患者本人不願配戴呼吸器不構成被告失當」之法院認定。此為法院針對自訴人「強迫戴呼吸器」指控的直接回應，遺漏影響對判決完整性之理解。",
+     "reason": "與 gt_claim_98 相關，生成摘要未提及「患者本人不願配戴呼吸器不構成被告失當」之法院認定。此為法院針對自訴人「強迫戴呼吸器」指控的直接回應，遺漏影響對判決完整性之理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 104,
+   "pred_total": 79,
+   "matched": 76,
+   "partial": 3,
+   "missing": 25,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

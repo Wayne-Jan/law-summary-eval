@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -148,17 +148,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6609,
-  "fact_recall": 0.84,
-  "fact_precision": 1.0,
-  "fact_f1": 0.91,
+  "fact_recall": 0.6774,
+  "fact_precision": 0.9872,
+  "fact_f1": 0.8035,
   "quality_overall": 4.7857,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9805,
-  "uncited_rate": null,
+  "uncited_rate": 0.167,
   "faithfulness_combined": {
-   "score": 1.0,
-   "citation_fidelity": 1.0,
-   "fact_precision": 1.0,
+   "score": 0.8947,
+   "citation_fidelity": 0.833,
+   "fact_precision": 0.9872,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -167,60 +167,178 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 0.957,
-  "weighted_recall": 0.9821,
+  "weighted_recall": 0.8495,
   "missing_severity": {
-   "critical": 0,
-   "important": 0,
-   "minor": 5,
+   "critical": 1,
+   "important": 14,
+   "minor": 11,
    "details": [
+    {
+     "gt_claim_id": 30,
+     "severity": "important",
+     "text": "GT 提及「被會診目的係為協助H主治醫師判斷病患T腹痛原因，甚或接手腹痛治療」。雖 reasoning section（pred claim 73）提及「負有積極探究腹內出血來源並給予適當治療之義務」，但確實未明確提及被會診目的。此為理解被告醫師職責範圍的重要資訊。",
+     "reason": "GT 提及「被會診目的係為協助H主治醫師判斷病患T腹痛原因，甚或接手腹痛治療」。雖 reasoning section（pred claim 73）提及「負有積極探究腹內出血來源並給予適當治療之義務」，但確實未明確提及被會診目的。此為理解被告醫師職責範圍的重要資訊。"
+    },
+    {
+     "gt_claim_id": 32,
+     "severity": "important",
+     "text": "GT 提及「被告甲即應積極探究腹內出血來源」。opinions section（pred claim 43）及 reasoning section（pred claim 73）已提及類似義務內容，但 facts section 確實無此法律評價。此為事實段落中過失認定的關鍵要點。",
+     "reason": "GT 提及「被告甲即應積極探究腹內出血來源」。opinions section（pred claim 43）及 reasoning section（pred claim 73）已提及類似義務內容，但 facts section 確實無此法律評價。此為事實段落中過失認定的關鍵要點。"
+    },
     {
      "gt_claim_id": 33,
      "severity": "minor",
-     "text": "被告甲從事醫療業務已35年，經驗豐富",
-     "reason": "被告資歷背景資訊，不影響判決結論理解，屬背景性事實"
+     "text": "GT 提及「被告甲從事醫療業務已35年」。pred 完全未提及。reasoning section（pred claim 75）提及「依其執業經驗」但未說明年資。此為背景性資訊，雖有助理解醫師資歷，但非案情核心。",
+     "reason": "GT 提及「被告甲從事醫療業務已35年」。pred 完全未提及。reasoning section（pred claim 75）提及「依其執業經驗」但未說明年資。此為背景性資訊，雖有助理解醫師資歷，但非案情核心。"
+    },
+    {
+     "gt_claim_id": 34,
+     "severity": "important",
+     "text": "GT 提及「被告甲自有能力注意」。reasoning section（pred claim 75）提及「應注意且能注意」，與 GT 語意相近。但 facts section 確實無此能力評價。此為過失認定的重要事實。",
+     "reason": "GT 提及「被告甲自有能力注意」。reasoning section（pred claim 75）提及「應注意且能注意」，與 GT 語意相近。但 facts section 確實無此能力評價。此為過失認定的重要事實。"
+    },
+    {
+     "gt_claim_id": 35,
+     "severity": "important",
+     "text": "GT 提及「被告甲未注意病患T腹膜炎症狀」。facts section 僅陳述病況，無「未注意」的主觀過失評價。reasoning section 有類似評價（pred claim 76「疏未注意」）。此為過失認定關鍵事實。",
+     "reason": "GT 提及「被告甲未注意病患T腹膜炎症狀」。facts section 僅陳述病況，無「未注意」的主觀過失評價。reasoning section 有類似評價（pred claim 76「疏未注意」）。此為過失認定關鍵事實。"
+    },
+    {
+     "gt_claim_id": 36,
+     "severity": "important",
+     "text": "GT 提及「經加護病房護理師電告病況後，被告甲仍未到院探究腹內出血來源」。reasoning section（pred claim 69）已涵蓋類似內容（「均未親自回院診視」），但 facts section 確實無此過失評價。此為案情理解的關鍵時間點。",
+     "reason": "GT 提及「經加護病房護理師電告病況後，被告甲仍未到院探究腹內出血來源」。reasoning section（pred claim 69）已涵蓋類似內容（「均未親自回院診視」），但 facts section 確實無此過失評價。此為案情理解的關鍵時間點。"
+    },
+    {
+     "gt_claim_id": 37,
+     "severity": "important",
+     "text": "GT 提及「被告甲未給予病患T適當治療」。facts section 僅提「指示繼續觀察、輸血」，無「未給予適當治療」的過失評價。此為醫療疏失的核心指控。",
+     "reason": "GT 提及「被告甲未給予病患T適當治療」。facts section 僅提「指示繼續觀察、輸血」，無「未給予適當治療」的過失評價。此為醫療疏失的核心指控。"
     },
     {
      "gt_claim_id": 40,
+     "severity": "important",
+     "text": "GT 提及「94年3月26日中午12時許」及「電請Q醫師先行診視」。pred claims 及段落均未提及中午12時許的具體時間，僅提「會先請證人C診視」但未提「中午12時」的時間點。此為理解會診時間線的重要資訊。",
+     "reason": "GT 提及「94年3月26日中午12時許」及「電請Q醫師先行診視」。pred claims 及段落均未提及中午12時許的具體時間，僅提「會先請證人C診視」但未提「中午12時」的時間點。此為理解會診時間線的重要資訊。"
+    },
+    {
+     "gt_claim_id": 53,
+     "severity": "important",
+     "text": "GT 提及「腸繫膜及乙狀結腸出血」與車禍時間點的關聯。facts section（pred claim 2）雖提及車禍傷害有腸繫膜及乙狀結腸出血，但 opinions section 未明確重述此因果。此為鑑定意見中的病因說明。",
+     "reason": "GT 提及「腸繫膜及乙狀結腸出血」與車禍時間點的關聯。facts section（pred claim 2）雖提及車禍傷害有腸繫膜及乙狀結腸出血，但 opinions section 未明確重述此因果。此為鑑定意見中的病因說明。"
+    },
+    {
+     "gt_claim_id": 54,
      "severity": "minor",
-     "text": "被告甲坦承有於94年3月26日中午12時許，知悉病患T需會診一般外科醫師後，即電請院內另1名一般外科Q醫師先行診視病患T",
-     "reason": "具體時間細節（中午12時許），核心事實（被告指示Q醫師診視）已由 claim 11 涵蓋"
+     "text": "GT 提及「同日並已出現腹痛情形」。facts section 已提及（pred claim 4）。opinions section 重複陳述此資訊為 missing。此為病情時間線的背景性資訊。",
+     "reason": "GT 提及「同日並已出現腹痛情形」。facts section 已提及（pred claim 4）。opinions section 重複陳述此資訊為 missing。此為病情時間線的背景性資訊。"
+    },
+    {
+     "gt_claim_id": 55,
+     "severity": "minor",
+     "text": "GT 提及「直至同年3月26日腹痛仍未緩解」。facts section（pred claim 6）已提及「94年3月26日病患X腹痛加劇」。opinions section 重複陳述為 missing。此為時間線補充資訊。",
+     "reason": "GT 提及「直至同年3月26日腹痛仍未緩解」。facts section（pred claim 6）已提及「94年3月26日病患X腹痛加劇」。opinions section 重複陳述為 missing。此為時間線補充資訊。"
+    },
+    {
+     "gt_claim_id": 56,
+     "severity": "minor",
+     "text": "GT 提及「經H醫師安排超音波、驗血等檢查」。facts section（pred claim 7）提及「安排超音波檢查」，但未明確提及「驗血」。此為檢查項目的細節差異。",
+     "reason": "GT 提及「經H醫師安排超音波、驗血等檢查」。facts section（pred claim 7）提及「安排超音波檢查」，但未明確提及「驗血」。此為檢查項目的細節差異。"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "minor",
+     "text": "GT 提及「同年3月27日腹痛及腹脹情形持續」。facts section（pred claim 21）已提及「病患X同日腹痛及腹脹情形持續」。opinions section 重複陳述為 missing。此為症狀延續的背景描述。",
+     "reason": "GT 提及「同年3月27日腹痛及腹脹情形持續」。facts section（pred claim 21）已提及「病患X同日腹痛及腹脹情形持續」。opinions section 重複陳述為 missing。此為症狀延續的背景描述。"
+    },
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "GT 提及「晚間有發燒情形（攝氏38度）」。facts section（pred claim 21）已提及「晚間有發燒情形（攝氏38度）」。opinions section 的 missing 可能為重複標記或段落邊界問題。此為具體數據細節。",
+     "reason": "GT 提及「晚間有發燒情形（攝氏38度）」。facts section（pred claim 21）已提及「晚間有發燒情形（攝氏38度）」。opinions section 的 missing 可能為重複標記或段落邊界問題。此為具體數據細節。"
+    },
+    {
+     "gt_claim_id": 59,
+     "severity": "minor",
+     "text": "GT 提及具體血液檢查數值。facts section（pred claim 21）已完整提及「白血球7200/yl、中性白血球86%、淋巴性白血球7%、血紅素14.3gm/dL」。opinions section 標記為 missing 可能為重複。此為檢驗數據細節。",
+     "reason": "GT 提及具體血液檢查數值。facts section（pred claim 21）已完整提及「白血球7200/yl、中性白血球86%、淋巴性白血球7%、血紅素14.3gm/dL」。opinions section 標記為 missing 可能為重複。此為檢驗數據細節。"
+    },
+    {
+     "gt_claim_id": 60,
+     "severity": "important",
+     "text": "GT 提及「H醫師根據超音波、驗血檢查結果，判斷病患T疑似腹內出血」。facts section（pred claim 7）僅提「經其主治醫師證人B診視並安排超音波檢查後，疑似有腹內出血情形」。確實缺少「根據驗血檢查結果」的部分。此為診斷依據的重要資訊。",
+     "reason": "GT 提及「H醫師根據超音波、驗血檢查結果，判斷病患T疑似腹內出血」。facts section（pred claim 7）僅提「經其主治醫師證人B診視並安排超音波檢查後，疑似有腹內出血情形」。確實缺少「根據驗血檢查結果」的部分。此為診斷依據的重要資訊。"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "important",
+     "text": "GT 提及「對其輸血並進行後續觀察」。facts section（pred claim 17-19）提及被告甲指示輸血觀察，但未明確提及H醫師（證人B）對病患的輸血處置。此為H醫師處置的重要資訊。",
+     "reason": "GT 提及「對其輸血並進行後續觀察」。facts section（pred claim 17-19）提及被告甲指示輸血觀察，但未明確提及H醫師（證人B）對病患的輸血處置。此為H醫師處置的重要資訊。"
     },
     {
      "gt_claim_id": 62,
+     "severity": "important",
+     "text": "GT 提及「符合醫療常規」。pred claims 及段落均未提及H醫師處置符合醫療常規的判斷。此為區分H醫師與被告甲責任的重要鑑定意見。",
+     "reason": "GT 提及「符合醫療常規」。pred claims 及段落均未提及H醫師處置符合醫療常規的判斷。此為區分H醫師與被告甲責任的重要鑑定意見。"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "important",
+     "text": "GT 提及「晚上出現發燒情形，代表病情變化」。facts section（pred claim 21）提及發燒，但未提及「代表病情變化」的診斷意義。此為病情評估的重要資訊。",
+     "reason": "GT 提及「晚上出現發燒情形，代表病情變化」。facts section（pred claim 21）提及發燒，但未提及「代表病情變化」的診斷意義。此為病情評估的重要資訊。"
+    },
+    {
+     "gt_claim_id": 65,
+     "severity": "important",
+     "text": "GT 提及「腹膜炎加劇」。pred claims 提及「明顯腹膜炎症狀」，但未明確提及「腹膜炎加劇」的判斷。此為病情惡化的重要指標。",
+     "reason": "GT 提及「腹膜炎加劇」。pred claims 提及「明顯腹膜炎症狀」，但未明確提及「腹膜炎加劇」的判斷。此為病情惡化的重要指標。"
+    },
+    {
+     "gt_claim_id": 66,
+     "severity": "critical",
+     "text": "GT 提及「負責病患T腹痛部分病情之醫師即有積極為剖腹探查手術，以探究腹內出血原因之責任」。此為鑑定意見中關於被告醫師義務的核心結論。Pred opinions section 僅提及「應負有積極探究腹內出血來源並給予適當治療之義務」，未明確提及「剖腹探查手術」的具體處置建議。此為判決過失認定的關鍵鑑定意見。",
+     "reason": "GT 提及「負責病患T腹痛部分病情之醫師即有積極為剖腹探查手術，以探究腹內出血原因之責任」。此為鑑定意見中關於被告醫師義務的核心結論。Pred opinions section 僅提及「應負有積極探究腹內出血來源並給予適當治療之義務」，未明確提及「剖腹探查手術」的具體處置建議。此為判決過失認定的關鍵鑑定意見。"
+    },
+    {
+     "gt_claim_id": 67,
+     "severity": "important",
+     "text": "GT 提及「H醫師於知悉病患T有疑似腹內出血情形後，立即會診一般外科醫師」。facts section 已涵蓋此資訊，但 opinions section 缺失可能是因為段落切割導致。此為H醫師處置符合醫療常規的重要說明。",
+     "reason": "GT 提及「H醫師於知悉病患T有疑似腹內出血情形後，立即會診一般外科醫師」。facts section 已涵蓋此資訊，但 opinions section 缺失可能是因為段落切割導致。此為H醫師處置符合醫療常規的重要說明。"
+    },
+    {
+     "gt_claim_id": 78,
      "severity": "minor",
-     "text": "符合醫療常規",
-     "reason": "指H醫師處置符合醫療常規，屬鑑定意見中的背景說明，非本案定罪關鍵"
+     "text": "GT 提及「處有期徒刑拾月」。pred verdict section 僅提及「處有期徒刑伍月」。此為減刑前的原判刑期資訊。雖最終刑期已報導，但原判刑期缺失影響對減刑幅度的理解。屬於判決資訊完整性問題。",
+     "reason": "GT 提及「處有期徒刑拾月」。pred verdict section 僅提及「處有期徒刑伍月」。此為減刑前的原判刑期資訊。雖最終刑期已報導，但原判刑期缺失影響對減刑幅度的理解。屬於判決資訊完整性問題。"
     },
     {
      "gt_claim_id": 81,
      "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實，不影響判決主文內容理解"
+     "text": "GT 提及「被告、檢察官於法定上訴期間未上訴」。pred verdict section 未提及。此為程序性事實，不影響罪刑理解。",
+     "reason": "GT 提及「被告、檢察官於法定上訴期間未上訴」。pred verdict section 未提及。此為程序性事實，不影響罪刑理解。"
     },
     {
      "gt_claim_id": 82,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序性結論，不影響判決主文內容理解"
+     "text": "GT 提及「本案判決即確定」。pred verdict section 未提及。此為程序性狀態說明，不影響罪刑理解。",
+     "reason": "GT 提及「本案判決即確定」。pred verdict section 未提及。此為程序性狀態說明，不影響罪刑理解。"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "minor",
+     "text": "GT 提及「被告甲從事醫療業務已35年，經驗豐富」。reasoning section（pred claim 75）提及「依其執業經驗」，但未明確提及「35年」年資。此為過失能力判斷的背景資訊，雖有助理解法院認定依據，但非核心事實。",
+     "reason": "GT 提及「被告甲從事醫療業務已35年，經驗豐富」。reasoning section（pred claim 75）提及「依其執業經驗」，但未明確提及「35年」年資。此為過失能力判斷的背景資訊，雖有助理解法院認定依據，但非核心事實。"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.7857,
-   "quality_overall": 4.7857,
-   "gt_length_ratio": 0.9114,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 93,
    "pred_total": 78,
-   "matched": 74,
+   "matched": 59,
    "partial": 8,
-   "missing": 11,
-   "hallucinated": 0
+   "missing": 26,
+   "hallucinated": 1
   },
-  "fact_recall_efficiency": 0.9217,
   "section_balance": 1.0
  }
 }

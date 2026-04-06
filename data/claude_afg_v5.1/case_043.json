@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,127 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.5469,
+  "fact_recall": 0.8394,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9127,
+  "quality_overall": 4.8786,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.053,
+  "faithfulness_combined": {
+   "score": 0.9682,
+   "citation_fidelity": 0.947,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9541,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 53,
+     "severity": "minor",
+     "text": "pred claims 中未見「醫師法第二十八條第一項」之明確法條引用。雖 reasoning section 有提及麻醉屬醫療業務行為（pred claim 74），但缺少具體法條名稱及項次，屬於鑑定意見區塊中的法律定性細節遺漏，影響輕微。",
+     "reason": "pred claims 中未見「醫師法第二十八條第一項」之明確法條引用。雖 reasoning section 有提及麻醉屬醫療業務行為（pred claim 74），但缺少具體法條名稱及項次，屬於鑑定意見區塊中的法律定性細節遺漏，影響輕微。"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "pred claims 中 opinions section 未見「原則上須取得合法醫師資格者始得為之」之完整表述。該內容出現在 reasoning section（pred claim 74），但 opinions section 呈現的是專家鑑定的事實認定結論而非法律原則論述，屬背景性法律要件事實，影響輕微。",
+     "reason": "pred claims 中 opinions section 未見「原則上須取得合法醫師資格者始得為之」之完整表述。該內容出現在 reasoning section（pred claim 74），但 opinions section 呈現的是專家鑑定的事實認定結論而非法律原則論述，屬背景性法律要件事實，影響輕微。"
+    },
+    {
+     "gt_claim_id": 55,
+     "severity": "minor",
+     "text": "pred claims 中 opinions section 未直接陳述「護士亦得為麻醉醫療行為」之例外規定。該內容出現在 reasoning section（pred claim 75），但 opinions section 的 90080 號鑑定內容僅提及醫師的注意義務，未完整呈現護士執行權限的法律架構，屬次要法律背景事實。",
+     "reason": "pred claims 中 opinions section 未直接陳述「護士亦得為麻醉醫療行為」之例外規定。該內容出現在 reasoning section（pred claim 75），但 opinions section 的 90080 號鑑定內容僅提及醫師的注意義務，未完整呈現護士執行權限的法律架構，屬次要法律背景事實。"
+    },
+    {
+     "gt_claim_id": 56,
+     "severity": "minor",
+     "text": "pred claims 中 opinions section 未見「醫師對依其指示而為醫療業務行為之護士，負有指揮、監督之責」之一般性原則陳述。該內容出現在 reasoning section（pred claim 76）。opinions section 的鑑定意見聚焦於具體過失認定，未涵蓋一般性指揮監督責任的法律原則說明，屬次要法理論述。",
+     "reason": "pred claims 中 opinions section 未見「醫師對依其指示而為醫療業務行為之護士，負有指揮、監督之責」之一般性原則陳述。該內容出現在 reasoning section（pred claim 76）。opinions section 的鑑定意見聚焦於具體過失認定，未涵蓋一般性指揮監督責任的法律原則說明，屬次要法理論述。"
+    },
+    {
+     "gt_claim_id": 85,
+     "severity": "minor",
+     "text": "被告甲之主觀觀察（打完針後無麻醉效果），屬細節性陳述，不影響過失認定之核心理解",
+     "reason": "被告甲之主觀觀察（打完針後無麻醉效果），屬細節性陳述，不影響過失認定之核心理解"
+    },
+    {
+     "gt_claim_id": 86,
+     "severity": "minor",
+     "text": "電話聯繫麻醉醫師與過敏現象出現的時間關聯細節，pred claims已涵蓋主要救治行為",
+     "reason": "電話聯繫麻醉醫師與過敏現象出現的時間關聯細節，pred claims已涵蓋主要救治行為"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "minor",
+     "text": "被告甲證詞中關於藥劑外包裝的陳述，屬法院用於彈劾證 credibility 之細節",
+     "reason": "被告甲證詞中關於藥劑外包裝的陳述，屬法院用於彈劾證 credibility 之細節"
+    },
+    {
+     "gt_claim_id": 89,
+     "severity": "minor",
+     "text": "被告甲辯稱「應等換好衣服再麻醉」之主張，為法院駁回之辯詞",
+     "reason": "被告甲辯稱「應等換好衣服再麻醉」之主張，為法院駁回之辯詞"
+    },
+    {
+     "gt_claim_id": 90,
+     "severity": "important",
+     "text": "法院認定被告甲始終未曾有確認藥劑之陳述，此為法院否定其辯解之關鍵論理依據，影響心證形成理解",
+     "reason": "法院認定被告甲始終未曾有確認藥劑之陳述，此為法院否定其辯解之關鍵論理依據，影響心證形成理解"
+    },
+    {
+     "gt_claim_id": 92,
+     "severity": "minor",
+     "text": "辯護人主張被告甲不知取錯藥且正在準備工作，屬被法院駁回之辯護論點",
+     "reason": "辯護人主張被告甲不知取錯藥且正在準備工作，屬被法院駁回之辯護論點"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "minor",
+     "text": "辯護人主張被告甲盡救治義務之摘要，pred claims已涵蓋其救治行為主要內容",
+     "reason": "辯護人主張被告甲盡救治義務之摘要，pred claims已涵蓋其救治行為主要內容"
+    },
+    {
+     "gt_claim_id": 94,
+     "severity": "minor",
+     "text": "辯護人類比醫師與藥劑師分工之論點，屬被法院駁回之辯護意見",
+     "reason": "辯護人類比醫師與藥劑師分工之論點，屬被法院駁回之辯護意見"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "醫審會鑑定意見「亦同此認定」之重複強調，pred claims已引用三份鑑定書內容",
+     "reason": "醫審會鑑定意見「亦同此認定」之重複強調，pred claims已引用三份鑑定書內容"
+    },
+    {
+     "gt_claim_id": 109,
+     "severity": "minor",
+     "text": "法院標準結語「事證已臻明確，應依法論科」，屬程序性陳述",
+     "reason": "法院標準結語「事證已臻明確，應依法論科」，屬程序性陳述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 109,
+   "pred_total": 95,
+   "matched": 88,
+   "partial": 7,
+   "missing": 14,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

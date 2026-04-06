@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -160,16 +160,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7052,
-  "fact_recall": 0.979,
+  "fact_recall": 0.8908,
   "fact_precision": 1.0,
-  "fact_f1": 0.989,
+  "fact_f1": 0.9422,
   "quality_overall": 4.525,
   "citation_accuracy": 0.96,
   "citation_support_score": 0.96,
-  "uncited_rate": 0.024,
+  "uncited_rate": 0.073,
   "faithfulness_combined": {
-   "score": 0.9622,
-   "citation_fidelity": 0.937,
+   "score": 0.934,
+   "citation_fidelity": 0.8899,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -179,24 +179,82 @@
   "compliance": 2,
   "cross_validation": "GOOD",
   "numerical_fidelity": 0.955,
-  "weighted_recall": null,
-  "missing_severity": null,
-  "information_density": {
-   "score": 4.525,
-   "quality_overall": 4.525,
-   "gt_length_ratio": 1.0464,
-   "length_penalty": 1.0,
-   "zone": "ideal"
+  "weighted_recall": 0.9636,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 31,
+     "severity": "minor",
+     "text": "傷口縫合處置屬辯方主張的醫療行為細節，不影響過失認定核心爭議",
+     "reason": "傷口縫合處置屬辯方主張的醫療行為細節，不影響過失認定核心爭議"
+    },
+    {
+     "gt_claim_id": 53,
+     "severity": "minor",
+     "text": "工地意外背景（梯子跌倒、混凝土鋼筋）屬案件發生經過，pred已在facts段提及『工地意外致鋼筋插入』，細節缺失不影響案情理解",
+     "reason": "工地意外背景（梯子跌倒、混凝土鋼筋）屬案件發生經過，pred已在facts段提及『工地意外致鋼筋插入』，細節缺失不影響案情理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "工作場所安全設施缺失屬意外事故責任歸屬背景，非醫療過失案件核心事實",
+     "reason": "工作場所安全設施缺失屬意外事故責任歸屬背景，非醫療過失案件核心事實"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "醫師乙傷口擴創探查細節屬鑑定意見中引述的病歷事實，pred已涵蓋主要醫療處置",
+     "reason": "醫師乙傷口擴創探查細節屬鑑定意見中引述的病歷事實，pred已涵蓋主要醫療處置"
+    },
+    {
+     "gt_claim_id": 66,
+     "severity": "minor",
+     "text": "顯微鏡觀察具體發現（心肌細胞肥大、急性腎盂腎炎、輸卵管擴大積水）屬解剖細節，pred已提及相關共病為協同因素",
+     "reason": "顯微鏡觀察具體發現（心肌細胞肥大、急性腎盂腎炎、輸卵管擴大積水）屬解剖細節，pred已提及相關共病為協同因素"
+    },
+    {
+     "gt_claim_id": 74,
+     "severity": "minor",
+     "text": "上訴期間及判決確定屬程序性事實，不影響判決主文內容理解",
+     "reason": "上訴期間及判決確定屬程序性事實，不影響判決主文內容理解"
+    },
+    {
+     "gt_claim_id": 83,
+     "severity": "important",
+     "text": "腸道疝入傷口及外部氣體無法進入之醫學機制說明，屬法院認定穿刺傷難以診斷之重要依據，影響過失程度判斷",
+     "reason": "腸道疝入傷口及外部氣體無法進入之醫學機制說明，屬法院認定穿刺傷難以診斷之重要依據，影響過失程度判斷"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "11月6日11時沿腹股溝往上痛之具體症狀細節，pred已提及同一時間點之全身盜汗、血壓不穩，核心症狀進展已涵蓋",
+     "reason": "11月6日11時沿腹股溝往上痛之具體症狀細節，pred已提及同一時間點之全身盜汗、血壓不穩，核心症狀進展已涵蓋"
+    },
+    {
+     "gt_claim_id": 108,
+     "severity": "important",
+     "text": "醫審會鑑定書關於『正確診斷治療可避免敗血症猝死』之結論，屬法院認定因果關係之重要依據，影響判決理由完整性",
+     "reason": "醫審會鑑定書關於『正確診斷治療可避免敗血症猝死』之結論，屬法院認定因果關係之重要依據，影響判決理由完整性"
+    },
+    {
+     "gt_claim_id": 109,
+     "severity": "important",
+     "text": "法務部法醫研究所關於『腸道疝入未被發現、未給予適當治療處置』之認定，屬法院認定疏失之關鍵鑑定依據",
+     "reason": "法務部法醫研究所關於『腸道疝入未被發現、未給予適當治療處置』之認定，屬法院認定疏失之關鍵鑑定依據"
+    }
+   ]
   },
   "fact_detail": {
    "gt_total": 119,
    "pred_total": 124,
-   "matched": 114,
-   "partial": 5,
-   "missing": 0,
+   "matched": 105,
+   "partial": 2,
+   "missing": 10,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.9356,
   "section_balance": 1.0
  }
 }

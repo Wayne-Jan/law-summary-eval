@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -141,5 +142,133 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7575,
+  "fact_recall": 0.8699,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9304,
+  "quality_overall": 4.8929,
+  "citation_accuracy": 0.9615,
+  "citation_support_score": 0.9442,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9769,
+   "citation_fidelity": 0.9615,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.943,
+  "weighted_recall": 0.9512,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 12,
+   "details": [
+    {
+     "gt_claim_id": 41,
+     "severity": "minor",
+     "text": "section_02_defense.txt 原文雖有「死亡證明書上所載死因僅為推測...無法證明死因是否為心室頻脈直接引起」的語意，但 Pred claim 8「死亡證明書上所載死因僅為推測...」僅簡化為「不能依此推論...因果關係」，未明確提及「是否為心室頻脈所直接引起」此一抗辯細節，屬 minor 遺漏",
+     "reason": "section_02_defense.txt 原文雖有「死亡證明書上所載死因僅為推測...無法證明死因是否為心室頻脈直接引起」的語意，但 Pred claim 8「死亡證明書上所載死因僅為推測...」僅簡化為「不能依此推論...因果關係」，未明確提及「是否為心室頻脈所直接引起」此一抗辯細節，屬 minor 遺漏"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "minor",
+     "text": "section_02_defense.txt 原文「死亡證明書上所載死因僅為推測」確實涉及死因記載的質疑，但 Pred claim 未明確提及死亡證明書記載「急性心肌梗塞併心因性休克」此具體內容，屬 specific 事實细节遺漏，severity 為 minor",
+     "reason": "section_02_defense.txt 原文「死亡證明書上所載死因僅為推測」確實涉及死因記載的質疑，但 Pred claim 未明確提及死亡證明書記載「急性心肌梗塞併心因性休克」此具體內容，屬 specific 事實细节遺漏，severity 為 minor"
+    },
+    {
+     "gt_claim_id": 51,
+     "severity": "important",
+     "text": "section_02_defense.txt 原文「病患X來時只有胸悶...胸悶可能的原因有很多...」涉及此醫學原則的應用，但 Pred claim 41 僅提及「胸悶原因很多（抽煙、糖尿病）」，未明確總結「臨床症狀只能懷疑不能診斷」之 general 醫學原則。此為被告乙辯護的核心論據之一，屬 important 遺漏",
+     "reason": "section_02_defense.txt 原文「病患X來時只有胸悶...胸悶可能的原因有很多...」涉及此醫學原則的應用，但 Pred claim 41 僅提及「胸悶原因很多（抽煙、糖尿病）」，未明確總結「臨床症狀只能懷疑不能診斷」之 general 醫學原則。此為被告乙辯護的核心論據之一，屬 important 遺漏"
+    },
+    {
+     "gt_claim_id": 52,
+     "severity": "important",
+     "text": "section_02_defense.txt 原文未明確引用「最高法院95年度台上字第3884號判決」之法條依據，Pred claim 亦無此引用。此乃被告甲法律論證的重要依據，屬 important 遺漏",
+     "reason": "section_02_defense.txt 原文未明確引用「最高法院95年度台上字第3884號判決」之法條依據，Pred claim 亦無此引用。此乃被告甲法律論證的重要依據，屬 important 遺漏"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "section_02_defense.txt 原文雖有質疑 killip 分類的內容（醫審會醫學文獻認定血壓72mmHg屬 killip 第4級），但未明確提及「醫審會第3次鑑定...依 killip 之分類應屬何級，認定有誤」的具體論點。此為 specific 質疑細節，屬 minor 遺漏",
+     "reason": "section_02_defense.txt 原文雖有質疑 killip 分類的內容（醫審會醫學文獻認定血壓72mmHg屬 killip 第4級），但未明確提及「醫審會第3次鑑定...依 killip 之分類應屬何級，認定有誤」的具體論點。此為 specific 質疑細節，屬 minor 遺漏"
+    },
+    {
+     "gt_claim_id": 55,
+     "severity": "minor",
+     "text": "section_02_defense.txt 原文「該鑑定意見恐未依據本案病歷所載確實鑑定，而有出於鑑定人主觀臆測推論之虞」已表達質疑，但 Pred claim 29 的「主觀臆測推論」相對委婉，未如 GT 55 明確使用「背於事實、與醫學原理完全矛盾」之強烈措辭。屬表述強度差異，severity 為 minor",
+     "reason": "section_02_defense.txt 原文「該鑑定意見恐未依據本案病歷所載確實鑑定，而有出於鑑定人主觀臆測推論之虞」已表達質疑，但 Pred claim 29 的「主觀臆測推論」相對委婉，未如 GT 55 明確使用「背於事實、與醫學原理完全矛盾」之強烈措辭。屬表述強度差異，severity 為 minor"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "minor",
+     "text": "section_03_opinions.txt 中包含「就算處置正確也有可能死亡」的語意（與 GT 74 相關），但在 defense section 中 Pred claim 未明確引用「醫審會第2次鑑定書鑑定意見(六)」作為辯護依據。此乃 specific 引用標註，屬 minor 遺漏",
+     "reason": "section_03_opinions.txt 中包含「就算處置正確也有可能死亡」的語意（與 GT 74 相關），但在 defense section 中 Pred claim 未明確引用「醫審會第2次鑑定書鑑定意見(六)」作為辯護依據。此乃 specific 引用標註，屬 minor 遺漏"
+    },
+    {
+     "gt_claim_id": 69,
+     "severity": "minor",
+     "text": "心電圖作為 VT 時間確認依據屬於鑑定中的技術性細節，section_03_opinions.txt 未明確提及，不影響案情核心理解",
+     "reason": "心電圖作為 VT 時間確認依據屬於鑑定中的技術性細節，section_03_opinions.txt 未明確提及，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 70,
+     "severity": "minor",
+     "text": "病歷醫囑單是否符合醫療常規為次要程序性事實，section_03_opinions.txt 未提及，不影響鑑定意見核心結論",
+     "reason": "病歷醫囑單是否符合醫療常規為次要程序性事實，section_03_opinions.txt 未提及，不影響鑑定意見核心結論"
+    },
+    {
+     "gt_claim_id": 76,
+     "severity": "minor",
+     "text": "加護病房病歷記載中沒有心臟電擊此細節，在 section_03_opinions.txt 中未特別強調（雖有提及「病歷記載無適切處理」），但屬次要事實",
+     "reason": "加護病房病歷記載中沒有心臟電擊此細節，在 section_03_opinions.txt 中未特別強調（雖有提及「病歷記載無適切處理」），但屬次要事實"
+    },
+    {
+     "gt_claim_id": 80,
+     "severity": "important",
+     "text": "心因性休克與心室頻脈的因果關係涉及醫療專業判斷的重要醫學因素，section_03_opinions.txt 雖提死亡原因為「心肌梗塞併心因性休克」但未明確說明 VT 導致 cardiogenic shock 的因果鏈，影響對死因機轉的完整理解",
+     "reason": "心因性休克與心室頻脈的因果關係涉及醫療專業判斷的重要醫學因素，section_03_opinions.txt 雖提死亡原因為「心肌梗塞併心因性休克」但未明確說明 VT 導致 cardiogenic shock 的因果鏈，影響對死因機轉的完整理解"
+    },
+    {
+     "gt_claim_id": 81,
+     "severity": "minor",
+     "text": "心肌梗塞病理機轉（動脈硬化、硬化斑、冠狀動脈阻塞）屬於背景醫學知識，section_03_opinions.txt 未提及，不影響案情判斷",
+     "reason": "心肌梗塞病理機轉（動脈硬化、硬化斑、冠狀動脈阻塞）屬於背景醫學知識，section_03_opinions.txt 未提及，不影響案情判斷"
+    },
+    {
+     "gt_claim_id": 82,
+     "severity": "minor",
+     "text": "心肌梗塞急性發作與動脈硬化慢性過程的對比屬病理背景，section_03_opinions.txt 未提及，不影響判決結論理解",
+     "reason": "心肌梗塞急性發作與動脈硬化慢性過程的對比屬病理背景，section_03_opinions.txt 未提及，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 90,
+     "severity": "minor",
+     "text": "發生地點「普通病房（應為加護病房之誤載）」為鑑定書中的記載錯誤註解，屬次要技術性細節",
+     "reason": "發生地點「普通病房（應為加護病房之誤載）」為鑑定書中的記載錯誤註解，屬次要技術性細節"
+    },
+    {
+     "gt_claim_id": 105,
+     "severity": "minor",
+     "text": "生成摘要 verdic t段落僅提及『經法院審理』作出判決結果，未明確寫出『臺灣雲林地方法院』及判決日期『民國 96 年 07 月 10 日』。此為程序性事實（法院名稱與判決日期），不影響案情實體理解，屬次要資訊。",
+     "reason": "生成摘要 verdic t段落僅提及『經法院審理』作出判決結果，未明確寫出『臺灣雲林地方法院』及判決日期『民國 96 年 07 月 10 日』。此為程序性事實（法院名稱與判決日期），不影響案情實體理解，屬次要資訊。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 186,
+   "matched": 106,
+   "partial": 2,
+   "missing": 15,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -136,17 +136,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.9359,
-  "fact_recall": 0.857,
-  "fact_precision": 1.0,
-  "fact_f1": 0.923,
+  "fact_recall": 0.7917,
+  "fact_precision": 0.9821,
+  "fact_f1": 0.8767,
   "quality_overall": 4.7804,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9889,
   "uncited_rate": 0.018,
   "faithfulness_combined": {
-   "score": 0.9892,
+   "score": 0.982,
    "citation_fidelity": 0.982,
-   "fact_precision": 1.0,
+   "fact_precision": 0.9821,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -155,108 +155,100 @@
   "compliance": 2,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9524,
+  "weighted_recall": 0.9325,
   "missing_severity": {
    "critical": 0,
-   "important": 1,
-   "minor": 10,
+   "important": 4,
+   "minor": 9,
    "details": [
     {
-     "gt_claim_id": 6,
-     "severity": "minor",
-     "text": "護士L領有護理師證書及麻醉訓練合格",
-     "reason": "背景性資訊，護理師身分已隱含專業資格"
-    },
-    {
      "gt_claim_id": 9,
-     "severity": "minor",
-     "text": "病患K心跳與呼吸仍持續下降",
-     "reason": "病情發展細節，已涵蓋於「呼吸心跳異常」描述中"
+     "severity": "important",
+     "text": "確認完全未提及：遍查 section_01_facts.txt、section_03_opinions.txt、section_05_reasoning.txt，均未見「病患K心跳與呼吸仍持續下降」的恶化過程描述。僅提及最終的「呼吸心跳異常」和「呼吸抑制」，但中間持續下降的動態過程未呈現",
+     "reason": "確認完全未提及：遍查 section_01_facts.txt、section_03_opinions.txt、section_05_reasoning.txt，均未見「病患K心跳與呼吸仍持續下降」的恶化過程描述。僅提及最終的「呼吸心跳異常」和「呼吸抑制」，但中間持續下降的動態過程未呈現"
     },
     {
      "gt_claim_id": 21,
      "severity": "minor",
-     "text": "病患K心跳與呼吸仍持續下降",
-     "reason": "重複項目"
-    },
-    {
-     "gt_claim_id": 32,
-     "severity": "minor",
-     "text": "我國法律雖未禁止非麻醉專科醫師執行麻醉",
-     "reason": "背景性法律說明"
-    },
-    {
-     "gt_claim_id": 34,
-     "severity": "minor",
-     "text": "足夠設備包括插管工具、急救藥物及人工換氣設備等",
-     "reason": "設備細節列舉"
-    },
-    {
-     "gt_claim_id": 46,
-     "severity": "minor",
-     "text": "導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷",
-     "reason": "輔助性鑑定說明"
+     "text": "與 GT-9 為重複事實，遍查全文未見「持續下降」過程描述。雖影響案情完整理解，但非核心事實，標記為 minor",
+     "reason": "與 GT-9 為重複事實，遍查全文未見「持續下降」過程描述。雖影響案情完整理解，但非核心事實，標記為 minor"
     },
     {
      "gt_claim_id": 47,
      "severity": "important",
-     "text": "被告此次所使用之麻醉藥物劑量對於正常病患而言在安全範圍",
-     "reason": "影響過失認定完整理解，突顯被告未考量特殊體質之過失"
+     "text": "確認完全未提及：section_03_opinions.txt 雖有大量鑑定意見內容，但遍查未見「被告此次所使用之麻醉藥物劑量對於正常病患而言在安全範圍」此緩解情節。此為長庚醫院及臺北榮總醫院鑑定的重要結論，影響過失程度的判斷，標記為 important",
+     "reason": "確認完全未提及：section_03_opinions.txt 雖有大量鑑定意見內容，但遍查未見「被告此次所使用之麻醉藥物劑量對於正常病患而言在安全範圍」此緩解情節。此為長庚醫院及臺北榮總醫院鑑定的重要結論，影響過失程度的判斷，標記為 important"
     },
     {
-     "gt_claim_id": 54,
-     "severity": "minor",
-     "text": "經告知簡式審判程序之旨，並聽取公訴人、被告甲及辯護人之意見後，法院合議庭裁定由受命法官獨任進行簡式審判程序審理",
-     "reason": "程序性細節"
+     "gt_claim_id": 48,
+     "severity": "important",
+     "text": "確認完全未提及：雖 section_05_reasoning.txt 提及「顯與普通病患不同」及 section_03_opinions.txt 提及「長期服用類固醇」，但未明確以「此病患並非普通病患」作為判斷基礎。此為鑑定意見中的重要定性，影響對被告注意義務程度的認定，標記為 important",
+     "reason": "確認完全未提及：雖 section_05_reasoning.txt 提及「顯與普通病患不同」及 section_03_opinions.txt 提及「長期服用類固醇」，但未明確以「此病患並非普通病患」作為判斷基礎。此為鑑定意見中的重要定性，影響對被告注意義務程度的認定，標記為 important"
     },
     {
-     "gt_claim_id": 56,
+     "gt_claim_id": 46,
      "severity": "minor",
-     "text": "告訴人已具狀表示撤回告訴之旨，有協議和解書1份在卷",
-     "reason": "程序性事實（撤回告訴）"
-    },
-    {
-     "gt_claim_id": 59,
-     "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴，本案判決即確定",
-     "reason": "程序性結尾"
+     "text": "確認完全未提及：遍查全文未見「導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷」此限制說明。此為鑑定意見中的技術性限制聲明，非核心事實，標記為 minor",
+     "reason": "確認完全未提及：遍查全文未見「導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷」此限制說明。此為鑑定意見中的技術性限制聲明，非核心事實，標記為 minor"
     },
     {
      "gt_claim_id": 65,
      "severity": "minor",
-     "text": "被告圖新臺幣15萬元之醫美高額報酬",
-     "reason": "動機細節（金額）"
+     "text": "確認完全未提及：遍查全文未見「圖新臺幣15萬元之醫美高額報酬」此動機描述。雖涉及犯罪動機，但非判決核心事實，標記為 minor",
+     "reason": "確認完全未提及：遍查全文未見「圖新臺幣15萬元之醫美高額報酬」此動機描述。雖涉及犯罪動機，但非判決核心事實，標記為 minor"
     },
     {
-     "gt_claim_id": 73,
+     "gt_claim_id": 53,
      "severity": "minor",
-     "text": "病患K心跳與呼吸仍持續下降",
-     "reason": "重複項目"
+     "text": "確認完全未提及：遍查 section_04_verdict.txt 僅記載判決結果，未提及「準備程序中就被訴事實為有罪之陳述」的簡式審判程序事實。此為程序性事實，不影響案情理解，標記為 minor",
+     "reason": "確認完全未提及：遍查 section_04_verdict.txt 僅記載判決結果，未提及「準備程序中就被訴事實為有罪之陳述」的簡式審判程序事實。此為程序性事實，不影響案情理解，標記為 minor"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "確認完全未提及：遍查 section_04_verdict.txt 未提及「簡式審判程序」裁定事實。section_05_reasoning.txt 提及「準備程序」但未說明簡式審判。此為程序性事實，不影響案情理解，標記為 minor",
+     "reason": "確認完全未提及：遍查 section_04_verdict.txt 未提及「簡式審判程序」裁定事實。section_05_reasoning.txt 提及「準備程序」但未說明簡式審判。此為程序性事實，不影響案情理解，標記為 minor"
+    },
+    {
+     "gt_claim_id": 55,
+     "severity": "minor",
+     "text": "確認完全未提及：遍查 section_04_verdict.txt 判決主文未提及告訴人與診所及被告達成和解並取得賠償金。雖 section_05_reasoning.txt 提及和解，但 GT-55 明確指定為 verdict section 事實。此為量刑參考情節，非判決主文內容，標記為 minor",
+     "reason": "確認完全未提及：遍查 section_04_verdict.txt 判決主文未提及告訴人與診所及被告達成和解並取得賠償金。雖 section_05_reasoning.txt 提及和解，但 GT-55 明確指定為 verdict section 事實。此為量刑參考情節，非判決主文內容，標記為 minor"
+    },
+    {
+     "gt_claim_id": 56,
+     "severity": "minor",
+     "text": "確認完全未提及：遍查 section_04_verdict.txt 未提及「告訴人已具狀表示撤回告訴」及「協議和解書1份在卷」。雖和解事實於 reasoning section 提及，但撤回告訴的具體程序未呈現。此為程序性事實，標記為 minor",
+     "reason": "確認完全未提及：遍查 section_04_verdict.txt 未提及「告訴人已具狀表示撤回告訴」及「協議和解書1份在卷」。雖和解事實於 reasoning section 提及，但撤回告訴的具體程序未呈現。此為程序性事實，標記為 minor"
+    },
+    {
+     "gt_claim_id": 59,
+     "severity": "minor",
+     "text": "確認完全未提及：遍查 section_04_verdict.txt 未提及「被告、檢察官於法定上訴期間未上訴，本案判決即確定」。判決主文僅載明判決內容，未涉及上訴期間及判決確定情況。此為程序性事實，標記為 minor",
+     "reason": "確認完全未提及：遍查 section_04_verdict.txt 未提及「被告、檢察官於法定上訴期間未上訴，本案判決即確定」。判決主文僅載明判決內容，未涉及上訴期間及判決確定情況。此為程序性事實，標記為 minor"
+    },
+    {
+     "gt_claim_id": 77,
+     "severity": "important",
+     "text": "確認完全未提及：遍查全文，section_01_facts.txt 提及「明知診所無足夠設備」為事實陳述，但 section_05_reasoning.txt 法院認定部分未明確表述為「法院認定被告明知診所並無足夠設備」。雖事實基礎存在，但法院認定層次的明確表述缺失，影響判決邏輯理解，標記為 important",
+     "reason": "確認完全未提及：遍查全文，section_01_facts.txt 提及「明知診所無足夠設備」為事實陳述，但 section_05_reasoning.txt 法院認定部分未明確表述為「法院認定被告明知診所並無足夠設備」。雖事實基礎存在，但法院認定層次的明確表述缺失，影響判決邏輯理解，標記為 important"
     },
     {
      "gt_claim_id": 84,
      "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴，本案判決即確定",
-     "reason": "重複項目"
+     "text": "確認完全未提及：遍查 section_05_reasoning.txt 未提及「被告、檢察官於法定上訴期間未上訴，本案判決即確定」。此為判決後程序事實，非 reasoning section 核心內容，標記為 minor",
+     "reason": "確認完全未提及：遍查 section_05_reasoning.txt 未提及「被告、檢察官於法定上訴期間未上訴，本案判決即確定」。此為判決後程序事實，非 reasoning section 核心內容，標記為 minor"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.3467,
-   "quality_overall": 4.7804,
-   "gt_length_ratio": 0.6365,
-   "length_penalty": 0.9093,
-   "zone": "too_short"
   },
   "fact_detail": {
    "gt_total": 84,
    "pred_total": 56,
-   "matched": 71,
-   "partial": 2,
-   "missing": 11,
-   "hallucinated": 0
+   "matched": 63,
+   "partial": 7,
+   "missing": 13,
+   "hallucinated": 1
   },
-  "fact_recall_efficiency": 1.3464,
   "section_balance": 1.0
  }
 }

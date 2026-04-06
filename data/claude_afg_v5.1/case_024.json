@@ -144,17 +144,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8679,
-  "fact_recall": 0.89,
-  "fact_precision": 1.0,
-  "fact_f1": 0.94,
+  "fact_recall": 0.86,
+  "fact_precision": 0.875,
+  "fact_f1": 0.8674,
   "quality_overall": 4.6857,
   "citation_accuracy": 0.9048,
   "citation_support_score": 0.9091,
-  "uncited_rate": 0.025,
+  "uncited_rate": 0.05,
   "faithfulness_combined": {
-   "score": 0.9293,
-   "citation_fidelity": 0.8822,
-   "fact_precision": 1.0,
+   "score": 0.8657,
+   "citation_fidelity": 0.8596,
+   "fact_precision": 0.875,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -163,36 +163,58 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9933,
+  "weighted_recall": 0.9333,
   "missing_severity": {
-   "critical": 0,
-   "important": 0,
-   "minor": 1,
+   "critical": 1,
+   "important": 2,
+   "minor": 3,
    "details": [
     {
      "gt_claim_id": 5,
+     "severity": "important",
+     "text": "病患X係診所投資人身份影響案情動機理解（為何成為代言手術對象），屬重要背景事實",
+     "reason": "病患X係診所投資人身份影響案情動機理解（為何成為代言手術對象），屬重要背景事實"
+    },
+    {
+     "gt_claim_id": 26,
      "severity": "minor",
-     "text": "病患X係該診所投資人",
-     "reason": "雖與犯罪動機（代言人身分）相關，但非影響判決核心事實（過失認定、因果關係、罪名成立）。病患X作為手術對象的身分已明確，投資人身分屬背景性資訊。"
+     "text": "簡易程序屬於程序性事實，雖有助完整理解判決形式，但不影響過失犯罪成立與否的核心理解",
+     "reason": "簡易程序屬於程序性事實，雖有助完整理解判決形式，但不影響過失犯罪成立與否的核心理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "severity": "critical",
+     "text": "死亡原因包含『局部麻醉、心律不整、缺血／缺氧性腦病（腦死）』等關鍵病機細節，遺漏影響死因理解及因果關係判定",
+     "reason": "死亡原因包含『局部麻醉、心律不整、缺血／缺氧性腦病（腦死）』等關鍵病機細節，遺漏影響死因理解及因果關係判定"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "minor",
+     "text": "證人A證述『該診尚在籌備中』已於facts段以『尚未正式營運，處於裝潢階段』表達，屬重複背景資訊",
+     "reason": "證人A證述『該診尚在籌備中』已於facts段以『尚未正式營運，處於裝潢階段』表達，屬重複背景資訊"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "important",
+     "text": "術前僅參考抽血報告及量血壓為過失認定重要細節，摘要僅提『量血壓』未提『抽血報告』，影響對術前評估不足程度的理解",
+     "reason": "術前僅參考抽血報告及量血壓為過失認定重要細節，摘要僅提『量血壓』未提『抽血報告』，影響對術前評估不足程度的理解"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "臺灣高等法院被告前案紀錄表』為證明前科之文書證據，屬佐證細節，不影響『有前科』核心事實的理解",
+     "reason": "臺灣高等法院被告前案紀錄表』為證明前科之文書證據，屬佐證細節，不影響『有前科』核心事實的理解"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.6857,
-   "quality_overall": 4.6857,
-   "gt_length_ratio": 1.0425,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 50,
    "pred_total": 40,
-   "matched": 43,
-   "partial": 3,
-   "missing": 4,
-   "hallucinated": 0
+   "matched": 42,
+   "partial": 2,
+   "missing": 6,
+   "hallucinated": 5
   },
-  "fact_recall_efficiency": 0.8537,
   "section_balance": 1.0
  }
 }

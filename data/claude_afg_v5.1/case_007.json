@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -136,5 +136,97 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8395,
+  "fact_recall": 0.87,
+  "fact_precision": 0.9829,
+  "fact_f1": 0.923,
+  "quality_overall": 4.9048,
+  "citation_accuracy": 0.9796,
+  "citation_support_score": 0.994,
+  "uncited_rate": 0.034,
+  "faithfulness_combined": {
+   "score": 0.9609,
+   "citation_fidelity": 0.9463,
+   "fact_precision": 0.9829,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9467,
+  "missing_severity": {
+   "critical": 1,
+   "important": 5,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 56,
+     "severity": "important",
+     "text": "鑑定意見中建議『應採取更積極之作為』屬關鍵醫療意見，雖 reasoning section 有類似法院認定，但確未在 opinions section 明確呈現鑑定機構的具體建議",
+     "reason": "鑑定意見中建議『應採取更積極之作為』屬關鍵醫療意見，雖 reasoning section 有類似法院認定，但確未在 opinions section 明確呈現鑑定機構的具體建議"
+    },
+    {
+     "gt_claim_id": 60,
+     "severity": "critical",
+     "text": "死因（顱內出血、創傷性蜘蛛膜下腔出血、頭部鈍力損傷）屬關鍵醫學事實，影響判決因果關係理解",
+     "reason": "死因（顱內出血、創傷性蜘蛛膜下腔出血、頭部鈍力損傷）屬關鍵醫學事實，影響判決因果關係理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "診斷證明書屬程序性證據文件，不影響核心案情理解",
+     "reason": "診斷證明書屬程序性證據文件，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "minor",
+     "text": "「檢察官督同法醫師相驗」屬程序性事實，不影響判決結論",
+     "reason": "「檢察官督同法醫師相驗」屬程序性事實，不影響判決結論"
+    },
+    {
+     "gt_claim_id": 63,
+     "severity": "minor",
+     "text": "勘驗筆錄、相驗屍體證明書、驗斷書等屬程序性文件清單，不影響核心事實理解",
+     "reason": "勘驗筆錄、相驗屍體證明書、驗斷書等屬程序性文件清單，不影響核心事實理解"
+    },
+    {
+     "gt_claim_id": 79,
+     "severity": "important",
+     "text": "「廣泛性腦病變症狀」之醫學解釋雖有助理解誤診原因，但屬背景性醫學知識說明",
+     "reason": "「廣泛性腦病變症狀」之醫學解釋雖有助理解誤診原因，但屬背景性醫學知識說明"
+    },
+    {
+     "gt_claim_id": 80,
+     "severity": "important",
+     "text": "喝酒與頭部外傷症狀比較雖有助理解誤診背景，但 opinions section 已有部分涵蓋",
+     "reason": "喝酒與頭部外傷症狀比較雖有助理解誤診背景，但 opinions section 已有部分涵蓋"
+    },
+    {
+     "gt_claim_id": 81,
+     "severity": "important",
+     "text": "「被告甲應知悉症狀相似」屬法院對被告專業能力的期待，雖重要但非核心事實",
+     "reason": "「被告甲應知悉症狀相似」屬法院對被告專業能力的期待，雖重要但非核心事實"
+    },
+    {
+     "gt_claim_id": 86,
+     "severity": "important",
+     "text": "「病歷記載不完全」屬法院認定疏失的重要佐證，影響過失認定理解",
+     "reason": "「病歷記載不完全」屬法院認定疏失的重要佐證，影響過失認定理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 100,
+   "pred_total": 117,
+   "matched": 84,
+   "partial": 6,
+   "missing": 9,
+   "hallucinated": 2
+  },
+  "section_balance": 1.0
+ }
 }

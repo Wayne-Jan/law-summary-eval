@@ -152,17 +152,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7481,
-  "fact_recall": 0.75,
-  "fact_precision": 1.0,
-  "fact_f1": 0.86,
+  "fact_recall": 0.6742,
+  "fact_precision": 0.9895,
+  "fact_f1": 0.802,
   "quality_overall": 4.7833,
   "citation_accuracy": 0.9783,
   "citation_support_score": 0.9467,
-  "uncited_rate": 0.105,
+  "uncited_rate": 0.063,
   "faithfulness_combined": {
-   "score": 0.9253,
-   "citation_fidelity": 0.8756,
-   "fact_precision": 1.0,
+   "score": 0.9458,
+   "citation_fidelity": 0.9167,
+   "fact_precision": 0.9895,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -171,60 +171,274 @@
   "compliance": 5,
   "cross_validation": "GOOD",
   "numerical_fidelity": null,
-  "weighted_recall": 0.9871,
+  "weighted_recall": 0.8903,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 6,
+   "important": 9,
+   "minor": 33,
    "details": [
+    {
+     "gt_claim_id": 2,
+     "severity": "minor",
+     "text": "經友人介紹為背景性事實，不影響案情核心理解",
+     "reason": "經友人介紹為背景性事實，不影響案情核心理解"
+    },
     {
      "gt_claim_id": 11,
      "severity": "minor",
-     "text": "醫師甲遂直接以手壓迫傷口止血",
-     "reason": "醫療處置細節，非影響判決理解之核心事實"
+     "text": "手壓迫止血為手術細節，不影響對過失行為與傷害結果之理解",
+     "reason": "手壓迫止血為手術細節，不影響對過失行為與傷害結果之理解"
     },
     {
      "gt_claim_id": 26,
      "severity": "minor",
-     "text": "醫師緊急通知備血以準備進行手術",
-     "reason": "手術準備程序性事實"
+     "text": "通知備血為程序性細節，不影響案情理解",
+     "reason": "通知備血為程序性細節，不影響案情理解"
     },
     {
-     "gt_claim_id": 90,
+     "gt_claim_id": 27,
      "severity": "minor",
-     "text": "第三次手術紀錄記載病患L有凝血病變，整個腹腔都有出血點，可能一碰就會出血",
-     "reason": "醫療細節描述，雖有助理解病情嚴重度，但非影響判決結論之核心"
+     "text": "第三次手術前具體症狀（躁動、血壓68/45）雖未詳列，但 pred 已提及11月5日血壓驟降的核心事實",
+     "reason": "第三次手術前具體症狀（躁動、血壓68/45）雖未詳列，但 pred 已提及11月5日血壓驟降的核心事實"
     },
     {
-     "gt_claim_id": 91,
+     "gt_claim_id": 36,
      "severity": "minor",
-     "text": "凝血病變這種情形下，病患應該極高的比例會死亡",
-     "reason": "預後判斷，非影響判決結論之核心事實"
+     "text": "公訴意旨具體內容未完整引述，但 pred 已涵蓋注意義務的核心論述",
+     "reason": "公訴意旨具體內容未完整引述，但 pred 已涵蓋注意義務的核心論述"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "important",
+     "text": "被告乙第二次手術時應打開後腹腔之注意義務為公訴意旨之核心指控內容，影響對被告乙被訴事由的完整理解",
+     "reason": "被告乙第二次手術時應打開後腹腔之注意義務為公訴意旨之核心指控內容，影響對被告乙被訴事由的完整理解"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "important",
+     "text": "未能打開後腹腔修補下腔靜脈撕裂傷之指控為被告乙涉案的關鍵事實，影響案情理解",
+     "reason": "未能打開後腹腔修補下腔靜脈撕裂傷之指控為被告乙涉案的關鍵事實，影響案情理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "severity": "minor",
+     "text": "文獻報告佐證為補充性資訊，不影響主要事實認定",
+     "reason": "文獻報告佐證為補充性資訊，不影響主要事實認定"
+    },
+    {
+     "gt_claim_id": 80,
+     "severity": "minor",
+     "text": "緊急照會血管外科醫師的細節雖未詳列，但 pred 已涵蓋緊急剖腹探查的核心事實",
+     "reason": "緊急照會血管外科醫師的細節雖未詳列，但 pred 已涵蓋緊急剖腹探查的核心事實"
+    },
+    {
+     "gt_claim_id": 81,
+     "severity": "minor",
+     "text": "具體發現內容（0.5公分等）已在其他 claims 中涵蓋，此處重複",
+     "reason": "具體發現內容（0.5公分等）已在其他 claims 中涵蓋，此處重複"
+    },
+    {
+     "gt_claim_id": 82,
+     "severity": "minor",
+     "text": "病情惡化過程已在 pred 的因果鏈描述中涵蓋",
+     "reason": "病情惡化過程已在 pred 的因果鏈描述中涵蓋"
+    },
+    {
+     "gt_claim_id": 85,
+     "severity": "minor",
+     "text": "TROCAR 穿刺機制雖未詳述，但 pred 已說明腹腔鏡操作不當的核心疏失",
+     "reason": "TROCAR 穿刺機制雖未詳述，但 pred 已說明腹腔鏡操作不當的核心疏失"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "minor",
+     "text": "洗腎及多重器官衰竭為並發症細節，pred 已涵蓋凝血功能異常等核心內容",
+     "reason": "洗腎及多重器官衰竭為並發症細節，pred 已涵蓋凝血功能異常等核心內容"
+    },
+    {
+     "gt_claim_id": 89,
+     "severity": "minor",
+     "text": "第一次手術前血壓具體數值未提及，但 pred 已涵蓋惡性循環的因果論述",
+     "reason": "第一次手術前血壓具體數值未提及，但 pred 已涵蓋惡性循環的因果論述"
     },
     {
      "gt_claim_id": 93,
      "severity": "minor",
-     "text": "法院函請醫事審議委員會鑑定之具體問題內容",
-     "reason": "程序性事實，摘要已涵蓋「法院函請鑑定」之核心"
+     "text": "法院函請鑑定的具體問題為程序性細節，pred 已提及第四次鑑定的核心結論",
+     "reason": "法院函請鑑定的具體問題為程序性細節，pred 已提及第四次鑑定的核心結論"
+    },
+    {
+     "gt_claim_id": 95,
+     "severity": "important",
+     "text": "第三次手術紀錄首次提及下腔靜脈撕裂傷為關鍵證據，影響對傷害時間點的判斷",
+     "reason": "第三次手術紀錄首次提及下腔靜脈撕裂傷為關鍵證據，影響對傷害時間點的判斷"
+    },
+    {
+     "gt_claim_id": 96,
+     "severity": "minor",
+     "text": "後腹腔血腫成因判斷已在 pred_claim_19 的鑑定意見歧異中涵蓋",
+     "reason": "後腹腔血腫成因判斷已在 pred_claim_19 的鑑定意見歧異中涵蓋"
+    },
+    {
+     "gt_claim_id": 97,
+     "severity": "important",
+     "text": "尚乏積極事證之認定為法院免除被告甲對下腔靜脈撕裂傷責任的重要法律結論",
+     "reason": "尚乏積極事證之認定為法院免除被告甲對下腔靜脈撕裂傷責任的重要法律結論"
+    },
+    {
+     "gt_claim_id": 99,
+     "severity": "important",
+     "text": "缝一針能否處理腹腔鏡傷害的推理為法院認定病歷真實性的關鍵論證",
+     "reason": "缝一針能否處理腹腔鏡傷害的推理為法院認定病歷真實性的關鍵論證"
+    },
+    {
+     "gt_claim_id": 100,
+     "severity": "important",
+     "text": "下腹腔靜脈組織特性及受損後不可能拖延七八天的醫學判斷，為認定傷害非第一次手術造成的重要依據",
+     "reason": "下腹腔靜脈組織特性及受損後不可能拖延七八天的醫學判斷，為認定傷害非第一次手術造成的重要依據"
+    },
+    {
+     "gt_claim_id": 102,
+     "severity": "important",
+     "text": "第一次手術無下腹腔靜脈傷害為法院認定傷害歸責的核心事實，影響被告責任劃分",
+     "reason": "第一次手術無下腹腔靜脈傷害為法院認定傷害歸責的核心事實，影響被告責任劃分"
+    },
+    {
+     "gt_claim_id": 103,
+     "severity": "minor",
+     "text": "與 GT_116、GT_136 內容重複，已於其他 matched claims 中涵蓋",
+     "reason": "與 GT_116、GT_136 內容重複，已於其他 matched claims 中涵蓋"
+    },
+    {
+     "gt_claim_id": 114,
+     "severity": "minor",
+     "text": "主動脈發炎感染或菌血症可能原因為被告辯稱內容，pred 雖未詳列但法院已認該辯稱尚非有據",
+     "reason": "主動脈發炎感染或菌血症可能原因為被告辯稱內容，pred 雖未詳列但法院已認該辯稱尚非有據"
+    },
+    {
+     "gt_claim_id": 115,
+     "severity": "minor",
+     "text": "第一次鑑定意見具體建議內容為控方論據，pred 已涵蓋第一次鑑定意見與事實有悖的核心認定",
+     "reason": "第一次鑑定意見具體建議內容為控方論據，pred 已涵蓋第一次鑑定意見與事實有悖的核心認定"
+    },
+    {
+     "gt_claim_id": 122,
+     "severity": "minor",
+     "text": "第四次鑑定意見具體內容為細節性資訊，pred 已涵蓋鑑定意見歧異的核心事實",
+     "reason": "第四次鑑定意見具體內容為細節性資訊，pred 已涵蓋鑑定意見歧異的核心事實"
+    },
+    {
+     "gt_claim_id": 123,
+     "severity": "minor",
+     "text": "實施第二次手術的原因已在 pred 中提及（躁動及血壓下降）",
+     "reason": "實施第二次手術的原因已在 pred 中提及（躁動及血壓下降）"
+    },
+    {
+     "gt_claim_id": 124,
+     "severity": "minor",
+     "text": "血壓下降多種可能因素為醫學細節，pred 已涵蓋不符持續出血的核心結論",
+     "reason": "血壓下降多種可能因素為醫學細節，pred 已涵蓋不符持續出血的核心結論"
+    },
+    {
+     "gt_claim_id": 125,
+     "severity": "minor",
+     "text": "後腹腔容納出血量具體數值為醫學細節，非影響判決結論之關鍵事實",
+     "reason": "後腹腔容納出血量具體數值為醫學細節，非影響判決結論之關鍵事實"
+    },
+    {
+     "gt_claim_id": 127,
+     "severity": "minor",
+     "text": "第二次手術發現第一次縫合處良好為醫療細節，pred 已提及後腹腔血腫無擴大的核心事實",
+     "reason": "第二次手術發現第一次縫合處良好為醫療細節，pred 已提及後腹腔血腫無擴大的核心事實"
+    },
+    {
+     "gt_claim_id": 128,
+     "severity": "minor",
+     "text": "後腹腔血腫多種成因為醫學說明，pred 已涵蓋血腫不一定係靜脈撕裂傷所致的核心結論",
+     "reason": "後腹腔血腫多種成因為醫學說明，pred 已涵蓋血腫不一定係靜脈撕裂傷所致的核心結論"
+    },
+    {
+     "gt_claim_id": 129,
+     "severity": "minor",
+     "text": "血腫處理標準為醫療常規細節，pred 已提及符合醫療常規的核心認定",
+     "reason": "血腫處理標準為醫療常規細節，pred 已提及符合醫療常規的核心認定"
+    },
+    {
+     "gt_claim_id": 133,
+     "severity": "minor",
+     "text": "法醫研究所鑑定書文號為文書編號，pred 已提及法醫研究所鑑定的核心內容",
+     "reason": "法醫研究所鑑定書文號為文書編號，pred 已提及法醫研究所鑑定的核心內容"
+    },
+    {
+     "gt_claim_id": 134,
+     "severity": "minor",
+     "text": "血管多次破裂及手術修補為死亡過程描述，pred 已涵蓋缺血性休克及吸入性肺炎之死因",
+     "reason": "血管多次破裂及手術修補為死亡過程描述，pred 已涵蓋缺血性休克及吸入性肺炎之死因"
+    },
+    {
+     "gt_claim_id": 135,
+     "severity": "minor",
+     "text": "鑑定意見未深入判斷之限制為評價性內容，pred 已涵蓋第四次鑑定意見的主要結論",
+     "reason": "鑑定意見未深入判斷之限制為評價性內容，pred 已涵蓋第四次鑑定意見的主要結論"
+    },
+    {
+     "gt_claim_id": 139,
+     "severity": "important",
+     "text": "下腹腔靜脈撕裂傷出血可能導致死亡但不是主要原因，為法院認定因果關係的重要限縮，影響對被告責任的理解",
+     "reason": "下腹腔靜脈撕裂傷出血可能導致死亡但不是主要原因，為法院認定因果關係的重要限縮，影響對被告責任的理解"
+    },
+    {
+     "gt_claim_id": 140,
+     "severity": "minor",
+     "text": "被告丙知道組織爛先打開胸腔等手術細節為第三次手術過程描述，pred 已涵蓋第三次手術的核心事實",
+     "reason": "被告丙知道組織爛先打開胸腔等手術細節為第三次手術過程描述，pred 已涵蓋第三次手術的核心事實"
+    },
+    {
+     "gt_claim_id": 141,
+     "severity": "minor",
+     "text": "血管剝離過程可能傷及下腔靜脈的機制解釋為醫學說明，pred 已提及第三次手術造成下腔靜脈撕裂傷",
+     "reason": "血管剝離過程可能傷及下腔靜脈的機制解釋為醫學說明，pred 已提及第三次手術造成下腔靜脈撕裂傷"
+    },
+    {
+     "gt_claim_id": 142,
+     "severity": "minor",
+     "text": "第三次手術出血14000CC為具體數值，pred 已提及大量出血及凝血功能異常",
+     "reason": "第三次手術出血14000CC為具體數值，pred 已提及大量出血及凝血功能異常"
+    },
+    {
+     "gt_claim_id": 143,
+     "severity": "minor",
+     "text": "腹腔多處出血點屬內科性出血為醫學判斷，pred 已提及腹腔內瀰漫性出血無法以外科手術修補",
+     "reason": "腹腔多處出血點屬內科性出血為醫學判斷，pred 已提及腹腔內瀰漫性出血無法以外科手術修補"
+    },
+    {
+     "gt_claim_id": 144,
+     "severity": "minor",
+     "text": "第三次手術造成下腔靜脈撕裂傷但未違反義務之認定，pred 已涵蓋處置屬允當、未違反注意義務之結論",
+     "reason": "第三次手術造成下腔靜脈撕裂傷但未違反義務之認定，pred 已涵蓋處置屬允當、未違反注意義務之結論"
+    },
+    {
+     "gt_claim_id": 145,
+     "severity": "minor",
+     "text": "縫合修補無疏失為與 GT_137、GT_144 重複之內容，已於 matched claims 中涵蓋",
+     "reason": "縫合修補無疏失為與 GT_137、GT_144 重複之內容，已於 matched claims 中涵蓋"
+    },
+    {
+     "gt_claim_id": 149,
+     "severity": "important",
+     "text": "「下腹主動脈裂傷經被告丙於10月27日修補」為關鍵事實，影響對被告乙/丙與被告甲責任區分之理解",
+     "reason": "「下腹主動脈裂傷經被告丙於10月27日修補」為關鍵事實，影響對被告乙/丙與被告甲責任區分之理解"
     }
    ]
-  },
-  "information_density": {
-   "score": 3.623,
-   "quality_overall": 4.7833,
-   "gt_length_ratio": 0.5302,
-   "length_penalty": 0.7574,
-   "zone": "too_short"
   },
   "fact_detail": {
    "gt_total": 155,
    "pred_total": 95,
-   "matched": 107,
-   "partial": 19,
-   "missing": 19,
-   "hallucinated": 0
+   "matched": 103,
+   "partial": 3,
+   "missing": 42,
+   "hallucinated": 1
   },
-  "fact_recall_efficiency": 1.4146,
   "section_balance": 1.0
  }
 }

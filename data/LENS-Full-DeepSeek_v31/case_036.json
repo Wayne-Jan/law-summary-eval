@@ -134,9 +134,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7488,
-  "fact_recall": 0.6,
+  "fact_recall": 0.6611,
   "fact_precision": 1.0,
-  "fact_f1": 0.75,
+  "fact_f1": 0.796,
   "quality_overall": 4.5839,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9654,
@@ -153,78 +153,196 @@
   "compliance": 2,
   "cross_validation": "ACCEPTABLE",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.8593,
+  "weighted_recall": 0.8481,
   "missing_severity": {
-   "critical": 0,
+   "critical": 2,
    "important": 8,
-   "minor": 22,
+   "minor": 19,
    "details": [
+    {
+     "gt_claim_id": 26,
+     "severity": "minor",
+     "text": "生成摘要確實未明確表述「被告乙否認業務過失傷害犯行」，僅以「依被告甲之辯護主張」間接引用，並說明「並無個人疏失」。雖「無個人疏失」語義上等於否認犯行，但未明確使用「否認」字樣，屬語意對應不完整。此為被告乙之辯護立場陳述，屬次要事實，不影響判決結論理解。",
+     "reason": "生成摘要確實未明確表述「被告乙否認業務過失傷害犯行」，僅以「依被告甲之辯護主張」間接引用，並說明「並無個人疏失」。雖「無個人疏失」語義上等於否認犯行，但未明確使用「否認」字樣，屬語意對應不完整。此為被告乙之辯護立場陳述，屬次要事實，不影響判決結論理解。"
+    },
     {
      "gt_claim_id": 34,
      "severity": "important",
-     "text": "醫師若依『合法藥物』所表示之使用方法開立處方，應已符合『正當使用』該藥物",
-     "reason": "法院 reasoning 重要法律標準，影響對判決理由的完整理解"
+     "text": "經查所有 section 原文（section_01_facts.txt 及 section_05_reasoning.txt），生成摘要確實未提及屏東縣醫師公會之法律見解「醫師若依『合法藥物』所表示之使用方法開立處方，應已符合『正當使用』該藥物」。此事實雖非直接決定判決結果，但屬專業機構意見，影響對鑑定意見段落的完整理解，故標記為 important。",
+     "reason": "經查所有 section 原文（section_01_facts.txt 及 section_05_reasoning.txt），生成摘要確實未提及屏東縣醫師公會之法律見解「醫師若依『合法藥物』所表示之使用方法開立處方，應已符合『正當使用』該藥物」。此事實雖非直接決定判決結果，但屬專業機構意見，影響對鑑定意見段落的完整理解，故標記為 important。"
+    },
+    {
+     "gt_claim_id": 37,
+     "severity": "minor",
+     "text": "檢察官未上訴屬判決後程序性事實。section_04_verdict.txt 僅提及判決日期及無罪結果，未涵蓋上訴狀態。此乃判決效力之前提程序事實，不影響案件實體內容理解。",
+     "reason": "檢察官未上訴屬判決後程序性事實。section_04_verdict.txt 僅提及判決日期及無罪結果，未涵蓋上訴狀態。此乃判決效力之前提程序事實，不影響案件實體內容理解。"
+    },
+    {
+     "gt_claim_id": 38,
+     "severity": "minor",
+     "text": "判決確定屬程序性結尾資訊。section_04_verdict.txt 及 section_05_reasoning.txt 均未提及判決確定狀態。此乃程序性事實，非案件核心實體內容。",
+     "reason": "判決確定屬程序性結尾資訊。section_04_verdict.txt 及 section_05_reasoning.txt 均未提及判決確定狀態。此乃程序性事實，非案件核心實體內容。"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "藥品製造商資訊（安星製藥）屬於背景性藥品規格細節，不影響判決理由核心理解",
+     "reason": "藥品製造商資訊（安星製藥）屬於背景性藥品規格細節，不影響判決理由核心理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "藥品許可證字號屬於程序性登記資訊，非判決理由關鍵",
+     "reason": "藥品許可證字號屬於程序性登記資訊，非判決理由關鍵"
+    },
+    {
+     "gt_claim_id": 51,
+     "severity": "minor",
+     "text": "藥品中文品名細節屬於背景資訊",
+     "reason": "藥品中文品名細節屬於背景資訊"
+    },
+    {
+     "gt_claim_id": 52,
+     "severity": "minor",
+     "text": "藥品英文品名細節屬於背景資訊",
+     "reason": "藥品英文品名細節屬於背景資訊"
+    },
+    {
+     "gt_claim_id": 53,
+     "severity": "minor",
+     "text": "克得注射液仿單完整適應症細節，pred已提及衛署公告適應症及被告甲主張之用藥目的，細節差異不影響判決結論",
+     "reason": "克得注射液仿單完整適應症細節，pred已提及衛署公告適應症及被告甲主張之用藥目的，細節差異不影響判決結論"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "藥品為合法藥物的法律地位，pred已提及係經衛署核准之藥物，此為背景事實",
+     "reason": "藥品為合法藥物的法律地位，pred已提及係經衛署核准之藥物，此為背景事實"
+    },
+    {
+     "gt_claim_id": 56,
+     "severity": "minor",
+     "text": "85年函示發布對象與轉知方式屬於程序性細節",
+     "reason": "85年函示發布對象與轉知方式屬於程序性細節"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "minor",
+     "text": "函示通知方式屬於程序性細節",
+     "reason": "函示通知方式屬於程序性細節"
+    },
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "藥事法第48之1條具體條文引用屬於法學論證細節",
+     "reason": "藥事法第48之1條具體條文引用屬於法學論證細節"
+    },
+    {
+     "gt_claim_id": 59,
+     "severity": "minor",
+     "text": "藥事法第75條具體條文引用屬於法學論證細節",
+     "reason": "藥事法第75條具體條文引用屬於法學論證細節"
     },
     {
      "gt_claim_id": 60,
      "severity": "important",
-     "text": "藥品標籤、仿單或包裝所記載既經行政院衛生署核准，其記載當屬可信",
-     "reason": "法院認定合法藥物使用無過失的重要論據"
+     "text": "『藥品記載經核准故可信』是重要的法律推論基礎，影響仿單證據力的認定",
+     "reason": "『藥品記載經核准故可信』是重要的法律推論基礎，影響仿單證據力的認定"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "標籤仿單附隨藥品屬於程序性規定",
+     "reason": "標籤仿單附隨藥品屬於程序性規定"
     },
     {
      "gt_claim_id": 62,
      "severity": "important",
-     "text": "醫療從業人員只要遵循標籤、仿單或包裝所為記載用藥，已足認其在用藥方面並無疏失",
-     "reason": "法院核心 reasoning 之一，影響對醫療過失認定的理解"
+     "text": "『遵循仿單即無疏失』是重要的法律原則，影響過失認定的標準",
+     "reason": "『遵循仿單即無疏失』是重要的法律原則，影響過失認定的標準"
     },
     {
      "gt_claim_id": 63,
      "severity": "important",
-     "text": "被告甲依藥品記載而為告訴人開立Ketoprofen之醫療處置難認有何不當",
-     "reason": "法院認定被告甲無醫療過失的關鍵結論"
+     "text": "『依藥品記載開立難認不當』是法院無罪判決的重要理由之一",
+     "reason": "『依藥品記載開立難認不當』是法院無罪判決的重要理由之一"
+    },
+    {
+     "gt_claim_id": 65,
+     "severity": "important",
+     "text": "藥物過敏為後天發展病態的醫學原理，是理解判決中『無法預測』論證的重要背景",
+     "reason": "藥物過敏為後天發展病態的醫學原理，是理解判決中『無法預測』論證的重要背景"
+    },
+    {
+     "gt_claim_id": 66,
+     "severity": "important",
+     "text": "藥物過敏三種模式（初次即過敏、慢性接觸、再次使用才過敏）影響對被告甲用藥合理性的判斷",
+     "reason": "藥物過敏三種模式（初次即過敏、慢性接觸、再次使用才過敏）影響對被告甲用藥合理性的判斷"
+    },
+    {
+     "gt_claim_id": 67,
+     "severity": "minor",
+     "text": "使用NSAID須注意過敏症狀屬於一般臨床注意事項",
+     "reason": "使用NSAID須注意過敏症狀屬於一般臨床注意事項"
+    },
+    {
+     "gt_claim_id": 68,
+     "severity": "important",
+     "text": "無常規檢查可預測過敏的醫學限制，是法院認定被告甲無過失的重要依據",
+     "reason": "無常規檢查可預測過敏的醫學限制，是法院認定被告甲無過失的重要依據"
+    },
+    {
+     "gt_claim_id": 69,
+     "severity": "important",
+     "text": "『即使過去不過敏仍可能過敏』是支撐『無法預測』論證的關鍵醫學事實",
+     "reason": "『即使過去不過敏仍可能過敏』是支撐『無法預測』論證的關鍵醫學事實"
+    },
+    {
+     "gt_claim_id": 75,
+     "severity": "minor",
+     "text": "護理人員法第37條具体條文引用屬法律細節",
+     "reason": "護理人員法第37條具体條文引用屬法律細節"
     },
     {
      "gt_claim_id": 76,
-     "severity": "important",
-     "text": "護理人員法第37條僅係行政上之管理，非謂未具護理資格之人所為之醫療行為一概均有過失可言",
-     "reason": "法院區分被告乙行為性質的重要論述，影響對判決理由的理解"
+     "severity": "critical",
+     "text": "護理人員法為行政管理的定性是法院區分行政與刑事責任的關鍵法律見解，直接影響護理資格與過失認定的關聯性",
+     "reason": "護理人員法為行政管理的定性是法院區分行政與刑事責任的關鍵法律見解，直接影響護理資格與過失認定的關聯性"
     },
     {
-     "gt_claim_id": 77,
-     "severity": "important",
-     "text": "告訴人所受傷害肇因於告訴人體質上無法預測之過敏",
-     "reason": "法院認定無過失的核心醫學依據"
+     "gt_claim_id": 81,
+     "severity": "minor",
+     "text": "具體違反條項的表述屬技術性細節",
+     "reason": "具體違反條項的表述屬技術性細節"
     },
     {
-     "gt_claim_id": 78,
-     "severity": "important",
-     "text": "倘當時係由具護理資格之人員為告訴人注射，亦無法避免告訴人過敏結果之發生",
-     "reason": "法院認定護理資格與傷害無因果關係的關鍵論證"
+     "gt_claim_id": 82,
+     "severity": "critical",
+     "text": "『違反護理人員法僅涉行政罰不涉刑責』是法院對護理資格問題的核心法律定性，直接影響無罪判決理由",
+     "reason": "『違反護理人員法僅涉行政罰不涉刑責』是法院對護理資格問題的核心法律定性，直接影響無罪判決理由"
     },
     {
-     "gt_claim_id": 79,
-     "severity": "important",
-     "text": "難認告訴人所受傷害與被告甲明知被告乙未具護理人員資格仍指示其注射乙事有何因果關係",
-     "reason": "法院判決被告乙無罪的重要 reasoning"
+     "gt_claim_id": 83,
+     "severity": "minor",
+     "text": "移送衛生主管機關裁處屬於程序性建議",
+     "reason": "移送衛生主管機關裁處屬於程序性建議"
+    },
+    {
+     "gt_claim_id": 90,
+     "severity": "minor",
+     "text": "A診所違反護理人員法第29條屬行政違規細節",
+     "reason": "A診所違反護理人員法第29條屬行政違規細節"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.5839,
-   "quality_overall": 4.5839,
-   "gt_length_ratio": 0.9273,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 90,
    "pred_total": 73,
-   "matched": 51,
-   "partial": 6,
-   "missing": 33,
+   "matched": 59,
+   "partial": 1,
+   "missing": 29,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.647,
   "section_balance": 1.0
  }
 }

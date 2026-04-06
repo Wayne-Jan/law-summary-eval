@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,97 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6512,
+  "fact_recall": 0.8241,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9036,
+  "quality_overall": 4.9071,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.98,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.938,
+  "weighted_recall": 0.9568,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 20,
+     "severity": "minor",
+     "text": "檢察官主張成立業務過失致死罪」屬於法律主張（法律事實），但摘要 facts 段僅提及「案經證人A訴由臺灣桃園地方法院檢察署檢察官偵查起訴」（程序事實），未明確說明檢察官主張的具體罪名；reasoning 段亦僅記載法院的最終認定「業務過失致死犯行」，未回顧檢察官的起訴主張。維持 missing 判定，標記 severity 為 minor（程序性法律事實，雖影響案情完整性，但判決結論已完整呈現）。",
+     "reason": "檢察官主張成立業務過失致死罪」屬於法律主張（法律事實），但摘要 facts 段僅提及「案經證人A訴由臺灣桃園地方法院檢察署檢察官偵查起訴」（程序事實），未明確說明檢察官主張的具體罪名；reasoning 段亦僅記載法院的最終認定「業務過失致死犯行」，未回顧檢察官的起訴主張。維持 missing 判定，標記 severity 為 minor（程序性法律事實，雖影響案情完整性，但判決結論已完整呈現）。"
+    },
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "醫學背景知識：胃鏡檢查作為消化道病灶最準確診斷方式之描述，摘要僅提及被告建議內視鏡檢查遭病患拒絕，未提及胃鏡之診斷價值定位",
+     "reason": "醫學背景知識：胃鏡檢查作為消化道病灶最準確診斷方式之描述，摘要僅提及被告建議內視鏡檢查遭病患拒絕，未提及胃鏡之診斷價值定位"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "醫學背景知識：上下肢脈搏或血壓強度差異代表主動脈瘤緊急狀況之徵象，全文未提及此項主動脈剝離身體檢查指標",
+     "reason": "醫學背景知識：上下肢脈搏或血壓強度差異代表主動脈瘤緊急狀況之徵象，全文未提及此項主動脈剝離身體檢查指標"
+    },
+    {
+     "gt_claim_id": 71,
+     "severity": "important",
+     "text": "關鍵醫學知識：主動脈剝離典型症狀為劇烈胸部疼痛，雖摘要提及「未呈現典型症狀」，但未明確說明典型症狀為何，影響對本案非典型表現（僅腹痛）之理解",
+     "reason": "關鍵醫學知識：主動脈剝離典型症狀為劇烈胸部疼痛，雖摘要提及「未呈現典型症狀」，但未明確說明典型症狀為何，影響對本案非典型表現（僅腹痛）之理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "severity": "important",
+     "text": "關鍵醫學知識：主動脈剝離併發血管阻塞時症狀視阻塞部位而定之機制說明，摘要未涵蓋此病理機轉分類",
+     "reason": "關鍵醫學知識：主動脈剝離併發血管阻塞時症狀視阻塞部位而定之機制說明，摘要未涵蓋此病理機轉分類"
+    },
+    {
+     "gt_claim_id": 73,
+     "severity": "important",
+     "text": "重要醫學知識：腦血管阻塞可表現為中風症狀，係主動脈剝離鑑別診斷之重要參考，全文未提及",
+     "reason": "重要醫學知識：腦血管阻塞可表現為中風症狀，係主動脈剝離鑑別診斷之重要參考，全文未提及"
+    },
+    {
+     "gt_claim_id": 74,
+     "severity": "important",
+     "text": "重要醫學知識：腹部血管阻塞導致腸胃缺血、腹痛之機制，與本案病患腹痛症狀相關，但摘要未說明此可能病因機轉",
+     "reason": "重要醫學知識：腹部血管阻塞導致腸胃缺血、腹痛之機制，與本案病患腹痛症狀相關，但摘要未說明此可能病因機轉"
+    },
+    {
+     "gt_claim_id": 75,
+     "severity": "important",
+     "text": "重要醫學知識：下肢血管阻塞導致單側腳疼痛或無力之症狀表現，與本案病患左腳麻痛無力之初發症狀相關，但摘要未建立此因果關聯說明",
+     "reason": "重要醫學知識：下肢血管阻塞導致單側腳疼痛或無力之症狀表現，與本案病患左腳麻痛無力之初發症狀相關，但摘要未建立此因果關聯說明"
+    },
+    {
+     "gt_claim_id": 76,
+     "severity": "minor",
+     "text": "醫學背景知識：主動脈剝離可從病史、身體檢查及影像檢查發現之診斷方法綜述，摘要未涵蓋此診斷架構說明",
+     "reason": "醫學背景知識：主動脈剝離可從病史、身體檢查及影像檢查發現之診斷方法綜述，摘要未涵蓋此診斷架構說明"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 124,
+   "matched": 88,
+   "partial": 2,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

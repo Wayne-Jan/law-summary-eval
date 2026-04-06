@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -132,5 +132,157 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6609,
+  "fact_recall": 0.7833,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8785,
+  "quality_overall": 4.4533,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9739,
+  "uncited_rate": 0.016,
+  "faithfulness_combined": {
+   "score": 0.9904,
+   "citation_fidelity": 0.984,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9185,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 16,
+   "details": [
+    {
+     "gt_claim_id": 24,
+     "severity": "minor",
+     "text": "GT claim 24指「被告乙坦承其無護理人員資格」。原始判決書第六段確有「訊據被告葉妙莉固坦承其無護理人員資格」，但此內容在pred中未被明確涵蓋。雖section_01_facts.txt提及「被告乙未具護理人員資格」，但並未明確指出是被告乙「坦承」。因屬程序性/背景性事實（被告資格狀態在facts section已有涵蓋），標記為minor",
+     "reason": "GT claim 24指「被告乙坦承其無護理人員資格」。原始判決書第六段確有「訊據被告葉妙莉固坦承其無護理人員資格」，但此內容在pred中未被明確涵蓋。雖section_01_facts.txt提及「被告乙未具護理人員資格」，但並未明確指出是被告乙「坦承」。因屬程序性/背景性事實（被告資格狀態在facts section已有涵蓋），標記為minor"
+    },
+    {
+     "gt_claim_id": 25,
+     "severity": "minor",
+     "text": "GT claim 25指「被告乙於前開時、地為病患G注射醫師所開立之Ketoprofen」。原始判決書第六段確有「並有於前開時、地為告訴人注射醫師所開立之Ketoprofen之事實」。雖pred在facts section（claim 4, 5）及reasoning section（claim 38, 39）提及注射事實，但均未明確歸屬為被告乙的「坦承」事實。此與GT claim 17、24類似，屬背景性事實，標記為minor",
+     "reason": "GT claim 25指「被告乙於前開時、地為病患G注射醫師所開立之Ketoprofen」。原始判決書第六段確有「並有於前開時、地為告訴人注射醫師所開立之Ketoprofen之事實」。雖pred在facts section（claim 4, 5）及reasoning section（claim 38, 39）提及注射事實，但均未明確歸屬為被告乙的「坦承」事實。此與GT claim 17、24類似，屬背景性事實，標記為minor"
+    },
+    {
+     "gt_claim_id": 27,
+     "severity": "important",
+     "text": "GT claim 27指「被告乙主張其係依照醫師所開立之處方箋正確施打藥劑」。原始判決書第六段明確記載「辯稱：伊係依照醫師所開立之處方箋正確施打藥劑等語」，此為被告乙的核心抗辯理由。Pred claim 19僅稱「被告乙並未在相關記載中提出獨立之答辯」，完全未涵蓋此抗辯內容。雖屬辯護要點，但考量GT claim 26已改判partial、被告乙在本案中的角色相對次要，標記為important",
+     "reason": "GT claim 27指「被告乙主張其係依照醫師所開立之處方箋正確施打藥劑」。原始判決書第六段明確記載「辯稱：伊係依照醫師所開立之處方箋正確施打藥劑等語」，此為被告乙的核心抗辯理由。Pred claim 19僅稱「被告乙並未在相關記載中提出獨立之答辯」，完全未涵蓋此抗辯內容。雖屬辯護要點，但考量GT claim 26已改判partial、被告乙在本案中的角色相對次要，標記為important"
+    },
+    {
+     "gt_claim_id": 34,
+     "severity": "important",
+     "text": "屏東縣醫師公會關於「正當使用」合法藥物之法律見解確未出現在生成摘要的 opinions 段落中。預測 claims 20-30 僅涵蓋醫審會鑑定意見（過敏機率、藥物適應症、仿單警語、醫療常規等），但未包含屏東縣醫師公會對「合法藥物」與「正當使用」的法律見解。此為專業醫學團體的實質法律意見，影響法院對用藥適當性的判斷，屬重要遺漏。",
+     "reason": "屏東縣醫師公會關於「正當使用」合法藥物之法律見解確未出現在生成摘要的 opinions 段落中。預測 claims 20-30 僅涵蓋醫審會鑑定意見（過敏機率、藥物適應症、仿單警語、醫療常規等），但未包含屏東縣醫師公會對「合法藥物」與「正當使用」的法律見解。此為專業醫學團體的實質法律意見，影響法院對用藥適當性的判斷，屬重要遺漏。"
+    },
+    {
+     "gt_claim_id": 37,
+     "severity": "minor",
+     "text": "程序性事實（檢察官上訴狀況），摘要僅提及判決日期與無罪結果，未提及上訴與否。屬程序性背景事實，不影響判決結論理解。",
+     "reason": "程序性事實（檢察官上訴狀況），摘要僅提及判決日期與無罪結果，未提及上訴與否。屬程序性背景事實，不影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 38,
+     "severity": "minor",
+     "text": "程序性事實（判決確定狀態），摘要未提及。屬程序性背景事實，不影響判決結論理解。",
+     "reason": "程序性事實（判決確定狀態），摘要未提及。屬程序性背景事實，不影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "具體藥品廠商（安星製藥）為背景技術細節，不影響判決理由理解",
+     "reason": "具體藥品廠商（安星製藥）為背景技術細節，不影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "藥品許可證字號為程序性細節，不影響案情核心理解",
+     "reason": "藥品許可證字號為程序性細節，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "severity": "minor",
+     "text": "藥品中文品名完整記載為次要資訊，摘要已提及Ketoprofen藥名足夠",
+     "reason": "藥品中文品名完整記載為次要資訊，摘要已提及Ketoprofen藥名足夠"
+    },
+    {
+     "gt_claim_id": 52,
+     "severity": "minor",
+     "text": "藥品英文品名為背景資訊，不影響判決結論",
+     "reason": "藥品英文品名為背景資訊，不影響判決結論"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "藥品合法性認定為程序性背景，摘要重點在醫療處置適當性",
+     "reason": "藥品合法性認定為程序性背景，摘要重點在醫療處置適當性"
+    },
+    {
+     "gt_claim_id": 56,
+     "severity": "minor",
+     "text": "85年函示發布對象及方式為歷史程序細節，非關鍵爭點",
+     "reason": "85年函示發布對象及方式為歷史程序細節，非關鍵爭點"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "minor",
+     "text": "通知方式細節（雜誌刊登、無個別通知）為法規背景，不影響判決理由核心",
+     "reason": "通知方式細節（雜誌刊登、無個別通知）為法規背景，不影響判決理由核心"
+    },
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "藥事法第48之1條具體條文為法律背景引用，非判決關鍵論證",
+     "reason": "藥事法第48之1條具體條文為法律背景引用，非判決關鍵論證"
+    },
+    {
+     "gt_claim_id": 59,
+     "severity": "minor",
+     "text": "藥事法第75條具體條文為法律背景引用，非判決核心",
+     "reason": "藥事法第75條具體條文為法律背景引用，非判決核心"
+    },
+    {
+     "gt_claim_id": 60,
+     "severity": "minor",
+     "text": "藥品記載可信度之抽象法律論述為判決背景論理，非關鍵事實",
+     "reason": "藥品記載可信度之抽象法律論述為判決背景論理，非關鍵事實"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "標籤仿單附隨義務為法律背景論述，摘要已於CH_14涵蓋藥品記載相關內容",
+     "reason": "標籤仿單附隨義務為法律背景論述，摘要已於CH_14涵蓋藥品記載相關內容"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "minor",
+     "text": "遵循藥品記載無疏失之原則性論述為法律背景，摘要已於最終結論涵蓋",
+     "reason": "遵循藥品記載無疏失之原則性論述為法律背景，摘要已於最終結論涵蓋"
+    },
+    {
+     "gt_claim_id": 63,
+     "severity": "important",
+     "text": "被告甲依藥品記載開立處置難認不當雖為重要法律結論，但pred claim 63已涵蓋此結論（見partial改判），此GT項為支撐論據，維持missing但標記為important",
+     "reason": "被告甲依藥品記載開立處置難認不當雖為重要法律結論，但pred claim 63已涵蓋此結論（見partial改判），此GT項為支撐論據，維持missing但標記為important"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 90,
+   "pred_total": 63,
+   "matched": 70,
+   "partial": 1,
+   "missing": 19,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

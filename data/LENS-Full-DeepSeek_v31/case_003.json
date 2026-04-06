@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -128,17 +128,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7952,
-  "fact_recall": 0.85,
-  "fact_precision": 0.99,
-  "fact_f1": 0.91,
+  "fact_recall": 0.8205,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9014,
   "quality_overall": 4.8554,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.975,
   "uncited_rate": 0.029,
   "faithfulness_combined": {
-   "score": 0.9786,
+   "score": 0.9826,
    "citation_fidelity": 0.971,
-   "fact_precision": 0.99,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -147,66 +147,82 @@
   "compliance": 5,
   "cross_validation": "GOOD",
   "numerical_fidelity": 0.947,
-  "weighted_recall": 0.9701,
+  "weighted_recall": 0.9402,
   "missing_severity": {
    "critical": 0,
-   "important": 1,
-   "minor": 5,
+   "important": 4,
+   "minor": 6,
    "details": [
-    {
-     "gt_claim_id": 43,
-     "severity": "important",
-     "text": "死亡前十小時期間均無任何症狀，可供醫師作診斷及依據之機率殆無",
-     "reason": "被告核心抗辯論點，雖法院駁斥但未於摘要中呈現被告之具體主張，影響辯方論點完整性"
-    },
     {
      "gt_claim_id": 33,
      "severity": "minor",
-     "text": "相驗屍體證明書、驗斷書、法醫解剖鑑報告等在卷為憑",
-     "reason": "證據文件列舉，屬證據細節，不影響死因事實理解"
+     "text": "生成摘要未提及相驗屍體證明書、驗斷書、法醫解剖鑑報告等證據文書，確認為 truly missing。此為證據列舉性事實，不涉及核心案情理解",
+     "reason": "生成摘要未提及相驗屍體證明書、驗斷書、法醫解剖鑑報告等證據文書，確認為 truly missing。此為證據列舉性事實，不涉及核心案情理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "severity": "important",
+     "text": "生成摘要未詳細列出危險因子清單（年齡大於六十五歲、肝硬化、後天免疫功能不全病毒感染、惡性腫瘤、器官移植及敗血症等），僅提及「沒有合併免疫功能低下或惡性病變」。影響對鑑定意見論證基礎的完整理解",
+     "reason": "生成摘要未詳細列出危險因子清單（年齡大於六十五歲、肝硬化、後天免疫功能不全病毒感染、惡性腫瘤、器官移植及敗血症等），僅提及「沒有合併免疫功能低下或惡性病變」。影響對鑑定意見論證基礎的完整理解"
+    },
+    {
+     "gt_claim_id": 35,
+     "severity": "minor",
+     "text": "生成摘要未明確陳述「本件之病患資料，並未有相關之證據顯示死亡率增加之因素」。雖有提及「在沒有合併免疫功能低下或惡性病變等情況」，但未完全對應 GT claim 的表述，確認為 missing",
+     "reason": "生成摘要未明確陳述「本件之病患資料，並未有相關之證據顯示死亡率增加之因素」。雖有提及「在沒有合併免疫功能低下或惡性病變等情況」，但未完全對應 GT claim 的表述，確認為 missing"
     },
     {
      "gt_claim_id": 39,
      "severity": "minor",
-     "text": "急性呼吸窘迫症候群死亡率有降低之趨勢",
-     "reason": "鑑定意見背景描述，非核心存活率數據"
+     "text": "生成摘要未提及「急性呼吸窘迫症候群死亡率有降低之趨勢」，僅提及「治療技術及呼吸器使用方式之進步」。雖有相關意涵但未明確陳述，確認為 missing",
+     "reason": "生成摘要未提及「急性呼吸窘迫症候群死亡率有降低之趨勢」，僅提及「治療技術及呼吸器使用方式之進步」。雖有相關意涵但未明確陳述，確認為 missing"
+    },
+    {
+     "gt_claim_id": 41,
+     "severity": "important",
+     "text": "生成摘要未提及「肺炎及肺膿瘍併發呼吸窘迫症，常見症狀包括...」的醫學論述，雖有列出相關症狀但未以「常見症狀包括」的方式呈現病因關聯性，影響對法院認定可診斷性的理解",
+     "reason": "生成摘要未提及「肺炎及肺膿瘍併發呼吸窘迫症，常見症狀包括...」的醫學論述，雖有列出相關症狀但未以「常見症狀包括」的方式呈現病因關聯性，影響對法院認定可診斷性的理解"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "important",
+     "text": "生成摘要未提及「死亡前十小時期間均無任何症狀，可供醫師作診斷及依據之機率殆無」的論述。這是鑑定意見中關於症狀顯現時機的重要內容，影響對被告抗辯是否合理之理解",
+     "reason": "生成摘要未提及「死亡前十小時期間均無任何症狀，可供醫師作診斷及依據之機率殆無」的論述。這是鑑定意見中關於症狀顯現時機的重要內容，影響對被告抗辯是否合理之理解"
     },
     {
      "gt_claim_id": 49,
      "severity": "minor",
-     "text": "本案病患初期並未呈現休克現象",
-     "reason": "醫學時間軸細節，摘要已提及休克症狀"
+     "text": "生成摘要未明確提及「本案病患初期並未呈現休克現象」。雖有部分症狀論述，但未明確提及「初期未呈現休克」，確認為 missing",
+     "reason": "生成摘要未明確提及「本案病患初期並未呈現休克現象」。雖有部分症狀論述，但未明確提及「初期未呈現休克」，確認為 missing"
     },
     {
      "gt_claim_id": 57,
      "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實，不影響判決實體內容理解"
+     "text": "生成摘要未提及「被告、檢察官於法定上訴期間未上訴」。此為程序性事實，不影響案情核心理解",
+     "reason": "生成摘要未提及「被告、檢察官於法定上訴期間未上訴」。此為程序性事實，不影響案情核心理解"
     },
     {
      "gt_claim_id": 58,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序狀態說明，屬程序性資訊"
+     "text": "生成摘要未提及「本案判決即確定」。此為判決效力程序性事實，不影響案情核心理解",
+     "reason": "生成摘要未提及「本案判決即確定」。此為判決效力程序性事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "severity": "important",
+     "text": "生成摘要未明確提及「法院採認醫審會三份鑑定意見」。雖然 reasoning section 中引用了鑑定意見內容，但未明確表述法院「採認」三份鑑定意見的態度，影響對法院心證形成過程的理解",
+     "reason": "生成摘要未明確提及「法院採認醫審會三份鑑定意見」。雖然 reasoning section 中引用了鑑定意見內容，但未明確表述法院「採認」三份鑑定意見的態度，影響對法院心證形成過程的理解"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.8554,
-   "quality_overall": 4.8554,
-   "gt_length_ratio": 0.8758,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 78,
    "pred_total": 70,
-   "matched": 65,
-   "partial": 3,
+   "matched": 63,
+   "partial": 2,
    "missing": 10,
-   "hallucinated": 1
+   "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.9705,
   "section_balance": 1.0
  }
 }

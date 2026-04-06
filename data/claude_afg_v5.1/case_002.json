@@ -144,9 +144,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7705,
-  "fact_recall": 0.8507,
+  "fact_recall": 0.6632,
   "fact_precision": 1.0,
-  "fact_f1": 0.9178,
+  "fact_f1": 0.7975,
   "quality_overall": 4.7357,
   "citation_accuracy": 0.9688,
   "citation_support_score": 0.9324,
@@ -161,110 +161,276 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": "ACCEPTABLE",
   "numerical_fidelity": 0.813,
-  "weighted_recall": 0.9699,
+  "weighted_recall": 0.8843,
   "missing_severity": {
-   "critical": 0,
-   "important": 0,
-   "minor": 13,
+   "critical": 1,
+   "important": 6,
+   "minor": 35,
    "details": [
+    {
+     "gt_claim_id": 28,
+     "severity": "critical",
+     "text": "積極治療措施可挽救生命此counterfactual assertion為案件核心因果關係主張，遺漏影響過失致死罪成立與否之理解",
+     "reason": "積極治療措施可挽救生命此counterfactual assertion為案件核心因果關係主張，遺漏影響過失致死罪成立與否之理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "severity": "important",
+     "text": "被告抗辯之核心邏輯：對無症狀病患僅能依神經學指數推斷，遺漏影響對防禦要點之理解",
+     "reason": "被告抗辯之核心邏輯：對無症狀病患僅能依神經學指數推斷，遺漏影響對防禦要點之理解"
+    },
+    {
+     "gt_claim_id": 32,
+     "severity": "important",
+     "text": "『無法採取侵入性治療』為被告抗辯關鍵論點，遺漏影響對醫療處置限制之理解",
+     "reason": "『無法採取侵入性治療』為被告抗辯關鍵論點，遺漏影響對醫療處置限制之理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "severity": "minor",
+     "text": "住入加護病房日期為程序性細節，不影響案情核心理解",
+     "reason": "住入加護病房日期為程序性細節，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 35,
+     "severity": "minor",
+     "text": "昏迷指數具體分數（十四至十五分）雖重要但pred已提及『昏迷指數達滿分15分』，數值範圍差異不影響核心事實",
+     "reason": "昏迷指數具體分數（十四至十五分）雖重要但pred已提及『昏迷指數達滿分15分』，數值範圍差異不影響核心事實"
+    },
+    {
+     "gt_claim_id": 36,
+     "severity": "minor",
+     "text": "昏迷指數穩定現象為背景性事實，pred已提及昏迷指數正常，不影響核心理解",
+     "reason": "昏迷指數穩定現象為背景性事實，pred已提及昏迷指數正常，不影響核心理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "severity": "minor",
+     "text": "『無神經功能障礙』與pred『均無異狀』語義重疊，不影響理解",
+     "reason": "『無神經功能障礙』與pred『均無異狀』語義重疊，不影響理解"
+    },
     {
      "gt_claim_id": 42,
      "severity": "minor",
-     "text": "被告使用之止痛劑量並無不當",
-     "reason": "被告辯護要點中的細節主張，不影響案情核心理解"
+     "text": "『止痛劑量並無不當』為次要評價性事實，pred已涵蓋止痛劑使用事實",
+     "reason": "『止痛劑量並無不當』為次要評價性事實，pred已涵蓋止痛劑使用事實"
     },
     {
      "gt_claim_id": 44,
      "severity": "minor",
-     "text": "其顱骨底下涵蓋大腦枕葉以及小腦等部位",
-     "reason": "解剖學背景說明，pred 已涵蓋核心病變部位"
+     "text": "顱骨底下解剖構造為背景性醫學知識，不影響案情核心",
+     "reason": "顱骨底下解剖構造為背景性醫學知識，不影響案情核心"
+    },
+    {
+     "gt_claim_id": 45,
+     "severity": "minor",
+     "text": "『凹陷之骨折無明顯變化之血腫效應』pred已提及『無產生明顯變化之血腫效應』，實質已涵蓋",
+     "reason": "『凹陷之骨折無明顯變化之血腫效應』pred已提及『無產生明顯變化之血腫效應』，實質已涵蓋"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "『9/9後無再追蹤CT』為時間細節，pred已涵蓋兩次CT檢查及病變加重事實",
+     "reason": "『9/9後無再追蹤CT』為時間細節，pred已涵蓋兩次CT檢查及病變加重事實"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "minor",
+     "text": "『第一次CT顯示蜘蛛網膜下腔出血』為病理細節，pred已涵蓋車禍致顱骨骨折等主要傷害",
+     "reason": "『第一次CT顯示蜘蛛網膜下腔出血』為病理細節，pred已涵蓋車禍致顱骨骨折等主要傷害"
+    },
+    {
+     "gt_claim_id": 55,
+     "severity": "minor",
+     "text": "『局部性枕骨骨折出陷』為解剖細節，pred已提及左側枕骨凹陷性骨折",
+     "reason": "『局部性枕骨骨折出陷』為解剖細節，pred已提及左側枕骨凹陷性骨折"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "minor",
+     "text": "『兩側腦室擴大』pred已以『水腦症』概括涵蓋，醫學上屬同一病理",
+     "reason": "『兩側腦室擴大』pred已以『水腦症』概括涵蓋，醫學上屬同一病理"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "『三天內CT有明顯變化』pred已提及『兩次電腦斷層顯示明顯變化』，時間細節差異不影響理解",
+     "reason": "『三天內CT有明顯變化』pred已提及『兩次電腦斷層顯示明顯變化』，時間細節差異不影響理解"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "minor",
+     "text": "『臨床症狀不明顯』pred已以『神經症狀並不明顯』涵蓋",
+     "reason": "『臨床症狀不明顯』pred已以『神經症狀並不明顯』涵蓋"
     },
     {
      "gt_claim_id": 68,
      "severity": "minor",
-     "text": "在醫學上後顱窩之受傷病變，本就與大腦部位之外傷病變不同",
-     "reason": "醫學分類說明，pred 已涵蓋後顱窩病變特徵"
+     "text": "『後顱窩與大腦外傷病變之醫學差異』為背景性醫學比較，不影響核心案情",
+     "reason": "『後顱窩與大腦外傷病變之醫學差異』為背景性醫學比較，不影響核心案情"
+    },
+    {
+     "gt_claim_id": 69,
+     "severity": "important",
+     "text": "『後顱窩病變之臨床特徵（除頭痛、頭暈外其餘神經症狀不明顯）』為醫審會鑑定關鍵見解，影響對被告注意義務之理解",
+     "reason": "『後顱窩病變之臨床特徵（除頭痛、頭暈外其餘神經症狀不明顯）』為醫審會鑑定關鍵見解，影響對被告注意義務之理解"
     },
     {
      "gt_claim_id": 72,
      "severity": "minor",
-     "text": "其表徵為(1)瞳孔起初並未散大，有時甚至縮小中到死亡後才放大",
-     "reason": "瞳孔變化細節，pred 已涵蓋神經學檢查正常之核心事實"
+     "text": "『瞳孔起初未散大...死亡後才放大』為病理表徵細節，pred已涵蓋突發性死亡",
+     "reason": "『瞳孔起初未散大...死亡後才放大』為病理表徵細節，pred已涵蓋突發性死亡"
+    },
+    {
+     "gt_claim_id": 73,
+     "severity": "minor",
+     "text": "『突發性心跳呼吸停止及意識變化』pred事實段落已涵蓋",
+     "reason": "『突發性心跳呼吸停止及意識變化』pred事實段落已涵蓋"
+    },
+    {
+     "gt_claim_id": 75,
+     "severity": "important",
+     "text": "『水腦症只是治療指標而非真正致死原因』區分真正死因與治療指標，影響對因果關係之理解",
+     "reason": "『水腦症只是治療指標而非真正致死原因』區分真正死因與治療指標，影響對因果關係之理解"
     },
     {
      "gt_claim_id": 77,
      "severity": "minor",
-     "text": "此手術就神經外科醫師而言，算是安全性相當高，並且一般歸類為小型手術",
-     "reason": "腦室外引流手術特性說明，屬補充資訊"
+     "text": "『腦室外引流手術安全性高、屬小型手術』為手術評估細節，不影響核心建議",
+     "reason": "『腦室外引流手術安全性高、屬小型手術』為手術評估細節，不影響核心建議"
+    },
+    {
+     "gt_claim_id": 78,
+     "severity": "important",
+     "text": "『腦室外引流僅矯正水腦症、未解決真正致命病灶』說明治療局限與死因區分",
+     "reason": "『腦室外引流僅矯正水腦症、未解決真正致命病灶』說明治療局限與死因區分"
     },
     {
      "gt_claim_id": 86,
      "severity": "minor",
-     "text": "高檢署法醫中心之解剖報告僅謂死者腦部整體水腫著明，但並未發現有水腦症及第四腦室阻塞與小腦病變之情形",
-     "reason": "解剖報告細節，pred 已涵蓋死因認定及「未週全之處」的核心結論"
+     "text": "『高檢署解剖報告未見水腦症及第四腦室阻塞』為法醫檢查具體發現，pred已涵蓋『未為詳細之記載』",
+     "reason": "『高檢署解剖報告未見水腦症及第四腦室阻塞』為法醫檢查具體發現，pred已涵蓋『未為詳細之記載』"
     },
     {
-     "gt_claim_id": 99,
+     "gt_claim_id": 91,
      "severity": "minor",
-     "text": "Handbook of Neurosurgery第一二四頁謂小腦扁桃體如穿過枕骨大孔，即會壓迫延腦，造成呼吸的停止，通常會快速致命",
-     "reason": "具體文獻引用頁碼及內容，pred 已概括提及「神經外科文獻」"
+     "text": "『法院判斷神經學指數能否指示真實情形』為程序性判斷框架描述，不影響結論",
+     "reason": "『法院判斷神經學指數能否指示真實情形』為程序性判斷框架描述，不影響結論"
+    },
+    {
+     "gt_claim_id": 94,
+     "severity": "minor",
+     "text": "『被告答辯狀列舉神經學檢查項目清單』為程序性細節，pred已涵蓋相關檢查項目",
+     "reason": "『被告答辯狀列舉神經學檢查項目清單』為程序性細節，pred已涵蓋相關檢查項目"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "『後顱窩病變漸重之病理進程』pred已於opinions段落涵蓋類似機轉",
+     "reason": "『後顱窩病變漸重之病理進程』pred已於opinions段落涵蓋類似機轉"
     },
     {
      "gt_claim_id": 100,
      "severity": "minor",
-     "text": "Handbook of Neurosurgery指出上述情形可發生在大腦或小腦的腫瘤或是顱內壓昇高之情況，也可以是因為腰椎穿刺所誘發",
-     "reason": "文獻中誘發因素說明，屬補充醫學背景"
+     "text": "『Handbook所述誘發情況（腫瘤、顱內壓昇高、腰椎穿刺）』為文獻內容細節",
+     "reason": "『Handbook所述誘發情況（腫瘤、顱內壓昇高、腰椎穿刺）』為文獻內容細節"
     },
     {
      "gt_claim_id": 101,
      "severity": "minor",
-     "text": "在大部分病例中，其可僅僅單純的腦幹受到壓迫，而沒有真的小腦扁桃體疝脫，即可致命",
-     "reason": "病理細節補充，pred 已涵蓋「意識清醒不代表小腦無受壓迫」的核心論點"
+     "text": "『單純腦幹受壓迫無須小腦扁桃體疝脫即可致命』為醫學原理細節",
+     "reason": "『單純腦幹受壓迫無須小腦扁桃體疝脫即可致命』為醫學原理細節"
+    },
+    {
+     "gt_claim_id": 102,
+     "severity": "minor",
+     "text": "『小腦扁桃體疝脫時意識可能仍清醒』為臨床案例特徵細節",
+     "reason": "『小腦扁桃體疝脫時意識可能仍清醒』為臨床案例特徵細節"
+    },
+    {
+     "gt_claim_id": 104,
+     "severity": "minor",
+     "text": "『被告關於小腦功能的辯論』pred已涵蓋小腦症狀判斷相關內容",
+     "reason": "『被告關於小腦功能的辯論』pred已涵蓋小腦症狀判斷相關內容"
+    },
+    {
+     "gt_claim_id": 110,
+     "severity": "minor",
+     "text": "『後顱窩CT檢查可能受干擾』pred已在被告辯詞段落涵蓋",
+     "reason": "『後顱窩CT檢查可能受干擾』pred已在被告辯詞段落涵蓋"
+    },
+    {
+     "gt_claim_id": 119,
+     "severity": "minor",
+     "text": "『醫審會第一次鑑定腦室外引流建議』pred claim 51已涵蓋腦室外引流",
+     "reason": "『醫審會第一次鑑定腦室外引流建議』pred claim 51已涵蓋腦室外引流"
+    },
+    {
+     "gt_claim_id": 120,
+     "severity": "minor",
+     "text": "『醫審會第二次鑑定腦室外引流矯正水腦症建議』pred claim 51已涵蓋",
+     "reason": "『醫審會第二次鑑定腦室外引流矯正水腦症建議』pred claim 51已涵蓋"
     },
     {
      "gt_claim_id": 121,
-     "severity": "minor",
-     "text": "水腦症並非本件真正之致命病灶",
-     "reason": "鑑定意見中的細節區分，pred 已涵蓋「小腦腦水腫壓迫腦幹致死」的核心死因"
+     "severity": "important",
+     "text": "『水腦症非本件真正之致命病灶』區分治療指標與真正死因",
+     "reason": "『水腦症非本件真正之致命病灶』區分治療指標與真正死因"
     },
     {
      "gt_claim_id": 124,
      "severity": "minor",
-     "text": "健保局之醫療保險給付並無後顱窩切除手術併腦膜整形此項目",
-     "reason": "健保給付程序性資訊，非核心案情"
+     "text": "『健保給付無後顱窩切除手術項目』為被告抗辯背景事實",
+     "reason": "『健保給付無後顱窩切除手術項目』為被告抗辯背景事實"
     },
     {
      "gt_claim_id": 125,
      "severity": "minor",
-     "text": "被告甲服務之G醫院從未聞見有後顱窩切除手術併腦膜整形手術",
-     "reason": "醫院經驗細節，pred 已涵蓋「非臨床通行作法」的辯護要點"
+     "text": "『G醫院無此手術經驗』為被告抗辯背景事實",
+     "reason": "『G醫院無此手術經驗』為被告抗辯背景事實"
+    },
+    {
+     "gt_claim_id": 129,
+     "severity": "minor",
+     "text": "『依臨床實踐非束手無策』為一般性醫療原則，pred已涵蓋應採積極治療",
+     "reason": "『依臨床實踐非束手無策』為一般性醫療原則，pred已涵蓋應採積極治療"
+    },
+    {
+     "gt_claim_id": 132,
+     "severity": "minor",
+     "text": "『被告甲為病患L之主治醫師』pred已於事實段落明確提及",
+     "reason": "『被告甲為病患L之主治醫師』pred已於事實段落明確提及"
+    },
+    {
+     "gt_claim_id": 135,
+     "severity": "minor",
+     "text": "『客觀上無絕不能注意之情形』為法理論述，pred已涵蓋客觀上可發現等",
+     "reason": "『客觀上無絕不能注意之情形』為法理論述，pred已涵蓋客觀上可發現等"
+    },
+    {
+     "gt_claim_id": 143,
+     "severity": "minor",
+     "text": "『被告犯罪之事證明確』為結論性陳述，pred已於判決結果涵蓋罪名成立",
+     "reason": "『被告犯罪之事證明確』為結論性陳述，pred已於判決結果涵蓋罪名成立"
     },
     {
      "gt_claim_id": 144,
      "severity": "minor",
-     "text": "被告甲聲請再進行第三次鑑定，經核並無必要",
-     "reason": "程序性事實，判決附帶事項，不影響案情理解"
+     "text": "『第三次鑑定之聲請及駁回』為程序性事實，不影響判決結論理解",
+     "reason": "『第三次鑑定之聲請及駁回』為程序性事實，不影響判決結論理解"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.6234,
-   "quality_overall": 4.7357,
-   "gt_length_ratio": 0.6834,
-   "length_penalty": 0.9763,
-   "zone": "too_short"
   },
   "fact_detail": {
    "gt_total": 144,
    "pred_total": 91,
-   "matched": 116,
-   "partial": 13,
-   "missing": 15,
+   "matched": 92,
+   "partial": 7,
+   "missing": 42,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 1.2448,
   "section_balance": 1.0
  }
 }

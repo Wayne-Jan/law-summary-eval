@@ -132,17 +132,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7345,
-  "fact_recall": 0.84,
-  "fact_precision": 0.85,
-  "fact_f1": 0.85,
+  "fact_recall": 0.7568,
+  "fact_precision": 0.8519,
+  "fact_f1": 0.8015,
   "quality_overall": 4.0167,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9571,
-  "uncited_rate": 0,
+  "uncited_rate": 0.0,
   "faithfulness_combined": {
-   "score": 0.94,
+   "score": 0.9408,
    "citation_fidelity": 1.0,
-   "fact_precision": 0.85,
+   "fact_precision": 0.8519,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -151,66 +151,64 @@
   "compliance": 5,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9189,
+  "weighted_recall": 0.9279,
   "missing_severity": {
-   "critical": 1,
+   "critical": 0,
    "important": 1,
-   "minor": 4,
+   "minor": 6,
    "details": [
     {
-     "gt_claim_id": 37,
-     "severity": "critical",
-     "text": "判決書內文無判決理由",
-     "reason": "影響判決結論理解的核心事實：協商判決書無判決理由，但預測摘要卻撰寫了詳細理由"
-    },
-    {
      "gt_claim_id": 18,
-     "severity": "important",
-     "text": "因為協商判決，鑑定內容未明載",
-     "reason": "影響案情完整理解：協商判決導致專業鑑定內容未被明確記載"
+     "severity": "minor",
+     "text": "「因為協商判決，鑑定內容未明載」為程序性背景說明，不影響鑑定意見本身的存在及事實認定",
+     "reason": "「因為協商判決，鑑定內容未明載」為程序性背景說明，不影響鑑定意見本身的存在及事實認定"
     },
     {
-     "gt_claim_id": 2,
+     "gt_claim_id": 21,
      "severity": "minor",
-     "text": "丙、戊之女即病患K",
-     "reason": "程序性/背景性事實：親子關係具體細節，匿名化後以『父、母』表示已足夠"
+     "text": "「臺灣桃園地方法院訊問被告甲後」為程序性細節，被告自白犯罪之事實已由defense section涵蓋",
+     "reason": "「臺灣桃園地方法院訊問被告甲後」為程序性細節，被告自白犯罪之事實已由defense section涵蓋"
+    },
+    {
+     "gt_claim_id": 22,
+     "severity": "minor",
+     "text": "「檢察官聲請協商判決」為程序性步驟，協商合意之核心事實已於verdict section涵蓋",
+     "reason": "「檢察官聲請協商判決」為程序性步驟，協商合意之核心事實已於verdict section涵蓋"
     },
     {
      "gt_claim_id": 25,
      "severity": "minor",
-     "text": "法院於民國97年4月30日作出協商判決",
-     "reason": "程序性日期事實，不影響案情理解"
+     "text": "「民國97年4月30日」為具體判決日期，不影響判決內容及法律後果之理解",
+     "reason": "「民國97年4月30日」為具體判決日期，不影響判決內容及法律後果之理解"
     },
     {
      "gt_claim_id": 30,
      "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實，不影響案情理解"
+     "text": "「被告、檢察官於法定上訴期間未上訴」為判決確定前的程序性事實，不影響判決內容理解",
+     "reason": "「被告、檢察官於法定上訴期間未上訴」為判決確定前的程序性事實，不影響判決內容理解"
     },
     {
      "gt_claim_id": 31,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序性結果，不影響案情理解"
+     "text": "「本案判決即確定」為判決效力狀態說明，屬程序性背景",
+     "reason": "「本案判決即確定」為判決效力狀態說明，屬程序性背景"
+    },
+    {
+     "gt_claim_id": 37,
+     "severity": "important",
+     "text": "「判決書內文無判決理由」為協商判決之重要特性，缺失導致摘要誤生成reasoning section內容，影響對判決結構之正確理解",
+     "reason": "「判決書內文無判決理由」為協商判決之重要特性，缺失導致摘要誤生成reasoning section內容，影響對判決結構之正確理解"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.0167,
-   "quality_overall": 4.0167,
-   "gt_length_ratio": 0.8733,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 37,
    "pred_total": 27,
-   "matched": 29,
-   "partial": 4,
-   "missing": 4,
+   "matched": 28,
+   "partial": 0,
+   "missing": 7,
    "hallucinated": 4
   },
-  "fact_recall_efficiency": 0.9619,
   "section_balance": 1.0
  }
 }

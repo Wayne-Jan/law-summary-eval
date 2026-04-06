@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -126,17 +126,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8715,
-  "fact_recall": 0.9074074074074074,
-  "fact_precision": 0.9375,
-  "fact_f1": 0.9222222222222222,
+  "fact_recall": 0.6759,
+  "fact_precision": 0.9355,
+  "fact_f1": 0.7848,
   "quality_overall": 4.6857,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.96,
-  "uncited_rate": 0.0,
+  "uncited_rate": 0.063,
   "faithfulness_combined": {
-   "score": 0.975,
-   "citation_fidelity": 1.0,
-   "fact_precision": 0.9375,
+   "score": 0.9364,
+   "citation_fidelity": 0.937,
+   "fact_precision": 0.9355,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -145,24 +145,82 @@
   "compliance": 5,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": null,
-  "missing_severity": null,
-  "information_density": {
-   "score": 4.6857,
-   "quality_overall": 4.6857,
-   "gt_length_ratio": 0.7556,
-   "length_penalty": 1.0,
-   "zone": "ideal"
+  "weighted_recall": 0.9012,
+  "missing_severity": {
+   "critical": 0,
+   "important": 6,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "severity": "minor",
+     "text": "程序性事實，判決對象為被告甲，被告乙的協商判決狀態僅為背景資訊，不影響本案理解",
+     "reason": "程序性事實，判決對象為被告甲，被告乙的協商判決狀態僅為背景資訊，不影響本案理解"
+    },
+    {
+     "gt_claim_id": 32,
+     "severity": "minor",
+     "text": "刑事宣示筆錄格式性描述，不影響判決內容理解",
+     "reason": "刑事宣示筆錄格式性描述，不影響判決內容理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "severity": "important",
+     "text": "判決內容包含給付特定機構新台幣二十萬元，屬判決主文之相關條件，遺漏影響判決內容完整性",
+     "reason": "判決內容包含給付特定機構新台幣二十萬元，屬判決主文之相關條件，遺漏影響判決內容完整性"
+    },
+    {
+     "gt_claim_id": 41,
+     "severity": "minor",
+     "text": "給付執行細節（日期、匯款方式），程序性資訊",
+     "reason": "給付執行細節（日期、匯款方式），程序性資訊"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "minor",
+     "text": "證據提存款據之記載，程序性資訊",
+     "reason": "證據提存款據之記載，程序性資訊"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "important",
+     "text": "「被告、檢察官於法定上訴期間未上訴，本案判決即確定」屬判決確定之關鍵程序資訊，影響判決效力理解",
+     "reason": "「被告、檢察官於法定上訴期間未上訴，本案判決即確定」屬判決確定之關鍵程序資訊，影響判決效力理解"
+    },
+    {
+     "gt_claim_id": 45,
+     "severity": "important",
+     "text": "骨科主治醫生乙的認知與過失在 reasoning section 完全遺漏，影響過失責任分配之完整理解",
+     "reason": "骨科主治醫生乙的認知與過失在 reasoning section 完全遺漏，影響過失責任分配之完整理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "severity": "important",
+     "text": "骨科主治醫生乙應盡之會診、抽血、內科控制等義務在 reasoning section 完全遺漏，影響注意義務標準理解",
+     "reason": "骨科主治醫生乙應盡之會診、抽血、內科控制等義務在 reasoning section 完全遺漏，影響注意義務標準理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "severity": "important",
+     "text": "乙疏未注意之過失認定在 reasoning section 完全遺漏，影響過失責任分配",
+     "reason": "乙疏未注意之過失認定在 reasoning section 完全遺漏，影響過失責任分配"
+    },
+    {
+     "gt_claim_id": 48,
+     "severity": "important",
+     "text": "乙施行手術之時間點與非急迫性在 reasoning section 完全遺漏，影響過失時點與違法性理解",
+     "reason": "乙施行手術之時間點與非急迫性在 reasoning section 完全遺漏，影響過失時點與違法性理解"
+    }
+   ]
   },
   "fact_detail": {
    "gt_total": 54,
-   "pred_total": 32,
-   "matched": 48,
-   "partial": 1,
-   "missing": 5,
+   "pred_total": 31,
+   "matched": 33,
+   "partial": 7,
+   "missing": 10,
    "hallucinated": 2
   },
-  "fact_recall_efficiency": 1.2009,
   "section_balance": 1.0
  }
 }

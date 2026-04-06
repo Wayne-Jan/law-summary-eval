@@ -136,16 +136,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7647,
-  "fact_recall": 0.77,
+  "fact_recall": 0.7684,
   "fact_precision": 1.0,
-  "fact_f1": 0.87,
+  "fact_f1": 0.869,
   "quality_overall": 4.8429,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0,
-  "uncited_rate": 0.167,
+  "uncited_rate": 0.0625,
   "faithfulness_combined": {
-   "score": 0.8998,
-   "citation_fidelity": 0.833,
+   "score": 0.9625,
+   "citation_fidelity": 0.9375,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -153,62 +153,204 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": "GOOD",
   "numerical_fidelity": null,
-  "weighted_recall": 0.9314,
+  "weighted_recall": 0.9093,
   "missing_severity": {
-   "critical": 1,
-   "important": 4,
-   "minor": 17,
+   "critical": 0,
+   "important": 7,
+   "minor": 23,
    "details": [
     {
-     "gt_claim_id": 95,
-     "severity": "critical",
-     "text": "本案關鍵在於被告是否因疏失而誤判、或未立即檢查，且其誤判及未檢查是否為造成本件新生兒死亡之原因",
-     "reason": "涉及法院論證結構的關鍵問題：誤判與未檢查是否為死因，此為判決結論的重要前提"
+     "gt_claim_id": 19,
+     "severity": "minor",
+     "text": "事實段落與理由段落原文均未提及具體法條『刑法第276條第2項』，僅泛指『檢察官起訴』及『刑法過失致死罪責』，屬程序性法條引用細節遺漏，不影響案情核心理解",
+     "reason": "事實段落與理由段落原文均未提及具體法條『刑法第276條第2項』，僅泛指『檢察官起訴』及『刑法過失致死罪責』，屬程序性法條引用細節遺漏，不影響案情核心理解"
     },
     {
-     "gt_claim_id": 51,
-     "severity": "important",
-     "text": "當時送G醫院後,G醫院也懷疑是嵌入性脫腸",
-     "reason": "涉及法院『不能僅因被告誤判即認有過失』之核心論證基礎，即連G醫院也無法立即正確診斷"
+     "gt_claim_id": 40,
+     "severity": "minor",
+     "text": "摘要未提及媽媽住院期間觀察小孩之細節，此為背景性輔助事實，非核心辯護要點",
+     "reason": "摘要未提及媽媽住院期間觀察小孩之細節，此為背景性輔助事實，非核心辯護要點"
     },
     {
-     "gt_claim_id": 52,
+     "gt_claim_id": 44,
      "severity": "important",
-     "text": "第二天照超音波後才發現是脾臟出血而不是嵌入性脫腸",
-     "reason": "涉及法院論證連設備精良的G醫院都需超音波才能確診，被告受限於診所設備不能認有過失"
+     "text": "「24小時後才發現」之時間特性為重要醫學辯護論點，摘要雖提及「一至三天」但未明確對應24小時延遲特性",
+     "reason": "「24小時後才發現」之時間特性為重要醫學辯護論點，摘要雖提及「一至三天」但未明確對應24小時延遲特性"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "「不知錯在那裡」為情緣性表述，非關鍵辯護理由，不影響案情理解",
+     "reason": "「不知錯在那裡」為情緣性表述，非關鍵辯護理由，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "important",
+     "text": "「鼠蹊部出血有很多種原因」涉及鑑別診斷之辯護論點，摘要僅陳述誤判結果而未涵蓋多元原因之辯解",
+     "reason": "「鼠蹊部出血有很多種原因」涉及鑑別診斷之辯護論點，摘要僅陳述誤判結果而未涵蓋多元原因之辯解"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "minor",
+     "text": "檢察官上訴狀況屬於判決後程序性資訊，生成摘要僅記載判決宣告無罪及法條依據，未提及後續上訴程序，不影響案情實體理解",
+     "reason": "檢察官上訴狀況屬於判決後程序性資訊，生成摘要僅記載判決宣告無罪及法條依據，未提及後續上訴程序，不影響案情實體理解"
+    },
+    {
+     "gt_claim_id": 65,
+     "severity": "minor",
+     "text": "判決確定狀態屬於程序性結論，生成摘要未記載此不影響對判決主文及理由的理解",
+     "reason": "判決確定狀態屬於程序性結論，生成摘要未記載此不影響對判決主文及理由的理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "severity": "minor",
+     "text": "護士身體無外傷證詞為輔助性證據，不影響主要案情理解",
+     "reason": "護士身體無外傷證詞為輔助性證據，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 74,
+     "severity": "minor",
+     "text": "G醫院醫師無法判斷外傷之證詞為輔助性細節",
+     "reason": "G醫院醫師無法判斷外傷之證詞為輔助性細節"
+    },
+    {
+     "gt_claim_id": 75,
+     "severity": "minor",
+     "text": "G醫�院病歷記載為背景資訊",
+     "reason": "G醫�院病歷記載為背景資訊"
+    },
+    {
+     "gt_claim_id": 76,
+     "severity": "minor",
+     "text": "不能證明外傷致死之推論已由「脾臟破裂原因非可歸責於被告」涵蓋",
+     "reason": "不能證明外傷致死之推論已由「脾臟破裂原因非可歸責於被告」涵蓋"
+    },
+    {
+     "gt_claim_id": 77,
+     "severity": "minor",
+     "text": "G醫院出院診斷具體內容為醫療細節",
+     "reason": "G醫院出院診斷具體內容為醫療細節"
+    },
+    {
+     "gt_claim_id": 79,
+     "severity": "minor",
+     "text": "瘀青長度細節為證人證詞次要描述",
+     "reason": "瘀青長度細節為證人證詞次要描述"
+    },
+    {
+     "gt_claim_id": 80,
+     "severity": "minor",
+     "text": "瘀青外觀細節為證人證詞次要描述",
+     "reason": "瘀青外觀細節為證人證詞次要描述"
+    },
+    {
+     "gt_claim_id": 82,
+     "severity": "minor",
+     "text": "G醫院醫師值班時間證詞為次要細節",
+     "reason": "G醫院醫師值班時間證詞為次要細節"
+    },
+    {
+     "gt_claim_id": 83,
+     "severity": "minor",
+     "text": "G醫院醫師觀察症狀已由「腹部有內出血」等事實涵蓋",
+     "reason": "G醫院醫師觀察症狀已由「腹部有內出血」等事實涵蓋"
+    },
+    {
+     "gt_claim_id": 84,
+     "severity": "minor",
+     "text": "血紅素數值2.6gm/dL已由「缺血性休克」等診斷涵蓋",
+     "reason": "血紅素數值2.6gm/dL已由「缺血性休克」等診斷涵蓋"
+    },
+    {
+     "gt_claim_id": 85,
+     "severity": "minor",
+     "text": "缺血性休克診斷已由 Claim 9 涵蓋",
+     "reason": "缺血性休克診斷已由 Claim 9 涵蓋"
+    },
+    {
+     "gt_claim_id": 86,
+     "severity": "minor",
+     "text": "治療細節（生理食鹽水、輸血）為醫療過程次要描述",
+     "reason": "治療細節（生理食鹽水、輸血）為醫療過程次要描述"
+    },
+    {
+     "gt_claim_id": 87,
+     "severity": "minor",
+     "text": "後續血紅素數值為醫療過程細節",
+     "reason": "後續血紅素數值為醫療過程細節"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "minor",
+     "text": "會診時間已由「次日八、九點」涵蓋",
+     "reason": "會診時間已由「次日八、九點」涵蓋"
+    },
+    {
+     "gt_claim_id": 89,
+     "severity": "minor",
+     "text": "不敢開刀原因已由「生命跡象不穩定而無法開刀」涵蓋",
+     "reason": "不敢開刀原因已由「生命跡象不穩定而無法開刀」涵蓋"
+    },
+    {
+     "gt_claim_id": 107,
+     "severity": "minor",
+     "text": "J診所診斷證明書記載為程序性文件細節",
+     "reason": "J診所診斷證明書記載為程序性文件細節"
+    },
+    {
+     "gt_claim_id": 111,
+     "severity": "minor",
+     "text": "25小時與事實不符之批評為論證細節",
+     "reason": "25小時與事實不符之批評為論證細節"
+    },
+    {
+     "gt_claim_id": 126,
+     "severity": "minor",
+     "text": "嬰兒在G醫院死亡已由「翌日即3月2日15時40分許死亡」涵蓋",
+     "reason": "嬰兒在G醫院死亡已由「翌日即3月2日15時40分許死亡」涵蓋"
+    },
+    {
+     "gt_claim_id": 127,
+     "severity": "important",
+     "text": "G醫院無法有效救治之論述為法院重要推論依據，影響過失認定",
+     "reason": "G醫院無法有效救治之論述為法院重要推論依據，影響過失認定"
     },
     {
      "gt_claim_id": 128,
      "severity": "important",
-     "text": "G醫院之設備、人力已屬全國醫療界之冠，仍不免於死",
-     "reason": "此為法院重要論證：連設備最好的醫院都無法救活，不能歸責於診所醫師"
+     "text": "G醫院設備人力冠全國之比較為法院重要推論基礎",
+     "reason": "G醫院設備人力冠全國之比較為法院重要推論基礎"
+    },
+    {
+     "gt_claim_id": 129,
+     "severity": "important",
+     "text": "J診所與G醫院比較為法院過失認定之重要論據",
+     "reason": "J診所與G醫院比較為法院過失認定之重要論據"
+    },
+    {
+     "gt_claim_id": 130,
+     "severity": "important",
+     "text": "留置J診所成效未見樂觀之假設論述為因果關係判定重要依據",
+     "reason": "留置J診所成效未見樂觀之假設論述為因果關係判定重要依據"
     },
     {
      "gt_claim_id": 131,
      "severity": "important",
-     "text": "上開鑑定書謂被告判斷失真致嬰兒死亡，其未考慮二者間之因果關係即下結論，亦嫌速斷",
-     "reason": "法院對鑑定報告的核心批評：未考慮因果關係即認定被告過失致死，此為判決重要論理基礎"
+     "text": "法院對鑑定書速斷之批評為鑑定意見採信與否之關鍵論點",
+     "reason": "法院對鑑定書速斷之批評為鑑定意見採信與否之關鍵論點"
     }
    ]
-  },
-  "information_density": {
-   "score": 3.7512,
-   "quality_overall": 4.8429,
-   "gt_length_ratio": 0.5422,
-   "length_penalty": 0.7746,
-   "zone": "too_short"
   },
   "fact_detail": {
    "gt_total": 136,
    "pred_total": 96,
-   "matched": 97,
-   "partial": 17,
-   "missing": 22,
+   "matched": 103,
+   "partial": 3,
+   "missing": 30,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 1.4201,
   "section_balance": 1.0
  }
 }

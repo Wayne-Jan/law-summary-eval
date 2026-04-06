@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -141,5 +142,73 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.5135,
+  "fact_recall": 0.935,
+  "fact_precision": 0.9613,
+  "fact_f1": 0.9479,
+  "quality_overall": 4.5179,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0014,
+  "uncited_rate": 0.019,
+  "faithfulness_combined": {
+   "score": 0.9731,
+   "citation_fidelity": 0.981,
+   "fact_precision": 0.9613,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": 0.976,
+  "weighted_recall": 0.9756,
+  "missing_severity": {
+   "critical": 2,
+   "important": 0,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 51,
+     "severity": "minor",
+     "text": "GT claim 51 係一般性醫學原則陳述：「絕大部分之疾病，尤其是嚴重之疾病，臨床症狀只能使醫師懷疑其為何種病，而不能診斷其為何病」。遍查摘要 defense 段落（含 cross-section），摘要雖提及心電圖診斷限制（Pred claim 43-45 提及「單用一個導程並無法正確判斷」、「需12導程心電圖才能診斷」等），但無法找到與 GT claim 51 語義完全對應之陳述。該原則屬背景性醫學知識，不影響具體案情理解，故標記為 minor。",
+     "reason": "GT claim 51 係一般性醫學原則陳述：「絕大部分之疾病，尤其是嚴重之疾病，臨床症狀只能使醫師懷疑其為何種病，而不能診斷其為何病」。遍查摘要 defense 段落（含 cross-section），摘要雖提及心電圖診斷限制（Pred claim 43-45 提及「單用一個導程並無法正確判斷」、「需12導程心電圖才能診斷」等），但無法找到與 GT claim 51 語義完全對應之陳述。該原則屬背景性醫學知識，不影響具體案情理解，故標記為 minor。"
+    },
+    {
+     "gt_claim_id": 81,
+     "severity": "minor",
+     "text": "心肌梗塞詳細病理機轉（動脈硬化、硬化斑急性變化、冠狀動脈阻塞）屬醫學背景知識，未影響過失認定理解",
+     "reason": "心肌梗塞詳細病理機轉（動脈硬化、硬化斑急性變化、冠狀動脈阻塞）屬醫學背景知識，未影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 82,
+     "severity": "minor",
+     "text": "心肌梗塞急性發作與慢性動脈硬化過程的關係屬醫學背景，非本案核心爭點",
+     "reason": "心肌梗塞急性發作與慢性動脈硬化過程的關係屬醫學背景，非本案核心爭點"
+    },
+    {
+     "gt_claim_id": 106,
+     "severity": "critical",
+     "text": "被告甲有罪判決是核心事實。GT claim 106 明確指出被告甲因業務過失致死罪被判有期徒刑陸月，但預測摘要完全不包含此項有罪判決，反而錯誤記載被告甲無罪。此為嚴重的判決結果錯誤，直接影響案件結論理解。",
+     "reason": "被告甲有罪判決是核心事實。GT claim 106 明確指出被告甲因業務過失致死罪被判有期徒刑陸月，但預測摘要完全不包含此項有罪判決，反而錯誤記載被告甲無罪。此為嚴重的判決結果錯誤，直接影響案件結論理解。"
+    },
+    {
+     "gt_claim_id": 107,
+     "severity": "critical",
+     "text": "被告乙無罪判決是核心事實。GT claim 107 明確指出被告乙無罪，但預測摘要完全不包含此項無罪判決，反而錯誤記載被告乙有罪並處刑。與 GT claim 106 合併觀察，預測摘要有嚴重的被告身分錯置問題。",
+     "reason": "被告乙無罪判決是核心事實。GT claim 107 明確指出被告乙無罪，但預測摘要完全不包含此項無罪判決，反而錯誤記載被告乙有罪並處刑。與 GT claim 106 合併觀察，預測摘要有嚴重的被告身分錯置問題。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 155,
+   "matched": 112,
+   "partial": 6,
+   "missing": 5,
+   "hallucinated": 6
+  },
+  "section_balance": 1.0
+ }
 }

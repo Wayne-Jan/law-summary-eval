@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -153,5 +154,139 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.716,
+  "fact_recall": 0.8077,
+  "fact_precision": 0.9643,
+  "fact_f1": 0.8791,
+  "quality_overall": 4.8809,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0067,
+  "uncited_rate": 0.014,
+  "faithfulness_combined": {
+   "score": 0.9773,
+   "citation_fidelity": 0.986,
+   "fact_precision": 0.9643,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9557,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 57,
+     "severity": "minor",
+     "text": "確認維持 missing：生成摘要確實未提及「第一次鑑定書未盡詳備」之內容，僅聚焦於第二次鑑定書結論。此為辯護方攻擊第一次鑑定妥當性的論點，屬背景性事實，不影響判決結論理解。",
+     "reason": "確認維持 missing：生成摘要確實未提及「第一次鑑定書未盡詳備」之內容，僅聚焦於第二次鑑定書結論。此為辯護方攻擊第一次鑑定妥當性的論點，屬背景性事實，不影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 60,
+     "severity": "minor",
+     "text": "腫瘤類型（後腹腔）為背景資訊，生成摘要提及「腫瘤切除手術」已足，不影響鑑定意見理解",
+     "reason": "腫瘤類型（後腹腔）為背景資訊，生成摘要提及「腫瘤切除手術」已足，不影響鑑定意見理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "minor",
+     "text": "外動脈侵犯及照會心臟專科細節為手術背景，在 facts 段已有涵蓋，opinions 段專注鑑定意見可接受",
+     "reason": "外動脈侵犯及照會心臟專科細節為手術背景，在 facts 段已有涵蓋，opinions 段專注鑑定意見可接受"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "minor",
+     "text": "「第一次手術順利」屬背景敘述，非鑑定意見核心爭點",
+     "reason": "「第一次手術順利」屬背景敘述，非鑑定意見核心爭點"
+    },
+    {
+     "gt_claim_id": 68,
+     "severity": "minor",
+     "text": "麻醉科處置後仍有變化為過程細節，opinions 段已載明時間軸核心判斷（似有延誤之嫌）",
+     "reason": "麻醉科處置後仍有變化為過程細節，opinions 段已載明時間軸核心判斷（似有延誤之嫌）"
+    },
+    {
+     "gt_claim_id": 69,
+     "severity": "minor",
+     "text": "血壓數值 80/40 為醫療細節，生成摘要提及「血壓持續下降」已涵蓋關鍵事實",
+     "reason": "血壓數值 80/40 為醫療細節，生成摘要提及「血壓持續下降」已涵蓋關鍵事實"
+    },
+    {
+     "gt_claim_id": 70,
+     "severity": "minor",
+     "text": "20:00 心跳血壓量不到為時間細節，facts 段已涵蓋該時間點事件",
+     "reason": "20:00 心跳血壓量不到為時間細節，facts 段已涵蓋該時間點事件"
+    },
+    {
+     "gt_claim_id": 71,
+     "severity": "minor",
+     "text": "醫師 A 再度通知為過去式細節，opinions 段聚焦鑑定意見評估而非完整重述",
+     "reason": "醫師 A 再度通知為過去式細節，opinions 段聚焦鑑定意見評估而非完整重述"
+    },
+    {
+     "gt_claim_id": 72,
+     "severity": "important",
+     "text": "「即時放下非急診之病人」為鑑定意見明確要求，涉及醫療責任判斷核心，雖然 74 提及「處置稍嫌不足」但 GT Claim 72 更具體指責應放下非急診病人",
+     "reason": "「即時放下非急診之病人」為鑑定意見明確要求，涉及醫療責任判斷核心，雖然 74 提及「處置稍嫌不足」但 GT Claim 72 更具體指責應放下非急診病人"
+    },
+    {
+     "gt_claim_id": 76,
+     "severity": "minor",
+     "text": "「若正在手術中則取代方式可接受」為條件性補充說明，非本次延誤認定之關鍵",
+     "reason": "「若正在手術中則取代方式可接受」為條件性補充說明，非本次延誤認定之關鍵"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "minor",
+     "text": "護理師僅能輸血維持生命徵兆的具體限制，屬詳細事實描述，不影響判決核心結論理解",
+     "reason": "護理師僅能輸血維持生命徵兆的具體限制，屬詳細事實描述，不影響判決核心結論理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "severity": "minor",
+     "text": "血紅素10.5的具體數值對比，屬細節性醫療數據，摘要已涵蓋血紅素異常的核心概念",
+     "reason": "血紅素10.5的具體數值對比，屬細節性醫療數據，摘要已涵蓋血紅素異常的核心概念"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "輸血與血紅素關係的推理細節，屬論證過程中的輔助說明，不影響過失認定結論",
+     "reason": "輸血與血紅素關係的推理細節，屬論證過程中的輔助說明，不影響過失認定結論"
+    },
+    {
+     "gt_claim_id": 113,
+     "severity": "minor",
+     "text": "94年12月8日自認的具體日期，屬程序性細節，非判決核心理由",
+     "reason": "94年12月8日自認的具體日期，屬程序性細節，非判決核心理由"
+    },
+    {
+     "gt_claim_id": 115,
+     "severity": "important",
+     "text": "「忽視術後護理使手術前功盡棄」是法院論述術後護理重要性的關鍵法理闡述，雖摘要有提及術後護理義務，但遺漏此強化論證",
+     "reason": "「忽視術後護理使手術前功盡棄」是法院論述術後護理重要性的關鍵法理闡述，雖摘要有提及術後護理義務，但遺漏此強化論證"
+    },
+    {
+     "gt_claim_id": 122,
+     "severity": "important",
+     "text": "急病患應送急診而非門診的推理，是法院反駁被告義務衝突抗辯的重要論點，摘要雖提及門診義務衝突，但遺漏此一強化論證",
+     "reason": "急病患應送急診而非門診的推理，是法院反駁被告義務衝突抗辯的重要論點，摘要雖提及門診義務衝突，但遺漏此一強化論證"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 143,
+   "pred_total": 140,
+   "matched": 108,
+   "partial": 15,
+   "missing": 17,
+   "hallucinated": 5
+  },
+  "section_balance": 1.0
+ }
 }

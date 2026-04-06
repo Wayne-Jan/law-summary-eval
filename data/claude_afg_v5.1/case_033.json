@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -122,5 +122,79 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8,
+  "fact_recall": 0.8897,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9416,
+  "quality_overall": 4.869,
+  "citation_accuracy": 0.9706,
+  "citation_support_score": 0.9706,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9824,
+   "citation_fidelity": 0.9706,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9608,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "severity": "important",
+     "text": "生成摘要在 facts section 中僅提到『導致併發症』，未明確提及『腎功能及呼吸功能衰竭』。雖然 opinions section 有所覆蓋，但 facts section 描述病史演變時遺漏此關鍵器官衰竭資訊，影響病程理解完整性。雖已標註為 partial，但 GT 38 的核心症狀細節（重複性抽痙、呼吸速率增加）在跨 section 合併後仍未完整對應。",
+     "reason": "生成摘要在 facts section 中僅提到『導致併發症』，未明確提及『腎功能及呼吸功能衰竭』。雖然 opinions section 有所覆蓋，但 facts section 描述病史演變時遺漏此關鍵器官衰竭資訊，影響病程理解完整性。雖已標註為 partial，但 GT 38 的核心症狀細節（重複性抽痙、呼吸速率增加）在跨 section 合併後仍未完整對應。"
+    },
+    {
+     "gt_claim_id": 44,
+     "severity": "important",
+     "text": "生成摘要雖提及『氣管插管等待至6月21日呼吸停止後始執行』的時間性描述，但未明確涵蓋『重新氣管插管治療雖然有延遲』這一評價性陳述。此乃第二次鑑定的重要結論，影響對鑑定意見的理解。",
+     "reason": "生成摘要雖提及『氣管插管等待至6月21日呼吸停止後始執行』的時間性描述，但未明確涵蓋『重新氣管插管治療雖然有延遲』這一評價性陳述。此乃第二次鑑定的重要結論，影響對鑑定意見的理解。"
+    },
+    {
+     "gt_claim_id": 48,
+     "severity": "minor",
+     "text": "判決日期（民國94年02月21日）未被摘要提及，屬程序性背景資訊，不影響案情實體理解。",
+     "reason": "判決日期（民國94年02月21日）未被摘要提及，屬程序性背景資訊，不影響案情實體理解。"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "檢察官於法定上訴期間未上訴之程序事實未被摘要提及，屬判決確定程序之背景資訊。",
+     "reason": "檢察官於法定上訴期間未上訴之程序事實未被摘要提及，屬判決確定程序之背景資訊。"
+    },
+    {
+     "gt_claim_id": 51,
+     "severity": "minor",
+     "text": "本案判決即確定之程序狀態未被摘要提及，屬判決效力之背景資訊。",
+     "reason": "本案判決即確定之程序狀態未被摘要提及，屬判決效力之背景資訊。"
+    },
+    {
+     "gt_claim_id": 52,
+     "severity": "minor",
+     "text": "生成摘要雖提及公訴人指控（claim 19），但未明確說明係以『病患L家屬於偵查中之指述』為論罪依據。雖略有遺漏，但此屬證據來源細節，不影響對起訴要旨的理解。",
+     "reason": "生成摘要雖提及公訴人指控（claim 19），但未明確說明係以『病患L家屬於偵查中之指述』為論罪依據。雖略有遺漏，但此屬證據來源細節，不影響對起訴要旨的理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 68,
+   "pred_total": 76,
+   "matched": 59,
+   "partial": 3,
+   "missing": 6,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

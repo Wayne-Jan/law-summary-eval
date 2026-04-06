@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -167,5 +168,79 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7206,
+  "fact_recall": 0.8876,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9405,
+  "quality_overall": 4.6405,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0052,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": null,
+  "weighted_recall": 0.9888,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 18,
+     "severity": "minor",
+     "text": "藥師核對處方後交付藥物的細節流程，僅 section_01_facts 提及藥師建議返回診所，未明確描述交付過程，確認維持 missing",
+     "reason": "藥師核對處方後交付藥物的細節流程，僅 section_01_facts 提及藥師建議返回診所，未明確描述交付過程，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 26,
+     "severity": "minor",
+     "text": "救護人員出勤具體時間（5時47分）未在任何 section 明確記載，section_01_facts 僅記載送達醫院時間（6時1分），為次要時間點",
+     "reason": "救護人員出勤具體時間（5時47分）未在任何 section 明確記載，section_01_facts 僅記載送達醫院時間（6時1分），為次要時間點"
+    },
+    {
+     "gt_claim_id": 27,
+     "severity": "minor",
+     "text": "救護人員抵達住處具體時間（5時51分）未明確記載，section_01_facts 僅提及5時46分呼叫救護車，為次要時間點",
+     "reason": "救護人員抵達住處具體時間（5時51分）未明確記載，section_01_facts 僅提及5時46分呼叫救護車，為次要時間點"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "minor",
+     "text": "Inderal 詳細臨床用途列表（含親鉻細胞瘤等），section_05_reasoning 僅簡述『治療狹心症、不整律、原發性及腎性高血壓、偏頭痛等』，詳細適應症為次要醫學細節",
+     "reason": "Inderal 詳細臨床用途列表（含親鉻細胞瘤等），section_05_reasoning 僅簡述『治療狹心症、不整律、原發性及腎性高血壓、偏頭痛等』，詳細適應症為次要醫學細節"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "與 GT 18 相同內容，藥師核對交付細節未完整涵蓋",
+     "reason": "與 GT 18 相同內容，藥師核對交付細節未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 56,
+     "severity": "minor",
+     "text": "病歷紀錄之第三人調取功能屬程序性/法理說明，非本案核心事實",
+     "reason": "病歷紀錄之第三人調取功能屬程序性/法理說明，非本案核心事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 178,
+   "pred_total": 171,
+   "matched": 157,
+   "partial": 2,
+   "missing": 19,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

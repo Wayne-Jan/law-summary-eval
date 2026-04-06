@@ -132,17 +132,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7445,
-  "fact_recall": 0.737,
-  "fact_precision": 0.688,
-  "fact_f1": 0.712,
+  "fact_recall": 0.7719,
+  "fact_precision": 0.7204,
+  "fact_f1": 0.7453,
   "quality_overall": 4.7833,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0,
-  "uncited_rate": 0.075,
+  "uncited_rate": 0.043,
   "faithfulness_combined": {
-   "score": 0.8302,
-   "citation_fidelity": 0.925,
-   "fact_precision": 0.688,
+   "score": 0.8624,
+   "citation_fidelity": 0.957,
+   "fact_precision": 0.7204,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -151,72 +151,100 @@
   "compliance": 5,
   "cross_validation": "GOOD",
   "numerical_fidelity": 0.958,
-  "weighted_recall": 0.9795,
+  "weighted_recall": 0.9591,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 7,
+   "important": 1,
+   "minor": 12,
    "details": [
     {
-     "gt_claim_id": 55,
+     "gt_claim_id": 42,
      "severity": "minor",
-     "text": "民間救護車正外派出勤，要被告暫候回音",
-     "reason": "救護車求援細節，不影響判決結論理解"
+     "text": "T醫院超音波檢查結果為被告辯護細節，雖有助於理解爭點，但不影響判決核心結論（法院認定死因為子宮頸裂傷出血）",
+     "reason": "T醫院超音波檢查結果為被告辯護細節，雖有助於理解爭點，但不影響判決核心結論（法院認定死因為子宮頸裂傷出血）"
     },
     {
-     "gt_claim_id": 58,
+     "gt_claim_id": 43,
      "severity": "minor",
-     "text": "等待二、三十分鐘仍不見救護車到來，只好再次向一一九確認",
-     "reason": "等待救護車細節，不影響判決結論理解"
+     "text": "T醫院病歷無裂傷記載為被告辯護論點，屬爭議細節，不影響死因認定",
+     "reason": "T醫院病歷無裂傷記載為被告辯護論點，屬爭議細節，不影響死因認定"
     },
     {
-     "gt_claim_id": 97,
+     "gt_claim_id": 44,
      "severity": "minor",
-     "text": "醫師懷疑合併DIC",
-     "reason": "已在其他claims中部分涵蓋"
+     "text": "『益證是項傷勢之難以診斷』為被告辯護總結，pred section_02_defense.txt 已有『診斷上具極高難度』等相關辯稱",
+     "reason": "『益證是項傷勢之難以診斷』為被告辯護總結，pred section_02_defense.txt 已有『診斷上具極高難度』等相關辯稱"
     },
     {
-     "gt_claim_id": 91,
+     "gt_claim_id": 45,
      "severity": "minor",
-     "text": "臺灣新北地方法院於民國91年07月31日作出判決（年份有誤）",
-     "reason": "程序性事實，pred 的89年正確"
+     "text": "『病患病情變化快速，要求被告於短短一小時內為正確診斷，期待不能』為被告辯護論點，pred section_02_defense.txt 有類似時間壓力描述",
+     "reason": "『病患病情變化快速，要求被告於短短一小時內為正確診斷，期待不能』為被告辯護論點，pred section_02_defense.txt 有類似時間壓力描述"
     },
     {
-     "gt_claim_id": 38,
+     "gt_claim_id": 52,
      "severity": "minor",
-     "text": "本案裂傷係往子宮體方向延伸，從陰道方向難以看到",
-     "reason": "已在 pred_claim_26 中涵蓋"
+     "text": "『被告甲已依一般婦產科醫師可能踐行之醫療常規』為法律標準論述，pred claims 中以『醫療過程均按照程序進行』(pred claim 31) 表達",
+     "reason": "『被告甲已依一般婦產科醫師可能踐行之醫療常規』為法律標準論述，pred claims 中以『醫療過程均按照程序進行』(pred claim 31) 表達"
     },
     {
-     "gt_claim_id": 32,
+     "gt_claim_id": 57,
      "severity": "minor",
-     "text": "當時產婦H狀況均甚良好，僅說腹痛",
-     "reason": "被告辯稱細節"
+     "text": "『一一九告知臺北縣以外縣市不支援』為救護車調度細節，pred section_02_defense.txt 已涵蓋『119告以不支援一般醫療院所』",
+     "reason": "『一一九告知臺北縣以外縣市不支援』為救護車調度細節，pred section_02_defense.txt 已涵蓋『119告以不支援一般醫療院所』"
     },
     {
-     "gt_claim_id": 33,
+     "gt_claim_id": 59,
      "severity": "minor",
-     "text": "被告甲施予子宮按摩後送入病房",
-     "reason": "治療程序細節"
+     "text": "『一一九告以：已經派出』為調度過程細節，pred section_02_defense.txt 有『等待20至30分鐘』暗示調度過程",
+     "reason": "『一一九告以：已經派出』為調度過程細節，pred section_02_defense.txt 有『等待20至30分鐘』暗示調度過程"
+    },
+    {
+     "gt_claim_id": 66,
+     "severity": "minor",
+     "text": "『T醫院之診斷證明書與實際病歷資料所載不盡相符』為被告質疑證據細節，屬程序性爭點",
+     "reason": "『T醫院之診斷證明書與實際病歷資料所載不盡相符』為被告質疑證據細節，屬程序性爭點"
+    },
+    {
+     "gt_claim_id": 68,
+     "severity": "minor",
+     "text": "『當時若施以緊急剖腹手術，非毫無挽救生命之機會』為被告假設性論述，與法院最終認定無直接關係",
+     "reason": "『當時若施以緊急剖腹手術，非毫無挽救生命之機會』為被告假設性論述，與法院最終認定無直接關係"
+    },
+    {
+     "gt_claim_id": 89,
+     "severity": "minor",
+     "text": "『由超音波片判斷，本件產婦H腹腔出血量應不多』為鑑定細節，pred section_03_opinions.txt 已涵蓋解剖死因鑑定",
+     "reason": "『由超音波片判斷，本件產婦H腹腔出血量應不多』為鑑定細節，pred section_03_opinions.txt 已涵蓋解剖死因鑑定"
+    },
+    {
+     "gt_claim_id": 90,
+     "severity": "minor",
+     "text": "『後腹腔是否有血液積聚，限於超音波穿透力不足』為技術細節，不影響出血致死的核心結論",
+     "reason": "『後腹腔是否有血液積聚，限於超音波穿透力不足』為技術細節，不影響出血致死的核心結論"
+    },
+    {
+     "gt_claim_id": 103,
+     "severity": "minor",
+     "text": "『本例產婦H嗜睡、惡露量持續增加、血液有不凝，均係羊水栓塞之臨床表徵』pred section_03_opinions.txt 有提及醫師懷疑羊水栓塞，但 GT claim 103 是法院論述病徵重疊的特殊性。此為醫學論證細節。",
+     "reason": "『本例產婦H嗜睡、惡露量持續增加、血液有不凝，均係羊水栓塞之臨床表徵』pred section_03_opinions.txt 有提及醫師懷疑羊水栓塞，但 GT claim 103 是法院論述病徵重疊的特殊性。此為醫學論證細節。"
+    },
+    {
+     "gt_claim_id": 104,
+     "severity": "important",
+     "text": "『病徵重疊或可能誤診，難以避免，固不論』是法院對於誤診可能性的法律判斷，屬重要法律論證，應予涵蓋",
+     "reason": "『病徵重疊或可能誤診，難以避免，固不論』是法院對於誤診可能性的法律判斷，屬重要法律論證，應予涵蓋"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.7833,
-   "quality_overall": 4.7833,
-   "gt_length_ratio": 0.9578,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 114,
    "pred_total": 93,
-   "matched": 73,
-   "partial": 21,
-   "missing": 20,
-   "hallucinated": 29
+   "matched": 82,
+   "partial": 12,
+   "missing": 13,
+   "hallucinated": 26
   },
-  "fact_recall_efficiency": 0.7695,
   "section_balance": 1.0
  }
 }

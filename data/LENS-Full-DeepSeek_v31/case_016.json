@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -136,17 +136,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.9014,
-  "fact_recall": 0.8673,
-  "fact_precision": 1.0,
-  "fact_f1": 0.9289,
+  "fact_recall": 0.8469,
+  "fact_precision": 0.9722,
+  "fact_f1": 0.9053,
   "quality_overall": 4.5,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9912,
-  "uncited_rate": 0.111,
+  "uncited_rate": 0.065,
   "faithfulness_combined": {
-   "score": 0.9334,
-   "citation_fidelity": 0.889,
-   "fact_precision": 1.0,
+   "score": 0.9499,
+   "citation_fidelity": 0.935,
+   "fact_precision": 0.9722,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -155,96 +155,94 @@
   "compliance": 2,
   "cross_validation": "GOOD",
   "numerical_fidelity": 0.962,
-  "weighted_recall": 0.9558,
+  "weighted_recall": 0.9592,
   "missing_severity": {
-   "critical": 1,
+   "critical": 0,
    "important": 0,
-   "minor": 10,
+   "minor": 12,
    "details": [
-    {
-     "gt_claim_id": 69,
-     "severity": "critical",
-     "text": "臺北地方法院於民國91年07月15日作成判決",
-     "reason": "判決日期為核心事實，但GT可能標示錯誤（案號為86年），且生成摘要完全未提及判決日期"
-    },
     {
      "gt_claim_id": 57,
      "severity": "minor",
-     "text": "病患Y於S醫院就醫時，係腸胃科醫師主治",
-     "reason": "輔助性資訊，不影響核心案情理解"
+     "text": "病患於S醫院就醫時主治醫師類型（腸胃科醫師）為背景性事實，pred雖未明確提及腸胃科醫師，但已涵蓋A醫院診療過程，不影響案情理解",
+     "reason": "病患於S醫院就醫時主治醫師類型（腸胃科醫師）為背景性事實，pred雖未明確提及腸胃科醫師，但已涵蓋A醫院診療過程，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "當時診斷為上腸胃道出血為背景性醫療細節，pred在reasoning段已涵蓋『上消化道出血』的相關內容，不影響判決結論理解",
+     "reason": "當時診斷為上腸胃道出血為背景性醫療細節，pred在reasoning段已涵蓋『上消化道出血』的相關內容，不影響判決結論理解"
     },
     {
      "gt_claim_id": 59,
      "severity": "minor",
-     "text": "三月二十五日作胃鏡，其結果為只見有一些淺的潰瘍",
-     "reason": "具體檢查細節，非關鍵事實"
-    },
-    {
-     "gt_claim_id": 60,
-     "severity": "minor",
-     "text": "三月二十六日所作之電腦斷層，發現腹腔內有血塊及氣體",
-     "reason": "僅血塊部分缺失，氣體已有提及"
+     "text": "三月二十五日胃鏡結果為細節性醫療記錄，不影響死因及過失認定等核心判決",
+     "reason": "三月二十五日胃鏡結果為細節性醫療記錄，不影響死因及過失認定等核心判決"
     },
     {
      "gt_claim_id": 61,
      "severity": "minor",
-     "text": "立即會診一般外科及整型外科",
-     "reason": "程序性細節"
+     "text": "會診一般外科及整型外科為S醫院內部處置流程，屬程序性事實，不影響因果關係及過失認定",
+     "reason": "會診一般外科及整型外科為S醫院內部處置流程，屬程序性事實，不影響因果關係及過失認定"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "minor",
+     "text": "三月二十七日緊急施行剖腹探查為細節性時間描述，pred claim 48已提及『同月二十七日A醫院為病患X作剖腹手術』，時間點已涵蓋",
+     "reason": "三月二十七日緊急施行剖腹探查為細節性時間描述，pred claim 48已提及『同月二十七日A醫院為病患X作剖腹手術』，時間點已涵蓋"
     },
     {
      "gt_claim_id": 63,
      "severity": "minor",
-     "text": "這些過程都是積極且適當的處置",
-     "reason": "評價性描述，核心事實已涵蓋"
+     "text": "對S醫院處置的正面評價（積極且適當）為背景性評價，pred claim 96已認定『A醫院未懷疑腸穿孔合理』，核心評價已涵蓋",
+     "reason": "對S醫院處置的正面評價（積極且適當）為背景性評價，pred claim 96已認定『A醫院未懷疑腸穿孔合理』，核心評價已涵蓋"
     },
     {
      "gt_claim_id": 64,
      "severity": "minor",
-     "text": "主要因從未見過會是小腸穿孔導致皮下發炎及敗血症",
-     "reason": "醫療文獻背景說明"
+     "text": "病因說明（小腸穿孔導致皮下發炎及敗血症）已涵蓋於pred claim 71的『腹壁壞死性筋膜炎併敗血性休克、小腸穿孔併腹膜炎』描述中",
+     "reason": "病因說明（小腸穿孔導致皮下發炎及敗血症）已涵蓋於pred claim 71的『腹壁壞死性筋膜炎併敗血性休克、小腸穿孔併腹膜炎』描述中"
     },
     {
      "gt_claim_id": 65,
      "severity": "minor",
-     "text": "三月二十日手術所造的穿孔",
-     "reason": "穿孔原因已於claims_71說明"
+     "text": "三月二十日手術所造的穿孔時間點已間接涵蓋於pred claim 71的因果關係描述中（抽脂手術造成小腸穿孔），不影響死因認定",
+     "reason": "三月二十日手術所造的穿孔時間點已間接涵蓋於pred claim 71的因果關係描述中（抽脂手術造成小腸穿孔），不影響死因認定"
     },
     {
      "gt_claim_id": 66,
      "severity": "minor",
-     "text": "至三月二十四日轉至S醫院時，已有四天之時間",
-     "reason": "時間間隔細節"
+     "text": "穿孔至轉院間的時間長度（四天）為背景性細節，pred claim 98已涵蓋『縱使立刻發現...亦不一定能挽救生命』的預後判斷，時間因素已間接考量",
+     "reason": "穿孔至轉院間的時間長度（四天）為背景性細節，pred claim 98已涵蓋『縱使立刻發現...亦不一定能挽救生命』的預後判斷，時間因素已間接考量"
+    },
+    {
+     "gt_claim_id": 69,
+     "severity": "minor",
+     "text": "判決日期（民國91年07月15日）為程序性事實，pred雖未提及確切日期但已涵蓋判決主文內容，不影響判決理解",
+     "reason": "判決日期（民國91年07月15日）為程序性事實，pred雖未提及確切日期但已涵蓋判決主文內容，不影響判決理解"
     },
     {
      "gt_claim_id": 73,
      "severity": "minor",
-     "text": "被告、自訴人於法定上訴期間未上訴",
-     "reason": "程序性事實"
+     "text": "「雙方於法定上訴期間未上訴」為程序性事實，屬程序完結狀態，pred雖未提及但不影響判決內容理解",
+     "reason": "「雙方於法定上訴期間未上訴」為程序性事實，屬程序完結狀態，pred雖未提及但不影響判決內容理解"
     },
     {
      "gt_claim_id": 74,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序性結果"
+     "text": "『本案判決即確定』為程序性事實，與GT_73為同一程序狀態的不同表述，不影響判決理解",
+     "reason": "『本案判決即確定』為程序性事實，與GT_73為同一程序狀態的不同表述，不影響判決理解"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.5,
-   "quality_overall": 4.5,
-   "gt_length_ratio": 1.1127,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 98,
    "pred_total": 108,
-   "matched": 79,
-   "partial": 12,
-   "missing": 7,
-   "hallucinated": 0
+   "matched": 80,
+   "partial": 6,
+   "missing": 12,
+   "hallucinated": 3
   },
-  "fact_recall_efficiency": 0.7795,
   "section_balance": 1.0
  }
 }

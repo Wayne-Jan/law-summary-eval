@@ -138,9 +138,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7091,
-  "fact_recall": 0.82,
+  "fact_recall": 0.9111,
   "fact_precision": 1.0,
-  "fact_f1": 0.9,
+  "fact_f1": 0.9535,
   "quality_overall": 4.4524,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0091,
@@ -155,44 +155,48 @@
    }
   },
   "compliance": 2,
-  "cross_validation": "GOOD",
+  "cross_validation": "ACCEPTABLE",
   "numerical_fidelity": 0.962,
-  "weighted_recall": 0.9889,
+  "weighted_recall": 0.9778,
   "missing_severity": {
-   "critical": 0,
+   "critical": 1,
    "important": 0,
    "minor": 3,
    "details": [
     {
-     "gt_claim_id": 19,
+     "gt_claim_id": 14,
      "severity": "minor",
-     "text": "被告三人對其母之死亡，亦應負過失業務過失致死罪責",
-     "reason": "自訴人法律主張，非法院認定之事實或結論"
+     "text": "被告乙、丙為該院醫師的身分陳述，在其他 section 未明確提及，屬背景性事實",
+     "reason": "被告乙、丙為該院醫師的身分陳述，在其他 section 未明確提及，屬背景性事實"
     },
     {
-     "gt_claim_id": 25,
+     "gt_claim_id": 33,
      "severity": "minor",
-     "text": "被告乙、丙、丁否認有拒絕轉診之舉",
-     "reason": "被告答辯細節，雖未明確寫出但摘要提到「業經否認」"
+     "text": "雖然摘要中詳細分析贊成論文與反對論文（pred claims 34-35），但缺少「醫界或有贊成者，然反對聲音亦不小」此一概括性醫界共識描述。此為背景性陳述，詳細論文分析已涵蓋相關內容，不影響主要案情理解。",
+     "reason": "雖然摘要中詳細分析贊成論文與反對論文（pred claims 34-35），但缺少「醫界或有贊成者，然反對聲音亦不小」此一概括性醫界共識描述。此為背景性陳述，詳細論文分析已涵蓋相關內容，不影響主要案情理解。"
+    },
+    {
+     "gt_claim_id": 40,
+     "severity": "critical",
+     "text": "GT claim 主張參與會診之三位醫師為「被告乙、丙、丁」，但 pred claim 83 記載為「被告丙、被告甲、被告丁」。雖然摘要確實提及「三位醫師共同會診所採取之急救措施並無不當」，但參與者身份與 GT 不符（乙 vs 甲）。被告身份屬關鍵事實，直接影響無罪判決對象之理解。",
+     "reason": "GT claim 主張參與會診之三位醫師為「被告乙、丙、丁」，但 pred claim 83 記載為「被告丙、被告甲、被告丁」。雖然摘要確實提及「三位醫師共同會診所採取之急救措施並無不當」，但參與者身份與 GT 不符（乙 vs 甲）。被告身份屬關鍵事實，直接影響無罪判決對象之理解。"
     },
     {
      "gt_claim_id": 75,
      "severity": "minor",
-     "text": "被告甲猶否認其無過失，自無可採",
-     "reason": "法院評價用語差異，核心事實（否認過失被駁回）已涵蓋"
+     "text": "法院對被告甲否認過失主張之否定性認定「猶否認其無過失，自無可採」未明確見於摘要。但摘要於 claim 71 已明確認定「被告甲過失致人於死之犯行，事證明確」，達到相同法律效果。此為程序性表述差異，不影響判決結論理解。",
+     "reason": "法院對被告甲否認過失主張之否定性認定「猶否認其無過失，自無可採」未明確見於摘要。但摘要於 claim 71 已明確認定「被告甲過失致人於死之犯行，事證明確」，達到相同法律效果。此為程序性表述差異，不影響判決結論理解。"
     }
    ]
   },
-  "information_density": null,
   "fact_detail": {
    "gt_total": 90,
    "pred_total": 93,
-   "matched": 71,
-   "partial": 6,
-   "missing": 9,
+   "matched": 81,
+   "partial": 2,
+   "missing": 4,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": null,
   "section_balance": 1.0
  }
 }

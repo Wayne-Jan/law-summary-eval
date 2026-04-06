@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -139,5 +140,127 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7647,
+  "fact_recall": 0.9024,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9487,
+  "quality_overall": 4.7381,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0043,
+  "faithfulness_combined": {
+   "score": 0.9974,
+   "citation_fidelity": 0.9957,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9675,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 12,
+   "details": [
+    {
+     "gt_claim_id": 84,
+     "severity": "minor",
+     "text": "Section_03_opinions.txt 未提及「只要有做溶脂手術，不論抽多或少，就有機會造成死亡」之普遍性論述，此屬文獻中風險說明，非核心鑑定意見",
+     "reason": "Section_03_opinions.txt 未提及「只要有做溶脂手術，不論抽多或少，就有機會造成死亡」之普遍性論述，此屬文獻中風險說明，非核心鑑定意見"
+    },
+    {
+     "gt_claim_id": 87,
+     "severity": "minor",
+     "text": "Section_03_opinions.txt 未明確提及肺栓塞重量閾值（800→1200→1500gm）之詳細數據，雖 pred claim 72 提及「兩肺重量達正常2倍」、pred claim 61 提及「兩肺共達1,740gm」，但未達 GT 之閾值精確度",
+     "reason": "Section_03_opinions.txt 未明確提及肺栓塞重量閾值（800→1200→1500gm）之詳細數據，雖 pred claim 72 提及「兩肺重量達正常2倍」、pred claim 61 提及「兩肺共達1,740gm」，但未達 GT 之閾值精確度"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "minor",
+     "text": "Section_03_opinions.txt 未明確提及肺栓塞「不容易以時間計算」及「個體狀況不同」之論述，pred claim 75 僅提及「24小時內發生通常沒辦法救回來」，未強調時間計算困難",
+     "reason": "Section_03_opinions.txt 未明確提及肺栓塞「不容易以時間計算」及「個體狀況不同」之論述，pred claim 75 僅提及「24小時內發生通常沒辦法救回來」，未強調時間計算困難"
+    },
+    {
+     "gt_claim_id": 89,
+     "severity": "minor",
+     "text": "Pred claim 75 提及「塞得很多，症狀發生很快」，但未明確論述「量越大則死亡率越高」之量化關係",
+     "reason": "Pred claim 75 提及「塞得很多，症狀發生很快」，但未明確論述「量越大則死亡率越高」之量化關係"
+    },
+    {
+     "gt_claim_id": 90,
+     "severity": "minor",
+     "text": "Section_03_opinions.txt 未明確提及「脂肪栓塞依脂肪流入血管多寡而定」之機制論述",
+     "reason": "Section_03_opinions.txt 未明確提及「脂肪栓塞依脂肪流入血管多寡而定」之機制論述"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "minor",
+     "text": "Pred claim 18 及 claim 64 提及「術後72小時內發生」、pred claim 75 提及「24小時內發生」，但未提及「60%、80%」之具體時間分布數據",
+     "reason": "Pred claim 18 及 claim 64 提及「術後72小時內發生」、pred claim 75 提及「24小時內發生」，但未提及「60%、80%」之具體時間分布數據"
+    },
+    {
+     "gt_claim_id": 92,
+     "severity": "minor",
+     "text": "Pred claim 75 提及「24小時內...表示塞得很多，症狀發生很快」，但 GT 明確論述「發作時間越快=量越大=越容易死亡、一天內發病死亡率最高」之因果鏈，pred 未完整涵蓋",
+     "reason": "Pred claim 75 提及「24小時內...表示塞得很多，症狀發生很快」，但 GT 明確論述「發作時間越快=量越大=越容易死亡、一天內發病死亡率最高」之因果鏈，pred 未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 100,
+     "severity": "important",
+     "text": "雖然摘要提及醫審會鑑定書支持法醫研究所結果（claim 106），但未明確提及醫審會『無法明確判斷』死因的結論，此為關於死因鑑定權威性的重要事實，影響法院採信法醫研究所理由的完整性理解",
+     "reason": "雖然摘要提及醫審會鑑定書支持法醫研究所結果（claim 106），但未明確提及醫審會『無法明確判斷』死因的結論，此為關於死因鑑定權威性的重要事實，影響法院採信法醫研究所理由的完整性理解"
+    },
+    {
+     "gt_claim_id": 103,
+     "severity": "minor",
+     "text": "摘要提到法醫研究所『具備較豐富之鑑驗及參考素材』（claim 104）及『直接解剖』（claim 102），但未明確將兩鑑定機構的專業能力、經驗、技術條件『相當』作為比較論述，屬鑑定機構比較的次要細節",
+     "reason": "摘要提到法醫研究所『具備較豐富之鑑驗及參考素材』（claim 104）及『直接解剖』（claim 102），但未明確將兩鑑定機構的專業能力、經驗、技術條件『相當』作為比較論述，屬鑑定機構比較的次要細節"
+    },
+    {
+     "gt_claim_id": 117,
+     "severity": "minor",
+     "text": "摘要描述證人許證詞（claim 115）及法院採信（gt_claim 118），但未提及辯護人質疑證詞時間點的特定爭點，屬辯護論點的次要細節",
+     "reason": "摘要描述證人許證詞（claim 115）及法院採信（gt_claim 118），但未提及辯護人質疑證詞時間點的特定爭點，屬辯護論點的次要細節"
+    },
+    {
+     "gt_claim_id": 118,
+     "severity": "minor",
+     "text": "摘要確實引用證人許證詞（claim 115）並提及『足徵』（表示採信），但未明確陳述法院對證人可信度的完整認定理由（無虛偽必要、描述具體明確），屬證據評價的次要細節",
+     "reason": "摘要確實引用證人許證詞（claim 115）並提及『足徵』（表示採信），但未明確陳述法院對證人可信度的完整認定理由（無虛偽必要、描述具體明確），屬證據評價的次要細節"
+    },
+    {
+     "gt_claim_id": 119,
+     "severity": "minor",
+     "text": "摘要引用證人許證詞關於住處狀態（糞便暗紅色、紙褲血跡等），但未提及法院特別強調此混亂狀態『非一般住家凌亂』的判斷論述，屬事實認定的細節描述",
+     "reason": "摘要引用證人許證詞關於住處狀態（糞便暗紅色、紙褲血跡等），但未提及法院特別強調此混亂狀態『非一般住家凌亂』的判斷論述，屬事實認定的細節描述"
+    },
+    {
+     "gt_claim_id": 121,
+     "severity": "minor",
+     "text": "摘要提及『本件除顯示病患X於手術完畢返家至送醫急救之間，均處於休息、睡覺之狀態』，但未明確提及『Line對話擷取畫面』此一具體證據類型，屬休息狀態證據的具體形式",
+     "reason": "摘要提及『本件除顯示病患X於手術完畢返家至送醫急救之間，均處於休息、睡覺之狀態』，但未明確提及『Line對話擷取畫面』此一具體證據類型，屬休息狀態證據的具體形式"
+    },
+    {
+     "gt_claim_id": 149,
+     "severity": "important",
+     "text": "摘要描述證人吳證稱『手術過程中有用儀器監測...但從來沒有記錄過什麼不正常的部分』（pred claims 102-103），並在最後一段提及『並未親自或指示護理人員切實記錄並據以依照前述動態比對方式』，此為證明被告未盡術後觀察義務的關鍵證人證詞，涉及過失認定的核心爭點",
+     "reason": "摘要描述證人吳證稱『手術過程中有用儀器監測...但從來沒有記錄過什麼不正常的部分』（pred claims 102-103），並在最後一段提及『並未親自或指示護理人員切實記錄並據以依照前述動態比對方式』，此為證明被告未盡術後觀察義務的關鍵證人證詞，涉及過失認定的核心爭點"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 164,
+   "pred_total": 230,
+   "matched": 146,
+   "partial": 4,
+   "missing": 14,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

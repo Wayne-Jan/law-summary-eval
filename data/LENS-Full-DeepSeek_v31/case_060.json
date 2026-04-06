@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -141,5 +142,61 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7812,
+  "fact_recall": 0.9536,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9763,
+  "quality_overall": 4.7571,
+  "citation_accuracy": 0.9595,
+  "citation_support_score": 0.8688,
+  "uncited_rate": 0.018,
+  "faithfulness_combined": {
+   "score": 0.9653,
+   "citation_fidelity": 0.9422,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.974,
+  "weighted_recall": 0.9912,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 87,
+     "severity": "important",
+     "text": "外傷出血病人血液循環不穩時使用Dormicum導致休克的風險係重要醫療資訊，雖屬opinions section（pred claim 57）提及，但GT標註為reasoning section內容，且reasoning原文確未包含此資訊，影響對藥物風險的完整理解",
+     "reason": "外傷出血病人血液循環不穩時使用Dormicum導致休克的風險係重要醫療資訊，雖屬opinions section（pred claim 57）提及，但GT標註為reasoning section內容，且reasoning原文確未包含此資訊，影響對藥物風險的完整理解"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "雖GT標註為reasoning，但此為傷勢細節描述，屬性上更適合facts section。pred在facts section（claims 2,4）及defense section（claim 18）已完整覆蓋，reasoning簡化提及『臉部外傷大量出血』可接受",
+     "reason": "雖GT標註為reasoning，但此為傷勢細節描述，屬性上更適合facts section。pred在facts section（claims 2,4）及defense section（claim 18）已完整覆蓋，reasoning簡化提及『臉部外傷大量出血』可接受"
+    },
+    {
+     "gt_claim_id": 105,
+     "severity": "minor",
+     "text": "23:12具體生命徵象數值雖為重要時間點記錄，但reasoning section以『夜間11時20分進入重症觀察室才裝上血氧機』等敘述涵蓋，且pred claim 80提及『夜間11時12分出現血氧濃度的紀錄』，跨section合併後核心資訊已存在",
+     "reason": "23:12具體生命徵象數值雖為重要時間點記錄，但reasoning section以『夜間11時20分進入重症觀察室才裝上血氧機』等敘述涵蓋，且pred claim 80提及『夜間11時12分出現血氧濃度的紀錄』，跨section合併後核心資訊已存在"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 151,
+   "pred_total": 120,
+   "matched": 140,
+   "partial": 8,
+   "missing": 3,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

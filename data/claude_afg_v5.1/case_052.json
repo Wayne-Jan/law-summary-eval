@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,145 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6582,
+  "fact_recall": 0.8571,
+  "fact_precision": 0.9829,
+  "fact_f1": 0.9157,
+  "quality_overall": 4.8857,
+  "citation_accuracy": 0.9692,
+  "citation_support_score": 0.9797,
+  "uncited_rate": 0.0085,
+  "faithfulness_combined": {
+   "score": 0.9697,
+   "citation_fidelity": 0.961,
+   "fact_precision": 0.9829,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": 0.952,
+  "weighted_recall": 0.9286,
+  "missing_severity": {
+   "critical": 3,
+   "important": 4,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "F醫院/M醫院之具體院所名稱屬背景資訊，摘要以「B醫院」「A附設醫院」匿名化處理，不影響案情理解",
+     "reason": "F醫院/M醫院之具體院所名稱屬背景資訊，摘要以「B醫院」「A附設醫院」匿名化處理，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "「放射科醫師決定施行插管引流」之細節未明確陳述，但摘要已涵蓋PCD引流之事實",
+     "reason": "「放射科醫師決定施行插管引流」之細節未明確陳述，但摘要已涵蓋PCD引流之事實"
+    },
+    {
+     "gt_claim_id": 52,
+     "severity": "minor",
+     "text": "「成效良好」之主觀評價未明確提及，但摘要claim 33提及白血球指數下降（31550降至19970），已側面反映治療反應",
+     "reason": "「成效良好」之主觀評價未明確提及，但摘要claim 33提及白血球指數下降（31550降至19970），已側面反映治療反應"
+    },
+    {
+     "gt_claim_id": 57,
+     "severity": "important",
+     "text": "「醫審會鑑定有重大瑕疵，自不足採」為被告重要抗辯要點，摘要雖提及質疑鑑定（claim 36）但未完整呈現「不足採」之強度",
+     "reason": "「醫審會鑑定有重大瑕疵，自不足採」為被告重要抗辯要點，摘要雖提及質疑鑑定（claim 36）但未完整呈現「不足採」之強度"
+    },
+    {
+     "gt_claim_id": 60,
+     "severity": "important",
+     "text": "「立刻手術不必然會得到更好的結果」為被告核心抗辯論點，摘要僅提及「有加速病情惡化之風險」（claim 38），未完整覆蓋「不必然更好」之論述",
+     "reason": "「立刻手術不必然會得到更好的結果」為被告核心抗辯論點，摘要僅提及「有加速病情惡化之風險」（claim 38），未完整覆蓋「不必然更好」之論述"
+    },
+    {
+     "gt_claim_id": 65,
+     "severity": "minor",
+     "text": "85年9月18日至F醫院就診之F醫院名稱為背景資訊，摘要已提及「B醫院」急診事實（claim 2）",
+     "reason": "85年9月18日至F醫院就診之F醫院名稱為背景資訊，摘要已提及「B醫院」急診事實（claim 2）"
+    },
+    {
+     "gt_claim_id": 73,
+     "severity": "important",
+     "text": "「不能以治療結果未見成效，遽以推斷有延誤手術時機情形」為被告關鍵抗辯邏輯，摘要未涵蓋此因果關係抗辯",
+     "reason": "「不能以治療結果未見成效，遽以推斷有延誤手術時機情形」為被告關鍵抗辯邏輯，摘要未涵蓋此因果關係抗辯"
+    },
+    {
+     "gt_claim_id": 85,
+     "severity": "minor",
+     "text": "GT claim 主張『當感染受到控制後，白血球數目會逐漸回復正常值』。經查驗 opinions、reasoning、facts、defense 四個 section 原文，均未提及『白血球回復正常值』此特定醫學知識。雖然白血球指數在 facts 段落有提及（5220、10840），但『感染控制後回復正常』的動態描述確實遺漏。此為輔助性醫學背景知識，不影響判決核心理解。",
+     "reason": "GT claim 主張『當感染受到控制後，白血球數目會逐漸回復正常值』。經查驗 opinions、reasoning、facts、defense 四個 section 原文，均未提及『白血球回復正常值』此特定醫學知識。雖然白血球指數在 facts 段落有提及（5220、10840），但『感染控制後回復正常』的動態描述確實遺漏。此為輔助性醫學背景知識，不影響判決核心理解。"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "minor",
+     "text": "GT claim 主張『本案無法醫鑑定』。經查驗全部 section 原文，法院 reasoning 段落明確提及『經本院就被告甲請求鑑定之事項委由醫審會鑑定』，表示本案確實有進行鑑定。GT claim 與原文不符，但生成摘要未包含此錯誤資訊，故屬『正確的遺漏』。此為程序性資訊，不影響案情核心理解。",
+     "reason": "GT claim 主張『本案無法醫鑑定』。經查驗全部 section 原文，法院 reasoning 段落明確提及『經本院就被告甲請求鑑定之事項委由醫審會鑑定』，表示本案確實有進行鑑定。GT claim 與原文不符，但生成摘要未包含此錯誤資訊，故屬『正確的遺漏』。此為程序性資訊，不影響案情核心理解。"
+    },
+    {
+     "gt_claim_id": 89,
+     "severity": "critical",
+     "text": "判決法院名稱為關鍵事實，GT 正確記載為『臺灣臺中地方法院』，但預測摘要錯誤記載為『臺灣基隆地方法院』，屬於案件識別錯誤，嚴重影響判決正確性。",
+     "reason": "判決法院名稱為關鍵事實，GT 正確記載為『臺灣臺中地方法院』，但預測摘要錯誤記載為『臺灣基隆地方法院』，屬於案件識別錯誤，嚴重影響判決正確性。"
+    },
+    {
+     "gt_claim_id": 90,
+     "severity": "important",
+     "text": "GT 明確標註『修正前』法條版本，預測摘要雖提及罪名但缺少此關鍵法律版本資訊，且建立在錯誤法院識別基礎上。",
+     "reason": "GT 明確標註『修正前』法條版本，預測摘要雖提及罪名但缺少此關鍵法律版本資訊，且建立在錯誤法院識別基礎上。"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "critical",
+     "text": "刑期內容雖出現在 pred claim 57，但依附於完全錯誤的法院名稱與判決日期，無法視為正確匹配。正確的『處有期徒刑肆月』必須與正確的『臺灣臺中地方法院』及『民國95年09月29日』一併呈現。",
+     "reason": "刑期內容雖出現在 pred claim 57，但依附於完全錯誤的法院名稱與判決日期，無法視為正確匹配。正確的『處有期徒刑肆月』必須與正確的『臺灣臺中地方法院』及『民國95年09月29日』一併呈現。"
+    },
+    {
+     "gt_claim_id": 92,
+     "severity": "critical",
+     "text": "易科罰金內容雖出現在 pred claim 57，但依附於完全錯誤的法院識別，無法視為正確匹配。",
+     "reason": "易科罰金內容雖出現在 pred claim 57，但依附於完全錯誤的法院識別，無法視為正確匹配。"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "證人戊關於引流效果不好的具體徵象（膿及腐爛組織出現）屬於詳細證詞內容，pred摘要雖涵蓋引流效果不佳的結論，但未詳列此具體徵象細節。此為佐證性細節，非判決核心論理依據。",
+     "reason": "證人戊關於引流效果不好的具體徵象（膿及腐爛組織出現）屬於詳細證詞內容，pred摘要雖涵蓋引流效果不佳的結論，但未詳列此具體徵象細節。此為佐證性細節，非判決核心論理依據。"
+    },
+    {
+     "gt_claim_id": 99,
+     "severity": "minor",
+     "text": "證人戊關於引流效果不好的詳細指標（體積不能縮小、持續有膿、腐爛組織、臨床症狀不改善）屬專業醫療細節，pred摘要已涵蓋『引流效果不佳』的核心結論，具體指標省略不影響案情理解。",
+     "reason": "證人戊關於引流效果不好的詳細指標（體積不能縮小、持續有膿、腐爛組織、臨床症狀不改善）屬專業醫療細節，pred摘要已涵蓋『引流效果不佳』的核心結論，具體指標省略不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 100,
+     "severity": "minor",
+     "text": "證人戊關於引流效果好的具體指標（引流量減少、膿色變清、空洞縮小）屬於正面描述，pred摘要僅聚焦於『引流效果不佳』的負面描述，未提及正面指標。此項雖有助理解判斷標準，但省略不影響『應改採手術』的核心結論。",
+     "reason": "證人戊關於引流效果好的具體指標（引流量減少、膿色變清、空洞縮小）屬於正面描述，pred摘要僅聚焦於『引流效果不佳』的負面描述，未提及正面指標。此項雖有助理解判斷標準，但省略不影響『應改採手術』的核心結論。"
+    },
+    {
+     "gt_claim_id": 102,
+     "severity": "minor",
+     "text": "醫審會第五次鑑定意見關於『感染控制後白血球回復正常』的生理機制說明，pred摘要提及白血球升高顯示感染失控（反向推理），但未正面描述『感染控制後回復正常』的機制。此為醫理背景說明，非判決關鍵論點。",
+     "reason": "醫審會第五次鑑定意見關於『感染控制後白血球回復正常』的生理機制說明，pred摘要提及白血球升高顯示感染失控（反向推理），但未正面描述『感染控制後回復正常』的機制。此為醫理背景說明，非判決關鍵論點。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 126,
+   "pred_total": 117,
+   "matched": 107,
+   "partial": 2,
+   "missing": 17,
+   "hallucinated": 2
+  },
+  "section_balance": 1.0
+ }
 }

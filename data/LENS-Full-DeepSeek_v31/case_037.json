@@ -132,16 +132,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7468,
-  "fact_recall": 0.6893,
+  "fact_recall": 0.7573,
   "fact_precision": 1.0,
-  "fact_f1": 0.816,
+  "fact_f1": 0.8619,
   "quality_overall": 4.6476,
   "citation_accuracy": 0.96,
   "citation_support_score": 0.9481,
-  "uncited_rate": 0.009,
+  "uncited_rate": 0.0,
   "faithfulness_combined": {
-   "score": 0.9708,
-   "citation_fidelity": 0.9514,
+   "score": 0.976,
+   "citation_fidelity": 0.96,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -151,174 +151,136 @@
   "compliance": 2,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.8706,
+  "weighted_recall": 0.9126,
   "missing_severity": {
-   "critical": 5,
-   "important": 7,
-   "minor": 11,
+   "critical": 2,
+   "important": 4,
+   "minor": 13,
    "details": [
     {
      "gt_claim_id": 6,
-     "severity": "important",
-     "text": "病患L於翌日即7月7日上午8時許因覺得胃部不舒服，到H診所就診",
-     "reason": "影響時間線完整性，但非判決關鍵"
-    },
-    {
-     "gt_claim_id": 12,
-     "severity": "critical",
-     "text": "醫師甲原應注意病患L有血壓偏低情形，應積極為病患L進一步作X光、超音波及心電圖等檢查",
-     "reason": "檢察官起訴核心論點，涉及過失認定"
-    },
-    {
-     "gt_claim_id": 13,
-     "severity": "important",
-     "text": "依當時情形，並無不能注意之情事",
-     "reason": "影響過失判斷完整性，為標準法律用語"
-    },
-    {
-     "gt_claim_id": 16,
-     "severity": "critical",
-     "text": "醫師甲未能及時發現病患L已有心肌梗塞情形，致病患L之急救時機遭延誤",
-     "reason": "檢察官起訴的因果論述重點，影響判決結論理解"
-    },
-    {
-     "gt_claim_id": 23,
      "severity": "minor",
-     "text": "一般民眾沒辦法區分中暑及熱衰竭",
-     "reason": "背景知識，被告辯護用語"
-    },
-    {
-     "gt_claim_id": 24,
-     "severity": "minor",
-     "text": "熱衰竭比中暑輕",
-     "reason": "背景知識，被告辯護用語"
-    },
-    {
-     "gt_claim_id": 32,
-     "severity": "minor",
-     "text": "打點滴的時間約有4個小時",
-     "reason": "時間細節，可由15:51-20:30推算"
-    },
-    {
-     "gt_claim_id": 33,
-     "severity": "important",
-     "text": "被告甲檢驗CK肌酸激酶是為了檢驗橫紋肌溶解症",
-     "reason": "影響對醫師判斷意圖的理解"
+     "text": "病患L於7月7日上午8時許到H診所就診之事實，經查section_01_facts.txt及section_05_reasoning.txt均僅提及「7月7日14時30分許...再次至A醫院急診」，未提及上午8時許的H診所就診。此事實確實未出現在摘要中。此為背景性事實（病患先至診所再到醫院），不影響核心案情（7月6日急診處置與7月7日再就診的因果關係），屬次要資訊。",
+     "reason": "病患L於7月7日上午8時許到H診所就診之事實，經查section_01_facts.txt及section_05_reasoning.txt均僅提及「7月7日14時30分許...再次至A醫院急診」，未提及上午8時許的H診所就診。此事實確實未出現在摘要中。此為背景性事實（病患先至診所再到醫院），不影響核心案情（7月6日急診處置與7月7日再就診的因果關係），屬次要資訊。"
     },
     {
      "gt_claim_id": 52,
      "severity": "minor",
-     "text": "心肌梗塞之治療方式，以2005年ACLS『急性』心肌梗塞建議，強調要用先MONA",
-     "reason": "醫學背景知識，鑑定中的治療規範詳述"
+     "text": "ACLS治療規範（MONA原則）屬背景醫學知識，雖未在摘要提及，但不影響本案事實理解與判決結論",
+     "reason": "ACLS治療規範（MONA原則）屬背景醫學知識，雖未在摘要提及，但不影響本案事實理解與判決結論"
+    },
+    {
+     "gt_claim_id": 53,
+     "severity": "minor",
+     "text": "12小時治療時限規範屬背景醫學標準，非本案關鍵爭點事實",
+     "reason": "12小時治療時限規範屬背景醫學標準，非本案關鍵爭點事實"
     },
     {
      "gt_claim_id": 54,
      "severity": "minor",
-     "text": "沒有『最近』心肌梗塞唯一必要之治療規範",
-     "reason": "醫學背景知識"
+     "text": "『最近心肌梗塞唯一必要之治療規範』屬醫學論述背景，非判決關鍵事實",
+     "reason": "『最近心肌梗塞唯一必要之治療規範』屬醫學論述背景，非判決關鍵事實"
     },
     {
      "gt_claim_id": 55,
      "severity": "minor",
-     "text": "超過12小時後之心肌梗塞治療，端看病人狀況給予治療",
-     "reason": "醫學背景知識"
+     "text": "「超過12小時後之治療原則」屬醫學背景知識，對本案判決結論影響有限",
+     "reason": "「超過12小時後之治療原則」屬醫學背景知識，對本案判決結論影響有限"
     },
     {
      "gt_claim_id": 56,
      "severity": "minor",
-     "text": "『最近』心肌梗塞仍可能再『急性』發作",
-     "reason": "醫學風險說明"
+     "text": "『最近心肌梗塞可能再急性發作』屬醫學常識背景，非本案特定事實",
+     "reason": "『最近心肌梗塞可能再急性發作』屬醫學常識背景，非本案特定事實"
     },
     {
      "gt_claim_id": 57,
      "severity": "minor",
-     "text": "臨床醫師應以臨床症狀、心電圖、肌鈣蛋白或肌酸酐激酶MB異構物等變化作判斷",
-     "reason": "診斷工具說明"
-    },
-    {
-     "gt_claim_id": 61,
-     "severity": "important",
-     "text": "病患出院時之血壓偏低為92/65 mmHg",
-     "reason": "重要數據，與入院時89/66比較顯示血壓上升"
+     "text": "診斷工具（心電圖、肌鈣蛋白、CK-MB）屬醫學背景，reasoning section 已有 CK值相關論述",
+     "reason": "診斷工具（心電圖、肌鈣蛋白、CK-MB）屬醫學背景，reasoning section 已有 CK值相關論述"
     },
     {
      "gt_claim_id": 63,
-     "severity": "important",
-     "text": "7月7日14:30病患血壓仍偏低80/62 mm/Hg",
-     "reason": "再次就診時的重要血壓數據"
+     "severity": "minor",
+     "text": "「7月7日血壓80/62 mmHg」屬專家意見內細節，雖未明確提及，但摘要已提及『血壓偏低』之臨床事實",
+     "reason": "「7月7日血壓80/62 mmHg」屬專家意見內細節，雖未明確提及，但摘要已提及『血壓偏低』之臨床事實"
     },
     {
      "gt_claim_id": 64,
-     "severity": "critical",
-     "text": "病患死亡原因為心肌梗塞，有心室纖維顫動及心因性休克死亡現象",
-     "reason": "死因的詳細病理資訊，影響判決結論理解"
+     "severity": "important",
+     "text": "『心室纖維顫動及心因性休克』為死因細節，雖 facts section 提及『急性心肌梗塞死亡』，但病理發現遺漏影響死因完整理解",
+     "reason": "『心室纖維顫動及心因性休克』為死因細節，雖 facts section 提及『急性心肌梗塞死亡』，但病理發現遺漏影響死因完整理解"
     },
     {
      "gt_claim_id": 65,
      "severity": "minor",
-     "text": "病患血壓仍有恢復時段",
-     "reason": "病理分析細節"
+     "text": "『血壓仍有恢復時段』屬專家意見細節，reasoning section 已論述血壓相關因果關係",
+     "reason": "『血壓仍有恢復時段』屬專家意見細節，reasoning section 已論述血壓相關因果關係"
     },
     {
      "gt_claim_id": 66,
+     "severity": "important",
+     "text": "『血壓偏低與死亡之因果關係判斷』為關鍵鑑定結論，直接影響過失認定，屬 opinions section 應涵蓋內容",
+     "reason": "『血壓偏低與死亡之因果關係判斷』為關鍵鑑定結論，直接影響過失認定，屬 opinions section 應涵蓋內容"
+    },
+    {
+     "gt_claim_id": 67,
+     "severity": "minor",
+     "text": "「臺北榮民總醫院」機構名稱雖未明確提及，但 reasoning section 提及『B醫院鑑定』，屬匿名化省略",
+     "reason": "「臺北榮民總醫院」機構名稱雖未明確提及，但 reasoning section 提及『B醫院鑑定』，屬匿名化省略"
+    },
+    {
+     "gt_claim_id": 69,
+     "severity": "important",
+     "text": "「無法斷定病患有心肌梗塞徵兆」為臺北榮總鑑定關鍵結論，直接影響醫療過失判斷",
+     "reason": "「無法斷定病患有心肌梗塞徵兆」為臺北榮總鑑定關鍵結論，直接影響醫療過失判斷"
+    },
+    {
+     "gt_claim_id": 70,
      "severity": "critical",
-     "text": "急診室時之血壓偏低，尚難認為與住院後之死亡有關",
-     "reason": "重要因果關係判斷，影響判決結論"
+     "text": "「當日處置符合醫療常規」為臺北榮總鑑定核心結論，直接支持被告無罪判決，屬 opinions section 關鍵遺漏",
+     "reason": "「當日處置符合醫療常規」為臺北榮總鑑定核心結論，直接支持被告無罪判決，屬 opinions section 關鍵遺漏"
+    },
+    {
+     "gt_claim_id": 71,
+     "severity": "critical",
+     "text": "「無法判斷處置與死因關係」為臺北榮總鑑定之因果關係結論，與判決無罪直接相關",
+     "reason": "「無法判斷處置與死因關係」為臺北榮總鑑定之因果關係結論，與判決無罪直接相關"
     },
     {
      "gt_claim_id": 74,
      "severity": "minor",
-     "text": "檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實"
+     "text": "檢察官上訴與否為程序性事實，生成摘要未提及。經查詢各 section 原文，確實無此資訊。此項不影響判決主文及實體理由之理解，屬次要遺漏。",
+     "reason": "檢察官上訴與否為程序性事實，生成摘要未提及。經查詢各 section 原文，確實無此資訊。此項不影響判決主文及實體理由之理解，屬次要遺漏。"
     },
     {
      "gt_claim_id": 75,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序結果"
+     "text": "判決確定狀態為程序性事實，生成摘要未提及。經查詢各 section 原文，確實無此資訊。此項為判決後續程序狀態，不影響判決內容本身之理解，屬次要遺漏。",
+     "reason": "判決確定狀態為程序性事實，生成摘要未提及。經查詢各 section 原文，確實無此資訊。此項為判決後續程序狀態，不影響判決內容本身之理解，屬次要遺漏。"
     },
     {
      "gt_claim_id": 80,
      "severity": "important",
-     "text": "胸悶是屬於主訴的症狀，病患沒有告訴醫師，醫師無法判斷病患有胸悶",
-     "reason": "重要醫學判斷原則，影響法院對注意義務的認定"
+     "text": "GT強調「胸悶屬於主訴症狀」的性質說明及「醫師無法判斷」的邏輯解釋，摘要僅陳述「無胸悶」的事實，未解釋此醫學原理，影響對診斷困難的理解。",
+     "reason": "GT強調「胸悶屬於主訴症狀」的性質說明及「醫師無法判斷」的邏輯解釋，摘要僅陳述「無胸悶」的事實，未解釋此醫學原理，影響對診斷困難的理解。"
     },
     {
      "gt_claim_id": 81,
-     "severity": "important",
-     "text": "被告係急診醫學專科醫師，並非心臟專科醫師",
-     "reason": "專業身分限制，影響注意義務標準判定"
-    },
-    {
-     "gt_claim_id": 83,
-     "severity": "important",
-     "text": "被告難以從病患之外觀及其他檢查數據察覺患者有胸悶、胸痛的病情",
-     "reason": "法院重要判斷，影響過失認定"
-    },
-    {
-     "gt_claim_id": 88,
-     "severity": "critical",
-     "text": "被告未安排心電圖檢查非造成病患後來於97年7月7日17時許住進加護病房後病情急轉直下死亡之原因",
-     "reason": "重要因果排除論述，直接影響判決結論"
+     "severity": "minor",
+     "text": "被告專科背景（急診醫學專科醫師、非心臟專科）雖有助理解案件，但屬背景性事實，不影響判決結論的核心理解。",
+     "reason": "被告專科背景（急診醫學專科醫師、非心臟專科）雖有助理解案件，但屬背景性事實，不影響判決結論的核心理解。"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.6476,
-   "quality_overall": 4.6476,
-   "gt_length_ratio": 1.1235,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 103,
    "pred_total": 107,
-   "matched": 68,
-   "partial": 6,
-   "missing": 24,
+   "matched": 78,
+   "partial": 0,
+   "missing": 19,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.6135,
   "section_balance": 1.0
  }
 }

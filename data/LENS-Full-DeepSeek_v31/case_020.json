@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -148,9 +148,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8944,
-  "fact_recall": 0.9391304347826087,
+  "fact_recall": 0.8696,
   "fact_precision": 1.0,
-  "fact_f1": 0.9689922480620154,
+  "fact_f1": 0.9302,
   "quality_overall": 4.56,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9897,
@@ -167,48 +167,94 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9913,
+  "weighted_recall": 0.9565,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 3,
+   "important": 3,
+   "minor": 9,
    "details": [
+    {
+     "gt_claim_id": 25,
+     "severity": "minor",
+     "text": "檢察官起訴論點中的「專業知識及客觀環境無不能注意」細節，摘要雖提及「依被告甲之專業知識」但未完整呈現「並無不能注意之情事」的法律論點，屬次要法律論述遺漏",
+     "reason": "檢察官起訴論點中的「專業知識及客觀環境無不能注意」細節，摘要雖提及「依被告甲之專業知識」但未完整呈現「並無不能注意之情事」的法律論點，屬次要法律論述遺漏"
+    },
+    {
+     "gt_claim_id": 44,
+     "severity": "important",
+     "text": "opinions 段中 ERCP 手術的完整名稱（含膽胰管擴約肌切開術）未完整呈現，影響醫療處置細節理解",
+     "reason": "opinions 段中 ERCP 手術的完整名稱（含膽胰管擴約肌切開術）未完整呈現，影響醫療處置細節理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "important",
+     "text": "鑑定意見中的反向條件判斷（若能順利引流則無需照會外科）未於摘要中呈現，影響鑑定意見完整性",
+     "reason": "鑑定意見中的反向條件判斷（若能順利引流則無需照會外科）未於摘要中呈現，影響鑑定意見完整性"
+    },
+    {
+     "gt_claim_id": 63,
+     "severity": "minor",
+     "text": "急性胰臟炎常規上無需細菌培養的醫療常規說明未呈現，屬次要醫療背景資訊",
+     "reason": "急性胰臟炎常規上無需細菌培養的醫療常規說明未呈現，屬次要醫療背景資訊"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "minor",
+     "text": "細菌培養適應症的說明未呈現，屬次要醫療背景資訊",
+     "reason": "細菌培養適應症的說明未呈現，屬次要醫療背景資訊"
+    },
     {
      "gt_claim_id": 68,
      "severity": "minor",
-     "text": "本案之ENBD很有可能是在加護病房之床邊進行",
-     "reason": "背景性推測事實，屬opinions section技術細節，不影響案情核心理解"
+     "text": "ENBD 施行地點（加護病房床邊）的推測性資訊未呈現，屬細節性事實",
+     "reason": "ENBD 施行地點（加護病房床邊）的推測性資訊未呈現，屬細節性事實"
+    },
+    {
+     "gt_claim_id": 77,
+     "severity": "important",
+     "text": "第三次鑑定意見中的因果關係判斷（無直接因果關係但升高風險）未呈現，影響鑑定意見完整性",
+     "reason": "第三次鑑定意見中的因果關係判斷（無直接因果關係但升高風險）未呈現，影響鑑定意見完整性"
     },
     {
      "gt_claim_id": 85,
      "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實，為判決確定之前提，不影響判決主文內容理解"
+     "text": "判決確定程序（上訴期間未上訴）未於 verdict 段呈現，屬程序性事實",
+     "reason": "判決確定程序（上訴期間未上訴）未於 verdict 段呈現，屬程序性事實"
     },
     {
      "gt_claim_id": 86,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序性結論，屬判決效力描述，非核心事實"
+     "text": "判決確定狀態未於 verdict 段呈現，屬程序性事實",
+     "reason": "判決確定狀態未於 verdict 段呈現，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "minor",
+     "text": "護理紀錄具體內容（「告知醫師甲，醫師甲囑咐進行KUB」）未於 reasoning 段完整呈現，但核心事實（引流管未引流液、進行KUB檢查）已涵蓋",
+     "reason": "護理紀錄具體內容（「告知醫師甲，醫師甲囑咐進行KUB」）未於 reasoning 段完整呈現，但核心事實（引流管未引流液、進行KUB檢查）已涵蓋"
+    },
+    {
+     "gt_claim_id": 112,
+     "severity": "minor",
+     "text": "「三次送鑑定」的數量資訊未於 reasoning 段明確呈現，屬細節性資訊",
+     "reason": "「三次送鑑定」的數量資訊未於 reasoning 段明確呈現，屬細節性資訊"
+    },
+    {
+     "gt_claim_id": 113,
+     "severity": "minor",
+     "text": "「鑑定結論始終一致」的評價性敘述未於 reasoning 段呈現，但法院已認定有疏失，核心結論已涵蓋",
+     "reason": "「鑑定結論始終一致」的評價性敘述未於 reasoning 段呈現，但法院已認定有疏失，核心結論已涵蓋"
     }
    ]
-  },
-  "information_density": {
-   "score": 3.7891,
-   "quality_overall": 4.56,
-   "gt_length_ratio": 1.5645,
-   "length_penalty": 0.8309,
-   "zone": "too_long"
   },
   "fact_detail": {
    "gt_total": 115,
    "pred_total": 133,
-   "matched": 104,
-   "partial": 8,
-   "missing": 3,
+   "matched": 100,
+   "partial": 0,
+   "missing": 12,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.6003,
   "section_balance": 1.0
  }
 }

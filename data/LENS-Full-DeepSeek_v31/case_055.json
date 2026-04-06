@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -143,5 +144,73 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.3099,
+  "fact_recall": 0.9323,
+  "fact_precision": 1.0,
+  "fact_f1": 0.965,
+  "quality_overall": 4.5214,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.101,
+  "faithfulness_combined": {
+   "score": 0.9394,
+   "citation_fidelity": 0.899,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "INCONSISTENT",
+  "numerical_fidelity": 0.972,
+  "weighted_recall": 0.9826,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 52,
+     "severity": "minor",
+     "text": "辯護輔助論點，關於產程順利時的常規通知機制，非關鍵醫療事實，不影響過失認定判斷",
+     "reason": "辯護輔助論點，關於產程順利時的常規通知機制，非關鍵醫療事實，不影響過失認定判斷"
+    },
+    {
+     "gt_claim_id": 82,
+     "severity": "minor",
+     "text": "本案無法醫意見屬背景性事實，未影響判決結論理解，摘要已涵蓋主要法醫鑑定內容（醫事審議委員會鑑定意見）",
+     "reason": "本案無法醫意見屬背景性事實，未影響判決結論理解，摘要已涵蓋主要法醫鑑定內容（醫事審議委員會鑑定意見）"
+    },
+    {
+     "gt_claim_id": 92,
+     "severity": "minor",
+     "text": "pred reasoning section 明確引用「行政院衛生署醫事審議委員會鑑定結果」並描述其內容，與 GT「無法醫意見」確實不符。但此乃鑑定意見存在與否的認定差異，非 reasoning 核心論證事實，屬背景性事實。",
+     "reason": "pred reasoning section 明確引用「行政院衛生署醫事審議委員會鑑定結果」並描述其內容，與 GT「無法醫意見」確實不符。但此乃鑑定意見存在與否的認定差異，非 reasoning 核心論證事實，屬背景性事實。"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "minor",
+     "text": "法院名稱（臺灣臺東地方法院）與判決日期（96年6月7日）屬判決書首部資訊，非 reasoning section 核心論證內容，pred 未涵蓋不影響過失認定之理解。",
+     "reason": "法院名稱（臺灣臺東地方法院）與判決日期（96年6月7日）屬判決書首部資訊，非 reasoning section 核心論證內容，pred 未涵蓋不影響過失認定之理解。"
+    },
+    {
+     "gt_claim_id": 95,
+     "severity": "minor",
+     "text": "易科罰金折算標準（銀元參佰元即新臺幣玖佰元折算壹日）屬刑罰執行細節，非 reasoning section 核心論證內容，pred 未提及不改變過失認定之理解。",
+     "reason": "易科罰金折算標準（銀元參佰元即新臺幣玖佰元折算壹日）屬刑罰執行細節，非 reasoning section 核心論證內容，pred 未提及不改變過失認定之理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 96,
+   "pred_total": 111,
+   "matched": 88,
+   "partial": 3,
+   "missing": 5,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

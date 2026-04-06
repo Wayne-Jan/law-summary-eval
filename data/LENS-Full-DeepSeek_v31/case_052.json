@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,73 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7349,
+  "fact_recall": 0.9563,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9777,
+  "quality_overall": 4.5911,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0032,
+  "uncited_rate": 0.008,
+  "faithfulness_combined": {
+   "score": 0.9952,
+   "citation_fidelity": 0.992,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9841,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 76,
+     "severity": "important",
+     "text": "GT claim 76 提及『引流管沖洗、重新更換引流管等』具體醫療處置細節，雖然 Pred claim 33（defense）提及 10月1日會診、claim 98/99（reasoning）提及 10月1日會診通知單，但均未明確記載『引流管沖洗』及『多次前往訪視』之具體處置行為。該事實為證人戊證述內容，屬專家證言細節，影響對醫師處置行為完整理解，但非直接影響判決結論之核心事實。",
+     "reason": "GT claim 76 提及『引流管沖洗、重新更換引流管等』具體醫療處置細節，雖然 Pred claim 33（defense）提及 10月1日會診、claim 98/99（reasoning）提及 10月1日會診通知單，但均未明確記載『引流管沖洗』及『多次前往訪視』之具體處置行為。該事實為證人戊證述內容，屬專家證言細節，影響對醫師處置行為完整理解，但非直接影響判決結論之核心事實。"
+    },
+    {
+     "gt_claim_id": 85,
+     "severity": "minor",
+     "text": "GT claim 85 提及『感染控制後白血球回復正常值』之醫學原理，生成摘要確實未提及『白血球回復正常』之表述。雖然 Pred claim 41（defense）提及『白血球由31550降至19970』，但此為下降趨勢而非『回復正常值』之判準說明。該項為醫學背景知識補充，不影響判決理由之理解。",
+     "reason": "GT claim 85 提及『感染控制後白血球回復正常值』之醫學原理，生成摘要確實未提及『白血球回復正常』之表述。雖然 Pred claim 41（defense）提及『白血球由31550降至19970』，但此為下降趨勢而非『回復正常值』之判準說明。該項為醫學背景知識補充，不影響判決理由之理解。"
+    },
+    {
+     "gt_claim_id": 88,
+     "severity": "minor",
+     "text": "GT claim 88『本案無法醫鑑定』為程序性事實陳述，生成摘要確實未提及。該項不影響案件實體判斷（過失認定、因果關係、刑度），屬背景性資訊。",
+     "reason": "GT claim 88『本案無法醫鑑定』為程序性事實陳述，生成摘要確實未提及。該項不影響案件實體判斷（過失認定、因果關係、刑度），屬背景性資訊。"
+    },
+    {
+     "gt_claim_id": 100,
+     "severity": "minor",
+     "text": "section_05 全文僅描述『引流效果不好』之徵兆，未提及『引流效果好』之具體表現（引流量減少、膿色變清、空洞縮小）。屬醫學專業判斷之補充說明，不影響過失認定之核心論證",
+     "reason": "section_05 全文僅描述『引流效果不好』之徵兆，未提及『引流效果好』之具體表現（引流量減少、膿色變清、空洞縮小）。屬醫學專業判斷之補充說明，不影響過失認定之核心論證"
+    },
+    {
+     "gt_claim_id": 102,
+     "severity": "minor",
+     "text": "section_05 原文僅提及白血球指數之限制（不能反應感染控制），未提及『感染控制後白血球回復正常值』之醫學常識描述，屬背景性醫學知識",
+     "reason": "section_05 原文僅提及白血球指數之限制（不能反應感染控制），未提及『感染控制後白血球回復正常值』之醫學常識描述，屬背景性醫學知識"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 126,
+   "pred_total": 129,
+   "matched": 120,
+   "partial": 1,
+   "missing": 5,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

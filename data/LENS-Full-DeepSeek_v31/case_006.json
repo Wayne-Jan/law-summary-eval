@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -128,17 +128,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8692,
-  "fact_recall": 0.78,
-  "fact_precision": 1.0,
-  "fact_f1": 0.88,
+  "fact_recall": 0.8049,
+  "fact_precision": 0.925,
+  "fact_f1": 0.8608,
   "quality_overall": 4.7,
   "citation_accuracy": 0.8636,
   "citation_support_score": 0.8304,
-  "uncited_rate": 0.0,
+  "uncited_rate": 0.05,
   "faithfulness_combined": {
-   "score": 0.9182,
-   "citation_fidelity": 0.8636,
-   "fact_precision": 1.0,
+   "score": 0.8623,
+   "citation_fidelity": 0.8204,
+   "fact_precision": 0.925,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -147,24 +147,70 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": null,
-  "missing_severity": null,
-  "information_density": {
-   "score": 4.7,
-   "quality_overall": 4.7,
-   "gt_length_ratio": 0.9498,
-   "length_penalty": 1.0,
-   "zone": "ideal"
+  "weighted_recall": 0.9024,
+  "missing_severity": {
+   "critical": 1,
+   "important": 2,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "severity": "important",
+     "text": "病患配偶告知心痛、要求轉診心臟科之事實未出現在生成摘要中。此為重要案情細節，影響對醫師過失情節的理解，但非判決核心結論",
+     "reason": "病患配偶告知心痛、要求轉診心臟科之事實未出現在生成摘要中。此為重要案情細節，影響對醫師過失情節的理解，但非判決核心結論"
+    },
+    {
+     "gt_claim_id": 16,
+     "severity": "minor",
+     "text": "訴訟程序過程(簡易判決處刑、通常程序轉換)屬程序性背景事實，不影響案情實體理解",
+     "reason": "訴訟程序過程(簡易判決處刑、通常程序轉換)屬程序性背景事實，不影響案情實體理解"
+    },
+    {
+     "gt_claim_id": 17,
+     "severity": "critical",
+     "text": "被告甲應盡注意義務之詳細內容(持續追蹤心電圖、檢查血清酵素、觀察治療反應、追蹤血型動力學、照會心臟科)雖在 opinions section (pred claim 20) 和 reasoning section (pred claim 34) 有提及，但 GT_17 明確位於 facts section 作為起訴事實核心。此過失認定之基礎事實遺漏影響判決理由理解",
+     "reason": "被告甲應盡注意義務之詳細內容(持續追蹤心電圖、檢查血清酵素、觀察治療反應、追蹤血型動力學、照會心臟科)雖在 opinions section (pred claim 20) 和 reasoning section (pred claim 34) 有提及，但 GT_17 明確位於 facts section 作為起訴事實核心。此過失認定之基礎事實遺漏影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "severity": "important",
+     "text": "「能注意而疏未注意」之法律評價用語未在生成摘要中明確出現，但此為過失要件之法律評價，opinions section 的 pred claim 21 雖有「能注意而疏未注意」表述，但該 claim 對應 GT 的 opinions section 而非 facts section 的 GT_18。影響過失認定之法律評價理解",
+     "reason": "「能注意而疏未注意」之法律評價用語未在生成摘要中明確出現，但此為過失要件之法律評價，opinions section 的 pred claim 21 雖有「能注意而疏未注意」表述，但該 claim 對應 GT 的 opinions section 而非 facts section 的 GT_18。影響過失認定之法律評價理解"
+    },
+    {
+     "gt_claim_id": 24,
+     "severity": "minor",
+     "text": "簡易判決格式導致未載明鑑定內容之說明，屬判決書格式背景資訊，不影響鑑定意見內容本身",
+     "reason": "簡易判決格式導致未載明鑑定內容之說明，屬判決書格式背景資訊，不影響鑑定意見內容本身"
+    },
+    {
+     "gt_claim_id": 25,
+     "severity": "minor",
+     "text": "判決日期(92年3月11日)未提及，屬時效性背景資訊，不影響案情理解",
+     "reason": "判決日期(92年3月11日)未提及，屬時效性背景資訊，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 29,
+     "severity": "minor",
+     "text": "被告、檢察官於法定上訴期間未上訴，屬判決確定程序事實，不影響主文理解",
+     "reason": "被告、檢察官於法定上訴期間未上訴，屬判決確定程序事實，不影響主文理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "severity": "minor",
+     "text": "本案判決即確定之狀態說明，屬程序性事實，不影響判決主文理解",
+     "reason": "本案判決即確定之狀態說明，屬程序性事實，不影響判決主文理解"
+    }
+   ]
   },
   "fact_detail": {
    "gt_total": 41,
    "pred_total": 40,
-   "matched": 29,
-   "partial": 6,
-   "missing": 6,
-   "hallucinated": 0
+   "matched": 33,
+   "partial": 0,
+   "missing": 8,
+   "hallucinated": 3
   },
-  "fact_recall_efficiency": 0.8212,
   "section_balance": 1.0
  }
 }

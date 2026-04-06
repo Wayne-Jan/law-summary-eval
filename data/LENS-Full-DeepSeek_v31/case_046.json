@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -149,5 +150,91 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6154,
+  "fact_recall": 0.914,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9551,
+  "quality_overall": 4.9267,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.027,
+  "uncited_rate": 0.075,
+  "faithfulness_combined": {
+   "score": 0.955,
+   "citation_fidelity": 0.925,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.964,
+  "weighted_recall": 0.9809,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 21,
+     "severity": "important",
+     "text": "經查全篇摘要，雖於『被告回應』段提及『被告甲、被告乙均矢口否認有業務過失致死犯行』可間接推知起訴罪名，但明確表述『檢察官主張成立業務過失致死罪』確未出現。此為起訴要旨關鍵資訊，影響案件性質理解，維持 missing 判定並標記為 important。",
+     "reason": "經查全篇摘要，雖於『被告回應』段提及『被告甲、被告乙均矢口否認有業務過失致死犯行』可間接推知起訴罪名，但明確表述『檢察官主張成立業務過失致死罪』確未出現。此為起訴要旨關鍵資訊，影響案件性質理解，維持 missing 判定並標記為 important。"
+    },
+    {
+     "gt_claim_id": 29,
+     "severity": "minor",
+     "text": "『依當時情形，並無不能注意情事』為過失認定之標準法律用語。經查全文，『判決理由』段以『被告甲顯有應注意而未予注意之過失』、『被告乙亦有應注意而疏未注意之過失』等表述呈現相同法律評價，雖用語不同但核心概念（被告具有注意能力且應注意而未注意）已完整涵蓋。此屬法律推理的標準表述轉化，不影響過失认定的實質理解，維持 missing 判定並標記為 minor。",
+     "reason": "『依當時情形，並無不能注意情事』為過失認定之標準法律用語。經查全文，『判決理由』段以『被告甲顯有應注意而未予注意之過失』、『被告乙亦有應注意而疏未注意之過失』等表述呈現相同法律評價，雖用語不同但核心概念（被告具有注意能力且應注意而未注意）已完整涵蓋。此屬法律推理的標準表述轉化，不影響過失认定的實質理解，維持 missing 判定並標記為 minor。"
+    },
+    {
+     "gt_claim_id": 73,
+     "severity": "minor",
+     "text": "罪名構成要件的背景性身份事實。摘要中僅以『業務過失致人於死罪』間接隱含業務身份，未獨立明確陳述『被告甲、被告乙為從事業務之人』。惟判決主文中的罪名與刑度已明確載明，此身份事實可從罪名推知，遺漏不影響核心判決資訊理解。",
+     "reason": "罪名構成要件的背景性身份事實。摘要中僅以『業務過失致人於死罪』間接隱含業務身份，未獨立明確陳述『被告甲、被告乙為從事業務之人』。惟判決主文中的罪名與刑度已明確載明，此身份事實可從罪名推知，遺漏不影響核心判決資訊理解。"
+    },
+    {
+     "gt_claim_id": 147,
+     "severity": "minor",
+     "text": "reasoning section全文檢查，未發現提及『醫囑時間與護理人員實際申領、用藥時間差異』之技術性辯解，屬病歷記載相關的次要細節，不影響過失致死罪判決結論，確認維持missing",
+     "reason": "reasoning section全文檢查，未發現提及『醫囑時間與護理人員實際申領、用藥時間差異』之技術性辯解，屬病歷記載相關的次要細節，不影響過失致死罪判決結論，確認維持missing"
+    },
+    {
+     "gt_claim_id": 148,
+     "severity": "minor",
+     "text": "reasoning section全文檢查，未發現提及『病歷有多位醫護人員簽名及油墨字跡不同』之客觀證據事實，屬次要證據細節，不影響主要判決結論，確認維持missing",
+     "reason": "reasoning section全文檢查，未發現提及『病歷有多位醫護人員簽名及油墨字跡不同』之客觀證據事實，屬次要證據細節，不影響主要判決結論，確認維持missing"
+    },
+    {
+     "gt_claim_id": 149,
+     "severity": "minor",
+     "text": "reasoning section全文檢查，未發現提及『竄改需十數人配合』之合理性推論，雖為有力辯論觀點但屬次要論證，不影響無罪判決結論（預測已有其他無罪理由），確認維持missing",
+     "reason": "reasoning section全文檢查，未發現提及『竄改需十數人配合』之合理性推論，雖為有力辯論觀點但屬次要論證，不影響無罪判決結論（預測已有其他無罪理由），確認維持missing"
+    },
+    {
+     "gt_claim_id": 150,
+     "severity": "minor",
+     "text": "reasoning section全文檢查，未發現提及『護理人員到庭證稱未重新謄寫護理紀錄』之證人證詞，屬次要證據細節，不影響無罪判決結論（預測已有概括性『無證據證明』結論），確認維持missing",
+     "reason": "reasoning section全文檢查，未發現提及『護理人員到庭證稱未重新謄寫護理紀錄』之證人證詞，屬次要證據細節，不影響無罪判決結論（預測已有概括性『無證據證明』結論），確認維持missing"
+    },
+    {
+     "gt_claim_id": 151,
+     "severity": "minor",
+     "text": "reasoning section全文檢查，雖提及『檢驗報告檢查日期均在十月二十六日以前』，但未明確提及『列印日期為87年10月26日以後』之關鍵區別，屬次要事實細節，確認維持missing",
+     "reason": "reasoning section全文檢查，雖提及『檢驗報告檢查日期均在十月二十六日以前』，但未明確提及『列印日期為87年10月26日以後』之關鍵區別，屬次要事實細節，確認維持missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 157,
+   "pred_total": 130,
+   "matched": 140,
+   "partial": 7,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

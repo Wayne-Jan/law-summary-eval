@@ -134,9 +134,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8009,
-  "fact_recall": 0.8624,
+  "fact_recall": 0.9298,
   "fact_precision": 1.0,
-  "fact_f1": 0.9264,
+  "fact_f1": 0.9636,
   "quality_overall": 4.5643,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9772,
@@ -153,66 +153,88 @@
   "compliance": 2,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.985,
+  "weighted_recall": 0.9663,
   "missing_severity": {
    "critical": 0,
-   "important": 2,
+   "important": 7,
    "minor": 4,
    "details": [
     {
+     "gt_claim_id": 55,
+     "severity": "important",
+     "text": "「確定診斷後送G醫院總院緊急外科手術」僅 facts 段 defense 部分提到轉診手術（pred claim 37），但 opinions section 未明確提及此專家意見。屬專家意見段落完整性遺漏，影響鑑定意見呈現",
+     "reason": "「確定診斷後送G醫院總院緊急外科手術」僅 facts 段 defense 部分提到轉診手術（pred claim 37），但 opinions section 未明確提及此專家意見。屬專家意見段落完整性遺漏，影響鑑定意見呈現"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "important",
+     "text": "「主動脈剝離可伴發腦中風，如未詳盡檢查分析可能僅作腦中風之診斷」。pred claim 74 提及相似性，但未提及「如未詳盡檢查分析可能僅作腦中風之診斷」之鑑別診斷風險關鍵句。屬鑑定意見中的鑑別診斷要點",
+     "reason": "「主動脈剝離可伴發腦中風，如未詳盡檢查分析可能僅作腦中風之診斷」。pred claim 74 提及相似性，但未提及「如未詳盡檢查分析可能僅作腦中風之診斷」之鑑別診斷風險關鍵句。屬鑑定意見中的鑑別診斷要點"
+    },
+    {
      "gt_claim_id": 65,
-     "severity": "minor",
-     "text": "主動脈剝離屬外科治療疾病，以急診開刀為主",
-     "reason": "屬醫學治療分類背景資訊，不影響判決結論理解"
+     "severity": "important",
+     "text": "「主動脈剝離屬外科治療疾病，以急診開刀為主」。遍查 claims.json 各 section，未見明確對應之陳述。屬主動脈剝離治療方式的重要醫學知識",
+     "reason": "「主動脈剝離屬外科治療疾病，以急診開刀為主」。遍查 claims.json 各 section，未見明確對應之陳述。屬主動脈剝離治療方式的重要醫學知識"
     },
     {
      "gt_claim_id": 67,
      "severity": "minor",
-     "text": "內科治療以維持血壓為主，採用型交感神經阻斷劑及抗血壓劑",
-     "reason": "屬次要治療藥物細節，摘要已提及維持血壓重點"
-    },
-    {
-     "gt_claim_id": 96,
-     "severity": "important",
-     "text": "此時應考慮其他可能之疾病，如主動脈剝離",
-     "reason": "第四次鑑定意見之重要鑑別診斷建議，影響對法院採信鑑定意見之完整理解"
+     "text": "「內科治療以維持血壓為主，採用型交感神經阻斷劑及抗血壓藥」。屬背景醫學知識，雖未影響本案判決核心，但影響醫療處置理解的完整性",
+     "reason": "「內科治療以維持血壓為主，採用型交感神經阻斷劑及抗血壓藥」。屬背景醫學知識，雖未影響本案判決核心，但影響醫療處置理解的完整性"
     },
     {
      "gt_claim_id": 117,
      "severity": "minor",
-     "text": "自訴人於法定上訴期間未上訴",
-     "reason": "屬判決程序性事實，不影響判決無罪之核心結論"
+     "text": "自訴人未上訴屬程序性後續事實，非判決主文內容，不影響判決結果理解。生成摘要僅記載判決日期與結果（無罪），未提及後續上訴程序，屬合理省略。",
+     "reason": "自訴人未上訴屬程序性後續事實，非判決主文內容，不影響判決結果理解。生成摘要僅記載判決日期與結果（無罪），未提及後續上訴程序，屬合理省略。"
     },
     {
      "gt_claim_id": 118,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "屬判決程序性結果，不影響判決無罪之核心結論"
+     "text": "判決確定屬程序性狀態描述，而非判決本身內容。生成摘要 focused 於判決主文（無罪宣告），省略判決確定的程序性敘述，不影響讀者對判決結果的理解。",
+     "reason": "判決確定屬程序性狀態描述，而非判決本身內容。生成摘要 focused 於判決主文（無罪宣告），省略判決確定的程序性敘述，不影響讀者對判決結果的理解。"
     },
     {
-     "gt_claim_id": 167,
+     "gt_claim_id": 120,
      "severity": "important",
-     "text": "病患所罹患之急性主動脈剝離乃死亡率極高之疾病，且合併大片腦中風，於接受八小時之開刀手術置換升主動脈後，仍呈高度心衰竭而死亡",
-     "reason": "重要醫療結果事實，影響對病患病情嚴重程度及即使診斷也可能死亡之因果關係理解"
+     "text": "確認 missing：病患到院時的具體症狀（雙側瞳孔3.5mm、呻吟、嘴唇發紫、心音不清）是評估病況嚴重程度的重要醫療細節，雖見於 section_01_facts.txt（pred_claim_6），但 reasoning section 作為法院認定事實之段落，未涵蓋這些診斷依據，影響對病情判斷困難度的完整理解。",
+     "reason": "確認 missing：病患到院時的具體症狀（雙側瞳孔3.5mm、呻吟、嘴唇發紫、心音不清）是評估病況嚴重程度的重要醫療細節，雖見於 section_01_facts.txt（pred_claim_6），但 reasoning section 作為法院認定事實之段落，未涵蓋這些診斷依據，影響對病情判斷困難度的完整理解。"
+    },
+    {
+     "gt_claim_id": 121,
+     "severity": "important",
+     "text": "確認 missing：C醫師診治後的詳細記載（昏迷指數變化、肢體冷、發紺、右側手腳無力、病理反射）是區分腦中風與主動脈剝離症狀的關鍵醫療觀察。雖見於 section_01_facts.txt（pred_claim_7），但 reasoning section 未涵蓋此部分診斷細節，影響對醫師初期判斷合理性的理解。",
+     "reason": "確認 missing：C醫師診治後的詳細記載（昏迷指數變化、肢體冷、發紺、右側手腳無力、病理反射）是區分腦中風與主動脈剝離症狀的關鍵醫療觀察。雖見於 section_01_facts.txt（pred_claim_7），但 reasoning section 未涵蓋此部分診斷細節，影響對醫師初期判斷合理性的理解。"
+    },
+    {
+     "gt_claim_id": 123,
+     "severity": "minor",
+     "text": "確認 missing：C醫師照會神經科H醫師、判斷為心臟問題後再照會內科代總醫師乙及被告甲的詳細會診流程，屬於醫療處置的過程性描述。雖有助於完整理解診療經過，但非判決核心理由之關鍵事實，pred summaries 中已涵蓋11時照會被告甲之關鍵時間點。",
+     "reason": "確認 missing：C醫師照會神經科H醫師、判斷為心臟問題後再照會內科代總醫師乙及被告甲的詳細會診流程，屬於醫療處置的過程性描述。雖有助於完整理解診療經過，但非判決核心理由之關鍵事實，pred summaries 中已涵蓋11時照會被告甲之關鍵時間點。"
+    },
+    {
+     "gt_claim_id": 124,
+     "severity": "important",
+     "text": "確認 missing：「翌日進行心臟超音波檢查，始發現上升主動脈剝離及心包膜積水」是法院認定診斷時序的關鍵事實節點。雖見於 section_01_facts.txt（pred_claim_10-11），但 reasoning section 僅提及6月3日上午9時許進行心臟超音波檢查，未明確提及「始發現上升主動脈剝離及心包膜積水」之診斷結果，影響對診斷延誤事實的理解。",
+     "reason": "確認 missing：「翌日進行心臟超音波檢查，始發現上升主動脈剝離及心包膜積水」是法院認定診斷時序的關鍵事實節點。雖見於 section_01_facts.txt（pred_claim_10-11），但 reasoning section 僅提及6月3日上午9時許進行心臟超音波檢查，未明確提及「始發現上升主動脈剝離及心包膜積水」之診斷結果，影響對診斷延誤事實的理解。"
+    },
+    {
+     "gt_claim_id": 125,
+     "severity": "important",
+     "text": "確認 missing：胸部電腦斷層證實之A型主動脈剝離範圍（上升、弓部、下降主動脈）及心包膜、胸腔積水等完整診斷細節，雖見於 section_01_facts.txt（pred_claim_12），但 reasoning section 未完整涵蓋，影響對疾病嚴重程度及診斷困難度的評估。",
+     "reason": "確認 missing：胸部電腦斷層證實之A型主動脈剝離範圍（上升、弓部、下降主動脈）及心包膜、胸腔積水等完整診斷細節，雖見於 section_01_facts.txt（pred_claim_12），但 reasoning section 未完整涵蓋，影響對疾病嚴重程度及診斷困難度的評估。"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.5643,
-   "quality_overall": 4.5643,
-   "gt_length_ratio": 0.945,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 178,
    "pred_total": 132,
-   "matched": 138,
-   "partial": 31,
-   "missing": 9,
+   "matched": 164,
+   "partial": 3,
+   "missing": 11,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.9126,
   "section_balance": 1.0
  }
 }

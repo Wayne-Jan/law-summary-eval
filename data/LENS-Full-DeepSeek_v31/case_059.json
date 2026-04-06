@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,151 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8254,
+  "fact_recall": 0.8613,
+  "fact_precision": 0.9808,
+  "fact_f1": 0.9172,
+  "quality_overall": 4.9033,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0127,
+  "uncited_rate": 0.077,
+  "faithfulness_combined": {
+   "score": 0.9461,
+   "citation_fidelity": 0.923,
+   "fact_precision": 0.9808,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9538,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 17,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "severity": "minor",
+     "text": "「上午5時50分檢查後返回急診室」此時間點事實未在 section_01_facts.txt 及 section_05_reasoning.txt 中出現，屬於腦部電腦斷層檢查的時間線背景資訊，非判決核心事實。",
+     "reason": "「上午5時50分檢查後返回急診室」此時間點事實未在 section_01_facts.txt 及 section_05_reasoning.txt 中出現，屬於腦部電腦斷層檢查的時間線背景資訊，非判決核心事實。"
+    },
+    {
+     "gt_claim_id": 94,
+     "severity": "minor",
+     "text": "『牙關緊閉』已於 facts section（claim 7）詳細記載，opinions section 為引用第一次鑑定意見之補充細節，屬鑑定意見中的具體徵象描述，非判決核心事實",
+     "reason": "『牙關緊閉』已於 facts section（claim 7）詳細記載，opinions section 為引用第一次鑑定意見之補充細節，屬鑑定意見中的具體徵象描述，非判決核心事實"
+    },
+    {
+     "gt_claim_id": 100,
+     "severity": "minor",
+     "text": "『插管超過3次不一定會引起併發症』為鑑定意見中的輔助性醫學論述，reasoning section 已涵蓋袋瓣罩限制及延誤風險之核心論點，此細節不影響判決理由理解",
+     "reason": "『插管超過3次不一定會引起併發症』為鑑定意見中的輔助性醫學論述，reasoning section 已涵蓋袋瓣罩限制及延誤風險之核心論點，此細節不影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 109,
+     "severity": "minor",
+     "text": "『在家中及到院時已有缺氧現象』為醫審會第二次鑑定意見（辯方觀點），法院於 reasoning section 明確未採納此見解（claim 149-152），屬被否定的鑑定論點，非判決基礎",
+     "reason": "『在家中及到院時已有缺氧現象』為醫審會第二次鑑定意見（辯方觀點），法院於 reasoning section 明確未採納此見解（claim 149-152），屬被否定的鑑定論點，非判決基礎"
+    },
+    {
+     "gt_claim_id": 110,
+     "severity": "minor",
+     "text": "『植物人狀態與病程發展及重傷害認定關係』為第二次鑑定意見，法院未採納此論點，判決因果關係認定相反（claim 156），屬被否定的鑑定論點",
+     "reason": "『植物人狀態與病程發展及重傷害認定關係』為第二次鑑定意見，法院未採納此論點，判決因果關係認定相反（claim 156），屬被否定的鑑定論點"
+    },
+    {
+     "gt_claim_id": 111,
+     "severity": "minor",
+     "text": "『發紺現象及護理記錄家屬敘述』為第二次鑑定意見引用的辯方論點，法院於 reasoning section 認定『尚難認...已至腦組織缺氧病變』（claim 152），未採納此見解",
+     "reason": "『發紺現象及護理記錄家屬敘述』為第二次鑑定意見引用的辯方論點，法院於 reasoning section 認定『尚難認...已至腦組織缺氧病變』（claim 152），未採納此見解"
+    },
+    {
+     "gt_claim_id": 112,
+     "severity": "minor",
+     "text": "『腦部缺氧病變多因而非單一原因』為第二次鑑定意見之病程發展論述，法院未採納此因果關係認定，屬被否定的鑑定論點",
+     "reason": "『腦部缺氧病變多因而非單一原因』為第二次鑑定意見之病程發展論述，法院未採納此因果關係認定，屬被否定的鑑定論點"
+    },
+    {
+     "gt_claim_id": 113,
+     "severity": "minor",
+     "text": "『無法判定為缺氧性腦病變之唯一原因』為第二次鑑定意見，法院於 reasoning section 相反認定『有相當因果關係』（claim 156），此為被否定的論點",
+     "reason": "『無法判定為缺氧性腦病變之唯一原因』為第二次鑑定意見，法院於 reasoning section 相反認定『有相當因果關係』（claim 156），此為被否定的論點"
+    },
+    {
+     "gt_claim_id": 114,
+     "severity": "minor",
+     "text": "『就診前1日及電腦斷層檢查時的低血氧』為第二次鑑定意見之辯方論點，法院未採納（claim 149-152）",
+     "reason": "『就診前1日及電腦斷層檢查時的低血氧』為第二次鑑定意見之辯方論點，法院未採納（claim 149-152）"
+    },
+    {
+     "gt_claim_id": 115,
+     "severity": "minor",
+     "text": "『植物人狀態與病程發展有關』為第二次鑑定意見，判決明確認定『過失行為與病患X成為植物人間有相當因果關係』（claim 156），未採納病程發展之說",
+     "reason": "『植物人狀態與病程發展有關』為第二次鑑定意見，判決明確認定『過失行為與病患X成為植物人間有相當因果關係』（claim 156），未採納病程發展之說"
+    },
+    {
+     "gt_claim_id": 116,
+     "severity": "minor",
+     "text": "『植物人狀態不能排除與插管時間過久有關』為第二次鑑定意見的謹慎表述，但法院認定為『有相當因果關係』（明確認定而非不能排除），屬程度差異",
+     "reason": "『植物人狀態不能排除與插管時間過久有關』為第二次鑑定意見的謹慎表述，但法院認定為『有相當因果關係』（明確認定而非不能排除），屬程度差異"
+    },
+    {
+     "gt_claim_id": 117,
+     "severity": "minor",
+     "text": "『原本因吸入性肺炎合併呼吸衰竭就診』已於 facts section 及 reasoning section（claim 107、140）詳細記載，opinions section 為第二次鑑定意見重複提及",
+     "reason": "『原本因吸入性肺炎合併呼吸衰竭就診』已於 facts section 及 reasoning section（claim 107、140）詳細記載，opinions section 為第二次鑑定意見重複提及"
+    },
+    {
+     "gt_claim_id": 118,
+     "severity": "minor",
+     "text": "『呼吸衰竭惡化導致需插管』已於 facts section（claims 5-8）詳細記載病程發展，opinions section 為第二次鑑定意見重複背景",
+     "reason": "『呼吸衰竭惡化導致需插管』已於 facts section（claims 5-8）詳細記載病程發展，opinions section 為第二次鑑定意見重複背景"
+    },
+    {
+     "gt_claim_id": 120,
+     "severity": "minor",
+     "text": "『值班醫師只能算是未成功救治呼吸衰竭』為第二次鑑定意見之辯方論點，法院未採納，判決認定為過失致重傷害",
+     "reason": "『值班醫師只能算是未成功救治呼吸衰竭』為第二次鑑定意見之辯方論點，法院未採納，判決認定為過失致重傷害"
+    },
+    {
+     "gt_claim_id": 121,
+     "severity": "minor",
+     "text": "『實難謂值班醫師造成缺氧性腦病變之主因』為第二次鑑定意見，法院明確認定『有相當因果關係』（claim 156），屬被否定的論點",
+     "reason": "『實難謂值班醫師造成缺氧性腦病變之主因』為第二次鑑定意見，法院明確認定『有相當因果關係』（claim 156），屬被否定的論點"
+    },
+    {
+     "gt_claim_id": 122,
+     "severity": "minor",
+     "text": "『若不插管仍會缺氧』之虛擬反事實為第二次鑑定意見的辯方論點，法院未採納（claim 155 認為『如及時建立穩定呼吸氣道，即可避免』）",
+     "reason": "『若不插管仍會缺氧』之虛擬反事實為第二次鑑定意見的辯方論點，法院未採納（claim 155 認為『如及時建立穩定呼吸氣道，即可避免』）"
+    },
+    {
+     "gt_claim_id": 123,
+     "severity": "minor",
+     "text": "『即使插管成功也難保證避免缺氧』為第二次鑑定意見之辯方論點，法院未採納（claim 155 認為及時建立氣道『即可避免』）",
+     "reason": "『即使插管成功也難保證避免缺氧』為第二次鑑定意見之辯方論點，法院未採納（claim 155 認為及時建立氣道『即可避免』）"
+    },
+    {
+     "gt_claim_id": 137,
+     "severity": "important",
+     "text": "法院對鑑定書及函文意見的駁斥是判決理由的重要組成部分。雖然摘要(五)判決理由段落確立了因果關係並認定被告過失，但並未明確提及法院如何回應醫審會認為「病人成為植物人係病程發展之結果」之鑑定意見。此為法院處理不利鑑定意見之重要論理過程，其缺失影響對判決理由完整性的理解。",
+     "reason": "法院對鑑定書及函文意見的駁斥是判決理由的重要組成部分。雖然摘要(五)判決理由段落確立了因果關係並認定被告過失，但並未明確提及法院如何回應醫審會認為「病人成為植物人係病程發展之結果」之鑑定意見。此為法院處理不利鑑定意見之重要論理過程，其缺失影響對判決理由完整性的理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 137,
+   "pred_total": 156,
+   "matched": 117,
+   "partial": 2,
+   "missing": 18,
+   "hallucinated": 3
+  },
+  "section_balance": 1.0
+ }
 }

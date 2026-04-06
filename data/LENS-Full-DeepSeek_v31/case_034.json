@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -184,16 +184,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8591,
-  "fact_recall": 0.78,
+  "fact_recall": 0.7485,
   "fact_precision": 1.0,
-  "fact_f1": 0.88,
+  "fact_f1": 0.8562,
   "quality_overall": 4.8304,
   "citation_accuracy": 0.9348,
   "citation_support_score": 0.9529,
-  "uncited_rate": 0.014,
+  "uncited_rate": 0.007,
   "faithfulness_combined": {
-   "score": 0.953,
-   "citation_fidelity": 0.9217,
+   "score": 0.957,
+   "citation_fidelity": 0.9283,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -203,168 +203,232 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9501,
+  "weighted_recall": 0.9162,
   "missing_severity": {
    "critical": 0,
-   "important": 8,
-   "minor": 9,
+   "important": 7,
+   "minor": 28,
    "details": [
     {
      "gt_claim_id": 2,
      "severity": "minor",
-     "text": "產婦Z係越南籍婦女",
-     "reason": "背景資訊，不影響案情理解"
+     "text": "經跨 section 檢查，生成摘要完全未提及產婦國籍（越南籍）。此為背景性事實，不影響核心案情理解。",
+     "reason": "經跨 section 檢查，生成摘要完全未提及產婦國籍（越南籍）。此為背景性事實，不影響核心案情理解。"
+    },
+    {
+     "gt_claim_id": 32,
+     "severity": "minor",
+     "text": "被告醫師資格與服務機構之背景性事實，雖未在 defense section 中出現，但已在 facts section（claim 1、claim 16）完整涵蓋：「醫師甲係設於基隆市之婦產科診所之醫師兼負責人」、「被告甲係領有醫師執照之婦產科專業醫師」。此為被告身份背景資訊，不影響 defense section 核心辯論內容之理解，屬次要性遺漏。",
+     "reason": "被告醫師資格與服務機構之背景性事實，雖未在 defense section 中出現，但已在 facts section（claim 1、claim 16）完整涵蓋：「醫師甲係設於基隆市之婦產科診所之醫師兼負責人」、「被告甲係領有醫師執照之婦產科專業醫師」。此為被告身份背景資訊，不影響 defense section 核心辯論內容之理解，屬次要性遺漏。"
     },
     {
      "gt_claim_id": 59,
      "severity": "minor",
-     "text": "頭皮下腱膜出血等可發生在產鉗生產、自然產或剖腹產，按Williams Obstetrics記載",
-     "reason": "醫學文獻來源細節，已涵蓋核心成因說明"
-    },
-    {
-     "gt_claim_id": 60,
-     "severity": "minor",
-     "text": "06:35發現胎兒膚色微紫，醫師是否發現頭皮腫脹合併症無法判斷",
-     "reason": "具體時間點判斷困難說明，核心概念已涵蓋"
+     "text": "Williams Obstetrics 教科書具體引用來源，屬文獻出處細節，不影響鑑定意見實質內容理解",
+     "reason": "Williams Obstetrics 教科書具體引用來源，屬文獻出處細節，不影響鑑定意見實質內容理解"
     },
     {
      "gt_claim_id": 61,
      "severity": "minor",
-     "text": "本案產婦為第一胎",
-     "reason": "產婦背景資訊，不影響核心判決"
+     "text": "產婦為第一胎係背景資訊，不影響鑑定意見對傷害成因的分析",
+     "reason": "產婦為第一胎係背景資訊，不影響鑑定意見對傷害成因的分析"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "minor",
+     "text": "胎頭位置細節（骨盆正中央往下約2、3公分）屬鑑定分析過程，摘要已提及『胎頭很低』之結論",
+     "reason": "胎頭位置細節（骨盆正中央往下約2、3公分）屬鑑定分析過程，摘要已提及『胎頭很低』之結論"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "minor",
+     "text": "血腫塊位於『右側』的方位細節，摘要已提及血腫塊尺寸",
+     "reason": "血腫塊位於『右側』的方位細節，摘要已提及血腫塊尺寸"
     },
     {
      "gt_claim_id": 65,
      "severity": "minor",
-     "text": "依據出生時病歷未見有血腫塊之記載",
-     "reason": "病歷細節，核心事實（05:53出生時無血腫）已涵蓋"
+     "text": "『出生時病歷未記載血腫塊』與『長庚醫院8:05送達時未顯示血腫塊』為不同時間點，摘要已涵蓋後者",
+     "reason": "『出生時病歷未記載血腫塊』與『長庚醫院8:05送達時未顯示血腫塊』為不同時間點，摘要已涵蓋後者"
     },
     {
-     "gt_claim_id": 70,
+     "gt_claim_id": 89,
      "severity": "minor",
-     "text": "中樞型膚色發紫成因包括心臟病、肺臟疾病等詳細說明",
-     "reason": "醫學知識細節，已涵蓋核心處置原則"
-    },
-    {
-     "gt_claim_id": 71,
-     "severity": "minor",
-     "text": "周邊型膚色發紫成因包括肢端血流阻塞等詳細說明",
-     "reason": "醫學知識細節，已涵蓋核心處置原則"
-    },
-    {
-     "gt_claim_id": 77,
-     "severity": "minor",
-     "text": "頭部瀰漫出血在送至G醫院期間會持續發生",
-     "reason": "出血持續性細節，核心概念（不易察覺）已涵蓋"
+     "text": "頭部傷害出現時間的推論（上午4時40分後）屬詳細分析過程",
+     "reason": "頭部傷害出現時間的推論（上午4時40分後）屬詳細分析過程"
     },
     {
      "gt_claim_id": 90,
      "severity": "minor",
-     "text": "剖腹產發生硬腦膜下腔出血發生率為7.4%",
-     "reason": "統計數據細節，未影響判決結論"
+     "text": "剖腹產併發症統計數據（7.4%）屬文獻引用細節",
+     "reason": "剖腹產併發症統計數據（7.4%）屬文獻引用細節"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "important",
+     "text": "『排除陰道擠壓傷害（因未進入第二產程）』係鑑定關鍵推論，影響死因判斷",
+     "reason": "『排除陰道擠壓傷害（因未進入第二產程）』係鑑定關鍵推論，影響死因判斷"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "important",
+     "text": "『時間上的相關性和醫學文獻上的可能性』之綜合結論，屬鑑定核心要點",
+     "reason": "『時間上的相關性和醫學文獻上的可能性』之綜合結論，屬鑑定核心要點"
+    },
+    {
+     "gt_claim_id": 94,
+     "severity": "minor",
+     "text": "胎兒頭部骨折發生機率的文獻引用屬補充說明",
+     "reason": "胎兒頭部骨折發生機率的文獻引用屬補充說明"
     },
     {
      "gt_claim_id": 95,
      "severity": "minor",
-     "text": "第一產程、第二產程定義說明",
-     "reason": "醫學定義，屬背景知識"
+     "text": "第一/第二產程定義屬醫學背景知識說明",
+     "reason": "第一/第二產程定義屬醫學背景知識說明"
+    },
+    {
+     "gt_claim_id": 96,
+     "severity": "minor",
+     "text": "骨盆腔壓迫胎頭時機的詳細說明（第一產程/第二產程）屬分析過程",
+     "reason": "骨盆腔壓迫胎頭時機的詳細說明（第一產程/第二產程）屬分析過程"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "子宮頸擴張6公分時母體扭動風險屬詳細分析",
+     "reason": "子宮頸擴張6公分時母體扭動風險屬詳細分析"
+    },
+    {
+     "gt_claim_id": 99,
+     "severity": "minor",
+     "text": "真空吸引器可能提高受傷機率之風險說明",
+     "reason": "真空吸引器可能提高受傷機率之風險說明"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "自然生產可能發生頭部骨折之文獻說明",
+     "reason": "自然生產可能發生頭部骨折之文獻說明"
+    },
+    {
+     "gt_claim_id": 102,
+     "severity": "important",
+     "text": "『病歷未記載真空吸引器使用』係鑑定重要發現，涉及醫療紀錄完整性",
+     "reason": "『病歷未記載真空吸引器使用』係鑑定重要發現，涉及醫療紀錄完整性"
+    },
+    {
+     "gt_claim_id": 103,
+     "severity": "important",
+     "text": "『時間上關聯性難以判斷』之結論屬鑑定核心要點",
+     "reason": "『時間上關聯性難以判斷』之結論屬鑑定核心要點"
     },
     {
      "gt_claim_id": 104,
      "severity": "minor",
-     "text": "真空吸引器使用時間一般約數秒鐘",
-     "reason": "使用時間細節，已涵蓋符合醫療常規之結論"
+     "text": "『壓力過大、使用過久、次數過多』等風險因素列舉",
+     "reason": "『壓力過大、使用過久、次數過多』等風險因素列舉"
     },
     {
      "gt_claim_id": 105,
      "severity": "minor",
-     "text": "剖腹產手術可於30分鐘內完成，本案並未短促甚多",
-     "reason": "手術時間比較，已涵蓋無遲延之結論"
+     "text": "『手術時間與真空吸引器使用判斷』之分析",
+     "reason": "『手術時間與真空吸引器使用判斷』之分析"
+    },
+    {
+     "gt_claim_id": 106,
+     "severity": "minor",
+     "text": "『凡曾試陰道生產之新生兒』開頭的條件說明，摘要已涵蓋血腫塊可能剛出生不明顯之結論",
+     "reason": "『凡曾試陰道生產之新生兒』開頭的條件說明，摘要已涵蓋血腫塊可能剛出生不明顯之結論"
     },
     {
      "gt_claim_id": 117,
      "severity": "minor",
-     "text": "Thacker et al:1987文獻引用",
-     "reason": "文獻來源細節"
+     "text": "Thacker et al:1987 文獻引用來源",
+     "reason": "Thacker et al:1987 文獻引用來源"
     },
     {
      "gt_claim_id": 118,
      "severity": "minor",
-     "text": "Skajaa et al: 1987文獻引用",
-     "reason": "文獻來源細節"
+     "text": "Skajaa et al:1987 文獻引用來源",
+     "reason": "Skajaa et al:1987 文獻引用來源"
+    },
+    {
+     "gt_claim_id": 119,
+     "severity": "important",
+     "text": "『第一產程無難產、未進入第二產程』係排除相關傷害可能性的關鍵依據",
+     "reason": "『第一產程無難產、未進入第二產程』係排除相關傷害可能性的關鍵依據"
     },
     {
      "gt_claim_id": 120,
      "severity": "minor",
-     "text": "孕婦雙腿夾緊時易壓迫胎兒頭部的生產姿勢說明",
-     "reason": "生產姿勢細節，核心事實（產婦躁動）已涵蓋"
+     "text": "產婦姿勢與胎兒產傷風險之討論",
+     "reason": "產婦姿勢與胎兒產傷風險之討論"
+    },
+    {
+     "gt_claim_id": 121,
+     "severity": "minor",
+     "text": "『非絕對禁止』之表述，摘要已提及『符合醫療常規』",
+     "reason": "『非絕對禁止』之表述，摘要已提及『符合醫療常規』"
     },
     {
      "gt_claim_id": 122,
      "severity": "minor",
-     "text": "併用真空吸引方式因手術傷口較產道寬大更不易造成嬰兒傷害",
-     "reason": "風險比較說明，已涵蓋符合醫療常規之結論"
+     "text": "『手術傷口較產道寬大、娩出時間較快』等比較分析",
+     "reason": "『手術傷口較產道寬大、娩出時間較快』等比較分析"
+    },
+    {
+     "gt_claim_id": 123,
+     "severity": "important",
+     "text": "『骨盆腔壓迫』、『第二產程』、『第一產程』等詳細醫學機制分析",
+     "reason": "『骨盆腔壓迫』、『第二產程』、『第一產程』等詳細醫學機制分析"
     },
     {
      "gt_claim_id": 124,
-     "severity": "minor",
-     "text": "因產痛甚劇亦有可能進入第二產程",
-     "reason": "產程推測細節"
+     "severity": "important",
+     "text": "『有可能進入第二產程，有可能因骨盆腔壓迫造成骨折』之鑑定推論",
+     "reason": "『有可能進入第二產程，有可能因骨盆腔壓迫造成骨折』之鑑定推論"
     },
     {
      "gt_claim_id": 125,
      "severity": "minor",
-     "text": "生產期間施行剖腹產發生硬腦膜腔出血發生率為7.4%",
-     "reason": "統計數據細節"
-    },
-    {
-     "gt_claim_id": 127,
-     "severity": "minor",
-     "text": "詳細文獻引用（Thacker et al）",
-     "reason": "文獻來源細節"
+     "text": "『7.4%發生率』、『頭部骨折極為罕見』等統計數據",
+     "reason": "『7.4%發生率』、『頭部骨折極為罕見』等統計數據"
     },
     {
      "gt_claim_id": 128,
      "severity": "minor",
-     "text": "詳細文獻引用（Skajaa et al）",
-     "reason": "文獻來源細節"
+     "text": "『產鉗、器械輔助生產』之相關說明",
+     "reason": "『產鉗、器械輔助生產』之相關說明"
     },
     {
      "gt_claim_id": 140,
-     "severity": "important",
-     "text": "檢察官於法定上訴期間未上訴",
-     "reason": "影響判決確定性理解，屬程序性重要資訊"
+     "severity": "minor",
+     "text": "程序性事實，關於檢察官是否上訴之程序狀態，不影響判決無罪之結論理解",
+     "reason": "程序性事實，關於檢察官是否上訴之程序狀態，不影響判決無罪之結論理解"
     },
     {
      "gt_claim_id": 141,
-     "severity": "important",
-     "text": "本案判決即確定",
-     "reason": "影響判決最終效力理解"
+     "severity": "minor",
+     "text": "程序性事實，關於判決確定之程序狀態，不影響判決無罪之結論理解",
+     "reason": "程序性事實，關於判決確定之程序狀態，不影響判決無罪之結論理解"
     },
     {
-     "gt_claim_id": 147,
-     "severity": "important",
-     "text": "法院整理四項爭點",
-     "reason": "影響法院審理架構理解"
+     "gt_claim_id": 155,
+     "severity": "minor",
+     "text": "「可以排除病患產後有碰撞地面或其他物品之傷害」為一排除性事實敘述，用於排除其他可能的傷害來源。經查 section_05_reasoning.txt 全文及所有預測 claims，均未提及「碰撞地面」或「掉到地上」等相關內容。雖法務部法醫研究所鑑定意見中有「死者沒有掉到地上受傷」之記載，但摘要未涵蓋此排除性判斷。惟此為排除性事實，不影響核心死因及過失認定之理解，故列為次要遺漏。",
+     "reason": "「可以排除病患產後有碰撞地面或其他物品之傷害」為一排除性事實敘述，用於排除其他可能的傷害來源。經查 section_05_reasoning.txt 全文及所有預測 claims，均未提及「碰撞地面」或「掉到地上」等相關內容。雖法務部法醫研究所鑑定意見中有「死者沒有掉到地上受傷」之記載，但摘要未涵蓋此排除性判斷。惟此為排除性事實，不影響核心死因及過失認定之理解，故列為次要遺漏。"
     }
    ]
-  },
-  "information_density": {
-   "score": 3.7691,
-   "quality_overall": 4.8304,
-   "gt_length_ratio": 0.5462,
-   "length_penalty": 0.7803,
-   "zone": "too_short"
   },
   "fact_detail": {
    "gt_total": 167,
    "pred_total": 141,
-   "matched": 122,
-   "partial": 18,
-   "missing": 27,
+   "matched": 117,
+   "partial": 16,
+   "missing": 34,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 1.428,
   "section_balance": 1.0
  }
 }

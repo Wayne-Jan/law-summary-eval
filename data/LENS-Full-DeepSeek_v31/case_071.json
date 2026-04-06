@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -129,5 +130,139 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6757,
+  "fact_recall": 0.8665,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9285,
+  "quality_overall": 4.7857,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.05,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9627,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 14,
+   "details": [
+    {
+     "gt_claim_id": 58,
+     "severity": "minor",
+     "text": "程序性事實細節（丙向丁報告的具體行為），不影響對會診流程的核心理解",
+     "reason": "程序性事實細節（丙向丁報告的具體行為），不影響對會診流程的核心理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "severity": "minor",
+     "text": "辯護細節（丁醫師確認其他醫師診斷），摘要已呈現被告甲研判急性闌尾炎，此確認性陳述為次要細節",
+     "reason": "辯護細節（丁醫師確認其他醫師診斷），摘要已呈現被告甲研判急性闌尾炎，此確認性陳述為次要細節"
+    },
+    {
+     "gt_claim_id": 62,
+     "severity": "important",
+     "text": "被告重要醫學論辯內容（急性主動脈剝離典型症狀描述），雖 pred_91 提及『無撕裂般胸痛』，但缺乏完整的症狀對比論述，影響對辯護要點的完整理解",
+     "reason": "被告重要醫學論辯內容（急性主動脈剝離典型症狀描述），雖 pred_91 提及『無撕裂般胸痛』，但缺乏完整的症狀對比論述，影響對辯護要點的完整理解"
+    },
+    {
+     "gt_claim_id": 63,
+     "severity": "minor",
+     "text": "檢查細節（抽血就酵素檢查），屬醫療技術性細節，不影響核心案情理解",
+     "reason": "檢查細節（抽血就酵素檢查），屬醫療技術性細節，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 64,
+     "severity": "minor",
+     "text": "鑑定報告細節（X光及心電圖無法診斷馬凡氏症），摘要 pred_121 已提及不宜苛求急診醫師診斷心臟血管疾病，此細節為補充說明",
+     "reason": "鑑定報告細節（X光及心電圖無法診斷馬凡氏症），摘要 pred_121 已提及不宜苛求急診醫師診斷心臟血管疾病，此細節為補充說明"
+    },
+    {
+     "gt_claim_id": 66,
+     "severity": "minor",
+     "text": "具體時間點（十點左右），摘要已有其他時間描述（八點、十一點近十二點），此為次要時間細節",
+     "reason": "具體時間點（十點左右），摘要已有其他時間描述（八點、十一點近十二點），此為次要時間細節"
+    },
+    {
+     "gt_claim_id": 70,
+     "severity": "minor",
+     "text": "被告總結性主張（會診過程無過失），摘要已涵蓋具體診療行為，此為概括性結論",
+     "reason": "被告總結性主張（會診過程無過失），摘要已涵蓋具體診療行為，此為概括性結論"
+    },
+    {
+     "gt_claim_id": 79,
+     "severity": "minor",
+     "text": "背景性論點（先天性疾病患者就醫選擇），屬辯護的輔助論述，非核心事實",
+     "reason": "背景性論點（先天性疾病患者就醫選擇），屬辯護的輔助論述，非核心事實"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "minor",
+     "text": "被告總結性主張（醫院整個流程無過失），屬概括性結論，具體診療過程已於摘要中呈現",
+     "reason": "被告總結性主張（醫院整個流程無過失），屬概括性結論，具體診療過程已於摘要中呈現"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "馬凡氏症自體顯性遺傳及膠原形成缺陷的基礎醫學定義，屬於背景性醫學知識，不影響判決結論理解",
+     "reason": "馬凡氏症自體顯性遺傳及膠原形成缺陷的基礎醫學定義，屬於背景性醫學知識，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "severity": "minor",
+     "text": "15%病人基因突變統計數據為背景性補充資訊，不影響案情理解",
+     "reason": "15%病人基因突變統計數據為背景性補充資訊，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 100,
+     "severity": "minor",
+     "text": "馬凡氏症診斷方法的詳細描述為醫學背景知識，在判決理由中已有臨床難診斷的說明，此細節不影響判決理解",
+     "reason": "馬凡氏症診斷方法的詳細描述為醫學背景知識，在判決理由中已有臨床難診斷的說明，此細節不影響判決理解"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "95%有心臟血管異常統計數據為背景性補充資訊，不影響死因認定",
+     "reason": "95%有心臟血管異常統計數據為背景性補充資訊，不影響死因認定"
+    },
+    {
+     "gt_claim_id": 102,
+     "severity": "minor",
+     "text": "80%有升主動脈瘤統計數據為背景性補充資訊，與個案死因無直接關係",
+     "reason": "80%有升主動脈瘤統計數據為背景性補充資訊，與個案死因無直接關係"
+    },
+    {
+     "gt_claim_id": 108,
+     "severity": "minor",
+     "text": "X光片無相關醫師報告屬病歷形式問題，非關鍵醫療過失認定事實",
+     "reason": "X光片無相關醫師報告屬病歷形式問題，非關鍵醫療過失認定事實"
+    },
+    {
+     "gt_claim_id": 115,
+     "severity": "important",
+     "text": "判決結果段（第四段）僅提及『被告甲、被告乙均無罪』，未明確宣告案件類型為『業務過失致人於死案件』。雖然事實段有提及『業務過失致死罪嫌』，但判決結果段作為獨立段落，應完整呈現判決案件類型。此為重要資訊遺漏，影響讀者對案件性質的完整理解。",
+     "reason": "判決結果段（第四段）僅提及『被告甲、被告乙均無罪』，未明確宣告案件類型為『業務過失致人於死案件』。雖然事實段有提及『業務過失致死罪嫌』，但判決結果段作為獨立段落，應完整呈現判決案件類型。此為重要資訊遺漏，影響讀者對案件性質的完整理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 161,
+   "pred_total": 163,
+   "matched": 134,
+   "partial": 11,
+   "missing": 16,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

@@ -138,16 +138,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.799,
-  "fact_recall": 0.769,
+  "fact_recall": 0.9747,
   "fact_precision": 1.0,
-  "fact_f1": 0.87,
+  "fact_f1": 0.9872,
   "quality_overall": 4.6214,
   "citation_accuracy": 0.88,
   "citation_support_score": 0.932,
-  "uncited_rate": 0.007,
+  "uncited_rate": 0.0,
   "faithfulness_combined": {
-   "score": 0.9243,
-   "citation_fidelity": 0.8738,
+   "score": 0.928,
+   "citation_fidelity": 0.88,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -157,84 +157,46 @@
   "compliance": 2,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9768,
+  "weighted_recall": 0.9916,
   "missing_severity": {
    "critical": 0,
-   "important": 2,
-   "minor": 7,
+   "important": 0,
+   "minor": 4,
    "details": [
     {
      "gt_claim_id": 51,
      "severity": "minor",
-     "text": "檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實，不影響案情實體理解"
+     "text": "原始判決書僅提及『本案經檢察官廖棣儀到庭執行職務』，未明確記載檢察官是否上訴，生成摘要未提及此資訊。屬程序性事實，不影響判決實體理解。",
+     "reason": "原始判決書僅提及『本案經檢察官廖棣儀到庭執行職務』，未明確記載檢察官是否上訴，生成摘要未提及此資訊。屬程序性事實，不影響判決實體理解。"
     },
     {
      "gt_claim_id": 52,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序性事實，判決結果已提及『無罪』，確定與否不影響無罪判決之理解"
+     "text": "原始判決書未明確記載『判決確定』，生成摘要未提及此資訊。屬程序性事實，不影響判決實體理解。",
+     "reason": "原始判決書未明確記載『判決確定』，生成摘要未提及此資訊。屬程序性事實，不影響判決實體理解。"
     },
     {
-     "gt_claim_id": 79,
+     "gt_claim_id": 58,
      "severity": "minor",
-     "text": "被告甲不會在急診處理事情",
-     "reason": "背景性工作流程細節，不影響主要案情理解"
+     "text": "雖為法院論證細節，但係質疑告訴人證詞可信度之輔助論點，非屬影響判決結論之核心事實",
+     "reason": "雖為法院論證細節，但係質疑告訴人證詞可信度之輔助論點，非屬影響判決結論之核心事實"
     },
     {
-     "gt_claim_id": 85,
+     "gt_claim_id": 63,
      "severity": "minor",
-     "text": "有A醫院住院病歷紀錄、護理紀錄單等可憑",
-     "reason": "證據引用形式，實質內容（病歷記載）已於其他claims涵蓋"
-    },
-    {
-     "gt_claim_id": 113,
-     "severity": "minor",
-     "text": "醫師T當時問過病患到底是哪裡過敏，但是病患說不清楚",
-     "reason": "細節性證詞內容，核心事實（病患說不清楚）已由其他claims涵蓋"
-    },
-    {
-     "gt_claim_id": 118,
-     "severity": "minor",
-     "text": "病患約7月17日凌晨才住院",
-     "reason": "時間細節，不影響主要時間軸理解（已於陸正威證詞中帶過）"
-    },
-    {
-     "gt_claim_id": 120,
-     "severity": "minor",
-     "text": "醫師R是直接跟病患W詢問有無對藥物過敏",
-     "reason": "證人證詞細節，核心事實已由其他claims涵蓋"
-    },
-    {
-     "gt_claim_id": 121,
-     "severity": "minor",
-     "text": "醫師R對有無接觸到家屬則沒有印象",
-     "reason": "證人證詞細節，不影響主要事實認定"
-    },
-    {
-     "gt_claim_id": 122,
-     "severity": "important",
-     "text": "若病患說有過敏，醫師R會問是哪一種藥物過敏，並記錄下來",
-     "reason": "涉及醫師詢問義務與病歷記載流程之專業常規，與過失認定相關"
+     "text": "雖為法院對健保卡註記疑點之分析，但係程序性論證細節，可從 reasoninig section 上下文推知相關內容，不影響核心過失認定",
+     "reason": "雖為法院對健保卡註記疑點之分析，但係程序性論證細節，可從 reasoninig section 上下文推知相關內容，不影響核心過失認定"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.0945,
-   "quality_overall": 4.6214,
-   "gt_length_ratio": 1.4673,
-   "length_penalty": 0.886,
-   "zone": "too_long"
   },
   "fact_detail": {
    "gt_total": 158,
    "pred_total": 150,
-   "matched": 119,
-   "partial": 5,
-   "missing": 34,
+   "matched": 154,
+   "partial": 0,
+   "missing": 4,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.5241,
   "section_balance": 1.0
  }
 }

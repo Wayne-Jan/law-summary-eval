@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -132,9 +132,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7651,
-  "fact_recall": 0.76,
+  "fact_recall": 0.6486,
   "fact_precision": 1.0,
-  "fact_f1": 0.86,
+  "fact_f1": 0.7869,
   "quality_overall": 4.6143,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.8714,
@@ -154,97 +154,85 @@
   "weighted_recall": 0.8739,
   "missing_severity": {
    "critical": 0,
-   "important": 5,
-   "minor": 4,
+   "important": 3,
+   "minor": 8,
    "details": [
-    {
-     "gt_claim_id": 5,
-     "severity": "important",
-     "status": "partial",
-     "text": "檢察官起訴主張被告甲成立刑法第276條第2項業務過失致死罪",
-     "reason": "影響罪名理解，但核心事實（起訴過失致死）已涵蓋"
-    },
-    {
-     "gt_claim_id": 18,
-     "severity": "important",
-     "status": "missing",
-     "text": "因為協商判決，鑑定內容未明載",
-     "reason": "影響對判決程序特殊性的理解"
-    },
-    {
-     "gt_claim_id": 34,
-     "severity": "important",
-     "status": "missing",
-     "text": "被告甲與病患K父母丙、戊已達成和解",
-     "reason": "影響對案件和解背景的理解"
-    },
-    {
-     "gt_claim_id": 35,
-     "severity": "important",
-     "status": "missing",
-     "text": "病患K父親丙並於96年10月31日向本院撤回對被告之告訴",
-     "reason": "影響對訴訟程序終結方式的理解"
-    },
-    {
-     "gt_claim_id": 37,
-     "severity": "important",
-     "status": "missing",
-     "text": "判決書內文無判決理由",
-     "reason": "與摘要實際產生內容存在重要不一致，影響對判決性質的理解"
-    },
     {
      "gt_claim_id": 2,
      "severity": "minor",
-     "status": "missing",
-     "text": "丙、戊之女即病患K",
-     "reason": "親屬關係細節，不影響案情理解"
+     "text": "病患與家屬親屬關係為背景性事實，不影響案情核心理解",
+     "reason": "病患與家屬親屬關係為背景性事實，不影響案情核心理解"
     },
     {
      "gt_claim_id": 13,
      "severity": "minor",
-     "status": "missing",
-     "text": "病患K之父丙提起告訴",
-     "reason": "程序起始細節，摘要已有「案經檢察官偵查起訴」"
+     "text": "告訴人身份及提起告訴為程序性事實，不影響判決結論理解",
+     "reason": "告訴人身份及提起告訴為程序性事實，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "severity": "minor",
+     "text": "『因協商判決導致鑑定內容未明載』為評論性說明，非核心事實",
+     "reason": "『因協商判決導致鑑定內容未明載』為評論性說明，非核心事實"
+    },
+    {
+     "gt_claim_id": 19,
+     "severity": "minor",
+     "text": "文件清單為列舉性事實，pred 已提及法務部法醫研究所鑑定書，缺少相驗證明書不影響核心案情",
+     "reason": "文件清單為列舉性事實，pred 已提及法務部法醫研究所鑑定書，缺少相驗證明書不影響核心案情"
+    },
+    {
+     "gt_claim_id": 21,
+     "severity": "minor",
+     "text": "被告於本院訊問時自白犯罪的事實已在 reasoning section claim 33 提及，此處為重複表述自白時機，屬次要細節",
+     "reason": "被告於本院訊問時自白犯罪的事實已在 reasoning section claim 33 提及，此處為重複表述自白時機，屬次要細節"
     },
     {
      "gt_claim_id": 30,
      "severity": "minor",
-     "status": "missing",
-     "text": "被告、檢察官於法定上訴期間未上訴",
-     "reason": "程序性事實，不影響判決結果理解"
+     "text": "未上訴為程序性結果事實，不影響判決主文理解",
+     "reason": "未上訴為程序性結果事實，不影響判決主文理解"
     },
     {
      "gt_claim_id": 31,
      "severity": "minor",
-     "status": "missing",
-     "text": "本案判決即確定",
-     "reason": "判決狀態聲明，屬程序性資訊"
+     "text": "判決確定為程序性結果事實，可從減刑及緩刑宣告推論",
+     "reason": "判決確定為程序性結果事實，可從減刑及緩刑宣告推論"
+    },
+    {
+     "gt_claim_id": 34,
+     "severity": "important",
+     "text": "被告與被害人家屬達成和解為判決重要考量因素，影響量刑及緩刑決定，屬重要事實",
+     "reason": "被告與被害人家屬達成和解為判決重要考量因素，影響量刑及緩刑決定，屬重要事實"
+    },
+    {
+     "gt_claim_id": 35,
+     "severity": "important",
+     "text": "撤回告訴為重要程序事實，影響案件進展理解，屬重要事實",
+     "reason": "撤回告訴為重要程序事實，影響案件進展理解，屬重要事實"
     },
     {
      "gt_claim_id": 36,
+     "severity": "important",
+     "text": "表明不再追究刑事責任為重要和解內容，影響法院量刑考量，屬重要事實",
+     "reason": "表明不再追究刑事責任為重要和解內容，影響法院量刑考量，屬重要事實"
+    },
+    {
+     "gt_claim_id": 37,
      "severity": "minor",
-     "status": "missing",
-     "text": "表明不再追究被告刑事責任",
-     "reason": "撤回告訴之附帶聲明，不影響核心理解"
+     "text": "判決書有無判決理由為評論性事實，非案情核心事實",
+     "reason": "判決書有無判決理由為評論性事實，非案情核心事實"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.6143,
-   "quality_overall": 4.6143,
-   "gt_length_ratio": 1.1174,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 37,
    "pred_total": 42,
-   "matched": 25,
-   "partial": 6,
-   "missing": 6,
+   "matched": 23,
+   "partial": 2,
+   "missing": 11,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.6802,
   "section_balance": 1.0
  }
 }

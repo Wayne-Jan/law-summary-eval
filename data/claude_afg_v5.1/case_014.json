@@ -128,17 +128,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.707,
-  "fact_recall": 0.8581081081081081,
-  "fact_precision": 1.0,
-  "fact_f1": 0.9239130434782609,
+  "fact_recall": 0.9324,
+  "fact_precision": 0.9882,
+  "fact_f1": 0.9595,
   "quality_overall": 4.9024,
   "citation_accuracy": 0.9444,
   "citation_support_score": 0.9216,
-  "uncited_rate": 0.0,
+  "uncited_rate": 0.035,
   "faithfulness_combined": {
-   "score": 0.9666,
-   "citation_fidelity": 0.9444,
-   "fact_precision": 1.0,
+   "score": 0.9421,
+   "citation_fidelity": 0.9113,
+   "fact_precision": 0.9882,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -147,54 +147,40 @@
   "compliance": 5,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9775,
+  "weighted_recall": 0.982,
   "missing_severity": {
    "critical": 0,
    "important": 1,
-   "minor": 3,
+   "minor": 2,
    "details": [
     {
-     "gt_claim_id": 30,
+     "gt_claim_id": 29,
      "severity": "minor",
-     "text": "依據G醫院之病歷記載並沒有提到病患H有頸靜脈鼓脹之情形產生",
-     "reason": "病歷記載之否定性細節，不影響核心案情理解"
+     "text": "「醫審會兩件、法醫研究所一件」屬鑑定數量統計性描述，為程序性背景事實。pred summary 雖分別提及各鑑定（第88332號、第89294號、法醫研究所），但未總結數量，不影響案情實質理解，屬次要遺漏。",
+     "reason": "「醫審會兩件、法醫研究所一件」屬鑑定數量統計性描述，為程序性背景事實。pred summary 雖分別提及各鑑定（第88332號、第89294號、法醫研究所），但未總結數量，不影響案情實質理解，屬次要遺漏。"
+    },
+    {
+     "gt_claim_id": 30,
+     "severity": "important",
+     "text": "「病歷未記載頸靜脈鼓脹」為重要否定性證據，涉及法院對鑑定意見可信度的評價（教科書說應有，但病歷沒記載）。此遺漏影響對法院證據判斷邏輯的完整理解，屬重要事實。",
+     "reason": "「病歷未記載頸靜脈鼓脹」為重要否定性證據，涉及法院對鑑定意見可信度的評價（教科書說應有，但病歷沒記載）。此遺漏影響對法院證據判斷邏輯的完整理解，屬重要事實。"
     },
     {
      "gt_claim_id": 43,
      "severity": "minor",
-     "text": "臺灣基隆地方法院檢察署檢察官督同法醫師相驗",
-     "reason": "程序性事實（相驗程序），不影響判決結論理解"
-    },
-    {
-     "gt_claim_id": 65,
-     "severity": "important",
-     "text": "依據法醫解剖報告,病患H心包膜積血約為80cc,心包膜表面覆蓋黃色的纖維蛋白塊,重75公克",
-     "reason": "法醫解剖具體量化數值（80cc積血、75公克纖維蛋白塊），影響對心包膜積血嚴重程度及死因機轉的完整理解"
-    },
-    {
-     "gt_claim_id": 66,
-     "severity": "minor",
-     "text": "可推測心包膜變性及硬度增加而造成心內壓增高,心血充填受限及心輸出量減少",
-     "reason": "病理機制推論細節，雖有助理解心臟填塞之病理生理，但非判決核心事實"
+     "text": "「檢察官督同法醫師相驗」為程序性事實，屬解剖鑑定的前置程序，不影響死因認定與過失判斷的實質理解，屬次要遺漏。",
+     "reason": "「檢察官督同法醫師相驗」為程序性事實，屬解剖鑑定的前置程序，不影響死因認定與過失判斷的實質理解，屬次要遺漏。"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.9024,
-   "quality_overall": 4.9024,
-   "gt_length_ratio": 1.2676,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 74,
    "pred_total": 85,
-   "matched": 59,
-   "partial": 9,
-   "missing": 6,
-   "hallucinated": 0
+   "matched": 67,
+   "partial": 4,
+   "missing": 3,
+   "hallucinated": 1
   },
-  "fact_recall_efficiency": 0.677,
   "section_balance": 1.0
  }
 }

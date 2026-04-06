@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -124,16 +124,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7712,
-  "fact_recall": 0.948529411764706,
+  "fact_recall": 0.9559,
   "fact_precision": 1.0,
-  "fact_f1": 0.9736842105263158,
+  "fact_f1": 0.9774,
   "quality_overall": 4.8107,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.98,
-  "uncited_rate": 0.056,
+  "uncited_rate": 0.07,
   "faithfulness_combined": {
-   "score": 0.9664,
-   "citation_fidelity": 0.944,
+   "score": 0.958,
+   "citation_fidelity": 0.93,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -143,48 +143,34 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 0.964,
-  "weighted_recall": 0.9853,
+  "weighted_recall": 0.9902,
   "missing_severity": {
    "critical": 0,
    "important": 0,
-   "minor": 3,
+   "minor": 2,
    "details": [
     {
      "gt_claim_id": 50,
      "severity": "minor",
-     "text": "檢察官於法定上訴期間未上訴",
-     "reason": "判決後程序性事實，屬判決執行層面資訊，不影響案情實體理解"
+     "text": "檢察官上訴狀態為判決書末尾程序性事實。經查全部 5 個 section 原文（section_01_facts、section_04_verdict、section_05_reasoning），均未提及檢察官是否上訴。此為程序性背景資訊，不影響判決結果之理解。",
+     "reason": "檢察官上訴狀態為判決書末尾程序性事實。經查全部 5 個 section 原文（section_01_facts、section_04_verdict、section_05_reasoning），均未提及檢察官是否上訴。此為程序性背景資訊，不影響判決結果之理解。"
     },
     {
      "gt_claim_id": 51,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "判決後程序性事實，與GT_50相關聯，不影響案件實體內容理解"
-    },
-    {
-     "gt_claim_id": 66,
-     "severity": "minor",
-     "text": "病患L家屬於警詢中陳述關於病患L車禍之情事，均不能為被告不利之認定",
-     "reason": "法院論證的補充性理由，摘要已涵蓋核心論點（偵查中陳述不能為不利認定），警詢部分屬額外論證細節"
+     "text": "判決確定狀態為程序性事實。經查全部 5 個 section 原文，均未提及本案判決是否確定。此為判決生效之程序性標註，不影響案情與判決結論之理解。",
+     "reason": "判決確定狀態為程序性事實。經查全部 5 個 section 原文，均未提及本案判決是否確定。此為判決生效之程序性標註，不影響案情與判決結論之理解。"
     }
    ]
-  },
-  "information_density": {
-   "score": 3.9961,
-   "quality_overall": 4.8107,
-   "gt_length_ratio": 1.565,
-   "length_penalty": 0.8307,
-   "zone": "too_long"
   },
   "fact_detail": {
    "gt_total": 68,
    "pred_total": 71,
    "matched": 64,
-   "partial": 1,
-   "missing": 3,
+   "partial": 2,
+   "missing": 2,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.6061,
   "section_balance": 1.0
  }
 }

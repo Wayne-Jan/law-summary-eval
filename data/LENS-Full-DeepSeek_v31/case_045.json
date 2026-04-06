@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,55 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8148,
+  "fact_recall": 0.9787,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9892,
+  "quality_overall": 4.7393,
+  "citation_accuracy": 0.9062,
+  "citation_support_score": 0.9282,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9437,
+   "citation_fidelity": 0.9062,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.857,
+  "weighted_recall": 0.9929,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 1,
+   "details": [
+    {
+     "gt_claim_id": 74,
+     "severity": "minor",
+     "text": "「本案無法醫鑑定」為程序性背景資訊，經查 section_03_opinions.txt 及 section_05_reasoning.txt 均未提及，摘要確實遺漏此項資訊，但不影響案情理解",
+     "reason": "「本案無法醫鑑定」為程序性背景資訊，經查 section_03_opinions.txt 及 section_05_reasoning.txt 均未提及，摘要確實遺漏此項資訊，但不影響案情理解"
+    },
+    {
+     "gt_claim_id": 121,
+     "severity": "important",
+     "text": "GT claim 強調被告甲『業已熟知』危險及診治療程，但 reasoning section 僅提及『應知悉』，語義有別，未完整覆蓋。此為法院認定注意義務的關鍵論理，影響案情完整理解",
+     "reason": "GT claim 強調被告甲『業已熟知』危險及診治療程，但 reasoning section 僅提及『應知悉』，語義有別，未完整覆蓋。此為法院認定注意義務的關鍵論理，影響案情完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 141,
+   "pred_total": 129,
+   "matched": 137,
+   "partial": 2,
+   "missing": 2,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

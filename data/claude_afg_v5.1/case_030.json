@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -125,5 +126,97 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7848,
+  "fact_recall": 0.7903,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8829,
+  "quality_overall": 4.7214,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0259,
+  "uncited_rate": 0.11,
+  "faithfulness_combined": {
+   "score": 0.934,
+   "citation_fidelity": 0.89,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9247,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 28,
+     "severity": "minor",
+     "text": "觸診症狀細節雖出現在原文，但係醫療技術性描述，不影響案情核心理解",
+     "reason": "觸診症狀細節雖出現在原文，但係醫療技術性描述，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 29,
+     "severity": "minor",
+     "text": "I醫院X光片姿勢與氣體位置雖有提及，但係鑑定意見次要技術細節",
+     "reason": "I醫院X光片姿勢與氣體位置雖有提及，但係鑑定意見次要技術細節"
+    },
+    {
+     "gt_claim_id": 30,
+     "severity": "important",
+     "text": "鑑定意見關於氣體判斷難度的說明，是法院認定診斷困難的重要依據，影響過失判斷",
+     "reason": "鑑定意見關於氣體判斷難度的說明，是法院認定診斷困難的重要依據，影響過失判斷"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "important",
+     "text": "案例罕見性係鑑定意見重要結論，影響對被告注意義務的評價，pred未提及致案情理解不完整",
+     "reason": "案例罕見性係鑑定意見重要結論，影響對被告注意義務的評價，pred未提及致案情理解不完整"
+    },
+    {
+     "gt_claim_id": 44,
+     "severity": "important",
+     "text": "醫師照會社會服務部查詢兒童受虐情形，係被告無過失的重要佐證事實，pred未提及",
+     "reason": "醫師照會社會服務部查詢兒童受虐情形，係被告無過失的重要佐證事實，pred未提及"
+    },
+    {
+     "gt_claim_id": 45,
+     "severity": "important",
+     "text": "三歲半兒童身高與浴缸比例分析，係鑑定意見質疑因果關係的重要論據，pred未提及",
+     "reason": "三歲半兒童身高與浴缸比例分析，係鑑定意見質疑因果關係的重要論據，pred未提及"
+    },
+    {
+     "gt_claim_id": 46,
+     "severity": "important",
+     "text": "死因可能存疑的質疑係鑑定意見重要結論，pred未提及影響對因果關係論證的理解",
+     "reason": "死因可能存疑的質疑係鑑定意見重要結論，pred未提及影響對因果關係論證的理解"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "minor",
+     "text": "生成摘要確實未提及檢察官上訴相關事實。此為程序性事實，不影響對判決主文及理由的理解。",
+     "reason": "生成摘要確實未提及檢察官上訴相關事實。此為程序性事實，不影響對判決主文及理由的理解。"
+    },
+    {
+     "gt_claim_id": 50,
+     "severity": "minor",
+     "text": "生成摘要僅提及判決結果與適用法條，未說明判決確定狀態。此為程序性事實，不影響案情理解。",
+     "reason": "生成摘要僅提及判決結果與適用法條，未說明判決確定狀態。此為程序性事實，不影響案情理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 64,
+   "matched": 49,
+   "partial": 0,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

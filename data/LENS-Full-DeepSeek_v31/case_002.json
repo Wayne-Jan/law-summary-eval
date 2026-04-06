@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -144,9 +144,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8829,
-  "fact_recall": 0.9444,
+  "fact_recall": 0.9028,
   "fact_precision": 1.0,
-  "fact_f1": 0.9714,
+  "fact_f1": 0.9489,
   "quality_overall": 4.6857,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0,
@@ -163,42 +163,64 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9954,
+  "weighted_recall": 0.9792,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 2,
+   "important": 2,
+   "minor": 5,
    "details": [
+    {
+     "gt_claim_id": 32,
+     "severity": "important",
+     "text": "此為被告辯護的核心論點之一（『當然無法採取任何侵入性之治療手段』），出現在 GT defense section 第二段。Pred claims 中僅提及『無神經學指數異常』但未明確導出『無法採取侵入性治療』這個法律推論。影響對被告辯護邏輯的完整理解。",
+     "reason": "此為被告辯護的核心論點之一（『當然無法採取任何侵入性之治療手段』），出現在 GT defense section 第二段。Pred claims 中僅提及『無神經學指數異常』但未明確導出『無法採取侵入性治療』這個法律推論。影響對被告辯護邏輯的完整理解。"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "minor",
+     "text": "屬於醫審會第一次鑑定中的次要結論（雖認止痛劑量無不當，但仍認應採取更積極處置）。非核心爭點，不影響案情關鍵理解。",
+     "reason": "屬於醫審會第一次鑑定中的次要結論（雖認止痛劑量無不當，但仍認應採取更積極處置）。非核心爭點，不影響案情關鍵理解。"
+    },
+    {
+     "gt_claim_id": 53,
+     "severity": "minor",
+     "text": "GT 將此視為醫審會鑑定意見的結論，但 pred claims 中『應採取更積極之處置』已完整涵蓋此意涵，只是主詞從『G醫院』變成隱含主詞。匿名化差異不影響語義，但此為機構名稱而非個人，標記為 minor。",
+     "reason": "GT 將此視為醫審會鑑定意見的結論，但 pred claims 中『應採取更積極之處置』已完整涵蓋此意涵，只是主詞從『G醫院』變成隱含主詞。匿名化差異不影響語義，但此為機構名稱而非個人，標記為 minor。"
+    },
+    {
+     "gt_claim_id": 60,
+     "severity": "important",
+     "text": "完整的病理因果鏈：『枕骨骨折→小腦受損→腦水腫→壓迫腦幹→阻塞第四腦室→水腦症』，這是醫審會第二次鑑定的重要病理機轉說明。Pred claims 29、31 有部分因果描述，但未完整呈現此七步因果鏈，影響對鑑定意見邏輯的完整理解。",
+     "reason": "完整的病理因果鏈：『枕骨骨折→小腦受損→腦水腫→壓迫腦幹→阻塞第四腦室→水腦症』，這是醫審會第二次鑑定的重要病理機轉說明。Pred claims 29、31 有部分因果描述，但未完整呈現此七步因果鏈，影響對鑑定意見邏輯的完整理解。"
+    },
+    {
+     "gt_claim_id": 68,
+     "severity": "minor",
+     "text": "醫學背景知識陳述，說明後顱窩病變與大腦外傷的不同。雖有助理解案情，但 pred claims 28 已涵蓋『後顱窩受傷病變特徵』的核心內容，此句為過渡性描述。",
+     "reason": "醫學背景知識陳述，說明後顱窩病變與大腦外傷的不同。雖有助理解案情，但 pred claims 28 已涵蓋『後顱窩受傷病變特徵』的核心內容，此句為過渡性描述。"
+    },
     {
      "gt_claim_id": 84,
      "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴，本案判決即確定",
-     "reason": "程序性事實（判決確定與否），不影響對案情實體內容之理解"
+     "text": "程序性事實（上訴期間未上訴、判決確定）。屬於判決結果的附帶說明，不影響判決本身內容的理解。pred claims 74 已涵蓋判決結果（緩刑貳年）等核心內容。",
+     "reason": "程序性事實（上訴期間未上訴、判決確定）。屬於判決結果的附帶說明，不影響判決本身內容的理解。pred claims 74 已涵蓋判決結果（緩刑貳年）等核心內容。"
     },
     {
      "gt_claim_id": 144,
      "severity": "minor",
-     "text": "被告甲聲請再進行第三次鑑定，經核並無必要",
-     "reason": "程序性事實（追加鑑定之聲請與駁回），兩次醫審會鑑定之實質內容已完整呈現，不影響案情理解"
+     "text": "程序性事實（第三次鑑定聲請被駁回）。出現在 GT 判決理由最末段，非核心事實認定或法律論證。不影響對判決理由主體內容的理解。",
+     "reason": "程序性事實（第三次鑑定聲請被駁回）。出現在 GT 判決理由最末段，非核心事實認定或法律論證。不影響對判決理由主體內容的理解。"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.6857,
-   "quality_overall": 4.6857,
-   "gt_length_ratio": 1.2085,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 144,
    "pred_total": 132,
-   "matched": 136,
-   "partial": 6,
-   "missing": 2,
+   "matched": 130,
+   "partial": 0,
+   "missing": 8,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.7815,
   "section_balance": 1.0
  }
 }

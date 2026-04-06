@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -125,5 +126,151 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8626,
+  "fact_recall": 0.8438,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9153,
+  "quality_overall": 4.6833,
+  "citation_accuracy": 0.9111,
+  "citation_support_score": 0.9109,
+  "uncited_rate": 0.073,
+  "faithfulness_combined": {
+   "score": 0.9068,
+   "citation_fidelity": 0.8446,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.912,
+  "missing_severity": {
+   "critical": 4,
+   "important": 12,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "severity": "important",
+     "text": "確認為 missing：家屬原擬轉至榮總(V醫院)的計畫在 section_01_facts.txt 確實未提及，影響轉院動機理解",
+     "reason": "確認為 missing：家屬原擬轉至榮總(V醫院)的計畫在 section_01_facts.txt 確實未提及，影響轉院動機理解"
+    },
+    {
+     "gt_claim_id": 16,
+     "severity": "important",
+     "text": "確認為 missing：『大於100CC之動靜脈畸形』的具體診斷結果未在 pred 中完整呈現",
+     "reason": "確認為 missing：『大於100CC之動靜脈畸形』的具體診斷結果未在 pred 中完整呈現"
+    },
+    {
+     "gt_claim_id": 18,
+     "severity": "important",
+     "text": "確認為 missing：顳葉鉤狀迴經大腦天幕脫出的具體病理表現未在 pred 中出現",
+     "reason": "確認為 missing：顳葉鉤狀迴經大腦天幕脫出的具體病理表現未在 pred 中出現"
+    },
+    {
+     "gt_claim_id": 19,
+     "severity": "minor",
+     "text": "確認為 missing：顱底池受壓迫的病理表現未出現，屬醫學細節",
+     "reason": "確認為 missing：顱底池受壓迫的病理表現未出現，屬醫學細節"
+    },
+    {
+     "gt_claim_id": 21,
+     "severity": "critical",
+     "text": "確認為 missing：『自行吸收腦內100CC血腫』的治療建議是關鍵醫療處置爭點，影響判決結論",
+     "reason": "確認為 missing：『自行吸收腦內100CC血腫』的治療建議是關鍵醫療處置爭點，影響判決結論"
+    },
+    {
+     "gt_claim_id": 24,
+     "severity": "important",
+     "text": "確認為 missing：醫師R建議手術開刀的具体事實未明確記載",
+     "reason": "確認為 missing：醫師R建議手術開刀的具体事實未明確記載"
+    },
+    {
+     "gt_claim_id": 31,
+     "severity": "important",
+     "text": "與 claim_16 重複，腦血管攝影檢查發現未涵蓋",
+     "reason": "與 claim_16 重複，腦血管攝影檢查發現未涵蓋"
+    },
+    {
+     "gt_claim_id": 32,
+     "severity": "important",
+     "text": "與 claim_17-18 合併版本，病理細節未涵蓋",
+     "reason": "與 claim_17-18 合併版本，病理細節未涵蓋"
+    },
+    {
+     "gt_claim_id": 33,
+     "severity": "minor",
+     "text": "與 claim_19 重複，顱底池受壓迫屬醫學細節",
+     "reason": "與 claim_19 重複，顱底池受壓迫屬醫學細節"
+    },
+    {
+     "gt_claim_id": 34,
+     "severity": "important",
+     "text": "與 claim_20 重複，腦壓上升屬關鍵病情指標",
+     "reason": "與 claim_20 重複，腦壓上升屬關鍵病情指標"
+    },
+    {
+     "gt_claim_id": 35,
+     "severity": "critical",
+     "text": "確認為 missing：『應考慮為該病患立即開刀取出血腫』是法院認定的核心注意義務",
+     "reason": "確認為 missing：『應考慮為該病患立即開刀取出血腫』是法院認定的核心注意義務"
+    },
+    {
+     "gt_claim_id": 36,
+     "severity": "critical",
+     "text": "確認為 missing：『防止因腦幹進一步受壓迫』的因果關係論述是判決重要法理基礎",
+     "reason": "確認為 missing：『防止因腦幹進一步受壓迫』的因果關係論述是判決重要法理基礎"
+    },
+    {
+     "gt_claim_id": 39,
+     "severity": "important",
+     "text": "確認為 missing：未及時採取手術的具體疏失描述",
+     "reason": "確認為 missing：未及時採取手術的具體疏失描述"
+    },
+    {
+     "gt_claim_id": 40,
+     "severity": "important",
+     "text": "確認為 missing：『無效治療方式』是法院對醫療行為的評價",
+     "reason": "確認為 missing：『無效治療方式』是法院對醫療行為的評價"
+    },
+    {
+     "gt_claim_id": 41,
+     "severity": "important",
+     "text": "確認為 missing：『昏迷指數降至7分』是病情惡化的關鍵臨床指標",
+     "reason": "確認為 missing：『昏迷指數降至7分』是病情惡化的關鍵臨床指標"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "important",
+     "text": "確認為 missing：醫師R建議手術的具體時間點",
+     "reason": "確認為 missing：醫師R建議手術的具體時間點"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "critical",
+     "text": "確認為 missing：『因Z醫院醫師治療延誤』的因果關係及臨床症狀完整描述",
+     "reason": "確認為 missing：『因Z醫院醫師治療延誤』的因果關係及臨床症狀完整描述"
+    },
+    {
+     "gt_claim_id": 138,
+     "severity": "important",
+     "text": "病患L死亡日期(91年2月19日)及死因(腦動靜脈異常併顱內出血致呼吸衰竭)在reasoning section中確實未被提及。reasoning section僅論述醫療行為與死亡無因果關係，但未載明死亡具體時間與原因。此為重要事實，影響對案件結果的完整理解。",
+     "reason": "病患L死亡日期(91年2月19日)及死因(腦動靜脈異常併顱內出血致呼吸衰竭)在reasoning section中確實未被提及。reasoning section僅論述醫療行為與死亡無因果關係，但未載明死亡具體時間與原因。此為重要事實，影響對案件結果的完整理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 144,
+   "pred_total": 164,
+   "matched": 117,
+   "partial": 9,
+   "missing": 18,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

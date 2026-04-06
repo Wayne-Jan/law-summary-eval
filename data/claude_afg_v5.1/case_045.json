@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,91 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6769,
+  "fact_recall": 0.8936,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9438,
+  "quality_overall": 4.7357,
+  "citation_accuracy": 0.8478,
+  "citation_support_score": 0.8826,
+  "uncited_rate": 0.053,
+  "faithfulness_combined": {
+   "score": 0.8817,
+   "citation_fidelity": 0.8029,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": 0.964,
+  "weighted_recall": 0.9787,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 39,
+     "severity": "important",
+     "text": "被告甲『治療並無不當』之抗辯主張，pred claims 中無對應明確主張。雖 claim 41 描述治療行為，但未明確萃取『並無不當』之辯護要點。屬辯護內容遺漏，影響對被告抗辯策略的完整理解，故標記為 important。",
+     "reason": "被告甲『治療並無不當』之抗辯主張，pred claims 中無對應明確主張。雖 claim 41 描述治療行為，但未明確萃取『並無不當』之辯護要點。屬辯護內容遺漏，影響對被告抗辯策略的完整理解，故標記為 important。"
+    },
+    {
+     "gt_claim_id": 74,
+     "severity": "minor",
+     "text": "「本案無法醫鑑定」屬鑑定程序背景資訊，判決書主要提及「醫事審議委員會鑑定」，未明確區分有無法醫鑑定。此為程序性事實，不影響案情實體理解。",
+     "reason": "「本案無法醫鑑定」屬鑑定程序背景資訊，判決書主要提及「醫事審議委員會鑑定」，未明確區分有無法醫鑑定。此為程序性事實，不影響案情實體理解。"
+    },
+    {
+     "gt_claim_id": 76,
+     "severity": "minor",
+     "text": "確認維持 missing：verdict section 確實未提及「經自訴人提起自訴」之程序起點。雖 facts section 已提及（claims.json claim 28），但 verdict section 專注於判決主文，此為次要程序性事實。",
+     "reason": "確認維持 missing：verdict section 確實未提及「經自訴人提起自訴」之程序起點。雖 facts section 已提及（claims.json claim 28），但 verdict section 專注於判決主文，此為次要程序性事實。"
+    },
+    {
+     "gt_claim_id": 77,
+     "severity": "minor",
+     "text": "確認維持 missing：verdict section 未提及「承受訴訟人承受訴訟」。雖 facts section 已提及（claims.json claim 29），但判決主文無需重複此程序性過渡事實。",
+     "reason": "確認維持 missing：verdict section 未提及「承受訴訟人承受訴訟」。雖 facts section 已提及（claims.json claim 29），但判決主文無需重複此程序性過渡事實。"
+    },
+    {
+     "gt_claim_id": 105,
+     "severity": "minor",
+     "text": "病患主述11月19日月經及點狀出血為診療細節，不影響判決核心理解",
+     "reason": "病患主述11月19日月經及點狀出血為診療細節，不影響判決核心理解"
+    },
+    {
+     "gt_claim_id": 106,
+     "severity": "minor",
+     "text": "超音波顯示無腫瘤為檢查細節，reasoning段已提及超音波檢查及子宮內膜薄等結果，此細節遺漏不影響因果關係理解",
+     "reason": "超音波顯示無腫瘤為檢查細節，reasoning段已提及超音波檢查及子宮內膜薄等結果，此細節遺漏不影響因果關係理解"
+    },
+    {
+     "gt_claim_id": 116,
+     "severity": "minor",
+     "text": "此claim與判決結果矛盾（被告甲最終有罪），且reasoning段已明確說明被告甲有罪理由，此矛盾claim遺漏不影響判決理解",
+     "reason": "此claim與判決結果矛盾（被告甲最終有罪），且reasoning段已明確說明被告甲有罪理由，此矛盾claim遺漏不影響判決理解"
+    },
+    {
+     "gt_claim_id": 133,
+     "severity": "minor",
+     "text": "存活率難判定之不確定性為醫學常識補充，reasoning段已提及「當有治癒及延長存活期限之可能」，此細節遺漏不影響論證",
+     "reason": "存活率難判定之不確定性為醫學常識補充，reasoning段已提及「當有治癒及延長存活期限之可能」，此細節遺漏不影響論證"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 141,
+   "pred_total": 131,
+   "matched": 122,
+   "partial": 8,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

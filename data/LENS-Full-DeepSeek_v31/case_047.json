@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,241 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8288,
+  "fact_recall": 0.7814,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8773,
+  "quality_overall": 4.8786,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9657,
+  "uncited_rate": 0.014,
+  "faithfulness_combined": {
+   "score": 0.9916,
+   "citation_fidelity": 0.986,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 0.964,
+  "weighted_recall": 0.9235,
+  "missing_severity": {
+   "critical": 0,
+   "important": 9,
+   "minor": 24,
+   "details": [
+    {
+     "gt_claim_id": 27,
+     "severity": "minor",
+     "text": "「被告甲有於右揭時、地為病患H看診之事實」屬程序性事實聲明，摘要中雖描述被告看診行為但未以總括性聲明呈現。此為背景性事實，不影響案情理解。",
+     "reason": "「被告甲有於右揭時、地為病患H看診之事實」屬程序性事實聲明，摘要中雖描述被告看診行為但未以總括性聲明呈現。此為背景性事實，不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 28,
+     "severity": "minor",
+     "text": "「被告甲否認有何業務過失致死之犯行」為形式性犯行否認聲明。摘要中呈現被告具體辯護內容，但未包含此總括性否認聲明。屬程序性事實，不影響實體辯護理解。",
+     "reason": "「被告甲否認有何業務過失致死之犯行」為形式性犯行否認聲明。摘要中呈現被告具體辯護內容，但未包含此總括性否認聲明。屬程序性事實，不影響實體辯護理解。"
+    },
+    {
+     "gt_claim_id": 44,
+     "severity": "important",
+     "text": "「被告之行為不應對死亡之結果負責」為被告核心辯護要點之一，與因果關係抗辯密切相關。pred claims雖有提及無因果關係（claim 74），但未明確包含此獨立聲明。影響辯護完整性理解。",
+     "reason": "「被告之行為不應對死亡之結果負責」為被告核心辯護要點之一，與因果關係抗辯密切相關。pred claims雖有提及無因果關係（claim 74），但未明確包含此獨立聲明。影響辯護完整性理解。"
+    },
+    {
+     "gt_claim_id": 52,
+     "severity": "important",
+     "text": "「若病患H症狀轉差就會立刻再做心電圖及抽血檢查心肌酵素」為被告假設性醫療行為描述，屬於「若病情轉壞」應變計畫之抗辯。摘要中雖提「若病情轉壞儘快返回就診」但未包含此具體檢查承諾。影響辯護論述完整性。",
+     "reason": "「若病患H症狀轉差就會立刻再做心電圖及抽血檢查心肌酵素」為被告假設性醫療行為描述，屬於「若病情轉壞」應變計畫之抗辯。摘要中雖提「若病情轉壞儘快返回就診」但未包含此具體檢查承諾。影響辯護論述完整性。"
+    },
+    {
+     "gt_claim_id": 61,
+     "severity": "important",
+     "text": "「若告訴人懷疑係被告未詳細檢查引起死亡，自應要求解剖以查明死因」為被告關於舉證責任之抗辯。summary_grounded.txt中確有記載，但pred claims未萃取此項。屬重要辯護論點。",
+     "reason": "「若告訴人懷疑係被告未詳細檢查引起死亡，自應要求解剖以查明死因」為被告關於舉證責任之抗辯。summary_grounded.txt中確有記載，但pred claims未萃取此項。屬重要辯護論點。"
+    },
+    {
+     "gt_claim_id": 63,
+     "severity": "important",
+     "text": "「歷經半年後只用一張心電圖主張係因被告之過失引起，顯令人質疑」為被告關於證據時效性之抗辯。summary_grounded.txt中確有記載，但pred claims未萃取。屬證據質疑重要論點。",
+     "reason": "「歷經半年後只用一張心電圖主張係因被告之過失引起，顯令人質疑」為被告關於證據時效性之抗辯。summary_grounded.txt中確有記載，但pred claims未萃取。屬證據質疑重要論點。"
+    },
+    {
+     "gt_claim_id": 83,
+     "severity": "important",
+     "text": "「病患H住處距署立G醫院僅數十公尺，到S醫院亦較C醫院為近」為被告質疑家屬送醫選擇之具體事實。摘要中提及「距其最近病歷之A醫院」但未包含與其他醫院距離比較。屬重要事實細節。",
+     "reason": "「病患H住處距署立G醫院僅數十公尺，到S醫院亦較C醫院為近」為被告質疑家屬送醫選擇之具體事實。摘要中提及「距其最近病歷之A醫院」但未包含與其他醫院距離比較。屬重要事實細節。"
+    },
+    {
+     "gt_claim_id": 84,
+     "severity": "important",
+     "text": "「發生不適後，其家屬何以不將之送往該二醫院急診」為被告質疑家屬送醫決策之抗辯。與gt_claim_id 83配合使用，構成完整的家屬延遲/不當送醫抗辯。摘要未涵蓋此論述。",
+     "reason": "「發生不適後，其家屬何以不將之送往該二醫院急診」為被告質疑家屬送醫決策之抗辯。與gt_claim_id 83配合使用，構成完整的家屬延遲/不當送醫抗辯。摘要未涵蓋此論述。"
+    },
+    {
+     "gt_claim_id": 92,
+     "severity": "minor",
+     "text": "心電圖電腦報告詳細內容屬於技術細節，不影響主要案情理解",
+     "reason": "心電圖電腦報告詳細內容屬於技術細節，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "minor",
+     "text": "醫師S判讀結果的詳細描述屬於技術細節，pred 已提到「疑似陳舊性下壁心肌梗塞」",
+     "reason": "醫師S判讀結果的詳細描述屬於技術細節，pred 已提到「疑似陳舊性下壁心肌梗塞」"
+    },
+    {
+     "gt_claim_id": 102,
+     "severity": "minor",
+     "text": "pred claim 79 提到「無法排除心肌梗塞之可能性」，語意相近",
+     "reason": "pred claim 79 提到「無法排除心肌梗塞之可能性」，語意相近"
+    },
+    {
+     "gt_claim_id": 104,
+     "severity": "minor",
+     "text": "急性心肌梗塞診斷標準屬於背景醫學知識",
+     "reason": "急性心肌梗塞診斷標準屬於背景醫學知識"
+    },
+    {
+     "gt_claim_id": 105,
+     "severity": "minor",
+     "text": "具體描述病患無ST波段變化屬於技術細節",
+     "reason": "具體描述病患無ST波段變化屬於技術細節"
+    },
+    {
+     "gt_claim_id": 106,
+     "severity": "minor",
+     "text": "pred claim 29 已提到「無發燒、無白血球增多」，語意一致",
+     "reason": "pred claim 29 已提到「無發燒、無白血球增多」，語意一致"
+    },
+    {
+     "gt_claim_id": 107,
+     "severity": "important",
+     "text": "病患沒有急性心肌梗塞是重要的鑑定結論，影響對案情醫學判斷的理解",
+     "reason": "病患沒有急性心肌梗塞是重要的鑑定結論，影響對案情醫學判斷的理解"
+    },
+    {
+     "gt_claim_id": 113,
+     "severity": "minor",
+     "text": "心肌梗塞定義屬於背景醫學知識",
+     "reason": "心肌梗塞定義屬於背景醫學知識"
+    },
+    {
+     "gt_claim_id": 114,
+     "severity": "minor",
+     "text": "急性心肌梗塞定義屬於背景醫學知識",
+     "reason": "急性心肌梗塞定義屬於背景醫學知識"
+    },
+    {
+     "gt_claim_id": 115,
+     "severity": "minor",
+     "text": "陳舊性心肌梗塞定義屬於背景醫學知識",
+     "reason": "陳舊性心肌梗塞定義屬於背景醫學知識"
+    },
+    {
+     "gt_claim_id": 125,
+     "severity": "minor",
+     "text": "冠狀動脈攝影檢查建議屬於技術細節",
+     "reason": "冠狀動脈攝影檢查建議屬於技術細節"
+    },
+    {
+     "gt_claim_id": 126,
+     "severity": "minor",
+     "text": "急性心肌梗塞併發症屬於背景醫學知識",
+     "reason": "急性心肌梗塞併發症屬於背景醫學知識"
+    },
+    {
+     "gt_claim_id": 128,
+     "severity": "minor",
+     "text": "陳舊性心肌梗塞處置建議，pred claim 85 已提到「心臟功能處於穩定，並非急症，不須急救」",
+     "reason": "陳舊性心肌梗塞處置建議，pred claim 85 已提到「心臟功能處於穩定，並非急症，不須急救」"
+    },
+    {
+     "gt_claim_id": 129,
+     "severity": "minor",
+     "text": "陳舊性心肌梗塞處置建議，pred claim 87 已提到「若懷疑有急性冠心症復發時，仍應收住院治療」",
+     "reason": "陳舊性心肌梗塞處置建議，pred claim 87 已提到「若懷疑有急性冠心症復發時，仍應收住院治療」"
+    },
+    {
+     "gt_claim_id": 130,
+     "severity": "minor",
+     "text": "具體日期（89年12月20日）與症狀細節屬於程序性資訊，pred 已提到「暈厥」",
+     "reason": "具體日期（89年12月20日）與症狀細節屬於程序性資訊，pred 已提到「暈厥」"
+    },
+    {
+     "gt_claim_id": 131,
+     "severity": "minor",
+     "text": "「心悸及胸部不適」症狀細節，pred 在 defense section 已提到相關症狀描述",
+     "reason": "「心悸及胸部不適」症狀細節，pred 在 defense section 已提到相關症狀描述"
+    },
+    {
+     "gt_claim_id": 132,
+     "severity": "important",
+     "text": "急診時心電圖的具體發現（疑似陳舊性下壁心肌梗塞及心肌缺氧）是重要的鑑定內容",
+     "reason": "急診時心電圖的具體發現（疑似陳舊性下壁心肌梗塞及心肌缺氧）是重要的鑑定內容"
+    },
+    {
+     "gt_claim_id": 133,
+     "severity": "minor",
+     "text": "死亡時間細節（第二天清晨）屬於時間細節",
+     "reason": "死亡時間細節（第二天清晨）屬於時間細節"
+    },
+    {
+     "gt_claim_id": 134,
+     "severity": "important",
+     "text": "無法確定急性或陳舊性心肌梗塞是鑑定意見的重要結論，影響案情醫學判斷",
+     "reason": "無法確定急性或陳舊性心肌梗塞是鑑定意見的重要結論，影響案情醫學判斷"
+    },
+    {
+     "gt_claim_id": 136,
+     "severity": "minor",
+     "text": "病歷紀錄具體時間屬於程序性細節",
+     "reason": "病歷紀錄具體時間屬於程序性細節"
+    },
+    {
+     "gt_claim_id": 137,
+     "severity": "minor",
+     "text": "急診病歷首頁抵達及離開時間屬於程序性細節",
+     "reason": "急診病歷首頁抵達及離開時間屬於程序性細節"
+    },
+    {
+     "gt_claim_id": 140,
+     "severity": "minor",
+     "text": "88年11月20日期與T紀念醫院名稱屬於醫院代碼對應差異，pred 已提到「B醫院」",
+     "reason": "88年11月20日期與T紀念醫院名稱屬於醫院代碼對應差異，pred 已提到「B醫院」"
+    },
+    {
+     "gt_claim_id": 141,
+     "severity": "minor",
+     "text": "89年7月25日期屬於時間細節，pred 已概括提到「在B醫院所做的兩張心電圖」",
+     "reason": "89年7月25日期屬於時間細節，pred 已概括提到「在B醫院所做的兩張心電圖」"
+    },
+    {
+     "gt_claim_id": 155,
+     "severity": "minor",
+     "text": "無胸部X光檢查屬於程序性/證據列舉細節",
+     "reason": "無胸部X光檢查屬於程序性/證據列舉細節"
+    },
+    {
+     "gt_claim_id": 156,
+     "severity": "minor",
+     "text": "無過去病史資料證明肺氣腫屬於程序性/證據說明細節",
+     "reason": "無過去病史資料證明肺氣腫屬於程序性/證據說明細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 183,
+   "pred_total": 142,
+   "matched": 140,
+   "partial": 6,
+   "missing": 33,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

@@ -132,9 +132,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7834,
-  "fact_recall": 0.957,
+  "fact_recall": 0.9624,
   "fact_precision": 1.0,
-  "fact_f1": 0.978,
+  "fact_f1": 0.9808,
   "quality_overall": 4.9071,
   "citation_accuracy": 0.9762,
   "citation_support_score": 0.9705,
@@ -151,54 +151,40 @@
   "compliance": 4,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9821,
+  "weighted_recall": 0.9892,
   "missing_severity": {
    "critical": 0,
-   "important": 1,
+   "important": 0,
    "minor": 3,
    "details": [
     {
      "gt_claim_id": 70,
      "severity": "minor",
-     "text": "自訴人於法定上訴期間未上訴",
-     "reason": "程序性事實，雖「判決確定」已提及，但未明確說明「未上訴」，對案情理解影響較小"
+     "text": "在 pred_claims（claims.json）遍尋所有 107 個 claims，確實未提及『自訴人未上訴』『上訴期間』『判決確定原因』等相關程序性事實。判決結果 section 僅提及『宣告無罪』『提起自訴』『審理後判決確定』，但『判決確定』並不等同於『未上訴』。此為程序性背景事實，不影響判決結論理解。",
+     "reason": "在 pred_claims（claims.json）遍尋所有 107 個 claims，確實未提及『自訴人未上訴』『上訴期間』『判決確定原因』等相關程序性事實。判決結果 section 僅提及『宣告無罪』『提起自訴』『審理後判決確定』，但『判決確定』並不等同於『未上訴』。此為程序性背景事實，不影響判決結論理解。"
     },
     {
      "gt_claim_id": 83,
-     "severity": "important",
-     "text": "病患有任何醫師無法預見之突發狀況，導致死亡，亦難謂醫師有誤判病情，或懈怠、疏忽可言，自不得課以過失罪責",
-     "reason": "法院重要法理論述，關乎過失責任之免責要件，影響對判決理由之完整理解"
-    },
-    {
-     "gt_claim_id": 84,
      "severity": "minor",
-     "text": "醫師動輒得咎，視疑難之病例為畏途，終非病患之福",
-     "reason": "法院政策考量論述，屬輔助性法理闡述，非核心判決理由"
+     "text": "section_05_reasoning.txt 與 pred claims 均未明確提及『病患有任何醫師無法預見之突發狀況』此具體免責論點。雖有相關『天性代謝異常』等論述，但係針對本案具體死因，非抽象的法律政策論述（醫師無法預見突發狀況免責原則）。此為次要論證，不影響判決結論理解。",
+     "reason": "section_05_reasoning.txt 與 pred claims 均未明確提及『病患有任何醫師無法預見之突發狀況』此具體免責論點。雖有相關『天性代謝異常』等論述，但係針對本案具體死因，非抽象的法律政策論述（醫師無法預見突發狀況免責原則）。此為次要論證，不影響判決結論理解。"
     },
     {
      "gt_claim_id": 88,
      "severity": "minor",
-     "text": "有該護理紀錄附卷可稽",
-     "reason": "單純證據程序性表述，病歷記載內容已於 claims 中充分涵蓋"
+     "text": "『有該護理紀錄附卷可稽』為程序性證據確認用語，雖 section_05_reasoning.txt 提及『護理記錄』相關內容，但『附卷可稽』係法院卷證存在的程序性描述，pred claims 未涵蓋此細節。此為程序性事實，不影響案情實體理解。",
+     "reason": "『有該護理紀錄附卷可稽』為程序性證據確認用語，雖 section_05_reasoning.txt 提及『護理記錄』相關內容，但『附卷可稽』係法院卷證存在的程序性描述，pred claims 未涵蓋此細節。此為程序性事實，不影響案情實體理解。"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.9071,
-   "quality_overall": 4.9071,
-   "gt_length_ratio": 1.2046,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 93,
    "pred_total": 107,
-   "matched": 87,
-   "partial": 2,
-   "missing": 4,
+   "matched": 89,
+   "partial": 1,
+   "missing": 3,
    "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.7945,
   "section_balance": 1.0
  }
 }

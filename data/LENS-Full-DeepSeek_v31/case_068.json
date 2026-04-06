@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,85 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8442,
+  "fact_recall": 0.9148,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9555,
+  "quality_overall": 4.7143,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0068,
+  "uncited_rate": 0.0745,
+  "faithfulness_combined": {
+   "score": 0.9553,
+   "citation_fidelity": 0.9255,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9835,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 41,
+     "severity": "minor",
+     "text": "GT claim 41 主張「未進行內診」，但經核對 section_05_reasoning.txt 與 section_01_facts.txt，法院明確認定被告甲確實進行內診（病歷記載「內診：子宮頸紅、分泌物、臭、兩側痛」）。此乃 GT 錯誤，因判決書內文與之矛盾，故 pred 摘要不收錄此錯誤陳述實屬正確，不影響案情理解",
+     "reason": "GT claim 41 主張「未進行內診」，但經核對 section_05_reasoning.txt 與 section_01_facts.txt，法院明確認定被告甲確實進行內診（病歷記載「內診：子宮頸紅、分泌物、臭、兩側痛」）。此乃 GT 錯誤，因判決書內文與之矛盾，故 pred 摘要不收錄此錯誤陳述實屬正確，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 96,
+     "severity": "minor",
+     "text": "右卵巢出血性囊腫的定義性描述（「是指右卵巢內因出血形成囊腫」）確未見於 opinions section，雖見於 reasoning 段，但屬純粹醫學定義說明，不影響死因機轉理解",
+     "reason": "右卵巢出血性囊腫的定義性描述（「是指右卵巢內因出血形成囊腫」）確未見於 opinions section，雖見於 reasoning 段，但屬純粹醫學定義說明，不影響死因機轉理解"
+    },
+    {
+     "gt_claim_id": 112,
+     "severity": "minor",
+     "text": "reasoning section 僅提到被告甲『懷疑可能為子宮外孕』、『依其專業判斷子宮外孕機率甚高』，但這是被告甲單方面判斷，並未明確描述『與孕婦討論』此可能性的互動情節。屬於細節性事實，不影響核心過失認定",
+     "reason": "reasoning section 僅提到被告甲『懷疑可能為子宮外孕』、『依其專業判斷子宮外孕機率甚高』，但這是被告甲單方面判斷，並未明確描述『與孕婦討論』此可能性的互動情節。屬於細節性事實，不影響核心過失認定"
+    },
+    {
+     "gt_claim_id": 119,
+     "severity": "minor",
+     "text": "reasoning section 完全未提及『子宮外孕三個典型症狀（疼痛、無月經、陰道出血）』的醫學背景知識介紹。屬於背景醫學知識，非判決核心事實",
+     "reason": "reasoning section 完全未提及『子宮外孕三個典型症狀（疼痛、無月經、陰道出血）』的醫學背景知識介紹。屬於背景醫學知識，非判決核心事實"
+    },
+    {
+     "gt_claim_id": 120,
+     "severity": "minor",
+     "text": "reasoning section 完全未提及『50%病人出現症狀』的統計數據。屬於醫學統計細節，非判決必要內容",
+     "reason": "reasoning section 完全未提及『50%病人出現症狀』的統計數據。屬於醫學統計細節，非判決必要內容"
+    },
+    {
+     "gt_claim_id": 149,
+     "severity": "important",
+     "text": "reasoning section 中法院確實認定『證人C依據陰道超音波檢查結果及病患X當時並無其他身體不適狀況，判斷為早期懷孕但因照不到胚囊心跳而囑咐三週後回診之處置並無違反醫療常規』，但這是法院直接認定，並未明確歸因於『醫審會鑑定書』的意見。涉及鑑定機構歸因的準確性",
+     "reason": "reasoning section 中法院確實認定『證人C依據陰道超音波檢查結果及病患X當時並無其他身體不適狀況，判斷為早期懷孕但因照不到胚囊心跳而囑咐三週後回診之處置並無違反醫療常規』，但這是法院直接認定，並未明確歸因於『醫審會鑑定書』的意見。涉及鑑定機構歸因的準確性"
+    },
+    {
+     "gt_claim_id": 152,
+     "severity": "important",
+     "text": "reasoning section 中法院確實認定『B醫院並未延誤手術治療時間』、『醫師有為病患X施打抗生素治療符合醫療常規』，但這是法院直接認定，並未明確提及『醫審會鑑定書』認同 T 醫院處置。涉及鑑定機構歸因的準確性",
+     "reason": "reasoning section 中法院確實認定『B醫院並未延誤手術治療時間』、『醫師有為病患X施打抗生素治療符合醫療常規』，但這是法院直接認定，並未明確提及『醫審會鑑定書』認同 T 醫院處置。涉及鑑定機構歸因的準確性"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 182,
+   "pred_total": 161,
+   "matched": 166,
+   "partial": 1,
+   "missing": 7,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

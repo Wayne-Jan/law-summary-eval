@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,85 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6857,
+  "fact_recall": 0.8935,
+  "fact_precision": 0.9714,
+  "fact_f1": 0.9308,
+  "quality_overall": 4.8357,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9939,
+  "uncited_rate": 0.0095,
+  "faithfulness_combined": {
+   "score": 0.9829,
+   "citation_fidelity": 0.9905,
+   "fact_precision": 0.9714,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": "GOOD",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9722,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 16,
+     "severity": "minor",
+     "text": "Deca 皮脂類固醇的胃潰瘍風險說明屬於藥物副作用背景資訊，雖檢察官起訴書中有提及，但非本案核心事實（本案核心用藥為 Aminophylline），不影響判決結論理解",
+     "reason": "Deca 皮脂類固醇的胃潰瘍風險說明屬於藥物副作用背景資訊，雖檢察官起訴書中有提及，但非本案核心事實（本案核心用藥為 Aminophylline），不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "severity": "minor",
+     "text": "緊急傷病患救治義務之法條原文雖未完整引用，但 facts section 已涵蓋「應即檢視」、「適當處置」等核心義務內容（見 claim 11、12），程式性法條用語遺漏不影響案情理解",
+     "reason": "緊急傷病患救治義務之法條原文雖未完整引用，但 facts section 已涵蓋「應即檢視」、「適當處置」等核心義務內容（見 claim 11、12），程式性法條用語遺漏不影響案情理解"
+    },
+    {
+     "gt_claim_id": 77,
+     "severity": "minor",
+     "text": "程式性判決日期（91年07月24日）未在生成摘要中明確提及。雖標題有法院名稱及案號年度（九十年度），但實際判決日期並未出現。此為程式性事實，不影響案情實體理解。",
+     "reason": "程式性判決日期（91年07月24日）未在生成摘要中明確提及。雖標題有法院名稱及案號年度（九十年度），但實際判決日期並未出現。此為程式性事實，不影響案情實體理解。"
+    },
+    {
+     "gt_claim_id": 90,
+     "severity": "minor",
+     "text": "告訴人丁證詞中「口渴」等細節確實未出現在任何section中，僅為背景性證詞細節，不影響案情核心理解",
+     "reason": "告訴人丁證詞中「口渴」等細節確實未出現在任何section中，僅為背景性證詞細節，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 96,
+     "severity": "important",
+     "text": "Deca藥物副作用與胃潰瘍風險的詳細說明未在摘要中提及，此資訊有助於理解病患用藥背景與潛在風險，影響案情完整理解",
+     "reason": "Deca藥物副作用與胃潰瘍風險的詳細說明未在摘要中提及，此資訊有助於理解病患用藥背景與潛在風險，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "severity": "important",
+     "text": "消化性潰瘍患者使用Deca的注意事項未提及，與claim 96相關，屬重要藥物安全資訊",
+     "reason": "消化性潰瘍患者使用Deca的注意事項未提及，與claim 96相關，屬重要藥物安全資訊"
+    },
+    {
+     "gt_claim_id": 98,
+     "severity": "minor",
+     "text": "Tagamet用於治療消化性潰瘍的推論未在摘要中闡述，屬醫療背景性推論，不影響過失認定結論",
+     "reason": "Tagamet用於治療消化性潰瘍的推論未在摘要中闡述，屬醫療背景性推論，不影響過失認定結論"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 105,
+   "matched": 93,
+   "partial": 7,
+   "missing": 7,
+   "hallucinated": 3
+  },
+  "section_balance": 1.0
+ }
 }

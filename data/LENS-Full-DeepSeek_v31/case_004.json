@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -132,103 +132,143 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8279,
-  "fact_recall": 0.864,
-  "fact_precision": 1.0,
-  "fact_f1": 0.927,
+  "fact_recall": 0.8333,
+  "fact_precision": 0.9333,
+  "fact_f1": 0.8805,
   "quality_overall": 4.6119,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9559,
   "uncited_rate": 0.305,
   "faithfulness_combined": {
-   "score": 0.817,
+   "score": 0.7903,
    "citation_fidelity": 0.695,
-   "fact_precision": 1.0,
+   "fact_precision": 0.9333,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 2,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9708,
+  "weighted_recall": 0.9444,
   "missing_severity": {
    "critical": 0,
-   "important": 1,
-   "minor": 8,
+   "important": 2,
+   "minor": 15,
    "details": [
     {
      "gt_claim_id": 42,
-     "severity": "important",
-     "text": "產婦H經轉診T醫院，該院醫師曾施以超音波檢查，除子宮內有些許血塊外，並無其他發現",
-     "reason": "影響診斷困難性論證之重要佐證事實"
+     "severity": "minor",
+     "text": "T醫院超音波檢查細節（除有些許血塊外並無其他發現）為被告辯護細節，雖可佐證診斷困難，但非理解判決核心所需",
+     "reason": "T醫院超音波檢查細節（除有些許血塊外並無其他發現）為被告辯護細節，雖可佐證診斷困難，但非理解判決核心所需"
     },
     {
      "gt_claim_id": 43,
      "severity": "minor",
-     "text": "據T醫院病例更無任何與子宮頸、子宮體裂傷之記載",
-     "reason": "證據記載細節"
+     "text": "T醫院病歷無裂傷記載為被告辯護細節，屬防御性論述，不影響法院最終過失認定",
+     "reason": "T醫院病歷無裂傷記載為被告辯護細節，屬防御性論述，不影響法院最終過失認定"
     },
     {
      "gt_claim_id": 44,
      "severity": "minor",
-     "text": "益證是項傷勢之難以診斷",
-     "reason": "推論性修飾語"
+     "text": "「益證是項傷勢之難以診斷」為被告辯護之結論性論述，pred摘要中已涵蓋「難以診斷」核心概念",
+     "reason": "「益證是項傷勢之難以診斷」為被告辯護之結論性論述，pred摘要中已涵蓋「難以診斷」核心概念"
+    },
+    {
+     "gt_claim_id": 45,
+     "severity": "minor",
+     "text": "「病情變化快速、一小時內正確診斷期待不能」為被告抗辯理由，pred摘要中已涵蓋「難以診斷、處置之症」",
+     "reason": "「病情變化快速、一小時內正確診斷期待不能」為被告抗辯理由，pred摘要中已涵蓋「難以診斷、處置之症」"
+    },
+    {
+     "gt_claim_id": 47,
+     "severity": "minor",
+     "text": "「該等手術需大型醫院始可進行」雖為被告抗辯要點，但 pred claims 中已於多處（如 pred_68）提及「轉送大型醫院符合一般開業醫師醫療水準」，核心概念已覆蓋",
+     "reason": "「該等手術需大型醫院始可進行」雖為被告抗辯要點，但 pred claims 中已於多處（如 pred_68）提及「轉送大型醫院符合一般開業醫師醫療水準」，核心概念已覆蓋"
+    },
+    {
+     "gt_claim_id": 86,
+     "severity": "minor",
+     "text": "「有鑑定書、相驗筆錄、驗斷書、相驗屍體證明書、照片」為證據清單列舉，屬程序性背景事實",
+     "reason": "「有鑑定書、相驗筆錄、驗斷書、相驗屍體證明書、照片」為證據清單列舉，屬程序性背景事實"
     },
     {
      "gt_claim_id": 89,
      "severity": "minor",
-     "text": "由超音波片判斷，本件產婦H腹腔出血量應不多",
-     "reason": "超音波判斷細節"
+     "text": "「由超音波片判斷，本件產婦H腹腔出血量應不多」為台北榮總鑑定細節，屬鑑定技術性內容，不影響死因認定",
+     "reason": "「由超音波片判斷，本件產婦H腹腔出血量應不多」為台北榮總鑑定細節，屬鑑定技術性內容，不影響死因認定"
     },
     {
      "gt_claim_id": 90,
      "severity": "minor",
-     "text": "後腹腔是否有血液積聚，限於超音波穿透力不足，無法據超音波影像判斷",
-     "reason": "檢查限制細節"
+     "text": "「後腹腔是否有血液積聚，限於超音波穿透力不足，無法據超音波影像判斷」為鑑定技術細節",
+     "reason": "「後腹腔是否有血液積聚，限於超音波穿透力不足，無法據超音波影像判斷」為鑑定技術細節"
     },
     {
      "gt_claim_id": 94,
      "severity": "minor",
-     "text": "被告、檢察官法定上訴期間未上訴",
-     "reason": "程序性事實"
+     "text": "「被告、檢察官法定上訴期間未上訴」為程序性事實，屬判決確定過程",
+     "reason": "「被告、檢察官法定上訴期間未上訴」為程序性事實，屬判決確定過程"
     },
     {
      "gt_claim_id": 95,
      "severity": "minor",
-     "text": "本案判決即確定",
-     "reason": "程序性結果"
+     "text": "「本案判決即確定」為程序性結果",
+     "reason": "「本案判決即確定」為程序性結果"
     },
     {
      "gt_claim_id": 98,
      "severity": "minor",
-     "text": "有A診所產婦H特別護理紀錄單及醫事審議委員會鑑定書所舉之案情概要存卷可按",
-     "reason": "證據清單細節"
+     "text": "「有A診所產婦H特別護理紀錄單及醫事審議委員會鑑定書所舉之案情概要存卷可按」為證據基礎陳述，pred使用[CH_09]引用已涵蓋此意",
+     "reason": "「有A診所產婦H特別護理紀錄單及醫事審議委員會鑑定書所舉之案情概要存卷可按」為證據基礎陳述，pred使用[CH_09]引用已涵蓋此意"
+    },
+    {
+     "gt_claim_id": 101,
+     "severity": "minor",
+     "text": "「有前揭醫事鑑定委員會之鑑定意見可考」為證據基礎陳述，pred使用[CH_09]引用已涵蓋",
+     "reason": "「有前揭醫事鑑定委員會之鑑定意見可考」為證據基礎陳述，pred使用[CH_09]引用已涵蓋"
+    },
+    {
+     "gt_claim_id": 102,
+     "severity": "important",
+     "text": "「轉診固符合一般開業醫師之醫療水準」為法院對轉診行為本身的醫療水準合規性判斷，pred僅提及「轉送大型醫院」但未明確陳述該醫療水準判斷，屬重要法律論點遺漏",
+     "reason": "「轉診固符合一般開業醫師之醫療水準」為法院對轉診行為本身的醫療水準合規性判斷，pred僅提及「轉送大型醫院」但未明確陳述該醫療水準判斷，屬重要法律論點遺漏"
+    },
+    {
+     "gt_claim_id": 103,
+     "severity": "important",
+     "text": "「本例產婦H嗜睡、惡露量增加、血液不凝，均係羊水栓塞之臨床表徵」為法院對症狀歸因的醫學判斷，pred僅提及「懷疑子宮收縮不良、DIC」而未提及法院認定的「羊水栓塞表徵」，影響理解法院如何評估被告診斷合理性",
+     "reason": "「本例產婦H嗜睡、惡露量增加、血液不凝，均係羊水栓塞之臨床表徵」為法院對症狀歸因的醫學判斷，pred僅提及「懷疑子宮收縮不良、DIC」而未提及法院認定的「羊水栓塞表徵」，影響理解法院如何評估被告診斷合理性"
     },
     {
      "gt_claim_id": 104,
      "severity": "minor",
-     "text": "病徵重疊或可能誤診，難以避免，固不論",
-     "reason": "論證修飾語"
+     "text": "「病徵重疊或可能誤診，難以避免，固不論」為法院法律判斷，屬次要論述",
+     "reason": "「病徵重疊或可能誤診，難以避免，固不論」為法院法律判斷，屬次要論述"
+    },
+    {
+     "gt_claim_id": 105,
+     "severity": "minor",
+     "text": "「縱診斷為羊水栓塞之處置，亦需要立即快速之反應」與GT_103相關，為注意義務延伸論述",
+     "reason": "「縱診斷為羊水栓塞之處置，亦需要立即快速之反應」與GT_103相關，為注意義務延伸論述"
+    },
+    {
+     "gt_claim_id": 107,
+     "severity": "minor",
+     "text": "「有前揭鑑定意見足參」為證據基礎陳述",
+     "reason": "「有前揭鑑定意見足參」為證據基礎陳述"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.4789,
-   "quality_overall": 4.6119,
-   "gt_length_ratio": 1.3386,
-   "length_penalty": 0.9712,
-   "zone": "too_long"
   },
   "fact_detail": {
    "gt_total": 114,
    "pred_total": 105,
-   "matched": 97,
-   "partial": 3,
-   "missing": 14,
-   "hallucinated": 0
+   "matched": 94,
+   "partial": 2,
+   "missing": 17,
+   "hallucinated": 7
   },
-  "fact_recall_efficiency": 0.6455,
   "section_balance": 1.0
  }
 }

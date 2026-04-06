@@ -50,6 +50,7 @@ EXTRA_CONDITIONS = OrderedDict(
         ("LENS-Full-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-A", "group": "開源模型"}),
         ("LENS-NoReact-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-B", "group": "開源模型"}),
         ("LENS-NoAFG-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-C", "group": "開源模型"}),
+        ("baseline_ollama_nemotron-3-super-cloud", {"label": "Nemotron 3 Super (120B / 12A)", "group": "開源模型"}),
     ]
 )
 
@@ -74,6 +75,7 @@ DISPLAY_LABELS = {
     "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
     "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
+    "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
 }
 
 RULE_MAP = OrderedDict(

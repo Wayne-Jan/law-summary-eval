@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -140,17 +140,17 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7904,
-  "fact_recall": 0.9655,
-  "fact_precision": 1.0,
-  "fact_f1": 0.9823,
+  "fact_recall": 0.8103,
+  "fact_precision": 0.8889,
+  "fact_f1": 0.8478,
   "quality_overall": 4.55,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9143,
-  "uncited_rate": 0.13,
+  "uncited_rate": 0.093,
   "faithfulness_combined": {
-   "score": 0.922,
-   "citation_fidelity": 0.87,
-   "fact_precision": 1.0,
+   "score": 0.8998,
+   "citation_fidelity": 0.907,
+   "fact_precision": 0.8889,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
@@ -159,42 +159,76 @@
   "compliance": 2,
   "cross_validation": "GOOD",
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9828,
+  "weighted_recall": 0.9368,
   "missing_severity": {
    "critical": 0,
-   "important": 1,
-   "minor": 1,
+   "important": 2,
+   "minor": 7,
    "details": [
     {
-     "gt_claim_id": 41,
+     "gt_claim_id": 6,
+     "severity": "minor",
+     "text": "護士不起訴處分確定為次要程序性事實，不影響案情理解與判決結論。摘要未提及此細節正確聚焦於主要醫療過失事實。",
+     "reason": "護士不起訴處分確定為次要程序性事實，不影響案情理解與判決結論。摘要未提及此細節正確聚焦於主要醫療過失事實。"
+    },
+    {
+     "gt_claim_id": 33,
      "severity": "important",
-     "text": "本案係簡式審判程序",
-     "reason": "審判程序類型影響對判決背景及正當性的完整理解，屬制度性重要資訊，雖非核心事實但具相當重要性"
+     "text": "「依當時之客觀狀況並無不能注意之情事」為業務過失罪責成立的核心法律要件之一（刑法第14條注意能力判斷），遺漏此要件影響過失認定的完整性理解。",
+     "reason": "「依當時之客觀狀況並無不能注意之情事」為業務過失罪責成立的核心法律要件之一（刑法第14條注意能力判斷），遺漏此要件影響過失認定的完整性理解。"
+    },
+    {
+     "gt_claim_id": 38,
+     "severity": "minor",
+     "text": "檢察官督同法醫相驗為死亡事實確認的程序性描述。摘要已在 reasonning 段記載「經臺灣宜蘭地方法院檢察署檢察官督同法醫相驗屬實」，程序要點已涵蓋。",
+     "reason": "檢察官督同法醫相驗為死亡事實確認的程序性描述。摘要已在 reasonning 段記載「經臺灣宜蘭地方法院檢察署檢察官督同法醫相驗屬實」，程序要點已涵蓋。"
+    },
+    {
+     "gt_claim_id": 41,
+     "severity": "minor",
+     "text": "簡式審判程序為程序性背景資訊，不影響實體案情與判決結論理解。",
+     "reason": "簡式審判程序為程序性背景資訊，不影響實體案情與判決結論理解。"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "minor",
+     "text": "「上述鑑定書意見未載於判決書」為形式性記載事實，不影響案件實質內容理解。reasoning 段已正確引用鑑定意見結論。",
+     "reason": "「上述鑑定書意見未載於判決書」為形式性記載事實，不影響案件實質內容理解。reasoning 段已正確引用鑑定意見結論。"
+    },
+    {
+     "gt_claim_id": 46,
+     "severity": "minor",
+     "text": "「簡式審判程序」與「受命法官獨任」均為程序性資訊，不影響判決實體認定與法益理解。",
+     "reason": "「簡式審判程序」與「受命法官獨任」均為程序性資訊，不影響判決實體認定與法益理解。"
+    },
+    {
+     "gt_claim_id": 47,
+     "severity": "minor",
+     "text": "「被告甲到庭後，對檢察官起訴事實，坦承不諱」已被 reasoning 段「被告甲於審理中到庭坦承不諱」涵蓋，語意相同僅表述差異。",
+     "reason": "「被告甲到庭後，對檢察官起訴事實，坦承不諱」已被 reasoning 段「被告甲於審理中到庭坦承不諱」涵蓋，語意相同僅表述差異。"
+    },
+    {
+     "gt_claim_id": 49,
+     "severity": "important",
+     "text": "「其間具有相當因果關係甚明」為判決核心法律認定。雖然 reasoning 段有「被告甲之過失與被害人病患X死亡結果間具有相當因果關係」，但 verdict 段未明確陳述因果關係認定，影響判決結構完整性。",
+     "reason": "「其間具有相當因果關係甚明」為判決核心法律認定。雖然 reasoning 段有「被告甲之過失與被害人病患X死亡結果間具有相當因果關係」，但 verdict 段未明確陳述因果關係認定，影響判決結構完整性。"
     },
     {
      "gt_claim_id": 53,
      "severity": "minor",
-     "text": "被告、檢察官於法定上訴期間未上訴，本案判決即確定",
-     "reason": "屬程序性/背景性事實，說明判決生效狀態，不影響醫療過失案情核心理解"
+     "text": "「判決確定」為案件最終狀態的程序性敘述，不影響判決內容理解。",
+     "reason": "「判決確定」為案件最終狀態的程序性敘述，不影響判決內容理解。"
     }
    ]
-  },
-  "information_density": {
-   "score": 4.55,
-   "quality_overall": 4.55,
-   "gt_length_ratio": 1.0828,
-   "length_penalty": 1.0,
-   "zone": "ideal"
   },
   "fact_detail": {
    "gt_total": 58,
    "pred_total": 54,
-   "matched": 56,
-   "partial": 0,
-   "missing": 2,
-   "hallucinated": 0
+   "matched": 46,
+   "partial": 2,
+   "missing": 9,
+   "hallucinated": 6
   },
-  "fact_recall_efficiency": 0.8917,
   "section_balance": 1.0
  }
 }
