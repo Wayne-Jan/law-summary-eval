@@ -95,6 +95,7 @@ EXCLUDED_CONDITIONS = {
     "opensource_afg_v11_5_writer_nemotron_super",
     "opensource_afg_v11_5_no_react_writer_nemotron_super",
     "opensource_afg_v11_5_no_afg_writer_nemotron_super",
+    "LENS-Full-DeepSeek_v31_writer_gemma4",
 }
 
 CONDITION_LABELS = {
