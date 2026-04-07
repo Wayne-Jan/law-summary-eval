@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -149,5 +150,166 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.675,
+  "fact_recall": 0.8626,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9262,
+  "quality_overall": 4.7786,
+  "citation_accuracy": 0.9762,
+  "citation_support_score": 0.9119,
+  "uncited_rate": 0.025,
+  "faithfulness_combined": {
+   "score": 0.9711,
+   "citation_fidelity": 0.9518,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 0.971,
+  "numerical_detail": {
+   "total_numerical": 34,
+   "correct": 33
+  },
+  "weighted_recall": 0.9466,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT claim 29 '依當時情形並無不能注意之情事' 雖在 section_01_facts.txt 檢察官論述中確有出現原文，但此為過失構成要件的法律判斷語句。pred claim 18 提到『被告甲未注意及此』已涵蓋過失行為，未明確引用『無不能注意之情事』此一法律用語不影響案情核心理解。屬於法律論述層次的省略，維持 missing 但標記為 important 而非 critical。",
+     "reason": "GT claim 29 '依當時情形並無不能注意之情事' 雖在 section_01_facts.txt 檢察官論述中確有出現原文，但此為過失構成要件的法律判斷語句。pred claim 18 提到『被告甲未注意及此』已涵蓋過失行為，未明確引用『無不能注意之情事』此一法律用語不影響案情核心理解。屬於法律論述層次的省略，維持 missing 但標記為 important 而非 critical。"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告核心辯護主張之一（認為病患無立即生命危險），影響案情完整理解，生成摘要確實未提及",
+     "reason": "被告核心辯護主張之一（認為病患無立即生命危險），影響案情完整理解，生成摘要確實未提及"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告核心辯護主張之一（留觀原因），影響案情完整理解，生成摘要確實未提及此 negation",
+     "reason": "被告核心辯護主張之一（留觀原因），影響案情完整理解，生成摘要確實未提及此 negation"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "護理人員安排心電圖的細節，屬程序性事實，生成摘要雖提及第二次心電圖但未明確主體為護理人員",
+     "reason": "護理人員安排心電圖的細節，屬程序性事實，生成摘要雖提及第二次心電圖但未明確主體為護理人員"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "GT claim 主體為『醫師甲』，但原文判決書被告辯護內容明確記載為『林斯晨醫師』（即證人D），生成摘要正確記載為『證人D』，與 GT claim 主體不符。此乃 GT claim 本身之主體錯誤，非摘要遺漏",
+     "reason": "GT claim 主體為『醫師甲』，但原文判決書被告辯護內容明確記載為『林斯晨醫師』（即證人D），生成摘要正確記載為『證人D』，與 GT claim 主體不符。此乃 GT claim 本身之主體錯誤，非摘要遺漏"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "GT claim 主體為『醫師甲』，但原文判決書被告辯護內容明確記載為『林斯晨醫師』（即證人D）建議作心導管手術，生成摘要正確記載為『證人D』，與 GT claim 主體不符。此乃 GT claim 本身之主體錯誤，非摘要遺漏",
+     "reason": "GT claim 主體為『醫師甲』，但原文判決書被告辯護內容明確記載為『林斯晨醫師』（即證人D）建議作心導管手術，生成摘要正確記載為『證人D』，與 GT claim 主體不符。此乃 GT claim 本身之主體錯誤，非摘要遺漏"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "原文判決書被告辯護內容確有『已將病患緊急推至心導管室準備進行手術』，生成摘要確實未提及此細節，維持 missing",
+     "reason": "原文判決書被告辯護內容確有『已將病患緊急推至心導管室準備進行手術』，生成摘要確實未提及此細節，維持 missing"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "初診時間（95年5月5日13時15分）及主訴症狀細節雖已於facts段完整呈現，但reasoning段專注於醫療過失認定，初診細節屬背景性事實，摘要於facts段已涵蓋，reasoning段省略不影響判決理由理解",
+     "reason": "初診時間（95年5月5日13時15分）及主訴症狀細節雖已於facts段完整呈現，但reasoning段專注於醫療過失認定，初診細節屬背景性事實，摘要於facts段已涵蓋，reasoning段省略不影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "初次檢查（心電圖、抽血、胸部X光）及NTG用藥已在摘要facts段完整記載，reasoning段著重於過失認定而非重複事實經過，屬合理刪減",
+     "reason": "初次檢查（心電圖、抽血、胸部X光）及NTG用藥已在摘要facts段完整記載，reasoning段著重於過失認定而非重複事實經過，屬合理刪減"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "13時21分心肌酶正常之具體時間點雖未於reasoning段明確提及，但摘要已於他處提及「血液檢查結果心肌酶呈現正常值」，屬於背景性檢查結果，不影響過失認定核心",
+     "reason": "13時21分心肌酶正常之具體時間點雖未於reasoning段明確提及，但摘要已於他處提及「血液檢查結果心肌酶呈現正常值」，屬於背景性檢查結果，不影響過失認定核心"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患之妻去找被告甲但不在之情節，摘要改以「病患X之妻亦於審理時結證，期間醫師或證人A均未前往留觀室探視，其向急診室反映後，被告甲僅表示7時30分再檢查」表達，語意相近但細節略有不同，確認維持missing",
+     "reason": "病患之妻去找被告甲但不在之情節，摘要改以「病患X之妻亦於審理時結證，期間醫師或證人A均未前往留觀室探視，其向急診室反映後，被告甲僅表示7時30分再檢查」表達，語意相近但細節略有不同，確認維持missing"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "三名護士（丁、乙、戊）接手照顧之具體順序與姓名，摘要以「證人A」代稱護理人員，雖匿名化但核心事實（護理人員輪班照護）已涵蓋，細節省略屬合理",
+     "reason": "三名護士（丁、乙、戊）接手照顧之具體順序與姓名，摘要以「證人A」代稱護理人員，雖匿名化但核心事實（護理人員輪班照護）已涵蓋，細節省略屬合理"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人丁詳細生命徵象檢查時間點（13:15、13:35、14:05、14:50、15:30）屬過於細節之程序性記載，摘要僅概括提及「護理紀錄」有記載，符合reasoning段應聚焦重點事實之原則",
+     "reason": "證人丁詳細生命徵象檢查時間點（13:15、13:35、14:05、14:50、15:30）屬過於細節之程序性記載，摘要僅概括提及「護理紀錄」有記載，符合reasoning段應聚焦重點事實之原則"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "13時30分給藥及電腦斷層檢查之具體時間點，GT原始內容與事實可能有出入（依gt_facts TL_3為13:35給藥，TL_4為13:52心電圖），摘要未提及電腦斷層，確認維持missing",
+     "reason": "13時30分給藥及電腦斷層檢查之具體時間點，GT原始內容與事實可能有出入（依gt_facts TL_3為13:35給藥，TL_4為13:52心電圖），摘要未提及電腦斷層，確認維持missing"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會鑑定之具體建議（4-6小時後重複追蹤、胸痛復發立刻重作心電圖）為法院認定醫師過失之關鍵醫療常規依據，摘要於「鑑定意見」段落僅概括提及「至少應在4至6小時後重複追蹤」，未明確提及「胸痛復發須立刻重作」之緊急處置要求，此為認定過失之重要標準，屬重要遺漏",
+     "reason": "醫審會鑑定之具體建議（4-6小時後重複追蹤、胸痛復發立刻重作心電圖）為法院認定醫師過失之關鍵醫療常規依據，摘要於「鑑定意見」段落僅概括提及「至少應在4至6小時後重複追蹤」，未明確提及「胸痛復發須立刻重作」之緊急處置要求，此為認定過失之重要標準，屬重要遺漏"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人丁、乙護理紀錄方式之詳細欄位（TPR、BP等）描述過於技術細節，摘要已於判決理由中以「護理紀錄」概括帶過，屬合理刪減",
+     "reason": "證人丁、乙護理紀錄方式之詳細欄位（TPR、BP等）描述過於技術細節，摘要已於判決理由中以「護理紀錄」概括帶過，屬合理刪減"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "護士戊在留觀期間無生命徵象檢查紀錄，雖GT有此事實，但摘要於判決理由「護理紀錄改善記載」段落已記載「證人B14時05分及15時30分記錄胸痛改善」及後續護士戊無記載之情節，核心過失事實已涵蓋",
+     "reason": "護士戊在留觀期間無生命徵象檢查紀錄，雖GT有此事實，但摘要於判決理由「護理紀錄改善記載」段落已記載「證人B14時05分及15時30分記錄胸痛改善」及後續護士戊無記載之情節，核心過失事實已涵蓋"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 131,
+   "pred_total": 81,
+   "matched": 112,
+   "partial": 2,
+   "missing": 17,
+   "hallucinated": 0
+  },
+  "section_balance": 0.7778
+ }
 }

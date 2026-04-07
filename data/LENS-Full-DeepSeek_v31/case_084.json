@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -145,5 +146,593 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7381,
+  "fact_recall": 0.5145,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6794,
+  "quality_overall": 4.8571,
+  "citation_accuracy": 0.9836,
+  "citation_support_score": 0.9698,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9902,
+   "citation_fidelity": 0.9836,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 0.938,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 30
+  },
+  "weighted_recall": 0.8285,
+  "missing_severity": {
+   "critical": 0,
+   "important": 11,
+   "minor": 67,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「被告否認業務過失致死」為被告整體抗辯立場，雖見於摘要原文（section_03_defense.txt 首句「被告甲否認有何業務過失致死犯行」），但未被 claim extractor 抽取為獨立 claim，導致 fact matcher 無 matched pred_claim。維持 missing 判定，屬 claim extraction gap。",
+     "reason": "「被告否認業務過失致死」為被告整體抗辯立場，雖見於摘要原文（section_03_defense.txt 首句「被告甲否認有何業務過失致死犯行」），但未被 claim extractor 抽取為獨立 claim，導致 fact matcher 無 matched pred_claim。維持 missing 判定，屬 claim extraction gap。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「翻身動到脊椎骨會疼痛」為被告論證手術必要性的具體症狀描述。摘要原文確有「如果他躺著完全不動的話也許不會痛，但是有翻身會動到脊椎骨，他還是會有疼痛」之記載，但 claim 25 僅提到「疼痛沒有改善」，未特別標示「翻身」動作與疼痛之因果關係。維持 missing 判定，此為細節性症狀描述，不影響整體辯護要旨理解。",
+     "reason": "「翻身動到脊椎骨會疼痛」為被告論證手術必要性的具體症狀描述。摘要原文確有「如果他躺著完全不動的話也許不會痛，但是有翻身會動到脊椎骨，他還是會有疼痛」之記載，但 claim 25 僅提到「疼痛沒有改善」，未特別標示「翻身」動作與疼痛之因果關係。維持 missing 判定，此為細節性症狀描述，不影響整體辯護要旨理解。"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "傷勢診斷細節已在section_01_facts提及，opinions段省略具體部位描述屬合理的內容篩選",
+     "reason": "傷勢診斷細節已在section_01_facts提及，opinions段省略具體部位描述屬合理的內容篩選"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "骨水泥材料成分（聚甲基丙烯酸甲酯）屬詳細材料學資訊，摘要未涵蓋為次要遺漏",
+     "reason": "骨水泥材料成分（聚甲基丙烯酸甲酯）屬詳細材料學資訊，摘要未涵蓋為次要遺漏"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "骨 cement溫度與神經損傷風險為材料特性細節，在本案未使用骨水泥的前提下屬背景性資訊",
+     "reason": "骨 cement溫度與神經損傷風險為材料特性細節，在本案未使用骨水泥的前提下屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "硫酸鈣詳細特性（可吸收、骨傳導性、強度比較）為材料學細節，pred已提及使用硫酸鈣",
+     "reason": "硫酸鈣詳細特性（可吸收、骨傳導性、強度比較）為材料學細節，pred已提及使用硫酸鈣"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "磷酸鈣材料特性為未使用之替代材料資訊，屬背景性說明",
+     "reason": "磷酸鈣材料特性為未使用之替代材料資訊，屬背景性說明"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "所有材料均有缺血性中風風險之陳述為醫學一般性說明，非本案關鍵鑑定結論",
+     "reason": "所有材料均有缺血性中風風險之陳述為醫學一般性說明，非本案關鍵鑑定結論"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "降血壓麻醉之目的與常見性已在section_01_facts間接提及（麻醉維持平均動脈壓於60毫米汞柱）",
+     "reason": "降血壓麻醉之目的與常見性已在section_01_facts間接提及（麻醉維持平均動脈壓於60毫米汞柱）"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓控制數值已在section_01_facts提及（麻醉維持平均動脈壓於60毫米汞柱）",
+     "reason": "血壓控制數值已在section_01_facts提及（麻醉維持平均動脈壓於60毫米汞柱）"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "缺血性中風為罕見併發症之陳述屬醫學背景說明",
+     "reason": "缺血性中風為罕見併發症之陳述屬醫學背景說明"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "缺血性中風一般危險因子清單屬醫學背景知識，pred已簡化為「無明顯高風險因子」",
+     "reason": "缺血性中風一般危險因子清單屬醫學背景知識，pred已簡化為「無明顯高風險因子」"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "缺血性中風發生原因為醫學背景知識，pred已涵蓋核心結論（左頸動脈狹窄導致）",
+     "reason": "缺血性中風發生原因為醫學背景知識，pred已涵蓋核心結論（左頸動脈狹窄導致）"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "多重可能原因詳述pred已涵蓋左頸動脈狹窄及低壓麻醉因素，其餘為列舉性補充",
+     "reason": "多重可能原因詳述pred已涵蓋左頸動脈狹窄及低壓麻醉因素，其餘為列舉性補充"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "失血量數值已在section_01_facts提及（失血量約為350c.c.，再度止血期間估計失血量共約2000c.c.）",
+     "reason": "失血量數值已在section_01_facts提及（失血量約為350c.c.，再度止血期間估計失血量共約2000c.c.）"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "脊椎手術失血量變化性屬一般醫學常識，非本案關鍵鑑定意見",
+     "reason": "脊椎手術失血量變化性屬一般醫學常識，非本案關鍵鑑定意見"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "低壓麻醉目的為背景性說明，pred已涵蓋事實（麻醉維持平均動脈壓於60毫米汞柱）",
+     "reason": "低壓麻醉目的為背景性說明，pred已涵蓋事實（麻醉維持平均動脈壓於60毫米汞柱）"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體輸血單位數為細節性醫療紀錄，非opinions段核心結論",
+     "reason": "具體輸血單位數為細節性醫療紀錄，非opinions段核心結論"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "緊急輸血單位數為細節性醫療紀錄",
+     "reason": "緊急輸血單位數為細節性醫療紀錄"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "緊急輸血劑量適當性評價為鑑定細節",
+     "reason": "緊急輸血劑量適當性評價為鑑定細節"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血栓溶解劑使用建議為治療細節",
+     "reason": "血栓溶解劑使用建議為治療細節"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "pred已評價「並無不當」，與「符合醫療常規」語義相近，屬措辭差異",
+     "reason": "pred已評價「並無不當」，與「符合醫療常規」語義相近，屬措辭差異"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "CT攝影具體發現為影像判讀細節",
+     "reason": "CT攝影具體發現為影像判讀細節"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "CT無法證實人造骨滲入為影像判讀細節",
+     "reason": "CT無法證實人造骨滲入為影像判讀細節"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "pred已述及硫酸鈣與骨 cement之區別（「硫酸鈣硬度較高，更不會有此情形」），材料選擇資訊已涵蓋",
+     "reason": "pred已述及硫酸鈣與骨 cement之區別（「硫酸鈣硬度較高，更不會有此情形」），材料選擇資訊已涵蓋"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "硫酸鈣與低血壓/休克併發症關係為文獻佐證細節",
+     "reason": "硫酸鈣與低血壓/休克併發症關係為文獻佐證細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "低血壓手術方式與風險為一般醫學原理",
+     "reason": "低血壓手術方式與風險為一般醫學原理"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "平均動脈壓建議範圍已於section_01_facts提及（麻醉維持平均動脈壓於60毫米汞柱）",
+     "reason": "平均動脈壓建議範圍已於section_01_facts提及（麻醉維持平均動脈壓於60毫米汞柱）"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "低血壓休克與血管疾病因果關係為鑑定推論過程",
+     "reason": "低血壓休克與血管疾病因果關係為鑑定推論過程"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "骨釘刺入胸腔血管之影像判讀為細節確認",
+     "reason": "骨釘刺入胸腔血管之影像判讀為細節確認"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "胸腔積水性質判斷為細節",
+     "reason": "胸腔積水性質判斷為細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "影像顯示骨釘未刺入胸腔血管為細節確認",
+     "reason": "影像顯示骨釘未刺入胸腔血管為細節確認"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第一次手術出血量為細節數據",
+     "reason": "第一次手術出血量為細節數據"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術後傷口滲血為一般術後情形描述",
+     "reason": "術後傷口滲血為一般術後情形描述"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "傷口滲血原因列舉為醫學背景",
+     "reason": "傷口滲血原因列舉為醫學背景"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "止血清創手術適應症為醫療常規說明",
+     "reason": "止血清創手術適應症為醫療常規說明"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術中無胸腔大出血為事實確認",
+     "reason": "手術中無胸腔大出血為事實確認"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "電腦斷層攝影影像發現為細節",
+     "reason": "電腦斷層攝影影像發現為細節"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "影像可能為人造骨滲入但無法證實為判讀細節",
+     "reason": "影像可能為人造骨滲入但無法證實為判讀細節"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "pred已明確區分硫酸鈣與骨 cement（「硫酸鈣硬度較高，更不會有此情形」）",
+     "reason": "pred已明確區分硫酸鈣與骨 cement（「硫酸鈣硬度較高，更不會有此情形」）"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "無法證實肺部栓塞為鑑定細節結論",
+     "reason": "無法證實肺部栓塞為鑑定細節結論"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "灌注針注意事項為手術操作規範",
+     "reason": "灌注針注意事項為手術操作規範"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "人工代用骨外露應對措施為操作規範",
+     "reason": "人工代用骨外露應對措施為操作規範"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "移動式X光機使用為手術常規",
+     "reason": "移動式X光機使用為手術常規"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術中使用fluoroscope為設備細節",
+     "reason": "術中使用fluoroscope為設備細節"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術後顱內鈣化現象為影像發現細節",
+     "reason": "術後顱內鈣化現象為影像發現細節"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "CT切面差異為技術性說明",
+     "reason": "CT切面差異為技術性說明"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "顱內鈣化可能成因為推論細節",
+     "reason": "顱內鈣化可能成因為推論細節"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "大出血與缺血效應關係為鑑定推論",
+     "reason": "大出血與缺血效應關係為鑑定推論"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管硬化狹窄與腦中風死亡關係pred已涵蓋核心（「本身腦頸動脈血管狹窄導致腦中風」）",
+     "reason": "血管硬化狹窄與腦中風死亡關係pred已涵蓋核心（「本身腦頸動脈血管狹窄導致腦中風」）"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "全身麻醉術中無法發現中風為醫療常規限制",
+     "reason": "全身麻醉術中無法發現中風為醫療常規限制"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術後中風緊急處置程序pred已涵蓋核心處置（「控制血壓...補充水分及血液...」）",
+     "reason": "術後中風緊急處置程序pred已涵蓋核心處置（「控制血壓...補充水分及血液...」）"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "椎骨融合術成功率數據為補充資訊",
+     "reason": "椎骨融合術成功率數據為補充資訊"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "大腦動脈栓塞高風險因子清單pred已簡化為「無明顯高風險因子」",
+     "reason": "大腦動脈栓塞高風險因子清單pred已簡化為「無明顯高風險因子」"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第11胸椎不確定脊椎骨折判斷已在section_01_facts提及（「胸椎第11節壓迫性骨折併胸椎第10節後棘骨折，屬不穩定脊椎骨折」）",
+     "reason": "第11胸椎不確定脊椎骨折判斷已在section_01_facts提及（「胸椎第11節壓迫性骨折併胸椎第10節後棘骨折，屬不穩定脊椎骨折」）"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未記錄證人W關於被告『一開始就說一定要開刀』的具體證詞，此為爭議焦點之一，影響案情完整理解",
+     "reason": "摘要未記錄證人W關於被告『一開始就說一定要開刀』的具體證詞，此為爭議焦點之一，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未記錄W詢問保守治療方式（背架固定、臥床休息）的內容，此為告知義務爭議的核心細節",
+     "reason": "摘要未記錄W詢問保守治療方式（背架固定、臥床休息）的內容，此為告知義務爭議的核心細節"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "當天晚上辦理住院手續為程序性時間點，雖影響時間順序清晰度，但不影響判決結論理解",
+     "reason": "當天晚上辦理住院手續為程序性時間點，雖影響時間順序清晰度，但不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "96年9月10日簽署手術同意書的具體日期明確記錄在程序性事實中，摘要已提及同意書相關情節",
+     "reason": "96年9月10日簽署手術同意書的具體日期明確記錄在程序性事實中，摘要已提及同意書相關情節"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病房護士交付同意書給W簽署的細節屬程序性事實，摘要已有護士交付同意書的概括記載",
+     "reason": "病房護士交付同意書給W簽署的細節屬程序性事實，摘要已有護士交付同意書的概括記載"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "W詢問空白同意書及護士『例行作業』回應為關鍵證詞，影響對手術同意程序完備性的理解",
+     "reason": "W詢問空白同意書及護士『例行作業』回應為關鍵證詞，影響對手術同意程序完備性的理解"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "W不知如何提問、被告即離開的細節，與主動告知義務認定相關，影響案情理解",
+     "reason": "W不知如何提問、被告即離開的細節，與主動告知義務認定相關，影響案情理解"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告未曾說明保守復健方式的指控是本案核心爭點之一，影響判決結論理解",
+     "reason": "被告未曾說明保守復健方式的指控是本案核心爭點之一，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患C之夫關於被告態度權威的證詞屬輔助性情節，雖有證明力但不影響判決結論",
+     "reason": "病患C之夫關於被告態度權威的證詞屬輔助性情節，雖有證明力但不影響判決結論"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告承認可用保守治療的證詞為關鍵證據，影響對被告行為認定的理解",
+     "reason": "被告承認可用保守治療的證詞為關鍵證據，影響對被告行為認定的理解"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人F未參與開刀過程屬輔助性事實，摘要未明確記載但不影響判決結論",
+     "reason": "證人F未參與開刀過程屬輔助性事實，摘要未明確記載但不影響判決結論"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "F負責住院照顧及術後治療為背景事實，影響F證詞的可信性評估，但不影響判決結論",
+     "reason": "F負責住院照顧及術後治療為背景事實，影響F證詞的可信性評估，但不影響判決結論"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "W向F詢問骨水泥及手術方式問題為關鍵時間點，影響對告知義務履行時機的理解",
+     "reason": "W向F詢問骨水泥及手術方式問題為關鍵時間點，影響對告知義務履行時機的理解"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "F回應應直接問被告為程序性事實，影響對責任歸屬的理解",
+     "reason": "F回應應直接問被告為程序性事實，影響對責任歸屬的理解"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "W手上沒資料不知如何提問的細節屬程序性情節，摘要已記載被告問家屬有無問題",
+     "reason": "W手上沒資料不知如何提問的細節屬程序性情節，摘要已記載被告問家屬有無問題"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告主觀認知已由F說明的情節，影響對被告過失認定的評價",
+     "reason": "被告主觀認知已由F說明的情節，影響對被告過失認定的評價"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "麻醉科醫生S具體證詞屬程序性證據，摘要已有麻醉醫師相關說明",
+     "reason": "麻醉科醫生S具體證詞屬程序性證據，摘要已有麻醉醫師相關說明"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院判斷與Y證詞相符為程序性認定，摘要已有麻醉風險相關說明",
+     "reason": "法院判斷與Y證詞相符為程序性認定，摘要已有麻醉風險相關說明"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "W於96年9月9日中午至翌日在醫院的時間為具體時間細節，不影響判決結論",
+     "reason": "W於96年9月9日中午至翌日在醫院的時間為具體時間細節，不影響判決結論"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "F醫師後來才到的時間順序屬程序性細節，摘要已有相關人員到場記載",
+     "reason": "F醫師後來才到的時間順序屬程序性細節，摘要已有相關人員到場記載"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "W只問麻醉評估單如何填寫為細節事實，不影響判決結論理解",
+     "reason": "W只問麻醉評估單如何填寫為細節事實，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Y對病患解釋詳盡的判斷為法院程序性認定，摘要已有麻醉風險說明記載",
+     "reason": "Y對病患解釋詳盡的判斷為法院程序性認定，摘要已有麻醉風險說明記載"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "治療方式選擇的綜合判斷原則為重要法律標準，影響對醫師裁量權範圍的理解",
+     "reason": "治療方式選擇的綜合判斷原則為重要法律標準，影響對醫師裁量權範圍的理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 173,
+   "pred_total": 132,
+   "matched": 83,
+   "partial": 12,
+   "missing": 78,
+   "hallucinated": 0
+  },
+  "section_balance": 0.2933
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -167,5 +168,250 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6171,
+  "fact_recall": 0.7949,
+  "fact_precision": 0.9052,
+  "fact_f1": 0.8465,
+  "quality_overall": 4.8143,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.19,
+  "faithfulness_combined": {
+   "score": 0.8481,
+   "citation_fidelity": 0.81,
+   "fact_precision": 0.9052,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 26,
+   "correct": 26
+  },
+  "weighted_recall": 0.9307,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 21,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「其夫因結識被告甲，乃於...前往C診所就診」，未明確提及「知悉其可治療氣喘」，屬背景性事實",
+     "reason": "section_01_facts.txt 僅提及「其夫因結識被告甲，乃於...前往C診所就診」，未明確提及「知悉其可治療氣喘」，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「病患X偕夫持處方箋至天士藥局領藥」，但未明確記載「下午3時44分許」這一具體時間點，屬時間細節遺漏",
+     "reason": "section_01_facts.txt 提及「病患X偕夫持處方箋至天士藥局領藥」，但未明確記載「下午3時44分許」這一具體時間點，屬時間細節遺漏"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅記載「救護人員於5時51分抵達」，未提及「下午5時47分許出勤」，屬時間細節遺漏",
+     "reason": "section_01_facts.txt 僅記載「救護人員於5時51分抵達」，未提及「下午5時47分許出勤」，屬時間細節遺漏"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "confirmed: section_01_facts.txt 已記載抵達時間為5時51分，pred claim 亦有提及，但 GT claim 單獨敘述為一個獨立 claim，pred 將其整合於事件鏈中，status 維持 missing",
+     "reason": "confirmed: section_01_facts.txt 已記載抵達時間為5時51分，pred claim 亦有提及，但 GT claim 單獨敘述為一個獨立 claim，pred 將其整合於事件鏈中，status 維持 missing"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅記載「案經檢察官起訴」，未提及「配偶P訴請」之程序細節，屬程序性事實",
+     "reason": "section_01_facts.txt 僅記載「案經檢察官起訴」，未提及「配偶P訴請」之程序細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及「自動檢舉簽分追加起訴」，屬程序性事實",
+     "reason": "section_01_facts.txt 未提及「自動檢舉簽分追加起訴」，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及「違反病歷詳實登載義務」，但未明確提及「第三人調取該病歷時，亦能瞭解醫療診斷之內容及過程」之病歷功能描述，屬次要概念性事實",
+     "reason": "section_05_reasoning.txt 提及「違反病歷詳實登載義務」，但未明確提及「第三人調取該病歷時，亦能瞭解醫療診斷之內容及過程」之病歷功能描述，屬次要概念性事實"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "處方箋3聯的細節屬程序性事實，核心事實（補登病歷、製作處方箋）已在facts及reasoning section涵蓋，具體聯數不影響案情理解",
+     "reason": "處方箋3聯的細節屬程序性事實，核心事實（補登病歷、製作處方箋）已在facts及reasoning section涵蓋，具體聯數不影響案情理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "護士撕掉原處方箋的細節屬程序性事實，核心事實（業務登載不實文書）已在reasoning section涵蓋",
+     "reason": "護士撕掉原處方箋的細節屬程序性事實，核心事實（業務登載不實文書）已在reasoning section涵蓋"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "黏貼處方箋於診療紀錄單的細節屬程序性事實，不影響案情核心理解",
+     "reason": "黏貼處方箋於診療紀錄單的細節屬程序性事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "前往天士藥局的具體時間（下午6時許）屬次要細節，核心事實（前往藥局領藥）已在facts section涵蓋",
+     "reason": "前往天士藥局的具體時間（下午6時許）屬次要細節，核心事實（前往藥局領藥）已在facts section涵蓋"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "藥師姓名的具體細節（張博彥）屬次要資訊，核心事實（被告前往藥局領取4種藥物）已在facts section涵蓋",
+     "reason": "藥師姓名的具體細節（張博彥）屬次要資訊，核心事實（被告前往藥局領取4種藥物）已在facts section涵蓋"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告將藥物丟棄的情節屬被告辯解細節，非核心事實。核心事實（被告領取藥物）已涵蓋，藥物去向不影響過失認定",
+     "reason": "被告將藥物丟棄的情節屬被告辯解細節，非核心事實。核心事實（被告領取藥物）已涵蓋，藥物去向不影響過失認定"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "病患T罹患氣喘痼疾屬重要背景事實，雖facts section有提及「長年為氣喘所苦」，但未明確對應GT defense section的「氣喘痼疾」表述，維持missing",
+     "reason": "病患T罹患氣喘痼疾屬重要背景事實，雖facts section有提及「長年為氣喘所苦」，但未明確對應GT defense section的「氣喘痼疾」表述，維持missing"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "案發時T氣喘發作屬關鍵事實認定（與被告「並非氣喘發作」辯解直接相關），facts section雖有氣喘症狀描述，但未明確呈現「案發時氣喘發作」的特定時間點認定",
+     "reason": "案發時T氣喘發作屬關鍵事實認定（與被告「並非氣喘發作」辯解直接相關），facts section雖有氣喘症狀描述，但未明確呈現「案發時氣喘發作」的特定時間點認定"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "替代藥物建議屬鑑定意見之細節性醫療建議，非本案核心爭點",
+     "reason": "替代藥物建議屬鑑定意見之細節性醫療建議，非本案核心爭點"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體替代治療方案屬鑑定意見之參考性建議，非核心事實認定",
+     "reason": "具體替代治療方案屬鑑定意見之參考性建議，非核心事實認定"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "吸入劑商品名稱列舉屬細節性醫療資訊，不影響違規用藥之核心認定",
+     "reason": "吸入劑商品名稱列舉屬細節性醫療資訊，不影響違規用藥之核心認定"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "類固醇劑量調整建議屬鑑定意見之治療建議層面，非關鍵事實",
+     "reason": "類固醇劑量調整建議屬鑑定意見之治療建議層面，非關鍵事實"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Amiodarone替代建議屬鑑定意見之參考性內容，非核心認定",
+     "reason": "Amiodarone替代建議屬鑑定意見之參考性內容，非核心認定"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病歷記載氣喘病史為鑑定意見之重要基礎事實，section_01_facts雖有病史記載，但opinions段未明確引用此點作為鑑定依據",
+     "reason": "病歷記載氣喘病史為鑑定意見之重要基礎事實，section_01_facts雖有病史記載，但opinions段未明確引用此點作為鑑定依據"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "家屬證詞之具體服藥時間屬證據細節，section_05_reasoning已提及服用時間，無需重複記載家屬證詞來源",
+     "reason": "家屬證詞之具體服藥時間屬證據細節，section_05_reasoning已提及服用時間，無需重複記載家屬證詞來源"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "藥物濃度檢測方法屬鑑定意見中證明方法之說明，非核心事實認定",
+     "reason": "藥物濃度檢測方法屬鑑定意見中證明方法之說明，非核心事實認定"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病歷資料無法證實服藥為鑑定意見中之證據評價，影響對鑑定結論完整理解",
+     "reason": "病歷資料無法證實服藥為鑑定意見中之證據評價，影響對鑑定結論完整理解"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖 section_01_facts.txt 有提及 11/3 主訴症狀，但 reasoning 段落確未明確引述，屬背景性事實細節，不影響過失認定之核心論證",
+     "reason": "雖 section_01_facts.txt 有提及 11/3 主訴症狀，但 reasoning 段落確未明確引述，屬背景性事實細節，不影響過失認定之核心論證"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 提及「心跳已達每分鐘約120次」但確未完整引述「神智清醒、冒冷汗」及「診斷為心律不整」之詳細理學檢查發現，屬重要的事實認定細節",
+     "reason": "section_05_reasoning.txt 提及「心跳已達每分鐘約120次」但確未完整引述「神智清醒、冒冷汗」及「診斷為心律不整」之詳細理學檢查發現，屬重要的事實認定細節"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及「未測量尖峰呼氣流速（PEF）」、「未給予必要用藥或轉診」，但未完整引述醫療準則之程序義務（含評估嚴重度、氧氣治療、急性照護轉診等），影響注意義務標準之完整論證",
+     "reason": "section_05_reasoning.txt 雖提及「未測量尖峰呼氣流速（PEF）」、「未給予必要用藥或轉診」，但未完整引述醫療準則之程序義務（含評估嚴重度、氧氣治療、急性照護轉診等），影響注意義務標準之完整論證"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 提及「已有氣喘合併急性發作之情形」但未明確表述「應詳加診斷是否處於氣喘發作期」之注意義務標準，屬重要的過失認定要件",
+     "reason": "section_05_reasoning.txt 提及「已有氣喘合併急性發作之情形」但未明確表述「應詳加診斷是否處於氣喘發作期」之注意義務標準，屬重要的過失認定要件"
+    },
+    {
+     "gt_claim_id": 176,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 確未提及「錯失治療機會」（lost chance）之法理論述，雖有「未給予必要用藥或轉診」，但缺少機會喪失之因果關係論證",
+     "reason": "section_05_reasoning.txt 確未提及「錯失治療機會」（lost chance）之法理論述，雖有「未給予必要用藥或轉診」，但缺少機會喪失之因果關係論證"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 178,
+   "pred_total": 116,
+   "matched": 134,
+   "partial": 15,
+   "missing": 29,
+   "hallucinated": 11
+  },
+  "section_balance": 0.7576
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -145,5 +146,243 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6758,
+  "fact_recall": 0.7288,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8431,
+  "quality_overall": 4.9357,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9681,
+  "uncited_rate": 0.075,
+  "faithfulness_combined": {
+   "score": 0.955,
+   "citation_fidelity": 0.925,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 0.96,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 24
+  },
+  "weighted_recall": 0.8842,
+  "missing_severity": {
+   "critical": 2,
+   "important": 9,
+   "minor": 17,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要雖提及『業務上之過失』，但『疏於注意』此特定過失事實陳述確實未出現，屬法律事實描述遺漏",
+     "reason": "生成摘要雖提及『業務上之過失』，但『疏於注意』此特定過失事實陳述確實未出現，屬法律事實描述遺漏"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "原文 defense 段確有此句『其結果皆可能造成術前說明書中所登載的大出血』，生成摘要未提及，屬次要背景性事實，對辯護要點理解影響較小",
+     "reason": "原文 defense 段確有此句『其結果皆可能造成術前說明書中所登載的大出血』，生成摘要未提及，屬次要背景性事實，對辯護要點理解影響較小"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾脫落具體位置（隱靜脈導管的分枝）雖見於 reasoning section，但 opinions section 確實未提及。此為技術性細節，不影響鑑定結論理解。",
+     "reason": "血管夾脫落具體位置（隱靜脈導管的分枝）雖見於 reasoning section，但 opinions section 確實未提及。此為技術性細節，不影響鑑定結論理解。"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「脫落原因不明」是鑑定意見的重要結論，影響對醫師責任的判斷。section_03_opinions.txt 雖有類似意涵（難以判斷係裝置不當），但未明確陳述「原因不明」。",
+     "reason": "「脫落原因不明」是鑑定意見的重要結論，影響對醫師責任的判斷。section_03_opinions.txt 雖有類似意涵（難以判斷係裝置不當），但未明確陳述「原因不明」。"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾用途說明為醫療背景知識，section_03_opinions.txt 未提及。屬次要技術性資訊。",
+     "reason": "血管夾用途說明為醫療背景知識，section_03_opinions.txt 未提及。屬次要技術性資訊。"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明具體內容為技術細節，section_03_opinions.txt 未提及。屬背景性資訊。",
+     "reason": "使用說明具體內容為技術細節，section_03_opinions.txt 未提及。屬背景性資訊。"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾應裝置位置的具體技術規範未在 opinions section 出現，屬次要醫療技術細節。",
+     "reason": "血管夾應裝置位置的具體技術規範未在 opinions section 出現，屬次要醫療技術細節。"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明對裝置位置的限制未在 opinions section 提及，屬次要資訊。",
+     "reason": "使用說明對裝置位置的限制未在 opinions section 提及，屬次要資訊。"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術同意書簽署事實見於 defense section，但 opinions section 作為鑑定意見段落，未納入此項程序性事實。屬次要資訊。",
+     "reason": "手術同意書簽署事實見於 defense section，但 opinions section 作為鑑定意見段落，未納入此項程序性事實。屬次要資訊。"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「病人生命徵象穩定，表示出血適當」是鑑定意見的重要醫療判斷，用於評估術後狀況。section_03_opinions.txt 雖提及第一份鑑定的部分內容，但未完整涵蓋此判斷。",
+     "reason": "「病人生命徵象穩定，表示出血適當」是鑑定意見的重要醫療判斷，用於評估術後狀況。section_03_opinions.txt 雖提及第一份鑑定的部分內容，但未完整涵蓋此判斷。"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「被告之處置適當，並無延誤」是鑑定對醫師處置的關鍵評價，直接影響過失認定。section_03_opinions.txt 確實未明確提及。",
+     "reason": "「被告之處置適當，並無延誤」是鑑定對醫師處置的關鍵評價，直接影響過失認定。section_03_opinions.txt 確實未明確提及。"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「手術過程難謂有疏失之處」是鑑定對手術過程的最終評價，屬核心結論。section_03_opinions.txt 未涵蓋此明確判斷。",
+     "reason": "「手術過程難謂有疏失之處」是鑑定對手術過程的最終評價，屬核心結論。section_03_opinions.txt 未涵蓋此明確判斷。"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術紀錄記載內容（無描述其他靜脈分枝處理方式）為鑑定依據之一，屬技術性細節，未在 opinions section 出現。",
+     "reason": "手術紀錄記載內容（無描述其他靜脈分枝處理方式）為鑑定依據之一，屬技術性細節，未在 opinions section 出現。"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾安全性核准資訊為產品背景資訊，未在 opinions section 提及，屬次要事實。",
+     "reason": "血管夾安全性核准資訊為產品背景資訊，未在 opinions section 提及，屬次要事實。"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用前測試要求為技術規範細節，未在 opinions section 出現，屬次要資訊。",
+     "reason": "使用前測試要求為技術規範細節，未在 opinions section 出現，屬次要資訊。"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「事實上有無說明，由病歷中無法得知」是鑑定對病歷記載限制的說明，雖相關但 opinions section 已涵蓋核心結論（告知項目不致包含所有細節），此為補充說明。",
+     "reason": "「事實上有無說明，由病歷中無法得知」是鑑定對病歷記載限制的說明，雖相關但 opinions section 已涵蓋核心結論（告知項目不致包含所有細節），此為補充說明。"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明書具體規範內容（無「不得」採用血管夾之規定）為技術細節，未在 opinions section 出現，屬次要資訊。",
+     "reason": "使用說明書具體規範內容（無「不得」採用血管夾之規定）為技術細節，未在 opinions section 出現，屬次要資訊。"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "自訴人主張視角的說明義務指控是理解爭點的關鍵，生成摘要僅呈現法院視角的說明義務說明，遺漏自訴人主張視角，影響爭點理解完整性",
+     "reason": "自訴人主張視角的說明義務指控是理解爭點的關鍵，生成摘要僅呈現法院視角的說明義務說明，遺漏自訴人主張視角，影響爭點理解完整性"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "自訴人關於『血管夾脫落風險未說明』之主張是爭點一的核心內容，遺漏影響爭點理解",
+     "reason": "自訴人關於『血管夾脫落風險未說明』之主張是爭點一的核心內容，遺漏影響爭點理解"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "自訴人關於『三種手術方法未提供選擇』之主張是爭點一的核心內容，遺漏影響爭點理解",
+     "reason": "自訴人關於『三種手術方法未提供選擇』之主張是爭點一的核心內容，遺漏影響爭點理解"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血管夾脫落具體部位為隱靜脈導管分枝屬於技術細節，雖完整但非影響判決理解的關鍵事實",
+     "reason": "血管夾脫落具體部位為隱靜脈導管分枝屬於技術細節，雖完整但非影響判決理解的關鍵事實"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『脫落原因不明』是法院認定無過失的重要依據之一，遺漏影響法院無罪論證的理解",
+     "reason": "『脫落原因不明』是法院認定無過失的重要依據之一，遺漏影響法院無罪論證的理解"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血管夾手術用途說明屬於背景性技術事實，非判決關鍵",
+     "reason": "血管夾手術用途說明屬於背景性技術事實，非判決關鍵"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血管夾使用說明內容屬於背景性技術細節",
+     "reason": "血管夾使用說明內容屬於背景性技術細節"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "『被告甲使用血管夾符合醫療常規』是法院的重要法律結論，遺漏影響判決理由的完整理解",
+     "reason": "『被告甲使用血管夾符合醫療常規』是法院的重要法律結論，遺漏影響判決理由的完整理解"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血管夾裝置位置及使用說明限制屬於技術細節",
+     "reason": "血管夾裝置位置及使用說明限制屬於技術細節"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血管夾安全性標準及使用前測試屬於技術細節",
+     "reason": "血管夾安全性標準及使用前測試屬於技術細節"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "『本案採用血管夾阻斷血管之方式，無違反醫療常規』是法院就爭點三的重要法律結論，遺漏影響判決理由的完整理解",
+     "reason": "『本案採用血管夾阻斷血管之方式，無違反醫療常規』是法院就爭點三的重要法律結論，遺漏影響判決理由的完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 118,
+   "pred_total": 107,
+   "matched": 82,
+   "partial": 8,
+   "missing": 28,
+   "hallucinated": 0
+  },
+  "section_balance": 0.6154
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,103 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7822,
+  "fact_recall": 0.875,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9333,
+  "quality_overall": 4.9357,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9935,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 24,
+   "correct": 24
+  },
+  "weighted_recall": 0.966,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅記載『案經檢察官偵查起訴』，未明確提及起訴罪名為『業務過失致死罪』；section_05_reasoning.txt 所載『成立業務過失致死罪』為法院之論罪理由，非檢察官主張。此為重要起訴事實，影響對案件範圍之理解。",
+     "reason": "section_01_facts.txt 僅記載『案經檢察官偵查起訴』，未明確提及起訴罪名為『業務過失致死罪』；section_05_reasoning.txt 所載『成立業務過失致死罪』為法院之論罪理由，非檢察官主張。此為重要起訴事實，影響對案件範圍之理解。"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT claim所述「被告乙、被告甲」看診組合與原文不符（原文為被告乙、被告丙），但因預測摘要已於claim 12正確描述B醫院就診事實（時間、地點），只是醫師組成不同，且原文確實為被告乙與被告丙而非被告甲，此GT claim可能存在錯誤。惟依審查原則，預測摘要未提及此特定醫師組合，維持missing。此為重要案情細節，影響對被告分工的理解。",
+     "reason": "GT claim所述「被告乙、被告甲」看診組合與原文不符（原文為被告乙、被告丙），但因預測摘要已於claim 12正確描述B醫院就診事實（時間、地點），只是醫師組成不同，且原文確實為被告乙與被告丙而非被告甲，此GT claim可能存在錯誤。惟依審查原則，預測摘要未提及此特定醫師組合，維持missing。此為重要案情細節，影響對被告分工的理解。"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為被告甲辯解中所提及之診斷排除內容（見 defense_facts DEF_ARG_1），非鑑定意見本身之核心內容，屬背景性醫療資訊，不影響對鑑定意見的理解",
+     "reason": "此為被告甲辯解中所提及之診斷排除內容（見 defense_facts DEF_ARG_1），非鑑定意見本身之核心內容，屬背景性醫療資訊，不影響對鑑定意見的理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "胃鏡檢查準確性之描述未見於 opinions section 或相關 GT facts，屬次要醫療細節，不影響鑑定意見的整體理解",
+     "reason": "胃鏡檢查準確性之描述未見於 opinions section 或相關 GT facts，屬次要醫療細節，不影響鑑定意見的整體理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖 GT 中有提及異常發現需立即處置，但 pred 摘要已涵蓋『應緊急電腦斷層掃描或會診專科醫師』之核心處置建議，遺漏脈搏血壓差異之具體判斷標準屬次要細節",
+     "reason": "雖 GT 中有提及異常發現需立即處置，但 pred 摘要已涵蓋『應緊急電腦斷層掃描或會診專科醫師』之核心處置建議，遺漏脈搏血壓差異之具體判斷標準屬次要細節"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為 EXP_2 中較為次要的後續追蹤建議，pred 摘要已涵蓋『需緊急電腦斷層掃描或會診』之核心處置，遺漏『無發現時仍需說明X光』屬程序性細節",
+     "reason": "此為 EXP_2 中較為次要的後續追蹤建議，pred 摘要已涵蓋『需緊急電腦斷層掃描或會診』之核心處置，遺漏『無發現時仍需說明X光』屬程序性細節"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「由證人A、證人B負責診治後，於同日晚間9時32分離院」，未提及「臆斷為無力及疲勞」之診斷內容。屬醫師A、B之診斷細節遺漏，對過失認定之核心 reasoning 影響較小。",
+     "reason": "section_01_facts.txt 僅提及「由證人A、證人B負責診治後，於同日晚間9時32分離院」，未提及「臆斷為無力及疲勞」之診斷內容。屬醫師A、B之診斷細節遺漏，對過失認定之核心 reasoning 影響較小。"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及被告丙「不知病患係二度就診」之具體抗辯內容，亦未見法院「實難採信」之評價。此為法院對被告抗辯之重要認定，影響過失責任之理解。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及被告丙「不知病患係二度就診」之具體抗辯內容，亦未見法院「實難採信」之評價。此為法院對被告抗辯之重要認定，影響過失責任之理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 103,
+   "matched": 89,
+   "partial": 11,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "section_balance": 0.8333
+ }
 }

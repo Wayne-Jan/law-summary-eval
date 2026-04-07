@@ -132,16 +132,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7468,
-  "fact_recall": 0.8398,
+  "fact_recall": 0.7864,
   "fact_precision": 1.0,
-  "fact_f1": 0.9129,
+  "fact_f1": 0.8804,
   "quality_overall": 4.6476,
   "citation_accuracy": 0.96,
   "citation_support_score": 0.9481,
-  "uncited_rate": 0.009,
+  "uncited_rate": 0.0093,
   "faithfulness_combined": {
-   "score": 0.9708,
-   "citation_fidelity": 0.9514,
+   "score": 0.9706,
+   "citation_fidelity": 0.9511,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -155,106 +155,148 @@
    "total_numerical": 46,
    "correct": 46
   },
-  "weighted_recall": 0.9482,
+  "weighted_recall": 0.9353,
   "missing_severity": {
-   "critical": 1,
+   "critical": 0,
    "important": 2,
-   "minor": 9,
+   "minor": 16,
    "details": [
     {
      "gt_claim_id": 6,
      "source_section": "facts",
      "severity": "minor",
-     "text": "7月7日上午至H診所就診之中間事件雖有時間線意義，但非判決核心事實，摘要未提及不影響案情理解",
-     "reason": "7月7日上午至H診所就診之中間事件雖有時間線意義，但非判決核心事實，摘要未提及不影響案情理解"
+     "text": "GT facts TL_6 確實存在『7月7日上午8時到胡必雄診所就診』之事實，但摘要所有 section（facts、defense、reasoning、opinions、verdict）均未提及此次診所就診，僅提及同日14:30至A醫院就診。此為次要背景事實，不影響主要案情理解。",
+     "reason": "GT facts TL_6 確實存在『7月7日上午8時到胡必雄診所就診』之事實，但摘要所有 section（facts、defense、reasoning、opinions、verdict）均未提及此次診所就診，僅提及同日14:30至A醫院就診。此為次要背景事實，不影響主要案情理解。"
     },
     {
      "gt_claim_id": 13,
      "source_section": "facts",
-     "severity": "critical",
-     "text": "「依當時情形並無不能注意之情事」係刑法過失認定之核心法律要件（注意能力之消極要件），涉及被告是否具有注意義務能力之重要法律爭點，摘要完全遺漏影響過失認定之理解",
-     "reason": "「依當時情形並無不能注意之情事」係刑法過失認定之核心法律要件（注意能力之消極要件），涉及被告是否具有注意義務能力之重要法律爭點，摘要完全遺漏影響過失認定之理解"
-    },
-    {
-     "gt_claim_id": 17,
-     "source_section": "defense",
-     "severity": "minor",
-     "text": "reasoning section 中雖提及「被告甲」多次，但未明確記載其職稱為「T醫院急診醫學科醫師」，僅為背景性身份資訊，屬次要事實。",
-     "reason": "reasoning section 中雖提及「被告甲」多次，但未明確記載其職稱為「T醫院急診醫學科醫師」，僅為背景性身份資訊，屬次要事實。"
+     "severity": "important",
+     "text": "『依當時情形，並無不能注意之情事』為過失犯成立與否之重要法律要素。摘要 reasoning 段雖有『已盡注意義務』、『符合醫療常規』等語義相近表述，但未明確出現此法定表述。維持 missing。",
+     "reason": "『依當時情形，並無不能注意之情事』為過失犯成立與否之重要法律要素。摘要 reasoning 段雖有『已盡注意義務』、『符合醫療常規』等語義相近表述，但未明確出現此法定表述。維持 missing。"
     },
     {
      "gt_claim_id": 23,
      "source_section": "defense",
      "severity": "minor",
-     "text": "reasoning section 未提及「一般民眾沒辦法區分中暑及熱衰竭」此辯護論點，屬辯護背景說明，不影響核心案情理解。",
-     "reason": "reasoning section 未提及「一般民眾沒辦法區分中暑及熱衰竭」此辯護論點，屬辯護背景說明，不影響核心案情理解。"
+     "text": "「一般民眾沒辦法區分中暑及熱衰竭」屬背景性醫學知識論點，非被告辯護核心要件，未出現於任何 section 原文中，不改判。",
+     "reason": "「一般民眾沒辦法區分中暑及熱衰竭」屬背景性醫學知識論點，非被告辯護核心要件，未出現於任何 section 原文中，不改判。"
     },
     {
      "gt_claim_id": 24,
      "source_section": "defense",
      "severity": "minor",
-     "text": "reasoning section 未提及「熱衰竭比中暑輕」之嚴重程度比較，屬辯護論點中小細節。",
-     "reason": "reasoning section 未提及「熱衰竭比中暑輕」之嚴重程度比較，屬辯護論點中小細節。"
+     "text": "「熱衰竭比中暑輕」屬醫學知識比較論點，gt_facts 中亦未明確記載此辯護主張，不改判。",
+     "reason": "「熱衰竭比中暑輕」屬醫學知識比較論點，gt_facts 中亦未明確記載此辯護主張，不改判。"
     },
     {
-     "gt_claim_id": 32,
-     "source_section": "defense",
+     "gt_claim_id": 52,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "reasoning section 提及「97年7月6日15時51分許為病患X診治」及「20時30分接受被告甲之處置後返家」，雖時段推算約4小時，但未明確記載「打點滴的時間約有4個小時」之具體論述，屬辯護細節性事實。",
-     "reason": "reasoning section 提及「97年7月6日15時51分許為病患X診治」及「20時30分接受被告甲之處置後返家」，雖時段推算約4小時，但未明確記載「打點滴的時間約有4個小時」之具體論述，屬辯護細節性事實。"
+     "text": "ACLS治療指引及MONA協議屬醫學背景知識，非案件關鍵事實",
+     "reason": "ACLS治療指引及MONA協議屬醫學背景知識，非案件關鍵事實"
     },
     {
-     "gt_claim_id": 33,
-     "source_section": "defense",
-     "severity": "important",
-     "text": "reasoning section 提及CK檢驗結果（220 IU/L），但未說明檢驗目的為「檢驗橫紋肌溶解症」。此係辯護方解釋當時醫療判斷之重要依據。",
-     "reason": "reasoning section 提及CK檢驗結果（220 IU/L），但未說明檢驗目的為「檢驗橫紋肌溶解症」。此係辯護方解釋當時醫療判斷之重要依據。"
-    },
-    {
-     "gt_claim_id": 49,
-     "source_section": "defense",
+     "gt_claim_id": 53,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "reasoning section 提及「告訴人之夫即病患X」及「與他的太太」陪同出院，但未明確記載「當天病患L與他的太太一同來院掛急診」的就醫場景，屬就醫情境細節。",
-     "reason": "reasoning section 提及「告訴人之夫即病患X」及「與他的太太」陪同出院，但未明確記載「當天病患L與他的太太一同來院掛急診」的就醫場景，屬就醫情境細節。"
+     "text": "12小時治療時限屬醫學背景知識，非案件關鍵事實",
+     "reason": "12小時治療時限屬醫學背景知識，非案件關鍵事實"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「最近」心肌梗塞治療規範屬醫學背景知識",
+     "reason": "「最近」心肌梗塞治療規範屬醫學背景知識"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "超過12小時後治療原則屬醫學背景知識",
+     "reason": "超過12小時後治療原則屬醫學背景知識"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心肌梗塞再發作風險屬醫學背景知識",
+     "reason": "心肌梗塞再發作風險屬醫學背景知識"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "臨床判斷工具詳細項目（心電圖、肌鈣蛋白、CK-MB）屬醫學技術細節",
+     "reason": "臨床判斷工具詳細項目（心電圖、肌鈣蛋白、CK-MB）屬醫學技術細節"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "7月7日血壓數值80/62 mmHg屬醫療細節",
+     "reason": "7月7日血壓數值80/62 mmHg屬醫療細節"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體死因機轉（心室纖維顫動、心因性休克）屬病理細節",
+     "reason": "具體死因機轉（心室纖維顫動、心因性休克）屬病理細節"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓恢復時段屬病程細節",
+     "reason": "血壓恢復時段屬病程細節"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓偏低與死亡關聯性判斷屬鑑定意見推論",
+     "reason": "血壓偏低與死亡關聯性判斷屬鑑定意見推論"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定機構名稱（台北榮民總醫院vs B醫院），屬背景資訊",
+     "reason": "鑑定機構名稱（台北榮民總醫院vs B醫院），屬背景資訊"
     },
     {
      "gt_claim_id": 74,
      "source_section": "verdict",
      "severity": "minor",
-     "text": "程序性事實，屬於判決後續效力說明，不影響案件核心判決內容（無罪）的理解。生成摘要已涵蓋「不能證明被告犯罪」之核心判決結果。",
-     "reason": "程序性事實，屬於判決後續效力說明，不影響案件核心判決內容（無罪）的理解。生成摘要已涵蓋「不能證明被告犯罪」之核心判決結果。"
+     "text": "生成摘要確實未提及檢察官未上訴的事實。此為程序性事實，在GT摘要(四)判決結果段落明確提及，但生成摘要僅提及判決無罪，未涵蓋此程序資訊。",
+     "reason": "生成摘要確實未提及檢察官未上訴的事實。此為程序性事實，在GT摘要(四)判決結果段落明確提及，但生成摘要僅提及判決無罪，未涵蓋此程序資訊。"
     },
     {
      "gt_claim_id": 75,
      "source_section": "verdict",
      "severity": "minor",
-     "text": "程序性事實，屬於判決確定狀態說明。生成摘要雖未明確提及「判決確定」，但已說明「不能證明被告犯罪」之判決結果。",
-     "reason": "程序性事實，屬於判決確定狀態說明。生成摘要雖未明確提及「判決確定」，但已說明「不能證明被告犯罪」之判決結果。"
+     "text": "生成摘要確實未提及判決已確定的狀態。此為程序性事實，在GT摘要(四)判決結果段落與檢察官未上訴一併提及，生成摘要完全遺漏。",
+     "reason": "生成摘要確實未提及判決已確定的狀態。此為程序性事實，在GT摘要(四)判決結果段落與檢察官未上訴一併提及，生成摘要完全遺漏。"
     },
     {
      "gt_claim_id": 81,
      "source_section": "reasoning",
-     "severity": "minor",
-     "text": "判決理由段未明確說明被告專科別（僅稱『被告甲』），雖第一段公訴事實提到『急診醫學科醫師甲』，但 reasoning section 確實未強調『並非心臟專科醫師』這一對比。屬背景性事實，不影響判決邏輯理解。",
-     "reason": "判決理由段未明確說明被告專科別（僅稱『被告甲』），雖第一段公訴事實提到『急診醫學科醫師甲』，但 reasoning section 確實未強調『並非心臟專科醫師』這一對比。屬背景性事實，不影響判決邏輯理解。"
-    },
-    {
-     "gt_claim_id": 90,
-     "source_section": "reasoning",
      "severity": "important",
-     "text": "GT 明確指出『臺北榮民總醫院』鑑定且結論為『無因果關係』，但 pred 僅稱『B醫院』且結論為『無法判斷關係』。機構名稱和明確結論均遺漏，影響對鑑定意見權威性的理解。",
-     "reason": "GT 明確指出『臺北榮民總醫院』鑑定且結論為『無因果關係』，但 pred 僅稱『B醫院』且結論為『無法判斷關係』。機構名稱和明確結論均遺漏，影響對鑑定意見權威性的理解。"
+     "text": "被告的急診醫學專科背景是判斷注意義務標準的重要事實。section_01_facts.txt雖提及「急診醫學科醫師甲」，但reasoning段未明確說明「並非心臟專科醫師」，影響對注意義務標準的理解，確認維持missing",
+     "reason": "被告的急診醫學專科背景是判斷注意義務標準的重要事實。section_01_facts.txt雖提及「急診醫學科醫師甲」，但reasoning段未明確說明「並非心臟專科醫師」，影響對注意義務標準的理解，確認維持missing"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 103,
    "pred_total": 107,
-   "matched": 83,
-   "partial": 7,
-   "missing": 11,
+   "matched": 77,
+   "partial": 8,
+   "missing": 18,
    "hallucinated": 0
   },
-  "section_balance": 0.5
+  "section_balance": 0.4667
  }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,271 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7405,
+  "fact_recall": 0.8214,
+  "fact_precision": 1.0,
+  "fact_f1": 0.902,
+  "quality_overall": 4.8857,
+  "citation_accuracy": 0.9804,
+  "citation_support_score": 0.9642,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9882,
+   "citation_fidelity": 0.9804,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.9212,
+  "missing_severity": {
+   "critical": 1,
+   "important": 9,
+   "minor": 22,
+   "details": [
+    {
+     "gt_claim_id": 41,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "此處GT claim 41主張「未進行內診」，但GT reasoning section之claim 115明確記載「被告甲對孕婦C施以內診」，兩者相互矛盾。經查master.json中arguments.prosecution_allegations亦提及「對鄭美君進行內診」，顯示被告確有進行內診。因此GT claim 41可能為錯誤標註或特指某時段未內診，但pred summary確未提及「未內診」之主張，維持missing判斷。此事實關係過失認定，屬重要等級。",
+     "reason": "此處GT claim 41主張「未進行內診」，但GT reasoning section之claim 115明確記載「被告甲對孕婦C施以內診」，兩者相互矛盾。經查master.json中arguments.prosecution_allegations亦提及「對鄭美君進行內診」，顯示被告確有進行內診。因此GT claim 41可能為錯誤標註或特指某時段未內診，但pred summary確未提及「未內診」之主張，維持missing判斷。此事實關係過失認定，屬重要等級。"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "此為推論型claim（「依被告甲之專業知識...並無不能注意之情事」），屬於過失認定的法律推論而非具體事實。pred summary雖提及被告專業知識但未明確陳述「無不能注意之情事」之推論，維持missing判斷。此為法律論證細節，屬次要等級。",
+     "reason": "此為推論型claim（「依被告甲之專業知識...並無不能注意之情事」），屬於過失認定的法律推論而非具體事實。pred summary雖提及被告專業知識但未明確陳述「無不能注意之情事」之推論，維持missing判斷。此為法律論證細節，屬次要等級。"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "此為被告辯護內容中的事實陳述（開立處方），屬於被告自我供述的一部分。雖未在pred defense段出現，但facts段已詳細記載處方內容，不影響案情理解。此為程序性/背景性事實遺漏。",
+     "reason": "此為被告辯護內容中的事實陳述（開立處方），屬於被告自我供述的一部分。雖未在pred defense段出現，但facts段已詳細記載處方內容，不影響案情理解。此為程序性/背景性事實遺漏。"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "此為被告辯護內容中關於家屬「進入其診間」的細節描述。核心事實「家屬告知醫師患者在診所外車上」已在facts段記載（「家屬甲進入診所告知醫師甲」），此處「診間」一詞屬細節差異，不影響核心事實傳達。",
+     "reason": "此為被告辯護內容中關於家屬「進入其診間」的細節描述。核心事實「家屬告知醫師患者在診所外車上」已在facts段記載（「家屬甲進入診所告知醫師甲」），此處「診間」一詞屬細節差異，不影響核心事實傳達。"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "此為被告辯護內容中關於患者症狀的描述。facts段完整記載「腹部劇烈疼痛而抱著肚子...痛到無法下車」，「四肢無力」可由「無法行走」合理推論。症狀細節已在其他段落充分體現，不影響病情理解。",
+     "reason": "此為被告辯護內容中關於患者症狀的描述。facts段完整記載「腹部劇烈疼痛而抱著肚子...痛到無法下車」，「四肢無力」可由「無法行走」合理推論。症狀細節已在其他段落充分體現，不影響病情理解。"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經跨 section 全文檢索，Section_01_facts、Section_04_reasoning、Section_05_verdict 均未明確提及『因昏迷期間需依賴呼吸器導致肺炎』之具體研判。雖 Section_04_reasoning 提及肺炎為死因之一，但未明確連結至『依賴呼吸器導致』之因果論述",
+     "reason": "經跨 section 全文檢索，Section_01_facts、Section_04_reasoning、Section_05_verdict 均未明確提及『因昏迷期間需依賴呼吸器導致肺炎』之具體研判。雖 Section_04_reasoning 提及肺炎為死因之一，但未明確連結至『依賴呼吸器導致』之因果論述"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經跨 section 全文檢索，雖 Section_05_verdict 結論提及『因腦部缺氧合併多重器官衰竭不治死亡』包含肺炎，但均未明確提及『住院期間發生肺炎應與使用呼吸器有關』之具體因果關係認定，屬重要病理機制遺漏",
+     "reason": "經跨 section 全文檢索，雖 Section_05_verdict 結論提及『因腦部缺氧合併多重器官衰竭不治死亡』包含肺炎，但均未明確提及『住院期間發生肺炎應與使用呼吸器有關』之具體因果關係認定，屬重要病理機制遺漏"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決日期為重要事實，雖法院名稱匹配但日期完全遺漏，影響判決時序理解",
+     "reason": "判決日期為重要事實，雖法院名稱匹配但日期完全遺漏，影響判決時序理解"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及子宮外孕三個典型症狀（疼痛、無月經、陰道出血）的醫學說明，缺乏明確對應，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及子宮外孕三個典型症狀（疼痛、無月經、陰道出血）的醫學說明，缺乏明確對應，維持 missing。"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『50%病人』的統計數據，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『50%病人』的統計數據，維持 missing。"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『症狀發生在子宮外孕已破裂情況下為主』的醫學說明，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『症狀發生在子宮外孕已破裂情況下為主』的醫學說明，維持 missing。"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『子宮外孕標準處理方式是轉診』的醫療處置說明，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『子宮外孕標準處理方式是轉診』的醫療處置說明，維持 missing。"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『卵巢破裂慢性出血→15日→肺臟微血栓→肺炎死亡』的完整死亡機制，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『卵巢破裂慢性出血→15日→肺臟微血栓→肺炎死亡』的完整死亡機制，維持 missing。"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『子宮外孕與子宮內懷孕臨床上不易區分』的醫學判斷，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『子宮外孕與子宮內懷孕臨床上不易區分』的醫學判斷，維持 missing。"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 明確記載『暈眩及下腹部劇烈疼痛』，與 GT claim 『並無其他身體不適』存在矛盾，無對應內容，維持 missing。",
+     "reason": "section_01_facts.txt 明確記載『暈眩及下腹部劇烈疼痛』，與 GT claim 『並無其他身體不適』存在矛盾，無對應內容，維持 missing。"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『醫審會鑑定書認同外院處置並無違反醫療常規』的鑑定意見，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『醫審會鑑定書認同外院處置並無違反醫療常規』的鑑定意見，維持 missing。"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『翌日凌晨1時45分許...經送往B分院急診』，但未明確提及『99年11月10日凌晨2時5分救護車送達T醫院』的具體時間，維持 missing。",
+     "reason": "section_01_facts.txt 提及『翌日凌晨1時45分許...經送往B分院急診』，但未明確提及『99年11月10日凌晨2時5分救護車送達T醫院』的具體時間，維持 missing。"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未明確提及『醫審會鑑定書認同T醫院處置』的鑑定意見，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未明確提及『醫審會鑑定書認同T醫院處置』的鑑定意見，維持 missing。"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及『右卵巢出血性囊腫』但未提及『巧克力囊腫』的具體診斷，維持 missing。",
+     "reason": "section_05_reasoning.txt 提及『右卵巢出血性囊腫』但未提及『巧克力囊腫』的具體診斷，維持 missing。"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『解剖結果未見卵巢有破裂情形』的解剖發現，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『解剖結果未見卵巢有破裂情形』的解剖發現，維持 missing。"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『子宮內出血病理機轉（輸卵管懷孕導致內膜增厚→黃體素不足→內膜壞死剝落）』的詳細醫學說明，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『子宮內出血病理機轉（輸卵管懷孕導致內膜增厚→黃體素不足→內膜壞死剝落）』的詳細醫學說明，維持 missing。"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未明確提及『子宮內膜出血與輸卵管懷孕有關』的因果判斷，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未明確提及『子宮內膜出血與輸卵管懷孕有關』的因果判斷，維持 missing。"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『腦部缺氧合併多重器官衰竭』但未提及『肺臟微血栓』，維持 missing。",
+     "reason": "section_01_facts.txt 提及『腦部缺氧合併多重器官衰竭』但未提及『肺臟微血栓』，維持 missing。"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『轉至加護病房治療』但未提及『長期臥床及使用呼吸器導致院內感染肺炎』的因果關係，維持 missing。",
+     "reason": "section_01_facts.txt 提及『轉至加護病房治療』但未提及『長期臥床及使用呼吸器導致院內感染肺炎』的因果關係，維持 missing。"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『手術前無咳嗽或發燒等肺炎症狀』的病史資訊，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『手術前無咳嗽或發燒等肺炎症狀』的病史資訊，維持 missing。"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『轉至加護病房治療』『昏迷狀態』但未明確提及『昏迷期間依賴呼吸器導致肺炎』的因果推論，維持 missing。",
+     "reason": "section_01_facts.txt 提及『轉至加護病房治療』『昏迷狀態』但未明確提及『昏迷期間依賴呼吸器導致肺炎』的因果推論，維持 missing。"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『住院期間發生肺炎與使用呼吸器有關』的因果關係，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『住院期間發生肺炎與使用呼吸器有關』的因果關係，維持 missing。"
+    },
+    {
+     "gt_claim_id": 165,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『T醫院病歷顯示術後給予抗生素治療』的處置記載，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『T醫院病歷顯示術後給予抗生素治療』的處置記載，維持 missing。"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及延至『11月24日』死亡，但未提及『11月12日發燒懷疑肺炎』的中間病程，維持 missing。",
+     "reason": "section_01_facts.txt 提及延至『11月24日』死亡，但未提及『11月12日發燒懷疑肺炎』的中間病程，維持 missing。"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及『當日晚上7時許』的回診時間，但 GT claim 的『99年11月10日凌晨』係指手術時間，兩者不同，維持 missing。",
+     "reason": "section_05_reasoning.txt 提及『當日晚上7時許』的回診時間，但 GT claim 的『99年11月10日凌晨』係指手術時間，兩者不同，維持 missing。"
+    },
+    {
+     "gt_claim_id": 170,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『緊急剖腹探查止血』但未明確提及『手術已經清除了腹腔血塊跟血液』的具體描述，維持 missing。",
+     "reason": "section_01_facts.txt 提及『緊急剖腹探查止血』但未明確提及『手術已經清除了腹腔血塊跟血液』的具體描述，維持 missing。"
+    },
+    {
+     "gt_claim_id": 172,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『術後死亡後解剖腹部沒有發現出血』的解剖發現，維持 missing。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未提及『術後死亡後解剖腹部沒有發現出血』的解剖發現，維持 missing。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 182,
+   "pred_total": 118,
+   "matched": 148,
+   "partial": 3,
+   "missing": 31,
+   "hallucinated": 0
+  },
+  "section_balance": 0.68
+ }
 }

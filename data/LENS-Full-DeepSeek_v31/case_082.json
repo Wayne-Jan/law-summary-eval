@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,51 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8842,
+  "fact_recall": 0.9625,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9809,
+  "quality_overall": 4.6518,
+  "citation_accuracy": 0.9714,
+  "citation_support_score": 0.9744,
+  "uncited_rate": 0.01,
+  "faithfulness_combined": {
+   "score": 0.977,
+   "citation_fidelity": 0.9617,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": null,
+  "numerical_detail": null,
+  "weighted_recall": 0.9917,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 0,
+   "details": [
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經查核 section_01_facts.txt 及跨 section 全文，生成摘要未包含「無不能注意之情形」之法律判斷。此為被告注意能力之認定，影響過失責任之理解，屬重要法律事實。",
+     "reason": "經查核 section_01_facts.txt 及跨 section 全文，生成摘要未包含「無不能注意之情形」之法律判斷。此為被告注意能力之認定，影響過失責任之理解，屬重要法律事實。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 80,
+   "pred_total": 100,
+   "matched": 75,
+   "partial": 4,
+   "missing": 1,
+   "hallucinated": 0
+  },
+  "section_balance": 0.9524
+ }
 }

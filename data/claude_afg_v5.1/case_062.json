@@ -180,6 +180,234 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8476,
-  "fact_recall_avg": null
+  "fact_recall": 0.8097,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8948,
+  "quality_overall": 4.8595,
+  "citation_accuracy": 0.9516,
+  "citation_support_score": 0.9294,
+  "uncited_rate": 0.019,
+  "faithfulness_combined": {
+   "score": 0.9601,
+   "citation_fidelity": 0.9335,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 34,
+   "correct": 34
+  },
+  "weighted_recall": 0.9269,
+  "missing_severity": {
+   "critical": 1,
+   "important": 5,
+   "minor": 21,
+   "details": [
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "『被告甲並未讓病患留院觀察』本質上是檢察官的指控內容，在 facts section（pred claim 11）已涵蓋『醫師甲未留院觀察6小時』。被告辯護的主張是『無消極不作為』而非承認『未讓病患留院觀察』。此為程序性事實，不影響辯護要點理解。",
+     "reason": "『被告甲並未讓病患留院觀察』本質上是檢察官的指控內容，在 facts section（pred claim 11）已涵蓋『醫師甲未留院觀察6小時』。被告辯護的主張是『無消極不作為』而非承認『未讓病患留院觀察』。此為程序性事實，不影響辯護要點理解。"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "『依據法醫的解剖報告，病患C係於2天後死亡』在 facts section（pred claim 15『病患X於急診後2日...猝死』）已涵蓋時間資訊。defense section 的 pred claim 41 也提到『依法醫解剖報告』。此為背景性時間事實，已於其他段落呈現。",
+     "reason": "『依據法醫的解剖報告，病患C係於2天後死亡』在 facts section（pred claim 15『病患X於急診後2日...猝死』）已涵蓋時間資訊。defense section 的 pred claim 41 也提到『依法醫解剖報告』。此為背景性時間事實，已於其他段落呈現。"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "ST波段形態特徵（圓滑緩慢上升、過早再極化鑑別診斷）為專業技術細節，雖未提及但不影響主要鑑定結論理解",
+     "reason": "ST波段形態特徵（圓滑緩慢上升、過早再極化鑑別診斷）為專業技術細節，雖未提及但不影響主要鑑定結論理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "R波變化與陳舊性心肌梗塞關聯為專業解釋細節，摘要已提及R波變化及陳舊性心肌梗塞判斷，具體關聯說明遺漏影響較小",
+     "reason": "R波變化與陳舊性心肌梗塞關聯為專業解釋細節，摘要已提及R波變化及陳舊性心肌梗塞判斷，具體關聯說明遺漏影響較小"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "高尖T波的各種可能性（正常變異、高血鉀、心肌缺血）為鑑別診斷細節，摘要已提及T波高尖，具體鑑別項目遺漏屬次要資訊",
+     "reason": "高尖T波的各種可能性（正常變異、高血鉀、心肌缺血）為鑑別診斷細節，摘要已提及T波高尖，具體鑑別項目遺漏屬次要資訊"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心電圖變化與心臟破裂死亡無直接因果關係為重要醫療鑑定意見，影響因果關係理解",
+     "reason": "心電圖變化與心臟破裂死亡無直接因果關係為重要醫療鑑定意見，影響因果關係理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "診斷急性心肌梗塞與心臟破裂無直接因果關係為關鍵因果論述，影響判決結論理解",
+     "reason": "診斷急性心肌梗塞與心臟破裂無直接因果關係為關鍵因果論述，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "四肢導極ST波段下降為心電圖具體發現細節，摘要已記載心電圖異常，此細節遺漏影響較小",
+     "reason": "四肢導極ST波段下降為心電圖具體發現細節，摘要已記載心電圖異常，此細節遺漏影響較小"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "ST段變化可能原因（心包膜炎、心肌炎等）為鑑別診斷背景資訊，未提及不影響主要案情理解",
+     "reason": "ST段變化可能原因（心包膜炎、心肌炎等）為鑑別診斷背景資訊，未提及不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病人無主訴呼吸困難為症狀描述細節，屬次要臨床資訊",
+     "reason": "病人無主訴呼吸困難為症狀描述細節，屬次要臨床資訊"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急診醫師訓練及照會說明為背景性醫療常規資訊，非本案關鍵事實",
+     "reason": "急診醫師訓練及照會說明為背景性醫療常規資訊，非本案關鍵事實"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心肌梗塞診斷須三項標準中兩項有變化為重要醫學標準，影響對醫療處置適當性的理解",
+     "reason": "心肌梗塞診斷須三項標準中兩項有變化為重要醫學標準，影響對醫療處置適當性的理解"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急性心肌梗塞致病機轉為醫學背景知識，雖有助理解但非本案特有關鍵事實",
+     "reason": "急性心肌梗塞致病機轉為醫學背景知識，雖有助理解但非本案特有關鍵事實"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急性心肌梗塞治療方法為一般醫療知識，與本案特定事實認定關聯較弱",
+     "reason": "急性心肌梗塞治療方法為一般醫療知識，與本案特定事實認定關聯較弱"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "陳舊性心肌梗塞治療為一般醫療知識，與本案判決焦點無直接關聯",
+     "reason": "陳舊性心肌梗塞治療為一般醫療知識，與本案判決焦點無直接關聯"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心肌梗塞併發心臟破裂比例為專家意見中的重要統計背景，影響對死亡原因可預期性的理解",
+     "reason": "心肌梗塞併發心臟破裂比例為專家意見中的重要統計背景，影響對死亡原因可預期性的理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "早期介入治療無法絕對避免心臟破裂為重要因果關係論述，影響過失認定理解",
+     "reason": "早期介入治療無法絕對避免心臟破裂為重要因果關係論述，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "頭部傷為表面傷不足以致死為法醫解剖細節，section_01_facts.txt 已提及此內容，但 opinions section 本身未直接涵蓋",
+     "reason": "頭部傷為表面傷不足以致死為法醫解剖細節，section_01_facts.txt 已提及此內容，但 opinions section 本身未直接涵蓋"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "呼吸道無水分、肺部無水腫為法醫解剖細節，section_01_facts.txt 已提及此內容",
+     "reason": "呼吸道無水分、肺部無水腫為法醫解剖細節，section_01_facts.txt 已提及此內容"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "外力造成心臟破裂與心肌梗塞破裂的病理鑑別為專業細節，section_01_facts.txt 已提及『若是外力造成的心臟破裂，來不及出現白血球即死亡』",
+     "reason": "外力造成心臟破裂與心肌梗塞破裂的病理鑑別為專業細節，section_01_facts.txt 已提及『若是外力造成的心臟破裂，來不及出現白血球即死亡』"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "發作後倒入水溝產生表面傷為法醫推論，section_01_facts.txt 已明確記載",
+     "reason": "發作後倒入水溝產生表面傷為法醫推論，section_01_facts.txt 已明確記載"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "verdict",
+     "severity": "critical",
+     "text": "判決日期「民國100年01月06日」為判決主文之核心要素（見原始判決書末「中華民國100年1月6日」），摘要僅提及「民國98年度認定」係錯誤資訊，屬致命遺漏，影響判決時間定位",
+     "reason": "判決日期「民國100年01月06日」為判決主文之核心要素（見原始判決書末「中華民國100年1月6日」），摘要僅提及「民國98年度認定」係錯誤資訊，屬致命遺漏，影響判決時間定位"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "具體就醫時間（下午5時4分）雖未在reasoning section明確提及，但『下午5時許』已於事實段呈現，對reasoning理解影響輕微",
+     "reason": "具體就醫時間（下午5時4分）雖未在reasoning section明確提及，但『下午5時許』已於事實段呈現，對reasoning理解影響輕微"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "檢查完成時間（下午5時20分）為次要時間細節，雖事實段有提及，但reasoning section聚焦過失論證而非精確時間表",
+     "reason": "檢查完成時間（下午5時20分）為次要時間細節，雖事實段有提及，但reasoning section聚焦過失論證而非精確時間表"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "生命徵象數值（血壓117/61、心跳84次、呼吸20次）雖具體，但reasoning section以『意識清醒、生命徵候穩定』概括呈現，對過失認定之核心論證無實質影響",
+     "reason": "生命徵象數值（血壓117/61、心跳84次、呼吸20次）雖具體，但reasoning section以『意識清醒、生命徵候穩定』概括呈現，對過失認定之核心論證無實質影響"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "出院時間（下午5時35分）為次要時間細節，reasoning section聚焦未留院觀察之過失，非精確時間點",
+     "reason": "出院時間（下午5時35分）為次要時間細節，reasoning section聚焦未留院觀察之過失，非精確時間點"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "PRWP註記為心電圖技術細節，reasoning section已涵蓋『R波未隨導極逐漸變大』之實質內容，技術縮寫不影響案情理解",
+     "reason": "PRWP註記為心電圖技術細節，reasoning section已涵蓋『R波未隨導極逐漸變大』之實質內容，技術縮寫不影響案情理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 155,
+   "pred_total": 107,
+   "matched": 123,
+   "partial": 5,
+   "missing": 27,
+   "hallucinated": 0
+  },
+  "section_balance": 0.5581
  }
 }
