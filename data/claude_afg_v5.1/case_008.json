@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -138,5 +138,67 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6944,
+  "fact_recall": 0.931,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9643,
+  "quality_overall": 4.7821,
+  "citation_accuracy": 0.9167,
+  "citation_support_score": 0.908,
+  "uncited_rate": 0.016,
+  "faithfulness_combined": {
+   "score": 0.9412,
+   "citation_fidelity": 0.902,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 0.958,
+  "weighted_recall": 0.977,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "severity": "minor",
+     "text": "經查核全部section原文（section_01_facts.txt、section_05_reasoning.txt及summary_grounded），摘要僅提及「護理人員證人A、證人B」，未提及護士獲不起訴處分確定之法律結果。此為其他涉案人員之程序性處理結果，雖有助完整理解案件責任歸屬，但不影響對被告罪責及因果關係之核心理解。",
+     "reason": "經查核全部section原文（section_01_facts.txt、section_05_reasoning.txt及summary_grounded），摘要僅提及「護理人員證人A、證人B」，未提及護士獲不起訴處分確定之法律結果。此為其他涉案人員之程序性處理結果，雖有助完整理解案件責任歸屬，但不影響對被告罪責及因果關係之核心理解。"
+    },
+    {
+     "gt_claim_id": 41,
+     "severity": "minor",
+     "text": "全文未提及「簡式審判程序」，屬程序性背景事實，不影響案情核心理解",
+     "reason": "全文未提及「簡式審判程序」，屬程序性背景事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 42,
+     "severity": "minor",
+     "text": "全文未提及「鑑定書意見未載於判決書」之描述，屬佐證性說明，非核心事實",
+     "reason": "全文未提及「鑑定書意見未載於判決書」之描述，屬佐證性說明，非核心事實"
+    },
+    {
+     "gt_claim_id": 46,
+     "severity": "minor",
+     "text": "『簡式審判程序』及『受命法官獨任』為判決程序性事實，摘要各 section 均未提及，不影響案情實體理解",
+     "reason": "『簡式審判程序』及『受命法官獨任』為判決程序性事實，摘要各 section 均未提及，不影響案情實體理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 58,
+   "pred_total": 62,
+   "matched": 54,
+   "partial": 0,
+   "missing": 4,
+   "hallucinated": 0
+  },
+  "section_balance": 1.0
+ }
 }

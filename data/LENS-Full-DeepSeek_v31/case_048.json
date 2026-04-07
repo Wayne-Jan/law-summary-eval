@@ -140,179 +140,91 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6875,
-  "fact_recall": 0.7828,
-  "fact_precision": 0.7553,
-  "fact_f1": 0.7688,
+  "fact_recall": 0.9457,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9721,
   "quality_overall": 4.7143,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9769,
-  "uncited_rate": 0.0,
+  "uncited_rate": 0.011,
   "faithfulness_combined": {
-   "score": 0.9021,
-   "citation_fidelity": 1.0,
-   "fact_precision": 0.7553,
+   "score": 0.9934,
+   "citation_fidelity": 0.989,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 2,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 0.952,
-  "weighted_recall": 0.9153,
+  "numerical_detail": {
+   "total_numerical": 21,
+   "correct": 20
+  },
+  "weighted_recall": 0.9771,
   "missing_severity": {
-   "critical": 0,
-   "important": 8,
-   "minor": 15,
+   "critical": 1,
+   "important": 4,
+   "minor": 1,
    "details": [
     {
-     "gt_claim_id": 8,
-     "severity": "minor",
-     "text": "『創傷圖示』欄位名稱確未在摘要中明確提及，雖腹部瘀血現象有記載（section_01_facts.txt），但特定欄位細節屬病歷記載的次要技術性資訊，不影響案情核心理解",
-     "reason": "『創傷圖示』欄位名稱確未在摘要中明確提及，雖腹部瘀血現象有記載（section_01_facts.txt），但特定欄位細節屬病歷記載的次要技術性資訊，不影響案情核心理解"
-    },
-    {
      "gt_claim_id": 40,
+     "source_section": "defense",
      "severity": "important",
-     "text": "被告坦承診治事實屬辯護核心要素，影響對被告辯護立場的理解。原始判決書明確記載『訊據被告庚○○雖對於右揭時、地，曾對被害人張泉男進行診治之事實坦承不諱』，生成摘要確實未提及被告『坦承不諱』的態度描述，維持 missing 判定。",
-     "reason": "被告坦承診治事實屬辯護核心要素，影響對被告辯護立場的理解。原始判決書明確記載『訊據被告庚○○雖對於右揭時、地，曾對被害人張泉男進行診治之事實坦承不諱』，生成摘要確實未提及被告『坦承不諱』的態度描述，維持 missing 判定。"
+     "text": "原文「訊據被告庚○○雖對於右揭時、地，曾對被害人張泉男進行診治之事實坦承不諱」確實存在，為被告辯護陳述之開頭，但生成摘要確實未提及此項事實。屬於辯護基本立場，影響對被告辯護策略的理解。",
+     "reason": "原文「訊據被告庚○○雖對於右揭時、地，曾對被害人張泉男進行診治之事實坦承不諱」確實存在，為被告辯護陳述之開頭，但生成摘要確實未提及此項事實。屬於辯護基本立場，影響對被告辯護策略的理解。"
     },
     {
      "gt_claim_id": 41,
-     "severity": "important",
-     "text": "被告否認犯罪行為屬辯護核心要素。原始判決書明確記載『惟矢口否認有何業務過失致死之犯行』，生成摘要雖在 reasoning section 提及被告辯稱內容，但未明確描述被告『否認業務過失致死犯行』的態度，維持 missing 判定。",
-     "reason": "被告否認犯罪行為屬辯護核心要素。原始判決書明確記載『惟矢口否認有何業務過失致死之犯行』，生成摘要雖在 reasoning section 提及被告辯稱內容，但未明確描述被告『否認業務過失致死犯行』的態度，維持 missing 判定。"
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "原文「惟矢口否認有何業務過失致死之犯行」確實存在，緊接於坦承不諱之後，為核心否認犯罪之主張。生成摘要確實未提及此項核心辯護立場，影響判決結論理解。",
+     "reason": "原文「惟矢口否認有何業務過失致死之犯行」確實存在，緊接於坦承不諱之後，為核心否認犯罪之主張。生成摘要確實未提及此項核心辯護立場，影響判決結論理解。"
     },
     {
      "gt_claim_id": 52,
-     "severity": "important",
-     "text": "被告提出醫學文獻證據屬辯護要點。原始判決書明確記載『並提出醫學文獻原文影本九紙為證』，雖 reasoning section 提及法院『查閱醫學文獻記載』及『被告雖提呈醫學文獻』，但未明確說明是被告提出『原文影本9紙』作為證據，此細節缺失影響對被告舉證行為的理解，維持 missing 判定。",
-     "reason": "被告提出醫學文獻證據屬辯護要點。原始判決書明確記載『並提出醫學文獻原文影本九紙為證』，雖 reasoning section 提及法院『查閱醫學文獻記載』及『被告雖提呈醫學文獻』，但未明確說明是被告提出『原文影本9紙』作為證據，此細節缺失影響對被告舉證行為的理解，維持 missing 判定。"
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "原文「並提出醫學文獻原文影本九紙為證」確實存在，為被告辯詞結尾處提出之證據。生成摘要確實未提及此項證據提出事實，屬程序性事實，不影響核心案情理解。",
+     "reason": "原文「並提出醫學文獻原文影本九紙為證」確實存在，為被告辯詞結尾處提出之證據。生成摘要確實未提及此項證據提出事實，屬程序性事實，不影響核心案情理解。"
     },
     {
      "gt_claim_id": 61,
-     "severity": "minor",
-     "text": "病患既往病史（高血壓、心臟疾病）確實未出現在生成摘要的 opinions section，亦未在其他 section 找到對應描述。屬背景性醫療資訊，雖影響病患整體病況理解，但非死因認定之核心事實。",
-     "reason": "病患既往病史（高血壓、心臟疾病）確實未出現在生成摘要的 opinions section，亦未在其他 section 找到對應描述。屬背景性醫療資訊，雖影響病患整體病況理解，但非死因認定之核心事實。"
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "GT claim_id 61 為鑑定意見中關於「病患原有高血壓、心臟疾病」之內容，確認生成摘要未提及。此為死因分析之輔助事實，影響案情完整理解，屬重要層級",
+     "reason": "GT claim_id 61 為鑑定意見中關於「病患原有高血壓、心臟疾病」之內容，確認生成摘要未提及。此為死因分析之輔助事實，影響案情完整理解，屬重要層級"
     },
     {
      "gt_claim_id": 62,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "「胸部鈍挫傷」此一特定診斷描述確實未出現在生成摘要中。雖 facts section 提及「左側肋骨骨折、左側外傷性血胸」，但「胸部鈍挫傷」作為獨立傷勢描述及其與心肺功能的關聯性未完整呈現，影響病況嚴重程度的完整理解。",
-     "reason": "「胸部鈍挫傷」此一特定診斷描述確實未出現在生成摘要中。雖 facts section 提及「左側肋骨骨折、左側外傷性血胸」，但「胸部鈍挫傷」作為獨立傷勢描述及其與心肺功能的關聯性未完整呈現，影響病況嚴重程度的完整理解。"
+     "text": "GT claim_id 62 為鑑定意見中關於「病患有胸部鈍挫傷和骨折、血胸」之內容，確認生成摘要未提及。此為死因分析之輔助事實，影響案情完整理解，屬重要層級",
+     "reason": "GT claim_id 62 為鑑定意見中關於「病患有胸部鈍挫傷和骨折、血胸」之內容，確認生成摘要未提及。此為死因分析之輔助事實，影響案情完整理解，屬重要層級"
     },
     {
      "gt_claim_id": 63,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "「胸部鈍挫傷和骨折、血胸增加心肺功能負擔」此一因果關係論述在生成摘要中完全缺失。GT 原文 (claim 100) 將此作為鑑定意見中病況評估的重要背景，缺失會影響對病患病情複雜度的理解。",
-     "reason": "「胸部鈍挫傷和骨折、血胸增加心肺功能負擔」此一因果關係論述在生成摘要中完全缺失。GT 原文 (claim 100) 將此作為鑑定意見中病況評估的重要背景，缺失會影響對病患病情複雜度的理解。"
-    },
-    {
-     "gt_claim_id": 70,
-     "severity": "minor",
-     "text": "主治醫師分類詳解屬背景性論述，summary 直接陳述法院認定結果，省略概念分類不影響判決結論理解",
-     "reason": "主治醫師分類詳解屬背景性論述，summary 直接陳述法院認定結果，省略概念分類不影響判決結論理解"
-    },
-    {
-     "gt_claim_id": 71,
-     "severity": "minor",
-     "text": "行政編制與業務權限區分屬概念性說明，section_05_reasoning.txt 第二段已實質論述此概念，pred 簡化為直接認定結果不影響理解",
-     "reason": "行政編制與業務權限區分屬概念性說明，section_05_reasoning.txt 第二段已實質論述此概念，pred 簡化為直接認定結果不影響理解"
-    },
-    {
-     "gt_claim_id": 73,
-     "severity": "minor",
-     "text": "概念區分論述屬法理背景，pred 已涵蓋法院認定被告甲為主治醫師的核心結論",
-     "reason": "概念區分論述屬法理背景，pred 已涵蓋法院認定被告甲為主治醫師的核心結論"
-    },
-    {
-     "gt_claim_id": 76,
-     "severity": "important",
-     "text": "F 醫院僅有被告一位胸腔外科醫師雖屬重要背景，但 pred 中「護理人員遇突發狀況時多聯繫通知被告甲」已間接支持其關鍵角色，維持 missing",
-     "reason": "F 醫院僅有被告一位胸腔外科醫師雖屬重要背景，但 pred 中「護理人員遇突發狀況時多聯繫通知被告甲」已間接支持其關鍵角色，維持 missing"
-    },
-    {
-     "gt_claim_id": 79,
-     "severity": "minor",
-     "text": "轉介過程細節屬事實背景，pred claim 56 「主要負責診治病患X之醫師」及多項病歷證據已涵蓋核心內容",
-     "reason": "轉介過程細節屬事實背景，pred claim 56 「主要負責診治病患X之醫師」及多項病歷證據已涵蓋核心內容"
-    },
-    {
-     "gt_claim_id": 89,
-     "severity": "minor",
-     "text": "醫學診斷方法說明屬專業背景論述，summary 未納入不影響判決理解",
-     "reason": "醫學診斷方法說明屬專業背景論述，summary 未納入不影響判決理解"
-    },
-    {
-     "gt_claim_id": 90,
-     "severity": "minor",
-     "text": "CT 目的說明屬醫學背景，summary 未納入不影響判決結論",
-     "reason": "CT 目的說明屬醫學背景，summary 未納入不影響判決結論"
-    },
-    {
-     "gt_claim_id": 92,
-     "severity": "minor",
-     "text": "丁醫師看 X 光片建議 CT 的細節屬事實經過，summary 省略此過程不影響核心認定",
-     "reason": "丁醫師看 X 光片建議 CT 的細節屬事實經過，summary 省略此過程不影響核心認定"
-    },
-    {
-     "gt_claim_id": 93,
-     "severity": "minor",
-     "text": "「乙個人看圖不準」屬證人證詞細節，非核心事實",
-     "reason": "「乙個人看圖不準」屬證人證詞細節，非核心事實"
-    },
-    {
-     "gt_claim_id": 94,
-     "severity": "important",
-     "text": "「院內唯一之胸腔外科醫師」雖屬重要事實，但 pred 中「護理人員遇突發狀況時多聯繫通知被告甲」已語義接近，維持 missing",
-     "reason": "「院內唯一之胸腔外科醫師」雖屬重要事實，但 pred 中「護理人員遇突發狀況時多聯繫通知被告甲」已語義接近，維持 missing"
-    },
-    {
-     "gt_claim_id": 95,
-     "severity": "minor",
-     "text": "發現瘀血並請護士聯絡的詳細過程屬事實細節，section_01_facts.txt 已有「發現腹部瘀血現象」「照會醫師甲」等描述，pred 已涵蓋核心內容",
-     "reason": "發現瘀血並請護士聯絡的詳細過程屬事實細節，section_01_facts.txt 已有「發現腹部瘀血現象」「照會醫師甲」等描述，pred 已涵蓋核心內容"
-    },
-    {
-     "gt_claim_id": 100,
-     "severity": "minor",
-     "text": "病患原有疾病屬背景資訊，因果關係論述中已透過其他方式呈現",
-     "reason": "病患原有疾病屬背景資訊，因果關係論述中已透過其他方式呈現"
-    },
-    {
-     "gt_claim_id": 102,
-     "severity": "minor",
-     "text": "「雖經手術仍無法挽回」屬結果描述，pred claim 5 「終因...而不治死亡」及 section_03_opinions 內容已涵蓋",
-     "reason": "「雖經手術仍無法挽回」屬結果描述，pred claim 5 「終因...而不治死亡」及 section_03_opinions 內容已涵蓋"
-    },
-    {
-     "gt_claim_id": 109,
-     "severity": "minor",
-     "text": "T 開立 CT 醫囑的具體細節屬事實經過，非判決核心",
-     "reason": "T 開立 CT 醫囑的具體細節屬事實經過，非判決核心"
-    },
-    {
-     "gt_claim_id": 112,
-     "severity": "minor",
-     "text": "具體處置及符合歐洲原則的詳細時間（7時30分）在 pred claim 29 有「91年4月3日7時30分許」及處置內容，符合歐洲原則見於 pred claim 30，維持 minor",
-     "reason": "具體處置及符合歐洲原則的詳細時間（7時30分）在 pred claim 29 有「91年4月3日7時30分許」及處置內容，符合歐洲原則見於 pred claim 30，維持 minor"
-    },
-    {
-     "gt_claim_id": 115,
-     "severity": "important",
-     "text": "被告辯稱「僅判讀胸腔部分」雖屬重要辯護要點，但 pred claim 23 已有「僅就胸腔部分加以判讀，並未及於腹腔部分之判斷」，經查確認 pred claim 23 為 defense section 內容，reasoning section 確實未重述此辯解，維持 missing",
-     "reason": "被告辯稱「僅判讀胸腔部分」雖屬重要辯護要點，但 pred claim 23 已有「僅就胸腔部分加以判讀，並未及於腹腔部分之判斷」，經查確認 pred claim 23 為 defense section 內容，reasoning section 確實未重述此辯解，維持 missing"
+     "text": "GT claim_id 63 為鑑定意見中關於「胸部鈍挫傷和骨折、血胸增加心肺功能負擔」之因果關係，確認生成摘要未提及。此為死因分析之輔助事實，影響案情完整理解，屬重要層級",
+     "reason": "GT claim_id 63 為鑑定意見中關於「胸部鈍挫傷和骨折、血胸增加心肺功能負擔」之因果關係，確認生成摘要未提及。此為死因分析之輔助事實，影響案情完整理解，屬重要層級"
     }
    ]
   },
   "fact_detail": {
-   "gt_total": 122,
-   "pred_total": 94,
-   "matched": 95,
-   "partial": 1,
-   "missing": 23,
-   "hallucinated": 23
+   "gt_total": 175,
+   "pred_total": 91,
+   "matched": 162,
+   "partial": 7,
+   "missing": 6,
+   "hallucinated": 0,
+   "gt_mismatch": {
+    "reported": 175,
+    "actual": 122
+   }
   },
-  "section_balance": 1.0
+  "section_balance": 0.75
  }
 }

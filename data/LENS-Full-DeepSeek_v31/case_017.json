@@ -122,63 +122,80 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8708,
-  "fact_recall": 0.7778,
-  "fact_precision": 0.9444,
-  "fact_f1": 0.853,
+  "fact_recall": 0.8415,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9139,
   "quality_overall": 4.85,
   "citation_accuracy": 0.9375,
   "citation_support_score": 0.9563,
-  "uncited_rate": 0.097,
+  "uncited_rate": 0.1,
   "faithfulness_combined": {
-   "score": 0.8857,
-   "citation_fidelity": 0.8466,
-   "fact_precision": 0.9444,
+   "score": 0.9062,
+   "citation_fidelity": 0.8438,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9537,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 19
+  },
+  "weighted_recall": 0.9431,
   "missing_severity": {
-   "critical": 0,
-   "important": 2,
-   "minor": 1,
+   "critical": 1,
+   "important": 0,
+   "minor": 4,
    "details": [
     {
      "gt_claim_id": 17,
-     "severity": "important",
-     "text": "facts section 確實未提及「無不能注意之情事」此注意義務能力前提，屬過失責任構成要件之一，影響案情完整理解",
-     "reason": "facts section 確實未提及「無不能注意之情事」此注意義務能力前提，屬過失責任構成要件之一，影響案情完整理解"
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『無不能注意之情事』係刑法過失責任重要法律要件，經掃描全部 section 原文（facts、opinions、reasoning）均未見對應表述。此要件事關注意義務違反之阻卻事由，影響過失責任成立與否之判斷，屬關鍵法律判斷遺漏。",
+     "reason": "『無不能注意之情事』係刑法過失責任重要法律要件，經掃描全部 section 原文（facts、opinions、reasoning）均未見對應表述。此要件事關注意義務違反之阻卻事由，影響過失責任成立與否之判斷，屬關鍵法律判斷遺漏。"
     },
     {
      "gt_claim_id": 22,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "opinions section 僅列舉三份鑑定書，未說明「因簡易判決處刑故無敘明鑑定摘要」之因果關係，屬程序性背景事實",
-     "reason": "opinions section 僅列舉三份鑑定書，未說明「因簡易判決處刑故無敘明鑑定摘要」之因果關係，屬程序性背景事實"
+     "text": "section_03_opinions.txt 確實未提及『簡易判決處刑』或『判決書中無敘明鑑定摘要』之程序性說明。檢視原文僅載明『本案有三份鑑定意見』並列出鑑定書名稱及法醫研究所之死因鑑定結果，但未交代因簡易判決程序故未詳載鑑定摘要之事實。此為程序性背景事實，不影響對鑑定結論之理解，severity 判定為 minor。",
+     "reason": "section_03_opinions.txt 確實未提及『簡易判決處刑』或『判決書中無敘明鑑定摘要』之程序性說明。檢視原文僅載明『本案有三份鑑定意見』並列出鑑定書名稱及法醫研究所之死因鑑定結果，但未交代因簡易判決程序故未詳載鑑定摘要之事實。此為程序性背景事實，不影響對鑑定結論之理解，severity 判定為 minor。"
     },
     {
-     "gt_claim_id": 37,
-     "severity": "important",
-     "text": "reasoning section 確實未提及「無不能注意之情事」之法律要件判斷，與 gt_claim_id 17 為同一事實於不同 section 之重複，影響過失責任成立理解",
-     "reason": "reasoning section 確實未提及「無不能注意之情事」之法律要件判斷，與 gt_claim_id 17 為同一事實於不同 section 之重複，影響過失責任成立理解"
+     "gt_claim_id": 26,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性細節，摘要確實未提及『合議庭裁定』及『逕依簡易判決處刑』之程序，但不影響判決結論理解",
+     "reason": "程序性細節，摘要確實未提及『合議庭裁定』及『逕依簡易判決處刑』之程序，但不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要未提及上訴期間及未上訴之程序性事實，不影響案情理解",
+     "reason": "摘要未提及上訴期間及未上訴之程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要未提及判決確定之狀態，屬程序性事實",
+     "reason": "摘要未提及判決確定之狀態，屬程序性事實"
     }
    ]
   },
   "fact_detail": {
-   "gt_total": 36,
-   "pred_total": 36,
-   "matched": 28,
-   "partial": 0,
-   "missing": 3,
-   "hallucinated": 2,
-   "gt_mismatch": {
-    "reported": 36,
-    "actual": 41
-   }
+   "gt_total": 41,
+   "pred_total": 31,
+   "matched": 33,
+   "partial": 3,
+   "missing": 5,
+   "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.6667
  }
 }

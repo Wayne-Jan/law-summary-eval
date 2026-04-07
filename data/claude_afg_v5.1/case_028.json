@@ -136,191 +136,227 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8198,
-  "fact_recall": 0.7647,
-  "fact_precision": 0.9875,
-  "fact_f1": 0.8619,
+  "fact_recall": 0.7794,
+  "fact_precision": 1.0,
+  "fact_f1": 0.876,
   "quality_overall": 4.6952,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9939,
-  "uncited_rate": 0.1125,
+  "uncited_rate": 0.125,
   "faithfulness_combined": {
-   "score": 0.9275,
-   "citation_fidelity": 0.8875,
-   "fact_precision": 0.9875,
+   "score": 0.925,
+   "citation_fidelity": 0.875,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 4,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 0.929,
-  "weighted_recall": 0.9338,
+  "numerical_detail": {
+   "total_numerical": 28,
+   "correct": 26
+  },
+  "weighted_recall": 0.924,
   "missing_severity": {
-   "critical": 0,
-   "important": 2,
-   "minor": 23,
+   "critical": 1,
+   "important": 3,
+   "minor": 22,
    "details": [
     {
-     "gt_claim_id": 25,
+     "gt_claim_id": 12,
+     "source_section": "facts",
      "severity": "important",
-     "text": "被告辯稱中明確提到的症狀時間與機制（2月28日晚上10時以後至3月1日凌晨，脾臟血液進入腹腔導致右側鼠蹊部黑青及陰囊腫大），在claims 20-31中雖有類似醫學說明（claim 23提到出生後一至三天症狀逐漸出現），但缺此具體時間與症狀描述，屬於病情發展機轉的重要事實",
-     "reason": "被告辯稱中明確提到的症狀時間與機制（2月28日晚上10時以後至3月1日凌晨，脾臟血液進入腹腔導致右側鼠蹊部黑青及陰囊腫大），在claims 20-31中雖有類似醫學說明（claim 23提到出生後一至三天症狀逐漸出現），但缺此具體時間與症狀描述，屬於病情發展機轉的重要事實"
+     "text": "經查 section_01_facts.txt 及 section_05_reasoning.txt，摘要提到檢察官起訴被告「自應注意新生兒之健康狀況」及「疏於注意致脾臟破裂出血」，但未明確提及「應注意脾臟破裂及嚴重貧血症狀」這個特定的注意義務內容。此為檢察官指控核心，影響案情完整理解，屬重要資訊遺漏",
+     "reason": "經查 section_01_facts.txt 及 section_05_reasoning.txt，摘要提到檢察官起訴被告「自應注意新生兒之健康狀況」及「疏於注意致脾臟破裂出血」，但未明確提及「應注意脾臟破裂及嚴重貧血症狀」這個特定的注意義務內容。此為檢察官指控核心，影響案情完整理解，屬重要資訊遺漏"
     },
     {
-     "gt_claim_id": 26,
-     "severity": "important",
-     "text": "被告辯稱中「接著貧血、休克等變化逐漸迅速，才造成此不幸事件」是承接gt_claim_id 25的病情進展描述，在claims中未完整呈現此因果關聯，屬重要病因時間軸",
-     "reason": "被告辯稱中「接著貧血、休克等變化逐漸迅速，才造成此不幸事件」是承接gt_claim_id 25的病情進展描述，在claims中未完整呈現此因果關聯，屬重要病因時間軸"
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense 段落確實未提及「2月28日晚上10時至3月1日凌晨」此具體時間範圍，也未提及「陰囊腫大」症狀。facts 段雖有相關事實，但被告辯護中未以此細節作為論證基礎。",
+     "reason": "defense 段落確實未提及「2月28日晚上10時至3月1日凌晨」此具體時間範圍，也未提及「陰囊腫大」症狀。facts 段雖有相關事實，但被告辯護中未以此細節作為論證基礎。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense 段落提及「吃奶及生理狀況均正常」，但未出現「如果生理不正常不可能吃得下奶」此推論邏輯。跨 section 搜尋亦不見此說理。",
+     "reason": "defense 段落提及「吃奶及生理狀況均正常」，但未出現「如果生理不正常不可能吃得下奶」此推論邏輯。跨 section 搜尋亦不見此說理。"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense 段落有「仔細檢查」「聽診」等具體行為描述，但無「嬰兒之健康狀況伊都有注意」此概括性聲明。屬於語義相近但非精確對應。",
+     "reason": "defense 段落有「仔細檢查」「聽診」等具體行為描述，但無「嬰兒之健康狀況伊都有注意」此概括性聲明。屬於語義相近但非精確對應。"
     },
     {
      "gt_claim_id": 40,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "被告辯稱中提到媽媽住院觀察小孩的細節（「當時因為媽媽剛生產完還住在院內，她都有下樓看小孩」），雖claim 25提及「病患X在發病前根據紀錄確實沒有異樣」，但缺少母親住院觀察的具體背景，屬次要事實",
-     "reason": "被告辯稱中提到媽媽住院觀察小孩的細節（「當時因為媽媽剛生產完還住在院內，她都有下樓看小孩」），雖claim 25提及「病患X在發病前根據紀錄確實沒有異樣」，但缺少母親住院觀察的具體背景，屬次要事實"
+     "text": "defense 段落完全未提及「媽媽剛生產完還住在院內」「下樓看小孩」等細節。跨 section 搜尋亦不見此內容。",
+     "reason": "defense 段落完全未提及「媽媽剛生產完還住在院內」「下樓看小孩」等細節。跨 section 搜尋亦不見此內容。"
     },
     {
      "gt_claim_id": 46,
-     "severity": "minor",
-     "text": "被告辯稱中「行政院衛生署醫事審議委員會指稱伊沒有注意到脾臟破裂」是被告轉述鑑定意見的內容，雖然鑑定意見在reasoning section有詳細討論（claims 55-63），但被告辯護詞中此轉述未出現在defense claims中，屬次要引用性內容",
-     "reason": "被告辯稱中「行政院衛生署醫事審議委員會指稱伊沒有注意到脾臟破裂」是被告轉述鑑定意見的內容，雖然鑑定意見在reasoning section有詳細討論（claims 55-63），但被告辯護詞中此轉述未出現在defense claims中，屬次要引用性內容"
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense 段落未提及行政院衛生署醫事審議委員會或其鑑定意見。opinions 段雖有醫審會意見，但被告辯護中未直接回應「醫審會指稱伊沒有注意到脾臟破裂」之指控，屬於辯護要點遺漏。",
+     "reason": "defense 段落未提及行政院衛生署醫事審議委員會或其鑑定意見。opinions 段雖有醫審會意見，但被告辯護中未直接回應「醫審會指稱伊沒有注意到脾臟破裂」之指控，屬於辯護要點遺漏。"
     },
     {
      "gt_claim_id": 49,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "被告辯稱中「伊不知錯在那裡」是被告主觀情感陳述，屬口頭辯護語氣，非核心法律事實",
-     "reason": "被告辯稱中「伊不知錯在那裡」是被告主觀情感陳述，屬口頭辯護語氣，非核心法律事實"
+     "text": "defense 段落被告否認過失，但未出現「伊不知錯在那裡」此具體說法。屬於辯護態度描述，非核心事實。",
+     "reason": "defense 段落被告否認過失，但未出現「伊不知錯在那裡」此具體說法。屬於辯護態度描述，非核心事實。"
     },
     {
      "gt_claim_id": 50,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "被告辯稱中「鼠蹊部出血有很多種原因」是被告對鼠蹊部症狀的醫學說明，在claim 30雖有提及B醫院懷疑嵌頓性疝氣的類似背景，但缺少此具體醫學解釋，屬次要醫學說明",
-     "reason": "被告辯稱中「鼠蹊部出血有很多種原因」是被告對鼠蹊部症狀的醫學說明，在claim 30雖有提及B醫院懷疑嵌頓性疝氣的類似背景，但缺少此具體醫學解釋，屬次要醫學說明"
+     "text": "defense 段落提到鼠蹊部為「不尋常狀況」而轉診，但未說明「鼠蹊部出血有很多種原因」此醫學背景知識。跨 section 無補充。",
+     "reason": "defense 段落提到鼠蹊部為「不尋常狀況」而轉診，但未說明「鼠蹊部出血有很多種原因」此醫學背景知識。跨 section 無補充。"
     },
     {
      "gt_claim_id": 53,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "該事實為鑑定意見中提及的背景資訊（嬰兒出生時情況良好），屬專家鑑定書中的時間線起點描述，非指控內容核心。生成摘要在opinions段落直接從『出生後二十三小時』開始敘述，未提及出生當時的狀態，但此遺漏不影響對被告疏失指控的理解，屬次要資訊。",
-     "reason": "該事實為鑑定意見中提及的背景資訊（嬰兒出生時情況良好），屬專家鑑定書中的時間線起點描述，非指控內容核心。生成摘要在opinions段落直接從『出生後二十三小時』開始敘述，未提及出生當時的狀態，但此遺漏不影響對被告疏失指控的理解，屬次要資訊。"
+     "text": "section_01_facts.txt雖有『產下一子』及『無異常』之記載，但無明確『出生時情況良好』之直接陳述。此屬醫療背景資訊，不影響案情核心理解（過失認定與因果關係）",
+     "reason": "section_01_facts.txt雖有『產下一子』及『無異常』之記載，但無明確『出生時情況良好』之直接陳述。此屬醫療背景資訊，不影響案情核心理解（過失認定與因果關係）"
     },
     {
      "gt_claim_id": 64,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "檢察官未上訴屬程序性事實，判決結果段落已完整涵蓋無罪判決核心內容，此附加資訊雖確實存在於GT，但不影響判決理由與結果的理解",
-     "reason": "檢察官未上訴屬程序性事實，判決結果段落已完整涵蓋無罪判決核心內容，此附加資訊雖確實存在於GT，但不影響判決理由與結果的理解"
+     "text": "程序性事實：檢察官上訴狀態，不影響判決結論理解。摘要確實未提及檢察官是否於法定上訴期間內提起上訴。",
+     "reason": "程序性事實：檢察官上訴狀態，不影響判決結論理解。摘要確實未提及檢察官是否於法定上訴期間內提起上訴。"
     },
     {
      "gt_claim_id": 65,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決確定同屬程序性事實，因未上訴而確定為當然結果，判決結果段落重點已放在無罪諭知，此狀態性敘述為次要資訊",
-     "reason": "判決確定同屬程序性事實，因未上訴而確定為當然結果，判決結果段落重點已放在無罪諭知，此狀態性敘述為次要資訊"
+     "text": "程序性事實：判決確定狀態，不影響判決結論理解。摘要提及判決作成及無罪結果，但未明確陳述『判決確定』此一程序事實。",
+     "reason": "程序性事實：判決確定狀態，不影響判決結論理解。摘要提及判決作成及無罪結果，但未明確陳述『判決確定』此一程序事實。"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred提到死因未經解剖不明（pred 72），與GT主張的具體死因論述（脾臟破裂→多重器官衰竭→缺血性休克→死亡）不同，pred係法院認定死因未明，屬重要事實差異",
+     "reason": "pred提到死因未經解剖不明（pred 72），與GT主張的具體死因論述（脾臟破裂→多重器官衰竭→缺血性休克→死亡）不同，pred係法院認定死因未明，屬重要事實差異"
     },
     {
      "gt_claim_id": 67,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "公訴人「病菌感染」之說法為替代死因理論，屬次要背景資訊，不影響判決核心邏輯",
-     "reason": "公訴人「病菌感染」之說法為替代死因理論，屬次要背景資訊，不影響判決核心邏輯"
+     "text": "pred未提及「病菌感染」與「脾臟破裂」的對比論述，此為法院駁斥公訴人可能主張的次要論點，屬背景性事實",
+     "reason": "pred未提及「病菌感染」與「脾臟破裂」的對比論述，此為法院駁斥公訴人可能主張的次要論點，屬背景性事實"
     },
     {
-     "gt_claim_id": 71,
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "「15分鐘內轉診無延誤」為辯護細節論點，pred claim 69 已提及「未有延宕之失誤」，核心語義已覆蓋",
-     "reason": "「15分鐘內轉診無延誤」為辯護細節論點，pred claim 69 已提及「未有延宕之失誤」，核心語義已覆蓋"
+     "text": "pred沒有提供G醫院的具體診斷結論（缺血性休克、多重器官衰竭等），雖摘要中有提及相關死因，但未明確標示為G醫院診斷，屬醫療細節性事實",
+     "reason": "pred沒有提供G醫院的具體診斷結論（缺血性休克、多重器官衰竭等），雖摘要中有提及相關死因，但未明確標示為G醫院診斷，屬醫療細節性事實"
     },
     {
      "gt_claim_id": 79,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "瘀青具體尺寸（4-5公分）為細節證詞，pred已有痣青部位描述，不影響案情理解",
-     "reason": "瘀青具體尺寸（4-5公分）為細節證詞，pred已有痣青部位描述，不影響案情理解"
+     "text": "pred沒有提到瘀青的具體描述（四、五公分），屬細節性量測數據",
+     "reason": "pred沒有提到瘀青的具體描述（四、五公分），屬細節性量測數據"
     },
     {
      "gt_claim_id": 80,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "瘀青顏色質地描述（紅腫非深瘀青）為細節證詞，不影響過失認定核心",
-     "reason": "瘀青顏色質地描述（紅腫非深瘀青）為細節證詞，不影響過失認定核心"
+     "text": "pred沒有提到瘀青的狀態描述（紅腫非深瘀青），屬細節性外觀描述",
+     "reason": "pred沒有提到瘀青的狀態描述（紅腫非深瘀青），屬細節性外觀描述"
     },
     {
      "gt_claim_id": 82,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "醫師值班時間證詞為背景資訊，pred已提及關鍵醫療處置內容",
-     "reason": "醫師值班時間證詞為背景資訊，pred已提及關鍵醫療處置內容"
-    },
-    {
-     "gt_claim_id": 83,
-     "severity": "minor",
-     "text": "pred claim 67 已提及呼吸心跳正常，肚子腫脹細節不影響核心因果論述",
-     "reason": "pred claim 67 已提及呼吸心跳正常，肚子腫脹細節不影響核心因果論述"
-    },
-    {
-     "gt_claim_id": 84,
-     "severity": "minor",
-     "text": "血壓數值未提及，但血紅素2.6gm/dL已明確記載，核心醫療數據已覆蓋",
-     "reason": "血壓數值未提及，但血紅素2.6gm/dL已明確記載，核心醫療數據已覆蓋"
+     "text": "pred沒有提到G醫院小兒科醫師的值班時間證詞（三、四點），屬細節性時間資訊",
+     "reason": "pred沒有提到G醫院小兒科醫師的值班時間證詞（三、四點），屬細節性時間資訊"
     },
     {
      "gt_claim_id": 86,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "生理食鹽水點滴細節處置為背景資訊，pred已提及輸血等主要治療",
-     "reason": "生理食鹽水點滴細節處置為背景資訊，pred已提及輸血等主要治療"
+     "text": "pred沒有提到G醫院具體的治療措施（生理食鹽水、輸血），屬醫療處置細節",
+     "reason": "pred沒有提到G醫院具體的治療措施（生理食鹽水、輸血），屬醫療處置細節"
     },
     {
      "gt_claim_id": 88,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "外科會診時間（八點）為細節，pred已提及外科會診及內出血認定",
-     "reason": "外科會診時間（八點）為細節，pred已提及外科會診及內出血認定"
+     "text": "pred沒有提到八點外科會診的具體時間點，屬細節性時間資訊",
+     "reason": "pred沒有提到八點外科會診的具體時間點，屬細節性時間資訊"
     },
     {
      "gt_claim_id": 89,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "section_01_facts.txt claim 11 已提及「因生命跡象不穩定而無法開刀」，語義已覆蓋",
-     "reason": "section_01_facts.txt claim 11 已提及「因生命跡象不穩定而無法開刀」，語義已覆蓋"
+     "text": "pred雖提到生命跡象不穩定無法開刀（claim 11），但未明確提及「不敢開刀」的決定表述，屬語意細節差異",
+     "reason": "pred雖提到生命跡象不穩定無法開刀（claim 11），但未明確提及「不敢開刀」的決定表述，屬語意細節差異"
     },
     {
      "gt_claim_id": 91,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "gt_facts.json TL_12 已記載9時超音波發現傷口，pred timeline已有對應",
-     "reason": "gt_facts.json TL_12 已記載9時超音波發現傷口，pred timeline已有對應"
+     "text": "pred沒有提到「3月1日9時」這個具體診斷時間，屬細節性時間資訊",
+     "reason": "pred沒有提到「3月1日9時」這個具體診斷時間，屬細節性時間資訊"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred雖提到21時護理記錄正常（claim 4），但未明確提及告訴人夫妻探視時嬰兒狀態正常的細節",
+     "reason": "pred雖提到21時護理記錄正常（claim 4），但未明確提及告訴人夫妻探視時嬰兒狀態正常的細節"
     },
     {
      "gt_claim_id": 106,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "護理人員9點換尿片證詞與 section_05_reasoning.txt「21時止無異狀」語義重疊",
-     "reason": "護理人員9點換尿片證詞與 section_05_reasoning.txt「21時止無異狀」語義重疊"
+     "text": "pred未明確提到護理人員9點換尿片時尚未發現異常的證詞",
+     "reason": "pred未明確提到護理人員9點換尿片時尚未發現異常的證詞"
     },
     {
      "gt_claim_id": 107,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "J診所診斷證明書記載為程序性文件資訊，pred已有症狀描述",
-     "reason": "J診所診斷證明書記載為程序性文件資訊，pred已有症狀描述"
-    },
-    {
-     "gt_claim_id": 114,
-     "severity": "minor",
-     "text": "pred claim 45 已提及急診室研判，睪丸扭轉細節不影響核心診斷論述",
-     "reason": "pred claim 45 已提及急診室研判，睪丸扭轉細節不影響核心診斷論述"
-    },
-    {
-     "gt_claim_id": 115,
-     "severity": "minor",
-     "text": "一般診所處置標準為背景醫療常識，pred claim 70 已提及「轉送大醫院為唯一決定」",
-     "reason": "一般診所處置標準為背景醫療常識，pred claim 70 已提及「轉送大醫院為唯一決定」"
+     "text": "pred沒有提到J診所診斷證明書的具體記載時間（23時）",
+     "reason": "pred沒有提到J診所診斷證明書的具體記載時間（23時）"
     },
     {
      "gt_claim_id": 118,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "gt_facts.json TL_8 記載到院時間，pred timeline已有對應",
-     "reason": "gt_facts.json TL_8 記載到院時間，pred timeline已有對應"
+     "text": "pred提到約2小時40分轉送時間（claim 68），但未明確提供「3月1日1時46分」這個具體到院時間",
+     "reason": "pred提到約2小時40分轉送時間（claim 68），但未明確提供「3月1日1時46分」這個具體到院時間"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "此為法院的無罪判決核心結論：「不能據為認定被告於嬰兒之死亡有何過失罪責」。pred雖有多處提及因果關係不存在（claim 34, 76）及查無證據（claim 80），但缺少此精確的法律結論表述，屬影響判決結論理解之關鍵事實",
+     "reason": "此為法院的無罪判決核心結論：「不能據為認定被告於嬰兒之死亡有何過失罪責」。pred雖有多處提及因果關係不存在（claim 34, 76）及查無證據（claim 80），但缺少此精確的法律結論表述，屬影響判決結論理解之關鍵事實"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 136,
    "pred_total": 80,
-   "matched": 104,
-   "partial": 0,
-   "missing": 25,
-   "hallucinated": 1
+   "matched": 102,
+   "partial": 8,
+   "missing": 26,
+   "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.5278
  }
 }

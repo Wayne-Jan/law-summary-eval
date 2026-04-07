@@ -138,9 +138,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7091,
-  "fact_recall": 0.9111,
+  "fact_recall": 0.9222,
   "fact_precision": 1.0,
-  "fact_f1": 0.9535,
+  "fact_f1": 0.9595,
   "quality_overall": 4.4524,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0091,
@@ -155,37 +155,52 @@
    }
   },
   "compliance": 2,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 0.962,
-  "weighted_recall": 0.9778,
+  "numerical_detail": {
+   "total_numerical": 26,
+   "correct": 25
+  },
+  "weighted_recall": 0.9704,
   "missing_severity": {
    "critical": 1,
-   "important": 0,
+   "important": 1,
    "minor": 3,
    "details": [
     {
      "gt_claim_id": 14,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "被告乙、丙為該院醫師的身分陳述，在其他 section 未明確提及，屬背景性事實",
-     "reason": "被告乙、丙為該院醫師的身分陳述，在其他 section 未明確提及，屬背景性事實"
+     "text": "section_05_reasoning.txt 提到『被告乙為A醫院院長...另被告丙、被告丁亦為該院醫師』，乙為院長而非醫師，GT claim 說『乙、丙亦為該院醫師』與原文略有出入，且屬背景性事實，不影響判決結果",
+     "reason": "section_05_reasoning.txt 提到『被告乙為A醫院院長...另被告丙、被告丁亦為該院醫師』，乙為院長而非醫師，GT claim 說『乙、丙亦為該院醫師』與原文略有出入，且屬背景性事實，不影響判決結果"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提到『被告丙、被告丁曾參與手術後之急救醫療』，原文是丙、丁參與，GT claim 說乙、丙參與，略有出入，且屬背景性事實",
+     "reason": "section_05_reasoning.txt 提到『被告丙、被告丁曾參與手術後之急救醫療』，原文是丙、丁參與，GT claim 說乙、丙參與，略有出入，且屬背景性事實"
     },
     {
      "gt_claim_id": 33,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "雖然摘要中詳細分析贊成論文與反對論文（pred claims 34-35），但缺少「醫界或有贊成者，然反對聲音亦不小」此一概括性醫界共識描述。此為背景性陳述，詳細論文分析已涵蓋相關內容，不影響主要案情理解。",
-     "reason": "雖然摘要中詳細分析贊成論文與反對論文（pred claims 34-35），但缺少「醫界或有贊成者，然反對聲音亦不小」此一概括性醫界共識描述。此為背景性陳述，詳細論文分析已涵蓋相關內容，不影響主要案情理解。"
+     "text": "摘要雖涵蓋贊成與反對論文之觀點，但未明確總結出「醫界或有贊成者，然反對聲音亦不小」的整體性醫界意見分歧判斷，屬背景性事實遺漏",
+     "reason": "摘要雖涵蓋贊成與反對論文之觀點，但未明確總結出「醫界或有贊成者，然反對聲音亦不小」的整體性醫界意見分歧判斷，屬背景性事實遺漏"
     },
     {
-     "gt_claim_id": 40,
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及一側手術後徵詢家屬同意，但未明確載明「家屬直至手術後才知悉兩側膝蓋均已置換」之重要事實，生成摘要確實遺漏",
+     "reason": "section_05_reasoning.txt 雖提及一側手術後徵詢家屬同意，但未明確載明「家屬直至手術後才知悉兩側膝蓋均已置換」之重要事實，生成摘要確實遺漏"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
      "severity": "critical",
-     "text": "GT claim 主張參與會診之三位醫師為「被告乙、丙、丁」，但 pred claim 83 記載為「被告丙、被告甲、被告丁」。雖然摘要確實提及「三位醫師共同會診所採取之急救措施並無不當」，但參與者身份與 GT 不符（乙 vs 甲）。被告身份屬關鍵事實，直接影響無罪判決對象之理解。",
-     "reason": "GT claim 主張參與會診之三位醫師為「被告乙、丙、丁」，但 pred claim 83 記載為「被告丙、被告甲、被告丁」。雖然摘要確實提及「三位醫師共同會診所採取之急救措施並無不當」，但參與者身份與 GT 不符（乙 vs 甲）。被告身份屬關鍵事實，直接影響無罪判決對象之理解。"
-    },
-    {
-     "gt_claim_id": 75,
-     "severity": "minor",
-     "text": "法院對被告甲否認過失主張之否定性認定「猶否認其無過失，自無可採」未明確見於摘要。但摘要於 claim 71 已明確認定「被告甲過失致人於死之犯行，事證明確」，達到相同法律效果。此為程序性表述差異，不影響判決結論理解。",
-     "reason": "法院對被告甲否認過失主張之否定性認定「猶否認其無過失，自無可採」未明確見於摘要。但摘要於 claim 71 已明確認定「被告甲過失致人於死之犯行，事證明確」，達到相同法律效果。此為程序性表述差異，不影響判決結論理解。"
+     "text": "section_05_reasoning.txt 最後段落雖有類似內容（「本院復查無其它積極證據足證被告戊○○、甲○○、乙○○亦有自訴人自訴之罪行」），但生成摘要未明確引用此法院論述，維持 missing，此為無罪判決核心論述，影響判決結論理解",
+     "reason": "section_05_reasoning.txt 最後段落雖有類似內容（「本院復查無其它積極證據足證被告戊○○、甲○○、乙○○亦有自訴人自訴之罪行」），但生成摘要未明確引用此法院論述，維持 missing，此為無罪判決核心論述，影響判決結論理解"
     }
    ]
   },
@@ -193,10 +208,10 @@
    "gt_total": 90,
    "pred_total": 93,
    "matched": 81,
-   "partial": 2,
-   "missing": 4,
+   "partial": 4,
+   "missing": 5,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.8947
  }
 }

@@ -140,16 +140,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8442,
-  "fact_recall": 0.9148,
+  "fact_recall": 0.8819,
   "fact_precision": 1.0,
-  "fact_f1": 0.9555,
+  "fact_f1": 0.9372,
   "quality_overall": 4.7143,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0068,
-  "uncited_rate": 0.0745,
+  "uncited_rate": 0.118,
   "faithfulness_combined": {
-   "score": 0.9553,
-   "citation_fidelity": 0.9255,
+   "score": 0.9292,
+   "citation_fidelity": 0.882,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -157,66 +157,168 @@
    }
   },
   "compliance": 2,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9835,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 32
+  },
+  "weighted_recall": 0.9451,
   "missing_severity": {
-   "critical": 0,
-   "important": 2,
-   "minor": 5,
+   "critical": 2,
+   "important": 6,
+   "minor": 12,
    "details": [
     {
      "gt_claim_id": 41,
-     "severity": "minor",
-     "text": "GT claim 41 主張「未進行內診」，但經核對 section_05_reasoning.txt 與 section_01_facts.txt，法院明確認定被告甲確實進行內診（病歷記載「內診：子宮頸紅、分泌物、臭、兩側痛」）。此乃 GT 錯誤，因判決書內文與之矛盾，故 pred 摘要不收錄此錯誤陳述實屬正確，不影響案情理解",
-     "reason": "GT claim 41 主張「未進行內診」，但經核對 section_05_reasoning.txt 與 section_01_facts.txt，法院明確認定被告甲確實進行內診（病歷記載「內診：子宮頸紅、分泌物、臭、兩側痛」）。此乃 GT 錯誤，因判決書內文與之矛盾，故 pred 摘要不收錄此錯誤陳述實屬正確，不影響案情理解"
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT claim 主張『未進行內診』，但摘要明確記載『進行內診』，兩者事實矛盾。此為醫療處置的關鍵事實差異，影響案情完整理解",
+     "reason": "GT claim 主張『未進行內診』，但摘要明確記載『進行內診』，兩者事實矛盾。此為醫療處置的關鍵事實差異，影響案情完整理解"
     },
     {
-     "gt_claim_id": 96,
+     "gt_claim_id": 57,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "右卵巢出血性囊腫的定義性描述（「是指右卵巢內因出血形成囊腫」）確未見於 opinions section，雖見於 reasoning 段，但屬純粹醫學定義說明，不影響死因機轉理解",
-     "reason": "右卵巢出血性囊腫的定義性描述（「是指右卵巢內因出血形成囊腫」）確未見於 opinions section，雖見於 reasoning 段，但屬純粹醫學定義說明，不影響死因機轉理解"
+     "text": "被告身份為負責人屬背景事實，在header section已有涵蓋，defense section雖無『坦承』之詞，但不影響案情理解。",
+     "reason": "被告身份為負責人屬背景事實，在header section已有涵蓋，defense section雖無『坦承』之詞，但不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "開立處方之事實在facts section已有完整記載，defense section著重於被告辯稱『需排除手術後才可服藥』的說明，非獨立陳述開立處方動作，屬合理摘要選擇。",
+     "reason": "開立處方之事實在facts section已有完整記載，defense section著重於被告辯稱『需排除手術後才可服藥』的說明，非獨立陳述開立處方動作，屬合理摘要選擇。"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "下午3時許之電話通話在facts section已有詳載（claim_20），defense section以『其後』概括表示，雖略去精確時間點，但不影響辯護要旨之理解。",
+     "reason": "下午3時許之電話通話在facts section已有詳載（claim_20），defense section以『其後』概括表示，雖略去精確時間點，但不影響辯護要旨之理解。"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "症狀描述在facts section已有完整記載（『腹部劇痛而無法行走』），defense section未重複敘述屬合理，且此為事實陳述而非辯護重點。",
+     "reason": "症狀描述在facts section已有完整記載（『腹部劇痛而無法行走』），defense section未重複敘述屬合理，且此為事實陳述而非辯護重點。"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "此為鑑定意見中關於早期子宮外孕假性妊娠囊可能誤診為正常懷孕之醫學見解，屬重要醫療專業見解，影響對 A 醫院診斷合理性的理解。經查 section_05_reasoning.txt 確有提及此內容，但 opinions section 摘要集中於醫審會鑑定意見，未詳載法醫研究所關於假性妊娠囊的醫學說明。確認維持 missing。",
+     "reason": "此為鑑定意見中關於早期子宮外孕假性妊娠囊可能誤診為正常懷孕之醫學見解，屬重要醫療專業見解，影響對 A 醫院診斷合理性的理解。經查 section_05_reasoning.txt 確有提及此內容，但 opinions section 摘要集中於醫審會鑑定意見，未詳載法醫研究所關於假性妊娠囊的醫學說明。確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "GT 關於證人醫師乙診療判斷符合醫療常規之陳述，Pred opinions section 完全未提及「證人醫師乙」相關內容，僅聚焦於醫審會及法醫研究所鑑定。經查 section_05_reasoning.txt 確有詳述此證人醫師乙之判斷，但 opinions section 未涵蓋。確認維持 missing。",
+     "reason": "GT 關於證人醫師乙診療判斷符合醫療常規之陳述，Pred opinions section 完全未提及「證人醫師乙」相關內容，僅聚焦於醫審會及法醫研究所鑑定。經查 section_05_reasoning.txt 確有詳述此證人醫師乙之判斷，但 opinions section 未涵蓋。確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "Pred opinions claim 13 稱「違反醫療常規」，但 GT claim 94 明確指出「施打抗生素治療符合醫療常規」。兩者結論完全相反，屬於重要醫療認定事實。Pred opinions section 確未提及此「符合醫療常規」之陳述，確認維持 missing。",
+     "reason": "Pred opinions claim 13 稱「違反醫療常規」，但 GT claim 94 明確指出「施打抗生素治療符合醫療常規」。兩者結論完全相反，屬於重要醫療認定事實。Pred opinions section 確未提及此「符合醫療常規」之陳述，確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "顯微鏡觀察肺臟微血栓與肺炎有關之法醫細節，為死因分析之補充說明，屬次要技術性細節。opinions section 摘要未涵蓋此細節，確認維持 missing。",
+     "reason": "顯微鏡觀察肺臟微血栓與肺炎有關之法醫細節，為死因分析之補充說明，屬次要技術性細節。opinions section 摘要未涵蓋此細節，確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "長期臥床及使用呼吸器病人易發生院內感染肺炎之一般醫學見解，為背景性醫學常識，非關鍵鑑定意見。opinions section 未提及此一般性說明，確認維持 missing。",
+     "reason": "長期臥床及使用呼吸器病人易發生院內感染肺炎之一般醫學見解，為背景性醫學常識，非關鍵鑑定意見。opinions section 未提及此一般性說明，確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病患手術前無肺炎症狀之否定事實，為死因分析輔助說明，屬次要事實。opinions section 未涵蓋此細節，確認維持 missing。",
+     "reason": "病患手術前無肺炎症狀之否定事實，為死因分析輔助說明，屬次要事實。opinions section 未涵蓋此細節，確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "昏迷期間依賴呼吸器導致肺炎之判斷，屬死因分析中之因果推論細節，非核心鑑定結論。opinions section 未提及此推論，確認維持 missing。",
+     "reason": "昏迷期間依賴呼吸器導致肺炎之判斷，屬死因分析中之因果推論細節，非核心鑑定結論。opinions section 未提及此推論，確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "住院期間肺炎與呼吸器使用之因果關係，屬死因分析輔助說明，對肺炎發生機轉的解釋。opinions section 未涵蓋此因果關係說明，確認維持 missing。",
+     "reason": "住院期間肺炎與呼吸器使用之因果關係，屬死因分析輔助說明，對肺炎發生機轉的解釋。opinions section 未涵蓋此因果關係說明，確認維持 missing。"
     },
     {
      "gt_claim_id": 112,
-     "severity": "minor",
-     "text": "reasoning section 僅提到被告甲『懷疑可能為子宮外孕』、『依其專業判斷子宮外孕機率甚高』，但這是被告甲單方面判斷，並未明確描述『與孕婦討論』此可能性的互動情節。屬於細節性事實，不影響核心過失認定",
-     "reason": "reasoning section 僅提到被告甲『懷疑可能為子宮外孕』、『依其專業判斷子宮外孕機率甚高』，但這是被告甲單方面判斷，並未明確描述『與孕婦討論』此可能性的互動情節。屬於細節性事實，不影響核心過失認定"
-    },
-    {
-     "gt_claim_id": 119,
-     "severity": "minor",
-     "text": "reasoning section 完全未提及『子宮外孕三個典型症狀（疼痛、無月經、陰道出血）』的醫學背景知識介紹。屬於背景醫學知識，非判決核心事實",
-     "reason": "reasoning section 完全未提及『子宮外孕三個典型症狀（疼痛、無月經、陰道出血）』的醫學背景知識介紹。屬於背景醫學知識，非判決核心事實"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 記載被告甲『率予排除』子宮外孕，而非『與孕婦討論』子宮外孕可能性。GT claim 強調『討論』動作，但法院認定被告甲未與孕婦充分討論即逕行排除，屬重要的事實差異，影響被告是否善盡告知義務的判斷",
+     "reason": "section_05_reasoning.txt 記載被告甲『率予排除』子宮外孕，而非『與孕婦討論』子宮外孕可能性。GT claim 強調『討論』動作，但法院認定被告甲未與孕婦充分討論即逕行排除，屬重要的事實差異，影響被告是否善盡告知義務的判斷"
     },
     {
      "gt_claim_id": 120,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "reasoning section 完全未提及『50%病人出現症狀』的統計數據。屬於醫學統計細節，非判決必要內容",
-     "reason": "reasoning section 完全未提及『50%病人出現症狀』的統計數據。屬於醫學統計細節，非判決必要內容"
+     "text": "section_05_reasoning.txt 全文未提及子宮外孕症狀出現在50%病人身上的統計數據。屬醫學背景資訊，不影響判決核心理解",
+     "reason": "section_05_reasoning.txt 全文未提及子宮外孕症狀出現在50%病人身上的統計數據。屬醫學背景資訊，不影響判決核心理解"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 全文未提及『症狀大部分發生在已破裂情況下』的醫學判斷。屬醫學背景資訊，不影響判決核心理解",
+     "reason": "section_05_reasoning.txt 全文未提及『症狀大部分發生在已破裂情況下』的醫學判斷。屬醫學背景資訊，不影響判決核心理解"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "雖section_05_reasoning.txt末段提到被告甲辯稱『卵巢破裂慢性出血引發肺臟微血栓及院內感染肺炎而死亡』，但這是被告辯詞而非法院認定。GT claim 143表述方式似屬法院認定，但實際法院已明確否定此死因。屬關鍵死因機轉遺漏，影響判決結論理解",
+     "reason": "雖section_05_reasoning.txt末段提到被告甲辯稱『卵巢破裂慢性出血引發肺臟微血栓及院內感染肺炎而死亡』，但這是被告辯詞而非法院認定。GT claim 143表述方式似屬法院認定，但實際法院已明確否定此死因。屬關鍵死因機轉遺漏，影響判決結論理解"
     },
     {
      "gt_claim_id": 149,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "reasoning section 中法院確實認定『證人C依據陰道超音波檢查結果及病患X當時並無其他身體不適狀況，判斷為早期懷孕但因照不到胚囊心跳而囑咐三週後回診之處置並無違反醫療常規』，但這是法院直接認定，並未明確歸因於『醫審會鑑定書』的意見。涉及鑑定機構歸因的準確性",
-     "reason": "reasoning section 中法院確實認定『證人C依據陰道超音波檢查結果及病患X當時並無其他身體不適狀況，判斷為早期懷孕但因照不到胚囊心跳而囑咐三週後回診之處置並無違反醫療常規』，但這是法院直接認定，並未明確歸因於『醫審會鑑定書』的意見。涉及鑑定機構歸因的準確性"
+     "text": "section_05_reasoning.txt 末段確實有記載『證人C...判斷為早期懷孕...處置並無違反醫療常規』及『醫師有為病患X施打抗生素治療符合醫療常規』，但未明確提及『醫審會鑑定書認同外院處置』這個證據來源歸屬。屬鑑定意見來源標示遺漏",
+     "reason": "section_05_reasoning.txt 末段確實有記載『證人C...判斷為早期懷孕...處置並無違反醫療常規』及『醫師有為病患X施打抗生素治療符合醫療常規』，但未明確提及『醫審會鑑定書認同外院處置』這個證據來源歸屬。屬鑑定意見來源標示遺漏"
     },
     {
      "gt_claim_id": 152,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "reasoning section 中法院確實認定『B醫院並未延誤手術治療時間』、『醫師有為病患X施打抗生素治療符合醫療常規』，但這是法院直接認定，並未明確提及『醫審會鑑定書』認同 T 醫院處置。涉及鑑定機構歸因的準確性",
-     "reason": "reasoning section 中法院確實認定『B醫院並未延誤手術治療時間』、『醫師有為病患X施打抗生素治療符合醫療常規』，但這是法院直接認定，並未明確提及『醫審會鑑定書』認同 T 醫院處置。涉及鑑定機構歸因的準確性"
+     "text": "section_05_reasoning.txt 末段確實記載『並未延誤手術治療時間』，但未明確提及『醫審會鑑定書認同』這個證據來源歸屬。屬鑑定意見來源標示遺漏",
+     "reason": "section_05_reasoning.txt 末段確實記載『並未延誤手術治療時間』，但未明確提及『醫審會鑑定書認同』這個證據來源歸屬。屬鑑定意見來源標示遺漏"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 末段提及『肺炎之發生常見於氣管插管之病人』及『研判因昏迷期間需依賴呼吸維生導致肺炎』，但未提及『11月12日發燒』的具體日期。屬時間細節遺漏",
+     "reason": "section_05_reasoning.txt 末段提及『肺炎之發生常見於氣管插管之病人』及『研判因昏迷期間需依賴呼吸維生導致肺炎』，但未提及『11月12日發燒』的具體日期。屬時間細節遺漏"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 182,
    "pred_total": 161,
-   "matched": 166,
-   "partial": 1,
-   "missing": 7,
+   "matched": 159,
+   "partial": 3,
+   "missing": 20,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.5
  }
 }

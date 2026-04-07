@@ -134,9 +134,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8131,
-  "fact_recall": 0.8125,
+  "fact_recall": 0.8333,
   "fact_precision": 1.0,
-  "fact_f1": 0.8966,
+  "fact_f1": 0.9091,
   "quality_overall": 4.8857,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0,
@@ -151,48 +151,56 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9167,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.9028,
   "missing_severity": {
    "critical": 1,
-   "important": 0,
-   "minor": 3,
+   "important": 1,
+   "minor": 2,
    "details": [
     {
      "gt_claim_id": 10,
-     "severity": "critical",
-     "text": "事實段關鍵過失要件遺漏。來源判決書事實段明確記載『且依當時情形並無不能注意情事，竟疏未注意』，生成摘要僅提及『應注意避免傷害陰莖』及『疏未注意』，未涵蓋『依當時情形並無不能注意情事』之能注意要件。雖理由段有『本院復查無被告當時有不能注意之具體情事』，但事實段確實遺漏此過失構成要件，屬影響過失責任認定的核心事實。",
-     "reason": "事實段關鍵過失要件遺漏。來源判決書事實段明確記載『且依當時情形並無不能注意情事，竟疏未注意』，生成摘要僅提及『應注意避免傷害陰莖』及『疏未注意』，未涵蓋『依當時情形並無不能注意情事』之能注意要件。雖理由段有『本院復查無被告當時有不能注意之具體情事』，但事實段確實遺漏此過失構成要件，屬影響過失責任認定的核心事實。"
+     "source_section": "facts",
+     "severity": "important",
+     "text": "『依當時情形並無不能注意情事』是過失犯罪構成要件中『注意能力』的事實認定，直接影響過失成立與否。雖reasoning section提及『查無不能注意之具體情事』，但facts section確實未提及此項事實，屬於重要法律要件事實遺漏。",
+     "reason": "『依當時情形並無不能注意情事』是過失犯罪構成要件中『注意能力』的事實認定，直接影響過失成立與否。雖reasoning section提及『查無不能注意之具體情事』，但facts section確實未提及此項事實，屬於重要法律要件事實遺漏。"
     },
     {
      "gt_claim_id": 13,
-     "severity": "minor",
-     "text": "判決日期程序性資訊遺漏。生成摘要判決主文段未提及『民國91年05月31日』之判決日期，屬程序性背景事實，不影響案情與判決結論理解。",
-     "reason": "判決日期程序性資訊遺漏。生成摘要判決主文段未提及『民國91年05月31日』之判決日期，屬程序性背景事實，不影響案情與判決結論理解。"
+     "source_section": "verdict",
+     "severity": "critical",
+     "text": "標題雖有『臺灣臺南地方法院91年度』，但具體判決日期『民國91年05月31日』未在任何 section 提及。此為判決識別關鍵資訊，影響判決書的完整識別。",
+     "reason": "標題雖有『臺灣臺南地方法院91年度』，但具體判決日期『民國91年05月31日』未在任何 section 提及。此為判決識別關鍵資訊，影響判決書的完整識別。"
     },
     {
      "gt_claim_id": 17,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "上訴程序資訊遺漏。生成摘要未提及『被告、檢察官於法定上訴期間未上訴』，來源判決書雖有『如不服本判決...應...提出上訴狀』之上訴教示，但未明確記載雙方是否上訴，此為程序性背景事實。",
-     "reason": "上訴程序資訊遺漏。生成摘要未提及『被告、檢察官於法定上訴期間未上訴』，來源判決書雖有『如不服本判決...應...提出上訴狀』之上訴教示，但未明確記載雙方是否上訴，此為程序性背景事實。"
+     "text": "『被告、檢察官於法定上訴期間未上訴』之事實未在摘要任何 section 提及，屬程序性事實，不影響主要案情理解。",
+     "reason": "『被告、檢察官於法定上訴期間未上訴』之事實未在摘要任何 section 提及，屬程序性事實，不影響主要案情理解。"
     },
     {
      "gt_claim_id": 18,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決確定狀態資訊遺漏。生成摘要未明確陳述『本案判決即確定』，來源判決書未於主文或事實理由中載明判決確定與否，屬程序性結論事實。",
-     "reason": "判決確定狀態資訊遺漏。生成摘要未明確陳述『本案判決即確定』，來源判決書未於主文或事實理由中載明判決確定與否，屬程序性結論事實。"
+     "text": "『本案判決即確定』之判決確定狀態未在摘要任何 section 提及，屬程序性事實，不影響主要案情理解。",
+     "reason": "『本案判決即確定』之判決確定狀態未在摘要任何 section 提及，屬程序性事實，不影響主要案情理解。"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 24,
-   "pred_total": 34,
-   "matched": 19,
-   "partial": 1,
+   "pred_total": 33,
+   "matched": 20,
+   "partial": 0,
    "missing": 4,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.5
  }
 }

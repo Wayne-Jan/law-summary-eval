@@ -144,75 +144,77 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8737,
-  "fact_recall": 0.6829,
-  "fact_precision": 0.9677,
-  "fact_f1": 0.8008,
+  "fact_recall": 0.8902,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9419,
   "quality_overall": 4.2732,
   "citation_accuracy": 0.8636,
   "citation_support_score": 0.9087,
   "uncited_rate": 0.049,
   "faithfulness_combined": {
-   "score": 0.8799,
+   "score": 0.8928,
    "citation_fidelity": 0.8213,
-   "fact_precision": 0.9677,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 2,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9431,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 25
+  },
+  "weighted_recall": 0.9512,
   "missing_severity": {
    "critical": 0,
    "important": 2,
-   "minor": 3,
+   "minor": 2,
    "details": [
     {
-     "gt_claim_id": 17,
-     "severity": "important",
-     "text": "生成摘要僅提及死因為『腸繫膜穿刺傷併大量出血、出血性休克』，未提及『膽結石內視鏡手術』亦為法醫研究所鑑定之死亡原因相關事實。此為專業鑑定意見的構成部分，影響死因論證的完整性。",
-     "reason": "生成摘要僅提及死因為『腸繫膜穿刺傷併大量出血、出血性休克』，未提及『膽結石內視鏡手術』亦為法醫研究所鑑定之死亡原因相關事實。此為專業鑑定意見的構成部分，影響死因論證的完整性。"
-    },
-    {
      "gt_claim_id": 21,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "生成摘要提及被告辯稱麻醉、氣體栓塞等可能死因，但未提及法醫解剖報告明確排除『麻藥過敏、氣體拴塞』之鑑定結論。此排除性結論是法院認定被告辯稱不可採的關鍵依據，影響鑑定意見的完整性。",
-     "reason": "生成摘要提及被告辯稱麻醉、氣體栓塞等可能死因，但未提及法醫解剖報告明確排除『麻藥過敏、氣體拴塞』之鑑定結論。此排除性結論是法院認定被告辯稱不可採的關鍵依據，影響鑑定意見的完整性。"
+     "text": "摘要 opinions section 雖提及法醫研究所的鑑定結論（腹腔內出血係銳器傷所致），但未明確提及解剖報告「排除」麻藥過敏、氣體拴塞之可能性的否定性鑑定發現。此為駁回被告辯解的重要鑑定發現，影響對鑑定意見完整性的理解",
+     "reason": "摘要 opinions section 雖提及法醫研究所的鑑定結論（腹腔內出血係銳器傷所致），但未明確提及解剖報告「排除」麻藥過敏、氣體拴塞之可能性的否定性鑑定發現。此為駁回被告辯解的重要鑑定發現，影響對鑑定意見完整性的理解"
     },
     {
      "gt_claim_id": 22,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "生成摘要未提及具體判決日期（民國104年07月21日）。此為程序性事實，不影響判決實質內容的理解。",
-     "reason": "生成摘要未提及具體判決日期（民國104年07月21日）。此為程序性事實，不影響判決實質內容的理解。"
+     "text": "判決日期屬程序性資訊，摘要聚焦於案件事實與結論，未提及不影響案情理解",
+     "reason": "判決日期屬程序性資訊，摘要聚焦於案件事實與結論，未提及不影響案情理解"
     },
     {
      "gt_claim_id": 29,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "生成摘要未提及法院查驗協商合意無刑事訴訟法第455條之4第1項所列禁止情形。此為協商判決的法定程序要件確認，屬程序性事實。",
-     "reason": "生成摘要未提及法院查驗協商合意無刑事訴訟法第455條之4第1項所列禁止情形。此為協商判決的法定程序要件確認，屬程序性事實。"
+     "text": "法院對協商合意之法定審查屬程序性法條引用，摘要已提及「依協商程序為判決」，未詳列法條不影響理解",
+     "reason": "法院對協商合意之法定審查屬程序性法條引用，摘要已提及「依協商程序為判決」，未詳列法條不影響理解"
     },
     {
      "gt_claim_id": 30,
-     "severity": "minor",
-     "text": "生成摘要雖提及『檢察官與被告甲於審判外達成協商合意』，但未明確提及『檢察官聲請改依協商程序而為判決』之程序動作。此為協商程序啟動的技術性程序細節。",
-     "reason": "生成摘要雖提及『檢察官與被告甲於審判外達成協商合意』，但未明確提及『檢察官聲請改依協商程序而為判決』之程序動作。此為協商程序啟動的技術性程序細節。"
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "檢察官聲請協商程序為判決形成之重要步驟，雖摘要提及「協商合意」但明確的「聲請」行為未載，影響程序完整理解",
+     "reason": "檢察官聲請協商程序為判決形成之重要步驟，雖摘要提及「協商合意」但明確的「聲請」行為未載，影響程序完整理解"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 41,
    "pred_total": 62,
-   "matched": 28,
-   "partial": 0,
-   "missing": 5,
-   "hallucinated": 2,
+   "matched": 36,
+   "partial": 1,
+   "missing": 4,
+   "hallucinated": 0,
    "gt_mismatch": {
     "reported": 41,
     "actual": 62
    }
   },
-  "section_balance": 1.0
+  "section_balance": 0.75
  }
 }

@@ -130,16 +130,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8479,
-  "fact_recall": 0.8817,
+  "fact_recall": 0.957,
   "fact_precision": 1.0,
-  "fact_f1": 0.9371,
+  "fact_f1": 0.978,
   "quality_overall": 4.9357,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9833,
-  "uncited_rate": 0.028,
+  "uncited_rate": 0.03,
   "faithfulness_combined": {
-   "score": 0.9832,
-   "citation_fidelity": 0.972,
+   "score": 0.982,
+   "citation_fidelity": 0.97,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -147,52 +147,50 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9821,
+  "weighted_recall": 0.9857,
   "missing_severity": {
    "critical": 0,
    "important": 0,
-   "minor": 5,
+   "minor": 4,
    "details": [
     {
      "gt_claim_id": 8,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "醫師乙為病患X作X光檢查及開立藥劑雖屬事實，已在defense段及reasoning段提及（pred_claim 31、58），但facts段未明確陳述此細節。此乃醫療處置細節，雖完整呈現更佳，但不影響案情主軸理解。",
-     "reason": "醫師乙為病患X作X光檢查及開立藥劑雖屬事實，已在defense段及reasoning段提及（pred_claim 31、58），但facts段未明確陳述此細節。此乃醫療處置細節，雖完整呈現更佳，但不影響案情主軸理解。"
+     "text": "X光檢查及開立促進末梢血管循環藥劑雖出現在 defense 段（claim_31）及 reasoning 段（claim_58）摘要中，但確實未在 facts section 提及。此為醫師乙具體醫療處置的細節性事實，屬次要醫療行為敘述，不影響核心案情（誤診、延誤治療、死亡因果關係）的理解。",
+     "reason": "X光檢查及開立促進末梢血管循環藥劑雖出現在 defense 段（claim_31）及 reasoning 段（claim_58）摘要中，但確實未在 facts section 提及。此為醫師乙具體醫療處置的細節性事實，屬次要醫療行為敘述，不影響核心案情（誤診、延誤治療、死亡因果關係）的理解。"
     },
     {
      "gt_claim_id": 48,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決日期（民國90年1月19日）為程序性事實，雖未在摘要中明確提及，但不影響案件實體內容理解。",
-     "reason": "判決日期（民國90年1月19日）為程序性事實，雖未在摘要中明確提及，但不影響案件實體內容理解。"
-    },
-    {
-     "gt_claim_id": 49,
-     "severity": "minor",
-     "text": "「本件事證明確」為判決套語，雖未逐字引用，但reasoning段最後一句「本件事證明確，被告二人右揭過失犯行均堪認定」已涵蓋此意，屬改寫而非遺漏。",
-     "reason": "「本件事證明確」為判決套語，雖未逐字引用，但reasoning段最後一句「本件事證明確，被告二人右揭過失犯行均堪認定」已涵蓋此意，屬改寫而非遺漏。"
+     "text": "判決日期（民國90年1月19日）確實未在生成摘要中出現。此為程序性資訊，不影響判決主文（罪刑宣告）的理解，屬次要遺漏。",
+     "reason": "判決日期（民國90年1月19日）確實未在生成摘要中出現。此為程序性資訊，不影響判決主文（罪刑宣告）的理解，屬次要遺漏。"
     },
     {
      "gt_claim_id": 57,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "「開具診斷證明書」屬程序性細節，pred_claim 65已提及「迄於翌日出院時止，仍認定為急性心肌梗塞」，診斷內容已呈現，開具證明書行為不影響過失認定之主軸。",
-     "reason": "「開具診斷證明書」屬程序性細節，pred_claim 65已提及「迄於翌日出院時止，仍認定為急性心肌梗塞」，診斷內容已呈現，開具證明書行為不影響過失認定之主軸。"
+     "text": "『出院時由被告乙開具病名為急性心肌梗塞之診斷證明書』此細節確實未見於任何 section 摘要中。惟此屬程序性文件細節，非關鍵醫療過失事實，對判決結論理解影響輕微",
+     "reason": "『出院時由被告乙開具病名為急性心肌梗塞之診斷證明書』此細節確實未見於任何 section 摘要中。惟此屬程序性文件細節，非關鍵醫療過失事實，對判決結論理解影響輕微"
     },
     {
      "gt_claim_id": 67,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "「主治醫師通常係對住院病患負責診治之醫師」為法律定義性陳述，pred_claim 70已明確陳述「被告二人均為病患X之主治醫師」，實質角色已確立，定義性說明屬背景資訊。",
-     "reason": "「主治醫師通常係對住院病患負責診治之醫師」為法律定義性陳述，pred_claim 70已明確陳述「被告二人均為病患X之主治醫師」，實質角色已確立，定義性說明屬背景資訊。"
+     "text": "『主治醫師通常係對住院病患負責診治之醫師』屬法律定義性說明，生成摘要雖未明確定義，但已陳述『被告二人均為病患X之主治醫師』之事實。法條定義之省略屬理解性背景知識，不影響案情核心理解",
+     "reason": "『主治醫師通常係對住院病患負責診治之醫師』屬法律定義性說明，生成摘要雖未明確定義，但已陳述『被告二人均為病患X之主治醫師』之事實。法條定義之省略屬理解性背景知識，不影響案情核心理解"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 93,
    "pred_total": 71,
-   "matched": 81,
-   "partial": 2,
-   "missing": 5,
+   "matched": 89,
+   "partial": 0,
+   "missing": 4,
    "hallucinated": 0
   },
   "section_balance": 1.0

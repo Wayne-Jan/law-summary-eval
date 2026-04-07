@@ -156,16 +156,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7901,
-  "fact_recall": 0.7604,
+  "fact_recall": 0.7595,
   "fact_precision": 1.0,
-  "fact_f1": 0.8639,
+  "fact_f1": 0.8633,
   "quality_overall": 4.4857,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9824,
-  "uncited_rate": 0.0,
+  "uncited_rate": 0.02,
   "faithfulness_combined": {
-   "score": 1.0,
-   "citation_fidelity": 1.0,
+   "score": 0.988,
+   "citation_fidelity": 0.98,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -173,486 +173,280 @@
    }
   },
   "compliance": 2,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.8343,
+  "numerical_detail": {
+   "total_numerical": 24,
+   "correct": 24
+  },
+  "weighted_recall": 0.865,
   "missing_severity": {
-   "critical": 6,
-   "important": 29,
-   "minor": 8,
+   "critical": 5,
+   "important": 18,
+   "minor": 13,
    "details": [
     {
-     "gt_claim_id": 39,
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "大腸鏡檢查後腹痛之醫學常識說明，屬背景性醫學知識，不影響案情核心理解",
+     "reason": "大腸鏡檢查後腹痛之醫學常識說明，屬背景性醫學知識，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "一般檢查後腹痛消失之常識，屬背景性醫學知識",
+     "reason": "一般檢查後腹痛消失之常識，屬背景性醫學知識"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腸道破裂臨床判斷標準是鑑定意見之重要發現，影響過失認定之醫學依據理解",
+     "reason": "腸道破裂臨床判斷標準是鑑定意見之重要發現，影響過失認定之醫學依據理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術發現具體數據（6×4公分之裂孔）係客觀醫療事實，雖 section_01_facts.txt 有提及，但在鑑定意見 section 中缺失",
+     "reason": "手術發現具體數據（6×4公分之裂孔）係客觀醫療事實，雖 section_01_facts.txt 有提及，但在鑑定意見 section 中缺失"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "灌腸壓力與破裂風險之醫學判斷，係排除灌腸為唯一 cause 之重要鑑定結論",
+     "reason": "灌腸壓力與破裂風險之醫學判斷，係排除灌腸為唯一 cause 之重要鑑定結論"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "大腸破裂時序與灌腸加重症狀之分析，影響因果關係理解",
+     "reason": "大腸破裂時序與灌腸加重症狀之分析，影響因果關係理解"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
      "severity": "critical",
-     "text": "GT claim 39指「醫師乙開立灌腸醫囑」，但生成摘要全文均記載為「被告甲（醫師甲）開立灌腸醫囑」。依master.json之arguments.prosecution_allegations及timeline，灌腸醫囑確係由醫師甲（許辰陽）開立，醫師乙僅係「授權護士蓋職章」及「疏未督導」。GT claim 39對行為主體之記載與案件事實不符，生成摘要不採用係正確，故維持missing，惟GT claim本身存在事實錯誤，標記為critical係因其涉及關鍵過失行為主體之認定。",
-     "reason": "GT claim 39指「醫師乙開立灌腸醫囑」，但生成摘要全文均記載為「被告甲（醫師甲）開立灌腸醫囑」。依master.json之arguments.prosecution_allegations及timeline，灌腸醫囑確係由醫師甲（許辰陽）開立，醫師乙僅係「授權護士蓋職章」及「疏未督導」。GT claim 39對行為主體之記載與案件事實不符，生成摘要不採用係正確，故維持missing，惟GT claim本身存在事實錯誤，標記為critical係因其涉及關鍵過失行為主體之認定。"
+     "text": "多重死因分析直接影響死因判定與被告責任歸屬之理解",
+     "reason": "多重死因分析直接影響死因判定與被告責任歸屬之理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "併發症之性質說明，屬輔助性醫學描述",
+     "reason": "併發症之性質說明，屬輔助性醫學描述"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "延遲就醫判斷係鑑定意見中被害人與有過失之重要認定，影響責任分配",
+     "reason": "延遲就醫判斷係鑑定意見中被害人與有過失之重要認定，影響責任分配"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "灌腸與腹膜炎、休克之因果關係為鑑定意見核心，影響過失與死因認定",
+     "reason": "灌腸與腹膜炎、休克之因果關係為鑑定意見核心，影響過失與死因認定"
     },
     {
      "gt_claim_id": 74,
-     "severity": "important",
-     "text": "大腸鏡檢查後腹痛機制說明（灌氣、腸鏡頂起牽扯），section_03_opinions.txt 完全未提及，影響醫療過失理解",
-     "reason": "大腸鏡檢查後腹痛機制說明（灌氣、腸鏡頂起牽扯），section_03_opinions.txt 完全未提及，影響醫療過失理解"
-    },
-    {
-     "gt_claim_id": 75,
-     "severity": "important",
-     "text": "一般檢查後腹痛預後說明，section_03_opinions.txt 完全未提及",
-     "reason": "一般檢查後腹痛預後說明，section_03_opinions.txt 完全未提及"
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "吻合處滲漏與腹膜炎敗血症之因果關係係多元死因之關鍵論述",
+     "reason": "吻合處滲漏與腹膜炎敗血症之因果關係係多元死因之關鍵論述"
     },
     {
      "gt_claim_id": 76,
-     "severity": "important",
-     "text": "腸道破裂診斷指標（腹痛持續、腹脹、便血、壓痛），section_03_opinions.txt 完全未提及，影響過失認定",
-     "reason": "腸道破裂診斷指標（腹痛持續、腹脹、便血、壓痛），section_03_opinions.txt 完全未提及，影響過失認定"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "就診病史雖重要，但 section_01_facts.txt 已涵蓋主要時序",
+     "reason": "就診病史雖重要，但 section_01_facts.txt 已涵蓋主要時序"
     },
     {
      "gt_claim_id": 77,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "手術發現大腸破裂 6×4 公分，雖見於 section_01_facts.txt，但 opinions 段應有專業分析而未見",
-     "reason": "手術發現大腸破裂 6×4 公分，雖見於 section_01_facts.txt，但 opinions 段應有專業分析而未見"
+     "text": "具體臨床檢查數值（心跳、體溫、白血球）係鑑定意見中判斷應懷疑腸破裂之重要依據",
+     "reason": "具體臨床檢查數值（心跳、體溫、白血球）係鑑定意見中判斷應懷疑腸破裂之重要依據"
     },
     {
      "gt_claim_id": 78,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "二次灌腸安全性評估（每次 118c.c 壓力不致太大），section_03_opinions.txt 未提及",
-     "reason": "二次灌腸安全性評估（每次 118c.c 壓力不致太大），section_03_opinions.txt 未提及"
+     "text": "應懷疑腸道破裂之診斷建議為鑑定意見關鍵醫療判斷",
+     "reason": "應懷疑腸道破裂之診斷建議為鑑定意見關鍵醫療判斷"
     },
     {
      "gt_claim_id": 79,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "大腸破裂時間點推斷（應早已發生），section_03_opinions.txt 未提及",
-     "reason": "大腸破裂時間點推斷（應早已發生），section_03_opinions.txt 未提及"
+     "text": "大腸已破裂之時間點判斷影響破裂時機與責任範圍之認定",
+     "reason": "大腸已破裂之時間點判斷影響破裂時機與責任範圍之認定"
     },
     {
      "gt_claim_id": 80,
-     "severity": "important",
-     "text": "灌腸可能加重腹腔污染，section_03_opinions.txt 未提及（雖 facts 段有提及）",
-     "reason": "灌腸可能加重腹腔污染，section_03_opinions.txt 未提及（雖 facts 段有提及）"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病人過往病史時間線係背景資訊，非核心爭點",
+     "reason": "病人過往病史時間線係背景資訊，非核心爭點"
     },
     {
      "gt_claim_id": 81,
-     "severity": "critical",
-     "text": "死因為多重因素造成，此為鑑定核心結論，section_03_opinions.txt 完全遺漏",
-     "reason": "死因為多重因素造成，此為鑑定核心結論，section_03_opinions.txt 完全遺漏"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "過往診斷結果係排除腸繫膜缺血之輔助論據",
+     "reason": "過往診斷結果係排除腸繫膜缺血之輔助論據"
     },
     {
      "gt_claim_id": 82,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "直腸破裂為大腸鏡檢併發症之性質認定，section_03_opinions.txt 未提及",
-     "reason": "直腸破裂為大腸鏡檢併發症之性質認定，section_03_opinions.txt 未提及"
+     "text": "腸繫膜缺血排除判定係反駁被告辯解之關鍵鑑定結論",
+     "reason": "腸繫膜缺血排除判定係反駁被告辯解之關鍵鑑定結論"
     },
     {
      "gt_claim_id": 83,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "延遲就醫（超過 24 小時）之認定，影響因果關係判斷，section_03_opinions.txt 未提及",
-     "reason": "延遲就醫（超過 24 小時）之認定，影響因果關係判斷，section_03_opinions.txt 未提及"
+     "text": "小腸壞死之手術發現為重要醫療事實，用以排除腸繫膜缺血",
+     "reason": "小腸壞死之手術發現為重要醫療事實，用以排除腸繫膜缺血"
     },
     {
      "gt_claim_id": 84,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "灌腸導致腹膜炎加劇、休克，雖 facts 段有提及，但 opinions 段應有專業分析",
-     "reason": "灌腸導致腹膜炎加劇、休克，雖 facts 段有提及，但 opinions 段應有專業分析"
+     "text": "小腸壞死原因分析直接反駁被告辯解",
+     "reason": "小腸壞死原因分析直接反駁被告辯解"
     },
     {
      "gt_claim_id": 85,
-     "severity": "important",
-     "text": "手術後吻合處滲漏併發症，section_03_opinions.txt 未提及",
-     "reason": "手術後吻合處滲漏併發症，section_03_opinions.txt 未提及"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腸繫膜缺血症狀之醫學描述係論證輔助說明",
+     "reason": "腸繫膜缺血症狀之醫學描述係論證輔助說明"
     },
     {
      "gt_claim_id": 86,
-     "severity": "critical",
-     "text": "腹膜炎、敗血症無法控制之認定，直接關係死因，section_03_opinions.txt 未提及",
-     "reason": "腹膜炎、敗血症無法控制之認定，直接關係死因，section_03_opinions.txt 未提及"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "無高血脂或心房顫動病史屬排除性論據，非核心事實",
+     "reason": "無高血脂或心房顫動病史屬排除性論據，非核心事實"
     },
     {
      "gt_claim_id": 87,
-     "severity": "critical",
-     "text": "灌腸可能為死因之一，為核心醫學意見，section_03_opinions.txt 未提及",
-     "reason": "灌腸可能為死因之一，為核心醫學意見，section_03_opinions.txt 未提及"
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腸繫膜缺血排除邏輯為鑑定意見重要推理過程",
+     "reason": "腸繫膜缺血排除邏輯為鑑定意見重要推理過程"
     },
     {
      "gt_claim_id": 88,
-     "severity": "important",
-     "text": "病人至 T 醫院時主訴症狀，section_03_opinions.txt 未提及",
-     "reason": "病人至 T 醫院時主訴症狀，section_03_opinions.txt 未提及"
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "病源判定結論（腸鏡穿孔+延遲就診）係鑑定意見最終因果認定，影響全案責任理解",
+     "reason": "病源判定結論（腸鏡穿孔+延遲就診）係鑑定意見最終因果認定，影響全案責任理解"
     },
     {
      "gt_claim_id": 89,
-     "severity": "important",
-     "text": "入院時生命徵象數據（心跳 118、白血球 24000 等），section_03_opinions.txt 未提及",
-     "reason": "入院時生命徵象數據（心跳 118、白血球 24000 等），section_03_opinions.txt 未提及"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "穿孔比例統計為背景機率說明，非本件關鍵事實",
+     "reason": "穿孔比例統計為背景機率說明，非本件關鍵事實"
     },
     {
      "gt_claim_id": 90,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "應懷疑腸道破裂之診斷判斷時機，section_03_opinions.txt 未提及",
-     "reason": "應懷疑腸道破裂之診斷判斷時機，section_03_opinions.txt 未提及"
+     "text": "穿孔時機分析（檢查時已發生 vs 損傷未破裂）影響破裂時序認定",
+     "reason": "穿孔時機分析（檢查時已發生 vs 損傷未破裂）影響破裂時序認定"
     },
     {
      "gt_claim_id": 91,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "症狀判斷大腸已破裂時間點，影響過失認定時點，section_03_opinions.txt 未提及",
-     "reason": "症狀判斷大腸已破裂時間點，影響過失認定時點，section_03_opinions.txt 未提及"
+     "text": "破裂機制分析（蠕動排便致壓力增加）係鑑定意見重要病理推論",
+     "reason": "破裂機制分析（蠕動排便致壓力增加）係鑑定意見重要病理推論"
     },
     {
      "gt_claim_id": 92,
-     "severity": "minor",
-     "text": "病人既往病史（89 年 5 月起），屬背景資訊，section_03_opinions.txt 未提及",
-     "reason": "病人既往病史（89 年 5 月起），屬背景資訊，section_03_opinions.txt 未提及"
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "灌腦非主因或唯一原因之判斷與 pred『違反醫療常規』形成方向性差異，雖同屬鑑定結論，但 GT claim 92 強調因果關係界定，屬關鍵鑑定發現",
+     "reason": "灌腦非主因或唯一原因之判斷與 pred『違反醫療常規』形成方向性差異，雖同屬鑑定結論，但 GT claim 92 強調因果關係界定，屬關鍵鑑定發現"
     },
     {
      "gt_claim_id": 93,
-     "severity": "minor",
-     "text": "既往診斷結果（腸道急躁症、消化性潰瘍），屬背景資訊",
-     "reason": "既往診斷結果（腸道急躁症、消化性潰瘍），屬背景資訊"
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "症狀加重機制說明係因果關係論述之一環",
+     "reason": "症狀加重機制說明係因果關係論述之一環"
     },
     {
      "gt_claim_id": 94,
-     "severity": "important",
-     "text": "排除腸繫膜缺血之判斷依據，為重要鑑別診斷，section_03_opinions.txt 未提及",
-     "reason": "排除腸繫膜缺血之判斷依據，為重要鑑別診斷，section_03_opinions.txt 未提及"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腹膜炎標準症狀為醫學常識性描述",
+     "reason": "腹膜炎標準症狀為醫學常識性描述"
     },
     {
      "gt_claim_id": 95,
-     "severity": "important",
-     "text": "94 年 10 月 1 日手術發現小腸壞死，雖 facts 段有提及，但 opinions 段應有分析",
-     "reason": "94 年 10 月 1 日手術發現小腸壞死，雖 facts 段有提及，但 opinions 段應有分析"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "症狀嚴重程度決定因素為背景醫學說明",
+     "reason": "症狀嚴重程度決定因素為背景醫學說明"
     },
     {
      "gt_claim_id": 96,
-     "severity": "important",
-     "text": "小腸壞死因非腸繫膜缺血造成之認定，section_03_opinions.txt 未提及",
-     "reason": "小腸壞死因非腸繫膜缺血造成之認定，section_03_opinions.txt 未提及"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "滲出物內容為醫學常識性列舉",
+     "reason": "滲出物內容為醫學常識性列舉"
     },
     {
      "gt_claim_id": 97,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "腸繫膜缺血臨床表現特徵（多段或大壞死），section_03_opinions.txt 未提及",
-     "reason": "腸繫膜缺血臨床表現特徵（多段或大壞死），section_03_opinions.txt 未提及"
+     "text": "X光片判讀（腹腔游離空氣）為第四次鑑定結論，支援『應懷疑穿孔』之重要依據",
+     "reason": "X光片判讀（腹腔游離空氣）為第四次鑑定結論，支援『應懷疑穿孔』之重要依據"
     },
     {
      "gt_claim_id": 98,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "病人無高血脂或心房顫動病史（排除腸繫膜缺血因素），section_03_opinions.txt 未提及",
-     "reason": "病人無高血脂或心房顫動病史（排除腸繫膜缺血因素），section_03_opinions.txt 未提及"
+     "text": "X光片判讀（腹膜炎）同為第四次鑑定結論",
+     "reason": "X光片判讀（腹膜炎）同為第四次鑑定結論"
     },
     {
      "gt_claim_id": 99,
-     "severity": "important",
-     "text": "若為腸繫膜缺血則大腸破裂處應有最嚴重壞死之邏輯推論，section_03_opinions.txt 未提及",
-     "reason": "若為腸繫膜缺血則大腸破裂處應有最嚴重壞死之邏輯推論，section_03_opinions.txt 未提及"
-    },
-    {
-     "gt_claim_id": 100,
-     "severity": "important",
-     "text": "腸繫膜缺血假說與本例不合之結論，section_03_opinions.txt 未提及",
-     "reason": "腸繫膜缺血假說與本例不合之結論，section_03_opinions.txt 未提及"
-    },
-    {
-     "gt_claim_id": 101,
-     "severity": "critical",
-     "text": "本例病源為腸鏡穿孔且延遲就診之核心結論，section_03_opinions.txt 未提及",
-     "reason": "本例病源為腸鏡穿孔且延遲就診之核心結論，section_03_opinions.txt 未提及"
-    },
-    {
-     "gt_claim_id": 102,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "大腸鏡檢查穿孔比例（小於 1%），屬參考數據",
-     "reason": "大腸鏡檢查穿孔比例（小於 1%），屬參考數據"
+     "text": "無法醫鑑定意見為程序性說明，不影響案情實體理解",
+     "reason": "無法醫鑑定意見為程序性說明，不影響案情實體理解"
     },
     {
-     "gt_claim_id": 103,
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "大腸穿孔原因兩種可能性分析，section_03_opinions.txt 未提及",
-     "reason": "大腸穿孔原因兩種可能性分析，section_03_opinions.txt 未提及"
-    },
-    {
-     "gt_claim_id": 104,
-     "severity": "important",
-     "text": "腸道蠕動壓力導致破裂機制說明，section_03_opinions.txt 未提及",
-     "reason": "腸道蠕動壓力導致破裂機制說明，section_03_opinions.txt 未提及"
-    },
-    {
-     "gt_claim_id": 105,
-     "severity": "important",
-     "text": "灌腸非造成大腸破裂主因之認定，影響過失比例判斷，section_03_opinions.txt 未提及",
-     "reason": "灌腸非造成大腸破裂主因之認定，影響過失比例判斷，section_03_opinions.txt 未提及"
-    },
-    {
-     "gt_claim_id": 106,
-     "severity": "important",
-     "text": "灌腸使症狀加重之前提條件分析，section_03_opinions.txt 未提及",
-     "reason": "灌腸使症狀加重之前提條件分析，section_03_opinions.txt 未提及"
-    },
-    {
-     "gt_claim_id": 107,
-     "severity": "minor",
-     "text": "腹膜炎標準症狀（腹痛、壓痛、反彈痛等），屬醫學常識說明",
-     "reason": "腹膜炎標準症狀（腹痛、壓痛、反彈痛等），屬醫學常識說明"
-    },
-    {
-     "gt_claim_id": 108,
-     "severity": "minor",
-     "text": "腹膜炎症狀變化影響因素說明，屬醫學常識",
-     "reason": "腹膜炎症狀變化影響因素說明，屬醫學常識"
-    },
-    {
-     "gt_claim_id": 109,
-     "severity": "important",
-     "text": "X 光片可懷疑腹腔游離空氣之解讀，section_03_opinions.txt 未提及",
-     "reason": "X 光片可懷疑腹腔游離空氣之解讀，section_03_opinions.txt 未提及"
-    },
-    {
-     "gt_claim_id": 110,
-     "severity": "critical",
-     "text": "本案無法醫鑑定意見之聲明，與 pred claims 明顯矛盾。Section 03_opinions.txt 所述為四次鑑定程序，與 GT 110 之「無法醫鑑定意見」不符，確認 pred 產生幻覺而非 GT 遺漏。",
-     "reason": "本案無法醫鑑定意見之聲明，與 pred claims 明顯矛盾。Section 03_opinions.txt 所述為四次鑑定程序，與 GT 110 之「無法醫鑑定意見」不符，確認 pred 產生幻覺而非 GT 遺漏。"
-    },
-    {
-     "gt_claim_id": 74,
-     "severity": "important",
-     "text": "大腸鏡檢查後腹痛機制說明（灌氣、腸鏡頂起牽扯），section_03_opinions.txt 完全未提及",
-     "reason": "大腸鏡檢查後腹痛機制說明（灌氣、腸鏡頂起牽扯），section_03_opinions.txt 完全未提及"
-    },
-    {
-     "gt_claim_id": 75,
-     "severity": "important",
-     "text": "一般檢查後腹痛預後說明，section_03_opinions.txt 完全未提及",
-     "reason": "一般檢查後腹痛預後說明，section_03_opinions.txt 完全未提及"
-    },
-    {
-     "gt_claim_id": 76,
-     "severity": "important",
-     "text": "腸道破裂診斷指標（腹痛持續、腹脹、便血、壓痛），section_03_opinions.txt 完全未提及",
-     "reason": "腸道破裂診斷指標（腹痛持續、腹脹、便血、壓痛），section_03_opinions.txt 完全未提及"
-    },
-    {
-     "gt_claim_id": 77,
-     "severity": "important",
-     "text": "手術發現大腸破裂 6×4 公分之細節",
-     "reason": "手術發現大腸破裂 6×4 公分之細節"
-    },
-    {
-     "gt_claim_id": 78,
-     "severity": "important",
-     "text": "二次灌腸安全性評估（每次 118c.c 壓力不致太大）",
-     "reason": "二次灌腸安全性評估（每次 118c.c 壓力不致太大）"
-    },
-    {
-     "gt_claim_id": 79,
-     "severity": "important",
-     "text": "大腸破裂時間點推斷（應早已發生）",
-     "reason": "大腸破裂時間點推斷（應早已發生）"
-    },
-    {
-     "gt_claim_id": 81,
-     "severity": "critical",
-     "text": "死因為多重因素造成，核心鑑定意見",
-     "reason": "死因為多重因素造成，核心鑑定意見"
-    },
-    {
-     "gt_claim_id": 82,
-     "severity": "important",
-     "text": "直腸破裂為大腸鏡檢併發症",
-     "reason": "直腸破裂為大腸鏡檢併發症"
-    },
-    {
-     "gt_claim_id": 83,
-     "severity": "important",
-     "text": "延遲就醫（超過 24 小時）之認定",
-     "reason": "延遲就醫（超過 24 小時）之認定"
-    },
-    {
-     "gt_claim_id": 85,
-     "severity": "important",
-     "text": "手術後吻合處滲漏併發症",
-     "reason": "手術後吻合處滲漏併發症"
-    },
-    {
-     "gt_claim_id": 86,
-     "severity": "critical",
-     "text": "腹膜炎、敗血症無法控制",
-     "reason": "腹膜炎、敗血症無法控制"
-    },
-    {
-     "gt_claim_id": 88,
-     "severity": "important",
-     "text": "病人至 T 醫院時主訴症狀",
-     "reason": "病人至 T 醫院時主訴症狀"
-    },
-    {
-     "gt_claim_id": 89,
-     "severity": "important",
-     "text": "入院時生命徵象數據",
-     "reason": "入院時生命徵象數據"
-    },
-    {
-     "gt_claim_id": 90,
-     "severity": "important",
-     "text": "應懷疑腸道破裂之診斷判斷",
-     "reason": "應懷疑腸道破裂之診斷判斷"
-    },
-    {
-     "gt_claim_id": 91,
-     "severity": "important",
-     "text": "症狀判斷大腸已破裂時間點",
-     "reason": "症狀判斷大腸已破裂時間點"
-    },
-    {
-     "gt_claim_id": 92,
-     "severity": "minor",
-     "text": "病人既往病史（89 年 5 月起）",
-     "reason": "病人既往病史（89 年 5 月起）"
-    },
-    {
-     "gt_claim_id": 93,
-     "severity": "minor",
-     "text": "既往診斷結果（腸道急躁症、消化性潰瘍）",
-     "reason": "既往診斷結果（腸道急躁症、消化性潰瘍）"
-    },
-    {
-     "gt_claim_id": 94,
-     "severity": "important",
-     "text": "排除腸繫膜缺血之判斷依據",
-     "reason": "排除腸繫膜缺血之判斷依據"
-    },
-    {
-     "gt_claim_id": 95,
-     "severity": "important",
-     "text": "94 年 10 月 1 日手術發現小腸壞死",
-     "reason": "94 年 10 月 1 日手術發現小腸壞死"
-    },
-    {
-     "gt_claim_id": 96,
-     "severity": "important",
-     "text": "小腸壞死因非腸繫膜缺血造成",
-     "reason": "小腸壞死因非腸繫膜缺血造成"
-    },
-    {
-     "gt_claim_id": 97,
-     "severity": "important",
-     "text": "腸繫膜缺血臨床表現特徵",
-     "reason": "腸繫膜缺血臨床表現特徵"
-    },
-    {
-     "gt_claim_id": 98,
-     "severity": "important",
-     "text": "病人無高血脂或心房顫動病史",
-     "reason": "病人無高血脂或心房顫動病史"
-    },
-    {
-     "gt_claim_id": 99,
-     "severity": "important",
-     "text": "若為腸繫膜缺血則大腸破裂處應有最嚴重壞死",
-     "reason": "若為腸繫膜缺血則大腸破裂處應有最嚴重壞死"
-    },
-    {
-     "gt_claim_id": 100,
-     "severity": "important",
-     "text": "腸繫膜缺血假說與本例不合",
-     "reason": "腸繫膜缺血假說與本例不合"
-    },
-    {
-     "gt_claim_id": 101,
-     "severity": "critical",
-     "text": "本例病源為腸鏡穿孔且延遲就診",
-     "reason": "本例病源為腸鏡穿孔且延遲就診"
-    },
-    {
-     "gt_claim_id": 102,
-     "severity": "minor",
-     "text": "大腸鏡檢查穿孔比例（小於 1%）",
-     "reason": "大腸鏡檢查穿孔比例（小於 1%）"
-    },
-    {
-     "gt_claim_id": 103,
-     "severity": "important",
-     "text": "大腸穿孔原因兩種可能性分析",
-     "reason": "大腸穿孔原因兩種可能性分析"
-    },
-    {
-     "gt_claim_id": 104,
-     "severity": "important",
-     "text": "腸道蠕動壓力導致破裂機制",
-     "reason": "腸道蠕動壓力導致破裂機制"
-    },
-    {
-     "gt_claim_id": 105,
-     "severity": "important",
-     "text": "灌腸非造成大腸破裂主因",
-     "reason": "灌腸非造成大腸破裂主因"
-    },
-    {
-     "gt_claim_id": 106,
-     "severity": "important",
-     "text": "灌腸使症狀加重之前提條件",
-     "reason": "灌腸使症狀加重之前提條件"
-    },
-    {
-     "gt_claim_id": 107,
-     "severity": "minor",
-     "text": "腹膜炎標準症狀說明",
-     "reason": "腹膜炎標準症狀說明"
-    },
-    {
-     "gt_claim_id": 108,
-     "severity": "minor",
-     "text": "腹膜炎症狀變化影響因素",
-     "reason": "腹膜炎症狀變化影響因素"
-    },
-    {
-     "gt_claim_id": 109,
-     "severity": "important",
-     "text": "X 光片可懷疑腹腔游離空氣",
-     "reason": "X 光片可懷疑腹腔游離空氣"
-    },
-    {
-     "gt_claim_id": 110,
-     "severity": "critical",
-     "text": "本案無法醫鑑定意見。但 pred 明確記載四次鑑定，屬 pred 幻覺，GT 正確。",
-     "reason": "本案無法醫鑑定意見。但 pred 明確記載四次鑑定，屬 pred 幻覺，GT 正確。"
-    },
-    {
-     "gt_claim_id": 117,
-     "severity": "minor",
-     "text": "被告乙『從事醫療業務之人』之身分未定義明確描述，但在判決主文中記載『被告乙犯業務過失致死罪』，此罪名本身已隱含『從事業務之人』之認定，屬次要資訊",
-     "reason": "被告乙『從事醫療業務之人』之身分未定義明確描述，但在判決主文中記載『被告乙犯業務過失致死罪』，此罪名本身已隱含『從事業務之人』之認定，屬次要資訊"
-    },
-    {
-     "gt_claim_id": 125,
-     "severity": "minor",
-     "text": "雖 section_05_reasoning.txt 提及「再觀諸急診護理紀錄單，亦無被告甲於當日下午七時許後對病患X觸診發現有腹部疼痛及腹部較脹之記載」，但 pred claims 中確實未明確記載此細節。此為輔助性證據說明，非核心案情事實，遺漏不影響判決結論理解。",
-     "reason": "雖 section_05_reasoning.txt 提及「再觀諸急診護理紀錄單，亦無被告甲於當日下午七時許後對病患X觸診發現有腹部疼痛及腹部較脹之記載」，但 pred claims 中確實未明確記載此細節。此為輔助性證據說明，非核心案情事實，遺漏不影響判決結論理解。"
-    },
-    {
-     "gt_claim_id": 140,
-     "severity": "important",
-     "text": "section_03_opinions.txt 和 section_05_reasoning.txt 確實提及四次鑑定及「違反醫療常規」，但 pred claims 未明確以「四次鑑定報告均認定」方式總結。此乃關鍵鑑定結論的摘要方式差異，影響案情完整理解，應標記為 important。",
-     "reason": "section_03_opinions.txt 和 section_05_reasoning.txt 確實提及四次鑑定及「違反醫療常規」，但 pred claims 未明確以「四次鑑定報告均認定」方式總結。此乃關鍵鑑定結論的摘要方式差異，影響案情完整理解，應標記為 important。"
-    },
-    {
-     "gt_claim_id": 142,
-     "severity": "important",
-     "text": "section_05_reasoning.txt 確實提及「病患X前曾至其他醫院就診...然當時病患X並無於就診前一日接受大腸鏡檢查後腹痛加劇情形」，但 pred claims 未明確記載「其他醫院就診時無大腸鏡檢查後腹痛加劇」這個關鍵對比事實。此乃法院比較被告辯解與本案差異的重要論述基礎。",
-     "reason": "section_05_reasoning.txt 確實提及「病患X前曾至其他醫院就診...然當時病患X並無於就診前一日接受大腸鏡檢查後腹痛加劇情形」，但 pred claims 未明確記載「其他醫院就診時無大腸鏡檢查後腹痛加劇」這個關鍵對比事實。此乃法院比較被告辯解與本案差異的重要論述基礎。"
-    },
-    {
-     "gt_claim_id": 161,
-     "severity": "minor",
-     "text": "「本案事證明確」為程序性結論用語，pred claims 未明確記載。此乃判決書常見的程式性表述，非核心事實，遺漏不影響案情理解。",
-     "reason": "「本案事證明確」為程序性結論用語，pred claims 未明確記載。此乃判決書常見的程式性表述，非核心事實，遺漏不影響案情理解。"
+     "text": "GT claim強調「已有腹膜炎之其他症狀」的確認性陳述，而摘要僅有「宜懷疑已有腹膜炎」的推測性表述，兩者在語氣(確認vs懷疑)上有本質差異。屬於鑑定意見的關鍵症狀認定，影響案情完整理解",
+     "reason": "GT claim強調「已有腹膜炎之其他症狀」的確認性陳述，而摘要僅有「宜懷疑已有腹膜炎」的推測性表述，兩者在語氣(確認vs懷疑)上有本質差異。屬於鑑定意見的關鍵症狀認定，影響案情完整理解"
     }
    ]
   },
   "fact_detail": {
-   "gt_total": 169,
+   "gt_total": 158,
    "pred_total": 148,
-   "matched": 128,
-   "partial": 1,
-   "missing": 39,
+   "matched": 119,
+   "partial": 2,
+   "missing": 37,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.0541
  }
 }

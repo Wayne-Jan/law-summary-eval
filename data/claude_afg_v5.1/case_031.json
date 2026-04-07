@@ -132,16 +132,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8126,
-  "fact_recall": 0.82,
+  "fact_recall": 0.9173,
   "fact_precision": 1.0,
-  "fact_f1": 0.9,
+  "fact_f1": 0.9568,
   "quality_overall": 4.7857,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9953,
-  "uncited_rate": 0.025,
+  "uncited_rate": 0.06,
   "faithfulness_combined": {
-   "score": 0.985,
-   "citation_fidelity": 0.975,
+   "score": 0.964,
+   "citation_fidelity": 0.94,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -149,30 +149,77 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": null,
-  "missing_severity": null,
-  "information_density": {
-   "score": 4.7857,
-   "quality_overall": 4.7857,
-   "gt_length_ratio": 1.1443,
-   "length_penalty": 1.0,
-   "zone": "ideal"
+  "numerical_detail": {
+   "total_numerical": 42,
+   "correct": 42
+  },
+  "weighted_recall": 0.9712,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "送醫途中出血為初診重要症狀，雖facts段提及緊急送醫，但未明確指出途中出血，確認摘要未提及",
+     "reason": "送醫途中出血為初診重要症狀，雖facts段提及緊急送醫，但未明確指出途中出血，確認摘要未提及"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "凌晨一時前腰酸背痛、腹痛之產前主訴，關乎病情惡化起始點，確認無任何section涵蓋",
+     "reason": "凌晨一時前腰酸背痛、腹痛之產前主訴，關乎病情惡化起始點，確認無任何section涵蓋"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "止痛器使用、變換臥姿等舒緩措施屬背景性細節，不影響核心案情理解，確認摘要未提及",
+     "reason": "止痛器使用、變換臥姿等舒緩措施屬背景性細節，不影響核心案情理解，確認摘要未提及"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "案夫明確指出呼吸「比前幾次更急更淺」之比較性陳述，雖facts段有提呼吸異常，但缺少與前數次比較的關鍵描述，確認摘要未提及",
+     "reason": "案夫明確指出呼吸「比前幾次更急更淺」之比較性陳述，雖facts段有提呼吸異常，但缺少與前數次比較的關鍵描述，確認摘要未提及"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "雖reasoning段提及「業務過失犯行」，但未明確引用「刑法第276條第2項」之法條依據，確認摘要未提及具體條文",
+     "reason": "雖reasoning段提及「業務過失犯行」，但未明確引用「刑法第276條第2項」之法條依據，確認摘要未提及具體條文"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "預產期11月29日與產檢次數10次為重要背景資訊，影響對產婦孕期完整性的理解，但reasoning段落未提及",
+     "reason": "預產期11月29日與產檢次數10次為重要背景資訊，影響對產婦孕期完整性的理解，但reasoning段落未提及"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "最後一次產檢日期雖屬時間細節，但reasoning段落僅提及『產檢期間』而未具體說明11月6日，不影響核心判斷",
+     "reason": "最後一次產檢日期雖屬時間細節，但reasoning段落僅提及『產檢期間』而未具體說明11月6日，不影響核心判斷"
+    }
+   ]
   },
   "fact_detail": {
-   "gt_total": 134,
+   "gt_total": 139,
    "pred_total": 118,
-   "matched": 103,
-   "partial": 14,
-   "missing": 18,
-   "hallucinated": 0,
-   "gt_mismatch": {
-    "reported": 134,
-    "actual": 139
-   }
+   "matched": 125,
+   "partial": 5,
+   "missing": 9,
+   "hallucinated": 0
   },
-  "fact_recall_efficiency": 0.7166,
-  "section_balance": 1.0
+  "section_balance": 0.8913
  }
 }

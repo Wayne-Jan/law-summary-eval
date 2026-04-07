@@ -132,9 +132,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7345,
-  "fact_recall": 0.7568,
+  "fact_recall": 0.6486,
   "fact_precision": 0.8519,
-  "fact_f1": 0.8015,
+  "fact_f1": 0.7365,
   "quality_overall": 4.0167,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9571,
@@ -149,64 +149,106 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9279,
+  "weighted_recall": 0.8559,
   "missing_severity": {
    "critical": 0,
-   "important": 1,
-   "minor": 6,
+   "important": 4,
+   "minor": 8,
    "details": [
     {
      "gt_claim_id": 18,
-     "severity": "minor",
-     "text": "「因為協商判決，鑑定內容未明載」為程序性背景說明，不影響鑑定意見本身的存在及事實認定",
-     "reason": "「因為協商判決，鑑定內容未明載」為程序性背景說明，不影響鑑定意見本身的存在及事實認定"
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要 opinions section 僅列舉鑑定書文件名稱，未提及「因為協商判決」導致「鑑定內容未明載」的因果說明，讀者無法理解為何鑑定內容不完整",
+     "reason": "摘要 opinions section 僅列舉鑑定書文件名稱，未提及「因為協商判決」導致「鑑定內容未明載」的因果說明，讀者無法理解為何鑑定內容不完整"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要 opinions section 僅提及鑑定書文件名稱，未包含鑑定結論內容「病患K係罹患心肌炎」，這是關鍵醫療鑑定結果，影響死因理解",
+     "reason": "摘要 opinions section 僅提及鑑定書文件名稱，未包含鑑定結論內容「病患K係罹患心肌炎」，這是關鍵醫療鑑定結果，影響死因理解"
     },
     {
      "gt_claim_id": 21,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "「臺灣桃園地方法院訊問被告甲後」為程序性細節，被告自白犯罪之事實已由defense section涵蓋",
-     "reason": "「臺灣桃園地方法院訊問被告甲後」為程序性細節，被告自白犯罪之事實已由defense section涵蓋"
-    },
-    {
-     "gt_claim_id": 22,
-     "severity": "minor",
-     "text": "「檢察官聲請協商判決」為程序性步驟，協商合意之核心事實已於verdict section涵蓋",
-     "reason": "「檢察官聲請協商判決」為程序性步驟，協商合意之核心事實已於verdict section涵蓋"
+     "text": "摘要僅述『本案被告自白犯罪』，未提及『臺灣桃園地方法院訊問被告甲後』之法院訊問程序。雖 defense section 有被告自白事實，但缺少『法院訊問』此程序性前提。屬程序性事實遺漏，不影響核心案情理解。",
+     "reason": "摘要僅述『本案被告自白犯罪』，未提及『臺灣桃園地方法院訊問被告甲後』之法院訊問程序。雖 defense section 有被告自白事實，但缺少『法院訊問』此程序性前提。屬程序性事實遺漏，不影響核心案情理解。"
     },
     {
      "gt_claim_id": 25,
-     "severity": "minor",
-     "text": "「民國97年4月30日」為具體判決日期，不影響判決內容及法律後果之理解",
-     "reason": "「民國97年4月30日」為具體判決日期，不影響判決內容及法律後果之理解"
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "Pred claims（verdict section claims 18-23）完整記載協商合意、科刑範圍、減刑、緩刑等內容，但完全未提及『97年4月30日』判決日期。此為協商判決關鍵時間節點，影響完整案情理解。",
+     "reason": "Pred claims（verdict section claims 18-23）完整記載協商合意、科刑範圍、減刑、緩刑等內容，但完全未提及『97年4月30日』判決日期。此為協商判決關鍵時間節點，影響完整案情理解。"
     },
     {
      "gt_claim_id": 30,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "「被告、檢察官於法定上訴期間未上訴」為判決確定前的程序性事實，不影響判決內容理解",
-     "reason": "「被告、檢察官於法定上訴期間未上訴」為判決確定前的程序性事實，不影響判決內容理解"
+     "text": "Pred 完全未提及『被告、檢察官於法定上訴期間未上訴』。雖可從協商判決性質推論雙方接受判決，但 GT 明確將此列為獨立事實。屬程序性事實遺漏。",
+     "reason": "Pred 完全未提及『被告、檢察官於法定上訴期間未上訴』。雖可從協商判決性質推論雙方接受判決，但 GT 明確將此列為獨立事實。屬程序性事實遺漏。"
     },
     {
      "gt_claim_id": 31,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "「本案判決即確定」為判決效力狀態說明，屬程序性背景",
-     "reason": "「本案判決即確定」為判決效力狀態說明，屬程序性背景"
+     "text": "Pred 未明確提及『本案判決即確定』。雖協商判決不上訴即確定為法律常識，但 GT 明確記載此程序狀態。屬程序性結論遺漏。",
+     "reason": "Pred 未明確提及『本案判決即確定』。雖協商判決不上訴即確定為法律常識，但 GT 明確記載此程序狀態。屬程序性結論遺漏。"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "協商程序屬於程序性事實，生成摘要未提及，但不影響案情核心事實理解",
+     "reason": "協商程序屬於程序性事實，生成摘要未提及，但不影響案情核心事實理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告認罪事實雖重要，但已在 verdict 段有所體現，reasoning 段遺漏屬次要",
+     "reason": "被告認罪事實雖重要，但已在 verdict 段有所體現，reasoning 段遺漏屬次要"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "和解事實屬於程序性背景資訊，不影響案件核心事實理解",
+     "reason": "和解事實屬於程序性背景資訊，不影響案件核心事實理解"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "撤回告訴日期及程序屬程序性事實，不影響案情理解",
+     "reason": "撤回告訴日期及程序屬程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "不再追究刑事責任之聲明屬和解配套程序，不影響核心事實",
+     "reason": "不再追究刑事責任之聲明屬和解配套程序，不影響核心事實"
     },
     {
      "gt_claim_id": 37,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "「判決書內文無判決理由」為協商判決之重要特性，缺失導致摘要誤生成reasoning section內容，影響對判決結構之正確理解",
-     "reason": "「判決書內文無判決理由」為協商判決之重要特性，缺失導致摘要誤生成reasoning section內容，影響對判決結構之正確理解"
+     "text": "判決書性質（無判決理由）影響對判決類型的理解，屬重要資訊",
+     "reason": "判決書性質（無判決理由）影響對判決類型的理解，屬重要資訊"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 37,
    "pred_total": 27,
-   "matched": 28,
-   "partial": 0,
-   "missing": 7,
+   "matched": 23,
+   "partial": 2,
+   "missing": 12,
    "hallucinated": 4
   },
   "section_balance": 1.0

@@ -152,16 +152,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7442,
-  "fact_recall": 0.9504,
+  "fact_recall": 0.9618,
   "fact_precision": 1.0,
-  "fact_f1": 0.9746,
+  "fact_f1": 0.9805,
   "quality_overall": 4.8095,
   "citation_accuracy": 0.9688,
   "citation_support_score": 0.9688,
-  "uncited_rate": 0.077,
+  "uncited_rate": 0.056,
   "faithfulness_combined": {
-   "score": 0.9365,
-   "citation_fidelity": 0.8942,
+   "score": 0.9487,
+   "citation_fidelity": 0.9145,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -169,48 +169,56 @@
    }
   },
   "compliance": 2,
-  "cross_validation": "INCONSISTENT",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9898,
+  "numerical_detail": {
+   "total_numerical": 29,
+   "correct": 29
+  },
+  "weighted_recall": 0.9873,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 4,
+   "important": 1,
+   "minor": 3,
    "details": [
     {
      "gt_claim_id": 93,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "「病患之妻去急診室找被告甲但被告甲不在」此細節在 reasoning section 未提及，屬背景情節遺漏",
-     "reason": "「病患之妻去急診室找被告甲但被告甲不在」此細節在 reasoning section 未提及，屬背景情節遺漏"
+     "text": "病患之妻去急診室尋找被告甲但未果，屬於證人證詞細節，非判決核心事實",
+     "reason": "病患之妻去急診室尋找被告甲但未果，屬於證人證詞細節，非判決核心事實"
     },
     {
      "gt_claim_id": 101,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "「13時30分給予NTG」及「被告甲發現異常才做電腦斷層」的具體情節與原文不符（原文為13時35分且電腦斷層為初次檢查非異常後才做），屬細節錯誤遺漏",
-     "reason": "「13時30分給予NTG」及「被告甲發現異常才做電腦斷層」的具體情節與原文不符（原文為13時35分且電腦斷層為初次檢查非異常後才做），屬細節錯誤遺漏"
+     "text": "「用藥後被告甲發現有異常，才做電腦斷層」為具體醫療程序細節，GT摘要雖有提及但生成摘要僅記載給藥事實，未涵蓋此後續處置",
+     "reason": "「用藥後被告甲發現有異常，才做電腦斷層」為具體醫療程序細節，GT摘要雖有提及但生成摘要僅記載給藥事實，未涵蓋此後續處置"
     },
     {
      "gt_claim_id": 111,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "「忘記把無不適主訴寫上去...往前寫」的具體證詞內容未於 pred claims 中體現，但屬護理紀錄佐證細節",
-     "reason": "「忘記把無不適主訴寫上去...往前寫」的具體證詞內容未於 pred claims 中體現，但屬護理紀錄佐證細節"
+     "text": "證人戊關於補寫紀錄之具體解釋（忘記寫、簽名後不可再寫故往前寫）屬證詞細節，pred claim 142僅記載病人沒有表示不舒服，未涵蓋記載方式之解釋",
+     "reason": "證人戊關於補寫紀錄之具體解釋（忘記寫、簽名後不可再寫故往前寫）屬證詞細節，pred claim 142僅記載病人沒有表示不舒服，未涵蓋記載方式之解釋"
     },
     {
      "gt_claim_id": 116,
-     "severity": "minor",
-     "text": "「19時40分許前接獲通知迴診病患前理應未看過護士戊所為之紀錄」的時間序推論未明確出現於 pred claims，但此為法院推論細節",
-     "reason": "「19時40分許前接獲通知迴診病患前理應未看過護士戊所為之紀錄」的時間序推論未明確出現於 pred claims，但此為法院推論細節"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院推論被告甲於19時40分許前未看過護士戊紀錄，係認定被告過失之關鍵事實基礎，生成摘要未明確陳述此推論",
+     "reason": "法院推論被告甲於19時40分許前未看過護士戊紀錄，係認定被告過失之關鍵事實基礎，生成摘要未明確陳述此推論"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 131,
-   "pred_total": 202,
-   "matched": 124,
-   "partial": 1,
+   "pred_total": 196,
+   "matched": 125,
+   "partial": 2,
    "missing": 4,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.9111
  }
 }

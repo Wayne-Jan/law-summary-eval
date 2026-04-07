@@ -130,9 +130,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7413,
-  "fact_recall": 0.821,
+  "fact_recall": 0.8056,
   "fact_precision": 1.0,
-  "fact_f1": 0.9017,
+  "fact_f1": 0.8923,
   "quality_overall": 4.7905,
   "citation_accuracy": 0.9608,
   "citation_support_score": 0.9764,
@@ -147,150 +147,231 @@
    }
   },
   "compliance": 4,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9403,
+  "numerical_detail": {
+   "total_numerical": 27,
+   "correct": 27
+  },
+  "weighted_recall": 0.93,
   "missing_severity": {
-   "critical": 2,
-   "important": 4,
-   "minor": 15,
+   "critical": 1,
+   "important": 3,
+   "minor": 25,
    "details": [
     {
      "gt_claim_id": 24,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "病患住院要做全髖關節再置換術為背景性事實，雖未明確記載但不影響案情理解",
-     "reason": "病患住院要做全髖關節再置換術為背景性事實，雖未明確記載但不影響案情理解"
+     "text": "被告辯稱「住院要做全髖關節再置換術」為背景性事實，摘要已在 facts section 提及住院目的為施行全髖關節置換術，雖未完全符合被告辯稱原文，但核心資訊已涵蓋",
+     "reason": "被告辯稱「住院要做全髖關節再置換術」為背景性事實，摘要已在 facts section 提及住院目的為施行全髖關節置換術，雖未完全符合被告辯稱原文，但核心資訊已涵蓋"
     },
     {
-     "gt_claim_id": 27,
+     "gt_claim_id": 25,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "心導管手術日期（91年4月27日）在 section_01_facts 已涵蓋，但「心臟科醫師執行」此細節未明確對應，僅寫「醫方決定...施行手術」。維持 missing 但標為 minor",
-     "reason": "心導管手術日期（91年4月27日）在 section_01_facts 已涵蓋，但「心臟科醫師執行」此細節未明確對應，僅寫「醫方決定...施行手術」。維持 missing 但標為 minor"
-    },
-    {
-     "gt_claim_id": 53,
-     "severity": "minor",
-     "text": "被告實際提出論文數量（六篇 vs 三篇）為細節數字差異，不影響辯護要點理解",
-     "reason": "被告實際提出論文數量（六篇 vs 三篇）為細節數字差異，不影響辯護要點理解"
+     "text": "「陳舊性心肌梗塞」檢查結果雖為被告辯稱內容，但摘要僅提及「冠狀動脈疾病」，未明確提及「陳舊性心肌梗塞」之診斷，屬於重要醫療細節遺漏",
+     "reason": "「陳舊性心肌梗塞」檢查結果雖為被告辯稱內容，但摘要僅提及「冠狀動脈疾病」，未明確提及「陳舊性心肌梗塞」之診斷，屬於重要醫療細節遺漏"
     },
     {
      "gt_claim_id": 54,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "醫學背景知識（心導管手術的分類說明），在 section_05_reasoning.txt 中雖有提及兩種術式的區別，但未明確載明『分為二類』的分類說明方式。此為醫學專業背景資訊，不影響判決結論理解",
-     "reason": "醫學背景知識（心導管手術的分類說明），在 section_05_reasoning.txt 中雖有提及兩種術式的區別，但未明確載明『分為二類』的分類說明方式。此為醫學專業背景資訊，不影響判決結論理解"
+     "text": "遍查 section_01_facts 及 section_02_defense 均未見『心導管手術分為PTCA及支架植入術二類』之醫學分類說明，屬醫學背景知識性事實遺漏",
+     "reason": "遍查 section_01_facts 及 section_02_defense 均未見『心導管手術分為PTCA及支架植入術二類』之醫學分類說明，屬醫學背景知識性事實遺漏"
     },
     {
      "gt_claim_id": 63,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "術後追蹤細節在 section_01_facts.txt 及 section_05_reasoning.txt 中均未明確記載心電圖『無異常變化』之具體追蹤結果，僅提及轉入普通病房後『情況穩定』。屬於醫療處置細節，對過失認定結論影響較小",
-     "reason": "術後追蹤細節在 section_01_facts.txt 及 section_05_reasoning.txt 中均未明確記載心電圖『無異常變化』之具體追蹤結果，僅提及轉入普通病房後『情況穩定』。屬於醫療處置細節，對過失認定結論影響較小"
+     "text": "section_01_facts 僅提及術後轉入普通病房情況穩定，section_02_defense 未提及術後追蹤心臟酵素及心電圖結果，屬具體醫療細節遺漏",
+     "reason": "section_01_facts 僅提及術後轉入普通病房情況穩定，section_02_defense 未提及術後追蹤心臟酵素及心電圖結果，屬具體醫療細節遺漏"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "遍查 section_01_facts 及 section_02_defense 均未見『防護性處置實施後第二日即逕行骨科手術，與病患有無因果關係實難判定』之鑑定核心結論，此為專家意見關鍵認定",
+     "reason": "遍查 section_01_facts 及 section_02_defense 均未見『防護性處置實施後第二日即逕行骨科手術，與病患有無因果關係實難判定』之鑑定核心結論，此為專家意見關鍵認定"
     },
     {
      "gt_claim_id": 81,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決日期（93年05月21日）屬程序性事實，生成摘要未提及，但此為次要資訊，不影響判決結論理解",
-     "reason": "判決日期（93年05月21日）屬程序性事實，生成摘要未提及，但此為次要資訊，不影響判決結論理解"
+     "text": "判決作成日期屬程序性事實，摘要標題雖提及案號及法院，但未明確記載判決作成日期『93年05月21日』，確認維持 missing",
+     "reason": "判決作成日期屬程序性事實，摘要標題雖提及案號及法院，但未明確記載判決作成日期『93年05月21日』，確認維持 missing"
     },
     {
      "gt_claim_id": 83,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "自訴人是否上訴屬程序性事實，生成摘要聚焦於實體判決理由與結果，此資訊遺漏不影響案情理解",
-     "reason": "自訴人是否上訴屬程序性事實，生成摘要聚焦於實體判決理由與結果，此資訊遺漏不影響案情理解"
+     "text": "摘要全文未提及自訴人是否於法定上訴期間上訴，屬程序性事實，確認維持 missing",
+     "reason": "摘要全文未提及自訴人是否於法定上訴期間上訴，屬程序性事實，確認維持 missing"
     },
     {
      "gt_claim_id": 84,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決確定狀態屬程序性事實，生成摘要已提及「被告甲無罪」之判決結果，判決確定與否不影響無罪結論之理解",
-     "reason": "判決確定狀態屬程序性事實，生成摘要已提及「被告甲無罪」之判決結果，判決確定與否不影響無罪結論之理解"
+     "text": "摘要全文未提及判決確定狀態，屬程序性事實，確認維持 missing",
+     "reason": "摘要全文未提及判決確定狀態，屬程序性事實，確認維持 missing"
     },
     {
      "gt_claim_id": 92,
-     "severity": "important",
-     "text": "自訴代理人關於冠狀動脈遭受破壞的具體論點未在摘要中明確提及。此項論點涉及自訴方對手術時機主張的醫學依據，影響攻防意見之完整理解",
-     "reason": "自訴代理人關於冠狀動脈遭受破壞的具體論點未在摘要中明確提及。此項論點涉及自訴方對手術時機主張的醫學依據，影響攻防意見之完整理解"
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴代理人關於冠狀動脈被破壞的具體論點屬於訴訟雙方攻防細節，摘要聚焦法院認定理由，可合理省略",
+     "reason": "自訴代理人關於冠狀動脈被破壞的具體論點屬於訴訟雙方攻防細節，摘要聚焦法院認定理由，可合理省略"
     },
     {
      "gt_claim_id": 93,
-     "severity": "important",
-     "text": "自訴代理人關於『應待一個月後手術』的具體時機主張未在摘要中明確提及。此為自訴方核心論點，影響攻防意見之完整理解",
-     "reason": "自訴代理人關於『應待一個月後手術』的具體時機主張未在摘要中明確提及。此為自訴方核心論點，影響攻防意見之完整理解"
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴代理人主張術後一個月再手術的具體論點，摘要已以「缺乏醫學定論支持」概括回應，無需逐一贅述",
+     "reason": "自訴代理人主張術後一個月再手術的具體論點，摘要已以「缺乏醫學定論支持」概括回應，無需逐一贅述"
     },
     {
      "gt_claim_id": 94,
-     "severity": "critical",
-     "text": "自訴代理人關於全髖關節置換術非急迫性、病患狀況不佳等完整疏失論點未明確呈現。此為本案核心攻防要點，影響判決理由理解",
-     "reason": "自訴代理人關於全髖關節置換術非急迫性、病患狀況不佳等完整疏失論點未明確呈現。此為本案核心攻防要點，影響判決理由理解"
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴代理人關於手術非急迫性及病患狀況的完整論點，摘要未完整呈現，但法院已在其他部分論述手術非急迫性，不影響整體理解",
+     "reason": "自訴代理人關於手術非急迫性及病患狀況的完整論點，摘要未完整呈現，但法院已在其他部分論述手術非急迫性，不影響整體理解"
     },
     {
      "gt_claim_id": 97,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "被告庭呈論文具體內容（術後第二天即可手術）已在 claims 34-35 涵蓋，此為重複資訊",
-     "reason": "被告庭呈論文具體內容（術後第二天即可手術）已在 claims 34-35 涵蓋，此為重複資訊"
+     "text": "被告甲庭呈論文具體內容（術後第二天即可手術）屬佐證細節，摘要已引用鑑定意見提及「無定論」，佐證文獻可合理省略",
+     "reason": "被告甲庭呈論文具體內容（術後第二天即可手術）屬佐證細節，摘要已引用鑑定意見提及「無定論」，佐證文獻可合理省略"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴人誤會手術類型（支架植入術）的事實，摘要雖陳述手術類型差異，但未明確指出誤會來源，屬可省略的背景脈絡",
+     "reason": "自訴人誤會手術類型（支架植入術）的事實，摘要雖陳述手術類型差異，但未明確指出誤會來源，屬可省略的背景脈絡"
     },
     {
      "gt_claim_id": 103,
-     "severity": "important",
-     "text": "自訴代理人對手術緊急性（非緊急/非必要性）的質疑未明確提及。此為自訴方核心論點",
-     "reason": "自訴代理人對手術緊急性（非緊急/非必要性）的質疑未明確提及。此為自訴方核心論點"
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴代理人質疑手術非緊急、非必要，摘要已在其他部分間接回應，無需重複列舉",
+     "reason": "自訴代理人質疑手術非緊急、非必要，摘要已在其他部分間接回應，無需重複列舉"
     },
     {
      "gt_claim_id": 104,
-     "severity": "important",
-     "text": "自訴代理人關於『等待病患情況穩定』的具體主張未完整呈現",
-     "reason": "自訴代理人關於『等待病患情況穩定』的具體主張未完整呈現"
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴代理人主張應等待病患穩定的論點，屬同一攻防脈絡的可省略細節",
+     "reason": "自訴代理人主張應等待病患穩定的論點，屬同一攻防脈絡的可省略細節"
     },
     {
      "gt_claim_id": 105,
-     "severity": "critical",
-     "text": "自訴代理人『二日內施行手術導致併發症死亡』的完整因果論述未涵蓋。此為本案核心攻防主張",
-     "reason": "自訴代理人『二日內施行手術導致併發症死亡』的完整因果論述未涵蓋。此為本案核心攻防主張"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "自訴代理人關於二日內手術導致死亡的指控是核心訴訟主張，雖然摘要引用了鑑定意見回應，但缺少對自訴人具體指控的陳述，影響攻防完整性",
+     "reason": "自訴代理人關於二日內手術導致死亡的指控是核心訴訟主張，雖然摘要引用了鑑定意見回應，但缺少對自訴人具體指控的陳述，影響攻防完整性"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "心導管術後追蹤心臟酵素及心電圖結果無異常，屬重要術前評估證據，證明術前狀況良好，有助於理解法院心證形成，不宜省略",
+     "reason": "心導管術後追蹤心臟酵素及心電圖結果無異常，屬重要術前評估證據，證明術前狀況良好，有助於理解法院心證形成，不宜省略"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告主張已告知家屬併發症，此為程序性陳述，摘要重點在法院認定告知義務已盡（透過同意書簽名），具體被告陳述可省略",
+     "reason": "被告主張已告知家屬併發症，此為程序性陳述，摘要重點在法院認定告知義務已盡（透過同意書簽名），具體被告陳述可省略"
     },
     {
      "gt_claim_id": 112,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "自訴人未出庭為程序性事實，不影響案情實質理解",
-     "reason": "自訴人未出庭為程序性事實，不影響案情實質理解"
+     "text": "自訴人未出庭的事實屬程序性事實，與本案實體判決無直接關聯，可合理省略",
+     "reason": "自訴人未出庭的事實屬程序性事實，與本案實體判決無直接關聯，可合理省略"
     },
     {
      "gt_claim_id": 113,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "自訴代理人關於被告告知併發症的具體說法為攻防細節，非核心事實",
-     "reason": "自訴代理人關於被告告知併發症的具體說法為攻防細節，非核心事實"
+     "text": "自訴代理人對告知的質疑，摘要已在其他段落綜合論述告知義務，此攻防細節可省略",
+     "reason": "自訴代理人對告知的質疑，摘要已在其他段落綜合論述告知義務，此攻防細節可省略"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告「手術非常成功」的辯稱，摘要已記載術中穩定、過程順利，實質內容已涵蓋",
+     "reason": "被告「手術非常成功」的辯稱，摘要已記載術中穩定、過程順利，實質內容已涵蓋"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴代理人未質疑的事實，屬消極事實，與判決結論無直接關係，可省略",
+     "reason": "自訴代理人未質疑的事實，屬消極事實，與判決結論無直接關係，可省略"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "右側瞳孔散大失去光反應為急救過程中的具體症狀，屬醫療細節，不影響過失認定的整體理解",
+     "reason": "右側瞳孔散大失去光反應為急救過程中的具體症狀，屬醫療細節，不影響過失認定的整體理解"
     },
     {
      "gt_claim_id": 136,
-     "severity": "minor",
-     "text": "送加護病房細節為處置流程，已涵蓋於『團隊醫療處置』等描述中",
-     "reason": "送加護病房細節為處置流程，已涵蓋於『團隊醫療處置』等描述中"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「其他生命徵兆穩定」及「送至加護病房」是法院認定術後處置無疏失的重要依據，雖摘要提心跳血壓穩定，但未明確提及加護病房及支持治療，影響對救治完整性的理解",
+     "reason": "「其他生命徵兆穩定」及「送至加護病房」是法院認定術後處置無疏失的重要依據，雖摘要提心跳血壓穩定，但未明確提及加護病房及支持治療，影響對救治完整性的理解"
     },
     {
      "gt_claim_id": 137,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "被告對病情具體判斷為醫療過程細節，非判決核心論理",
-     "reason": "被告對病情具體判斷為醫療過程細節，非判決核心論理"
+     "text": "被告甲對病況的具體判斷（血塊栓塞腦部血管或冠狀動脈）屬專業醫療推論，不影響法院對處置合規性的認定",
+     "reason": "被告甲對病況的具體判斷（血塊栓塞腦部血管或冠狀動脈）屬專業醫療推論，不影響法院對處置合規性的認定"
     },
     {
      "gt_claim_id": 138,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "重新施予抗凝血劑為具體處置措施，非判決核心論理",
-     "reason": "重新施予抗凝血劑為具體處置措施，非判決核心論理"
+     "text": "重新施予抗凝血劑注射為處置細節，摘要已涵蓋急救處置整體描述，具體步驟可省略",
+     "reason": "重新施予抗凝血劑注射為處置細節，摘要已涵蓋急救處置整體描述，具體步驟可省略"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「始終陷於昏迷」與摘要「恢復意識後又昏迷」語義相近，表達方式差異不影響事實理解",
+     "reason": "「始終陷於昏迷」與摘要「恢復意識後又昏迷」語義相近，表達方式差異不影響事實理解"
     },
     {
      "gt_claim_id": 148,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "死亡證明書為程序性證據，死因已明確記載於摘要中",
-     "reason": "死亡證明書為程序性證據，死因已明確記載於摘要中"
+     "text": "死亡證明書作為證據屬程序性記載，摘要已明確記載死亡原因，證據形式可省略",
+     "reason": "死亡證明書作為證據屬程序性記載，摘要已明確記載死亡原因，證據形式可省略"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴代理人對死因無意見屬程序性陳述，不影響死因認定的實體內容",
+     "reason": "自訴代理人對死因無意見屬程序性陳述，不影響死因認定的實體內容"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 162,
    "pred_total": 109,
-   "matched": 131,
-   "partial": 4,
-   "missing": 21,
+   "matched": 128,
+   "partial": 5,
+   "missing": 29,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.25
  }
 }

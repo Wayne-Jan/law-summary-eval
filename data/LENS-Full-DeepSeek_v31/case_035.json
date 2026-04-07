@@ -126,57 +126,73 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8518,
-  "fact_recall": 0.5299,
-  "fact_precision": 0.9677,
-  "fact_f1": 0.6848,
+  "fact_recall": 0.9545,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9767,
   "quality_overall": 4.7071,
   "citation_accuracy": 0.9796,
   "citation_support_score": 0.9673,
-  "uncited_rate": 0.009,
+  "uncited_rate": 0.018,
   "faithfulness_combined": {
-   "score": 0.9696,
-   "citation_fidelity": 0.9708,
-   "fact_precision": 0.9677,
+   "score": 0.9772,
+   "citation_fidelity": 0.962,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 2,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9943,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 25
+  },
+  "weighted_recall": 0.9865,
   "missing_severity": {
    "critical": 0,
    "important": 0,
-   "minor": 2,
+   "minor": 4,
    "details": [
     {
-     "gt_claim_id": 63,
+     "gt_claim_id": 52,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "生成摘要確實未提及檢察官上訴情況。此為判決後程序性事實，不影響無罪判決結論之理解。",
-     "reason": "生成摘要確實未提及檢察官上訴情況。此為判決後程序性事實，不影響無罪判決結論之理解。"
+     "text": "生成摘要未提及『病患於剖腹生產後，突然呼吸困難，不久後意識不清』作為『非特異性症狀』、『可能為羊水栓塞臨床表現』之鑑別診斷要點。經查section_03_opinions.txt原文僅述及『羊水栓塞係一種無法預防之產科急症，其臨床表現非常多樣化』，未詳述具體症狀特徵。此為醫學鑑定意見之背景知識說明，屬次要事實。",
+     "reason": "生成摘要未提及『病患於剖腹生產後，突然呼吸困難，不久後意識不清』作為『非特異性症狀』、『可能為羊水栓塞臨床表現』之鑑別診斷要點。經查section_03_opinions.txt原文僅述及『羊水栓塞係一種無法預防之產科急症，其臨床表現非常多樣化』，未詳述具體症狀特徵。此為醫學鑑定意見之背景知識說明，屬次要事實。"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要未提及『妊娠毒血症、急性肺水腫』等鑑別診斷。經查section_03_opinions.txt原文並未明確列舉這些鑑別診斷疾病名稱，此為GT摘要對醫學專業意見的補充說明，非鑑定意見原文直接陳述之核心內容，屬次要事實。",
+     "reason": "生成摘要未提及『妊娠毒血症、急性肺水腫』等鑑別診斷。經查section_03_opinions.txt原文並未明確列舉這些鑑別診斷疾病名稱，此為GT摘要對醫學專業意見的補充說明，非鑑定意見原文直接陳述之核心內容，屬次要事實。"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（檢察官上訴狀況），全篇 section 原文未提及，屬判決書尾部標準程序記載，不影響案情理解",
+     "reason": "程序性事實（檢察官上訴狀況），全篇 section 原文未提及，屬判決書尾部標準程序記載，不影響案情理解"
     },
     {
      "gt_claim_id": 64,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "生成摘要未明確提及判決確定狀態。此為程序性結果描述，不影響主要判決結論（無罪）之理解。",
-     "reason": "生成摘要未明確提及判決確定狀態。此為程序性結果描述，不影響主要判決結論（無罪）之理解。"
+     "text": "程序性事實（判決確定狀態），全篇 section 原文未提及，屬判決書尾部標準程序記載，不影響案情理解",
+     "reason": "程序性事實（判決確定狀態），全篇 section 原文未提及，屬判決書尾部標準程序記載，不影響案情理解"
     }
    ]
   },
   "fact_detail": {
-   "gt_total": 117,
-   "pred_total": 93,
-   "matched": 62,
-   "partial": 0,
-   "missing": 2,
-   "hallucinated": 3,
-   "gt_mismatch": {
-    "reported": 117,
-    "actual": 99
-   }
+   "gt_total": 99,
+   "pred_total": 111,
+   "matched": 94,
+   "partial": 1,
+   "missing": 4,
+   "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.5
  }
 }

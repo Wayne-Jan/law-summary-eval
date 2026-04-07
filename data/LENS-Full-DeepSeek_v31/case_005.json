@@ -126,63 +126,73 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8031,
-  "fact_recall": 0.5517,
-  "fact_precision": 1.0,
-  "fact_f1": 0.7111,
+  "fact_recall": 0.9558,
+  "fact_precision": 0.9933,
+  "fact_f1": 0.9742,
   "quality_overall": 4.9286,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0339,
-  "uncited_rate": 0.0,
+  "uncited_rate": 0.0067,
   "faithfulness_combined": {
-   "score": 1.0,
-   "citation_fidelity": 1.0,
-   "fact_precision": 1.0,
+   "score": 0.9933,
+   "citation_fidelity": 0.9933,
+   "fact_precision": 0.9933,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 5,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 0.981,
-  "weighted_recall": 0.9931,
+  "numerical_detail": {
+   "total_numerical": 52,
+   "correct": 51
+  },
+  "weighted_recall": 0.9823,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 3,
+   "important": 2,
+   "minor": 2,
    "details": [
     {
-     "gt_claim_id": 77,
-     "severity": "minor",
-     "text": "臨床上懷疑敗血症應先給予抗生素治療之程序性醫療指引，屬背景性醫學知識，不影響判決結論理解",
-     "reason": "臨床上懷疑敗血症應先給予抗生素治療之程序性醫療指引，屬背景性醫學知識，不影響判決結論理解"
+     "gt_claim_id": 49,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "相驗屍體證明書記載之死亡原因（糖尿病併發滲出性腦出血）屬於重要醫學事實，雖summary_facts段落提及『終因肝昏迷及出血性休克死亡』，但未提及相驗屍體證明書之正式記載，且『滲出性腦出血』與『出血性休克』為不同醫學概念。此為死因認定的關鍵證據，影響案情完整理解。",
+     "reason": "相驗屍體證明書記載之死亡原因（糖尿病併發滲出性腦出血）屬於重要醫學事實，雖summary_facts段落提及『終因肝昏迷及出血性休克死亡』，但未提及相驗屍體證明書之正式記載，且『滲出性腦出血』與『出血性休克』為不同醫學概念。此為死因認定的關鍵證據，影響案情完整理解。"
     },
     {
      "gt_claim_id": 79,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "相驗屍體證明書開立之特定死亡原因（糖尿病併發滲出性腦出血）為程序性文書細節，判決最終認定死因為肝昏迷及出血性休克已於 pred claim 43 完整涵蓋",
-     "reason": "相驗屍體證明書開立之特定死亡原因（糖尿病併發滲出性腦出血）為程序性文書細節，判決最終認定死因為肝昏迷及出血性休克已於 pred claim 43 完整涵蓋"
+     "text": "雖GT中有claim 49記載此項，但屬於facts section（相驗屍體證明書為程序性文件），非opinions section應聚焦之鑑定意見內容。摘要未提及不影響鑑定意見之理解。",
+     "reason": "雖GT中有claim 49記載此項，但屬於facts section（相驗屍體證明書為程序性文件），非opinions section應聚焦之鑑定意見內容。摘要未提及不影響鑑定意見之理解。"
     },
     {
      "gt_claim_id": 84,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決確定狀態為程序性事實，不影響判決主文（被告罪名成立、刑度）之理解",
-     "reason": "判決確定狀態為程序性事實，不影響判決主文（被告罪名成立、刑度）之理解"
+     "text": "判決確定狀態為程序性事實，摘要僅引用判決主文(CH_02)，未提及是否上訴或確定，屬次要資訊",
+     "reason": "判決確定狀態為程序性事實，摘要僅引用判決主文(CH_02)，未提及是否上訴或確定，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 專注於過失責任論述，未明確宣告「業務過失致死罪」之罪名認定，該內容確實僅出現在 verdict section",
+     "reason": "reasoning section 專注於過失責任論述，未明確宣告「業務過失致死罪」之罪名認定，該內容確實僅出現在 verdict section"
     }
    ]
   },
   "fact_detail": {
-   "gt_total": 145,
-   "pred_total": 118,
-   "matched": 80,
-   "partial": 0,
-   "missing": 3,
-   "hallucinated": 0,
-   "gt_mismatch": {
-    "reported": 145,
-    "actual": 113
-   }
+   "gt_total": 113,
+   "pred_total": 150,
+   "matched": 107,
+   "partial": 2,
+   "missing": 4,
+   "hallucinated": 1
   },
-  "section_balance": 1.0
+  "section_balance": 0.8
  }
 }

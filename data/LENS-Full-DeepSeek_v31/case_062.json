@@ -180,16 +180,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6579,
-  "fact_recall": 0.8,
+  "fact_recall": 0.8129,
   "fact_precision": 1.0,
-  "fact_f1": 0.8889,
+  "fact_f1": 0.8968,
   "quality_overall": 4.9714,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0067,
-  "uncited_rate": 0.03,
+  "uncited_rate": 0.01,
   "faithfulness_combined": {
-   "score": 0.982,
-   "citation_fidelity": 0.97,
+   "score": 0.994,
+   "citation_fidelity": 0.99,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -197,150 +197,196 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9484,
+  "numerical_detail": {
+   "total_numerical": 28,
+   "correct": 28
+  },
+  "weighted_recall": 0.9441,
   "missing_severity": {
    "critical": 0,
-   "important": 3,
-   "minor": 18,
+   "important": 2,
+   "minor": 22,
    "details": [
     {
-     "gt_claim_id": 46,
+     "gt_claim_id": 30,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "reasoning section 提及「背負重物」，但未提及「農藥桶」此具體細節，屬辯護背景次要資訊",
-     "reason": "reasoning section 提及「背負重物」，但未提及「農藥桶」此具體細節，屬辯護背景次要資訊"
+     "text": "被告抗辯細節，原文有提及「依照病患陳萬恭主訴胸痛之症狀進行相關身體檢查」，但生成摘要僅概述被告辯稱，未詳述此具體論點",
+     "reason": "被告抗辯細節，原文有提及「依照病患陳萬恭主訴胸痛之症狀進行相關身體檢查」，但生成摘要僅概述被告辯稱，未詳述此具體論點"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告抗辯論點，原文有「沒有心肌梗塞的證據」，但生成摘要未明確分離此論點",
+     "reason": "被告抗辯論點，原文有「沒有心肌梗塞的證據」，但生成摘要未明確分離此論點"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "程序性時間資訊，原文有「95年5 月21日17時許入院」，此細節在facts section已有覆蓋",
+     "reason": "程序性時間資訊，原文有「95年5 月21日17時許入院」，此細節在facts section已有覆蓋"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫學判斷標準說明，原文有詳細記載，但生成摘要側重事實陳述而非醫學標準說明",
+     "reason": "醫學判斷標準說明，原文有詳細記載，但生成摘要側重事實陳述而非醫學標準說明"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告抗辯細節，「已經對病患安排相關理學檢查」與claim 8「問診及理學檢查」內容重疊",
+     "reason": "被告抗辯細節，「已經對病患安排相關理學檢查」與claim 8「問診及理學檢查」內容重疊"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "症狀清單細節，生成摘要claim 9已提及「無胸痛劇烈、呼吸困雍」，雖未完整列舉所有症狀，但核心資訊已覆蓋",
+     "reason": "症狀清單細節，生成摘要claim 9已提及「無胸痛劇烈、呼吸困雍」，雖未完整列舉所有症狀，但核心資訊已覆蓋"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告抗辯論點，與pred claim 6「急診時並無急性心肌梗塞」屬同一判斷，生成摘要已有覆蓋",
+     "reason": "被告抗辯論點，與pred claim 6「急診時並無急性心肌梗塞」屬同一判斷，生成摘要已有覆蓋"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告抗辯細節，原文有「主訴係因背負農藥桶造成胸骨處疼痛」，生成摘要未提及此主訴原因",
+     "reason": "被告抗辯細節，原文有「主訴係因背負農藥桶造成胸骨處疼痛」，生成摘要未提及此主訴原因"
     },
     {
      "gt_claim_id": 48,
-     "severity": "important",
-     "text": "摘要雖多處暗示診斷合理，但未明確使用「無誤診」一詞，影響抗辯主張完整性",
-     "reason": "摘要雖多處暗示診斷合理，但未明確使用「無誤診」一詞，影響抗辯主張完整性"
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告抗辯論點，原文有「被告在醫療上並無誤診之情事」，生成摘要未明確提及",
+     "reason": "被告抗辯論點，原文有「被告在醫療上並無誤診之情事」，生成摘要未明確提及"
     },
     {
      "gt_claim_id": 51,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "摘要未提及「按照急診醫療程序」之表述，屬程序性描述",
-     "reason": "摘要未提及「按照急診醫療程序」之表述，屬程序性描述"
+     "text": "被告抗辯論點，原文有「按照急診醫療程序為病患診治處理」，生成摘要未明確提及",
+     "reason": "被告抗辯論點，原文有「按照急診醫療程序為病患診治處理」，生成摘要未明確提及"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告抗辯細節，原文有「主訴之胸骨處疼痛確實有得到緩解」，生成摘要未提及治療後緩解效果",
+     "reason": "被告抗辯細節，原文有「主訴之胸骨處疼痛確實有得到緩解」，生成摘要未提及治療後緩解效果"
     },
     {
      "gt_claim_id": 53,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "遍查5段均未提及「門診追蹤後離院」之流程細節",
-     "reason": "遍查5段均未提及「門診追蹤後離院」之流程細節"
+     "text": "程序性細節，原文有「囑咐門診追蹤後始離院」，生成摘要未提及此細節",
+     "reason": "程序性細節，原文有「囑咐門診追蹤後始離院」，生成摘要未提及此細節"
     },
     {
      "gt_claim_id": 54,
-     "severity": "important",
-     "text": "摘要雖間接涵蓋「無不能注意」，但未明確表述「無消極不作為」此一明確抗辯主張",
-     "reason": "摘要雖間接涵蓋「無不能注意」，但未明確表述「無消極不作為」此一明確抗辯主張"
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告抗辯論點，原文有「被告絕無任何消極不作為之情事」，生成摘要未明確提及",
+     "reason": "被告抗辯論點，原文有「被告絕無任何消極不作為之情事」，生成摘要未明確提及"
     },
     {
      "gt_claim_id": 59,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "遍查5段均未提及「過苛」論點，屬次要辯護論點",
-     "reason": "遍查5段均未提及「過苛」論點，屬次要辯護論點"
+     "text": "被告抗辯論點，原文有「責令被告有診斷當時根本無急性心肌梗塞症狀之病患有急性心肌梗塞疾病之可能，未免過苛」，生成摘要未提及此論點",
+     "reason": "被告抗辯論點，原文有「責令被告有診斷當時根本無急性心肌梗塞症狀之病患有急性心肌梗塞疾病之可能，未免過苛」，生成摘要未提及此論點"
     },
     {
      "gt_claim_id": 60,
+     "source_section": "defense",
      "severity": "important",
-     "text": "摘要中 opinions section (claim 50) 指出應留院觀察以「印證或排除」心肌梗塞，與 GT「無診斷可能」論點相反，確實未提及此抗辯",
-     "reason": "摘要中 opinions section (claim 50) 指出應留院觀察以「印證或排除」心肌梗塞，與 GT「無診斷可能」論點相反，確實未提及此抗辯"
+     "text": "被告抗辯重要論點，原文有「縱使留院觀察6 小時亦無診斷急性心肌梗塞之可能」，此為被告對留院觀察可能性的核心抗辯，生成摘要未提及",
+     "reason": "被告抗辯重要論點，原文有「縱使留院觀察6 小時亦無診斷急性心肌梗塞之可能」，此為被告對留院觀察可能性的核心抗辯，生成摘要未提及"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告抗辯重要論點，原文有「被告是否根據心電圖診斷出急性心肌梗塞，與病患C其後病程心臟是否破裂並無直接因果關係」，此為因果關係核心抗辯，生成摘要雖有提及「無因果關係」但未詳述此邏輯",
+     "reason": "被告抗辯重要論點，原文有「被告是否根據心電圖診斷出急性心肌梗塞，與病患C其後病程心臟是否破裂並無直接因果關係」，此為因果關係核心抗辯，生成摘要雖有提及「無因果關係」但未詳述此邏輯"
     },
     {
      "gt_claim_id": 73,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "四肢導極 II、III、aVF 有 ST 波段下降之具體細節，摘要未提及此技術性心電圖細節",
-     "reason": "四肢導極 II、III、aVF 有 ST 波段下降之具體細節，摘要未提及此技術性心電圖細節"
-    },
-    {
-     "gt_claim_id": 79,
-     "severity": "minor",
-     "text": "急診醫師訓練及照會心臟科醫師議題，屬背景性專業資訊，非核心事實",
-     "reason": "急診醫師訓練及照會心臟科醫師議題，屬背景性專業資訊，非核心事實"
-    },
-    {
-     "gt_claim_id": 86,
-     "severity": "minor",
-     "text": "病理切片顯微鏡檢查發現嗜中性白血球浸潤之具體細節，摘要僅提及心肌壞死",
-     "reason": "病理切片顯微鏡檢查發現嗜中性白血球浸潤之具體細節，摘要僅提及心肌壞死"
-    },
-    {
-     "gt_claim_id": 90,
-     "severity": "minor",
-     "text": "急性心肌梗塞主要致病機轉（粥狀動脈硬塊破裂剝落），屬醫學機制背景知識",
-     "reason": "急性心肌梗塞主要致病機轉（粥狀動脈硬塊破裂剝落），屬醫學機制背景知識"
+     "text": "四肢導極ST波段下降為技術性心電圖細節，五段摘要均未提及",
+     "reason": "四肢導極ST波段下降為技術性心電圖細節，五段摘要均未提及"
     },
     {
      "gt_claim_id": 92,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "陳舊性心肌梗塞治療方式，屬治療細節背景資訊",
-     "reason": "陳舊性心肌梗塞治療方式，屬治療細節背景資訊"
+     "text": "陳舊性心肌梗塞處理後遺症為背景知識，非本案關鍵鑑定結論",
+     "reason": "陳舊性心肌梗塞處理後遺症為背景知識，非本案關鍵鑑定結論"
     },
     {
      "gt_claim_id": 94,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "心肌梗塞併發心臟破裂之統計比例資訊，屬背景性數據",
-     "reason": "心肌梗塞併發心臟破裂之統計比例資訊，屬背景性數據"
+     "text": "心臟破裂發生比例為背景統計資訊，判決中未載明具體比例",
+     "reason": "心臟破裂發生比例為背景統計資訊，判決中未載明具體比例"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "早期介入治療之限制雖與因果關係有關，但判決理由已記載「無法確保心臟不會破裂」等核心意旨",
+     "reason": "早期介入治療之限制雖與因果關係有關，但判決理由已記載「無法確保心臟不會破裂」等核心意旨"
     },
     {
      "gt_claim_id": 99,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "頭部傷為表面傷不足以致死之法醫判斷，屬鑑定細節",
-     "reason": "頭部傷為表面傷不足以致死之法醫判斷，屬鑑定細節"
+     "text": "頭部傷勢評估為鑑定細節，判決理由未提及表面傷不足以致死",
+     "reason": "頭部傷勢評估為鑑定細節，判決理由未提及表面傷不足以致死"
     },
     {
      "gt_claim_id": 100,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "呼吸道無明顯吸入水分及肺部無水腫之法醫解剖發現，屬鑑定細節",
-     "reason": "呼吸道無明顯吸入水分及肺部無水腫之法醫解剖發現，屬鑑定細節"
+     "text": "呼吸道及肺部檢查發現為鑑定技術細節，判決理由未提及",
+     "reason": "呼吸道及肺部檢查發現為鑑定技術細節，判決理由未提及"
     },
     {
      "gt_claim_id": 101,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "顯微鏡下嗜中性白血球浸潤之具體病理描述，摘要僅提及心臟破裂結論",
-     "reason": "顯微鏡下嗜中性白血球浸潤之具體病理描述，摘要僅提及心臟破裂結論"
+     "text": "嗜中性白血球浸潤之顯微鏡具體描述未完整出現，判決理由僅提到心肌壞死",
+     "reason": "嗜中性白血球浸潤之顯微鏡具體描述未完整出現，判決理由僅提到心肌壞死"
     },
     {
      "gt_claim_id": 102,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "外力心臟破裂與心肌梗塞破裂之病理區分（白血球出現與否），屬專業鑑別細節",
-     "reason": "外力心臟破裂與心肌梗塞破裂之病理區分（白血球出現與否），屬專業鑑別細節"
-    },
-    {
-     "gt_claim_id": 111,
-     "severity": "minor",
-     "text": "就診日期(95年5月21日)在reasoning段有提及('[CH_14]就診之95年5月21日')，但精確時間(下午5時4分)未提及。此精確時間點屬於背景性事實細節，非reasoning段核心論證所需。",
-     "reason": "就診日期(95年5月21日)在reasoning段有提及('[CH_14]就診之95年5月21日')，但精確時間(下午5時4分)未提及。此精確時間點屬於背景性事實細節，非reasoning段核心論證所需。"
-    },
-    {
-     "gt_claim_id": 113,
-     "severity": "minor",
-     "text": "檢查項目(身體檢查、心電圖、X光攝影)在reasoning段有提及([CH_09]理學檢查、心電圖、胸部X光攝影)，但精確時間(下午5時20分)未提及。reasoning段聚焦醫療處置適當性論證，非精確時間記載。",
-     "reason": "檢查項目(身體檢查、心電圖、X光攝影)在reasoning段有提及([CH_09]理學檢查、心電圖、胸部X光攝影)，但精確時間(下午5時20分)未提及。reasoning段聚焦醫療處置適當性論證，非精確時間記載。"
-    },
-    {
-     "gt_claim_id": 114,
-     "severity": "minor",
-     "text": "生命徵候具體數值(血壓117/61、心跳84次、呼吸20次)在reasoning段完全未提及。reasoning段著重於醫療過失論證，此等精確數值屬背景事實，非reasoning核心。",
-     "reason": "生命徵候具體數值(血壓117/61、心跳84次、呼吸20次)在reasoning段完全未提及。reasoning段著重於醫療過失論證，此等精確數值屬背景事實，非reasoning核心。"
-    },
-    {
-     "gt_claim_id": 117,
-     "severity": "minor",
-     "text": "出院時間(下午5時35分)在reasoning段未明確提及，僅概括提到『病患X急診出院後2日始死亡』([CH_21])。精確出院時間屬timeline事實，reasoning段重點在因果關係論證。",
-     "reason": "出院時間(下午5時35分)在reasoning段未明確提及，僅概括提到『病患X急診出院後2日始死亡』([CH_21])。精確出院時間屬timeline事實，reasoning段重點在因果關係論證。"
+     "text": "外力造成心臟破裂的病理區別為鑑定細節，判決中未提及",
+     "reason": "外力造成心臟破裂的病理區別為鑑定細節，判決中未提及"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 155,
    "pred_total": 101,
-   "matched": 119,
+   "matched": 121,
    "partial": 10,
-   "missing": 23,
+   "missing": 24,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.5152
  }
 }

@@ -160,16 +160,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7052,
-  "fact_recall": 0.8908,
+  "fact_recall": 0.8529,
   "fact_precision": 1.0,
-  "fact_f1": 0.9422,
+  "fact_f1": 0.9206,
   "quality_overall": 4.525,
   "citation_accuracy": 0.96,
   "citation_support_score": 0.96,
-  "uncited_rate": 0.073,
+  "uncited_rate": 0.056,
   "faithfulness_combined": {
-   "score": 0.934,
-   "citation_fidelity": 0.8899,
+   "score": 0.9437,
+   "citation_fidelity": 0.9062,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -177,84 +177,49 @@
    }
   },
   "compliance": 2,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 0.955,
-  "weighted_recall": 0.9636,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 21
+  },
+  "weighted_recall": 0.9888,
   "missing_severity": {
    "critical": 0,
-   "important": 3,
-   "minor": 7,
+   "important": 1,
+   "minor": 2,
    "details": [
     {
      "gt_claim_id": 31,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "傷口縫合處置屬辯方主張的醫療行為細節，不影響過失認定核心爭議",
-     "reason": "傷口縫合處置屬辯方主張的醫療行為細節，不影響過失認定核心爭議"
+     "text": "經查核summary_grounded.txt與summary_clean.txt全文，被告辯稱段落中提及『傷口擴創術』、『傷口止血』、『清理傷口』等處置，但確實未提及『傷口縫合』此項處置。然而，此屬被告辯解中的細節性處置描述，不影響對被告抗辯主張（已盡檢查義務）的核心理解，故判定為minor。",
+     "reason": "經查核summary_grounded.txt與summary_clean.txt全文，被告辯稱段落中提及『傷口擴創術』、『傷口止血』、『清理傷口』等處置，但確實未提及『傷口縫合』此項處置。然而，此屬被告辯解中的細節性處置描述，不影響對被告抗辯主張（已盡檢查義務）的核心理解，故判定為minor。"
     },
     {
-     "gt_claim_id": 53,
-     "severity": "minor",
-     "text": "工地意外背景（梯子跌倒、混凝土鋼筋）屬案件發生經過，pred已在facts段提及『工地意外致鋼筋插入』，細節缺失不影響案情理解",
-     "reason": "工地意外背景（梯子跌倒、混凝土鋼筋）屬案件發生經過，pred已在facts段提及『工地意外致鋼筋插入』，細節缺失不影響案情理解"
-    },
-    {
-     "gt_claim_id": 54,
-     "severity": "minor",
-     "text": "工作場所安全設施缺失屬意外事故責任歸屬背景，非醫療過失案件核心事實",
-     "reason": "工作場所安全設施缺失屬意外事故責任歸屬背景，非醫療過失案件核心事實"
-    },
-    {
-     "gt_claim_id": 61,
-     "severity": "minor",
-     "text": "醫師乙傷口擴創探查細節屬鑑定意見中引述的病歷事實，pred已涵蓋主要醫療處置",
-     "reason": "醫師乙傷口擴創探查細節屬鑑定意見中引述的病歷事實，pred已涵蓋主要醫療處置"
-    },
-    {
-     "gt_claim_id": 66,
-     "severity": "minor",
-     "text": "顯微鏡觀察具體發現（心肌細胞肥大、急性腎盂腎炎、輸卵管擴大積水）屬解剖細節，pred已提及相關共病為協同因素",
-     "reason": "顯微鏡觀察具體發現（心肌細胞肥大、急性腎盂腎炎、輸卵管擴大積水）屬解剖細節，pred已提及相關共病為協同因素"
+     "gt_claim_id": 70,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "Pred claim 1 記載「於96年8月31日作成判決」，但 GT 正確日期為「98年8月31日」。Pred 誤將案號年度（96年度）當作判決日期年度，屬重要事實錯誤，summary 全文無「98年」判決日期之正確記載，維持 missing",
+     "reason": "Pred claim 1 記載「於96年8月31日作成判決」，但 GT 正確日期為「98年8月31日」。Pred 誤將案號年度（96年度）當作判決日期年度，屬重要事實錯誤，summary 全文無「98年」判決日期之正確記載，維持 missing"
     },
     {
      "gt_claim_id": 74,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "上訴期間及判決確定屬程序性事實，不影響判決主文內容理解",
-     "reason": "上訴期間及判決確定屬程序性事實，不影響判決主文內容理解"
-    },
-    {
-     "gt_claim_id": 83,
-     "severity": "important",
-     "text": "腸道疝入傷口及外部氣體無法進入之醫學機制說明，屬法院認定穿刺傷難以診斷之重要依據，影響過失程度判斷",
-     "reason": "腸道疝入傷口及外部氣體無法進入之醫學機制說明，屬法院認定穿刺傷難以診斷之重要依據，影響過失程度判斷"
-    },
-    {
-     "gt_claim_id": 98,
-     "severity": "minor",
-     "text": "11月6日11時沿腹股溝往上痛之具體症狀細節，pred已提及同一時間點之全身盜汗、血壓不穩，核心症狀進展已涵蓋",
-     "reason": "11月6日11時沿腹股溝往上痛之具體症狀細節，pred已提及同一時間點之全身盜汗、血壓不穩，核心症狀進展已涵蓋"
-    },
-    {
-     "gt_claim_id": 108,
-     "severity": "important",
-     "text": "醫審會鑑定書關於『正確診斷治療可避免敗血症猝死』之結論，屬法院認定因果關係之重要依據，影響判決理由完整性",
-     "reason": "醫審會鑑定書關於『正確診斷治療可避免敗血症猝死』之結論，屬法院認定因果關係之重要依據，影響判決理由完整性"
-    },
-    {
-     "gt_claim_id": 109,
-     "severity": "important",
-     "text": "法務部法醫研究所關於『腸道疝入未被發現、未給予適當治療處置』之認定，屬法院認定疏失之關鍵鑑定依據",
-     "reason": "法務部法醫研究所關於『腸道疝入未被發現、未給予適當治療處置』之認定，屬法院認定疏失之關鍵鑑定依據"
+     "text": "原始判決書結尾僅有上訴告知條款（「如不服本判決應於收受本判決後10日內...」），並無明確記載「未上訴、判決確定」之資訊。此屬判決後續執行程序性事實，非判決書正文內容，維持 missing 並標記 minor",
+     "reason": "原始判決書結尾僅有上訴告知條款（「如不服本判決應於收受本判決後10日內...」），並無明確記載「未上訴、判決確定」之資訊。此屬判決後續執行程序性事實，非判決書正文內容，維持 missing 並標記 minor"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 119,
    "pred_total": 124,
-   "matched": 105,
-   "partial": 2,
-   "missing": 10,
+   "matched": 99,
+   "partial": 5,
+   "missing": 15,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.6
  }
 }

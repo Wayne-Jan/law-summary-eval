@@ -144,9 +144,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8502,
-  "fact_recall": 0.6613,
+  "fact_recall": 0.7661,
   "fact_precision": 1.0,
-  "fact_f1": 0.7961,
+  "fact_f1": 0.8676,
   "quality_overall": 4.7214,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.975,
@@ -161,23 +161,98 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 0.947,
-  "weighted_recall": 1.0,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 18
+  },
+  "weighted_recall": 0.8978,
   "missing_severity": {
-   "critical": 0,
-   "important": 0,
-   "minor": 0,
-   "details": []
+   "critical": 1,
+   "important": 7,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 14,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告關於 CPR 胸部按摩導致腹腔出血之因果關係抗辯（DEF_ARG_1）完全未出現在生成摘要中。生成摘要僅提及認罪協商，遺漏此實體防禦主張，影響對案情完整理解。",
+     "reason": "被告關於 CPR 胸部按摩導致腹腔出血之因果關係抗辯（DEF_ARG_1）完全未出現在生成摘要中。生成摘要僅提及認罪協商，遺漏此實體防禦主張，影響對案情完整理解。"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "否定性解剖發現（無麻藥過敏、氣體拴塞證據）屬於排除其他死因的專家鑑定內容，有助於完整理解鑑定結論，但未提及不影響核心死亡原因（腸繫膜穿刺傷併出血）的理解，故標為 important。",
+     "reason": "否定性解剖發現（無麻藥過敏、氣體拴塞證據）屬於排除其他死因的專家鑑定內容，有助於完整理解鑑定結論，但未提及不影響核心死亡原因（腸繫膜穿刺傷併出血）的理解，故標為 important。"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定後之上訴期間程序事實，屬判決書尾部程序性記載，雖原始判決書提及「協商判決...不得上訴」，但未明確載明「被告、檢察官於法定上訴期間未上訴」之敘述，且此為程序性結論而非核心事實，對案情理解影響較小。",
+     "reason": "判決確定後之上訴期間程序事實，屬判決書尾部程序性記載，雖原始判決書提及「協商判決...不得上訴」，但未明確載明「被告、檢察官於法定上訴期間未上訴」之敘述，且此為程序性結論而非核心事實，對案情理解影響較小。"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態為程序性結論，原始判決書雖有協商判決不得上訴之規定說明，但「本案判決即確定」之確切表述未見於摘要，屬程序性事實，對主案情理解影響較小。",
+     "reason": "判決確定狀態為程序性結論，原始判決書雖有協商判決不得上訴之規定說明，但「本案判決即確定」之確切表述未見於摘要，屬程序性事實，對主案情理解影響較小。"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告 CPR 辯解內容在 reasoning section 完全未提及，影響過失認定之完整性。section_01_facts 與 section_05_reasoning 均未涵蓋此辯解。",
+     "reason": "被告 CPR 辯解內容在 reasoning section 完全未提及，影響過失認定之完整性。section_01_facts 與 section_05_reasoning 均未涵蓋此辯解。"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告最後表示要開腹檢查之事實，在全部 5 個 section 中均未提及，影響對被告認知狀態之理解。",
+     "reason": "被告最後表示要開腹檢查之事實，在全部 5 個 section 中均未提及，影響對被告認知狀態之理解。"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院對 CPR 辯解之駁回認定（與解剖結果不符）在 reasoning section 未提及，影響法院心證之完整呈現。",
+     "reason": "法院對 CPR 辯解之駁回認定（與解剖結果不符）在 reasoning section 未提及，影響法院心證之完整呈現。"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告關於麻醉、氣體拴塞之辯解在 reasoning section 未提及，影響對被告辯護策略之全面理解。",
+     "reason": "被告關於麻醉、氣體拴塞之辯解在 reasoning section 未提及，影響對被告辯護策略之全面理解。"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院對被告辯解整體評價（不足採信、卸責之詞）在 reasoning section 未明確出現，缺失法院心證之概括性結論。",
+     "reason": "法院對被告辯解整體評價（不足採信、卸責之詞）在 reasoning section 未明確出現，缺失法院心證之概括性結論。"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "被告當可據此及時研判處理係過失認定之核心法律標準，完全缺失將影響對注意義務違反之理解。全部 section 均無此內容。",
+     "reason": "被告當可據此及時研判處理係過失認定之核心法律標準，完全缺失將影響對注意義務違反之理解。全部 section 均無此內容。"
+    }
+   ]
   },
   "fact_detail": {
    "gt_total": 62,
-   "pred_total": 42,
-   "matched": 39,
-   "partial": 4,
-   "missing": 14,
+   "pred_total": 40,
+   "matched": 43,
+   "partial": 9,
+   "missing": 10,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.0
  }
 }

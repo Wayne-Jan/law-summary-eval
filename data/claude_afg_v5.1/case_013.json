@@ -148,9 +148,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6613,
-  "fact_recall": 0.824,
+  "fact_recall": 0.744,
   "fact_precision": 1.0,
-  "fact_f1": 0.9035,
+  "fact_f1": 0.8532,
   "quality_overall": 4.8929,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9674,
@@ -165,108 +165,224 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 0.786,
-  "weighted_recall": 0.9627,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 11
+  },
+  "weighted_recall": 0.9013,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 14,
+   "important": 9,
+   "minor": 19,
    "details": [
     {
-     "gt_claim_id": 27,
+     "gt_claim_id": 1,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "檢察官起訴主張的完整性事實，生成摘要未明確提及「應避免心肺功能衰竭」之義務主張，但相關病理結果已在其他論述中涵蓋",
-     "reason": "檢察官起訴主張的完整性事實，生成摘要未明確提及「應避免心肺功能衰竭」之義務主張，但相關病理結果已在其他論述中涵蓋"
+     "text": "GT claim 為醫師甲係「X中心」醫師之實體事實，prediction 雖提及「A診所」但係作為手術地點，並未明確陳述醫師與該機構之隸屬關係，屬背景性機構資訊遺漏",
+     "reason": "GT claim 為醫師甲係「X中心」醫師之實體事實，prediction 雖提及「A診所」但係作為手術地點，並未明確陳述醫師與該機構之隸屬關係，屬背景性機構資訊遺漏"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「鼻管預供氧氣」係被告辯護主張（見 defense 段），非 facts 段客觀事實，屬 minor 遺漏",
+     "reason": "「鼻管預供氧氣」係被告辯護主張（見 defense 段），非 facts 段客觀事實，屬 minor 遺漏"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官起訴主張之具體副作用風險（呼吸抑制）係關鍵過失認定依據，facts 段檢察官主張被簡化，影響案情完整理解",
+     "reason": "檢察官起訴主張之具體副作用風險（呼吸抑制）係關鍵過失認定依據，facts 段檢察官主張被簡化，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「喉頭痙攣」「暫時性窒息」係檢察官主張之重要副作用風險，雖 opinions 段提及，但 facts 段起訴主張確未完整呈現",
+     "reason": "「喉頭痙攣」「暫時性窒息」係檢察官主張之重要副作用風險，雖 opinions 段提及，但 facts 段起訴主張確未完整呈現"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「藥物防止垂涎」係檢察官多項注意義務之一，與「充分預供氧氣」並列，prediction 於 claim 16 合併提及，屬次要事實細節",
+     "reason": "「藥物防止垂涎」係檢察官多項注意義務之一，與「充分預供氧氣」並列，prediction 於 claim 16 合併提及，屬次要事實細節"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「心肺功能衰竭」係檢察官主張應避免之結果，雖 opinions/reasoning 段提及，但 facts 段起訴主張被簡化為「腦缺氧病變」，遺漏重要因果鏈",
+     "reason": "「心肺功能衰竭」係檢察官主張應避免之結果，雖 opinions/reasoning 段提及，但 facts 段起訴主張被簡化為「腦缺氧病變」，遺漏重要因果鏈"
     },
     {
      "gt_claim_id": 28,
-     "severity": "minor",
-     "text": "檢察官起訴主張的程序性事實，法院論述已涵蓋「設備不足不應從事手術」的核心認定，但未作為檢察官主張呈現",
-     "reason": "檢察官起訴主張的程序性事實，法院論述已涵蓋「設備不足不應從事手術」的核心認定，但未作為檢察官主張呈現"
-    },
-    {
-     "gt_claim_id": 31,
-     "severity": "minor",
-     "text": "檢察官起訴主張的具體醫療措施細節（肌肉弛鬆劑），生成摘要未提及此特定醫療措施",
-     "reason": "檢察官起訴主張的具體醫療措施細節（肌肉弛鬆劑），生成摘要未提及此特定醫療措施"
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「限於物力人力無法提供必要設備則不應從事手術」係檢察官起訴之重要主張，直接關連過失認定，屬重要事實遺漏",
+     "reason": "「限於物力人力無法提供必要設備則不應從事手術」係檢察官起訴之重要主張，直接關連過失認定，屬重要事實遺漏"
     },
     {
      "gt_claim_id": 38,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "藥物作用說明（Demerol是止痛），屬背景性醫學知識，不影響核心案情理解",
-     "reason": "藥物作用說明（Demerol是止痛），屬背景性醫學知識，不影響核心案情理解"
+     "text": "Demerol的藥理分類（止痛藥）屬於背景醫學知識，非本案核心爭點",
+     "reason": "Demerol的藥理分類（止痛藥）屬於背景醫學知識，非本案核心爭點"
     },
     {
      "gt_claim_id": 39,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "藥物作用說明（Diprivan是麻醉誘導劑），屬背景性醫學知識，不影響核心案情理解",
-     "reason": "藥物作用說明（Diprivan是麻醉誘導劑），屬背景性醫學知識，不影響核心案情理解"
+     "text": "Diprivan的藥理分類（麻醉誘導劑）屬於背景醫學知識，非本案核心爭點",
+     "reason": "Diprivan的藥理分類（麻醉誘導劑）屬於背景醫學知識，非本案核心爭點"
     },
     {
      "gt_claim_id": 40,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "藥物過敏機制細節（喉頭水腫抑制呼吸），屬鑑定意見中的病理說明，pred 已涵蓋「過敏引致死亡」的核心結論",
-     "reason": "藥物過敏機制細節（喉頭水腫抑制呼吸），屬鑑定意見中的病理說明，pred 已涵蓋「過敏引致死亡」的核心結論"
+     "text": "Diprivan過敏反應症狀（喉頭水腫）屬於鑑定意見中的醫學細節，摘要已提及「喉頭痙攣或呼吸抑制」，涵蓋了主要醫療風險",
+     "reason": "Diprivan過敏反應症狀（喉頭水腫）屬於鑑定意見中的醫學細節，摘要已提及「喉頭痙攣或呼吸抑制」，涵蓋了主要醫療風險"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為事實描述，在 facts section 已有涵蓋，opinions section 聚焦鑑定意見內容，遺漏不影響該section完整性",
+     "reason": "此為事實描述，在 facts section 已有涵蓋，opinions section 聚焦鑑定意見內容，遺漏不影響該section完整性"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為事實描述，在 facts section 及 reasoning section 已有詳細涵蓋，opinions section 聚焦鑑定意見，遺漏不影響理解",
+     "reason": "此為事實描述，在 facts section 及 reasoning section 已有詳細涵蓋，opinions section 聚焦鑑定意見，遺漏不影響理解"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為事實描述，在 facts section 已有涵蓋（病患X送達B醫院...已無心跳等），opinions section 無需重複",
+     "reason": "此為事實描述，在 facts section 已有涵蓋（病患X送達B醫院...已無心跳等），opinions section 無需重複"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為事實描述，在 facts section 已有完整涵蓋，opinions section 聚焦鑑定意見，遺漏不影響理解",
+     "reason": "此為事實描述，在 facts section 已有完整涵蓋，opinions section 聚焦鑑定意見，遺漏不影響理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為臺大醫院鑑定意見中的醫學論述，摘要已涵蓋核心結論（醫師本應備有預防及應變措施），此細節遺漏不影響鑑定意見的理解",
+     "reason": "此為臺大醫院鑑定意見中的醫學論述，摘要已涵蓋核心結論（醫師本應備有預防及應變措施），此細節遺漏不影響鑑定意見的理解"
     },
     {
      "gt_claim_id": 47,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "鑑定意見中的診斷方法細節，pred 論述已涵蓋「血液顏色變黑」的醫療事實",
-     "reason": "鑑定意見中的診斷方法細節，pred 論述已涵蓋「血液顏色變黑」的醫療事實"
+     "text": "此為臺大醫院鑑定意見中的診斷方法細節，屬次要醫學論述，非鑑定結論核心",
+     "reason": "此為臺大醫院鑑定意見中的診斷方法細節，屬次要醫學論述，非鑑定結論核心"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為事實描述，在 facts section 已有詳細涵蓋（陰道整形手術），opinions section 無需重複",
+     "reason": "此為事實描述，在 facts section 已有詳細涵蓋（陰道整形手術），opinions section 無需重複"
     },
     {
      "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "此為臺北榮總鑑定的重要結論，涉藥物使用是否妥適的關鍵判斷，雖然摘要提到造成呼吸抑制，但未明確提及劑量與給予方式「尚稱妥適」的鑑定結論，影響對鑑定意見完整性的理解",
+     "reason": "此為臺北榮總鑑定的重要結論，涉藥物使用是否妥適的關鍵判斷，雖然摘要提到造成呼吸抑制，但未明確提及劑量與給予方式「尚稱妥適」的鑑定結論，影響對鑑定意見完整性的理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "此為臺大醫院鑑定的核心論點之一，關乎藥物過敏與藥物直接作用的臨床處理是否相同的關鍵醫學判斷，遺漏會影響對鑑定意見邏輯完整的理解",
+     "reason": "此為臺大醫院鑑定的核心論點之一，關乎藥物過敏與藥物直接作用的臨床處理是否相同的關鍵醫學判斷，遺漏會影響對鑑定意見邏輯完整的理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "鑑定意見中關於藥物劑量是否妥適的評價，pred 已涵蓋藥物使用事實及副作用風險",
-     "reason": "鑑定意見中關於藥物劑量是否妥適的評價，pred 已涵蓋藥物使用事實及副作用風險"
+     "text": "此為臺大醫院鑑定中的背景描述，摘要已提及「施用Demerol及Diprivan進行全身麻醉」，讀者可推知為全身麻醉病患",
+     "reason": "此為臺大醫院鑑定中的背景描述，摘要已提及「施用Demerol及Diprivan進行全身麻醉」，讀者可推知為全身麻醉病患"
     },
     {
      "gt_claim_id": 64,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "被告前科狀況（無前科）是判決中「刑之酌科及緩刑」的重要考量因素，影響量刑與緩刑決定的理解，但預測摘要完全未提及",
+     "reason": "被告前科狀況（無前科）是判決中「刑之酌科及緩刑」的重要考量因素，影響量刑與緩刑決定的理解，但預測摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "量刑考量因素（被告無前科），屬判決的輔助性資訊，pred 已提及「緩刑參年」的結果",
-     "reason": "量刑考量因素（被告無前科），屬判決的輔助性資訊，pred 已提及「緩刑參年」的結果"
+     "text": "程序性事實（臺北地檢署請榮總鑑定），所有 section 均未提及『臺北地檢署另請』此程序細節",
+     "reason": "程序性事實（臺北地檢署請榮總鑑定），所有 section 均未提及『臺北地檢署另請』此程序細節"
     },
     {
      "gt_claim_id": 78,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "法院程序性事實（函詢法醫研究所），pred 已涵蓋鑑定意見分歧及取捨的實體論述",
-     "reason": "法院程序性事實（函詢法醫研究所），pred 已涵蓋鑑定意見分歧及取捨的實體論述"
+     "text": "程序性事實（法院函詢法醫研究所），所有 section 均未提及此函詢細節",
+     "reason": "程序性事實（法院函詢法醫研究所），所有 section 均未提及此函詢細節"
     },
     {
      "gt_claim_id": 79,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "程序性事實（法醫研究所回覆方式），pred 已涵蓋法院最終採信的鑑定結論",
-     "reason": "程序性事實（法醫研究所回覆方式），pred 已涵蓋法院最終採信的鑑定結論"
+     "text": "程序性事實（法醫研究所簡略覆以『是』），所有 section 均未提及此回覆細節",
+     "reason": "程序性事實（法醫研究所簡略覆以『是』），所有 section 均未提及此回覆細節"
     },
     {
-     "gt_claim_id": 80,
-     "severity": "minor",
-     "text": "程序性事實（法院依職權送請台大鑑定），pred 已涵蓋台大鑑定的實體意見",
-     "reason": "程序性事實（法院依職權送請台大鑑定），pred 已涵蓋台大鑑定的實體意見"
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "重要證人證詞細節（病患在美國曾使用同樣藥物、非特殊體質），section_05_reasoning.txt 僅泛稱『證人麻醉專科醫師證稱』，未涵蓋此具體證詞內容，影響過失認定理解",
+     "reason": "重要證人證詞細節（病患在美國曾使用同樣藥物、非特殊體質），section_05_reasoning.txt 僅泛稱『證人麻醉專科醫師證稱』，未涵蓋此具體證詞內容，影響過失認定理解"
     },
     {
-     "gt_claim_id": 104,
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "具體法條引用（醫療法第40條），pred 論述已涵蓋「醫療機構應具備適當場所及安全設施」的法律要求",
-     "reason": "具體法條引用（醫療法第40條），pred 論述已涵蓋「醫療機構應具備適當場所及安全設施」的法律要求"
+     "text": "量化細節（副作用幾乎百分之百），section_05_reasoning.txt 有『極可能會產生』但未提『幾乎百分之百』",
+     "reason": "量化細節（副作用幾乎百分之百），section_05_reasoning.txt 有『極可能會產生』但未提『幾乎百分之百』"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫學機制細節（舌頭會阻塞到氣管），section_05_reasoning.txt 有『抬高下巴』但未提『舌頭阻塞氣管』的原因",
+     "reason": "醫學機制細節（舌頭會阻塞到氣管），section_05_reasoning.txt 有『抬高下巴』但未提『舌頭阻塞氣管』的原因"
     },
     {
      "gt_claim_id": 125,
-     "severity": "minor",
-     "text": "綜合結論性陳述，pred 已通過具體過失認定涵蓋此結論，無新增事實",
-     "reason": "綜合結論性陳述，pred 已通過具體過失認定涵蓋此結論，無新增事實"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院最終心證（所辯均不足採信，犯行堪以認定），section_05_reasoning.txt 雖有完整過失論述但未明確總結此結論，影響判決理解",
+     "reason": "法院最終心證（所辯均不足採信，犯行堪以認定），section_05_reasoning.txt 雖有完整過失論述但未明確總結此結論，影響判決理解"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 125,
    "pred_total": 89,
-   "matched": 97,
-   "partial": 12,
-   "missing": 14,
+   "matched": 89,
+   "partial": 8,
+   "missing": 28,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.48
  }
 }

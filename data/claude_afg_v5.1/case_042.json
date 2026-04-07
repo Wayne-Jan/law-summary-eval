@@ -138,71 +138,66 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6176,
-  "fact_recall": 0.8389,
-  "fact_precision": 0.9364,
-  "fact_f1": 0.885,
+  "fact_recall": 0.95,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9744,
   "quality_overall": 4.7667,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9929,
-  "uncited_rate": 0.009,
+  "uncited_rate": 0.0,
   "faithfulness_combined": {
-   "score": 0.9692,
-   "citation_fidelity": 0.991,
-   "fact_precision": 0.9364,
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9778,
+  "numerical_detail": {
+   "total_numerical": 27,
+   "correct": 27
+  },
+  "weighted_recall": 0.9852,
   "missing_severity": {
    "critical": 0,
    "important": 1,
-   "minor": 4,
+   "minor": 2,
    "details": [
     {
      "gt_claim_id": 25,
+     "source_section": "defense",
      "severity": "important",
-     "text": "生成摘要之被告回應段落僅描述自訴人指控內容（被告乙、丙、丁拒絕轉診要求），未明確呈現被告方否認拒絕轉診之辯解立場。雖然判決理由段落有提及「業經被告三人所否認」，但辯護段落未完整表達被告否認之立場，故判定為遺漏。此為辯護要點，影響案情完整理解。",
-     "reason": "生成摘要之被告回應段落僅描述自訴人指控內容（被告乙、丙、丁拒絕轉診要求），未明確呈現被告方否認拒絕轉診之辯解立場。雖然判決理由段落有提及「業經被告三人所否認」，但辯護段落未完整表達被告否認之立場，故判定為遺漏。此為辯護要點，影響案情完整理解。"
-    },
-    {
-     "gt_claim_id": 30,
-     "severity": "minor",
-     "text": "摘要僅提及「被告甲所提十八篇國外研究報告中，贊成兩側同時施作之論文病患平均年齡均未超過七十歲」，未細列具體發表年份（1978、1985等），但此不影響鑑定意見核心結論之理解",
-     "reason": "摘要僅提及「被告甲所提十八篇國外研究報告中，贊成兩側同時施作之論文病患平均年齡均未超過七十歲」，未細列具體發表年份（1978、1985等），但此不影響鑑定意見核心結論之理解"
-    },
-    {
-     "gt_claim_id": 33,
-     "severity": "minor",
-     "text": "GT 原文強調「醫界或有贊成者，然反對聲音亦不小」之雙面性論述，但摘要僅提及「近年醫學研究亦傾向反對兩側同時施作」，雖未完整呈現「或有贊成者」之語境，但已涵蓋反對趨勢之主要資訊",
-     "reason": "GT 原文強調「醫界或有贊成者，然反對聲音亦不小」之雙面性論述，但摘要僅提及「近年醫學研究亦傾向反對兩側同時施作」，雖未完整呈現「或有贊成者」之語境，但已涵蓋反對趨勢之主要資訊"
-    },
-    {
-     "gt_claim_id": 36,
-     "severity": "minor",
-     "text": "摘要於多處提及「對八十歲以上之病患...會有較高之併發症及死亡機率」，雖未使用「年紀愈大，發生之危險愈高」之原文表述，但語義相近，且屬次要資訊",
-     "reason": "摘要於多處提及「對八十歲以上之病患...會有較高之併發症及死亡機率」，雖未使用「年紀愈大，發生之危險愈高」之原文表述，但語義相近，且屬次要資訊"
+     "text": "GT要求此內容應出現在defense section（被告回應），但Pred的被告回應段落只包含被告甲的抗辯，未提及被告乙、丙、丁否認拒絕轉診的抗辯。雖然此內容在reasoning section有出現，但defense section確實遺漏被告乙、丙、丁的具體抗辯內容，影響被告方抗辯的完整性理解",
+     "reason": "GT要求此內容應出現在defense section（被告回應），但Pred的被告回應段落只包含被告甲的抗辯，未提及被告乙、丙、丁否認拒絕轉診的抗辯。雖然此內容在reasoning section有出現，但defense section確實遺漏被告乙、丙、丁的具體抗辯內容，影響被告方抗辯的完整性理解"
     },
     {
      "gt_claim_id": 38,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "此為醫師應盡義務之背景性論述，摘要已涵蓋術前評估與告知義務之核心內容，未提及「有效降低併發症與死亡率」之具體要求不影響案情理解",
-     "reason": "此為醫師應盡義務之背景性論述，摘要已涵蓋術前評估與告知義務之核心內容，未提及「有效降低併發症與死亡率」之具體要求不影響案情理解"
+     "text": "原始文字雖提及『以有效的降低可能發生的併發症與死亡率』，但生成摘要未明確對應此項醫師義務要求，屬次要事實遺漏。",
+     "reason": "原始文字雖提及『以有效的降低可能發生的併發症與死亡率』，但生成摘要未明確對應此項醫師義務要求，屬次要事實遺漏。"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要未獨立陳述被告丙、丁曾參與急救醫療之身分事實（雖 section_03 提及急救措施無不當，但未明確列出參與人員），屬次要人物識別事實遺漏。",
+     "reason": "生成摘要未獨立陳述被告丙、丁曾參與急救醫療之身分事實（雖 section_03 提及急救措施無不當，但未明確列出參與人員），屬次要人物識別事實遺漏。"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 90,
    "pred_total": 110,
-   "matched": 75,
-   "partial": 1,
-   "missing": 11,
-   "hallucinated": 7
+   "matched": 84,
+   "partial": 3,
+   "missing": 3,
+   "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.8333
  }
 }

@@ -134,16 +134,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7488,
-  "fact_recall": 0.6611,
+  "fact_recall": 0.5556,
   "fact_precision": 1.0,
-  "fact_f1": 0.796,
+  "fact_f1": 0.7143,
   "quality_overall": 4.5839,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9654,
-  "uncited_rate": 0.0,
+  "uncited_rate": 0.014,
   "faithfulness_combined": {
-   "score": 1.0,
-   "citation_fidelity": 1.0,
+   "score": 0.9916,
+   "citation_fidelity": 0.986,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -151,198 +151,301 @@
    }
   },
   "compliance": 2,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.8481,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 17
+  },
+  "weighted_recall": 0.7296,
   "missing_severity": {
-   "critical": 2,
-   "important": 8,
-   "minor": 19,
+   "critical": 9,
+   "important": 16,
+   "minor": 14,
    "details": [
     {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 中僅記載被告甲『明知被告乙未具護理人員資格』，這是被告甲的認知陳述，並非被告乙本人『坦承』無護理資格。全文未見被告乙親自坦承此事實的記載",
+     "reason": "section_02_defense.txt 中僅記載被告甲『明知被告乙未具護理人員資格』，這是被告甲的認知陳述，並非被告乙本人『坦承』無護理資格。全文未見被告乙親自坦承此事實的記載"
+    },
+    {
      "gt_claim_id": 26,
-     "severity": "minor",
-     "text": "生成摘要確實未明確表述「被告乙否認業務過失傷害犯行」，僅以「依被告甲之辯護主張」間接引用，並說明「並無個人疏失」。雖「無個人疏失」語義上等於否認犯行，但未明確使用「否認」字樣，屬語意對應不完整。此為被告乙之辯護立場陳述，屬次要事實，不影響判決結論理解。",
-     "reason": "生成摘要確實未明確表述「被告乙否認業務過失傷害犯行」，僅以「依被告甲之辯護主張」間接引用，並說明「並無個人疏失」。雖「無個人疏失」語義上等於否認犯行，但未明確使用「否認」字樣，屬語意對應不完整。此為被告乙之辯護立場陳述，屬次要事實，不影響判決結論理解。"
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 僅記載被告乙『依被告甲之辯護主張，係依醫師指示執行注射，並無個人疏失』，此為對行為的辯解，並非明確『否認業務過失傷害犯行』的法律表述。跨 sections 檢查後，仍無被告乙明確否認犯行之記載",
+     "reason": "section_02_defense.txt 僅記載被告乙『依被告甲之辯護主張，係依醫師指示執行注射，並無個人疏失』，此為對行為的辯解，並非明確『否認業務過失傷害犯行』的法律表述。跨 sections 檢查後，仍無被告乙明確否認犯行之記載"
     },
     {
      "gt_claim_id": 34,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "經查所有 section 原文（section_01_facts.txt 及 section_05_reasoning.txt），生成摘要確實未提及屏東縣醫師公會之法律見解「醫師若依『合法藥物』所表示之使用方法開立處方，應已符合『正當使用』該藥物」。此事實雖非直接決定判決結果，但屬專業機構意見，影響對鑑定意見段落的完整理解，故標記為 important。",
-     "reason": "經查所有 section 原文（section_01_facts.txt 及 section_05_reasoning.txt），生成摘要確實未提及屏東縣醫師公會之法律見解「醫師若依『合法藥物』所表示之使用方法開立處方，應已符合『正當使用』該藥物」。此事實雖非直接決定判決結果，但屬專業機構意見，影響對鑑定意見段落的完整理解，故標記為 important。"
+     "text": "生成摘要僅提及醫審會鑑定意見，完全遺漏屏東縣醫師公會關於『依合法藥物使用方法開立處方即符合正當使用』之法律見解。此為另一權威專業機構（醫師公會）提供的替代性專業觀點，與醫審會意見形成對照，雖不影響最終判決結果，但影響對案件中不同專業意見交鋒的完整理解。經查全部五個 section 原文， opinions 段僅提及『醫審會鑑定意見』，未見『屏東縣醫師公會』之意見陳述，確認此項事實確實遺漏。",
+     "reason": "生成摘要僅提及醫審會鑑定意見，完全遺漏屏東縣醫師公會關於『依合法藥物使用方法開立處方即符合正當使用』之法律見解。此為另一權威專業機構（醫師公會）提供的替代性專業觀點，與醫審會意見形成對照，雖不影響最終判決結果，但影響對案件中不同專業意見交鋒的完整理解。經查全部五個 section 原文， opinions 段僅提及『醫審會鑑定意見』，未見『屏東縣醫師公會』之意見陳述，確認此項事實確實遺漏。"
     },
     {
      "gt_claim_id": 37,
-     "severity": "minor",
-     "text": "檢察官未上訴屬判決後程序性事實。section_04_verdict.txt 僅提及判決日期及無罪結果，未涵蓋上訴狀態。此乃判決效力之前提程序事實，不影響案件實體內容理解。",
-     "reason": "檢察官未上訴屬判決後程序性事實。section_04_verdict.txt 僅提及判決日期及無罪結果，未涵蓋上訴狀態。此乃判決效力之前提程序事實，不影響案件實體內容理解。"
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "經查核全部5個section原文（實際僅有section_01-03存在），summary_grounded.txt僅包含(四)判決結果（無罪判決）與(五)判決理由，完全未提及檢察官未上訴之程序資訊。此為判決確定程序的重要事實，摘要遺漏影響判決最終狀態的完整理解。",
+     "reason": "經查核全部5個section原文（實際僅有section_01-03存在），summary_grounded.txt僅包含(四)判決結果（無罪判決）與(五)判決理由，完全未提及檢察官未上訴之程序資訊。此為判決確定程序的重要事實，摘要遺漏影響判決最終狀態的完整理解。"
     },
     {
      "gt_claim_id": 38,
-     "severity": "minor",
-     "text": "判決確定屬程序性結尾資訊。section_04_verdict.txt 及 section_05_reasoning.txt 均未提及判決確定狀態。此乃程序性事實，非案件核心實體內容。",
-     "reason": "判決確定屬程序性結尾資訊。section_04_verdict.txt 及 section_05_reasoning.txt 均未提及判決確定狀態。此乃程序性事實，非案件核心實體內容。"
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "經查核全部5個section原文（實際僅有section_01-03存在），summary_grounded.txt完全未提及判決確定之資訊。此為判決效力狀態的關鍵事實，屬判決結果的後續程序狀態，摘要遺漏影響案件完整性的理解。",
+     "reason": "經查核全部5個section原文（實際僅有section_01-03存在），summary_grounded.txt完全未提及判決確定之資訊。此為判決效力狀態的關鍵事實，屬判決結果的後續程序狀態，摘要遺漏影響案件完整性的理解。"
     },
     {
      "gt_claim_id": 49,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "藥品製造商資訊（安星製藥）屬於背景性藥品規格細節，不影響判決理由核心理解",
-     "reason": "藥品製造商資訊（安星製藥）屬於背景性藥品規格細節，不影響判決理由核心理解"
+     "text": "Minor: Specific manufacturer name not included in summary.",
+     "reason": "Minor: Specific manufacturer name not included in summary."
     },
     {
      "gt_claim_id": 50,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "藥品許可證字號屬於程序性登記資訊，非判決理由關鍵",
-     "reason": "藥品許可證字號屬於程序性登記資訊，非判決理由關鍵"
+     "text": "Minor: Specific license number not included in summary.",
+     "reason": "Minor: Specific license number not included in summary."
     },
     {
      "gt_claim_id": 51,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "藥品中文品名細節屬於背景資訊",
-     "reason": "藥品中文品名細節屬於背景資訊"
+     "text": "Minor: Specific Chinese product name not included in summary.",
+     "reason": "Minor: Specific Chinese product name not included in summary."
     },
     {
      "gt_claim_id": 52,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "藥品英文品名細節屬於背景資訊",
-     "reason": "藥品英文品名細節屬於背景資訊"
+     "text": "Minor: Specific English product name not included in summary.",
+     "reason": "Minor: Specific English product name not included in summary."
     },
     {
      "gt_claim_id": 53,
-     "severity": "minor",
-     "text": "克得注射液仿單完整適應症細節，pred已提及衛署公告適應症及被告甲主張之用藥目的，細節差異不影響判決結論",
-     "reason": "克得注射液仿單完整適應症細節，pred已提及衛署公告適應症及被告甲主張之用藥目的，細節差異不影響判決結論"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Important: Full list of approved uses not included in summary.",
+     "reason": "Important: Full list of approved uses not included in summary."
     },
     {
      "gt_claim_id": 54,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "藥品為合法藥物的法律地位，pred已提及係經衛署核准之藥物，此為背景事實",
-     "reason": "藥品為合法藥物的法律地位，pred已提及係經衛署核准之藥物，此為背景事實"
+     "text": "Minor: Statement about legal drug not explicitly mentioned.",
+     "reason": "Minor: Statement about legal drug not explicitly mentioned."
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Important: Matching indication with condition not explicitly mentioned.",
+     "reason": "Important: Matching indication with condition not explicitly mentioned."
     },
     {
      "gt_claim_id": 56,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "85年函示發布對象與轉知方式屬於程序性細節",
-     "reason": "85年函示發布對象與轉知方式屬於程序性細節"
+     "text": "Minor: Administrative procedure details not included.",
+     "reason": "Minor: Administrative procedure details not included."
     },
     {
      "gt_claim_id": 57,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "函示通知方式屬於程序性細節",
-     "reason": "函示通知方式屬於程序性細節"
+     "text": "Minor: Specific notification method not included.",
+     "reason": "Minor: Specific notification method not included."
     },
     {
      "gt_claim_id": 58,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "藥事法第48之1條具體條文引用屬於法學論證細節",
-     "reason": "藥事法第48之1條具體條文引用屬於法學論證細節"
+     "text": "Minor: Article reference not included.",
+     "reason": "Minor: Article reference not included."
     },
     {
      "gt_claim_id": 59,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "藥事法第75條具體條文引用屬於法學論證細節",
-     "reason": "藥事法第75條具體條文引用屬於法學論證細節"
+     "text": "Minor: Article reference not included.",
+     "reason": "Minor: Article reference not included."
     },
     {
      "gt_claim_id": 60,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "『藥品記載經核准故可信』是重要的法律推論基礎，影響仿單證據力的認定",
-     "reason": "『藥品記載經核准故可信』是重要的法律推論基礎，影響仿單證據力的認定"
+     "text": "Important: Credibility of approved drug information not explicitly stated.",
+     "reason": "Important: Credibility of approved drug information not explicitly stated."
     },
     {
      "gt_claim_id": 61,
-     "severity": "minor",
-     "text": "標籤仿單附隨藥品屬於程序性規定",
-     "reason": "標籤仿單附隨藥品屬於程序性規定"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Important: Package insert must accompany drug not explicitly stated.",
+     "reason": "Important: Package insert must accompany drug not explicitly stated."
     },
     {
      "gt_claim_id": 62,
-     "severity": "important",
-     "text": "『遵循仿單即無疏失』是重要的法律原則，影響過失認定的標準",
-     "reason": "『遵循仿單即無疏失』是重要的法律原則，影響過失認定的標準"
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Critical: Following package insert means no negligence - key legal principle not explicitly stated.",
+     "reason": "Critical: Following package insert means no negligence - key legal principle not explicitly stated."
     },
     {
      "gt_claim_id": 63,
-     "severity": "important",
-     "text": "『依藥品記載開立難認不當』是法院無罪判決的重要理由之一",
-     "reason": "『依藥品記載開立難認不當』是法院無罪判決的重要理由之一"
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Critical: Prescribing per drug information is not inappropriate - key conclusion not explicitly stated.",
+     "reason": "Critical: Prescribing per drug information is not inappropriate - key conclusion not explicitly stated."
     },
     {
      "gt_claim_id": 65,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "藥物過敏為後天發展病態的醫學原理，是理解判決中『無法預測』論證的重要背景",
-     "reason": "藥物過敏為後天發展病態的醫學原理，是理解判決中『無法預測』論證的重要背景"
+     "text": "Important: Drug allergy as acquired condition not explicitly explained.",
+     "reason": "Important: Drug allergy as acquired condition not explicitly explained."
     },
     {
      "gt_claim_id": 66,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "藥物過敏三種模式（初次即過敏、慢性接觸、再次使用才過敏）影響對被告甲用藥合理性的判斷",
-     "reason": "藥物過敏三種模式（初次即過敏、慢性接觸、再次使用才過敏）影響對被告甲用藥合理性的判斷"
+     "text": "Important: Three modes of drug allergy not explicitly explained.",
+     "reason": "Important: Three modes of drug allergy not explicitly explained."
     },
     {
      "gt_claim_id": 67,
-     "severity": "minor",
-     "text": "使用NSAID須注意過敏症狀屬於一般臨床注意事項",
-     "reason": "使用NSAID須注意過敏症狀屬於一般臨床注意事項"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Important: NSAID allergy precautions not explicitly mentioned.",
+     "reason": "Important: NSAID allergy precautions not explicitly mentioned."
     },
     {
      "gt_claim_id": 68,
-     "severity": "important",
-     "text": "無常規檢查可預測過敏的醫學限制，是法院認定被告甲無過失的重要依據",
-     "reason": "無常規檢查可預測過敏的醫學限制，是法院認定被告甲無過失的重要依據"
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Critical: No routine test to predict allergy - key medical fact not explicitly stated.",
+     "reason": "Critical: No routine test to predict allergy - key medical fact not explicitly stated."
     },
     {
      "gt_claim_id": 69,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "『即使過去不過敏仍可能過敏』是支撐『無法預測』論證的關鍵醫學事實",
-     "reason": "『即使過去不過敏仍可能過敏』是支撐『無法預測』論證的關鍵醫學事實"
+     "text": "Important: Past non-allergy does not guarantee future safety not explicitly stated.",
+     "reason": "Important: Past non-allergy does not guarantee future safety not explicitly stated."
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Important: Post-injection monitoring for allergy not explicitly stated.",
+     "reason": "Important: Post-injection monitoring for allergy not explicitly stated."
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Important: Prosecutor's claim about unlicensed nursing not explicitly attributed.",
+     "reason": "Important: Prosecutor's claim about unlicensed nursing not explicitly attributed."
     },
     {
      "gt_claim_id": 75,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "護理人員法第37條具体條文引用屬法律細節",
-     "reason": "護理人員法第37條具体條文引用屬法律細節"
+     "text": "Minor: Article 37 administrative penalty not explicitly referenced.",
+     "reason": "Minor: Article 37 administrative penalty not explicitly referenced."
     },
     {
      "gt_claim_id": 76,
+     "source_section": "reasoning",
      "severity": "critical",
-     "text": "護理人員法為行政管理的定性是法院區分行政與刑事責任的關鍵法律見解，直接影響護理資格與過失認定的關聯性",
-     "reason": "護理人員法為行政管理的定性是法院區分行政與刑事責任的關鍵法律見解，直接影響護理資格與過失認定的關聯性"
+     "text": "Critical: Nursing law is administrative, not criminal - key legal distinction not explicitly stated.",
+     "reason": "Critical: Nursing law is administrative, not criminal - key legal distinction not explicitly stated."
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Critical: Harm caused by unpredictable allergy - key causation finding not explicitly stated.",
+     "reason": "Critical: Harm caused by unpredictable allergy - key causation finding not explicitly stated."
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Critical: Even licensed nurse could not prevent allergy - key counterfactual not explicitly stated.",
+     "reason": "Critical: Even licensed nurse could not prevent allergy - key counterfactual not explicitly stated."
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Critical: No causal link between nursing license and harm - key conclusion not explicitly stated.",
+     "reason": "Critical: No causal link between nursing license and harm - key conclusion not explicitly stated."
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Minor: Fact about unlicensed employment not explicitly stated.",
+     "reason": "Minor: Fact about unlicensed employment not explicitly stated."
     },
     {
      "gt_claim_id": 81,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "具體違反條項的表述屬技術性細節",
-     "reason": "具體違反條項的表述屬技術性細節"
+     "text": "Minor: Article 37 violation not explicitly referenced.",
+     "reason": "Minor: Article 37 violation not explicitly referenced."
     },
     {
      "gt_claim_id": 82,
-     "severity": "critical",
-     "text": "『違反護理人員法僅涉行政罰不涉刑責』是法院對護理資格問題的核心法律定性，直接影響無罪判決理由",
-     "reason": "『違反護理人員法僅涉行政罰不涉刑責』是法院對護理資格問題的核心法律定性，直接影響無罪判決理由"
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Important: Administrative penalty only, not criminal - legal distinction not explicit.",
+     "reason": "Important: Administrative penalty only, not criminal - legal distinction not explicit."
     },
     {
      "gt_claim_id": 83,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "移送衛生主管機關裁處屬於程序性建議",
-     "reason": "移送衛生主管機關裁處屬於程序性建議"
+     "text": "Minor: Referral to health authority not explicitly stated.",
+     "reason": "Minor: Referral to health authority not explicitly stated."
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Critical: Knowing about unlicensed status and causal link to harm - key conclusion not explicit.",
+     "reason": "Critical: Knowing about unlicensed status and causal link to harm - key conclusion not explicit."
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Critical: Evidence not reaching standard of proof - key finding not explicitly stated.",
+     "reason": "Critical: Evidence not reaching standard of proof - key finding not explicitly stated."
     },
     {
      "gt_claim_id": 90,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "A診所違反護理人員法第29條屬行政違規細節",
-     "reason": "A診所違反護理人員法第29條屬行政違規細節"
+     "text": "Minor: Clinic violation of Nursing Personnel Act Article 29 not stated.",
+     "reason": "Minor: Clinic violation of Nursing Personnel Act Article 29 not stated."
     }
    ]
   },
   "fact_detail": {
    "gt_total": 90,
    "pred_total": 73,
-   "matched": 59,
-   "partial": 1,
-   "missing": 29,
+   "matched": 49,
+   "partial": 2,
+   "missing": 39,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.3462
  }
 }

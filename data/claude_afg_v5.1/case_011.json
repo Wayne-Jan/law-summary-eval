@@ -138,16 +138,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8117,
-  "fact_recall": 0.6525,
+  "fact_recall": 0.6356,
   "fact_precision": 1.0,
-  "fact_f1": 0.7897,
+  "fact_f1": 0.7772,
   "quality_overall": 4.6857,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9857,
-  "uncited_rate": 0.025,
+  "uncited_rate": 0.0,
   "faithfulness_combined": {
-   "score": 0.985,
-   "citation_fidelity": 0.975,
+   "score": 1.0,
+   "citation_fidelity": 1.0,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -155,126 +155,91 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.904,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.9435,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 17,
+   "important": 1,
+   "minor": 8,
    "details": [
     {
      "gt_claim_id": 18,
-     "severity": "minor",
-     "text": "法律要件「並無不能注意之情事」為過失責任的構成要件之一，但屬於可推論的技術性要件，不影響主要案情理解。",
-     "reason": "法律要件「並無不能注意之情事」為過失責任的構成要件之一，但屬於可推論的技術性要件，不影響主要案情理解。"
-    },
-    {
-     "gt_claim_id": 30,
-     "severity": "minor",
-     "text": "案件類型「業務過失致死」已由判決主文實質涵蓋，此為形式上標示。",
-     "reason": "案件類型「業務過失致死」已由判決主文實質涵蓋，此為形式上標示。"
-    },
-    {
-     "gt_claim_id": 31,
-     "severity": "minor",
-     "text": "opinions section 確實未提及檢察官提起公訴，但 facts section 已涵蓋此事實。",
-     "reason": "opinions section 確實未提及檢察官提起公訴，但 facts section 已涵蓋此事實。"
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01 與 section_05 均未明確陳述「並無不能注意之情事」此法律條件，雖 reasoning 有「能注意」表述，但未明確否定「不能注意」抗辯，屬過失認定的重要法律條件遺漏",
+     "reason": "section_01 與 section_05 均未明確陳述「並無不能注意之情事」此法律條件，雖 reasoning 有「能注意」表述，但未明確否定「不能注意」抗辯，屬過失認定的重要法律條件遺漏"
     },
     {
      "gt_claim_id": 32,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "程序性事實（簡易判決處刑），不影響犯罪事實與判決結果理解。",
-     "reason": "程序性事實（簡易判決處刑），不影響犯罪事實與判決結果理解。"
+     "text": "經查閱全部 5 個 section，pred claims 與 sections 內容均未提及「法院合議庭裁定改以簡易判決處刑」此程序性事實。雖然 section_01_facts.txt 結尾提到「案經檢察官提起公訴」，但無後續程序轉換的說明。此為程序性背景資訊，不影響案情核心理解。",
+     "reason": "經查閱全部 5 個 section，pred claims 與 sections 內容均未提及「法院合議庭裁定改以簡易判決處刑」此程序性事實。雖然 section_01_facts.txt 結尾提到「案經檢察官提起公訴」，但無後續程序轉換的說明。此為程序性背景資訊，不影響案情核心理解。"
     },
     {
      "gt_claim_id": 33,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "判決書形式說明（是否附鑑定意見），不影響案情實質內容。",
-     "reason": "判決書形式說明（是否附鑑定意見），不影響案情實質內容。"
+     "text": "經查閱全部 5 個 section，pred claims 提及證人A（放射線科醫師）及病患X之妻的證詞，但未明確說明「判決書未附上鑑定意見」。GT claim 特指判決書附件狀態，而 pred 僅呈現證人證詞內容，無法涵蓋「未附鑑定意見」的資訊。此為程序性/背景性事實，不影響過失認定或因果關係等核心案情。",
+     "reason": "經查閱全部 5 個 section，pred claims 提及證人A（放射線科醫師）及病患X之妻的證詞，但未明確說明「判決書未附上鑑定意見」。GT claim 特指判決書附件狀態，而 pred 僅呈現證人證詞內容，無法涵蓋「未附鑑定意見」的資訊。此為程序性/背景性事實，不影響過失認定或因果關係等核心案情。"
     },
     {
      "gt_claim_id": 34,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決日期（99年12月17日）與法院名稱為背景資訊，facts section 開頭已隱含此資訊，且verdict section已有實質內容。",
-     "reason": "判決日期（99年12月17日）與法院名稱為背景資訊，facts section 開頭已隱含此資訊，且verdict section已有實質內容。"
+     "text": "摘要標題雖提及法院名稱及年度，但未提及具體判決日期（99年12月17日），屬程序性資訊",
+     "reason": "摘要標題雖提及法院名稱及年度，但未提及具體判決日期（99年12月17日），屬程序性資訊"
     },
     {
      "gt_claim_id": 39,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "證據文件形式說明（和解書及支票影本），和解事實本身已於verdict涵蓋。",
-     "reason": "證據文件形式說明（和解書及支票影本），和解事實本身已於verdict涵蓋。"
+     "text": "摘要有提及達成民事和解，但未提及和解書、支票影本等具體證據文件，屬次要證據細節",
+     "reason": "摘要有提及達成民事和解，但未提及和解書、支票影本等具體證據文件，屬次要證據細節"
     },
     {
      "gt_claim_id": 41,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "證據文件形式說明（前案紀錄表），前科紀錄本身已於verdict涵蓋。",
-     "reason": "證據文件形式說明（前案紀錄表），前科紀錄本身已於verdict涵蓋。"
+     "text": "摘要有提及無前科紀錄，但未提及臺灣高等法院被告前案紀錄表此證據文件，屬次要證據細節",
+     "reason": "摘要有提及無前科紀錄，但未提及臺灣高等法院被告前案紀錄表此證據文件，屬次要證據細節"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要有提及緩刑貳年，但缺少「以啟自新」之諭知目的，屬次要修飾性資訊",
+     "reason": "摘要有提及緩刑貳年，但缺少「以啟自新」之諭知目的，屬次要修飾性資訊"
     },
     {
      "gt_claim_id": 44,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決確定程序說明（未上訴），屬於判決後續狀態，不影響判決內容理解。",
-     "reason": "判決確定程序說明（未上訴），屬於判決後續狀態，不影響判決內容理解。"
+     "text": "摘要未提及被告及檢察官是否上訴，屬程序性事實",
+     "reason": "摘要未提及被告及檢察官是否上訴，屬程序性事實"
     },
     {
      "gt_claim_id": 45,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決確定狀態，屬程序性結論，不影響犯罪事實與判決理由理解。",
-     "reason": "判決確定狀態，屬程序性結論，不影響犯罪事實與判決理由理解。"
-    },
-    {
-     "gt_claim_id": 46,
-     "severity": "minor",
-     "text": "opinions section 已提及「證人A為A醫院放射線科主治醫師」，身份說明已涵蓋於該處。",
-     "reason": "opinions section 已提及「證人A為A醫院放射線科主治醫師」，身份說明已涵蓋於該處。"
-    },
-    {
-     "gt_claim_id": 48,
-     "severity": "minor",
-     "text": "pred claim 17已提及「同日下午約13時許將驗片判讀結果輸入電腦上傳至病歷資料」，屬 partial 而非 missing，維持 partial 判定。",
-     "reason": "pred claim 17已提及「同日下午約13時許將驗片判讀結果輸入電腦上傳至病歷資料」，屬 partial 而非 missing，維持 partial 判定。"
-    },
-    {
-     "gt_claim_id": 49,
-     "severity": "minor",
-     "text": "醫院驗片作業流程細節（急件規定），屬背景流程說明，非核心犯罪事實。",
-     "reason": "醫院驗片作業流程細節（急件規定），屬背景流程說明，非核心犯罪事實。"
-    },
-    {
-     "gt_claim_id": 50,
-     "severity": "minor",
-     "text": "醫院驗片作業流程細節（門診流程），屬背景流程說明，非核心犯罪事實。",
-     "reason": "醫院驗片作業流程細節（門診流程），屬背景流程說明，非核心犯罪事實。"
-    },
-    {
-     "gt_claim_id": 51,
-     "severity": "minor",
-     "text": "判讀時間規定（三天內），屬醫院作業規範，摘要已涵蓋「下午1時許完成判讀」的關鍵時間點。",
-     "reason": "判讀時間規定（三天內），屬醫院作業規範，摘要已涵蓋「下午1時許完成判讀」的關鍵時間點。"
-    },
-    {
-     "gt_claim_id": 53,
-     "severity": "minor",
-     "text": "section_03_opinions.txt 已於證人證詞中提及「開立胸部X光攝影、肝功能、抽血及上消化道攝影等檢查之處方箋」（pred claim 18）。",
-     "reason": "section_03_opinions.txt 已於證人證詞中提及「開立胸部X光攝影、肝功能、抽血及上消化道攝影等檢查之處方箋」（pred claim 18）。"
-    },
-    {
-     "gt_claim_id": 56,
-     "severity": "minor",
-     "text": "section_03_opinions.txt 證人證詞已實質涵蓋法院認定一般作業程序的依據。",
-     "reason": "section_03_opinions.txt 證人證詞已實質涵蓋法院認定一般作業程序的依據。"
+     "text": "摘要未提及判決確定狀態，屬程序性事實",
+     "reason": "摘要未提及判決確定狀態，屬程序性事實"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 59,
    "pred_total": 40,
-   "matched": 36,
+   "matched": 35,
    "partial": 5,
-   "missing": 15,
+   "missing": 19,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.2857
  }
 }

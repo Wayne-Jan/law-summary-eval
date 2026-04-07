@@ -126,16 +126,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8007,
-  "fact_recall": 0.7727,
+  "fact_recall": 0.9444,
   "fact_precision": 1.0,
-  "fact_f1": 0.8718,
+  "fact_f1": 0.9714,
   "quality_overall": 4.7905,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9872,
-  "uncited_rate": 0.027,
+  "uncited_rate": 0.0,
   "faithfulness_combined": {
-   "score": 0.9838,
-   "citation_fidelity": 0.973,
+   "score": 1.0,
+   "citation_fidelity": 1.0,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -143,120 +143,56 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9192,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 32
+  },
+  "weighted_recall": 0.9731,
   "missing_severity": {
-   "critical": 0,
-   "important": 8,
-   "minor": 8,
+   "critical": 1,
+   "important": 2,
+   "minor": 1,
    "details": [
     {
-     "gt_claim_id": 19,
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『產後突然呼吸困難、嚴重缺氧』指18日剖腹產後立即發生的症狀，摘要僅記載19日晚間及20日凌晨的症狀，未涵蓋此關鍵初始時間點，影響羊水栓塞發病時間線的理解",
+     "reason": "『產後突然呼吸困難、嚴重缺氧』指18日剖腹產後立即發生的症狀，摘要僅記載19日晚間及20日凌晨的症狀，未涵蓋此關鍵初始時間點，影響羊水栓塞發病時間線的理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "section_01_facts.txt 雖有提及檢察官起訴內容，但未明確陳述「醫師甲疏未注意產婦產後出現呼吸困難、嚴重缺氧等症狀，應先以供氧設備給予氧氣」此一具體疏失指控。PRED_11 僅提及「無進一步檢查之相關資料或記載」，未涵蓋「產後呼吸困難應給氧」之疏失語義。經查全部 sections，未發現完整對應 GT_19 之陳述。此為公訴意旨之核心指控事實，影響案情完整理解。",
-     "reason": "section_01_facts.txt 雖有提及檢察官起訴內容，但未明確陳述「醫師甲疏未注意產婦產後出現呼吸困難、嚴重缺氧等症狀，應先以供氧設備給予氧氣」此一具體疏失指控。PRED_11 僅提及「無進一步檢查之相關資料或記載」，未涵蓋「產後呼吸困難應給氧」之疏失語義。經查全部 sections，未發現完整對應 GT_19 之陳述。此為公訴意旨之核心指控事實，影響案情完整理解。"
+     "text": "opinions section 摘要確實未提及妊娠毒血症、急性肺水腫等鑑別診斷，雖然 reasoning section 有引用醫審會鑑定提及，但 opinions section 的專家意見摘要遺漏此重要醫學鑑別要點",
+     "reason": "opinions section 摘要確實未提及妊娠毒血症、急性肺水腫等鑑別診斷，雖然 reasoning section 有引用醫審會鑑定提及，但 opinions section 的專家意見摘要遺漏此重要醫學鑑別要點"
     },
     {
-     "gt_claim_id": 20,
+     "gt_claim_id": 56,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "section_01_facts.txt 雖有「無進一步檢查之相關資料或記載」（PRED_11），但未明確陳述「醫師甲疏未進行詳細檢查確認是否羊水栓塞」之過失指控。GT_20 為獨立的疏失指控，pred summaries 中未獨立或明確陳述此項過失。此為公訴意旨核心指控，影響案情完整理解。",
-     "reason": "section_01_facts.txt 雖有「無進一步檢查之相關資料或記載」（PRED_11），但未明確陳述「醫師甲疏未進行詳細檢查確認是否羊水栓塞」之過失指控。GT_20 為獨立的疏失指控，pred summaries 中未獨立或明確陳述此項過失。此為公訴意旨核心指控，影響案情完整理解。"
-    },
-    {
-     "gt_claim_id": 44,
-     "severity": "minor",
-     "text": "『等了1分鐘救護車還沒有來』的具體等待時長細節，在摘要中確實未提及，僅提到『爭取時間』『救護車旋將來至』，未明確對應『等1分鐘』的細節",
-     "reason": "『等了1分鐘救護車還沒有來』的具體等待時長細節，在摘要中確實未提及，僅提到『爭取時間』『救護車旋將來至』，未明確對應『等1分鐘』的細節"
-    },
-    {
-     "gt_claim_id": 51,
-     "severity": "minor",
-     "text": "gt_claim 包含兩部分：(1)衛生署鑑定認未供氧有疏失 (2)被告甲對此有意見。摘要僅涵蓋第(1)部分（醫審會鑑定意見），未明確提及被告對鑑定意見的『有意見』回應，屬 partial coverage 但 input 標為 missing，維持 missing",
-     "reason": "gt_claim 包含兩部分：(1)衛生署鑑定認未供氧有疏失 (2)被告甲對此有意見。摘要僅涵蓋第(1)部分（醫審會鑑定意見），未明確提及被告對鑑定意見的『有意見』回應，屬 partial coverage 但 input 標為 missing，維持 missing"
-    },
-    {
-     "gt_claim_id": 59,
-     "severity": "important",
-     "text": "「病患最後因敗血性休克死亡，這是結果，無法反應原來造成的起始原因」確實未在 pred opinions section 出現。pred claim 40-41 僅提及「最原始表現有呼吸急促和瀰漫性血管內溶血症」「無法完全否定羊水栓塞」，但未提及「敗血性休克」作為最終死因及「無法反應起始原因」的因果限制說明。此為法醫研究所的重要鑑定結論，影響因果關係判斷，屬於重要遺漏。",
-     "reason": "「病患最後因敗血性休克死亡，這是結果，無法反應原來造成的起始原因」確實未在 pred opinions section 出現。pred claim 40-41 僅提及「最原始表現有呼吸急促和瀰漫性血管內溶血症」「無法完全否定羊水栓塞」，但未提及「敗血性休克」作為最終死因及「無法反應起始原因」的因果限制說明。此為法醫研究所的重要鑑定結論，影響因果關係判斷，屬於重要遺漏。"
+     "text": "opinions section 摘要確實未明確提及「羊水栓塞係無法預防之產科急症」這一關鍵鑑定要點，影響對專家意見核心結論的理解",
+     "reason": "opinions section 摘要確實未明確提及「羊水栓塞係無法預防之產科急症」這一關鍵鑑定要點，影響對專家意見核心結論的理解"
     },
     {
      "gt_claim_id": 63,
-     "severity": "important",
-     "text": "摘要 pred claim 50 僅提及『被告』未上訴，完全未提及『檢察官』未上訴。在無罪判決中，檢察官是否上訴係判決確定之關鍵程序事實，摘要遺漏影響對判決確定程序之完整理解",
-     "reason": "摘要 pred claim 50 僅提及『被告』未上訴，完全未提及『檢察官』未上訴。在無罪判決中，檢察官是否上訴係判決確定之關鍵程序事實，摘要遺漏影響對判決確定程序之完整理解"
-    },
-    {
-     "gt_claim_id": 71,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "檢察官關於轉診醫院選擇的指控細節，屬檢察官論告內容的細節陳述，未見於 reasoning 段落中，維持 missing",
-     "reason": "檢察官關於轉診醫院選擇的指控細節，屬檢察官論告內容的細節陳述，未見於 reasoning 段落中，維持 missing"
-    },
-    {
-     "gt_claim_id": 72,
-     "severity": "minor",
-     "text": "醫院距離比較（D醫院 vs A醫院）為地理位置細節，屬背景性事實，不影響判決結論理解，維持 missing",
-     "reason": "醫院距離比較（D醫院 vs A醫院）為地理位置細節，屬背景性事實，不影響判決結論理解，維持 missing"
-    },
-    {
-     "gt_claim_id": 73,
-     "severity": "minor",
-     "text": "凌晨4時轉診時間及交通狀況為背景性時間細節，影響判決結論，維持 missing",
-     "reason": "凌晨4時轉診時間及交通狀況為背景性時間細節，影響判決結論，維持 missing"
-    },
-    {
-     "gt_claim_id": 74,
-     "severity": "minor",
-     "text": "D醫院醫療技術受國人推崇為轉診理由的細節，屬法院對轉診決定正當性的說明，維持 missing",
-     "reason": "D醫院醫療技術受國人推崇為轉診理由的細節，屬法院對轉診決定正當性的說明，維持 missing"
-    },
-    {
-     "gt_claim_id": 75,
-     "severity": "minor",
-     "text": "計程車轉診及未用救護車的明確陳述未見於 reasoning，雖有提及救護車但未明確比較，維持 missing",
-     "reason": "計程車轉診及未用救護車的明確陳述未見於 reasoning，雖有提及救護車但未明確比較，維持 missing"
-    },
-    {
-     "gt_claim_id": 76,
-     "severity": "minor",
-     "text": "救護車遲遲不至的辯稱未見於 reasoning，僅見「認救護車旋將來至」，語義不同，維持 missing",
-     "reason": "救護車遲遲不至的辯稱未見於 reasoning，僅見「認救護車旋將來至」，語義不同，維持 missing"
-    },
-    {
-     "gt_claim_id": 83,
-     "severity": "important",
-     "text": "法院函請法醫研究所鑑定屬法院調查證據的重要程序事實，雖 pred claim 5 有此陳述，但 GT 歸類為 reasoning 而生成摘要將之置於 opinions section，屬 section 歸類差異，但 GT 未於 reasoning 段落呈現，維持 missing",
-     "reason": "法院函請法醫研究所鑑定屬法院調查證據的重要程序事實，雖 pred claim 5 有此陳述，但 GT 歸類為 reasoning 而生成摘要將之置於 opinions section，屬 section 歸類差異，但 GT 未於 reasoning 段落呈現，維持 missing"
-    },
-    {
-     "gt_claim_id": 84,
-     "severity": "important",
-     "text": "法醫研究所關於敗血性休克為結果無法反應起始原因的分析，屬鑑定意見的關鍵內容，影響因果關係判斷，未見於 reasoning，維持 missing",
-     "reason": "法醫研究所關於敗血性休克為結果無法反應起始原因的分析，屬鑑定意見的關鍵內容，影響因果關係判斷，未見於 reasoning，維持 missing"
-    },
-    {
-     "gt_claim_id": 91,
-     "severity": "important",
-     "text": "輸血延誤與死亡關係的論述屬法院引用判例的重要法律推理，影響因果關係判斷，未見於 reasoning，維持 missing",
-     "reason": "輸血延誤與死亡關係的論述屬法院引用判例的重要法律推理，影響因果關係判斷，未見於 reasoning，維持 missing"
-    },
-    {
-     "gt_claim_id": 98,
-     "severity": "important",
-     "text": "檢察官未提出其他積極證據屬法院判決無罪的重要理由之一，雖 reasoning 末段有類似意涵，但精確文句未出現，維持 missing",
-     "reason": "檢察官未提出其他積極證據屬法院判決無罪的重要理由之一，雖 reasoning 末段有類似意涵，但精確文句未出現，維持 missing"
+     "text": "摘要判決結果段落僅提及「被告於法定上訴期間未上訴」，未提及檢察官是否上訴，屬程序性事實，不影響判決結論理解",
+     "reason": "摘要判決結果段落僅提及「被告於法定上訴期間未上訴」，未提及檢察官是否上訴，屬程序性事實，不影響判決結論理解"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 99,
    "pred_total": 74,
-   "matched": 76,
-   "partial": 1,
-   "missing": 16,
+   "matched": 92,
+   "partial": 3,
+   "missing": 4,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.75
  }
 }

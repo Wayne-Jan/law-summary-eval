@@ -128,59 +128,87 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.707,
-  "fact_recall": 0.9324,
-  "fact_precision": 0.9882,
-  "fact_f1": 0.9595,
+  "fact_recall": 0.8784,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9353,
   "quality_overall": 4.9024,
   "citation_accuracy": 0.9444,
   "citation_support_score": 0.9216,
-  "uncited_rate": 0.035,
+  "uncited_rate": 0.0,
   "faithfulness_combined": {
-   "score": 0.9421,
-   "citation_fidelity": 0.9113,
-   "fact_precision": 0.9882,
+   "score": 0.9666,
+   "citation_fidelity": 0.9444,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.982,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 17
+  },
+  "weighted_recall": 0.955,
   "missing_severity": {
-   "critical": 0,
-   "important": 1,
-   "minor": 2,
+   "critical": 1,
+   "important": 2,
+   "minor": 3,
    "details": [
     {
-     "gt_claim_id": 29,
+     "gt_claim_id": 6,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "「醫審會兩件、法醫研究所一件」屬鑑定數量統計性描述，為程序性背景事實。pred summary 雖分別提及各鑑定（第88332號、第89294號、法醫研究所），但未總結數量，不影響案情實質理解，屬次要遺漏。",
-     "reason": "「醫審會兩件、法醫研究所一件」屬鑑定數量統計性描述，為程序性背景事實。pred summary 雖分別提及各鑑定（第88332號、第89294號、法醫研究所），但未總結數量，不影響案情實質理解，屬次要遺漏。"
+     "text": "section_01_facts.txt 僅提及「因洗腎所需血流量不夠」，未明確提到「手術後按時洗腎」之事實。雖gt_facts TL_4有記載，但生成摘要確實未涵蓋此時間性事實。此為背景性醫療事實，不影響過失判定核心。",
+     "reason": "section_01_facts.txt 僅提及「因洗腎所需血流量不夠」，未明確提到「手術後按時洗腎」之事實。雖gt_facts TL_4有記載，但生成摘要確實未涵蓋此時間性事實。此為背景性醫療事實，不影響過失判定核心。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要提及個別鑑定意見內容，但未明確總結鑑定數量（醫審會兩件、法醫研究所一件），屬概述性資訊，不影響案情理解",
+     "reason": "生成摘要提及個別鑑定意見內容，但未明確總結鑑定數量（醫審會兩件、法醫研究所一件），屬概述性資訊，不影響案情理解"
     },
     {
      "gt_claim_id": 30,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "「病歷未記載頸靜脈鼓脹」為重要否定性證據，涉及法院對鑑定意見可信度的評價（教科書說應有，但病歷沒記載）。此遺漏影響對法院證據判斷邏輯的完整理解，屬重要事實。",
-     "reason": "「病歷未記載頸靜脈鼓脹」為重要否定性證據，涉及法院對鑑定意見可信度的評價（教科書說應有，但病歷沒記載）。此遺漏影響對法院證據判斷邏輯的完整理解，屬重要事實。"
+     "text": "生成摘要提及心包膜填塞臨床表徵包括頸靜脈鼓脹，但未明確說明病歷上並無此記載。此為重要否定性事實，影響鑑定意見的完整理解",
+     "reason": "生成摘要提及心包膜填塞臨床表徵包括頸靜脈鼓脹，但未明確說明病歷上並無此記載。此為重要否定性事實，影響鑑定意見的完整理解"
     },
     {
      "gt_claim_id": 43,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "「檢察官督同法醫師相驗」為程序性事實，屬解剖鑑定的前置程序，不影響死因認定與過失判斷的實質理解，屬次要遺漏。",
-     "reason": "「檢察官督同法醫師相驗」為程序性事實，屬解剖鑑定的前置程序，不影響死因認定與過失判斷的實質理解，屬次要遺漏。"
+     "text": "生成摘要未提及檢察官督同法醫師相驗的程序性事實，不影響鑑定內容理解",
+     "reason": "生成摘要未提及檢察官督同法醫師相驗的程序性事實，不影響鑑定內容理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "確實遺漏：GT claim 66 提及「心包膜變性及硬度增加而造成心內壓增高、心血充填受限及心輸出量減少」之病理推論，遍查 reasoning section 及全文均未提及，影響對死因機轉的完整理解。",
+     "reason": "確實遺漏：GT claim 66 提及「心包膜變性及硬度增加而造成心內壓增高、心血充填受限及心輸出量減少」之病理推論，遍查 reasoning section 及全文均未提及，影響對死因機轉的完整理解。"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "確實遺漏：GT claim 74「被告丙之過失犯罪事證應堪認定」為法院正式法律結論用語，雖 pred claim 83 有「難辭其疚」，但語義強度與法律正式性有別，且被告身份標示不一致（丙 vs 甲），影響判決結論理解。",
+     "reason": "確實遺漏：GT claim 74「被告丙之過失犯罪事證應堪認定」為法院正式法律結論用語，雖 pred claim 83 有「難辭其疚」，但語義強度與法律正式性有別，且被告身份標示不一致（丙 vs 甲），影響判決結論理解。"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 74,
    "pred_total": 85,
-   "matched": 67,
-   "partial": 4,
-   "missing": 3,
-   "hallucinated": 1
+   "matched": 62,
+   "partial": 6,
+   "missing": 6,
+   "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.8235
  }
 }

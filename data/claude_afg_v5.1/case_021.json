@@ -136,16 +136,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8918,
-  "fact_recall": 0.875,
+  "fact_recall": 0.8393,
   "fact_precision": 1.0,
-  "fact_f1": 0.9333,
+  "fact_f1": 0.9126,
   "quality_overall": 4.9119,
   "citation_accuracy": 0.9722,
   "citation_support_score": 0.9556,
-  "uncited_rate": 0.064,
+  "uncited_rate": 0.077,
   "faithfulness_combined": {
-   "score": 0.946,
-   "citation_fidelity": 0.91,
+   "score": 0.9384,
+   "citation_fidelity": 0.8973,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -153,42 +153,77 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9881,
+  "numerical_detail": {
+   "total_numerical": 18,
+   "correct": 18
+  },
+  "weighted_recall": 0.9683,
   "missing_severity": {
    "critical": 0,
-   "important": 0,
-   "minor": 3,
+   "important": 1,
+   "minor": 6,
    "details": [
     {
      "gt_claim_id": 28,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "死亡方式為病死/自然死係鑑定報告中的分類項目，屬背景性事實，不影響案情理解或判決結論",
-     "reason": "死亡方式為病死/自然死係鑑定報告中的分類項目，屬背景性事實，不影響案情理解或判決結論"
+     "text": "死亡方式為病死/自然死是法醫研究所鑑定報告中的次要資訊，屬鑑定分類細節。主要死亡原因「急性缺氧性腦症併發肺炎/多重器官衰竭」已在摘要中完整呈現，不影響案情核心理解。",
+     "reason": "死亡方式為病死/自然死是法醫研究所鑑定報告中的次要資訊，屬鑑定分類細節。主要死亡原因「急性缺氧性腦症併發肺炎/多重器官衰竭」已在摘要中完整呈現，不影響案情核心理解。"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "足夠設備的詳細清單已在判決事實段完整引用（「如插管工具、急救藥物及人工換氣設備等」），opinions section的GT claim是對該內容的重複。摘要在第一段已明確提及「足夠設備（如插管工具、急救藥物及人工換氣設備等）」，故在opinions section省略屬合理簡化，不影響理解。",
+     "reason": "足夠設備的詳細清單已在判決事實段完整引用（「如插管工具、急救藥物及人工換氣設備等」），opinions section的GT claim是對該內容的重複。摘要在第一段已明確提及「足夠設備（如插管工具、急救藥物及人工換氣設備等）」，故在opinions section省略屬合理簡化，不影響理解。"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓血氧下降至無法偵測是急救時的具體監測細節。摘要已提及「呼吸心跳異常狀況」及「血壓血氧下降」，缺少「無法偵測」程度描述不影響核心事實理解。",
+     "reason": "血壓血氧下降至無法偵測是急救時的具體監測細節。摘要已提及「呼吸心跳異常狀況」及「血壓血氧下降」，缺少「無法偵測」程度描述不影響核心事實理解。"
     },
     {
      "gt_claim_id": 46,
-     "severity": "minor",
-     "text": "「資料不足無法做更好的判斷」屬鑑定意見中的輔助說明，非核心醫學意見，不影響被告行為與因果關係之認定",
-     "reason": "「資料不足無法做更好的判斷」屬鑑定意見中的輔助說明，非核心醫學意見，不影響被告行為與因果關係之認定"
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「診斷不確定性」是E醫院鑑定的重要專業意見，反映被告處置不當導致資料不足無法判斷真正病因。此項缺失影響對醫療過失嚴重程度的完整理解，應標記為important。",
+     "reason": "「診斷不確定性」是E醫院鑑定的重要專業意見，反映被告處置不當導致資料不足無法判斷真正病因。此項缺失影響對醫療過失嚴重程度的完整理解，應標記為important。"
     },
     {
-     "gt_claim_id": 47,
+     "gt_claim_id": 52,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "「對正常病患在安全範圍」為鑑定意見中的補充說明，用於對比病患特殊性質，非核心爭點事實",
-     "reason": "「對正常病患在安全範圍」為鑑定意見中的補充說明，用於對比病患特殊性質，非核心爭點事實"
+     "text": "判決作成日期為程序性事實，不影響案情理解",
+     "reason": "判決作成日期為程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "撤回告訴具狀及協議和解書為程序性細節，摘要已提及和解事實",
+     "reason": "撤回告訴具狀及協議和解書為程序性細節，摘要已提及和解事實"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決確定程序屬於 verdict section 的程序性事實，reasoning section 未提及尚屬合理，不影響案情理解",
+     "reason": "判決確定程序屬於 verdict section 的程序性事實，reasoning section 未提及尚屬合理，不影響案情理解"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 84,
    "pred_total": 78,
-   "matched": 72,
-   "partial": 3,
-   "missing": 3,
+   "matched": 64,
+   "partial": 13,
+   "missing": 7,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.75
  }
 }

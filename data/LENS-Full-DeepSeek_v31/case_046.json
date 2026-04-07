@@ -152,16 +152,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6154,
-  "fact_recall": 0.914,
+  "fact_recall": 0.8408,
   "fact_precision": 1.0,
-  "fact_f1": 0.9551,
+  "fact_f1": 0.9135,
   "quality_overall": 4.9267,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.027,
-  "uncited_rate": 0.075,
+  "uncited_rate": 0.046,
   "faithfulness_combined": {
-   "score": 0.955,
-   "citation_fidelity": 0.925,
+   "score": 0.9724,
+   "citation_fidelity": 0.954,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -169,72 +169,196 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 0.964,
-  "weighted_recall": 0.9809,
+  "numerical_detail": {
+   "total_numerical": 28,
+   "correct": 27
+  },
+  "weighted_recall": 0.9406,
   "missing_severity": {
    "critical": 0,
-   "important": 1,
-   "minor": 7,
+   "important": 4,
+   "minor": 20,
    "details": [
     {
      "gt_claim_id": 21,
+     "source_section": "facts",
      "severity": "important",
-     "text": "經查全篇摘要，雖於『被告回應』段提及『被告甲、被告乙均矢口否認有業務過失致死犯行』可間接推知起訴罪名，但明確表述『檢察官主張成立業務過失致死罪』確未出現。此為起訴要旨關鍵資訊，影響案件性質理解，維持 missing 判定並標記為 important。",
-     "reason": "經查全篇摘要，雖於『被告回應』段提及『被告甲、被告乙均矢口否認有業務過失致死犯行』可間接推知起訴罪名，但明確表述『檢察官主張成立業務過失致死罪』確未出現。此為起訴要旨關鍵資訊，影響案件性質理解，維持 missing 判定並標記為 important。"
+     "text": "預測摘要雖描述事實經過與起訴程序，但未明確陳述檢察官主張的具體罪名為『業務過失致死罪』。原始判決書開頭明確記載『業務過失案件』，主文亦判決『業務上之過失致人於死』，此為重要法律背景資訊，影響對案件性質的完整理解。",
+     "reason": "預測摘要雖描述事實經過與起訴程序，但未明確陳述檢察官主張的具體罪名為『業務過失致死罪』。原始判決書開頭明確記載『業務過失案件』，主文亦判決『業務上之過失致人於死』，此為重要法律背景資訊，影響對案件性質的完整理解。"
     },
     {
      "gt_claim_id": 29,
-     "severity": "minor",
-     "text": "『依當時情形，並無不能注意情事』為過失認定之標準法律用語。經查全文，『判決理由』段以『被告甲顯有應注意而未予注意之過失』、『被告乙亦有應注意而疏未注意之過失』等表述呈現相同法律評價，雖用語不同但核心概念（被告具有注意能力且應注意而未注意）已完整涵蓋。此屬法律推理的標準表述轉化，不影響過失认定的實質理解，維持 missing 判定並標記為 minor。",
-     "reason": "『依當時情形，並無不能注意情事』為過失認定之標準法律用語。經查全文，『判決理由』段以『被告甲顯有應注意而未予注意之過失』、『被告乙亦有應注意而疏未注意之過失』等表述呈現相同法律評價，雖用語不同但核心概念（被告具有注意能力且應注意而未注意）已完整涵蓋。此屬法律推理的標準表述轉化，不影響過失认定的實質理解，維持 missing 判定並標記為 minor。"
+     "source_section": "facts",
+     "severity": "important",
+     "text": "預測摘要未明確出現『並無不能注意情事』這一過失責任構成要件的法律判斷用語。原始判決書事實段針對被告甲、乙均明確記載『依當時情形，並無不能注意情事』，此乃過失犯成立與否的重要法律要件，缺失影響對法院認定被告有注意義務且能注意而不注意之法律推理的理解。",
+     "reason": "預測摘要未明確出現『並無不能注意情事』這一過失責任構成要件的法律判斷用語。原始判決書事實段針對被告甲、乙均明確記載『依當時情形，並無不能注意情事』，此乃過失犯成立與否的重要法律要件，缺失影響對法院認定被告有注意義務且能注意而不注意之法律推理的理解。"
     },
     {
-     "gt_claim_id": 73,
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "罪名構成要件的背景性身份事實。摘要中僅以『業務過失致人於死罪』間接隱含業務身份，未獨立明確陳述『被告甲、被告乙為從事業務之人』。惟判決主文中的罪名與刑度已明確載明，此身份事實可從罪名推知，遺漏不影響核心判決資訊理解。",
-     "reason": "罪名構成要件的背景性身份事實。摘要中僅以『業務過失致人於死罪』間接隱含業務身份，未獨立明確陳述『被告甲、被告乙為從事業務之人』。惟判決主文中的罪名與刑度已明確載明，此身份事實可從罪名推知，遺漏不影響核心判決資訊理解。"
+     "text": "CHUNK_08有具體體溫「攝氏三十八點八度」，但摘要僅泛述「持續發燒」，具體數值遺漏屬細節性事實",
+     "reason": "CHUNK_08有具體體溫「攝氏三十八點八度」，但摘要僅泛述「持續發燒」，具體數值遺漏屬細節性事實"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_08有「自十月二十四日晚上七時到死亡為止，均未再度進食」，摘要未提及進食狀況，屬病情細節",
+     "reason": "CHUNK_08有「自十月二十四日晚上七時到死亡為止，均未再度進食」，摘要未提及進食狀況，屬病情細節"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_10有「持續使用腎毒性抗生素」，摘要僅提「抗生素」未提「腎毒性」屬性，屬藥物特性細節",
+     "reason": "CHUNK_10有「持續使用腎毒性抗生素」，摘要僅提「抗生素」未提「腎毒性」屬性，屬藥物特性細節"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "CHUNK_10有被告甲偵查中明確供述：「如果沒照超音波會導致無法判斷它是腎炎或腎膿瘍」，摘要未提及此關鍵供述，影響過失認定之理解",
+     "reason": "CHUNK_10有被告甲偵查中明確供述：「如果沒照超音波會導致無法判斷它是腎炎或腎膿瘍」，摘要未提及此關鍵供述，影響過失認定之理解"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_15、17有說明會詳細時間地點，摘要僅泛述病歷相關程序，未提10/26晚10時、急診室旁會議室等細節",
+     "reason": "CHUNK_15、17有說明會詳細時間地點，摘要僅泛述病歷相關程序，未提10/26晚10時、急診室旁會議室等細節"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_17有「彌封於國泰醫院提供之牛皮紙袋中」，摘要未提及牛皮紙袋材質細節",
+     "reason": "CHUNK_17有「彌封於國泰醫院提供之牛皮紙袋中」，摘要未提及牛皮紙袋材質細節"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_15有「五十二頁病歷（封底面不計、未含空白頁六頁及檢查單）」，摘要未提及頁數記載細節",
+     "reason": "CHUNK_15有「五十二頁病歷（封底面不計、未含空白頁六頁及檢查單）」，摘要未提及頁數記載細節"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_17、CHUNK_15有簽名及透明膠帶黏貼細節，摘要未提及彌封程序之具體方式",
+     "reason": "CHUNK_17、CHUNK_15有簽名及透明膠帶黏貼細節，摘要未提及彌封程序之具體方式"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_15有「承辦檢察官隨即函國泰醫院調取上揭病歷」，摘要未提及檢察官調取程序",
+     "reason": "CHUNK_15有「承辦檢察官隨即函國泰醫院調取上揭病歷」，摘要未提及檢察官調取程序"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_15有「共計四十六張（含空白底頁，檢驗報告）」，摘要未提及病歷張數",
+     "reason": "CHUNK_15有「共計四十六張（含空白底頁，檢驗報告）」，摘要未提及病歷張數"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_15有「迴至八十八年一月二十六日，壬○○出庭應訊，始發現上情」，摘要未提及具體發現時間",
+     "reason": "CHUNK_15有「迴至八十八年一月二十六日，壬○○出庭應訊，始發現上情」，摘要未提及具體發現時間"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_18有「手稿內容字跡潦草，多為片段字句，足見當時記錄之匆忙」，摘要未提及手稿字跡細節",
+     "reason": "CHUNK_18有「手稿內容字跡潦草，多為片段字句，足見當時記錄之匆忙」，摘要未提及手稿字跡細節"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_18有「解說過程中並有病患家屬打斷詢問、發言...被告等二人當時心情之緊張可想而知」，摘要未提及現場情緒氣氛",
+     "reason": "CHUNK_18有「解說過程中並有病患家屬打斷詢問、發言...被告等二人當時心情之緊張可想而知」，摘要未提及現場情緒氣氛"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_18有「被告等二人於手稿蓋章係於說明、記錄完畢之後...是否能僅憑記憶即時更正亦非無疑」，摘要未提及蓋章時機與更正可能性之論述",
+     "reason": "CHUNK_18有「被告等二人於手稿蓋章係於說明、記錄完畢之後...是否能僅憑記憶即時更正亦非無疑」，摘要未提及蓋章時機與更正可能性之論述"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "CHUNK_18有「尚難僅以手稿內容與病歷記載不符即遽認被告等二人竄改病歷內容」，此為無罪判決之核心論證，摘要遺漏影響判決理由理解",
+     "reason": "CHUNK_18有「尚難僅以手稿內容與病歷記載不符即遽認被告等二人竄改病歷內容」，此為無罪判決之核心論證，摘要遺漏影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_18有「日期誤載此種情形與文書記載通常可能發生之錯誤相仿，並非即可推認係被告重謄病歷之誤」，摘要未提及日期錯誤之推論",
+     "reason": "CHUNK_18有「日期誤載此種情形與文書記載通常可能發生之錯誤相仿，並非即可推認係被告重謄病歷之誤」，摘要未提及日期錯誤之推論"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CHUNK_18有「巡房日期、CRP檢驗日期...此均無法排除被告等二人口誤或告訴人壬○○耳誤之可能」，摘要未提及具體爭議點之分析",
+     "reason": "CHUNK_18有「巡房日期、CRP檢驗日期...此均無法排除被告等二人口誤或告訴人壬○○耳誤之可能」，摘要未提及具體爭議點之分析"
     },
     {
      "gt_claim_id": 147,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "reasoning section全文檢查，未發現提及『醫囑時間與護理人員實際申領、用藥時間差異』之技術性辯解，屬病歷記載相關的次要細節，不影響過失致死罪判決結論，確認維持missing",
-     "reason": "reasoning section全文檢查，未發現提及『醫囑時間與護理人員實際申領、用藥時間差異』之技術性辯解，屬病歷記載相關的次要細節，不影響過失致死罪判決結論，確認維持missing"
+     "text": "CHUNK_18有「手稿上記載為被告戊○○醫囑時間，與護理人員實際申領、用藥時間自不相同...亦非即有不符之處」，摘要未提及醫囑時間與用藥時間差異之解釋",
+     "reason": "CHUNK_18有「手稿上記載為被告戊○○醫囑時間，與護理人員實際申領、用藥時間自不相同...亦非即有不符之處」，摘要未提及醫囑時間與用藥時間差異之解釋"
     },
     {
      "gt_claim_id": 148,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "reasoning section全文檢查，未發現提及『病歷有多位醫護人員簽名及油墨字跡不同』之客觀證據事實，屬次要證據細節，不影響主要判決結論，確認維持missing",
-     "reason": "reasoning section全文檢查，未發現提及『病歷有多位醫護人員簽名及油墨字跡不同』之客觀證據事實，屬次要證據細節，不影響主要判決結論，確認維持missing"
+     "text": "CHUNK_19有「病歷內容除被告等二人記錄、簽名外...該病歷逐日油墨、字跡均不相同」，摘要未提及病歷多元特徵",
+     "reason": "CHUNK_19有「病歷內容除被告等二人記錄、簽名外...該病歷逐日油墨、字跡均不相同」，摘要未提及病歷多元特徵"
     },
     {
      "gt_claim_id": 149,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "reasoning section全文檢查，未發現提及『竄改需十數人配合』之合理性推論，雖為有力辯論觀點但屬次要論證，不影響無罪判決結論（預測已有其他無罪理由），確認維持missing",
-     "reason": "reasoning section全文檢查，未發現提及『竄改需十數人配合』之合理性推論，雖為有力辯論觀點但屬次要論證，不影響無罪判決結論（預測已有其他無罪理由），確認維持missing"
+     "text": "CHUNK_19有「若被告等要加以竄改，尚要經過十數人加以配合」，摘要未提及多人配合之論證",
+     "reason": "CHUNK_19有「若被告等要加以竄改，尚要經過十數人加以配合」，摘要未提及多人配合之論證"
     },
     {
      "gt_claim_id": 150,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "reasoning section全文檢查，未發現提及『護理人員到庭證稱未重新謄寫護理紀錄』之證人證詞，屬次要證據細節，不影響無罪判決結論（預測已有概括性『無證據證明』結論），確認維持missing",
-     "reason": "reasoning section全文檢查，未發現提及『護理人員到庭證稱未重新謄寫護理紀錄』之證人證詞，屬次要證據細節，不影響無罪判決結論（預測已有概括性『無證據證明』結論），確認維持missing"
+     "text": "CHUNK_19有「證人丁○○、丑○○、己○○...證稱伊未重新謄寫護理紀錄」，摘要未提及護理人員證詞",
+     "reason": "CHUNK_19有「證人丁○○、丑○○、己○○...證稱伊未重新謄寫護理紀錄」，摘要未提及護理人員證詞"
     },
     {
      "gt_claim_id": 151,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "reasoning section全文檢查，雖提及『檢驗報告檢查日期均在十月二十六日以前』，但未明確提及『列印日期為87年10月26日以後』之關鍵區別，屬次要事實細節，確認維持missing",
-     "reason": "reasoning section全文檢查，雖提及『檢驗報告檢查日期均在十月二十六日以前』，但未明確提及『列印日期為87年10月26日以後』之關鍵區別，屬次要事實細節，確認維持missing"
+     "text": "CHUNK_19有「國泰醫院移送檢察官病歷資料中確有列印日期為八十七年十月二十六日以後之檢驗報告」，摘要未提及檢驗報告列印日期",
+     "reason": "CHUNK_19有「國泰醫院移送檢察官病歷資料中確有列印日期為八十七年十月二十六日以後之檢驗報告」，摘要未提及檢驗報告列印日期"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 157,
    "pred_total": 130,
-   "matched": 140,
-   "partial": 7,
-   "missing": 8,
+   "matched": 131,
+   "partial": 2,
+   "missing": 24,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.7284
  }
 }

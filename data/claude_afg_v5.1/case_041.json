@@ -142,16 +142,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6154,
-  "fact_recall": 0.8511,
+  "fact_recall": 0.9237,
   "fact_precision": 1.0,
-  "fact_f1": 0.9196,
+  "fact_f1": 0.9603,
   "quality_overall": 4.8929,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.9839,
-  "uncited_rate": 0.018,
+  "uncited_rate": 0.07,
   "faithfulness_combined": {
-   "score": 0.9892,
-   "citation_fidelity": 0.982,
+   "score": 0.958,
+   "citation_fidelity": 0.93,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -159,72 +159,77 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9746,
+  "numerical_detail": {
+   "total_numerical": 39,
+   "correct": 39
+  },
+  "weighted_recall": 0.9796,
   "missing_severity": {
    "critical": 0,
-   "important": 2,
+   "important": 1,
    "minor": 6,
    "details": [
     {
      "gt_claim_id": 37,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "預測摘要僅提及被告未做電腦斷層掃描，但未提及『斷層掃描亦有盲點，若出血量少，可能無法判斷』之醫學論點。遍查全部 sections（facts、defense、opinions、reasoning、verdict）均無此內容，確認為遺漏。此為辯護論點中的輔助論述，屬次要事實。",
-     "reason": "預測摘要僅提及被告未做電腦斷層掃描，但未提及『斷層掃描亦有盲點，若出血量少，可能無法判斷』之醫學論點。遍查全部 sections（facts、defense、opinions、reasoning、verdict）均無此內容，確認為遺漏。此為辯護論點中的輔助論述，屬次要事實。"
-    },
-    {
-     "gt_claim_id": 38,
-     "severity": "important",
-     "text": "預測摘要雖提及『伊雖未記載昏迷指數、瞳孔放大』，但遺漏關鍵的『是伊疏忽』自認部分。GT 中此為被告自認疏失之陳述，但摘要僅陳述未記載之事實，未涵蓋被告承認此為疏忽之意涵。遍查全部 sections 均無被告自認疏忽之內容，確認為遺漏。此為被告對疏失的態度，影響案情完整理解。",
-     "reason": "預測摘要雖提及『伊雖未記載昏迷指數、瞳孔放大』，但遺漏關鍵的『是伊疏忽』自認部分。GT 中此為被告自認疏失之陳述，但摘要僅陳述未記載之事實，未涵蓋被告承認此為疏忽之意涵。遍查全部 sections 均無被告自認疏忽之內容，確認為遺漏。此為被告對疏失的態度，影響案情完整理解。"
+     "text": "『斷層掃描有盲點，出血量少無法判斷』這一技術性辯護理由在預測摘要中確實未出現，屬被告未做電腦斷層掃描的輔助論點，為次要技術性辯護",
+     "reason": "『斷層掃描有盲點，出血量少無法判斷』這一技術性辯護理由在預測摘要中確實未出現，屬被告未做電腦斷層掃描的輔助論點，為次要技術性辯護"
     },
     {
      "gt_claim_id": 67,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "昏迷指數15分與3分的具體意義屬醫學背景知識補充，原文未明確說明此對照關係，GT摘要額外添加以幫助理解",
-     "reason": "昏迷指數15分與3分的具體意義屬醫學背景知識補充，原文未明確說明此對照關係，GT摘要額外添加以幫助理解"
+     "text": "昏迷指數3分表示深度昏迷為一般醫學背景知識，不影響案情理解",
+     "reason": "昏迷指數3分表示深度昏迷為一般醫學背景知識，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "『同學視為家屬』的詳細條件（同住+能執行醫囑）係鑑定意見中重要醫療指引，影響對留院觀察建議的理解",
+     "reason": "『同學視為家屬』的詳細條件（同住+能執行醫囑）係鑑定意見中重要醫療指引，影響對留院觀察建議的理解"
     },
     {
      "gt_claim_id": 79,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "膀胱內留有二西西尿液屬解剖細節事實，用於反駁「二次跌倒」辯護，但非醫療過失認定的核心事實",
-     "reason": "膀胱內留有二西西尿液屬解剖細節事實，用於反駁「二次跌倒」辯護，但非醫療過失認定的核心事實"
+     "text": "膀胱內尿液量為次要解剖細節，不影響死因判斷",
+     "reason": "膀胱內尿液量為次要解剖細節，不影響死因判斷"
     },
     {
      "gt_claim_id": 89,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決日期（90年03月06日）及完整法院名稱（臺灣新竹地方法院）確實未被生成摘要提及。此為程序性事實，不影響案情實體理解及判決結論。",
-     "reason": "判決日期（90年03月06日）及完整法院名稱（臺灣新竹地方法院）確實未被生成摘要提及。此為程序性事實，不影響案情實體理解及判決結論。"
-    },
-    {
-     "gt_claim_id": 95,
-     "severity": "important",
-     "text": "reasoning section 雖提及「若有交付傷後注意事項書面指示，A醫院的處置是妥適的」，但摘要未明確陳述醫師「須要」或「應該」交付書面指示的義務規範內容。GT claim 95 強調的是義務規範（若檢查正常或病患堅持回家，須交付書面指示），屬鑑定意見的重要醫療準則，摘要中確實遺漏此規範性陳述",
-     "reason": "reasoning section 雖提及「若有交付傷後注意事項書面指示，A醫院的處置是妥適的」，但摘要未明確陳述醫師「須要」或「應該」交付書面指示的義務規範內容。GT claim 95 強調的是義務規範（若檢查正常或病患堅持回家，須交付書面指示），屬鑑定意見的重要醫療準則，摘要中確實遺漏此規範性陳述"
+     "text": "經查全部5個section（01_facts、03_opinions、05_reasoning，及不存在的02_issues、04_defense），均未提及「90年03月06日」判決日期。此為程序性事實（判決日期與法院名稱），不影響判決結論或案情核心理解",
+     "reason": "經查全部5個section（01_facts、03_opinions、05_reasoning，及不存在的02_issues、04_defense），均未提及「90年03月06日」判決日期。此為程序性事實（判決日期與法院名稱），不影響判決結論或案情核心理解"
     },
     {
      "gt_claim_id": 111,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "reasoning section 摘要提及多項證人證詞及鑑定意見，但未明確列出「證人乙於偵、審中證述」及「台灣高等法院檢察署法醫中心鑑定書」等具體證據文件名稱。此為證據援引的具體性細節，不影響核心論證理解",
-     "reason": "reasoning section 摘要提及多項證人證詞及鑑定意見，但未明確列出「證人乙於偵、審中證述」及「台灣高等法院檢察署法醫中心鑑定書」等具體證據文件名稱。此為證據援引的具體性細節，不影響核心論證理解"
+     "text": "證據引用細節（證人乙證述、病歷摘要報告、法醫中心鑑定書附卷）屬佐證性內容，reasoning section 摘要省略不影響過失認定邏輯理解",
+     "reason": "證據引用細節（證人乙證述、病歷摘要報告、法醫中心鑑定書附卷）屬佐證性內容，reasoning section 摘要省略不影響過失認定邏輯理解"
     },
     {
      "gt_claim_id": 119,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "reasoning section 雖確認死亡為外傷性腦損傷所致，但未明確提及「前開死亡原因有法醫中心鑑定書附卷可稽」的形式性證據說明。屬程序性/證據來源陳述，核心事實（硬腦膜上出血致死）已於 claim 100 涵蓋",
-     "reason": "reasoning section 雖確認死亡為外傷性腦損傷所致，但未明確提及「前開死亡原因有法醫中心鑑定書附卷可稽」的形式性證據說明。屬程序性/證據來源陳述，核心事實（硬腦膜上出血致死）已於 claim 100 涵蓋"
+     "text": "法醫中心鑑定書附卷的證據引用屬形式性記載，摘要已涵蓋死因內容，省略證據名稱不影響因果關係理解",
+     "reason": "法醫中心鑑定書附卷的證據引用屬形式性記載，摘要已涵蓋死因內容，省略證據名稱不影響因果關係理解"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 131,
    "pred_total": 114,
-   "matched": 108,
-   "partial": 7,
-   "missing": 8,
+   "matched": 118,
+   "partial": 6,
+   "missing": 7,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.6667
  }
 }

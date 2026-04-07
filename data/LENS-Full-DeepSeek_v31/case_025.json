@@ -130,251 +130,136 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7891,
-  "fact_recall": 0.7583,
-  "fact_precision": 1.0,
-  "fact_f1": 0.8625,
+  "fact_recall": 0.8907,
+  "fact_precision": 0.981,
+  "fact_f1": 0.9337,
   "quality_overall": 4.75,
   "citation_accuracy": 0.9259,
   "citation_support_score": 0.8759,
   "uncited_rate": 0.105,
   "faithfulness_combined": {
-   "score": 0.8972,
+   "score": 0.8896,
    "citation_fidelity": 0.8287,
-   "fact_precision": 1.0,
+   "fact_precision": 0.981,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 2,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 0.969,
-  "weighted_recall": 0.9051,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 31
+  },
+  "weighted_recall": 0.9691,
   "missing_severity": {
    "critical": 0,
-   "important": 8,
-   "minor": 27,
+   "important": 1,
+   "minor": 12,
    "details": [
     {
      "gt_claim_id": 9,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "事實段落雖提及第二次急診『經醫師診治』，但未明確指出是『另一名』醫師，屬次要細節，不影響判決理解",
-     "reason": "事實段落雖提及第二次急診『經醫師診治』，但未明確指出是『另一名』醫師，屬次要細節，不影響判決理解"
+     "text": "第二次急診醫師姓名(江美治/J醫師)確實未在任何section中明確提及，属背景性事實遺漏，不影響案情核心理解",
+     "reason": "第二次急診醫師姓名(江美治/J醫師)確實未在任何section中明確提及，属背景性事實遺漏，不影響案情核心理解"
     },
     {
      "gt_claim_id": 22,
+     "source_section": "facts",
      "severity": "important",
-     "text": "摘要雖提及死因為肺炎鏈球菌感染，但未明確陳述『因疏失致未發現感染』的因果關係，影響過失認定理解",
-     "reason": "摘要雖提及死因為肺炎鏈球菌感染，但未明確陳述『因疏失致未發現感染』的因果關係，影響過失認定理解"
+     "text": "「致未發現H童感染肺炎鏈球菌」此因果推論未在facts section明確呈現，雖見於allegation，但作為事實段落的關鍵因果關係遺漏會影響對案情完整性的理解",
+     "reason": "「致未發現H童感染肺炎鏈球菌」此因果推論未在facts section明確呈現，雖見於allegation，但作為事實段落的關鍵因果關係遺漏會影響對案情完整性的理解"
     },
     {
      "gt_claim_id": 25,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "摘要提及業務過失致死罪，但未明確引用『刑法第276條』條文編號，屬程序性事實",
-     "reason": "摘要提及業務過失致死罪，但未明確引用『刑法第276條』條文編號，屬程序性事實"
+     "text": "起訴法條(刑法第276條)為程序性法律資訊，非核心事實，遺漏不影響主要案情理解",
+     "reason": "起訴法條(刑法第276條)為程序性法律資訊，非核心事實，遺漏不影響主要案情理解"
     },
     {
      "gt_claim_id": 51,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "「婦幼科主任當時在解剖現場」確實未在 pred claims 中提及。檢視全部 section 內容，被告辯論時提到解剖報告的內容，但未提及婦幼科主任在解剖現場此一事實。此為背景性細節，不影響對被告辯護要點的理解。",
-     "reason": "「婦幼科主任當時在解剖現場」確實未在 pred claims 中提及。檢視全部 section 內容，被告辯論時提到解剖報告的內容，但未提及婦幼科主任在解剖現場此一事實。此為背景性細節，不影響對被告辯護要點的理解。"
-    },
-    {
-     "gt_claim_id": 71,
-     "severity": "minor",
-     "text": "就診時間點（85年12月18日5時8分）雖見於section_01_facts.txt，但GT中屬鑑定意見引用的病歷時間，生成摘要未提及此細節屬事實截斷，不影響判決理解",
-     "reason": "就診時間點（85年12月18日5時8分）雖見於section_01_facts.txt，但GT中屬鑑定意見引用的病歷時間，生成摘要未提及此細節屬事實截斷，不影響判決理解"
-    },
-    {
-     "gt_claim_id": 72,
-     "severity": "minor",
-     "text": "體溫39℃及咽喉發炎為鑑定意見中的病歷記載細節，生成摘要未明確提及，屬醫療細節遺漏",
-     "reason": "體溫39℃及咽喉發炎為鑑定意見中的病歷記載細節，生成摘要未明確提及，屬醫療細節遺漏"
-    },
-    {
-     "gt_claim_id": 73,
-     "severity": "minor",
-     "text": "頸部、胸腔、肺部、心臟、腹部檢查正常為鑑定意見細節，section_05_reasoning.txt雖提及部分檢查但未完整涵蓋，屬醫療細節遺漏",
-     "reason": "頸部、胸腔、肺部、心臟、腹部檢查正常為鑑定意見細節，section_05_reasoning.txt雖提及部分檢查但未完整涵蓋，屬醫療細節遺漏"
-    },
-    {
-     "gt_claim_id": 79,
-     "severity": "minor",
-     "text": "注射點滴時可主訴疼痛的意識狀態見於section_05_reasoning.txt『意識狀態在注射點滴時仍可主訴疼痛』，但生成摘要確實未提及此細節",
-     "reason": "注射點滴時可主訴疼痛的意識狀態見於section_05_reasoning.txt『意識狀態在注射點滴時仍可主訴疼痛』，但生成摘要確實未提及此細節"
-    },
-    {
-     "gt_claim_id": 80,
-     "severity": "minor",
-     "text": "胸部退縮現象和呼吸音粗見於section_05_reasoning.txt『呼吸時胸部退縮現象，呼吸音粗』，但生成摘要確實未提及",
-     "reason": "胸部退縮現象和呼吸音粗見於section_05_reasoning.txt『呼吸時胸部退縮現象，呼吸音粗』，但生成摘要確實未提及"
-    },
-    {
-     "gt_claim_id": 81,
-     "severity": "minor",
-     "text": "給予氧氣及靜脈點滴後住進加護病房的時間（12時50分）見於section_01_facts.txt和section_05_reasoning.txt，但生成摘要確實未提及",
-     "reason": "給予氧氣及靜脈點滴後住進加護病房的時間（12時50分）見於section_01_facts.txt和section_05_reasoning.txt，但生成摘要確實未提及"
-    },
-    {
-     "gt_claim_id": 82,
-     "severity": "minor",
-     "text": "住院後詳細生理數值和症狀（心跳170、呼吸60等）見於section_01_facts.txt和section_05_reasoning.txt，但生成摘要確實未提及",
-     "reason": "住院後詳細生理數值和症狀（心跳170、呼吸60等）見於section_01_facts.txt和section_05_reasoning.txt，但生成摘要確實未提及"
-    },
-    {
-     "gt_claim_id": 83,
-     "severity": "minor",
-     "text": "氣管插管、呼吸器、升血壓藥物等急救措施確未在生成摘要提及，屬醫療細節遺漏",
-     "reason": "氣管插管、呼吸器、升血壓藥物等急救措施確未在生成摘要提及，屬醫療細節遺漏"
-    },
-    {
-     "gt_claim_id": 84,
-     "severity": "minor",
-     "text": "13時意識喪失時間點見於section_01_facts.txt『13時許病患X意識喪失』，但生成摘要確實未提及",
-     "reason": "13時意識喪失時間點見於section_01_facts.txt『13時許病患X意識喪失』，但生成摘要確實未提及"
-    },
-    {
-     "gt_claim_id": 85,
-     "severity": "minor",
-     "text": "14時10分死亡時間點見於section_01_facts.txt『14時10分許終因肺炎鏈球菌感染...死亡』，但生成摘要確實未提及",
-     "reason": "14時10分死亡時間點見於section_01_facts.txt『14時10分許終因肺炎鏈球菌感染...死亡』，但生成摘要確實未提及"
-    },
-    {
-     "gt_claim_id": 89,
-     "severity": "important",
-     "text": "『短短七小時內』時間範疇為第三次鑑定意見的關鍵論述，section_05_reasoning.txt提及『變化十分快速』但未明確『七小時內』，屬重要鑑定論據遺漏",
-     "reason": "『短短七小時內』時間範疇為第三次鑑定意見的關鍵論述，section_05_reasoning.txt提及『變化十分快速』但未明確『七小時內』，屬重要鑑定論據遺漏"
-    },
-    {
-     "gt_claim_id": 90,
-     "severity": "important",
-     "text": "請法院查明病歷紀錄真實性的程序性建議為第一次鑑定核心結論，section_05_reasoning.txt雖提及病歷真實性調查但非明確引用鑑定建議，屬重要鑑定意見遺漏",
-     "reason": "請法院查明病歷紀錄真實性的程序性建議為第一次鑑定核心結論，section_05_reasoning.txt雖提及病歷真實性調查但非明確引用鑑定建議，屬重要鑑定意見遺漏"
+     "text": "遍查5個 section 原文皆無提及「婦幼科主任」在解剖現場，屬程序性事實不影響案情理解",
+     "reason": "遍查5個 section 原文皆無提及「婦幼科主任」在解剖現場，屬程序性事實不影響案情理解"
     },
     {
      "gt_claim_id": 91,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "仔細聽診可判定心跳呼吸規則性及雜音的論述確未在生成摘要提及，屬醫療專業細節遺漏",
-     "reason": "仔細聽診可判定心跳呼吸規則性及雜音的論述確未在生成摘要提及，屬醫療專業細節遺漏"
+     "text": "聽診判定的醫學專業意見雖重要，但section_03_opinions.txt主要記載三次鑑定結論，未完整呈現聽診細節的醫學論述，屬於鑑定意見章節的次要技術細節",
+     "reason": "聽診判定的醫學專業意見雖重要，但section_03_opinions.txt主要記載三次鑑定結論，未完整呈現聽診細節的醫學論述，屬於鑑定意見章節的次要技術細節"
     },
     {
      "gt_claim_id": 97,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "肺炎鏈球菌感染症狀依感染部位及嚴重性有不同表現為醫學背景說明，生成摘要未提及，屬背景知識遺漏",
-     "reason": "肺炎鏈球菌感染症狀依感染部位及嚴重性有不同表現為醫學背景說明，生成摘要未提及，屬背景知識遺漏"
+     "text": "肺炎鏈球菌感染症狀多樣性為背景醫學知識，section_03_opinions.txt第三次鑑定僅概括性提及，未完整呈現系統分類，不影響鑑定結論理解",
+     "reason": "肺炎鏈球菌感染症狀多樣性為背景醫學知識，section_03_opinions.txt第三次鑑定僅概括性提及，未完整呈現系統分類，不影響鑑定結論理解"
     },
     {
      "gt_claim_id": 98,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "肺炎的症狀列表（高燒、呼吸窘迫、咳嗽）為第三次鑑定中的醫學說明，生成摘要未提及",
-     "reason": "肺炎的症狀列表（高燒、呼吸窘迫、咳嗽）為第三次鑑定中的醫學說明，生成摘要未提及"
+     "text": "肺炎具體症狀為鑑定意見的背景醫學知識，pred摘要已涵蓋核心醫學判斷（敗血症症狀、病情變化快速等），細節症狀列舉屬次要資訊",
+     "reason": "肺炎具體症狀為鑑定意見的背景醫學知識，pred摘要已涵蓋核心醫學判斷（敗血症症狀、病情變化快速等），細節症狀列舉屬次要資訊"
     },
     {
      "gt_claim_id": 99,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "腦膜炎的症狀列表為第三次鑑定中的醫學說明，生成摘要未提及",
-     "reason": "腦膜炎的症狀列表為第三次鑑定中的醫學說明，生成摘要未提及"
+     "text": "腦膜炎具體症狀為背景醫學知識，pred摘要已涵蓋核心鑑定結論（敗血症變化快速、病情罕見等），症狀細節列舉不影響主要鑑定意見理解",
+     "reason": "腦膜炎具體症狀為背景醫學知識，pred摘要已涵蓋核心鑑定結論（敗血症變化快速、病情罕見等），症狀細節列舉不影響主要鑑定意見理解"
     },
     {
      "gt_claim_id": 100,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "敗血症的症狀列表為第三次鑑定中的醫學說明，生成摘要未提及",
-     "reason": "敗血症的症狀列表為第三次鑑定中的醫學說明，生成摘要未提及"
-    },
-    {
-     "gt_claim_id": 101,
-     "severity": "important",
-     "text": "『除了發燒、活力較差外，無其他可能敗血症引起的徵候紀錄』為第三次鑑定的重要論斷，生成摘要未提及，影響對鑑定意見的理解",
-     "reason": "『除了發燒、活力較差外，無其他可能敗血症引起的徵候紀錄』為第三次鑑定的重要論斷，生成摘要未提及，影響對鑑定意見的理解"
-    },
-    {
-     "gt_claim_id": 102,
-     "severity": "minor",
-     "text": "肺炎鏈球菌感染最常見位置為肺部的醫學文獻說明，生成摘要未提及",
-     "reason": "肺炎鏈球菌感染最常見位置為肺部的醫學文獻說明，生成摘要未提及"
+     "text": "敗血症具體症狀為背景醫學知識，pred摘要已涵蓋「體溫39度可能為敗血症症狀之一」等核心判斷，完整症狀列表屬次要資訊",
+     "reason": "敗血症具體症狀為背景醫學知識，pred摘要已涵蓋「體溫39度可能為敗血症症狀之一」等核心判斷，完整症狀列表屬次要資訊"
     },
     {
      "gt_claim_id": 103,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "25%~37%肺炎病人可引起菌血症的數據為醫學文獻記載，生成摘要未提及",
-     "reason": "25%~37%肺炎病人可引起菌血症的數據為醫學文獻記載，生成摘要未提及"
-    },
-    {
-     "gt_claim_id": 104,
-     "severity": "important",
-     "text": "醫師無法預見感染必引起敗血症的論述為第三次鑑定的重要論點，生成摘要未提及，影響對過失判斷依據的理解",
-     "reason": "醫師無法預見感染必引起敗血症的論述為第三次鑑定的重要論點，生成摘要未提及，影響對過失判斷依據的理解"
-    },
-    {
-     "gt_claim_id": 105,
-     "severity": "minor",
-     "text": "肺炎鏈球菌感染可引起全身各處感染的說明，生成摘要未提及",
-     "reason": "肺炎鏈球菌感染可引起全身各處感染的說明，生成摘要未提及"
-    },
-    {
-     "gt_claim_id": 106,
-     "severity": "minor",
-     "text": "醫學文獻無記載敗血症腦膜炎出現所需時間的說明，生成摘要未提及",
-     "reason": "醫學文獻無記載敗血症腦膜炎出現所需時間的說明，生成摘要未提及"
-    },
-    {
-     "gt_claim_id": 107,
-     "severity": "important",
-     "text": "『7小時內』發生急劇變化為罕見的時間範疇論述，section_05_reasoning.txt提及『變化十分快速』但未明確『7小時內』，屬重要鑑定論據遺漏",
-     "reason": "『7小時內』發生急劇變化為罕見的時間範疇論述，section_05_reasoning.txt提及『變化十分快速』但未明確『7小時內』，屬重要鑑定論據遺漏"
+     "text": "菌血症發生率統計數據（25%~37%）為專業醫學文獻細節，雖在GT claims中存在，但pred摘要未提及不影響鑑定結論的理解",
+     "reason": "菌血症發生率統計數據（25%~37%）為專業醫學文獻細節，雖在GT claims中存在，但pred摘要未提及不影響鑑定結論的理解"
     },
     {
      "gt_claim_id": 108,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "如有特殊變化當可發現並加早期診治的論述，生成摘要未提及",
-     "reason": "如有特殊變化當可發現並加早期診治的論述，生成摘要未提及"
-    },
-    {
-     "gt_claim_id": 109,
-     "severity": "minor",
-     "text": "急診室紀錄雖簡單但符合上呼吸道感染症狀的評價，生成摘要未提及",
-     "reason": "急診室紀錄雖簡單但符合上呼吸道感染症狀的評價，生成摘要未提及"
-    },
-    {
-     "gt_claim_id": 110,
-     "severity": "minor",
-     "text": "5時8分到達、5時15分離開及無觀察病情變化資料的時間與評價，雖見於其他段落但生成摘要未完整涵蓋",
-     "reason": "5時8分到達、5時15分離開及無觀察病情變化資料的時間與評價，雖見於其他段落但生成摘要未完整涵蓋"
-    },
-    {
-     "gt_claim_id": 113,
-     "severity": "minor",
-     "text": "敗血症體溫可能正常或低體溫的醫學說明，生成摘要未提及",
-     "reason": "敗血症體溫可能正常或低體溫的醫學說明，生成摘要未提及"
-    },
-    {
-     "gt_claim_id": 116,
-     "severity": "minor",
-     "text": "敗血症時血壓可能降低或正常的醫學說明，生成摘要未提及",
-     "reason": "敗血症時血壓可能降低或正常的醫學說明，生成摘要未提及"
+     "text": "醫師早期診治責任為一般性醫療原則論述，非本案特定鑑定結論，pred已涵蓋「急診處應有呼吸、心跳記錄」等具體鑑定意見",
+     "reason": "醫師早期診治責任為一般性醫療原則論述，非本案特定鑑定結論，pred已涵蓋「急診處應有呼吸、心跳記錄」等具體鑑定意見"
     },
     {
      "gt_claim_id": 124,
-     "severity": "important",
-     "text": "『檢察官於法定上訴期間未上訴』屬判決程序性事實，影響對案件最終狀態的理解，GT摘要中有提及，但生成摘要僅提及上訴權未提及檢察官未上訴，確認維持 missing",
-     "reason": "『檢察官於法定上訴期間未上訴』屬判決程序性事實，影響對案件最終狀態的理解，GT摘要中有提及，但生成摘要僅提及上訴權未提及檢察官未上訴，確認維持 missing"
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "全體 section 原文均未提及檢察官上訴情況，僅 section_04_verdict.txt 有一般性上訴教示。屬程序性事實，不影響無罪判決結論理解。",
+     "reason": "全體 section 原文均未提及檢察官上訴情況，僅 section_04_verdict.txt 有一般性上訴教示。屬程序性事實，不影響無罪判決結論理解。"
     },
     {
      "gt_claim_id": 125,
-     "severity": "important",
-     "text": "『本案判決即確定』屬判決最終結果狀態，與GT claim 124具有邏輯關聯，影響判決完整理解，確認維持 missing",
-     "reason": "『本案判決即確定』屬判決最終結果狀態，與GT claim 124具有邏輯關聯，影響判決完整理解，確認維持 missing"
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "全體 section 原文均未提及判決確定與否。屬程序性事實，不影響無罪判決結論理解。",
+     "reason": "全體 section 原文均未提及判決確定與否。屬程序性事實，不影響無罪判決結論理解。"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 151,
    "pred_total": 105,
-   "matched": 114,
-   "partial": 1,
-   "missing": 35,
-   "hallucinated": 0
+   "matched": 131,
+   "partial": 7,
+   "missing": 13,
+   "hallucinated": 2
   },
-  "section_balance": 1.0
+  "section_balance": 0.5
  }
 }

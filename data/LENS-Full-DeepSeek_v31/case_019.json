@@ -126,101 +126,87 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8715,
-  "fact_recall": 0.6759,
-  "fact_precision": 0.9355,
-  "fact_f1": 0.7848,
+  "fact_recall": 0.8796,
+  "fact_precision": 1.0,
+  "fact_f1": 0.936,
   "quality_overall": 4.6857,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.96,
-  "uncited_rate": 0.063,
+  "uncited_rate": 0.13,
   "faithfulness_combined": {
-   "score": 0.9364,
-   "citation_fidelity": 0.937,
-   "fact_precision": 0.9355,
+   "score": 0.922,
+   "citation_fidelity": 0.87,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9012,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.9506,
   "missing_severity": {
    "critical": 0,
-   "important": 6,
+   "important": 2,
    "minor": 4,
    "details": [
     {
      "gt_claim_id": 15,
-     "severity": "minor",
-     "text": "程序性事實，判決對象為被告甲，被告乙的協商判決狀態僅為背景資訊，不影響本案理解",
-     "reason": "程序性事實，判決對象為被告甲，被告乙的協商判決狀態僅為背景資訊，不影響本案理解"
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告乙（骨科證人A醫師）業經先以協商判決確定之事實，在 section_01_facts.txt 與 section_05_reasoning.txt 中均未提及。雖將被告乙標示為『證人A醫師』，但未交代其已協商判決確定之法律狀態。此為共同被告處理結果，影響案情完整理解。",
+     "reason": "被告乙（骨科證人A醫師）業經先以協商判決確定之事實，在 section_01_facts.txt 與 section_05_reasoning.txt 中均未提及。雖將被告乙標示為『證人A醫師』，但未交代其已協商判決確定之法律狀態。此為共同被告處理結果，影響案情完整理解。"
     },
     {
      "gt_claim_id": 32,
+     "source_section": "defense",
      "severity": "minor",
-     "text": "刑事宣示筆錄格式性描述，不影響判決內容理解",
-     "reason": "刑事宣示筆錄格式性描述，不影響判決內容理解"
+     "text": "『刑事宣示筆錄內容未載被告回應』屬程序性事實。原始宣示筆錄確實無『被告回應』段落，僅有犯罪事實要旨。然此乃協商判決之常態（被告協商合意已於先前程序完成），不影響案情核心理解。",
+     "reason": "『刑事宣示筆錄內容未載被告回應』屬程序性事實。原始宣示筆錄確實無『被告回應』段落，僅有犯罪事實要旨。然此乃協商判決之常態（被告協商合意已於先前程序完成），不影響案情核心理解。"
     },
     {
      "gt_claim_id": 40,
+     "source_section": "verdict",
      "severity": "important",
-     "text": "判決內容包含給付特定機構新台幣二十萬元，屬判決主文之相關條件，遺漏影響判決內容完整性",
-     "reason": "判決內容包含給付特定機構新台幣二十萬元，屬判決主文之相關條件，遺漏影響判決內容完整性"
+     "text": "給付公益團體二十萬元屬判決附記事項之重要內容，摘要遺漏影響判決完整性理解",
+     "reason": "給付公益團體二十萬元屬判決附記事項之重要內容，摘要遺漏影響判決完整性理解"
     },
     {
      "gt_claim_id": 41,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "給付執行細節（日期、匯款方式），程序性資訊",
-     "reason": "給付執行細節（日期、匯款方式），程序性資訊"
+     "text": "匯款完成時間為履行細節，雖屬事實但非核心判決結果",
+     "reason": "匯款完成時間為履行細節，雖屬事實但非核心判決結果"
     },
     {
      "gt_claim_id": 42,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "證據提存款據之記載，程序性資訊",
-     "reason": "證據提存款據之記載，程序性資訊"
+     "text": "證據記載為程序性參照，不影響判決主旨理解",
+     "reason": "證據記載為程序性參照，不影響判決主旨理解"
     },
     {
      "gt_claim_id": 43,
-     "severity": "important",
-     "text": "「被告、檢察官於法定上訴期間未上訴，本案判決即確定」屬判決確定之關鍵程序資訊，影響判決效力理解",
-     "reason": "「被告、檢察官於法定上訴期間未上訴，本案判決即確定」屬判決確定之關鍵程序資訊，影響判決效力理解"
-    },
-    {
-     "gt_claim_id": 45,
-     "severity": "important",
-     "text": "骨科主治醫生乙的認知與過失在 reasoning section 完全遺漏，影響過失責任分配之完整理解",
-     "reason": "骨科主治醫生乙的認知與過失在 reasoning section 完全遺漏，影響過失責任分配之完整理解"
-    },
-    {
-     "gt_claim_id": 46,
-     "severity": "important",
-     "text": "骨科主治醫生乙應盡之會診、抽血、內科控制等義務在 reasoning section 完全遺漏，影響注意義務標準理解",
-     "reason": "骨科主治醫生乙應盡之會診、抽血、內科控制等義務在 reasoning section 完全遺漏，影響注意義務標準理解"
-    },
-    {
-     "gt_claim_id": 47,
-     "severity": "important",
-     "text": "乙疏未注意之過失認定在 reasoning section 完全遺漏，影響過失責任分配",
-     "reason": "乙疏未注意之過失認定在 reasoning section 完全遺漏，影響過失責任分配"
-    },
-    {
-     "gt_claim_id": 48,
-     "severity": "important",
-     "text": "乙施行手術之時間點與非急迫性在 reasoning section 完全遺漏，影響過失時點與違法性理解",
-     "reason": "乙施行手術之時間點與非急迫性在 reasoning section 完全遺漏，影響過失時點與違法性理解"
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定情形屬程序性事實，原文雖有協商判決上訴限制說明但未明確記載「未上訴」",
+     "reason": "判決確定情形屬程序性事實，原文雖有協商判決上訴限制說明但未明確記載「未上訴」"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 54,
-   "pred_total": 31,
-   "matched": 33,
-   "partial": 7,
-   "missing": 10,
-   "hallucinated": 2
+   "pred_total": 32,
+   "matched": 47,
+   "partial": 1,
+   "missing": 6,
+   "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.5
  }
 }

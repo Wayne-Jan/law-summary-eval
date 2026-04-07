@@ -132,16 +132,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7651,
-  "fact_recall": 0.6486,
+  "fact_recall": 0.6622,
   "fact_precision": 1.0,
-  "fact_f1": 0.7869,
+  "fact_f1": 0.7967,
   "quality_overall": 4.6143,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.8714,
-  "uncited_rate": 0.048,
+  "uncited_rate": 0.0,
   "faithfulness_combined": {
-   "score": 0.9712,
-   "citation_fidelity": 0.952,
+   "score": 1.0,
+   "citation_fidelity": 1.0,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -149,88 +149,92 @@
    }
   },
   "compliance": 2,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 0.8,
-  "weighted_recall": 0.8739,
+  "weighted_recall": 0.8559,
   "missing_severity": {
-   "critical": 0,
-   "important": 3,
-   "minor": 8,
+   "critical": 1,
+   "important": 4,
+   "minor": 5,
    "details": [
     {
      "gt_claim_id": 2,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "病患與家屬親屬關係為背景性事實，不影響案情核心理解",
-     "reason": "病患與家屬親屬關係為背景性事實，不影響案情核心理解"
-    },
-    {
-     "gt_claim_id": 13,
-     "severity": "minor",
-     "text": "告訴人身份及提起告訴為程序性事實，不影響判決結論理解",
-     "reason": "告訴人身份及提起告訴為程序性事實，不影響判決結論理解"
+     "text": "摘要僅提及「由父母陪同求診」，未明確陳述「丙、戊之女」的親屬關係，屬背景性身份事實",
+     "reason": "摘要僅提及「由父母陪同求診」，未明確陳述「丙、戊之女」的親屬關係，屬背景性身份事實"
     },
     {
      "gt_claim_id": 18,
-     "severity": "minor",
-     "text": "『因協商判決導致鑑定內容未明載』為評論性說明，非核心事實",
-     "reason": "『因協商判決導致鑑定內容未明載』為評論性說明，非核心事實"
-    },
-    {
-     "gt_claim_id": 19,
-     "severity": "minor",
-     "text": "文件清單為列舉性事實，pred 已提及法務部法醫研究所鑑定書，缺少相驗證明書不影響核心案情",
-     "reason": "文件清單為列舉性事實，pred 已提及法務部法醫研究所鑑定書，缺少相驗證明書不影響核心案情"
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「因為協商判決，鑑定內容未明載」解釋了為何opinions段缺乏實質鑑定內容，影響對本 section 缺失的理解",
+     "reason": "「因為協商判決，鑑定內容未明載」解釋了為何opinions段缺乏實質鑑定內容，影響對本 section 缺失的理解"
     },
     {
      "gt_claim_id": 21,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "被告於本院訊問時自白犯罪的事實已在 reasoning section claim 33 提及，此處為重複表述自白時機，屬次要細節",
-     "reason": "被告於本院訊問時自白犯罪的事實已在 reasoning section claim 33 提及，此處為重複表述自白時機，屬次要細節"
+     "text": "程序性事實（法院訊問後自白），非判決核心內容，不影響判決結果理解",
+     "reason": "程序性事實（法院訊問後自白），非判決核心內容，不影響判決結果理解"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（檢察官聲請協商判決），非判決核心內容",
+     "reason": "程序性事實（檢察官聲請協商判決），非判決核心內容"
     },
     {
      "gt_claim_id": 30,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "未上訴為程序性結果事實，不影響判決主文理解",
-     "reason": "未上訴為程序性結果事實，不影響判決主文理解"
+     "text": "程序性事實（上訴期間未上訴），非判決核心內容",
+     "reason": "程序性事實（上訴期間未上訴），非判決核心內容"
     },
     {
      "gt_claim_id": 31,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "判決確定為程序性結果事實，可從減刑及緩刑宣告推論",
-     "reason": "判決確定為程序性結果事實，可從減刑及緩刑宣告推論"
+     "text": "程序性事實（判決確定），屬判決後狀態，非判決書本體內容",
+     "reason": "程序性事實（判決確定），屬判決後狀態，非判決書本體內容"
     },
     {
      "gt_claim_id": 34,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "被告與被害人家屬達成和解為判決重要考量因素，影響量刑及緩刑決定，屬重要事實",
-     "reason": "被告與被害人家屬達成和解為判決重要考量因素，影響量刑及緩刑決定，屬重要事實"
+     "text": "生成摘要之 reasoning section 未提及被告與被害人家屬達成和解之事實，GT 判決理由段明確記載此和解事實，屬影響刑度裁量的重要情節",
+     "reason": "生成摘要之 reasoning section 未提及被告與被害人家屬達成和解之事實，GT 判決理由段明確記載此和解事實，屬影響刑度裁量的重要情節"
     },
     {
      "gt_claim_id": 35,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "撤回告訴為重要程序事實，影響案件進展理解，屬重要事實",
-     "reason": "撤回告訴為重要程序事實，影響案件進展理解，屬重要事實"
+     "text": "生成摘要未提及被害人家屬於96年10月31日撤回告訴之具體日期及程序事實，GT 明確記載此時間點",
+     "reason": "生成摘要未提及被害人家屬於96年10月31日撤回告訴之具體日期及程序事實，GT 明確記載此時間點"
     },
     {
      "gt_claim_id": 36,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "表明不再追究刑事責任為重要和解內容，影響法院量刑考量，屬重要事實",
-     "reason": "表明不再追究刑事責任為重要和解內容，影響法院量刑考量，屬重要事實"
+     "text": "生成摘要未提及家屬表明不再追究刑事責任之的意思表示，GT 判決理由段明確記載",
+     "reason": "生成摘要未提及家屬表明不再追究刑事責任之的意思表示，GT 判決理由段明確記載"
     },
     {
      "gt_claim_id": 37,
-     "severity": "minor",
-     "text": "判決書有無判決理由為評論性事實，非案情核心事實",
-     "reason": "判決書有無判決理由為評論性事實，非案情核心事實"
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "GT 判決理由段明確指出「判決書內文無判決理由」，此為協商判決之重要特徵，生成摘要反而提供了詳細的判決理由內容，與 GT 存在根本性矛盾",
+     "reason": "GT 判決理由段明確指出「判決書內文無判決理由」，此為協商判決之重要特徵，生成摘要反而提供了詳細的判決理由內容，與 GT 存在根本性矛盾"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 37,
    "pred_total": 42,
-   "matched": 23,
-   "partial": 2,
-   "missing": 11,
+   "matched": 22,
+   "partial": 5,
+   "missing": 10,
    "hallucinated": 0
   },
   "section_balance": 1.0

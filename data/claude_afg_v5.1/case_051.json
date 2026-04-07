@@ -138,16 +138,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.5963,
-  "fact_recall": 0.9072,
+  "fact_recall": 0.8535,
   "fact_precision": 1.0,
-  "fact_f1": 0.9514,
+  "fact_f1": 0.921,
   "quality_overall": 4.5571,
   "citation_accuracy": 0.9722,
   "citation_support_score": 0.9829,
-  "uncited_rate": 0.008,
+  "uncited_rate": 0.023,
   "faithfulness_combined": {
-   "score": 0.9787,
-   "citation_fidelity": 0.9644,
+   "score": 0.9699,
+   "citation_fidelity": 0.9498,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -155,72 +155,183 @@
    }
   },
   "compliance": 4,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": null,
-  "weighted_recall": 0.9691,
+  "numerical_detail": null,
+  "weighted_recall": 0.9406,
   "missing_severity": {
    "critical": 0,
-   "important": 1,
-   "minor": 7,
+   "important": 6,
+   "minor": 16,
    "details": [
     {
      "gt_claim_id": 2,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "『產前檢查』與『住院待產』為不同概念，全部 sections 均未提及產前檢查事實，屬背景性事實遺漏",
-     "reason": "『產前檢查』與『住院待產』為不同概念，全部 sections 均未提及產前檢查事實，屬背景性事實遺漏"
+     "text": "經查 section_01_facts.txt、section_02_defense.txt、section_03_opinions.txt 及全部 GT claims 均未提及『產前檢查』，僅提及產婦因羊水破裂住院待產，確認摘要未涵蓋此背景事實，屬次要背景資訊",
+     "reason": "經查 section_01_facts.txt、section_02_defense.txt、section_03_opinions.txt 及全部 GT claims 均未提及『產前檢查』，僅提及產婦因羊水破裂住院待產，確認摘要未涵蓋此背景事實，屬次要背景資訊"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 雖提及『無需使用真空吸引器』，但未明確說明原因為『產婦並無疾病或衰竭』。此為醫療適應症判斷的重要事實，影響對使用真空吸引器必要性的理解，確認摘要未完整涵蓋",
+     "reason": "section_01_facts.txt 雖提及『無需使用真空吸引器』，但未明確說明原因為『產婦並無疾病或衰竭』。此為醫療適應症判斷的重要事實，影響對使用真空吸引器必要性的理解，確認摘要未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經查全部 section 原文及 GT claims，『胎兒窘迫或下降、內轉不好』等具體醫療情形未在 facts section 明確記載（reasoning section claim 77、87 雖提及相關醫療標準，但為法律論述而非事實陳述）。此為判斷醫療處置適當性的重要事實，確認摘要未涵蓋",
+     "reason": "經查全部 section 原文及 GT claims，『胎兒窘迫或下降、內轉不好』等具體醫療情形未在 facts section 明確記載（reasoning section claim 77、87 雖提及相關醫療標準，但為法律論述而非事實陳述）。此為判斷醫療處置適當性的重要事實，確認摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『能注意』但未使用『無不能注意之情事』之完整消極條件表述。此為刑法過失構成要件的法律程式性表述，雖有『能注意』之正面論述，但未完整呈現消極條件，屬次要技術性遺漏",
+     "reason": "section_01_facts.txt 提及『能注意』但未使用『無不能注意之情事』之完整消極條件表述。此為刑法過失構成要件的法律程式性表述，雖有『能注意』之正面論述，但未完整呈現消極條件，屬次要技術性遺漏"
     },
     {
      "gt_claim_id": 40,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "判決是否附鑑定意見內容屬程序性元資訊，不影響案情核心理解",
-     "reason": "判決是否附鑑定意見內容屬程序性元資訊，不影響案情核心理解"
+     "text": "判決格式說明（是否附鑑定意見內容）屬於程序性/格式性資訊，不影響案情實體理解。",
+     "reason": "判決格式說明（是否附鑑定意見內容）屬於程序性/格式性資訊，不影響案情實體理解。"
     },
     {
-     "gt_claim_id": 43,
+     "gt_claim_id": 47,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "頭皮下切開及左邊顳區例外之解剖細節，屬鑑定報告次要技術描述，不影響死因認定理解",
-     "reason": "頭皮下切開及左邊顳區例外之解剖細節，屬鑑定報告次要技術描述，不影響死因認定理解"
+     "text": "胃腸無特殊變化之解剖細節，屬背景性解剖發現，非關鍵死因判斷要素。",
+     "reason": "胃腸無特殊變化之解剖細節，屬背景性解剖發現，非關鍵死因判斷要素。"
     },
     {
      "gt_claim_id": 54,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "肺臟擴張狀態為解剖細節，與本案帽狀腱膜下出血致死之核心事實關聯性較低",
-     "reason": "肺臟擴張狀態為解剖細節，與本案帽狀腱膜下出血致死之核心事實關聯性較低"
+     "text": "肺臟擴張狀況屬解剖細節，非核心死因相關事實。",
+     "reason": "肺臟擴張狀況屬解剖細節，非核心死因相關事實。"
     },
     {
      "gt_claim_id": 55,
-     "severity": "important",
-     "text": "病患出生時狀態（哭聲宏亮、膚色正常）為重要醫療觀察事實，雖摘要提及Apgar評分暗示狀態良好，但未明確描述具體徵象，影響對病情轉折的理解",
-     "reason": "病患出生時狀態（哭聲宏亮、膚色正常）為重要醫療觀察事實，雖摘要提及Apgar評分暗示狀態良好，但未明確描述具體徵象，影響對病情轉折的理解"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "新生兒出生時哭聲、膚色雖存在於 GT timeline (TL_4)，但屬背景性出生狀況描述，不影響過失認定核心。",
+     "reason": "新生兒出生時哭聲、膚色雖存在於 GT timeline (TL_4)，但屬背景性出生狀況描述，不影響過失認定核心。"
     },
     {
      "gt_claim_id": 56,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "死後屍體窒息表徵為解剖細節，屬排除其他死因之次要資訊",
-     "reason": "死後屍體窒息表徵為解剖細節，屬排除其他死因之次要資訊"
+     "text": "無窒息表徵之解剖發現為排除性細節，非核心事實。",
+     "reason": "無窒息表徵之解剖發現為排除性細節，非核心事實。"
     },
     {
      "gt_claim_id": 57,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "肺臟狀況與死因關係判定為次要醫療鑑定細節",
-     "reason": "肺臟狀況與死因關係判定為次要醫療鑑定細節"
+     "text": "肺臟與死因關係之推定屬專業判斷細節，摘要已明確記載死因為帽狀腱膜下出血致出血性休克，此細節非必要。",
+     "reason": "肺臟與死因關係之推定屬專業判斷細節，摘要已明確記載死因為帽狀腱膜下出血致出血性休克，此細節非必要。"
     },
     {
      "gt_claim_id": 58,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "程序性事實（判決日期94年12月30日）遺漏，不影響案情理解與判決結論。",
-     "reason": "程序性事實（判決日期94年12月30日）遺漏，不影響案情理解與判決結論。"
+     "text": "判決日期（民國94年12月30日）與管轄法院（臺灣彰化地方法院）為程序性資訊，section_01_facts.txt 與 section_05_reasoning.txt 均未提及。其餘 section 檔案不存在。屬於程序性事實遺漏，不影響案情實體理解。",
+     "reason": "判決日期（民國94年12月30日）與管轄法院（臺灣彰化地方法院）為程序性資訊，section_01_facts.txt 與 section_05_reasoning.txt 均未提及。其餘 section 檔案不存在。屬於程序性事實遺漏，不影響案情實體理解。"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt雖有「新生兒後腦勺硬硬的，且血塊漫延到頸部」等類似描述，但GT要求的是「很明顯的帽狀腱膜下出血」這一法醫判斷的精確表述，摘要中確實未完整涵蓋此特定證詞原文",
+     "reason": "section_05_reasoning.txt雖有「新生兒後腦勺硬硬的，且血塊漫延到頸部」等類似描述，但GT要求的是「很明顯的帽狀腱膜下出血」這一法醫判斷的精確表述，摘要中確實未完整涵蓋此特定證詞原文"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法醫證人G的詳細證詞內容（新生兒頸部較厚、前後較長）屬細節描述，摘要確實未提及，不影響核心案情理解",
+     "reason": "法醫證人G的詳細證詞內容（新生兒頸部較厚、前後較長）屬細節描述，摘要確實未提及，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt有用「APTT與APTT指數比較異常應該比較偏向休克引起」但確實缺少「PATT」具體縮寫，屬細節省略",
+     "reason": "section_05_reasoning.txt有用「APTT與APTT指數比較異常應該比較偏向休克引起」但確實缺少「PATT」具體縮寫，屬細節省略"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt提到「其他部位無凝血功能異常」，但GT精確證詞「本件的新生兒其他部位無凝血功能異常」確實未完整引用",
+     "reason": "section_05_reasoning.txt提到「其他部位無凝血功能異常」，但GT精確證詞「本件的新生兒其他部位無凝血功能異常」確實未完整引用"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt「過失義務與因果關係」段落雖有提及使用適應症，但GT中詳列的完整醫療規範（母體疾病、第二產程過長等適應症完整列表）確實未完整涵蓋，影響醫療規範理解",
+     "reason": "section_05_reasoning.txt「過失義務與因果關係」段落雖有提及使用適應症，但GT中詳列的完整醫療規範（母體疾病、第二產程過長等適應症完整列表）確實未完整涵蓋，影響醫療規範理解"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt雖有提及真空吸引器使用規范，但GT中詳細的技術參數（每2分鐘增加0.2kgf/cm2、40-60cmHg、拉曳五次、15分鐘等具體數值）確實未完整涵蓋，影響過失認定依據理解",
+     "reason": "section_05_reasoning.txt雖有提及真空吸引器使用規范，但GT中詳細的技術參數（每2分鐘增加0.2kgf/cm2、40-60cmHg、拉曳五次、15分鐘等具體數值）確實未完整涵蓋，影響過失認定依據理解"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要中雖有提及注意事項，但GT明確的失敗標準（拉曳超過五次、超過15分鐘、改用剖腹產）確實未完整涵蓋，影響醫療標準理解",
+     "reason": "摘要中雖有提及注意事項，但GT明確的失敗標準（拉曳超過五次、超過15分鐘、改用剖腹產）確實未完整涵蓋，影響醫療標準理解"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "30分鐘時間限制確實在section_05_reasoning.txt中未提及，屬細節性醫療規範",
+     "reason": "30分鐘時間限制確實在section_05_reasoning.txt中未提及，屬細節性醫療規範"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt有「當胎頭拉出時應放鬆壓力」以及section_05_reasoning.txt結尾有「當胎頭拉出時，即應放鬆壓力」，基本涵蓋此意涵",
+     "reason": "section_01_facts.txt有「當胎頭拉出時應放鬆壓力」以及section_05_reasoning.txt結尾有「當胎頭拉出時，即應放鬆壓力」，基本涵蓋此意涵"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt有「被告甲係婦產科醫師」，背景資訊（從82年間開始擔任）雖提及職業但詳細起始時間屬細節",
+     "reason": "section_05_reasoning.txt有「被告甲係婦產科醫師」，背景資訊（從82年間開始擔任）雖提及職業但詳細起始時間屬細節"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "雖有「本案並無何病患X之妻生產困難」，但GT明確提及「第二產程過長或胎兒過大」等不適用真空吸引器的具體情況，與過失認定直接相關，屬重要遺漏",
+     "reason": "雖有「本案並無何病患X之妻生產困難」，但GT明確提及「第二產程過長或胎兒過大」等不適用真空吸引器的具體情況，與過失認定直接相關，屬重要遺漏"
     }
    ]
   },
   "fact_detail": {
-   "gt_total": 97,
-   "pred_total": 131,
-   "matched": 88,
-   "partial": 0,
-   "missing": 8,
-   "hallucinated": 0
+   "gt_total": 157,
+   "pred_total": 96,
+   "matched": 133,
+   "partial": 2,
+   "missing": 22,
+   "hallucinated": 0,
+   "gt_mismatch": {
+    "reported": 157,
+    "actual": 97
+   }
   },
-  "section_balance": 1.0
+  "section_balance": 0.6667
  }
 }

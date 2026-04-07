@@ -146,6 +146,125 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.5519,
-  "fact_recall_avg": null
+  "fact_recall": 0.8229,
+  "fact_precision": 0.9894,
+  "fact_f1": 0.8985,
+  "quality_overall": 4.5304,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.1702,
+  "faithfulness_combined": {
+   "score": 0.8936,
+   "citation_fidelity": 0.8298,
+   "fact_precision": 0.9894,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": "ACCEPTABLE",
+  "numerical_fidelity": 1.0,
+  "weighted_recall": 0.9167,
+  "missing_severity": {
+   "critical": 1,
+   "important": 8,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "severity": "minor",
+     "text": "GT claim 指「醫師甲指示護理人員給予氧氣及點滴灌注，令產婦左側臥」。查 section_03_opinions.txt 提及「側臥、點滴及氧氣等處置亦無延誤」，此係鑑定意見認為處置妥適的正面評價，屬於專家意見 section 內容，而非 facts section 核心事實。facts section 未提及此細節不影響案情主線理解，屬於醫療處置的程序性細節。",
+     "reason": "GT claim 指「醫師甲指示護理人員給予氧氣及點滴灌注，令產婦左側臥」。查 section_03_opinions.txt 提及「側臥、點滴及氧氣等處置亦無延誤」，此係鑑定意見認為處置妥適的正面評價，屬於專家意見 section 內容，而非 facts section 核心事實。facts section 未提及此細節不影響案情主線理解，屬於醫療處置的程序性細節。"
+    },
+    {
+     "gt_claim_id": 14,
+     "severity": "important",
+     "text": "GT claim 指「醫師甲嘗試將臍帶推回子宮失敗，即準備緊急剖腹生產」。查 pred claim 83 mentions「胎頭推不回」，但未明確提及「嘗試將臍帶推回子宮」及「準備緊急剖腹生產」的動作過程。此為臍帶脫垂後處置的關鍵時間點事實，涉及醫療決策過程，屬重要醫療事實遺漏，影響案情完整理解。",
+     "reason": "GT claim 指「醫師甲嘗試將臍帶推回子宮失敗，即準備緊急剖腹生產」。查 pred claim 83 mentions「胎頭推不回」，但未明確提及「嘗試將臍帶推回子宮」及「準備緊急剖腹生產」的動作過程。此為臍帶脫垂後處置的關鍵時間點事實，涉及醫療決策過程，屬重要醫療事實遺漏，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 15,
+     "severity": "critical",
+     "text": "GT claim 指「同日下午1時許胎兒心跳降至每分鐘30至50次」。查生成摘要 pred claim 15 及 19 皆記載「胎心下降至每分鐘100至120下」及「無法量得胎音」。心跳從100-120降至30-50是胎兒窘迫的關鍵生理指標變化，直接影響因果關係判斷與過失認定，屬致命性遺漏。",
+     "reason": "GT claim 指「同日下午1時許胎兒心跳降至每分鐘30至50次」。查生成摘要 pred claim 15 及 19 皆記載「胎心下降至每分鐘100至120下」及「無法量得胎音」。心跳從100-120降至30-50是胎兒窘迫的關鍵生理指標變化，直接影響因果關係判斷與過失認定，屬致命性遺漏。"
+    },
+    {
+     "gt_claim_id": 16,
+     "severity": "important",
+     "text": "GT claim 指「醫師甲取消剖腹生產，準備用真空吸引輔助生產」。生成摘要 pred claim 83 有提及「取消剖腹生產準備真空吸引」，但缺少「準備用」的過程描述及時間點明確對應。此為醫療決策轉折的重要事實，影響過失時序判斷。",
+     "reason": "GT claim 指「醫師甲取消剖腹生產，準備用真空吸引輔助生產」。生成摘要 pred claim 83 有提及「取消剖腹生產準備真空吸引」，但缺少「準備用」的過程描述及時間點明確對應。此為醫療決策轉折的重要事實，影響過失時序判斷。"
+    },
+    {
+     "gt_claim_id": 25,
+     "severity": "important",
+     "text": "GT claim 指「依當時之情形，並無不能注意之情事」。此乃刑法過失構成要件中「注意能力」判斷的關鍵法律事實。查 reasoning section 中有多次提及「應注意」、「疏未注意」，但未明確對應「無不能注意之情事」此特定法律用語。此遺漏影響對被告注意義務能力的完整理解，屬重要法律要件事實。",
+     "reason": "GT claim 指「依當時之情形，並無不能注意之情事」。此乃刑法過失構成要件中「注意能力」判斷的關鍵法律事實。查 reasoning section 中有多次提及「應注意」、「疏未注意」，但未明確對應「無不能注意之情事」此特定法律用語。此遺漏影響對被告注意義務能力的完整理解，屬重要法律要件事實。"
+    },
+    {
+     "gt_claim_id": 43,
+     "severity": "minor",
+     "text": "被告甲任職於U診所的身分認定屬背景性事實，生成摘要section_facts已提及『在臺東地區執業』，雖未明確標明『U診所』名稱，但不影響判決結論理解",
+     "reason": "被告甲任職於U診所的身分認定屬背景性事實，生成摘要section_facts已提及『在臺東地區執業』，雖未明確標明『U診所』名稱，但不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 48,
+     "severity": "important",
+     "text": "這是被告辯護的重要論據（關於發現臍帶脫垂方法之教科書文獻說明），生成摘要未提及，影響對被告辯護要點的完整理解",
+     "reason": "這是被告辯護的重要論據（關於發現臍帶脫垂方法之教科書文獻說明），生成摘要未提及，影響對被告辯護要點的完整理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "severity": "important",
+     "text": "這是被告辯護的核心論點之一（緊急處理原則並非唯一原則），生成摘要僅提及被告辯稱應評估方法快慢，未明確提及『並非唯一原則』的語義",
+     "reason": "這是被告辯護的核心論點之一（緊急處理原則並非唯一原則），生成摘要僅提及被告辯稱應評估方法快慢，未明確提及『並非唯一原則』的語義"
+    },
+    {
+     "gt_claim_id": 55,
+     "severity": "important",
+     "text": "這是被告辯護的具體適用條件（處理原則適用於胎頭高、子宮頸開不多時），生成摘要未涵蓋此具體主張，影響辯護論點的完整性",
+     "reason": "這是被告辯護的具體適用條件（處理原則適用於胎頭高、子宮頸開不多時），生成摘要未涵蓋此具體主張，影響辯護論點的完整性"
+    },
+    {
+     "gt_claim_id": 82,
+     "severity": "minor",
+     "text": "經查全部 sections 及 chunks，確無「本案無法醫意見」之明文記載。雖有醫審會鑑定，但無法醫意見屬程序性背景事實，未影響案情理解。",
+     "reason": "經查全部 sections 及 chunks，確無「本案無法醫意見」之明文記載。雖有醫審會鑑定，但無法醫意見屬程序性背景事實，未影響案情理解。"
+    },
+    {
+     "gt_claim_id": 83,
+     "severity": "minor",
+     "text": "判決日期「96年06月07日」在生成摘要中僅見「96年」而無完整日期，此為程序性事實，不影響案情理解",
+     "reason": "判決日期「96年06月07日」在生成摘要中僅見「96年」而無完整日期，此為程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 91,
+     "severity": "important",
+     "text": "經查 section_05_reasoning.txt 及全部 claims，摘要確實未提及『真空吸引於時效上並無幫助』此一法院認定被告延遲處理導致措施無效的關鍵結論。此為過失認定的核心論點之一，遺漏影響對法院因果判斷的理解。",
+     "reason": "經查 section_05_reasoning.txt 及全部 claims，摘要確實未提及『真空吸引於時效上並無幫助』此一法院認定被告延遲處理導致措施無效的關鍵結論。此為過失認定的核心論點之一，遺漏影響對法院因果判斷的理解。"
+    },
+    {
+     "gt_claim_id": 92,
+     "severity": "important",
+     "text": "GT claim 92 指『本案無法醫意見』，但 section_05_reasoning.txt 明確記載有『衛生署醫事審議委員會鑑定』，pred-89亦提及此鑑定。GT與原文事實不符，但 pred 確實未提及『無法醫意見』此一 GT 的錯誤斷言。維持 missing。",
+     "reason": "GT claim 92 指『本案無法醫意見』，但 section_05_reasoning.txt 明確記載有『衛生署醫事審議委員會鑑定』，pred-89亦提及此鑑定。GT與原文事實不符，但 pred 確實未提及『無法醫意見』此一 GT 的錯誤斷言。維持 missing。"
+    },
+    {
+     "gt_claim_id": 93,
+     "severity": "minor",
+     "text": "判決日期『民國96年06月07日』為程序性資訊，claims.json 及全部 section 原文均未提及。此為次要事實，不影響案情理解。",
+     "reason": "判決日期『民國96年06月07日』為程序性資訊，claims.json 及全部 section 原文均未提及。此為次要事實，不影響案情理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 96,
+   "pred_total": 94,
+   "matched": 78,
+   "partial": 2,
+   "missing": 14,
+   "hallucinated": 1
+  },
+  "section_balance": 1.0
  }
 }

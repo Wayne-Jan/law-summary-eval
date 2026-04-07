@@ -128,9 +128,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7952,
-  "fact_recall": 0.8205,
+  "fact_recall": 0.9038,
   "fact_precision": 1.0,
-  "fact_f1": 0.9014,
+  "fact_f1": 0.9495,
   "quality_overall": 4.8554,
   "citation_accuracy": 1.0,
   "citation_support_score": 0.975,
@@ -145,84 +145,70 @@
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 0.947,
-  "weighted_recall": 0.9402,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 18
+  },
+  "weighted_recall": 0.9701,
   "missing_severity": {
    "critical": 0,
-   "important": 4,
-   "minor": 6,
+   "important": 1,
+   "minor": 5,
    "details": [
     {
+     "gt_claim_id": 16,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查核 summary_grounded.txt 第（二）被告回應段確有「被告甲否認有何業務過失致死犯行」之表述，但 claims.json 中 defense section（claim_id 14-17）僅提取具體辯稱內容（日期、理由、症狀陳述等），未將「否認犯行」此一總括性辯護立場提取為獨立 claim。然而此為辯護主軸之陳述，屬於辯護立場的宣告性表述，雖應提及但在 pred claims 中確實未被獨立提取，故維持 missing 判定，嚴重程度標記為 important（影響辯護立場完整理解）。",
+     "reason": "經查核 summary_grounded.txt 第（二）被告回應段確有「被告甲否認有何業務過失致死犯行」之表述，但 claims.json 中 defense section（claim_id 14-17）僅提取具體辯稱內容（日期、理由、症狀陳述等），未將「否認犯行」此一總括性辯護立場提取為獨立 claim。然而此為辯護主軸之陳述，屬於辯護立場的宣告性表述，雖應提及但在 pred claims 中確實未被獨立提取，故維持 missing 判定，嚴重程度標記為 important（影響辯護立場完整理解）。"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要雖提及『第一份、第二份、第三份鑑定意見』但未明確整合說明『三次鑑定共三份鑑定書』，屬程序性描述差異，不影響案情理解",
+     "reason": "生成摘要雖提及『第一份、第二份、第三份鑑定意見』但未明確整合說明『三次鑑定共三份鑑定書』，屬程序性描述差異，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "就醫日期89年2月2日雖在facts段有提及送醫時間『下午5時30分許』，但摘要不影響案情核心理解",
+     "reason": "就醫日期89年2月2日雖在facts段有提及送醫時間『下午5時30分許』，但摘要不影響案情核心理解"
+    },
+    {
      "gt_claim_id": 33,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "生成摘要未提及相驗屍體證明書、驗斷書、法醫解剖鑑報告等證據文書，確認為 truly missing。此為證據列舉性事實，不涉及核心案情理解",
-     "reason": "生成摘要未提及相驗屍體證明書、驗斷書、法醫解剖鑑報告等證據文書，確認為 truly missing。此為證據列舉性事實，不涉及核心案情理解"
-    },
-    {
-     "gt_claim_id": 34,
-     "severity": "important",
-     "text": "生成摘要未詳細列出危險因子清單（年齡大於六十五歲、肝硬化、後天免疫功能不全病毒感染、惡性腫瘤、器官移植及敗血症等），僅提及「沒有合併免疫功能低下或惡性病變」。影響對鑑定意見論證基礎的完整理解",
-     "reason": "生成摘要未詳細列出危險因子清單（年齡大於六十五歲、肝硬化、後天免疫功能不全病毒感染、惡性腫瘤、器官移植及敗血症等），僅提及「沒有合併免疫功能低下或惡性病變」。影響對鑑定意見論證基礎的完整理解"
-    },
-    {
-     "gt_claim_id": 35,
-     "severity": "minor",
-     "text": "生成摘要未明確陳述「本件之病患資料，並未有相關之證據顯示死亡率增加之因素」。雖有提及「在沒有合併免疫功能低下或惡性病變等情況」，但未完全對應 GT claim 的表述，確認為 missing",
-     "reason": "生成摘要未明確陳述「本件之病患資料，並未有相關之證據顯示死亡率增加之因素」。雖有提及「在沒有合併免疫功能低下或惡性病變等情況」，但未完全對應 GT claim 的表述，確認為 missing"
-    },
-    {
-     "gt_claim_id": 39,
-     "severity": "minor",
-     "text": "生成摘要未提及「急性呼吸窘迫症候群死亡率有降低之趨勢」，僅提及「治療技術及呼吸器使用方式之進步」。雖有相關意涵但未明確陳述，確認為 missing",
-     "reason": "生成摘要未提及「急性呼吸窘迫症候群死亡率有降低之趨勢」，僅提及「治療技術及呼吸器使用方式之進步」。雖有相關意涵但未明確陳述，確認為 missing"
-    },
-    {
-     "gt_claim_id": 41,
-     "severity": "important",
-     "text": "生成摘要未提及「肺炎及肺膿瘍併發呼吸窘迫症，常見症狀包括...」的醫學論述，雖有列出相關症狀但未以「常見症狀包括」的方式呈現病因關聯性，影響對法院認定可診斷性的理解",
-     "reason": "生成摘要未提及「肺炎及肺膿瘍併發呼吸窘迫症，常見症狀包括...」的醫學論述，雖有列出相關症狀但未以「常見症狀包括」的方式呈現病因關聯性，影響對法院認定可診斷性的理解"
-    },
-    {
-     "gt_claim_id": 43,
-     "severity": "important",
-     "text": "生成摘要未提及「死亡前十小時期間均無任何症狀，可供醫師作診斷及依據之機率殆無」的論述。這是鑑定意見中關於症狀顯現時機的重要內容，影響對被告抗辯是否合理之理解",
-     "reason": "生成摘要未提及「死亡前十小時期間均無任何症狀，可供醫師作診斷及依據之機率殆無」的論述。這是鑑定意見中關於症狀顯現時機的重要內容，影響對被告抗辯是否合理之理解"
-    },
-    {
-     "gt_claim_id": 49,
-     "severity": "minor",
-     "text": "生成摘要未明確提及「本案病患初期並未呈現休克現象」。雖有部分症狀論述，但未明確提及「初期未呈現休克」，確認為 missing",
-     "reason": "生成摘要未明確提及「本案病患初期並未呈現休克現象」。雖有部分症狀論述，但未明確提及「初期未呈現休克」，確認為 missing"
+     "text": "相驗屍體證明書等文件屬程序性證據文件，非opinions段落核心內容，不影響爭點理解",
+     "reason": "相驗屍體證明書等文件屬程序性證據文件，非opinions段落核心內容，不影響爭點理解"
     },
     {
      "gt_claim_id": 57,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "生成摘要未提及「被告、檢察官於法定上訴期間未上訴」。此為程序性事實，不影響案情核心理解",
-     "reason": "生成摘要未提及「被告、檢察官於法定上訴期間未上訴」。此為程序性事實，不影響案情核心理解"
+     "text": "生成摘要確實未提及被告與檢察官是否上訴，此為程序性事實，不影響判決核心結論（過失認定、刑度、緩刑）之理解",
+     "reason": "生成摘要確實未提及被告與檢察官是否上訴，此為程序性事實，不影響判決核心結論（過失認定、刑度、緩刑）之理解"
     },
     {
      "gt_claim_id": 58,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "生成摘要未提及「本案判決即確定」。此為判決效力程序性事實，不影響案情核心理解",
-     "reason": "生成摘要未提及「本案判決即確定」。此為判決效力程序性事實，不影響案情核心理解"
-    },
-    {
-     "gt_claim_id": 59,
-     "severity": "important",
-     "text": "生成摘要未明確提及「法院採認醫審會三份鑑定意見」。雖然 reasoning section 中引用了鑑定意見內容，但未明確表述法院「採認」三份鑑定意見的態度，影響對法院心證形成過程的理解",
-     "reason": "生成摘要未明確提及「法院採認醫審會三份鑑定意見」。雖然 reasoning section 中引用了鑑定意見內容，但未明確表述法院「採認」三份鑑定意見的態度，影響對法院心證形成過程的理解"
+     "text": "生成摘要確實未提及判決確定與否，此為程序性結語，不改變判決結果之理解",
+     "reason": "生成摘要確實未提及判決確定與否，此為程序性結語，不改變判決結果之理解"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 78,
    "pred_total": 70,
-   "matched": 63,
-   "partial": 2,
-   "missing": 10,
+   "matched": 69,
+   "partial": 3,
+   "missing": 6,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.75
  }
 }

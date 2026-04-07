@@ -140,16 +140,16 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7193,
-  "fact_recall": 0.9028,
+  "fact_recall": 0.9167,
   "fact_precision": 1.0,
-  "fact_f1": 0.9489,
+  "fact_f1": 0.9565,
   "quality_overall": 4.7809,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0505,
-  "uncited_rate": 0.033,
+  "uncited_rate": 0.0325,
   "faithfulness_combined": {
-   "score": 0.9802,
-   "citation_fidelity": 0.967,
+   "score": 0.9805,
+   "citation_fidelity": 0.9675,
    "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
@@ -157,66 +157,77 @@
    }
   },
   "compliance": 4,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9599,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 25
+  },
+  "weighted_recall": 0.9722,
   "missing_severity": {
-   "critical": 1,
-   "important": 4,
-   "minor": 2,
+   "critical": 0,
+   "important": 2,
+   "minor": 5,
    "details": [
     {
      "gt_claim_id": 9,
+     "source_section": "facts",
      "severity": "important",
-     "text": "X光檢視結果（心臟擴大合併肺血管鬱血）為重要醫學證據，影響病情理解，但遍查 section_01_facts 及 section_05_reasoning 均未發現對應內容。雖 section_05_reasoning 提及『胸部Ｘ光』作為應進行之檢查項目，但未記載具體檢查結果。",
-     "reason": "X光檢視結果（心臟擴大合併肺血管鬱血）為重要醫學證據，影響病情理解，但遍查 section_01_facts 及 section_05_reasoning 均未發現對應內容。雖 section_05_reasoning 提及『胸部Ｘ光』作為應進行之檢查項目，但未記載具體檢查結果。"
+     "text": "遍查全部 5 個 section 均無 J 醫院 X 光檢查及心臟擴大合併肺血管鬱血之記載，屬醫療檢查結果遺漏，影響病情完整理解",
+     "reason": "遍查全部 5 個 section 均無 J 醫院 X 光檢查及心臟擴大合併肺血管鬱血之記載，屬醫療檢查結果遺漏，影響病情完整理解"
     },
     {
      "gt_claim_id": 33,
+     "source_section": "facts",
      "severity": "important",
-     "text": "與 gt_claim_id 9 為重複內容（J醫院X光檢視結果），經確認 section_01_facts 及 section_05_reasoning 均未提及『心臟擴大合併肺血管鬱血』之檢查發現。",
-     "reason": "與 gt_claim_id 9 為重複內容（J醫院X光檢視結果），經確認 section_01_facts 及 section_05_reasoning 均未提及『心臟擴大合併肺血管鬱血』之檢查發現。"
+     "text": "與 gt_claim_id 9 為重複內容，遍查全部 section 均無 X 光檢查結果記載，確實遺漏",
+     "reason": "與 gt_claim_id 9 為重複內容，遍查全部 section 均無 X 光檢查結果記載，確實遺漏"
     },
     {
      "gt_claim_id": 72,
-     "severity": "important",
-     "text": "section_03_opinions.txt 僅提及兩次鑑定中關於醫療疏失的意見，確實未提及病患死亡日期（90年11月10日）。雖然 pred claim 122 在 reasoning section 有提及此日期，但 opinions section 本身遺漏了第二次鑑定中關於死亡時間的關鍵事實。",
-     "reason": "section_03_opinions.txt 僅提及兩次鑑定中關於醫療疏失的意見，確實未提及病患死亡日期（90年11月10日）。雖然 pred claim 122 在 reasoning section 有提及此日期，但 opinions section 本身遺漏了第二次鑑定中關於死亡時間的關鍵事實。"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病患死亡日期見於 section_05_reasoning 段末，opinions 段落確實未提及，屬次要事實",
+     "reason": "病患死亡日期見於 section_05_reasoning 段末，opinions 段落確實未提及，屬次要事實"
     },
     {
      "gt_claim_id": 73,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "section_03_opinions.txt 未提及『時隔1年10個月』的時間跨度。雖然 pred claim 122 在 reasoning section 有提及『時隔一年十個月』，但 opinions section 本身確實遺漏此鑑定意見中的時間資訊。此為背景性時間計算，影響較小。",
-     "reason": "section_03_opinions.txt 未提及『時隔1年10個月』的時間跨度。雖然 pred claim 122 在 reasoning section 有提及『時隔一年十個月』，但 opinions section 本身確實遺漏此鑑定意見中的時間資訊。此為背景性時間計算，影響較小。"
+     "text": "時隔1年10個月見於 section_05_reasoning 段末鑑定意見轉述，opinions 段落確實未提及，屬次要事實",
+     "reason": "時隔1年10個月見於 section_05_reasoning 段末鑑定意見轉述，opinions 段落確實未提及，屬次要事實"
     },
     {
      "gt_claim_id": 74,
-     "severity": "important",
-     "text": "section_03_opinions.txt 未提及死亡原因（痰多、呼吸急促造成呼吸衰竭）。雖然 pred claim 120 在 reasoning section 有提及死因，但 opinions section 本身遺漏了第二次鑑定中關於死因認定的重要專家意見。",
-     "reason": "section_03_opinions.txt 未提及死亡原因（痰多、呼吸急促造成呼吸衰竭）。雖然 pred claim 120 在 reasoning section 有提及死因，但 opinions section 本身遺漏了第二次鑑定中關於死因認定的重要專家意見。"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "J醫院說明死因見於 section_05_reasoning 段末，opinions 段落確實未提及，屬次要事實",
+     "reason": "J醫院說明死因見於 section_05_reasoning 段末，opinions 段落確實未提及，屬次要事實"
     },
     {
      "gt_claim_id": 75,
-     "severity": "critical",
-     "text": "section_03_opinions.txt 未提及『因時隔約2年，疏失與死亡無法判斷有關係』的因果關係判斷。雖然 pred claim 122 在 reasoning section 有類似內容，但 opinions section 遺漏了專家鑑定對死亡因果關係的關鍵結論，影響判決理由完整性。",
-     "reason": "section_03_opinions.txt 未提及『因時隔約2年，疏失與死亡無法判斷有關係』的因果關係判斷。雖然 pred claim 122 在 reasoning section 有類似內容，但 opinions section 遺漏了專家鑑定對死亡因果關係的關鍵結論，影響判決理由完整性。"
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "疏失與死亡因果關係判斷見於 section_05_reasoning 段末，opinions 段落確實未提及，屬次要事實",
+     "reason": "疏失與死亡因果關係判斷見於 section_05_reasoning 段末，opinions 段落確實未提及，屬次要事實"
     },
     {
      "gt_claim_id": 76,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "遍查所有 sections 及 pred claims，確實未提及『本案無法醫意見』。此為程序性背景事實，不影響主要案情理解。",
-     "reason": "遍查所有 sections 及 pred claims，確實未提及『本案無法醫意見』。此為程序性背景事實，不影響主要案情理解。"
+     "text": "無法醫意見見於 section_05_reasoning 段末，opinions 段落確實未提及，屬次要事實",
+     "reason": "無法醫意見見於 section_05_reasoning 段末，opinions 段落確實未提及，屬次要事實"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 108,
    "pred_total": 123,
-   "matched": 96,
-   "partial": 3,
-   "missing": 8,
+   "matched": 97,
+   "partial": 4,
+   "missing": 7,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.7727
  }
 }

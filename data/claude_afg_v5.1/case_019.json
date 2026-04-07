@@ -126,95 +126,87 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8278,
-  "fact_recall": 0.7778,
-  "fact_precision": 0.95,
-  "fact_f1": 0.8553,
+  "fact_recall": 0.8519,
+  "fact_precision": 1.0,
+  "fact_f1": 0.92,
   "quality_overall": 4.8357,
   "citation_accuracy": 0.875,
   "citation_support_score": 0.8824,
-  "uncited_rate": 0.2,
+  "uncited_rate": 0.175,
   "faithfulness_combined": {
-   "score": 0.8,
-   "citation_fidelity": 0.7,
-   "fact_precision": 0.95,
+   "score": 0.8331,
+   "citation_fidelity": 0.7219,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9136,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.9506,
   "missing_severity": {
    "critical": 0,
-   "important": 5,
+   "important": 2,
    "minor": 4,
    "details": [
     {
      "gt_claim_id": 3,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "病患先前至醫院求診做相關檢查的病史，屬背景性事實，不影響核心案情理解",
-     "reason": "病患先前至醫院求診做相關檢查的病史，屬背景性事實，不影響核心案情理解"
+     "text": "section_01_facts.txt 與 section_05_reasoning.txt 均未提及病患曾至X醫院求診做相關檢查的病史。摘要僅提及「病患X患有甲狀腺功能亢進多年」，但未說明是否曾至同一家醫院求診。此為背景性事實，不影響案情核心理解。",
+     "reason": "section_01_facts.txt 與 section_05_reasoning.txt 均未提及病患曾至X醫院求診做相關檢查的病史。摘要僅提及「病患X患有甲狀腺功能亢進多年」，但未說明是否曾至同一家醫院求診。此為背景性事實，不影響案情核心理解。"
     },
     {
      "gt_claim_id": 31,
-     "severity": "important",
-     "text": "案件性質為『協商案件』且為『刑事宣示筆錄』，影響對案件程序類型的理解",
-     "reason": "案件性質為『協商案件』且為『刑事宣示筆錄』，影響對案件程序類型的理解"
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅記載『本案被告甲自白犯罪，法院依簡易程序、簡易判決處刑』，未提及『協商案件』性質或『刑事宣示筆錄』文件類型。屬程序性資訊，不影響案情實體理解。",
+     "reason": "section_02_defense.txt 僅記載『本案被告甲自白犯罪，法院依簡易程序、簡易判決處刑』，未提及『協商案件』性質或『刑事宣示筆錄』文件類型。屬程序性資訊，不影響案情實體理解。"
     },
     {
      "gt_claim_id": 32,
-     "severity": "minor",
-     "text": "刑事宣示筆錄內容未載被告回應，屬程序性細節，已於 defense 段提及被告甲自白",
-     "reason": "刑事宣示筆錄內容未載被告回應，屬程序性細節，已於 defense 段提及被告甲自白"
-    },
-    {
-     "gt_claim_id": 33,
+     "source_section": "defense",
      "severity": "important",
-     "text": "判決作成日期錯誤（GT 為 97 年 02 月 15 日，Pred 錯誤記載為 94 年），影響判決時點正確性",
-     "reason": "判決作成日期錯誤（GT 為 97 年 02 月 15 日，Pred 錯誤記載為 94 年），影響判決時點正確性"
+     "text": "section_02_defense.txt 記載『被告自白犯罪』，但 GT 明確指出『刑事宣示筆錄內容未載被告回應』，生成摘要完全未提及筆錄『未載被告回應』此關鍵事實，影響辯護段落完整性。",
+     "reason": "section_02_defense.txt 記載『被告自白犯罪』，但 GT 明確指出『刑事宣示筆錄內容未載被告回應』，生成摘要完全未提及筆錄『未載被告回應』此關鍵事實，影響辯護段落完整性。"
     },
     {
      "gt_claim_id": 42,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "郵政劃撥儲金存款收據作為證據，屬證據細節，核心匯款事實已涵蓋",
-     "reason": "郵政劃撥儲金存款收據作為證據，屬證據細節，核心匯款事實已涵蓋"
+     "text": "雖然判決書附記事項確實提及『有郵政劃撥儲金存款收據在卷可參』，但此為佐證被告已匯款之程序性文件，不影響判決主文及刑罰內容理解",
+     "reason": "雖然判決書附記事項確實提及『有郵政劃撥儲金存款收據在卷可參』，但此為佐證被告已匯款之程序性文件，不影響判決主文及刑罰內容理解"
     },
     {
      "gt_claim_id": 43,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "未上訴、判決確定之程序性事實，屬判決後續狀態，不影響核心判決內容理解",
-     "reason": "未上訴、判決確定之程序性事實，屬判決後續狀態，不影響核心判決內容理解"
-    },
-    {
-     "gt_claim_id": 44,
-     "severity": "important",
-     "text": "Pred 確實未明確提及『非急迫性之左側股骨骨內釘固定手術』此手術類型，雖 facts 段有『施行非急迫性之左側股骨骨內釘固定手術』但主詞為被告乙而非被告甲。GT claim 44 主詞為被告甲，與 facts 段主詞不一致",
-     "reason": "Pred 確實未明確提及『非急迫性之左側股骨骨內釘固定手術』此手術類型，雖 facts 段有『施行非急迫性之左側股骨骨內釘固定手術』但主詞為被告乙而非被告甲。GT claim 44 主詞為被告甲，與 facts 段主詞不一致"
-    },
-    {
-     "gt_claim_id": 46,
-     "severity": "important",
-     "text": "Pred reasoning 段僅提及『應於術前完成檢驗以評估病患甲狀腺狀態』，未完整涵蓋 GT 要求的『會診專科醫師、重新抽血、待檢驗報告完成、以內科療法控制至正常後方施行手術』等完整醫療義務流程",
-     "reason": "Pred reasoning 段僅提及『應於術前完成檢驗以評估病患甲狀腺狀態』，未完整涵蓋 GT 要求的『會診專科醫師、重新抽血、待檢驗報告完成、以內科療法控制至正常後方施行手術』等完整醫療義務流程"
+     "text": "判決書原文僅記載『如有不服...得...上訴』之上訴權教示，並未記載『被告、檢察官於法定上訴期間未上訴』之後續程序事實，此為判決確定後之程序發展，不影響判決內容理解",
+     "reason": "判決書原文僅記載『如有不服...得...上訴』之上訴權教示，並未記載『被告、檢察官於法定上訴期間未上訴』之後續程序事實，此為判決確定後之程序發展，不影響判決內容理解"
     },
     {
      "gt_claim_id": 47,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "Pred reasoning 段未明確提及『乙疏未注意，未做術前手術風險之完整評估』，雖有『貿然於抽血檢驗報告完成前進行手術』但缺少『疏未注意』及『術前風險評估』的明確表述",
-     "reason": "Pred reasoning 段未明確提及『乙疏未注意，未做術前手術風險之完整評估』，雖有『貿然於抽血檢驗報告完成前進行手術』但缺少『疏未注意』及『術前風險評估』的明確表述"
+     "text": "reasoning section 摘要僅聚焦於被告甲之麻醉過失，確實未提及被告乙（骨科醫師）疏未注意、未做術前手術風險完整評估之事實。此項缺失影響對兩名被告過失分工之完整理解。",
+     "reason": "reasoning section 摘要僅聚焦於被告甲之麻醉過失，確實未提及被告乙（骨科醫師）疏未注意、未做術前手術風險完整評估之事實。此項缺失影響對兩名被告過失分工之完整理解。"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 54,
    "pred_total": 40,
-   "matched": 40,
+   "matched": 44,
    "partial": 4,
-   "missing": 9,
-   "hallucinated": 2
+   "missing": 6,
+   "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.0
  }
 }

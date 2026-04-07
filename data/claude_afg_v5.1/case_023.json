@@ -144,9 +144,9 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8143,
-  "fact_recall": 0.8533,
+  "fact_recall": 0.8641,
   "fact_precision": 1.0,
-  "fact_f1": 0.9208,
+  "fact_f1": 0.9271,
   "quality_overall": 4.5286,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0462,
@@ -161,79 +161,87 @@
    }
   },
   "compliance": 3,
-  "cross_validation": "ACCEPTABLE",
+  "cross_validation": null,
   "numerical_fidelity": 0.95,
-  "weighted_recall": 0.9457,
+  "numerical_detail": {
+   "total_numerical": 20,
+   "correct": 19
+  },
+  "weighted_recall": 0.9565,
   "missing_severity": {
    "critical": 1,
-   "important": 2,
-   "minor": 8,
+   "important": 0,
+   "minor": 9,
    "details": [
     {
      "gt_claim_id": 18,
-     "severity": "important",
-     "text": "被告乙作為流動護理師的具體職責（執行醫囑、維持保暖、點滴順暢、呼吸道暢通等）在摘要中未提及，影響對被告乙角色的完整理解",
-     "reason": "被告乙作為流動護理師的具體職責（執行醫囑、維持保暖、點滴順暢、呼吸道暢通等）在摘要中未提及，影響對被告乙角色的完整理解"
-    },
-    {
-     "gt_claim_id": 21,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "被告乙依醫囑執行保暖的視角未明確提及，但被告甲指示的視角已涵蓋核心事實",
-     "reason": "被告乙依醫囑執行保暖的視角未明確提及，但被告甲指示的視角已涵蓋核心事實"
-    },
-    {
-     "gt_claim_id": 23,
-     "severity": "minor",
-     "text": "被告乙被起訴的罪名雖未在 facts 段明確提及，但 reasoning 段已說明最終不受理結果，不影響判決理解",
-     "reason": "被告乙被起訴的罪名雖未在 facts 段明確提及，但 reasoning 段已說明最終不受理結果，不影響判決理解"
+     "text": "section_01_facts.txt 僅提及『護理師乙為A診所之護理人員』，未詳述流動護理師職責範圍（執行醫囑、維持保暖、點滴、呼吸道等），屬職責細節遺漏，不影響案情核心理解",
+     "reason": "section_01_facts.txt 僅提及『護理師乙為A診所之護理人員』，未詳述流動護理師職責範圍（執行醫囑、維持保暖、點滴、呼吸道等），屬職責細節遺漏，不影響案情核心理解"
     },
     {
      "gt_claim_id": 24,
-     "severity": "important",
-     "text": "被告甲關於遵從SOP的抗辯主張在 defense 段完全遺漏，屬於重要辯護要點的遺漏",
-     "reason": "被告甲關於遵從SOP的抗辯主張在 defense 段完全遺漏，屬於重要辯護要點的遺漏"
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告甲在 defense section 僅表示『伊願認罪』，並未提出任何關於遵從 SOP 或診所操作流程的抗辯理由。經查詢全部 section（facts、defense、opinions、verdict、reasoning），均無被告主張遵從『K診所製訂之保暖儀器操作SOP』的內容。雖然 verdict section 提到『率爾遵從A診所既定之操作流程』，但這是法院對被告行為的評價，並非被告自身的抗辯主張。因被告實際上為認罪態度且未提出具體抗辯，此項缺失屬次要資訊，不影響案情理解。",
+     "reason": "被告甲在 defense section 僅表示『伊願認罪』，並未提出任何關於遵從 SOP 或診所操作流程的抗辯理由。經查詢全部 section（facts、defense、opinions、verdict、reasoning），均無被告主張遵從『K診所製訂之保暖儀器操作SOP』的內容。雖然 verdict section 提到『率爾遵從A診所既定之操作流程』，但這是法院對被告行為的評價，並非被告自身的抗辯主張。因被告實際上為認罪態度且未提出具體抗辯，此項缺失屬次要資訊，不影響案情理解。"
     },
     {
      "gt_claim_id": 25,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "醫審會鑑定書的存在性宣告未明確提及（僅引用內容），屬程序性事實",
-     "reason": "醫審會鑑定書的存在性宣告未明確提及（僅引用內容），屬程序性事實"
+     "text": "預測摘要聚焦於鑑定內容本身，未明確提及『鑑定書1份』之存在性宣告，屬程序性細節遺漏，不影響鑑定意見理解",
+     "reason": "預測摘要聚焦於鑑定內容本身，未明確提及『鑑定書1份』之存在性宣告，屬程序性細節遺漏，不影響鑑定意見理解"
     },
     {
      "gt_claim_id": 31,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "保暖行為作為「醫療輔助行為」的分類定性未提及，屬學理分類",
-     "reason": "保暖行為作為「醫療輔助行為」的分類定性未提及，屬學理分類"
+     "text": "預測摘要提到『符合醫療常規』，但未明確定義保暖行為為『醫療輔助行為』，此概念在原文中無明確對應表述",
+     "reason": "預測摘要提到『符合醫療常規』，但未明確定義保暖行為為『醫療輔助行為』，此概念在原文中無明確對應表述"
     },
     {
      "gt_claim_id": 44,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "與 GT 25 類似，醫審會鑑定書「在卷可查」的存在性宣告未明確提及",
-     "reason": "與 GT 25 類似，醫審會鑑定書「在卷可查」的存在性宣告未明確提及"
+     "text": "預測摘要已充分涵蓋鑑定內容實質，『在卷可查』為程序性證據存在性宣告，非影響案情理解之關鍵資訊",
+     "reason": "預測摘要已充分涵蓋鑑定內容實質，『在卷可查』為程序性證據存在性宣告，非影響案情理解之關鍵資訊"
     },
     {
-     "gt_claim_id": 54,
-     "severity": "critical",
-     "text": "判決日期錯誤（GT 106年1月13日 vs Pred 104年1月19日），這是核心事實錯誤，影響判決同一性",
-     "reason": "判決日期錯誤（GT 106年1月13日 vs Pred 104年1月19日），這是核心事實錯誤，影響判決同一性"
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要『台灣麻醉醫學會鑑定意見』小標題及內容已涵蓋該鑑定機構之意見，未明寫『函1份』為次要程序性遺漏",
+     "reason": "預測摘要『台灣麻醉醫學會鑑定意見』小標題及內容已涵蓋該鑑定機構之意見，未明寫『函1份』為次要程序性遺漏"
     },
     {
      "gt_claim_id": 61,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "「未上訴」的程序性事實未提及，影響判決確定時點的理解",
-     "reason": "「未上訴」的程序性事實未提及，影響判決確定時點的理解"
+     "text": "預測摘要未提及上訴期間及未上訴事實，遍查全部sections無此資訊，屬程序性結尾事實，不影響案情實體理解",
+     "reason": "預測摘要未提及上訴期間及未上訴事實，遍查全部sections無此資訊，屬程序性結尾事實，不影響案情實體理解"
     },
     {
      "gt_claim_id": 62,
+     "source_section": "verdict",
      "severity": "minor",
-     "text": "「判決即確定」的狀態未明確提及，屬程序性結論",
-     "reason": "「判決即確定」的狀態未明確提及，屬程序性結論"
+     "text": "預測摘要未提及判決確定狀態，與gt_claim_id 61相關聯，屬程序性結尾事實，不影響案情實體理解",
+     "reason": "預測摘要未提及判決確定狀態，與gt_claim_id 61相關聯，屬程序性結尾事實，不影響案情實體理解"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "生成摘要確實未提及K診所（匿名化為A診所）之烘被機「不以醫療器材列管」此特定規範性說明，僅提及「非屬衛生福利部審核通過為保暖之醫療器材」。屬於補充性規範細節，不影響過失認定之主軸。",
+     "reason": "生成摘要確實未提及K診所（匿名化為A診所）之烘被機「不以醫療器材列管」此特定規範性說明，僅提及「非屬衛生福利部審核通過為保暖之醫療器材」。屬於補充性規範細節，不影響過失認定之主軸。"
     },
     {
      "gt_claim_id": 88,
-     "severity": "minor",
-     "text": "「不以指明犯人為必要」的法律理論說明未提及，屬法理闡述",
-     "reason": "「不以指明犯人為必要」的法律理論說明未提及，屬法理闡述"
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "生成摘要(五)判決理由中雖提及被告乙不受理的說明，但未明確載明「提告不以指明犯人為必要」此法律原則。此原則涉及告訴乃論罪提告要件之理解，影響對告訴期間起算點的完整理解，屬關鍵法律論述。",
+     "reason": "生成摘要(五)判決理由中雖提及被告乙不受理的說明，但未明確載明「提告不以指明犯人為必要」此法律原則。此原則涉及告訴乃論罪提告要件之理解，影響對告訴期間起算點的完整理解，屬關鍵法律論述。"
     }
    ]
   },
@@ -241,10 +249,10 @@
    "gt_total": 92,
    "pred_total": 112,
    "matched": 77,
-   "partial": 3,
-   "missing": 11,
+   "partial": 5,
+   "missing": 10,
    "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.0
  }
 }

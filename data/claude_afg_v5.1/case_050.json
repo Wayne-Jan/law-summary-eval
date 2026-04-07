@@ -156,137 +156,255 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.716,
-  "fact_recall": 0.8077,
-  "fact_precision": 0.9643,
-  "fact_f1": 0.8791,
+  "fact_recall": 0.7378,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8491,
   "quality_overall": 4.8809,
   "citation_accuracy": 1.0,
   "citation_support_score": 1.0067,
   "uncited_rate": 0.014,
   "faithfulness_combined": {
-   "score": 0.9773,
+   "score": 0.9916,
    "citation_fidelity": 0.986,
-   "fact_precision": 0.9643,
+   "fact_precision": 1.0,
    "weights": {
     "citation_fidelity": 0.6,
     "fact_precision": 0.4
    }
   },
   "compliance": 5,
-  "cross_validation": "GOOD",
+  "cross_validation": null,
   "numerical_fidelity": 1.0,
-  "weighted_recall": 0.9557,
+  "numerical_detail": {
+   "total_numerical": 27,
+   "correct": 27
+  },
+  "weighted_recall": 0.8951,
   "missing_severity": {
-   "critical": 0,
-   "important": 3,
-   "minor": 13,
+   "critical": 2,
+   "important": 11,
+   "minor": 17,
    "details": [
     {
-     "gt_claim_id": 57,
+     "gt_claim_id": 23,
+     "source_section": "facts",
      "severity": "minor",
-     "text": "確認維持 missing：生成摘要確實未提及「第一次鑑定書未盡詳備」之內容，僅聚焦於第二次鑑定書結論。此為辯護方攻擊第一次鑑定妥當性的論點，屬背景性事實，不影響判決結論理解。",
-     "reason": "確認維持 missing：生成摘要確實未提及「第一次鑑定書未盡詳備」之內容，僅聚焦於第二次鑑定書結論。此為辯護方攻擊第一次鑑定妥當性的論點，屬背景性事實，不影響判決結論理解。"
+     "text": "呼叫器系統為背景性事實，說明通訊方式，不影響案情核心理解與判決結論",
+     "reason": "呼叫器系統為背景性事實，說明通訊方式，不影響案情核心理解與判決結論"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT 辯護主張 20:10 恢復室人員直接打電話給被告且被告立即前往之事實，在 pred claims 中無對應描述。pred claim 45 雖提及 20 時許接獲第二次呼叫後前往，但未提及『直接打電話』及『立即親自前往』之辯護主張細節。此為辯護要點，影響案情理解，應標記為重要遺漏",
+     "reason": "GT 辯護主張 20:10 恢復室人員直接打電話給被告且被告立即前往之事實，在 pred claims 中無對應描述。pred claim 45 雖提及 20 時許接獲第二次呼叫後前往，但未提及『直接打電話』及『立即親自前往』之辯護主張細節。此為辯護要點，影響案情理解，應標記為重要遺漏"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "GT 辯護主張『第一次鑑定書未盡詳備』在 pred claims 中未提及。pred claims 僅提及第二次鑑定書內容（claim 64-66），未提及第一次鑑定書之評價。此為辯護意見引用之程序性事實，屬次要資訊",
+     "reason": "GT 辯護主張『第一次鑑定書未盡詳備』在 pred claims 中未提及。pred claims 僅提及第二次鑑定書內容（claim 64-66），未提及第一次鑑定書之評價。此為辯護意見引用之程序性事實，屬次要資訊"
     },
     {
      "gt_claim_id": 60,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "腫瘤類型（後腹腔）為背景資訊，生成摘要提及「腫瘤切除手術」已足，不影響鑑定意見理解",
-     "reason": "腫瘤類型（後腹腔）為背景資訊，生成摘要提及「腫瘤切除手術」已足，不影響鑑定意見理解"
+     "text": "背景性診斷事實（後腹腔腫瘤），於案情理解屬背景資訊，不影響過失認定",
+     "reason": "背景性診斷事實（後腹腔腫瘤），於案情理解屬背景資訊，不影響過失認定"
     },
     {
      "gt_claim_id": 61,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "外動脈侵犯及照會心臟專科細節為手術背景，在 facts 段已有涵蓋，opinions 段專注鑑定意見可接受",
-     "reason": "外動脈侵犯及照會心臟專科細節為手術背景，在 facts 段已有涵蓋，opinions 段專注鑑定意見可接受"
+     "text": "手術細節（外動脈重建），屬手術背景描述，不影響後續醫療過失判斷",
+     "reason": "手術細節（外動脈重建），屬手術背景描述，不影響後續醫療過失判斷"
     },
     {
      "gt_claim_id": 62,
+     "source_section": "opinions",
      "severity": "minor",
-     "text": "「第一次手術順利」屬背景敘述，非鑑定意見核心爭點",
-     "reason": "「第一次手術順利」屬背景敘述，非鑑定意見核心爭點"
+     "text": "第一次手術過程順利之背景描述，與術後過失爭議無直接關聯",
+     "reason": "第一次手術過程順利之背景描述，與術後過失爭議無直接關聯"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "麻醉科醫師19:35通知之具體時間點，影響時間軸完整性與責任判斷",
+     "reason": "麻醉科醫師19:35通知之具體時間點，影響時間軸完整性與責任判斷"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師甲20:10到達恢復室之關鍵時間點，影響延誤期間計算",
+     "reason": "醫師甲20:10到達恢復室之關鍵時間點，影響延誤期間計算"
     },
     {
      "gt_claim_id": 68,
-     "severity": "minor",
-     "text": "麻醉科處置後仍有變化為過程細節，opinions 段已載明時間軸核心判斷（似有延誤之嫌）",
-     "reason": "麻醉科處置後仍有變化為過程細節，opinions 段已載明時間軸核心判斷（似有延誤之嫌）"
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "麻醉科醫師處置後仍有變化之病程描述，影響後續處置必要性之理解",
+     "reason": "麻醉科醫師處置後仍有變化之病程描述，影響後續處置必要性之理解"
     },
     {
      "gt_claim_id": 69,
-     "severity": "minor",
-     "text": "血壓數值 80/40 為醫療細節，生成摘要提及「血壓持續下降」已涵蓋關鍵事實",
-     "reason": "血壓數值 80/40 為醫療細節，生成摘要提及「血壓持續下降」已涵蓋關鍵事實"
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "19:55失去意識及血壓80/40之危急狀態，為病情惡化關鍵節點，影響過失因果關係判斷",
+     "reason": "19:55失去意識及血壓80/40之危急狀態，為病情惡化關鍵節點，影響過失因果關係判斷"
     },
     {
      "gt_claim_id": 70,
-     "severity": "minor",
-     "text": "20:00 心跳血壓量不到為時間細節，facts 段已涵蓋該時間點事件",
-     "reason": "20:00 心跳血壓量不到為時間細節，facts 段已涵蓋該時間點事件"
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "20:00心跳血壓量不到及實施急救，為急救啟動關鍵事實，影響延誤與損害結果之因果關係認定",
+     "reason": "20:00心跳血壓量不到及實施急救，為急救啟動關鍵事實，影響延誤與損害結果之因果關係認定"
     },
     {
      "gt_claim_id": 71,
-     "severity": "minor",
-     "text": "醫師 A 再度通知為過去式細節，opinions 段聚焦鑑定意見評估而非完整重述",
-     "reason": "醫師 A 再度通知為過去式細節，opinions 段聚焦鑑定意見評估而非完整重述"
-    },
-    {
-     "gt_claim_id": 72,
+     "source_section": "opinions",
      "severity": "important",
-     "text": "「即時放下非急診之病人」為鑑定意見明確要求，涉及醫療責任判斷核心，雖然 74 提及「處置稍嫌不足」但 GT Claim 72 更具體指責應放下非急診病人",
-     "reason": "「即時放下非急診之病人」為鑑定意見明確要求，涉及醫療責任判斷核心，雖然 74 提及「處置稍嫌不足」但 GT Claim 72 更具體指責應放下非急診病人"
+     "text": "醫師A再度通知醫師甲之行為，影響通知次數與醫師甲回應義務之判斷",
+     "reason": "醫師A再度通知醫師甲之行為，影響通知次數與醫師甲回應義務之判斷"
     },
     {
      "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "第二次鑑定書重要條件式結論（若在手術中則取代方式可接受），為專家意見之重要限定條件",
+     "reason": "第二次鑑定書重要條件式結論（若在手術中則取代方式可接受），為專家意見之重要限定條件"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院對被告具體抗辯的駁斥理由，涉及『只要有醫師A一人即可』的抗辯內容，生成摘要未提及此關鍵辯論要點，影響案情理解",
+     "reason": "法院對被告具體抗辯的駁斥理由，涉及『只要有醫師A一人即可』的抗辯內容，生成摘要未提及此關鍵辯論要點，影響案情理解"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "「若正在手術中則取代方式可接受」為條件性補充說明，非本次延誤認定之關鍵",
-     "reason": "「若正在手術中則取代方式可接受」為條件性補充說明，非本次延誤認定之關鍵"
+     "text": "觀察指標的具體內容（血壓、心跳、血紅素）雖有遺漏，但 section_05 已多次提及血壓和心跳，主要觀察指標已有涵蓋",
+     "reason": "觀察指標的具體內容（血壓、心跳、血紅素）雖有遺漏，但 section_05 已多次提及血壓和心跳，主要觀察指標已有涵蓋"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「被告自承觀察指標」為細節性陳述，生成摘要已涵蓋核心論點」",
+     "reason": "「被告自承觀察指標」為細節性陳述，生成摘要已涵蓋核心論點」"
     },
     {
      "gt_claim_id": 93,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "護理師僅能輸血維持生命徵兆的具體限制，屬詳細事實描述，不影響判決核心結論理解",
-     "reason": "護理師僅能輸血維持生命徵兆的具體限制，屬詳細事實描述，不影響判決核心結論理解"
+     "text": "證人D遵照指示繼續輸血為具體證詞細節，不影響法院核心論理",
+     "reason": "證人D遵照指示繼續輸血為具體證詞細節，不影響法院核心論理"
     },
     {
      "gt_claim_id": 97,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "血紅素10.5的具體數值對比，屬細節性醫療數據，摘要已涵蓋血紅素異常的核心概念",
-     "reason": "血紅素10.5的具體數值對比，屬細節性醫療數據，摘要已涵蓋血紅素異常的核心概念"
+     "text": "血紅素10.5的具體數值為細節數據，非影響判決結論之關鍵事實",
+     "reason": "血紅素10.5的具體數值為細節數據，非影響判決結論之關鍵事實"
     },
     {
      "gt_claim_id": 98,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "輸血與血紅素關係的推理細節，屬論證過程中的輔助說明，不影響過失認定結論",
-     "reason": "輸血與血紅素關係的推理細節，屬論證過程中的輔助說明，不影響過失認定結論"
+     "text": "『病患正在輸血，血紅素不可能降太低』為法院論證過程中的過渡性陳述",
+     "reason": "『病患正在輸血，血紅素不可能降太低』為法院論證過程中的過渡性陳述"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『被告應知之甚詳』及『尚包括血壓及心跳』為法院論證邏輯的重要組成，影響過失認定的完整性理解",
+     "reason": "『被告應知之甚詳』及『尚包括血壓及心跳』為法院論證邏輯的重要組成，影響過失認定的完整性理解"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「『縱使血紅素尚可，心跳加快血壓降低已呈現可能內出血』為法院認定被告應負責的關鍵推論，生成摘要僅提及『應有預見術後內出血併發症』，缺少『即使血紅素正常仍應注意心跳血壓』的邏輯」",
+     "reason": "「『縱使血紅素尚可，心跳加快血壓降低已呈現可能內出血』為法院認定被告應負責的關鍵推論，生成摘要僅提及『應有預見術後內出血併發症』，缺少『即使血紅素正常仍應注意心跳血壓』的邏輯」"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「『相隔幾層樓、路程不到幾分鐘』的具體細節，section_05 已提及『僅需短短幾分鐘』，主要內容已涵蓋」",
+     "reason": "「『相隔幾層樓、路程不到幾分鐘』的具體細節，section_05 已提及『僅需短短幾分鐘』，主要內容已涵蓋」"
     },
     {
      "gt_claim_id": 113,
+     "source_section": "reasoning",
      "severity": "minor",
-     "text": "94年12月8日自認的具體日期，屬程序性細節，非判決核心理由",
-     "reason": "94年12月8日自認的具體日期，屬程序性細節，非判決核心理由"
+     "text": "94年12月8日審理時自認的具體日期細節，非影響判決結論之關鍵",
+     "reason": "94年12月8日審理時自認的具體日期細節，非影響判決結論之關鍵"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "『手術後護理為專門醫療學科』為背景性論述，非核心事實",
+     "reason": "『手術後護理為專門醫療學科』為背景性論述，非核心事實"
     },
     {
      "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "『忽視手術後護理使手術前功盡棄』為背景性論述",
+     "reason": "『忽視手術後護理使手術前功盡棄』為背景性論述"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "「忽視術後護理使手術前功盡棄」是法院論述術後護理重要性的關鍵法理闡述，雖摘要有提及術後護理義務，但遺漏此強化論證",
-     "reason": "「忽視術後護理使手術前功盡棄」是法院論述術後護理重要性的關鍵法理闡述，雖摘要有提及術後護理義務，但遺漏此強化論證"
+     "text": "「『手術是主治醫生做的，請他回來做最正確的判斷』為論證呼叫主治醫師必要性的關鍵理由，生成摘要僅提及呼叫原則，缺少此因果邏輯」",
+     "reason": "「『手術是主治醫生做的，請他回來做最正確的判斷』為論證呼叫主治醫師必要性的關鍵理由，生成摘要僅提及呼叫原則，缺少此因果邏輯」"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "16人次掛號門診的具體數據，section_05 已有『正在門診為由』之表述",
+     "reason": "16人次掛號門診的具體數據，section_05 已有『正在門診為由』之表述"
     },
     {
      "gt_claim_id": 122,
+     "source_section": "reasoning",
      "severity": "important",
-     "text": "急病患應送急診而非門診的推理，是法院反駁被告義務衝突抗辯的重要論點，摘要雖提及門診義務衝突，但遺漏此一強化論證",
-     "reason": "急病患應送急診而非門診的推理，是法院反駁被告義務衝突抗辯的重要論點，摘要雖提及門診義務衝突，但遺漏此一強化論證"
+     "text": "「『嚴重病患應送急診而非門診等候』為法院駁斥被告義務衝突抗辯的關鍵論點，生成摘要僅提及『衡量保護法益之輕重』，未完整涵蓋此論述」",
+     "reason": "「『嚴重病患應送急診而非門診等候』為法院駁斥被告義務衝突抗辯的關鍵論點，生成摘要僅提及『衡量保護法益之輕重』，未完整涵蓋此論述」"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「『醫療疏失確實惹起結果之發生』的核心內容已於 section_05 中『非特具有過失且與病患之重傷害結果間具有相當因果關係』涵蓋」",
+     "reason": "「『醫療疏失確實惹起結果之發生』的核心內容已於 section_05 中『非特具有過失且與病患之重傷害結果間具有相當因果關係』涵蓋」"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證據法則之抽象法律原則論述，屬學理性說明",
+     "reason": "證據法則之抽象法律原則論述，屬學理性說明"
     }
    ]
   },
   "fact_detail": {
    "gt_total": 143,
    "pred_total": 140,
-   "matched": 108,
+   "matched": 98,
    "partial": 15,
-   "missing": 17,
-   "hallucinated": 5
+   "missing": 30,
+   "hallucinated": 0
   },
-  "section_balance": 1.0
+  "section_balance": 0.4118
  }
 }
