@@ -136,5 +136,221 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8357,
+  "fact_recall": 0.7773,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8747,
+  "quality_overall": 4.7214,
+  "checklist_pass_rate": 0.9847,
+  "citation_accuracy": 0.975,
+  "citation_support_score": 0.9537,
+  "uncited_rate": 0.076,
+  "faithfulness_combined": {
+   "score": 0.9405,
+   "citation_fidelity": 0.9009,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 32
+  },
+  "weighted_recall": 0.9132,
+  "missing_severity": {
+   "critical": 0,
+   "important": 7,
+   "minor": 17,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 雖有「晚間住院治療」，但 GT claim 強調「辦理住院」的時間點，pred 未明確區分「辦理住院」與「晚間住院」的語義差異，確認維持 missing",
+     "reason": "section_01_facts.txt 雖有「晚間住院治療」，但 GT claim 強調「辦理住院」的時間點，pred 未明確區分「辦理住院」與「晚間住院」的語義差異，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 記載病患因「呼吸窘迫」就診，診斷為「急性腎傷害合併急性肺水腫」，11日中午為「意識不清」而非「低血糖昏迷」（血糖103mg/dL）。GT claim「低血糖昏迷」與原文不符，pred 正確呈現原文語義，故 GT claim 5 確實未被 pred 覆蓋，屬重要事實差異（就診/昏迷原因），標記為 important",
+     "reason": "section_01_facts.txt 記載病患因「呼吸窘迫」就診，診斷為「急性腎傷害合併急性肺水腫」，11日中午為「意識不清」而非「低血糖昏迷」（血糖103mg/dL）。GT claim「低血糖昏迷」與原文不符，pred 正確呈現原文語義，故 GT claim 5 確實未被 pred 覆蓋，屬重要事實差異（就診/昏迷原因），標記為 important"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "三個 section 原文均未提及「血氧飽和度回至100%」，pred 確實未涵蓋此特定數據，確認維持 missing",
+     "reason": "三個 section 原文均未提及「血氧飽和度回至100%」，pred 確實未涵蓋此特定數據，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "三個 section 原文均未提及「轉送加護病房治療」，僅述及「經診斷為缺氧缺血性腦病變」。此為重要醫療處置流程事實，確認維持 missing，標記為 important",
+     "reason": "三個 section 原文均未提及「轉送加護病房治療」，僅述及「經診斷為缺氧缺血性腦病變」。此為重要醫療處置流程事實，確認維持 missing，標記為 important"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「氣管嚴重痙攣收縮」，但「對施以甦醒球之治療毫無反應」此因果描述未見於任何 section 原文，pred 也未提及，確認維持 missing",
+     "reason": "section_01_facts.txt 提及「氣管嚴重痙攣收縮」，但「對施以甦醒球之治療毫無反應」此因果描述未見於任何 section 原文，pred 也未提及，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "三個 section 原文均無「血氧飽和度無法回復」的明確表述，pred 提及血氧濃度下降和無法測得，但未明確說「無法回復」，確認維持 missing",
+     "reason": "三個 section 原文均無「血氧飽和度無法回復」的明確表述，pred 提及血氧濃度下降和無法測得，但未明確說「無法回復」，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 生成摘要未提及『腦部處於低血氧與低血流灌注狀態』之醫學機轉說明，影響缺氧缺血性腦病變成因之完整理解",
+     "reason": "section_03_opinions.txt 生成摘要未提及『腦部處於低血氧與低血流灌注狀態』之醫學機轉說明，影響缺氧缺血性腦病變成因之完整理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 生成摘要未提及『缺氧缺血性腦病變合併大腦皮質功能及腦幹損傷而持續昏迷不醒』之完整診斷與結果",
+     "reason": "section_03_opinions.txt 生成摘要未提及『缺氧缺血性腦病變合併大腦皮質功能及腦幹損傷而持續昏迷不醒』之完整診斷與結果"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 生成摘要聚焦於實習醫師執行權限及急救原因，未觸及『放置鼻胃管原則上需要開立醫囑』之一般醫療規範說明",
+     "reason": "section_03_opinions.txt 生成摘要聚焦於實習醫師執行權限及急救原因，未觸及『放置鼻胃管原則上需要開立醫囑』之一般醫療規範說明"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 生成摘要未提及『鼻胃管到期或脫落需要更換，沿用原有之醫囑繼續執行』之操作慣例判斷",
+     "reason": "section_03_opinions.txt 生成摘要未提及『鼻胃管到期或脫落需要更換，沿用原有之醫囑繼續執行』之操作慣例判斷"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt記載『同年月11日上午11時45分許，主治醫師證人A查房時發現』肺水腫，但生成摘要未明確提及『住院之隔日早上』之時間點，屬時間細節遺漏，不影響案情核心理解",
+     "reason": "section_01_facts.txt記載『同年月11日上午11時45分許，主治醫師證人A查房時發現』肺水腫，但生成摘要未明確提及『住院之隔日早上』之時間點，屬時間細節遺漏，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt雖明確記載『證人A隨後使用利尿劑』，但此為背景治療細節，生成摘要聚焦過失爭議，未涵蓋此細節不影響判決結論",
+     "reason": "section_01_facts.txt雖明確記載『證人A隨後使用利尿劑』，但此為背景治療細節，生成摘要聚焦過失爭議，未涵蓋此細節不影響判決結論"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt記載『病患X口鼻處有許多分泌物不斷湧出』，但此為背景症狀描述，非判決關鍵爭點",
+     "reason": "section_01_facts.txt記載『病患X口鼻處有許多分泌物不斷湧出』，但此為背景症狀描述，非判決關鍵爭點"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt有提及使用鼻胃管引流，但未明確提及『證人W1』之證詞，生成摘要以客觀敘述呈現",
+     "reason": "section_01_facts.txt有提及使用鼻胃管引流，但未明確提及『證人W1』之證詞，生成摘要以客觀敘述呈現"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred摘要已涵蓋『需要高濃度氧氣面罩治療』，GT中『證人W2知悉』之證人歸屬細節未明確提及，屬次要",
+     "reason": "pred摘要已涵蓋『需要高濃度氧氣面罩治療』，GT中『證人W2知悉』之證人歸屬細節未明確提及，屬次要"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "生成摘要未提及證人W2急救後翻閱病歷之細節，此為證人個人行為描述，非過失認定關鍵",
+     "reason": "生成摘要未提及證人W2急救後翻閱病歷之細節，此為證人個人行為描述，非過失認定關鍵"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt雖論述置放鼻胃管之必要性，但未明確陳述『生命徵象並無不適合放置鼻胃管』之直接判斷，此為法院事實認定重要基礎",
+     "reason": "section_05_reasoning.txt雖論述置放鼻胃管之必要性，但未明確陳述『生命徵象並無不適合放置鼻胃管』之直接判斷，此為法院事實認定重要基礎"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt僅提及『予以氧氣治療後，回復96%』，GT中『98%』數值未見於生成摘要，屬數據細節遺漏",
+     "reason": "section_01_facts.txt僅提及『予以氧氣治療後，回復96%』，GT中『98%』數值未見於生成摘要，屬數據細節遺漏"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred摘要已涵蓋『需要高濃度氧氣面罩治療』，GT中『證人W2認為』之歸屬細節未明確分開陳述",
+     "reason": "pred摘要已涵蓋『需要高濃度氧氣面罩治療』，GT中『證人W2認為』之歸屬細節未明確分開陳述"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "生成摘要以客觀敘述呈現鼻胃管用途，未明確援引證人W1證詞作為來源",
+     "reason": "生成摘要以客觀敘述呈現鼻胃管用途，未明確援引證人W1證詞作為來源"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "生成摘要未明確提及證人W2表示會置回鼻胃管之證詞，雖有類似論述但歸屬未清晰",
+     "reason": "生成摘要未明確提及證人W2表示會置回鼻胃管之證詞，雖有類似論述但歸屬未清晰"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "類同gt_claim_id 78，法院雖認定評估可採，但未明確陳述『置放前生命徵象並無不適合』之直接判斷語句",
+     "reason": "類同gt_claim_id 78，法院雖認定評估可採，但未明確陳述『置放前生命徵象並無不適合』之直接判斷語句"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "生成摘要提及會議紀錄與證人證詞，但未明確說明『相符』之認定",
+     "reason": "生成摘要提及會議紀錄與證人證詞，但未明確說明『相符』之認定"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "此為法院核心邏輯論述『難僅憑公訴人所提證據認定犯行』，生成摘要未明確涵蓋『證據不足』之法律論述，影響無罪判決基礎理解",
+     "reason": "此為法院核心邏輯論述『難僅憑公訴人所提證據認定犯行』，生成摘要未明確涵蓋『證據不足』之法律論述，影響無罪判決基礎理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 119,
+   "pred_total": 105,
+   "matched": 90,
+   "partial": 5,
+   "missing": 24,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.653,
+  "compression_afg_chars": 3784,
+  "compression_source_chars": 10904,
+  "gt_length_ratio": 1.0387,
+  "gt_length_afg_chars": 3784,
+  "gt_length_gt_chars": 3643,
+  "section_balance": 0.7455
+ }
 }

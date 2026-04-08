@@ -132,6 +132,275 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7871,
-  "fact_recall_avg": null
+  "fact_recall": 0.6228,
+  "fact_precision": 0.918,
+  "fact_f1": 0.7421,
+  "quality_overall": 4.8857,
+  "checklist_pass_rate": 0.981,
+  "citation_accuracy": 0.95,
+  "citation_support_score": 0.92,
+  "uncited_rate": 0.082,
+  "faithfulness_combined": {
+   "score": 0.8905,
+   "citation_fidelity": 0.8721,
+   "fact_precision": 0.918,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 23,
+   "correct": 23
+  },
+  "weighted_recall": 0.883,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 24,
+   "details": [
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "關於『未及時止血導致凝血異常、死亡率極高』之因果後果評估，係影響過失程度判斷的重要醫療事實，摘要完全未提及",
+     "reason": "關於『未及時止血導致凝血異常、死亡率極高』之因果後果評估，係影響過失程度判斷的重要醫療事實，摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "轉送大型醫院之目的說明（更進一步檢查治療、避免大出血死亡）僅部分出現於pred claim 6-7，但『避免產婦因大出血而有導致死亡之可能』關鍵後果語義遺漏，維持partial（若原判定為missing則維持missing）",
+     "reason": "轉送大型醫院之目的說明（更進一步檢查治療、避免大出血死亡）僅部分出現於pred claim 6-7，但『避免產婦因大出血而有導致死亡之可能』關鍵後果語義遺漏，維持partial（若原判定為missing則維持missing）"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "『並無不能注意之情況』屬法律程式性表述，不影響案情實質理解",
+     "reason": "『並無不能注意之情況』屬法律程式性表述，不影響案情實質理解"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「病情變化快速，要求一小時內正確診斷期待不能」此辯護要點雖未在生成摘要中提及，但defense段已涵蓋「診斷極高難度」「醫學之極限」等核心論述，此為重複強調語，屬次要遺漏",
+     "reason": "「病情變化快速，要求一小時內正確診斷期待不能」此辯護要點雖未在生成摘要中提及，但defense段已涵蓋「診斷極高難度」「醫學之極限」等核心論述，此為重複強調語，屬次要遺漏"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「緊急剖腹手術切除子宮或結紮動脈血管始可挽救生命」屬鑑定報告內容轉述，非被告直接辯稱內容，defense段對手術難度已有其他論述，此為背景性事實",
+     "reason": "「緊急剖腹手術切除子宮或結紮動脈血管始可挽救生命」屬鑑定報告內容轉述，非被告直接辯稱內容，defense段對手術難度已有其他論述，此為背景性事實"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「大型醫院與診所設備能力對比」雖未明確提及，但defense段已提及診所轉診必要性，此為輔助性論述",
+     "reason": "「大型醫院與診所設備能力對比」雖未明確提及，但defense段已提及診所轉診必要性，此為輔助性論述"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「死者所患誠屬難以診斷處置之症」為總結性語句，defense段已涵蓋診斷困難、醫學極限等實質內容，此為重複強調",
+     "reason": "「死者所患誠屬難以診斷處置之症」為總結性語句，defense段已涵蓋診斷困難、醫學極限等實質內容，此為重複強調"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「依醫療常規診治，未違反客觀注意義務」雖未完整呈現，但defense段已明確表示「醫療過程均按程序進行」「並無疏失」，核心意思已涵蓋",
+     "reason": "「依醫療常規診治，未違反客觀注意義務」雖未完整呈現，但defense段已明確表示「醫療過程均按程序進行」「並無疏失」，核心意思已涵蓋"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「十時四十分再度向一一九求援」此具體時間點未在defense段出現，屬細節性時間資訊，不影響對轉院延誤原因的理解",
+     "reason": "「十時四十分再度向一一九求援」此具體時間點未在defense段出現，屬細節性時間資訊，不影響對轉院延誤原因的理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「等待二、三十分鐘再次確認」雖未明確提及，但defense段已有「等候民間救護車亦無回音」涵蓋等待事實，此為時間細節",
+     "reason": "「等待二、三十分鐘再次確認」雖未明確提及，但defense段已有「等候民間救護車亦無回音」涵蓋等待事實，此為時間細節"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「一一九告以已經派出」為通話內容細節，defense段僅提及「不支援一般醫療院所」，屬程序性細節",
+     "reason": "「一一九告以已經派出」為通話內容細節，defense段僅提及「不支援一般醫療院所」，屬程序性細節"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「十一時十分救護車到診所」此具體時間未在defense段出現，屬時間細節",
+     "reason": "「十一時十分救護車到診所」此具體時間未在defense段出現，屬時間細節"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「請求支援期間依醫事常規進行急救」雖未明確提及，但defense段已涵蓋「給予氧氣、靜脈輸液、止血針劑」等急救處置，實質內容已呈現",
+     "reason": "「請求支援期間依醫事常規進行急救」雖未明確提及，但defense段已涵蓋「給予氧氣、靜脈輸液、止血針劑」等急救處置，實質內容已呈現"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「下午一時五十五分大量出血」此具體時間點未在defense段出現，屬時間細節",
+     "reason": "「下午一時五十五分大量出血」此具體時間點未在defense段出現，屬時間細節"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「診斷證明書與病歷不符」未在defense段出現，屬輔助性質疑論點",
+     "reason": "「診斷證明書與病歷不符」未在defense段出現，屬輔助性質疑論點"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「緊急剖腹手術非毫無挽救機會」未在defense段出現，屬鑑定意見相關論述",
+     "reason": "「緊急剖腹手術非毫無挽救機會」未在defense段出現，屬鑑定意見相關論述"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此內容實際上屬於 section_01_facts（事實段描述患者症狀），非鑑定人專業意見，摘要若涵蓋應在 facts section",
+     "reason": "此內容實際上屬於 section_01_facts（事實段描述患者症狀），非鑑定人專業意見，摘要若涵蓋應在 facts section"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此內容屬於 section_01_facts（事實陳述），非鑑定人意見",
+     "reason": "此內容屬於 section_01_facts（事實陳述），非鑑定人意見"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions 僅提及 DIC 一般醫學原理，未明確記載『血液有不凝集現象』之觀察，摘要確實未提及",
+     "reason": "section_03_opinions 僅提及 DIC 一般醫學原理，未明確記載『血液有不凝集現象』之觀察，摘要確實未提及"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此內容出現在 section_02_defense 被告辯稱中（子宮收縮不良），非鑑定人專業意見",
+     "reason": "此內容出現在 section_02_defense 被告辯稱中（子宮收縮不良），非鑑定人專業意見"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此內容屬於 section_02_defense（被告辯稱『判斷為子宮收縮不良』），非鑑定人意見",
+     "reason": "此內容屬於 section_02_defense（被告辯稱『判斷為子宮收縮不良』），非鑑定人意見"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions 中醫審會鑑定僅說明 DIC 的一般醫學原理，未提及『醫師懷疑』之診斷過程，摘要確實未涵蓋此診斷推理",
+     "reason": "section_03_opinions 中醫審會鑑定僅說明 DIC 的一般醫學原理，未提及『醫師懷疑』之診斷過程，摘要確實未涵蓋此診斷推理"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此內容屬於 section_02_defense 被告辯稱內容，非鑑定人明確意見",
+     "reason": "此內容屬於 section_02_defense 被告辯稱內容，非鑑定人明確意見"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此內容屬於 section_02_defense 被告辯稱內容，非鑑定人明確意見",
+     "reason": "此內容屬於 section_02_defense 被告辯稱內容，非鑑定人明確意見"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決書末尾程序性事實（上訴期間未上訴），非關鍵事實，不影響案情主體理解",
+     "reason": "判決書末尾程序性事實（上訴期間未上訴），非關鍵事實，不影響案情主體理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態為程序性結論，摘要未提及但不影響判決主文理解",
+     "reason": "判決確定狀態為程序性結論，摘要未提及但不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要中未提及「醫師懷疑子宮收縮不良及DIC」的診斷過程，影響醫療判斷脈絡理解",
+     "reason": "摘要中未提及「醫師懷疑子宮收縮不良及DIC」的診斷過程，影響醫療判斷脈絡理解"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要中未提及「轉診符合一般開業醫師醫療水準」的論述，屬程序性標準說明",
+     "reason": "摘要中未提及「轉診符合一般開業醫師醫療水準」的論述，屬程序性標準說明"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要中未提及「羊水栓塞之臨床表徵」的鑑別診斷，影響病情判斷理解",
+     "reason": "摘要中未提及「羊水栓塞之臨床表徵」的鑑別診斷，影響病情判斷理解"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要中未提及「病徵重疊或可能誤診，難以避免」的法律論述，屬程序性說明",
+     "reason": "摘要中未提及「病徵重疊或可能誤診，難以避免」的法律論述，屬程序性說明"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要中未提及「縱診斷為羊水栓塞亦需立即反應」的論述，影響注意義務範圍理解",
+     "reason": "摘要中未提及「縱診斷為羊水栓塞亦需立即反應」的論述，影響注意義務範圍理解"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要中 pred claim 13 提到「無從進行手術」，但未提及「DIC狀態下剖腹探查術伴隨相當危險」的醫療評估",
+     "reason": "摘要中 pred claim 13 提到「無從進行手術」，但未提及「DIC狀態下剖腹探查術伴隨相當危險」的醫療評估"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 114,
+   "pred_total": 61,
+   "matched": 61,
+   "partial": 20,
+   "missing": 33,
+   "hallucinated": 5
+  },
+  "compression_ratio": 0.6552,
+  "compression_afg_chars": 2189,
+  "compression_source_chars": 6349,
+  "gt_length_ratio": 0.6744,
+  "gt_length_afg_chars": 2189,
+  "gt_length_gt_chars": 3246,
+  "section_balance": 0.641
  }
 }
