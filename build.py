@@ -744,8 +744,19 @@ def normalize_v310_entities(master):
 
 def extract_eval_summary(eval_dir):
     report = read_json(os.path.join(eval_dir, "report.json"))
-    if report and "scores" in report:
-        return report["scores"]
+    scores = report.get("scores", {}) if report else {}
+
+    # Patch: if report.json has no quality, fallback to quality.json
+    if scores.get("quality") is None and scores.get("quality_avg") is None and scores.get("quality_overall") is None:
+        quality_file = read_json(os.path.join(eval_dir, "quality.json"))
+        if quality_file and "overall" in quality_file:
+            ov = quality_file["overall"].get("overall_quality")
+            if ov is not None:
+                scores["quality_overall"] = ov
+
+    if scores:
+        return scores
+
     result = {}
     rule = read_json(os.path.join(eval_dir, "rule_metrics.json"))
     if rule and "_summary" in rule:
