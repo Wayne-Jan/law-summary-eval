@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,359 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7392,
+  "fact_recall": 0.6316,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7742,
+  "quality_overall": 4.8929,
+  "citation_accuracy": 0.9808,
+  "citation_support_score": 0.9818,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9885,
+   "citation_fidelity": 0.9808,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": null,
+  "numerical_fidelity": null,
+  "numerical_detail": null,
+  "weighted_recall": 0.8271,
+  "missing_severity": {
+   "critical": 0,
+   "important": 24,
+   "minor": 21,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "『麻醉科醫師丙』（劉宏濱）僅為初期麻醉負責人，後續由被告甲接續，屬次要背景人物。pred 雖暗示有人負責初期麻醉（『接續』），但未明確提及姓名。跨 section 後仍無完整對應",
+     "reason": "『麻醉科醫師丙』（劉宏濱）僅為初期麻醉負責人，後續由被告甲接續，屬次要背景人物。pred 雖暗示有人負責初期麻醉（『接續』），但未明確提及姓名。跨 section 後仍無完整對應"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred claim 1 已提及『術後恢復室照護』為平日職責，雖未明確說明『本案中由其負責』，但從上下文已可推知。然『手術室術後照護事務』之具體措詞未出現，維持 missing，屬次要事實",
+     "reason": "pred claim 1 已提及『術後恢復室照護』為平日職責，雖未明確說明『本案中由其負責』，但從上下文已可推知。然『手術室術後照護事務』之具體措詞未出現，維持 missing，屬次要事實"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred claim 9 使用『應能研判...竟未給予』之法律類似表述，但未使用『應注意、能注意，又無其他不能注意之情事，竟疏未注意』之標準三段論刑法過失用語。此為法律專業術語格式差異，屬次要",
+     "reason": "pred claim 9 使用『應能研判...竟未給予』之法律類似表述，但未使用『應注意、能注意，又無其他不能注意之情事，竟疏未注意』之標準三段論刑法過失用語。此為法律專業術語格式差異，屬次要"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred claim 13 僅提及『瀰漫性肺泡傷害、缺氧性腦病』，未提及『肝小葉中心壞死』。雖 gt_claims.json 的 opinions section gt_claim #90 及 gt_claim #38 都有提及，但 pred 簡化了併發症列舉，屬次要醫學細節",
+     "reason": "pred claim 13 僅提及『瀰漫性肺泡傷害、缺氧性腦病』，未提及『肝小葉中心壞死』。雖 gt_claims.json 的 opinions section gt_claim #90 及 gt_claim #38 都有提及，但 pred 簡化了併發症列舉，屬次要醫學細節"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred claim 13 未提及『支氣管肺炎』，與 gt_claim #39 相同屬併發症列舉簡化。gt_claims.json 的 opinions section gt_claim #90 有完整列舉，pred 擇要提及，屬次要醫學細節",
+     "reason": "pred claim 13 未提及『支氣管肺炎』，與 gt_claim #39 相同屬併發症列舉簡化。gt_claims.json 的 opinions section gt_claim #90 有完整列舉，pred 擇要提及，屬次要醫學細節"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "係被告辯稱中關於向家屬解釋病情之具體時間細節（上午10時40分及11時10分），屬背景性事實，不影響案情理解",
+     "reason": "係被告辯稱中關於向家屬解釋病情之具體時間細節（上午10時40分及11時10分），屬背景性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "係被告辯稱中關於病患母親是否的在場之細節，屬背景性事實，不影響案情理解",
+     "reason": "係被告辯稱中關於病患母親是否的在場之細節，屬背景性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "係被告辯稱中關於做完電腦斷層後向家屬解釋病情之細節，屬背景性事實，不影響案情理解",
+     "reason": "係被告辯稱中關於做完電腦斷層後向家屬解釋病情之細節，屬背景性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要僅簡述脂肪栓塞不易診斷，未提及具體發生時間（18至24小時甚至三日後）",
+     "reason": "摘要僅簡述脂肪栓塞不易診斷，未提及具體發生時間（18至24小時甚至三日後）"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及休克、昏迷或手術麻醉中更不易察覺之細節",
+     "reason": "摘要未提及休克、昏迷或手術麻醉中更不易察覺之細節"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及症狀類似頭部外傷、難以區分之醫學細節",
+     "reason": "摘要未提及症狀類似頭部外傷、難以區分之醫學細節"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Capan氏分類法及三個子型屬專業醫學分類細節，非判決關鍵",
+     "reason": "Capan氏分類法及三個子型屬專業醫學分類細節，非判決關鍵"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及本案為猛暴性及0.2%發生率之關鍵統計數據",
+     "reason": "摘要未提及本案為猛暴性及0.2%發生率之關鍵統計數據"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及猛暴性脂肪栓塞傷後數小時發生、麻醉結束時無法醒轉之特徵",
+     "reason": "摘要未提及猛暴性脂肪栓塞傷後數小時發生、麻醉結束時無法醒轉之特徵"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及初期病徵不顯著但醫院已高度懷疑之關鍵事實",
+     "reason": "摘要未提及初期病徵不顯著但醫院已高度懷疑之關鍵事實"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體檢查項目（胸部X光、眼底血管等）屬細節性醫療資訊",
+     "reason": "具體檢查項目（胸部X光、眼底血管等）屬細節性醫療資訊"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "'診斷並未遲延'為鑑定關鍵結論，摘要未明確陳述",
+     "reason": "'診斷並未遲延'為鑑定關鍵結論，摘要未明確陳述"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "後續治療方式（呼吸器、類固醇）符合醫學準則之結論未於摘要呈現",
+     "reason": "後續治療方式（呼吸器、類固醇）符合醫學準則之結論未於摘要呈現"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Fentanyl劑量6ml（300ug）為具體數值細節",
+     "reason": "Fentanyl劑量6ml（300ug）為具體數值細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "施打Naloxone符合麻醉醫療業務準則為重要鑑定結論，摘要未提及",
+     "reason": "施打Naloxone符合麻醉醫療業務準則為重要鑑定結論，摘要未提及"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "頭暈嘔吐為常見現象及primperan藥名屬細節",
+     "reason": "頭暈嘔吐為常見現象及primperan藥名屬細節"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肌肉鬆弛劑劑量調整因素屬專業細節",
+     "reason": "肌肉鬆弛劑劑量調整因素屬專業細節"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術時間5小時及曾恢復自發性呼吸為時序細節",
+     "reason": "手術時間5小時及曾恢復自發性呼吸為時序細節"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "pavulon劑量符合醫療準則為重要鑑定結論",
+     "reason": "pavulon劑量符合醫療準則為重要鑑定結論"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術結束後恢復自發性呼吸、給予拮抗劑、恢復室呼吸狀況為重要事實認定",
+     "reason": "手術結束後恢復自發性呼吸、給予拮抗劑、恢復室呼吸狀況為重要事實認定"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "排除肌肉鬆弛劑造成傷害為重要因果關係認定",
+     "reason": "排除肌肉鬆弛劑造成傷害為重要因果關係認定"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "脂肪栓塞造成SpO2及EtCO2降低為重要醫療知識",
+     "reason": "脂肪栓塞造成SpO2及EtCO2降低為重要醫療知識"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "全程使用SpO2及EtCO2監測及無監測不當為重要過失認定",
+     "reason": "全程使用SpO2及EtCO2監測及無監測不當為重要過失認定"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "恢復室設備及護理人員職責屬制度性細節",
+     "reason": "恢復室設備及護理人員職責屬制度性細節"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急診室血壓心跳穩定、無嚴重缺血、手術中血壓穩定為重要事實",
+     "reason": "急診室血壓心跳穩定、無嚴重缺血、手術中血壓穩定為重要事實"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "出血450cc、血紅素範圍、排除缺血性休克為重要事實認定",
+     "reason": "出血450cc、血紅素範圍、排除缺血性休克為重要事實認定"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "'高度懷疑之態度'為鑑定意見表述",
+     "reason": "'高度懷疑之態度'為鑑定意見表述"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "'本件麻醉及手術方面並未發現不當措施'為綜合性鑑定結論，摘要雖有類似意思但未完整涵蓋",
+     "reason": "'本件麻醉及手術方面並未發現不當措施'為綜合性鑑定結論，摘要雖有類似意思但未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "延遲甦醒三大原因（藥物、代謝性腦病變、神經傷害）為重要醫學知識",
+     "reason": "延遲甦醒三大原因（藥物、代謝性腦病變、神經傷害）為重要醫學知識"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "無典型症狀時的診斷方式為重要鑑定意見",
+     "reason": "無典型症狀時的診斷方式為重要鑑定意見"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "美國麻醉醫學會準則修訂日期屬背景資訊",
+     "reason": "美國麻醉醫學會準則修訂日期屬背景資訊"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "恢復室準則具體監測項目為細節",
+     "reason": "恢復室準則具體監測項目為細節"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "'並無發現恢復室中處置不當之情事'為重要鑑定結論",
+     "reason": "'並無發現恢復室中處置不當之情事'為重要鑑定結論"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "緊急會診檢查為程序性細節",
+     "reason": "緊急會診檢查為程序性細節"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "處置時間點是否延誤難以客觀認定為重要鑑定保留意見",
+     "reason": "處置時間點是否延誤難以客觀認定為重要鑑定保留意見"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術前風險告知具體內容為細節",
+     "reason": "術前風險告知具體內容為細節"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "施予Naloxone及安排腦部電腦斷層為重要事實",
+     "reason": "施予Naloxone及安排腦部電腦斷層為重要事實"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "已安排腦部電腦斷層檢查為重要事實",
+     "reason": "已安排腦部電腦斷層檢查為重要事實"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "蜘蛛膜下腔出血分類及本案為繼發性之認定為重要醫學鑑定",
+     "reason": "蜘蛛膜下腔出血分類及本案為繼發性之認定為重要醫學鑑定"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning 段落確實未提及「胸部X光、血液氣體分析、眼底血管、心臟超音波」等具體診斷線索，屬次要細節",
+     "reason": "reasoning 段落確實未提及「胸部X光、血液氣體分析、眼底血管、心臟超音波」等具體診斷線索，屬次要細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 133,
+   "pred_total": 93,
+   "matched": 80,
+   "partial": 8,
+   "missing": 45,
+   "hallucinated": 0
+  },
+  "section_balance": 0.2174
+ }
 }

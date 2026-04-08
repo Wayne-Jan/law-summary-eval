@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -120,5 +120,103 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8618,
+  "fact_recall": 0.8049,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8919,
+  "quality_overall": null,
+  "citation_accuracy": 0.6,
+  "citation_support_score": 0.58,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.76,
+   "citation_fidelity": 0.6,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": null,
+  "numerical_fidelity": 0.938,
+  "numerical_detail": {
+   "total_numerical": 16,
+   "correct": 15
+  },
+  "weighted_recall": 0.9106,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「無不能注意之情事」是過失犯構成要件的重要法律事實，section_01_facts.txt 及 section_05_reasoning.txt 均未明確提及。雖為重要法律要件，但本案主要爭點在於醫療過失與因果關係的醫學事實認定，此要件的遺漏對整體案情理解影響為重要級別。",
+     "reason": "「無不能注意之情事」是過失犯構成要件的重要法律事實，section_01_facts.txt 及 section_05_reasoning.txt 均未明確提及。雖為重要法律要件，但本案主要爭點在於醫療過失與因果關係的醫學事實認定，此要件的遺漏對整體案情理解影響為重要級別。"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決日期（93年10月28日）屬於程序性資訊，雖有助於定位判決時點，但不影響案件實體內容與判決結果的理解",
+     "reason": "判決日期（93年10月28日）屬於程序性資訊，雖有助於定位判決時點，但不影響案件實體內容與判決結果的理解"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "「依其他現存證據已足認定犯罪」為簡易判決處刑的程序性說明，預測摘要已提及被告自白及罪名成立，程序細節遺漏不影響判決結論理解",
+     "reason": "「依其他現存證據已足認定犯罪」為簡易判決處刑的程序性說明，預測摘要已提及被告自白及罪名成立，程序細節遺漏不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "「經合議庭裁定後，逕依簡易判決處刑」涉及簡易程序與通常程序的轉換重要程序資訊，影響對判決程序性質的完整理解",
+     "reason": "「經合議庭裁定後，逕依簡易判決處刑」涉及簡易程序與通常程序的轉換重要程序資訊，影響對判決程序性質的完整理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "上訴期間未上訴屬於判決確定前的程序性狀態，GT事實中已包含，預測摘要遺漏不影響判決結果理解",
+     "reason": "上訴期間未上訴屬於判決確定前的程序性狀態，GT事實中已包含，預測摘要遺漏不影響判決結果理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態雖為重要程序性結果，但預測摘要已完整呈現主刑與緩刑內容，判決確定的敘述缺失不影響實體判決結論理解",
+     "reason": "判決確定狀態雖為重要程序性結果，但預測摘要已完整呈現主刑與緩刑內容，判決確定的敘述缺失不影響實體判決結論理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "過失犯構成要件「無不能注意之情事」之法律用語未在 reasoning section 明確提及，雖推理邏輯隱含此意，但缺少正式法律要件陳述，影響法律論證完整性",
+     "reason": "過失犯構成要件「無不能注意之情事」之法律用語未在 reasoning section 明確提及，雖推理邏輯隱含此意，但缺少正式法律要件陳述，影響法律論證完整性"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院肯認鑑定內容屬於 reasoning 中的程序性描述事实，預測雖未明確提及「肯認」字眼，但法院已實質採納鑑定內容進行論證，不影響主要法律推理理解",
+     "reason": "法院肯認鑑定內容屬於 reasoning 中的程序性描述事实，預測雖未明確提及「肯認」字眼，但法院已實質採納鑑定內容進行論證，不影響主要法律推理理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 41,
+   "pred_total": 32,
+   "matched": 33,
+   "partial": 0,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "section_balance": 0.4444
+ }
 }

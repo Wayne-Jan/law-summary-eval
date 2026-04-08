@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -120,5 +120,138 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.868,
+  "fact_recall": 0.6585,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7941,
+  "quality_overall": 4.1946,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9625,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.7561,
+  "missing_severity": {
+   "critical": 7,
+   "important": 3,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "在原始判決書第一段明確記載「或於病況更危急時，並應立即拆開部分傷口縫線，以手指直探心包內，讓血水引流出，再徹底清除血塊及止血」的具體急救方法細節，但生成摘要僅提及「重新打開傷口、清除血塊」，遺漏了拆開縫線、手指探入心包等關鍵急救技術細節。此屬重要醫療過失認定依據，影響案情完整理解，故標記為 important。",
+     "reason": "在原始判決書第一段明確記載「或於病況更危急時，並應立即拆開部分傷口縫線，以手指直探心包內，讓血水引流出，再徹底清除血塊及止血」的具體急救方法細節，但生成摘要僅提及「重新打開傷口、清除血塊」，遺漏了拆開縫線、手指探入心包等關鍵急救技術細節。此屬重要醫療過失認定依據，影響案情完整理解，故標記為 important。"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決日期（93年10月28日）及法院名稱（臺南地方法院）屬程序性資訊，摘要確實未提及，不影響案情核心理解",
+     "reason": "判決日期（93年10月28日）及法院名稱（臺南地方法院）屬程序性資訊，摘要確實未提及，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "上訴期間及未上訴之事實屬程序性後續資訊，摘要確實未提及，不影響判決主文理解",
+     "reason": "上訴期間及未上訴之事實屬程序性後續資訊，摘要確實未提及，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定屬程序性後續狀態，摘要確實未提及，不影響案情核心理解",
+     "reason": "判決確定屬程序性後續狀態，摘要確實未提及，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 僅簡述『坦承不諱』、『鑑定書等在卷可稽』，未論述心臟手術併發症之醫療專業判斷。此為過失認定之核心事實，影響判決理由完整性。",
+     "reason": "section_05_reasoning.txt 僅簡述『坦承不諱』、『鑑定書等在卷可稽』，未論述心臟手術併發症之醫療專業判斷。此為過失認定之核心事實，影響判決理由完整性。"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "判決理由段落未具體說明被告『理應注意』之醫療注意義務內容。",
+     "reason": "判決理由段落未具體說明被告『理應注意』之醫療注意義務內容。"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "判決理由未論述引流管、血塊堆積、心包填塞等術後監測之具體醫療處置事項。",
+     "reason": "判決理由未論述引流管、血塊堆積、心包填塞等術後監測之具體醫療處置事項。"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "判決理由未提及『重新打開傷口、清除血塊』等急救方法。",
+     "reason": "判決理由未提及『重新打開傷口、清除血塊』等急救方法。"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "判決理由未論述危急時拆開縫線、手指探心包等具體急救程序。",
+     "reason": "判決理由未論述危急時拆開縫線、手指探心包等具體急救程序。"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "判決理由未說明『無不能注意之情事』之法律要件判斷。",
+     "reason": "判決理由未說明『無不能注意之情事』之法律要件判斷。"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "判決理由未論述『延誤治療時機』之具體事實，影響過失認定。",
+     "reason": "判決理由未論述『延誤治療時機』之具體事實，影響過失認定。"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "判決理由未記載被害人死亡時間（十二月十九日晚上十一時）及死亡原因（心臟血管繞道手術後併發症肝衰竭），影響判決結果理解。",
+     "reason": "判決理由未記載被害人死亡時間（十二月十九日晚上十一時）及死亡原因（心臟血管繞道手術後併發症肝衰竭），影響判決結果理解。"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "判決理由僅有『足認被告確有業務過失致死』之結論，未建立『未及時急救』與『死亡』間之因果關係論述，影響判決理由完備性。",
+     "reason": "判決理由僅有『足認被告確有業務過失致死』之結論，未建立『未及時急救』與『死亡』間之因果關係論述，影響判決理由完備性。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 41,
+   "pred_total": 40,
+   "matched": 26,
+   "partial": 2,
+   "missing": 13,
+   "hallucinated": 0
+  },
+  "section_balance": 0.1
+ }
 }

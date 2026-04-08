@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -136,5 +136,117 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8483,
+  "fact_recall": 0.8136,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8972,
+  "quality_overall": 4.9321,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9833,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.9153,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "此乃檢察官起訴書中關於注意義務客觀可能性的法律判斷（「依當時情形並無不能注意之情事」），用於確立被告具有注意能力且過失係屬可避免。預測摘要僅提及「本應注意」之義務面，未提及「無不能注意之情事」之能力面，影響對被告可非難性之完整理解。",
+     "reason": "此乃檢察官起訴書中關於注意義務客觀可能性的法律判斷（「依當時情形並無不能注意之情事」），用於確立被告具有注意能力且過失係屬可避免。預測摘要僅提及「本應注意」之義務面，未提及「無不能注意之情事」之能力面，影響對被告可非難性之完整理解。"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "未提及『臺灣高等法院被告前案紀錄表』此輔助性證據文件，屬量刑參考資料的程序性細節，不影響判決結論理解",
+     "reason": "未提及『臺灣高等法院被告前案紀錄表』此輔助性證據文件，屬量刑參考資料的程序性細節，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "未提及被告及檢察官上訴狀況，屬判決後程序性事實，不影響判決主文內容理解",
+     "reason": "未提及被告及檢察官上訴狀況，屬判決後程序性事實，不影響判決主文內容理解"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "未提及判決確定狀態，屬判決後程序性事實，不影響判決主文內容理解",
+     "reason": "未提及判決確定狀態，屬判決後程序性事實，不影響判決主文內容理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred claim 27雖提及『放射線科主治醫師證稱其已將判讀結果上傳』，但未明確包含『係由渠負責驗片判讀』之職責歸屬語義。此為背景性作業流程事實，非核心過失爭點。",
+     "reason": "pred claim 27雖提及『放射線科主治醫師證稱其已將判讀結果上傳』，但未明確包含『係由渠負責驗片判讀』之職責歸屬語義。此為背景性作業流程事實，非核心過失爭點。"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "全部5個section均未提及『僅有急診醫師所開立之X光攝影檢查係屬急件』之作業流程分類規定。此為理解為何X光片未立即判讀的重要背景資訊。",
+     "reason": "全部5個section均未提及『僅有急診醫師所開立之X光攝影檢查係屬急件』之作業流程分類規定。此為理解為何X光片未立即判讀的重要背景資訊。"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "全部5個section均未提及『技術員將X光片交由登記室...放射線科主治醫師自取進行判讀』之詳細作業流程。與gt_claim_id 49相關，共同說明非急件處理流程。",
+     "reason": "全部5個section均未提及『技術員將X光片交由登記室...放射線科主治醫師自取進行判讀』之詳細作業流程。與gt_claim_id 49相關，共同說明非急件處理流程。"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "全部5個section均未提及『三天內進行判讀完畢即可』之時間標準規定。此為判斷院方作業是否合規的重要時間參考。",
+     "reason": "全部5個section均未提及『三天內進行判讀完畢即可』之時間標準規定。此為判斷院方作業是否合規的重要時間參考。"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred claim 29提及『病患X之配偶證稱』，但未明確包含『以證人身分於法院審理時』之程序性描述。此為程序性事實，不影響實體案情理解。",
+     "reason": "pred claim 29提及『病患X之配偶證稱』，但未明確包含『以證人身分於法院審理時』之程序性描述。此為程序性事實，不影響實體案情理解。"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05雖提及放射線科醫師上傳判讀結果之事實，但未明確表述『法院據此判認...均係依照非急件之一般作業程序為之』之法院認定結論。此乃法院對作業程序性質之重要法律認定。",
+     "reason": "section_05雖提及放射線科醫師上傳判讀結果之事實，但未明確表述『法院據此判認...均係依照非急件之一般作業程序為之』之法院認定結論。此乃法院對作業程序性質之重要法律認定。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 59,
+   "pred_total": 37,
+   "matched": 47,
+   "partial": 2,
+   "missing": 10,
+   "hallucinated": 0
+  },
+  "section_balance": 0.5714
+ }
 }

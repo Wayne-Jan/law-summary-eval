@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,124 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.9105,
+  "fact_recall": 0.8618,
+  "fact_precision": 0.9841,
+  "fact_f1": 0.9189,
+  "quality_overall": 4.8167,
+  "citation_accuracy": 0.9759,
+  "citation_support_score": 0.9262,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9792,
+   "citation_fidelity": 0.9759,
+   "fact_precision": 0.9841,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 28,
+   "correct": 28
+  },
+  "weighted_recall": 0.9295,
+  "missing_severity": {
+   "critical": 4,
+   "important": 7,
+   "minor": 0,
+   "details": [
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "GT claim 主張「醫師乙上午8時接手醫師丙」，但 section_01_facts.txt 原文明確記載「醫師丙於同日上午8時許接手處理醫師乙之值班業務」，兩者直接矛盾。摘要無法涵蓋與原文衝突的 GT claim",
+     "reason": "GT claim 主張「醫師乙上午8時接手醫師丙」，但 section_01_facts.txt 原文明確記載「醫師丙於同日上午8時許接手處理醫師乙之值班業務」，兩者直接矛盾。摘要無法涵蓋與原文衝突的 GT claim"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "GT claim 指「被告丙」應檢查並報告，但 section_01_facts.txt 及 section_05_reasoning.txt 法院認定均指出凌晨2時值班處理者為「醫師乙」（被告乙），而非被告丙。誰承擔凌晨值班責任是核心事實，GT 與原文不一致",
+     "reason": "GT claim 指「被告丙」應檢查並報告，但 section_01_facts.txt 及 section_05_reasoning.txt 法院認定均指出凌晨2時值班處理者為「醫師乙」（被告乙），而非被告丙。誰承擔凌晨值班責任是核心事實，GT 與原文不一致"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "GT claim 指「被告丙」疏未注意、僅為止痛處置，但原文明確記載凌晨時段是「醫師乙」執行相關行為。法院認定也確認被告乙有處置作為。GT 與原文及法院認定均不一致",
+     "reason": "GT claim 指「被告丙」疏未注意、僅為止痛處置，但原文明確記載凌晨時段是「醫師乙」執行相關行為。法院認定也確認被告乙有處置作為。GT 與原文及法院認定均不一致"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "辯護要點中『醫審會有重大瑕疵』雖有提及，但『應以臺灣胸腔及心臟血管外科學會之鑑定較為可採』之比較性陳述未見於生成摘要，影響對辯護策略完整理解",
+     "reason": "辯護要點中『醫審會有重大瑕疵』雖有提及，但『應以臺灣胸腔及心臟血管外科學會之鑑定較為可採』之比較性陳述未見於生成摘要，影響對辯護策略完整理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經重新審查 section_03_opinions.txt 全文，雖有提及『醫審會認定，被告甲、被告丙應對病患X重新進行身體評估』（對應 GT claim 70），但確實未提及『照胸部X光片之處置無補於復甦病人，且易導致判斷失誤』的具體批評內容。此為醫審會對被告醫療處置的重要鑑定意見，影響對醫審會立場的完整理解，屬重要遺漏。",
+     "reason": "經重新審查 section_03_opinions.txt 全文，雖有提及『醫審會認定，被告甲、被告丙應對病患X重新進行身體評估』（對應 GT claim 70），但確實未提及『照胸部X光片之處置無補於復甦病人，且易導致判斷失誤』的具體批評內容。此為醫審會對被告醫療處置的重要鑑定意見，影響對醫審會立場的完整理解，屬重要遺漏。"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "醫審會第一次鑑定具體結論（認定哪位被告處置失當）是法院論證關鍵。雖法院有提及『醫審會兩份鑑定書所指被告有醫療疏失部分』（pred claim 123），但未明確說明是第一次鑑定認醫師丙處置失當。經查GT claim 64（opinions section）實際記載為『被告乙』而非『醫師丙』，此為GT內部不一致，但pred仍未明確提及其一鑑定結論，維持missing並標記critical",
+     "reason": "醫審會第一次鑑定具體結論（認定哪位被告處置失當）是法院論證關鍵。雖法院有提及『醫審會兩份鑑定書所指被告有醫療疏失部分』（pred claim 123），但未明確說明是第一次鑑定認醫師丙處置失當。經查GT claim 64（opinions section）實際記載為『被告乙』而非『醫師丙』，此為GT內部不一致，但pred仍未明確提及其一鑑定結論，維持missing並標記critical"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會鑑定中關於醫師丙僅考慮骨折疼痛原因的具體認定，是法院論證基礎之一。pred僅概括提及醫審會鑑定不採，未提此具體內容",
+     "reason": "醫審會鑑定中關於醫師丙僅考慮骨折疼痛原因的具體認定，是法院論證基礎之一。pred僅概括提及醫審會鑑定不採，未提此具體內容"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會指出的診斷疏漏（未將休克列入鑑別診斷）是本案關鍵醫療爭點，pred未明確引用此鑑定內容",
+     "reason": "醫審會指出的診斷疏漏（未將休克列入鑑別診斷）是本案關鍵醫療爭點，pred未明確引用此鑑定內容"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會的反事實推論（若將休克列入鑑別診斷則可提早診斷體腔內出血）是鑑定核心邏輯，pred僅概括拒斥醫審會鑑定，未提此具體因果推論",
+     "reason": "醫審會的反事實推論（若將休克列入鑑別診斷則可提早診斷體腔內出血）是鑑定核心邏輯，pred僅概括拒斥醫審會鑑定，未提此具體因果推論"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會第二次鑑定的具體建議內容（應進一步追查以避免延誤診斷）是法院論證基礎，pred未明確引用",
+     "reason": "醫審會第二次鑑定的具體建議內容（應進一步追查以避免延誤診斷）是法院論證基礎，pred未明確引用"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "檢察官依醫審會鑑定結果認定被告有醫療過失的立場，是法院論證的對造觀點。pred claim 120僅提檢察官囑託鑑定，未提及其依鑑定結果認定過失的具體立場",
+     "reason": "檢察官依醫審會鑑定結果認定被告有醫療過失的立場，是法院論證的對造觀點。pred claim 120僅提檢察官囑託鑑定，未提及其依鑑定結果認定過失的具體立場"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 126,
+   "matched": 100,
+   "partial": 12,
+   "missing": 11,
+   "hallucinated": 2
+  },
+  "section_balance": 0.7
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -146,5 +146,103 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7958,
+  "fact_recall": 0.8763,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9341,
+  "quality_overall": 4.2333,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.047,
+  "faithfulness_combined": {
+   "score": 0.9718,
+   "citation_fidelity": 0.953,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 19
+  },
+  "weighted_recall": 0.9642,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅提及「止痛藥」緩解腹痛，未提及「禁食」導致緩解，屬醫療處置背景細節，不影響案情核心理解",
+     "reason": "摘要僅提及「止痛藥」緩解腹痛，未提及「禁食」導致緩解，屬醫療處置背景細節，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要提及轉至加護病房之事實但缺少「下午4時10分」具體時間點，屬精確時間細節，不影響事件序列理解",
+     "reason": "摘要提及轉至加護病房之事實但缺少「下午4時10分」具體時間點，屬精確時間細節，不影響事件序列理解"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要提及輸血處置(claims 6, 7)但缺少「上午11時」具體時間點，屬精確時間細節，不影響醫療處置理解",
+     "reason": "摘要提及輸血處置(claims 6, 7)但缺少「上午11時」具體時間點，屬精確時間細節，不影響醫療處置理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section 未提及「94年3月26日中午」具體時點及「電請Q醫師」的具體動作，僅簡述「指示戚來篠先行診視」。此為會診醫師身份認定的時間關鍵事實，影響案情理解",
+     "reason": "defense section 未提及「94年3月26日中午」具體時點及「電請Q醫師」的具體動作，僅簡述「指示戚來篠先行診視」。此為會診醫師身份認定的時間關鍵事實，影響案情理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section 完全未提及「晚間7時30分回院診視」的事實，該事實雖存在於 facts section，但 defense section 摘要遺漏此認定被會診醫師身份的關鍵時間點",
+     "reason": "defense section 完全未提及「晚間7時30分回院診視」的事實，該事實雖存在於 facts section，但 defense section 摘要遺漏此認定被會診醫師身份的關鍵時間點"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "確實血液檢查數值（白血球7200/yl等）在摘要中完全未提及。這是鑑定意見中用於說明病情的背景性數據，雖不影響鑑定結論理解，但屬於專業鑑定依據的一部分",
+     "reason": "確實血液檢查數值（白血球7200/yl等）在摘要中完全未提及。這是鑑定意見中用於說明病情的背景性數據，雖不影響鑑定結論理解，但屬於專業鑑定依據的一部分"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "經查原始判決書全文，雖有「如不服本判決應於收受送達後10日內向本院提出上訴書狀」之上訴權利告知，但並未明確記載「被告、檢察官於法定上訴期間未上訴」之程序事實。此項資訊係判決後之程序狀態，未見於判決主文或理由，摘要未提及屬合理範圍。",
+     "reason": "經查原始判決書全文，雖有「如不服本判決應於收受送達後10日內向本院提出上訴書狀」之上訴權利告知，但並未明確記載「被告、檢察官於法定上訴期間未上訴」之程序事實。此項資訊係判決後之程序狀態，未見於判決主文或理由，摘要未提及屬合理範圍。"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "經查原始判決書全文，判決結尾雖有上訴期間之告知，但並未明確記載「本案判決即確定」之程序宣告。判決確定屬事後程序狀態，非判決書本文內容，摘要未涵蓋此程序性資訊符合 grounded 摘要原則。",
+     "reason": "經查原始判決書全文，判決結尾雖有上訴期間之告知，但並未明確記載「本案判決即確定」之程序宣告。判決確定屬事後程序狀態，非判決書本文內容，摘要未涵蓋此程序性資訊符合 grounded 摘要原則。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 64,
+   "matched": 78,
+   "partial": 7,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "section_balance": 0.7143
+ }
 }

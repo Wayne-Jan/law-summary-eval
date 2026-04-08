@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,82 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8201,
+  "fact_recall": 0.9155,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9559,
+  "quality_overall": 4.9179,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9903,
+  "uncited_rate": 0.087,
+  "faithfulness_combined": {
+   "score": 0.9478,
+   "citation_fidelity": 0.913,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.9765,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 20,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告乙的詳細背景（衛生福利部S醫院、畢業後一般醫學訓練、分派到T醫院急診科訓練）在 summary 中僅簡述為「住院醫師」，屬於背景性資訊遺漏，不影響案情核心理解。",
+     "reason": "被告乙的詳細背景（衛生福利部S醫院、畢業後一般醫學訓練、分派到T醫院急診科訓練）在 summary 中僅簡述為「住院醫師」，屬於背景性資訊遺漏，不影響案情核心理解。"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為程序性meta-fact（「本案有醫審會鑑定書一份」之文件存在聲明），pred僅引用鑑定意見內容（claim 48）而未獨立聲明文件存在，屬次要事實不影響案情理解",
+     "reason": "此為程序性meta-fact（「本案有醫審會鑑定書一份」之文件存在聲明），pred僅引用鑑定意見內容（claim 48）而未獨立聲明文件存在，屬次要事實不影響案情理解"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院駁回公訴人聲請函詢之程序性事實，section_05_reasoning.txt 確無記載，屬程序性事實不影響實體判決理解",
+     "reason": "法院駁回公訴人聲請函詢之程序性事實，section_05_reasoning.txt 確無記載，屬程序性事實不影響實體判決理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "辯護人聲請傳喚證人等之程序性事實，section_05_reasoning.txt 確無記載，屬程序性事實",
+     "reason": "辯護人聲請傳喚證人等之程序性事實，section_05_reasoning.txt 確無記載，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院駁回辯護人聲請之程序性事實，section_05_reasoning.txt 確無記載，屬程序性事實",
+     "reason": "法院駁回辯護人聲請之程序性事實，section_05_reasoning.txt 確無記載，屬程序性事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 71,
+   "pred_total": 104,
+   "matched": 64,
+   "partial": 2,
+   "missing": 5,
+   "hallucinated": 0
+  },
+  "section_balance": 0.8421
+ }
 }

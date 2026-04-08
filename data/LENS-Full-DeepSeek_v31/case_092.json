@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -131,5 +132,177 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7383,
+  "fact_recall": 0.8577,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9234,
+  "quality_overall": null,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9867,
+  "uncited_rate": 0.0071,
+  "faithfulness_combined": {
+   "score": 0.9957,
+   "citation_fidelity": 0.9929,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": null,
+  "numerical_fidelity": null,
+  "numerical_detail": null,
+  "weighted_recall": 0.944,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 15,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "背景病史資訊，雖重要但不影響判決核心爭點的理解",
+     "reason": "背景病史資訊，雖重要但不影響判決核心爭點的理解"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "背景手術病史，與本案醫療過失認定無直接因果關係",
+     "reason": "背景手術病史，與本案醫療過失認定無直接因果關係"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "過失責任成立的法律技術性要件，屬於法律專業論述層面",
+     "reason": "過失責任成立的法律技術性要件，屬於法律專業論述層面"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "程序性事實（被告乙已歿），不影響被告甲罪責判斷",
+     "reason": "程序性事實（被告乙已歿），不影響被告甲罪責判斷"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告乙醫療處置的重要事實，雖屬被告乙部分，但涉及醫療處置連續性的判斷",
+     "reason": "被告乙醫療處置的重要事實，雖屬被告乙部分，但涉及醫療處置連續性的判斷"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫療常規的具體檢查項目，雖未完整列出，但摘要已提及部分核心檢查（白蛋白、肌酸酐）",
+     "reason": "醫療常規的具體檢查項目，雖未完整列出，但摘要已提及部分核心檢查（白蛋白、肌酸酐）"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫療常規的檢查建議，摘要已涵蓋核心概念（排除肝腎疾病）",
+     "reason": "醫療常規的檢查建議，摘要已涵蓋核心概念（排除肝腎疾病）"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖然 reasoning section 提到生化檢驗，但未詳列所有檢查項目（空腹血糖、尿素氮、肌酸酐等），屬細節性事實，不影響案情理解",
+     "reason": "雖然 reasoning section 提到生化檢驗，但未詳列所有檢查項目（空腹血糖、尿素氮、肌酸酐等），屬細節性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "reasoning section 及其他段落均未提及11月18日檢驗報告單出具日期，屬程序性時間細節",
+     "reason": "reasoning section 及其他段落均未提及11月18日檢驗報告單出具日期，屬程序性時間細節"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "『難認已盡應為之醫療措施』雖在 reasoning section 有類似表述（『難謂符合醫療常規』），但具體用語不同，且屬法律評價要點",
+     "reason": "『難認已盡應為之醫療措施』雖在 reasoning section 有類似表述（『難謂符合醫療常規』），但具體用語不同，且屬法律評價要點"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary 中提到『無法判斷當時病人是否為陰囊水腫、陰囊感染或罹患福耳尼埃氏壞疽症』較晚出現，opinions section 未完整涵蓋此鑑定結論",
+     "reason": "summary 中提到『無法判斷當時病人是否為陰囊水腫、陰囊感染或罹患福耳尼埃氏壞疽症』較晚出現，opinions section 未完整涵蓋此鑑定結論"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "身體診察定義在 reasoning section 未明確展開，屬醫學專業知識解釋",
+     "reason": "身體診察定義在 reasoning section 未明確展開，屬醫學專業知識解釋"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "台灣泌尿科醫學會函覆內容未在 opinions section 完整呈現，屬補充性鑑定意見",
+     "reason": "台灣泌尿科醫學會函覆內容未在 opinions section 完整呈現，屬補充性鑑定意見"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "一般陰囊腫大與福耳尼埃氏壞疽症區分未在 opinions section 明確陳述",
+     "reason": "一般陰囊腫大與福耳尼埃氏壞疽症區分未在 opinions section 明確陳述"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "福耳尼埃氏壞疽症性質定義在 opinions section 未完整呈現",
+     "reason": "福耳尼埃氏壞疽症性質定義在 opinions section 未完整呈現"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查 section_05_reasoning.txt 全文，確實未提及『11月20日上午至22日中午期間無就診紀錄』之具體事實，section_01_facts 雖提及11/20上午有就診，但未明確陳述此期間『無其他就診紀錄』之否定性事實",
+     "reason": "經查 section_05_reasoning.txt 全文，確實未提及『11月20日上午至22日中午期間無就診紀錄』之具體事實，section_01_facts 雖提及11/20上午有就診，但未明確陳述此期間『無其他就診紀錄』之否定性事實"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查 section_05_reasoning.txt 全文，未提及『11月20日上午至22日中午期間無病程照護紀錄』之具體陳述，原文僅提及病歷記載不明確，但未針對此特定時段之病程照護紀錄進行否定性描述",
+     "reason": "經查 section_05_reasoning.txt 全文，未提及『11月20日上午至22日中午期間無病程照護紀錄』之具體陳述，原文僅提及病歷記載不明確，但未針對此特定時段之病程照護紀錄進行否定性描述"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查 section_05_reasoning.txt 全文，未明確載有『醫師起初給予抗生素之處置或可認為已盡到醫療上之注意』之法律評價。雖 CH_12 段落提及『若僅為單純陰囊感染...未必會造成病患X之死亡』，但此為因果關係論述，非對『給予抗生素處置已盡注意義務』之正面評價",
+     "reason": "經查 section_05_reasoning.txt 全文，未明確載有『醫師起初給予抗生素之處置或可認為已盡到醫療上之注意』之法律評價。雖 CH_12 段落提及『若僅為單純陰囊感染...未必會造成病患X之死亡』，但此為因果關係論述，非對『給予抗生素處置已盡注意義務』之正面評價"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查 section_05_reasoning.txt CH_11 段落，僅提及『病歷並未描述陰囊疾病為何、陰囊外觀如何、疼痛與否』及『並未記載身體診察結果、陰囊外觀或疼痛與否』，但未明確使用『無任何關於後續追蹤及照護之記載』之概括性表述",
+     "reason": "經查 section_05_reasoning.txt CH_11 段落，僅提及『病歷並未描述陰囊疾病為何、陰囊外觀如何、疼痛與否』及『並未記載身體診察結果、陰囊外觀或疼痛與否』，但未明確使用『無任何關於後續追蹤及照護之記載』之概括性表述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 137,
+   "pred_total": 141,
+   "matched": 116,
+   "partial": 3,
+   "missing": 18,
+   "hallucinated": 0
+  },
+  "section_balance": 0.7667
+ }
 }

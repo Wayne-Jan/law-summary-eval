@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,159 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7329,
+  "fact_recall": 0.8372,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9114,
+  "quality_overall": 4.75,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9909,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 3,
+  "cross_validation": null,
+  "numerical_fidelity": 0.969,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 31
+  },
+  "weighted_recall": 0.9457,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 11,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "facts section 及 defense section 均未提及具體的身體診察紀錄細節（肌力5分、深部肌腱反射下降、無局部神經學徵象），此為重要醫療評估細節，影響病情判斷理解",
+     "reason": "facts section 及 defense section 均未提及具體的身體診察紀錄細節（肌力5分、深部肌腱反射下降、無局部神經學徵象），此為重要醫療評估細節，影響病情判斷理解"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts section 僅提到「由家屬送往」，未明確提及「有家屬陪伴在側」此程序性細節",
+     "reason": "facts section 僅提到「由家屬送往」，未明確提及「有家屬陪伴在側」此程序性細節"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "sections 原文未提及家屬對於何種事情表示接受，屬對話細節遺漏",
+     "reason": "sections 原文未提及家屬對於何種事情表示接受，屬對話細節遺漏"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts section 僅提到被告詢問家屬確認用藥習慣，未提及家屬表示不知藥物位置需回家查看",
+     "reason": "facts section 僅提到被告詢問家屬確認用藥習慣，未提及家屬表示不知藥物位置需回家查看"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "sections 原文未提及家人返回後看到空藥袋的時間點（18時5分）及事件",
+     "reason": "sections 原文未提及家人返回後看到空藥袋的時間點（18時5分）及事件"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts section 提到被告「安排病患X於同日18時30分許接受腦部電腦斷層掃瞄」，但未明確提及18時8分向家屬表示「還是要做」的溝通過程",
+     "reason": "facts section 提到被告「安排病患X於同日18時30分許接受腦部電腦斷層掃瞄」，但未明確提及18時8分向家屬表示「還是要做」的溝通過程"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "opinions section 提到「證人E醫師表示病患X右側腦部有囊腫」，但未明確提及「19時5分許」此具體時間點",
+     "reason": "opinions section 提到「證人E醫師表示病患X右側腦部有囊腫」，但未明確提及「19時5分許」此具體時間點"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts section 提到「家屬詢問是否為腦中風，被告甲回答...」，但未明確提及19時8分許的CT結果解釋時間點",
+     "reason": "facts section 提到「家屬詢問是否為腦中風，被告甲回答...」，但未明確提及19時8分許的CT結果解釋時間點"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "sections 原文未提及9時15分被告向家屬解釋病情的具體時間點",
+     "reason": "sections 原文未提及9時15分被告向家屬解釋病情的具體時間點"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "雖 gt_facts.json 有記載，但摘要未提及「因腦壓升高」此一重要醫療指標，影響對病情嚴重程度的理解",
+     "reason": "雖 gt_facts.json 有記載，但摘要未提及「因腦壓升高」此一重要醫療指標，影響對病情嚴重程度的理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts section 及 gt_facts.json 均有此資訊，但摘要未提及5月22日頭顱成形術，屬後續治療程序性事實",
+     "reason": "facts section 及 gt_facts.json 均有此資訊，但摘要未提及5月22日頭顱成形術，屬後續治療程序性事實"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "gt_facts.json 有記載，但摘要未提及6月11日轉復健科的時間點，屬後續治療程序性事實",
+     "reason": "gt_facts.json 有記載，但摘要未提及6月11日轉復健科的時間點，屬後續治療程序性事實"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "facts section 提到「突發性噁心、嘔吐」，但未提及「知覺喪失、感覺異常」等重要主訴症狀，影響病情評估理解",
+     "reason": "facts section 提到「突發性噁心、嘔吐」，但未提及「知覺喪失、感覺異常」等重要主訴症狀，影響病情評估理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "sections 原文未提及TIA（短暫性腦缺血發作）過去病史，此為重要風險因子，影響對被告診斷判斷的理解",
+     "reason": "sections 原文未提及TIA（短暫性腦缺血發作）過去病史，此為重要風險因子，影響對被告診斷判斷的理解"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告否認犯行的基本立場陳述，屬辯護要點，影響被告防禦立場的完整理解",
+     "reason": "被告否認犯行的基本立場陳述，屬辯護要點，影響被告防禦立場的完整理解"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "『承受訴訟人承受訴訟』係程序性事實，涉及訴訟繼承人制度，經查全部 5 個 section 原文均未提及，確認維持 missing。此為次要資訊，不影響案情理解",
+     "reason": "『承受訴訟人承受訴訟』係程序性事實，涉及訴訟繼承人制度，經查全部 5 個 section 原文均未提及，確認維持 missing。此為次要資訊，不影響案情理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 129,
+   "pred_total": 132,
+   "matched": 103,
+   "partial": 10,
+   "missing": 16,
+   "hallucinated": 0
+  },
+  "section_balance": 0.8
+ }
 }

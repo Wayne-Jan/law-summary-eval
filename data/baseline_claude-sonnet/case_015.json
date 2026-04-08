@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -132,5 +132,61 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8657,
+  "fact_recall": 0.9167,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9565,
+  "quality_overall": 4.769,
+  "citation_accuracy": 0.8333,
+  "citation_support_score": 0.8583,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9,
+   "citation_fidelity": 0.8333,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.9722,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 17,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "原始判決書末段僅記載『如不服本判決，應於判決送達後十日內向本院提出上訴狀』之上訴權利告知，並未記載被告、檢察官是否實際上訴。此為判決書範圍外之程序性事實，不影響案情理解。",
+     "reason": "原始判決書末段僅記載『如不服本判決，應於判決送達後十日內向本院提出上訴狀』之上訴權利告知，並未記載被告、檢察官是否實際上訴。此為判決書範圍外之程序性事實，不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "原始判決書本文未記載『本案判決即確定』之文字。判決確定與否屬於判決書以外之程序性事實（見於確定證明書），非判決書內容所能涵蓋。摘要未提及此情況為正確。",
+     "reason": "原始判決書本文未記載『本案判決即確定』之文字。判決確定與否屬於判決書以外之程序性事實（見於確定證明書），非判決書內容所能涵蓋。摘要未提及此情況為正確。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 24,
+   "pred_total": 31,
+   "matched": 22,
+   "partial": 0,
+   "missing": 2,
+   "hallucinated": 0
+  },
+  "section_balance": 0.6667
+ }
 }

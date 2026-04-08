@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -128,5 +128,138 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8331,
+  "fact_recall": 0.8333,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9091,
+  "quality_overall": 4.7964,
+  "citation_accuracy": 0.96,
+  "citation_support_score": 0.936,
+  "uncited_rate": 0.014,
+  "faithfulness_combined": {
+   "score": 0.9679,
+   "citation_fidelity": 0.9466,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 3,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 20,
+   "correct": 20
+  },
+  "weighted_recall": 0.9247,
+  "missing_severity": {
+   "critical": 1,
+   "important": 6,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "各 section 確實記載被告乙接續診治、病患主訴症狀、被告乙疏未施以腦部斷層檢查等事實，但均未明確以『疏未注意...等症狀』描述其過失性質。section_05_reasoning.txt 反而記載被告乙『於病歷記載「考慮施以腦部斷層掃描」』，顯示其實有注意到症狀，與 GT 主張之『疏未注意』有所出入，故維持 missing。此項涉及被告乙過失行為之具體定性，屬重要事實遺漏。",
+     "reason": "各 section 確實記載被告乙接續診治、病患主訴症狀、被告乙疏未施以腦部斷層檢查等事實，但均未明確以『疏未注意...等症狀』描述其過失性質。section_05_reasoning.txt 反而記載被告乙『於病歷記載「考慮施以腦部斷層掃描」』，顯示其實有注意到症狀，與 GT 主張之『疏未注意』有所出入，故維持 missing。此項涉及被告乙過失行為之具體定性，屬重要事實遺漏。"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性法律用語，雖於原文 reasoning section 出現「本件事證明確」之表述，但生成摘要在 verdict 段落以具體判決理由（被告過失行為與被害人死亡具有相當因果關係）取代此形式性用語，不影響判決實質內容理解",
+     "reason": "程序性法律用語，雖於原文 reasoning section 出現「本件事證明確」之表述，但生成摘要在 verdict 段落以具體判決理由（被告過失行為與被害人死亡具有相當因果關係）取代此形式性用語，不影響判決實質內容理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決後程序性事實，屬於判決確定前的上訴程序資訊，生成摘要未提及不影響判決結論理解",
+     "reason": "判決後程序性事實，屬於判決確定前的上訴程序資訊，生成摘要未提及不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決後程序性事實，屬判決效力狀態，生成摘要未提及不影響判決實質內容理解",
+     "reason": "判決後程序性事實，屬判決效力狀態，生成摘要未提及不影響判決實質內容理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "出院時由被告乙開具病名為急性心肌梗塞之診斷證明書屬於診斷證明書開具的具體程序事實，section_05_reasoning.txt未明確提及此細節，僅於section_01_facts.txt提及其為急診時判定為心肌梗塞，屬於背景性程序資訊",
+     "reason": "出院時由被告乙開具病名為急性心肌梗塞之診斷證明書屬於診斷證明書開具的具體程序事實，section_05_reasoning.txt未明確提及此細節，僅於section_01_facts.txt提及其為急診時判定為心肌梗塞，屬於背景性程序資訊"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "迄於翌日(即二十九日)病患X出院時止，被告甲猶認定為急性心肌梗塞強調被告甲誤診持續至出院的時間節點，section_05_reasoning.txt雖有誤診為心肌梗塞但未明確時間延續性，影響對被告甲過失持續性的理解",
+     "reason": "迄於翌日(即二十九日)病患X出院時止，被告甲猶認定為急性心肌梗塞強調被告甲誤診持續至出院的時間節點，section_05_reasoning.txt雖有誤診為心肌梗塞但未明確時間延續性，影響對被告甲過失持續性的理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "被告甲之認定顯有疏失是法院對被告甲診斷行為的明確過失認定，section_05_reasoning.txt雖有誤診情事等描述暗示過失，但未使用顯有疏失的明確法律評價用語，影響對法院過失認定标准的理解",
+     "reason": "被告甲之認定顯有疏失是法院對被告甲診斷行為的明確過失認定，section_05_reasoning.txt雖有誤診情事等描述暗示過失，但未使用顯有疏失的明確法律評價用語，影響對法院過失認定标准的理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告乙曾為病患X作X光檢查及開立促進末梢血管循環之藥劑出現在defense section (pred claim 26)，reasoning section未提及此具體診治行為細節，屬於被告乙診治行為的背景資訊",
+     "reason": "被告乙曾為病患X作X光檢查及開立促進末梢血管循環之藥劑出現在defense section (pred claim 26)，reasoning section未提及此具體診治行為細節，屬於被告乙診治行為的背景資訊"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告乙上揭行為自屬為病患X診治之醫療行為，而非會診行為是法院對被告乙行為性質的重要法律定性，section_05_reasoning.txt雖有認定被告乙為主治醫師的內容，但未明確區分醫療行為與會診行為的法律定性論述，影響對法院論證邏輯的理解",
+     "reason": "被告乙上揭行為自屬為病患X診治之醫療行為，而非會診行為是法院對被告乙行為性質的重要法律定性，section_05_reasoning.txt雖有認定被告乙為主治醫師的內容，但未明確區分醫療行為與會診行為的法律定性論述，影響對法院論證邏輯的理解"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告乙上開辯解不足採是法院對被告乙特定辯解（建議作檢查因病患拒絕始未予檢查）的明確否定，section_05_reasoning.txt有法院認被告乙此辯解不足採信(pred claim 58)，但此pred claim對應GT claim 58而非81，GT claim 81更明確對應上開辯解即前述建議檢查之辯解，屬於重要法律認定",
+     "reason": "被告乙上開辯解不足採是法院對被告乙特定辯解（建議作檢查因病患拒絕始未予檢查）的明確否定，section_05_reasoning.txt有法院認被告乙此辯解不足採信(pred claim 58)，但此pred claim對應GT claim 58而非81，GT claim 81更明確對應上開辯解即前述建議檢查之辯解，屬於重要法律認定"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患X血清CPK值僅為198U/L，並未逾越300U/L數值對比細節，pred claim 53提及CPK值僅一九八UL、未達心肌梗塞診斷標準但未明確提及300U/L門檻數值，屬於數值細節缺失",
+     "reason": "病患X血清CPK值僅為198U/L，並未逾越300U/L數值對比細節，pred claim 53提及CPK值僅一九八UL、未達心肌梗塞診斷標準但未明確提及300U/L門檻數值，屬於數值細節缺失"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患X並無明顯心肌梗塞之病情是法院根據CPK值等證據對病情的直接否定性認定，section_05_reasoning.txt雖有未達心肌梗塞診斷標準的事實鋪陳，但未明確表述並無明顯心肌梗塞之病情的結論性認定，影響對病情判斷的理解",
+     "reason": "病患X並無明顯心肌梗塞之病情是法院根據CPK值等證據對病情的直接否定性認定，section_05_reasoning.txt雖有未達心肌梗塞診斷標準的事實鋪陳，但未明確表述並無明顯心肌梗塞之病情的結論性認定，影響對病情判斷的理解"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患X主訴症狀最有可能之臨床診斷為蜘蛛網膜下腔出血，需以脊椎液穿刺或腦部斷層檢查加以證實是醫審會鑑定的核心醫學意見，雖pred claim 30、31有類似表述但分布於opinions section，且GT claim 84將診斷與檢查需求合併為完整醫學判斷，pred claims為分開表述，影響reasoning section的醫學論證完整性",
+     "reason": "病患X主訴症狀最有可能之臨床診斷為蜘蛛網膜下腔出血，需以脊椎液穿刺或腦部斷層檢查加以證實是醫審會鑑定的核心醫學意見，雖pred claim 30、31有類似表述但分布於opinions section，且GT claim 84將診斷與檢查需求合併為完整醫學判斷，pred claims為分開表述，影響reasoning section的醫學論證完整性"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 71,
+   "matched": 75,
+   "partial": 5,
+   "missing": 13,
+   "hallucinated": 0
+  },
+  "section_balance": 0.5714
+ }
 }

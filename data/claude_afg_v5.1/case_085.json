@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -129,5 +130,222 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7744,
+  "fact_recall": 0.7802,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8765,
+  "quality_overall": 4.725,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9706,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 38,
+   "correct": 38
+  },
+  "weighted_recall": 0.908,
+  "missing_severity": {
+   "critical": 0,
+   "important": 7,
+   "minor": 18,
+   "details": [
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "健保補助申請事件屬背景性程序事實，未出現於任何 section 原文中，不影響醫療處置及判決結論之理解",
+     "reason": "健保補助申請事件屬背景性程序事實，未出現於任何 section 原文中，不影響醫療處置及判決結論之理解"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "健保局癌症認定回覆屬行政分類背景資訊，未出現於任何 section 原文中，非判決關鍵事實",
+     "reason": "健保局癌症認定回覆屬行政分類背景資訊，未出現於任何 section 原文中，非判決關鍵事實"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "自訴人與被告之具體對話細節未出現於任何 section 原文中，屬敘述性細節而非核心法律主張",
+     "reason": "自訴人與被告之具體對話細節未出現於任何 section 原文中，屬敘述性細節而非核心法律主張"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "自訴人與病患之配偶關係雖見於 GT，但生成摘要僅泛稱「自訴人」「證人C」，未明確建立家庭關係，影響對案情背景之完整理解",
+     "reason": "自訴人與病患之配偶關係雖見於 GT，但生成摘要僅泛稱「自訴人」「證人C」，未明確建立家庭關係，影響對案情背景之完整理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "95年4月後病患由整形外科、骨科、皮膚科看診之細節，屬於時序性補充說明，不影響主要辯護主張理解",
+     "reason": "95年4月後病患由整形外科、骨科、皮膚科看診之細節，屬於時序性補充說明，不影響主要辯護主張理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "95年7月3日急診就醫時間點已在 facts section 提及，defense section 省略重複時序資訊",
+     "reason": "95年7月3日急診就醫時間點已在 facts section 提及，defense section 省略重複時序資訊"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "急診照會骨科及一般外科之程序性細節，非辯護核心爭點",
+     "reason": "急診照會骨科及一般外科之程序性細節，非辯護核心爭點"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "轉由被告辦理住院之程序性事實，不影響辯護實質內容理解",
+     "reason": "轉由被告辦理住院之程序性事實，不影響辯護實質內容理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "健保局行政分類論述係被告重要辯護理由，用於區隔葉狀肉瘤與乳癌之關係，雖重要但非判決關鍵",
+     "reason": "健保局行政分類論述係被告重要辯護理由，用於區隔葉狀肉瘤與乳癌之關係，雖重要但非判決關鍵"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "與 claim 61 為同一辯護論述之延續，說明行政分類不等同醫學定義，影響辯護完整性",
+     "reason": "與 claim 61 為同一辯護論述之延續，說明行政分類不等同醫學定義，影響辯護完整性"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "術後傷口未癒合之細節，屬於補充說明放療化療延遲原因，非核心辯護",
+     "reason": "術後傷口未癒合之細節，屬於補充說明放療化療延遲原因，非核心辯護"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "乳頭皮膚浸潤及分泌物之具體症狀描述，屬傷口狀況細節",
+     "reason": "乳頭皮膚浸潤及分泌物之具體症狀描述，屬傷口狀況細節"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "整形外科換藥照護之程序性說明",
+     "reason": "整形外科換藥照護之程序性說明"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "放療化療須待傷口癒合之辯護理由，說明未即時進行癌症治療之原因，影響過失認定理解",
+     "reason": "放療化療須待傷口癒合之辯護理由，說明未即時進行癌症治療之原因，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 確實未提及惡性葉狀肉瘤與乳腺癌診療差異。雖然 reasoning section 第四段有引用鑑定意見提及此點，但 opinions section 本身僅陳述醫審會鑑定之診療行為結論，未涵蓋此醫學知識差異論點。",
+     "reason": "opinions section 確實未提及惡性葉狀肉瘤與乳腺癌診療差異。雖然 reasoning section 第四段有引用鑑定意見提及此點，但 opinions section 本身僅陳述醫審會鑑定之診療行為結論，未涵蓋此醫學知識差異論點。"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五段摘要全文均未提及此假設性治療方案對比（「如果病人是乳腺癌，則其治療可能就會在92年8月8日手術後，給予藥物治療」）。確實 missing。",
+     "reason": "五段摘要全文均未提及此假設性治療方案對比（「如果病人是乳腺癌，則其治療可能就會在92年8月8日手術後，給予藥物治療」）。確實 missing。"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 確實未提及病歷記載告知病患復發可能性之細節。reasoning section 第五段有引用鑑定意見提及『已告知patient為Malignant Phyllodes Tumor，且有復發之可能』，但 opinions section 本身未涵蓋此細節。",
+     "reason": "opinions section 確實未提及病歷記載告知病患復發可能性之細節。reasoning section 第五段有引用鑑定意見提及『已告知patient為Malignant Phyllodes Tumor，且有復發之可能』，但 opinions section 本身未涵蓋此細節。"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未涵蓋『葉狀肉瘤通常發生在乳房』之醫學背景知識。reasoning section 第六段引用乳房疾病教科書提及葉狀肉瘤之特性，但 opinions section 僅聚焦於醫審會鑑定結論，未包含背景性醫學知識。",
+     "reason": "opinions section 未涵蓋『葉狀肉瘤通常發生在乳房』之醫學背景知識。reasoning section 第六段引用乳房疾病教科書提及葉狀肉瘤之特性，但 opinions section 僅聚焦於醫審會鑑定結論，未包含背景性醫學知識。"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未涵蓋『葉狀肉瘤可分為良性、不確定性及惡性』之分類知識。屬於醫學背景知識，reasoning section 雖有提及教科書內容，但 opinions section 本身確實未包含此資訊。",
+     "reason": "opinions section 未涵蓋『葉狀肉瘤可分為良性、不確定性及惡性』之分類知識。屬於醫學背景知識，reasoning section 雖有提及教科書內容，但 opinions section 本身確實未包含此資訊。"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未涵蓋『大部份的葉狀肉瘤為良性』之流行病學統計。reasoning section 第六段提及『少於5%的葉狀肉瘤可發展遠處移轉』，但未明確提及『大部份為良性』之說法。opinions section 本身確實未包含。",
+     "reason": "opinions section 未涵蓋『大部份的葉狀肉瘤為良性』之流行病學統計。reasoning section 第六段提及『少於5%的葉狀肉瘤可發展遠處移轉』，但未明確提及『大部份為良性』之說法。opinions section 本身確實未包含。"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未涵蓋『葉狀肉瘤通常一般的切片不容易判定』之診斷困難度資訊。reasoning section 未提及此點。確實 missing。",
+     "reason": "opinions section 未涵蓋『葉狀肉瘤通常一般的切片不容易判定』之診斷困難度資訊。reasoning section 未提及此點。確實 missing。"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未涵蓋『若病理上已確定為惡性，則等同惡性腫瘤，可視為癌症之一種』之病理分類知識。reasoning section 第四段提及『惡性葉狀肉瘤是否為乳癌或癌症一種，僅係醫學分類或健保局行政分類之問題』，但未明確提及此具體論點。opinions section 確實未包含。",
+     "reason": "opinions section 未涵蓋『若病理上已確定為惡性，則等同惡性腫瘤，可視為癌症之一種』之病理分類知識。reasoning section 第四段提及『惡性葉狀肉瘤是否為乳癌或癌症一種，僅係醫學分類或健保局行政分類之問題』，但未明確提及此具體論點。opinions section 確實未包含。"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "August及Kearney術後檢查頻率建議在section_05_reasoning.txt中未出現，屬醫學文獻細節，不影響法院論證主軸",
+     "reason": "August及Kearney術後檢查頻率建議在section_05_reasoning.txt中未出現，屬醫學文獻細節，不影響法院論證主軸"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "『依肉瘤方式而非癌方式治療』之具體表述在section_05_reasoning.txt中未出現，pred僅提及『輔助性全身治療在初期切除後並不建議』，未明確區分肉瘤與癌的治療方式差異",
+     "reason": "『依肉瘤方式而非癌方式治療』之具體表述在section_05_reasoning.txt中未出現，pred僅提及『輔助性全身治療在初期切除後並不建議』，未明確區分肉瘤與癌的治療方式差異"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『殺人罪及業務過失致人於死罪相繩』之法律結論在section_05_reasoning.txt中未明確表述，pred僅於section_04_verdict.txt提及不能證明犯罪、判決無罪，reasoning section遺漏殺人罪不成立之論證過程，影響法律推理完整性",
+     "reason": "『殺人罪及業務過失致人於死罪相繩』之法律結論在section_05_reasoning.txt中未明確表述，pred僅於section_04_verdict.txt提及不能證明犯罪、判決無罪，reasoning section遺漏殺人罪不成立之論證過程，影響法律推理完整性"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 116,
+   "pred_total": 115,
+   "matched": 90,
+   "partial": 1,
+   "missing": 25,
+   "hallucinated": 0
+  },
+  "section_balance": 0.4286
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -142,5 +142,334 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8095,
+  "fact_recall": 0.684,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8124,
+  "quality_overall": 4.569,
+  "citation_accuracy": 0.9268,
+  "citation_support_score": 0.9195,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9561,
+   "citation_fidelity": 0.9268,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 0.92,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 23
+  },
+  "weighted_recall": 0.8611,
+  "missing_severity": {
+   "critical": 1,
+   "important": 17,
+   "minor": 23,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經檢視全部 sections，僅 section_01_facts.txt 提到『經搶救無效』，但未提及『醫師甲經護士通知立即趕至施以急救』的具體過程，屬關鍵醫療過程事實遺漏，影響案情完整理解",
+     "reason": "經檢視全部 sections，僅 section_01_facts.txt 提到『經搶救無效』，但未提及『醫師甲經護士通知立即趕至施以急救』的具體過程，屬關鍵醫療過程事實遺漏，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "首次鑑定提及之九月七日加護病房住院日期屬背景資訊，pred雖未明確摘錄，但不影響鑑定核心意見之理解",
+     "reason": "首次鑑定提及之九月七日加護病房住院日期屬背景資訊，pred雖未明確摘錄，但不影響鑑定核心意見之理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "顱骨底下涵蓋大腦枕葉及小腦等解剖構造描述，屬輔助性醫學背景說明，非核心鑑定意見",
+     "reason": "顱骨底下涵蓋大腦枕葉及小腦等解剖構造描述，屬輔助性醫學背景說明，非核心鑑定意見"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "骨折無明顯血腫效應為鑑定之重要發現，用以排除其他病因，pred未提及影響對鑑定邏輯的理解",
+     "reason": "骨折無明顯血腫效應為鑑定之重要發現，用以排除其他病因，pred未提及影響對鑑定邏輯的理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "九月九日後未再追蹤檢查及病情惡化推測，為因果關係推論之重要環節",
+     "reason": "九月九日後未再追蹤檢查及病情惡化推測，為因果關係推論之重要環節"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "第一次電腦斷層具體結果（蜘蛛網膜下腔出血）為病因診斷之重要依據",
+     "reason": "第一次電腦斷層具體結果（蜘蛛網膜下腔出血）為病因診斷之重要依據"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "第一次電腦斷層具體結果（局部性枕骨骨折出陷）為病因診斷之重要依據",
+     "reason": "第一次電腦斷層具體結果（局部性枕骨骨折出陷）為病因診斷之重要依據"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "放射科報告結論為鑑定意見之來源依據，pred未提及影響論證來源之完整性",
+     "reason": "放射科報告結論為鑑定意見之來源依據，pred未提及影響論證來源之完整性"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「小腦水腫、第四腦室阻塞、水腦症並非真正致死原因」為鑑定核心結論，直接影響死因認定",
+     "reason": "「小腦水腫、第四腦室阻塞、水腦症並非真正致死原因」為鑑定核心結論，直接影響死因認定"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦室外引流手術安全性分類屬醫療處置之輔助說明",
+     "reason": "腦室外引流手術安全性分類屬醫療處置之輔助說明"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腦室外引流手術之治療限制為評估醫療處分適當性之重要參考",
+     "reason": "腦室外引流手術之治療限制為評估醫療處分適當性之重要參考"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "質疑醫審會第二次鑑定之辯護細節遺漏",
+     "reason": "質疑醫審會第二次鑑定之辯護細節遺漏"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法醫報告具體內容為證據比對關鍵",
+     "reason": "法醫報告具體內容為證據比對關鍵"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病理檢查紀錄性質屬背景說明",
+     "reason": "病理檢查紀錄性質屬背景說明"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法醫報告未詳記病變狀況影響證據評價",
+     "reason": "法醫報告未詳記病變狀況影響證據評價"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法醫中心死因認定與醫審會差異屬關鍵論述",
+     "reason": "法醫中心死因認定與醫審會差異屬關鍵論述"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫療上有未儘周全之處為重要證據",
+     "reason": "醫療上有未儘周全之處為重要證據"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "神經學指數指示能力判斷屬核心推理",
+     "reason": "神經學指數指示能力判斷屬核心推理"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "小腦扁桃體疝脫其他成因屬文獻細節",
+     "reason": "小腦扁桃體疝脫其他成因屬文獻細節"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "小腦受損具體症狀屬辯護細節",
+     "reason": "小腦受損具體症狀屬辯護細節"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "無嘔吐等情形之推論已涵蓋",
+     "reason": "無嘔吐等情形之推論已涵蓋"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "神經學病徵僅係腦幹生命跡象屬細節",
+     "reason": "神經學病徵僅係腦幹生命跡象屬細節"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "未免率斷為法院關鍵評價",
+     "reason": "未免率斷為法院關鍵評價"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "電腦斷層檢查干擾之抗辯",
+     "reason": "電腦斷層檢查干擾之抗辯"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "後顱窩電腦斷層可能受干擾屬背景",
+     "reason": "後顱窩電腦斷層可能受干擾屬背景"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "枕骨部位凹陷性骨折擠壓屬當然",
+     "reason": "枕骨部位凹陷性骨折擠壓屬當然"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "第二次電腦斷層第四腦室看不見",
+     "reason": "第二次電腦斷層第四腦室看不見"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "如能警覺第四腦室病變為法律推理",
+     "reason": "如能警覺第四腦室病變為法律推理"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫審會第一次鑑定腦室外引流建議",
+     "reason": "醫審會第一次鑑定腦室外引流建議"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "第二次鑑定腦室外引流建議",
+     "reason": "第二次鑑定腦室外引流建議"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "水腦症並非真正致命病灶屬因果關鍵",
+     "reason": "水腦症並非真正致命病灶屬因果關鍵"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "後顱窩切除手術併腦膜整形建議",
+     "reason": "後顱窩切除手術併腦膜整形建議"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告辯稱手術缺乏醫學文獻支持",
+     "reason": "被告辯稱手術缺乏醫學文獻支持"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "健保給付無此手術項目",
+     "reason": "健保給付無此手術項目"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫院從未聞見有此手術",
+     "reason": "醫院從未聞見有此手術"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "非臨床上針對後顱窩損傷通行手術",
+     "reason": "非臨床上針對後顱窩損傷通行手術"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "手術為建議性質屬補充說明",
+     "reason": "手術為建議性質屬補充說明"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "並非束手無策屬減壓措施關鍵論述",
+     "reason": "並非束手無策屬減壓措施關鍵論述"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "難以非通行手術推卸注意義務屬法律結論",
+     "reason": "難以非通行手術推卸注意義務屬法律結論"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "犯罪事證明確犯行堪認定屬結論性表述",
+     "reason": "犯罪事證明確犯行堪認定屬結論性表述"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "第三次鑑定聲請無必要屬程序性事實",
+     "reason": "第三次鑑定聲請無必要屬程序性事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 144,
+   "pred_total": 67,
+   "matched": 94,
+   "partial": 9,
+   "missing": 41,
+   "hallucinated": 0
+  },
+  "section_balance": 0.5
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,607 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6132,
+  "fact_recall": 0.5765,
+  "fact_precision": 0.9467,
+  "fact_f1": 0.7166,
+  "quality_overall": 4.9179,
+  "citation_accuracy": 0.9524,
+  "citation_support_score": 0.9638,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9501,
+   "citation_fidelity": 0.9524,
+   "fact_precision": 0.9467,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 0.982,
+  "numerical_detail": {
+   "total_numerical": 56,
+   "correct": 55
+  },
+  "weighted_recall": 0.8299,
+  "missing_severity": {
+   "critical": 6,
+   "important": 8,
+   "minor": 66,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告應注意Tegretol是否屬核准適應症之注意義務，雖屬重要醫療規範，但在摘要中已提及『非核准適應症』之背景，且此為法律專業細節，不影響整體案情理解",
+     "reason": "被告應注意Tegretol是否屬核准適應症之注意義務，雖屬重要醫療規範，但在摘要中已提及『非核准適應症』之背景，且此為法律專業細節，不影響整體案情理解"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告應注意Tegretol可能引起嚴重危害之注意義務，摘要中已提及衛生署發函提醒嚴重危害之事實，此為注意義務的細節表述，不影響整體因果關係理解",
+     "reason": "被告應注意Tegretol可能引起嚴重危害之注意義務，摘要中已提及衛生署發函提醒嚴重危害之事實，此為注意義務的細節表述，不影響整體因果關係理解"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告涉犯業務過失致死罪嫌係檢察官指控之罪名，屬於案件背景資訊，摘要重點在於法院最終無罪判決結果，罪名指控之具體法條編號未提及不影響判決結論理解",
+     "reason": "被告涉犯業務過失致死罪嫌係檢察官指控之罪名，屬於案件背景資訊，摘要重點在於法院最終無罪判決結果，罪名指控之具體法條編號未提及不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "生成摘要使用匿名化表述『心臟內科專科醫師甲任職於A醫院』，與 GT 的原始名稱『被告係臺中縣沙鹿鎮光田醫院心臟內科專科醫師』語義相符，但日期錯誤導致上下文錯置",
+     "reason": "生成摘要使用匿名化表述『心臟內科專科醫師甲任職於A醫院』，與 GT 的原始名稱『被告係臺中縣沙鹿鎮光田醫院心臟內科專科醫師』語義相符，但日期錯誤導致上下文錯置"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "診療關係起始日期為關鍵時間節點，生成摘要雖提到『自民國89年7月26日起』，但後續日期均誤植為91年，導致部分事實遺漏",
+     "reason": "診療關係起始日期為關鍵時間節點，生成摘要雖提到『自民國89年7月26日起』，但後續日期均誤植為91年，導致部分事實遺漏"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "89年12月12日門診及腳麻主訴為用藥起因，生成摘要未提及此日期，經查 section_01_facts.txt 確實提到『90年12月12日門診時』但年份已錯誤",
+     "reason": "89年12月12日門診及腳麻主訴為用藥起因，生成摘要未提及此日期，經查 section_01_facts.txt 確實提到『90年12月12日門診時』但年份已錯誤"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "三環抗憂鬱藥物（Tofranil）為第一線用藥，生成摘要雖提到此治療過程，但日期錯誤導致語境不完整，維持 missing",
+     "reason": "三環抗憂鬱藥物（Tofranil）為第一線用藥，生成摘要雖提到此治療過程，但日期錯誤導致語境不完整，維持 missing"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "Tegretol 首次開立日期（90年1月9日）為本案關鍵時間點，生成摘要誤植為91年1月9日，導致整個 timeline 錯誤，屬致命錯誤",
+     "reason": "Tegretol 首次開立日期（90年1月9日）為本案關鍵時間點，生成摘要誤植為91年1月9日，導致整個 timeline 錯誤，屬致命錯誤"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "90年2月6日回診症狀為判斷是否應停藥的關鍵，生成摘要誤植為91年2月6日，嚴重影響案情理解",
+     "reason": "90年2月6日回診症狀為判斷是否應停藥的關鍵，生成摘要誤植為91年2月6日，嚴重影響案情理解"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "90年2月6日再次開立 Tegretol 是過失認定的核心事實，日期錯誤影響因果關係判斷，屬致命錯誤",
+     "reason": "90年2月6日再次開立 Tegretol 是過失認定的核心事實，日期錯誤影響因果關係判斷，屬致命錯誤"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "90年2月11日急診住院為 SJS 症狀發作的關鍵事件，摘要雖提及此事但年份誤植為91年，導致事實錯誤",
+     "reason": "90年2月11日急診住院為 SJS 症狀發作的關鍵事件，摘要雖提及此事但年份誤植為91年，導致事實錯誤"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "SJS 症狀發展為因果關係判斷的重要依據，摘要有提及但日期錯誤導致語境不完整",
+     "reason": "SJS 症狀發展為因果關係判斷的重要依據，摘要有提及但日期錯誤導致語境不完整"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "病危通知日期為病情嚴重程度的指標，摘要雖提及『2月16日病危通知』但未標示年份，無法明確對應",
+     "reason": "病危通知日期為病情嚴重程度的指標，摘要雖提及『2月16日病危通知』但未標示年份，無法明確對應"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "轉院事實存在但年份誤植，經查 section_01_facts.txt 提到『2月16日轉診至B醫院』但未明確標示90年",
+     "reason": "轉院事實存在但年份誤植，經查 section_01_facts.txt 提到『2月16日轉診至B醫院』但未明確標示90年"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "死亡日期為案件結果，摘要雖提及『2月25日...死亡』但年份誤植為91年，屬致命錯誤",
+     "reason": "死亡日期為案件結果，摘要雖提及『2月25日...死亡』但年份誤植為91年，屬致命錯誤"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "被告抗辯重點：第一次開立 Tegretol 的日期，生成摘要誤植為91年1月9日，嚴重影響抗辯內容理解",
+     "reason": "被告抗辯重點：第一次開立 Tegretol 的日期，生成摘要誤植為91年1月9日，嚴重影響抗辯內容理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查 section_02_defense.txt 全文，確實未提及『住院期間並非主治醫師』之抗辯，此為被告重要抗辯要點，遺漏影響案情完整理解",
+     "reason": "經查 section_02_defense.txt 全文，確實未提及『住院期間並非主治醫師』之抗辯，此為被告重要抗辯要點，遺漏影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查 section_02_defense.txt 全文，確實未提及『對臺中榮總清創手術的質疑』之抗辯，此為被告重要抗辯要點",
+     "reason": "經查 section_02_defense.txt 全文，確實未提及『對臺中榮總清創手術的質疑』之抗辯，此為被告重要抗辯要點"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「引起史蒂文強森症候群之原因很多」係第一份鑑定書之一般性背景說明，非opinions段落核心內容。opinions段落重點在於呈現兩份鑑定意見之衝突，此背景性事實未提及不影響對鑑定意見差異之理解。",
+     "reason": "「引起史蒂文強森症候群之原因很多」係第一份鑑定書之一般性背景說明，非opinions段落核心內容。opinions段落重點在於呈現兩份鑑定意見之衝突，此背景性事實未提及不影響對鑑定意見差異之理解。"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病患早期接觸性皮膚炎病史（七十六年八月起）係第一份鑑定書「案情概要」中之背景資訊，屬詳細病歷記載而非鑑定意見核心結論，未提及不影響對兩份鑑定意見衝突之理解。",
+     "reason": "病患早期接觸性皮膚炎病史（七十六年八月起）係第一份鑑定書「案情概要」中之背景資訊，屬詳細病歷記載而非鑑定意見核心結論，未提及不影響對兩份鑑定意見衝突之理解。"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "痛風病史（八十一年起）係第一份鑑定書「案情概要」中之背景用藥史，非鑑定意見之核心爭點或結論。",
+     "reason": "痛風病史（八十一年起）係第一份鑑定書「案情概要」中之背景用藥史，非鑑定意見之核心爭點或結論。"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "早期非類固醇類抗發炎止痛藥物使用史係第一份鑑定書「案情概要」中之詳細病歷背景，非opinions段落應涵蓋之核心內容。",
+     "reason": "早期非類固醇類抗發炎止痛藥物使用史係第一份鑑定書「案情概要」中之詳細病歷背景，非opinions段落應涵蓋之核心內容。"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十五年八月起之降尿酸藥物使用史係第一份鑑定書「案情概要」之背景資訊，非鑑定意見核心。",
+     "reason": "八十五年八月起之降尿酸藥物使用史係第一份鑑定書「案情概要」之背景資訊，非鑑定意見核心。"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "高三酸甘油脂血症及降血脂藥物使用史（八十二年五月起）係第一份鑑定書之詳細背景病歷，非核心意見內容。",
+     "reason": "高三酸甘油脂血症及降血脂藥物使用史（八十二年五月起）係第一份鑑定書之詳細背景病歷，非核心意見內容。"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Lopid用藥史（八十六年六月起）係第一份鑑定書「案情概要」中之詳細用藥記載，非鑑定意見核心結論。",
+     "reason": "Lopid用藥史（八十六年六月起）係第一份鑑定書「案情概要」中之詳細用藥記載，非鑑定意見核心結論。"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十三年十一月下肢疼痛就診史係第一份鑑定書「案情概要」之背景資訊，非鑑定意見核心內容。",
+     "reason": "八十三年十一月下肢疼痛就診史係第一份鑑定書「案情概要」之背景資訊，非鑑定意見核心內容。"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腰椎退化性關節炎診斷係第一份鑑定書「案情概要」中之詳細檢查結果，非opinions段落核心。",
+     "reason": "腰椎退化性關節炎診斷係第一份鑑定書「案情概要」中之詳細檢查結果，非opinions段落核心。"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腰椎脊髓X光攝影檢查結果（神經受壓迫）係第一份鑑定書之詳細病歷記載，非核心意見內容。",
+     "reason": "腰椎脊髓X光攝影檢查結果（神經受壓迫）係第一份鑑定書之詳細病歷記載，非核心意見內容。"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "因腰椎問題接受非類固醇類抗發炎止痛藥物治療之詳細記載係第一份鑑定書之背景資訊。",
+     "reason": "因腰椎問題接受非類固醇類抗發炎止痛藥物治療之詳細記載係第一份鑑定書之背景資訊。"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十六年足部疼痛及血管擴張藥物使用史係第一份鑑定書「案情概要」之詳細背景病歷。",
+     "reason": "八十六年足部疼痛及血管擴張藥物使用史係第一份鑑定書「案情概要」之詳細背景病歷。"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十五年九月起高血壓病史係第一份鑑定書「案情概要」之背景資訊，非鑑定意見核心。",
+     "reason": "八十五年九月起高血壓病史係第一份鑑定書「案情概要」之背景資訊，非鑑定意見核心。"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心絞痛及缺血性心臟病診斷之詳細過程係第一份鑑定書之詳細病歷記載。",
+     "reason": "心絞痛及缺血性心臟病診斷之詳細過程係第一份鑑定書之詳細病歷記載。"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "新陳代謝科蘇矢立醫師診療及多種心臟藥物使用之詳細記載係第一份鑑定書「案情概要」之背景資訊。",
+     "reason": "新陳代謝科蘇矢立醫師診療及多種心臟藥物使用之詳細記載係第一份鑑定書「案情概要」之背景資訊。"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十六年十月起前列腺肥大及相關藥物治療史係第一份鑑定書之詳細背景病歷。",
+     "reason": "八十六年十月起前列腺肥大及相關藥物治療史係第一份鑑定書之詳細背景病歷。"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "白內障診斷係第一份鑑定書「案情概要」之附帶病史記載，非核心內容。",
+     "reason": "白內障診斷係第一份鑑定書「案情概要」之附帶病史記載，非核心內容。"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十九年七月二十六日轉至被告乙門診之確切日期係第一份鑑定書之詳細病程記載，此日期雖重要但已於facts段落涵蓋。",
+     "reason": "八十九年七月二十六日轉至被告乙門診之確切日期係第一份鑑定書之詳細病程記載，此日期雖重要但已於facts段落涵蓋。"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十九年七月二十六日被告乙初期開立藥物之詳細清單係第一份鑑定書「案情概要」之詳細記載，非opinions段落核心。",
+     "reason": "八十九年七月二十六日被告乙初期開立藥物之詳細清單係第一份鑑定書「案情概要」之詳細記載，非opinions段落核心。"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十九年七月至九十年十二月間病況穩定之描述係第一份鑑定書之病程背景說明。",
+     "reason": "八十九年七月至九十年十二月間病況穩定之描述係第一份鑑定書之病程背景說明。"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "八十九年七月至九十年十二月間幾乎不使用止痛藥之詳細記載係第一份鑑定書之背景資訊。",
+     "reason": "八十九年七月至九十年十二月間幾乎不使用止痛藥之詳細記載係第一份鑑定書之背景資訊。"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Zestril停藥時間（九十年三月）之詳細記載係第一份鑑定書之詳細病程記錄。",
+     "reason": "Zestril停藥時間（九十年三月）之詳細記載係第一份鑑定書之詳細病程記錄。"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "毛地黃停藥時間（九十年四月）之詳細記載係第一份鑑定書之詳細病程記錄。",
+     "reason": "毛地黃停藥時間（九十年四月）之詳細記載係第一份鑑定書之詳細病程記錄。"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "九十年十一月十四日門診開立藥物之詳細清單係第一份鑑定書之詳細用藥記載，非核心意見內容。",
+     "reason": "九十年十一月十四日門診開立藥物之詳細清單係第一份鑑定書之詳細用藥記載，非核心意見內容。"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "九十年十二月十二日雙腳麻木主訴係第一份鑑定書「案情概要」之詳細病程記載，已於facts段落涵蓋。",
+     "reason": "九十年十二月十二日雙腳麻木主訴係第一份鑑定書「案情概要」之詳細病程記載，已於facts段落涵蓋。"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Tofranil治療之詳細劑量記載（每日三次，每次十毫克）係第一份鑑定書之詳細用藥記錄，facts段落已提及改用Tegretol前曾使用三環抗憂鬱藥物。",
+     "reason": "Tofranil治療之詳細劑量記載（每日三次，每次十毫克）係第一份鑑定書之詳細用藥記錄，facts段落已提及改用Tegretol前曾使用三環抗憂鬱藥物。"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "九十一年一月九日開立Tegretol之確切時間點及藥物全名（Carbamazepine）詳細記載係第一份鑑定書之詳細記錄，facts段落已涵蓋改用Tegretol之核心事實。",
+     "reason": "九十一年一月九日開立Tegretol之確切時間點及藥物全名（Carbamazepine）詳細記載係第一份鑑定書之詳細記錄，facts段落已涵蓋改用Tegretol之核心事實。"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "首次給予二十八日份Tegretol藥量之詳細記載係第一份鑑定書之詳細用藥記錄，facts段落已提及給予四週藥量。",
+     "reason": "首次給予二十八日份Tegretol藥量之詳細記載係第一份鑑定書之詳細用藥記錄，facts段落已提及給予四週藥量。"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "九十一年二月六日回診時主訴之詳細症狀（發燒、畏寒、眼睛紅腫等）係第一份鑑定書之詳細病程記載，pred claim 16有類似內容。GT claim 84-85源自第一份鑑定之病史概要，而pred claim 16為facts段落內容，且兩者時點相同（2月6日），屬於跨section涵蓋但fact matcher按section獨立判斷導致missing標記。此處維持missing，因opinions section未直接涵蓋此詳細病程。",
+     "reason": "九十一年二月六日回診時主訴之詳細症狀（發燒、畏寒、眼睛紅腫等）係第一份鑑定書之詳細病程記載，pred claim 16有類似內容。GT claim 84-85源自第一份鑑定之病史概要，而pred claim 16為facts段落內容，且兩者時點相同（2月6日），屬於跨section涵蓋但fact matcher按section獨立判斷導致missing標記。此處維持missing，因opinions section未直接涵蓋此詳細病程。"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月六日抽血檢查結果之詳細數據（白血球數目、帶狀中性白血球及單核白血球比率）係第一份鑑定書之詳細檢驗記載，屬詳細病歷數據而非核心意見內容。",
+     "reason": "二月六日抽血檢查結果之詳細數據（白血球數目、帶狀中性白血球及單核白血球比率）係第一份鑑定書之詳細檢驗記載，屬詳細病歷數據而非核心意見內容。"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月六日繼續開立Tegretol四週份量之確切記載係第一份鑑定書之詳細用藥記錄，facts段落已涵蓋二月六日繼續開立Tegretol之事實。",
+     "reason": "二月六日繼續開立Tegretol四週份量之確切記載係第一份鑑定書之詳細用藥記錄，facts段落已涵蓋二月六日繼續開立Tegretol之事實。"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月六日加開Voren、Medicon-A、Garason之詳細記載係第一份鑑定書之詳細用藥記錄，屬詳細背景資訊。",
+     "reason": "二月六日加開Voren、Medicon-A、Garason之詳細記載係第一份鑑定書之詳細用藥記錄，屬詳細背景資訊。"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月十一日急診就診時之詳細症狀（全身皮膚紅疹、口腔潰瘍併膿樣分泌物、眼睛紅腫、發燒、畏寒、血尿、黃疸）係第一份鑑定書「案情概要」之詳細病程記載，facts段落已涵蓋SJS發作就診之核心事實。",
+     "reason": "二月十一日急診就診時之詳細症狀（全身皮膚紅疹、口腔潰瘍併膿樣分泌物、眼睛紅腫、發燒、畏寒、血尿、黃疸）係第一份鑑定書「案情概要」之詳細病程記載，facts段落已涵蓋SJS發作就診之核心事實。"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急診理學檢查血壓數據（159/73毫米汞柱）係第一份鑑定書之詳細檢驗數據，非opinions段落核心內容。",
+     "reason": "急診理學檢查血壓數據（159/73毫米汞柱）係第一份鑑定書之詳細檢驗數據，非opinions段落核心內容。"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急診理學檢查脈搏數據（113次/分）係第一份鑑定書之詳細檢驗數據。",
+     "reason": "急診理學檢查脈搏數據（113次/分）係第一份鑑定書之詳細檢驗數據。"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急診理學檢查呼吸數據（20次/分）係第一份鑑定書之詳細檢驗數據。",
+     "reason": "急診理學檢查呼吸數據（20次/分）係第一份鑑定書之詳細檢驗數據。"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急診理學檢查體溫數據（37.6度）係第一份鑑定書之詳細檢驗數據。",
+     "reason": "急診理學檢查體溫數據（37.6度）係第一份鑑定書之詳細檢驗數據。"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "CRP數值（7.1 mg/dL）係第一份鑑定書之詳細檢驗數據，屬詳細病歷資訊而非核心意見內容。",
+     "reason": "CRP數值（7.1 mg/dL）係第一份鑑定書之詳細檢驗數據，屬詳細病歷資訊而非核心意見內容。"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "膽紅素數值（總膽紅素9.2 mg/dL、結合型膽紅素8.3 mg/dL）係第一份鑑定書之詳細檢驗數據。",
+     "reason": "膽紅素數值（總膽紅素9.2 mg/dL、結合型膽紅素8.3 mg/dL）係第一份鑑定書之詳細檢驗數據。"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肝功能指數數值（ALT 112 U/L、AST 82 U/L）係第一份鑑定書之詳細檢驗數據。",
+     "reason": "肝功能指數數值（ALT 112 U/L、AST 82 U/L）係第一份鑑定書之詳細檢驗數據。"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腹部超音波發現（肝硬化、脾臟腫大、膽結石、左腎囊腫）係第一份鑑定書之詳細檢查結果。",
+     "reason": "腹部超音波發現（肝硬化、脾臟腫大、膽結石、左腎囊腫）係第一份鑑定書之詳細檢查結果。"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "胸部X光發現（心臟擴大、主動脈硬化）係第一份鑑定書之詳細檢查結果。",
+     "reason": "胸部X光發現（心臟擴大、主動脈硬化）係第一份鑑定書之詳細檢查結果。"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫師建議住院接受治療之記載係第一份鑑定書之病程記錄，facts段落已涵蓋急診後住院之核心事實。",
+     "reason": "醫師建議住院接受治療之記載係第一份鑑定書之病程記錄，facts段落已涵蓋急診後住院之核心事實。"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月十一日住進肝膽腸胃科之詳細記載係第一份鑑定書之詳細病程記錄，facts段落已涵蓋住院事實。",
+     "reason": "二月十一日住進肝膽腸胃科之詳細記載係第一份鑑定書之詳細病程記錄，facts段落已涵蓋住院事實。"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "會診皮膚科醫師之記載係第一份鑑定書之詳細病程記錄，屬治療過程細節而非核心意見內容。",
+     "reason": "會診皮膚科醫師之記載係第一份鑑定書之詳細病程記錄，屬治療過程細節而非核心意見內容。"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月十一日至十六日住院期間症狀無明顯改善之詳細記載係第一份鑑定書之病程記錄，facts段落已涵蓋症狀未改善之核心事實。",
+     "reason": "二月十一日至十六日住院期間症狀無明顯改善之詳細記載係第一份鑑定書之病程記錄，facts段落已涵蓋症狀未改善之核心事實。"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "住院期間合併症狀（發燒、畏寒、腹瀉、流鼻血）之詳細記載係第一份鑑定書之詳細病程記錄，pred claim 16為2月6日回診時症狀，與此處2月11-16日住院期間症狀時點不同。",
+     "reason": "住院期間合併症狀（發燒、畏寒、腹瀉、流鼻血）之詳細記載係第一份鑑定書之詳細病程記錄，pred claim 16為2月6日回診時症狀，與此處2月11-16日住院期間症狀時點不同。"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月十六日轉診至臺中榮總之詳細記載係第一份鑑定書之病程記錄，facts段落已涵蓋轉診之核心事實。",
+     "reason": "二月十六日轉診至臺中榮總之詳細記載係第一份鑑定書之病程記錄，facts段落已涵蓋轉診之核心事實。"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "轉診時全身皮膚紅疹破損嚴重之詳細理學檢查發現係第一份鑑定書之詳細檢查記載。",
+     "reason": "轉診時全身皮膚紅疹破損嚴重之詳細理學檢查發現係第一份鑑定書之詳細檢查記載。"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "轉診時黏膜破皮、輕度呼吸困難、黃疸及腹脹之詳細理學檢查發現係第一份鑑定書之詳細檢查記載。",
+     "reason": "轉診時黏膜破皮、輕度呼吸困難、黃疸及腹脹之詳細理學檢查發現係第一份鑑定書之詳細檢查記載。"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "會診毒物科、清創術、住進燒燙傷病房之詳細治療過程記載係第一份鑑定書之詳細病程記錄。",
+     "reason": "會診毒物科、清創術、住進燒燙傷病房之詳細治療過程記載係第一份鑑定書之詳細病程記錄。"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月十八日再次清創手術之詳細記載係第一份鑑定書之詳細病程記錄。",
+     "reason": "二月十八日再次清創手術之詳細記載係第一份鑑定書之詳細病程記錄。"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月十八日傷口細菌培養陽性之詳細檢驗結果係第一份鑑定書之詳細檢查記載。",
+     "reason": "二月十八日傷口細菌培養陽性之詳細檢驗結果係第一份鑑定書之詳細檢查記載。"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月十九日腹部電腦斷層檢查發現脾腫大之詳細記載係第一份鑑定書之詳細檢查結果。",
+     "reason": "二月十九日腹部電腦斷層檢查發現脾腫大之詳細記載係第一份鑑定書之詳細檢查結果。"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "黃疸指數及發炎指數持續升高之詳細病程記載係第一份鑑定書之詳細檢驗數據趨勢。",
+     "reason": "黃疸指數及發炎指數持續升高之詳細病程記載係第一份鑑定書之詳細檢驗數據趨勢。"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "二月二十日後產生敗血性休克、急性腎衰竭及全血球減少症等詳細併發症記載係第一份鑑定書之詳細病程記錄，facts段落已涵蓋病況惡化之核心事實。",
+     "reason": "二月二十日後產生敗血性休克、急性腎衰竭及全血球減少症等詳細併發症記載係第一份鑑定書之詳細病程記錄，facts段落已涵蓋病況惡化之核心事實。"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "積極使用抗生素、輸血、利尿劑、升壓劑及呼吸加護治療之詳細治療措施記載係第一份鑑定書之詳細病程記錄。",
+     "reason": "積極使用抗生素、輸血、利尿劑、升壓劑及呼吸加護治療之詳細治療措施記載係第一份鑑定書之詳細病程記錄。"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出院時其他次診斷（敗血症、肝硬化、肝腎、骨髓及呼吸衰竭、左腎囊腫、痛風及高血脂症）之詳細記載係第一份鑑定書之詳細診斷記錄，facts段落已涵蓋主要診斷為SJS之核心事實。",
+     "reason": "出院時其他次診斷（敗血症、肝硬化、肝腎、骨髓及呼吸衰竭、左腎囊腫、痛風及高血脂症）之詳細記載係第一份鑑定書之詳細診斷記錄，facts段落已涵蓋主要診斷為SJS之核心事實。"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖然判決書第四部分㈡之⒊段提到『蔡連壽該二次門診病歷資料，均未記載其服用Tegretol藥物情形而付之闕如』，但生成摘要未明確提及『二次門診病歷均未記載』此具體細節，僅整體說明病歷未記載。此為次要事實細節，不影響案情理解。",
+     "reason": "雖然判決書第四部分㈡之⒊段提到『蔡連壽該二次門診病歷資料，均未記載其服用Tegretol藥物情形而付之闕如』，但生成摘要未明確提及『二次門診病歷均未記載』此具體細節，僅整體說明病歷未記載。此為次要事實細節，不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖然判決書第四部分㈠段記載『蔡連壽於九十一年二月十一日因全身皮膚紅疹、口腔潰瘍併膿樣分泌物及眼睛紅腫有四天之久...而至光田醫院急診室就診，乃於當日住進該院肝膽腸胃科』，但生成摘要未詳細描述2月11日住院過程（症狀描述、急診、住院科別）。此為事實經過細節，摘要已提及其後住院治療，此細節缺失屬次要。",
+     "reason": "雖然判決書第四部分㈠段記載『蔡連壽於九十一年二月十一日因全身皮膚紅疹、口腔潰瘍併膿樣分泌物及眼睛紅腫有四天之久...而至光田醫院急診室就診，乃於當日住進該院肝膽腸胃科』，但生成摘要未詳細描述2月11日住院過程（症狀描述、急診、住院科別）。此為事實經過細節，摘要已提及其後住院治療，此細節缺失屬次要。"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決書記載住院期間症狀持續，但生成摘要未詳述此過程。摘要重點在於醫療行為是否符合常規，住院期間症狀變化屬次要事實。",
+     "reason": "判決書記載住院期間症狀持續，但生成摘要未詳述此過程。摘要重點在於醫療行為是否符合常規，住院期間症狀變化屬次要事實。"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決書第四部分㈠段記載『蔡連壽於二月十一日至二月十六日在該院住院期間...於二月十六日接獲病危通知後，經家屬要求而轉診至臺中榮總』，但生成摘要僅提『2月16日轉診至B醫院』，未提『病危通知』情節。此為轉診原因細節，屬次要事實。",
+     "reason": "判決書第四部分㈠段記載『蔡連壽於二月十一日至二月十六日在該院住院期間...於二月十六日接獲病危通知後，經家屬要求而轉診至臺中榮總』，但生成摘要僅提『2月16日轉診至B醫院』，未提『病危通知』情節。此為轉診原因細節，屬次要事實。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 196,
+   "pred_total": 169,
+   "matched": 110,
+   "partial": 6,
+   "missing": 80,
+   "hallucinated": 9
+  },
+  "section_balance": 0.2055
+ }
 }

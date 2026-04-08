@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -141,5 +142,922 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7481,
+  "fact_recall": 0.4872,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6552,
+  "quality_overall": 4.6857,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9906,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 56,
+   "correct": 56
+  },
+  "weighted_recall": 0.82,
+  "missing_severity": {
+   "critical": 0,
+   "important": 23,
+   "minor": 102,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "『而依當時情形，並非不能注意』係刑法過失犯構成要件之客觀可注意性判斷標準，影響過失認定之法律評價。section_01_facts 雖有『原應注意此項義務而竟疏未注意』，但未明確涵蓋『非不能注意』之法律概念表述，故維持 missing。",
+     "reason": "『而依當時情形，並非不能注意』係刑法過失犯構成要件之客觀可注意性判斷標準，影響過失認定之法律評價。section_01_facts 雖有『原應注意此項義務而竟疏未注意』，但未明確涵蓋『非不能注意』之法律概念表述，故維持 missing。"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢察官認定之具體罪名（刑法第276條第2項業務過失致死罪）屬程序性背景資訊，摘要中已提及『檢察官偵查起訴』，法條細節不影響核心案情理解。各 section 原文均未明確出現『刑法第276條第2項』之表述，故維持 missing。",
+     "reason": "檢察官認定之具體罪名（刑法第276條第2項業務過失致死罪）屬程序性背景資訊，摘要中已提及『檢察官偵查起訴』，法條細節不影響核心案情理解。各 section 原文均未明確出現『刑法第276條第2項』之表述，故維持 missing。"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "Defense section 僅稱『被告甲』未提及『婦產科主治醫師』身份，此為被告辯護之重要背景資訊，應於 defense section 中清楚說明被告身份以利理解辯護立場",
+     "reason": "Defense section 僅稱『被告甲』未提及『婦產科主治醫師』身份，此為被告辯護之重要背景資訊，應於 defense section 中清楚說明被告身份以利理解辯護立場"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 僅稱『娩出胎兒後』，未提及『羊膜撐破』或『第一位胎兒』等雙胞胎分娩細節，屬手術過程細節但非核心辯護要點",
+     "reason": "Defense section 僅稱『娩出胎兒後』，未提及『羊膜撐破』或『第一位胎兒』等雙胞胎分娩細節，屬手術過程細節但非核心辯護要點"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 未提及『第二位胎兒』或『找出腳部』等雙胞胎分娩細節，屬手術過程描述但非辯護重點",
+     "reason": "Defense section 未提及『第二位胎兒』或『找出腳部』等雙胞胎分娩細節，屬手術過程描述但非辯護重點"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 未提及『麻醉醫師將子宮收縮劑以點滴方式注入』，屬手術細節但非辯護核心論點",
+     "reason": "Defense section 未提及『麻醉醫師將子宮收縮劑以點滴方式注入』，屬手術細節但非辯護核心論點"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 未提及『胎盤完整排出』，屬手術流程細節",
+     "reason": "Defense section 未提及『胎盤完整排出』，屬手術流程細節"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 未提及『檢查卵巢、輸卵管、子宮旁組織均無出血或腫瘤』，屬手術檢查細節但非辯護重點",
+     "reason": "Defense section 未提及『檢查卵巢、輸卵管、子宮旁組織均無出血或腫瘤』，屬手術檢查細節但非辯護重點"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 未提及『內診查看子宮收縮及陰道出血情形』，屬術後檢查細節",
+     "reason": "Defense section 未提及『內診查看子宮收縮及陰道出血情形』，屬術後檢查細節"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 未提及『送至恢復室觀察』，僅提及手術完成後約半小時送回病房",
+     "reason": "Defense section 未提及『送至恢復室觀察』，僅提及手術完成後約半小時送回病房"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 明確表示『結果腹部並無腹水』，與 GT claim『腹水持續增加』不同。摘要確實未提及『CPR過程中經超音波發現腹水持續增加』此項被告辯稱內容",
+     "reason": "Defense section 明確表示『結果腹部並無腹水』，與 GT claim『腹水持續增加』不同。摘要確實未提及『CPR過程中經超音波發現腹水持續增加』此項被告辯稱內容"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 未提及『家屬同意轉至彰化基督教醫院』，屬轉院程序細節",
+     "reason": "Defense section 未提及『家屬同意轉至彰化基督教醫院』，屬轉院程序細節"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense section 未提及『凌晨2時許宣布急救無效』的具體時間點，屬事件結尾細節",
+     "reason": "Defense section 未提及『凌晨2時許宣布急救無效』的具體時間點，屬事件結尾細節"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要提到死因為羊水栓塞併發DIC所致，但未明確提及「死亡方式為意外」之鑑定結論，屬重要資訊遺漏",
+     "reason": "預測摘要提到死因為羊水栓塞併發DIC所致，但未明確提及「死亡方式為意外」之鑑定結論，屬重要資訊遺漏"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及羊水栓塞急性期死亡率40-50%的具體數據，屬醫學細節資訊",
+     "reason": "預測摘要未提及羊水栓塞急性期死亡率40-50%的具體數據，屬醫學細節資訊"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及DIC晚期皮膚點狀出血症狀之描述",
+     "reason": "預測摘要未提及DIC晚期皮膚點狀出血症狀之描述"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要僅說「符合羊水栓塞臨床表現」，未明確陳述「本案產婦並無DIC皮膚點狀出血症狀」之否定性判斷",
+     "reason": "預測摘要僅說「符合羊水栓塞臨床表現」，未明確陳述「本案產婦並無DIC皮膚點狀出血症狀」之否定性判斷"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及APTT 122.9秒超過正常上限4倍之具體檢驗數值",
+     "reason": "預測摘要未提及APTT 122.9秒超過正常上限4倍之具體檢驗數值"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及解剖咽喉水腫排除急性過敏反應之具體判斷方法",
+     "reason": "預測摘要未提及解剖咽喉水腫排除急性過敏反應之具體判斷方法"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及術中讓配偶進入開刀房之常理性判斷",
+     "reason": "預測摘要未提及術中讓配偶進入開刀房之常理性判斷"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及CPR急救符合標準程序之鑑定意見",
+     "reason": "預測摘要未提及CPR急救符合標準程序之鑑定意見"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及從昏迷至死亡共5小時之時間資訊",
+     "reason": "預測摘要未提及從昏迷至死亡共5小時之時間資訊"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及羊水栓塞可發生於不同生產階段之說明",
+     "reason": "預測摘要未提及羊水栓塞可發生於不同生產階段之說明"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及因急救得宜未第一時間死亡之判斷",
+     "reason": "預測摘要未提及因急救得宜未第一時間死亡之判斷"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及羊水栓塞病因機轉複雜、無法有效治療之醫學背景",
+     "reason": "預測摘要未提及羊水栓塞病因機轉複雜、無法有效治療之醫學背景"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及剖腹產遇羊水栓塞會合併凝血病變、傷口再出血之說明",
+     "reason": "預測摘要未提及剖腹產遇羊水栓塞會合併凝血病變、傷口再出血之說明"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及右側子宮靜脈切斷處為常規剖腹產切開處之判斷",
+     "reason": "預測摘要未提及右側子宮靜脈切斷處為常規剖腹產切開處之判斷"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及針距0.5-1公分及凝血異常導致法醫誤判無縫合痕之鑑定分析",
+     "reason": "預測摘要未提及針距0.5-1公分及凝血異常導致法醫誤判無縫合痕之鑑定分析"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未明確描述產後失血休克「先出血再休克」與羊水栓塞「先休克再出血」之病程順序差異，影響鑑別診斷理解",
+     "reason": "預測摘要未明確描述產後失血休克「先出血再休克」與羊水栓塞「先休克再出血」之病程順序差異，影響鑑別診斷理解"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及術後7小時超音波檢查發現腹腔多量積血之具體時間點",
+     "reason": "預測摘要未提及術後7小時超音波檢查發現腹腔多量積血之具體時間點"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及羊水栓塞導致心肺衰竭、心臟停止之完整症狀描述",
+     "reason": "預測摘要未提及羊水栓塞導致心肺衰竭、心臟停止之完整症狀描述"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及以臨床鑑別診斷區分羊水栓塞與傷口未止血之方法論",
+     "reason": "預測摘要未提及以臨床鑑別診斷區分羊水栓塞與傷口未止血之方法論"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未明確描述羊水栓塞與產後失血休克在「症狀順序」上的關鍵差異，影響鑑別診斷理解",
+     "reason": "預測摘要未明確描述羊水栓塞與產後失血休克在「症狀順序」上的關鍵差異，影響鑑別診斷理解"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及新英格蘭雜誌相關文獻",
+     "reason": "預測摘要未提及新英格蘭雜誌相關文獻"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及羊水栓塞確定診斷需加上突發性低血壓、缺氧、消耗性凝血功能異常等要件",
+     "reason": "預測摘要未提及羊水栓塞確定診斷需加上突發性低血壓、缺氧、消耗性凝血功能異常等要件"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及法醫鑑定結論「非妥適之推論」之評價",
+     "reason": "預測摘要未提及法醫鑑定結論「非妥適之推論」之評價"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及出血量4000毫升應屬於泛發性血管內血液凝固症可能產生之出血量之判斷",
+     "reason": "預測摘要未提及出血量4000毫升應屬於泛發性血管內血液凝固症可能產生之出血量之判斷"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及羊水栓塞引發DIC出血量可能達數千至上萬毫升之說明",
+     "reason": "預測摘要未提及羊水栓塞引發DIC出血量可能達數千至上萬毫升之說明"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及出血性休克各期臨床症狀之漸進性改變描述",
+     "reason": "預測摘要未提及出血性休克各期臨床症狀之漸進性改變描述"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未明確陳述病歷記載「並未發現出血性休克臨床症狀」之否定發現",
+     "reason": "預測摘要未明確陳述病歷記載「並未發現出血性休克臨床症狀」之否定發現"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及法醫發現腹腔積血4000毫升並非短時間內縫合針距間出血所致之判斷",
+     "reason": "預測摘要未提及法醫發現腹腔積血4000毫升並非短時間內縫合針距間出血所致之判斷"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及短時間內縫合針距間靜脈出血導致4000毫升積血不太可能之臨床判斷",
+     "reason": "預測摘要未提及短時間內縫合針距間靜脈出血導致4000毫升積血不太可能之臨床判斷"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及出血性休克第二期具體症狀數值",
+     "reason": "預測摘要未提及出血性休克第二期具體症狀數值"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及DIC診斷標準（Fibrinogen<100、PT/APTT延長）",
+     "reason": "預測摘要未提及DIC診斷標準（Fibrinogen<100、PT/APTT延長）"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及Fibrinogen小於50之具體檢驗數值",
+     "reason": "預測摘要未提及Fibrinogen小於50之具體檢驗數值"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未詳細說明DIC導致任何器官、黏膜均可能出血之機制",
+     "reason": "預測摘要未詳細說明DIC導致任何器官、黏膜均可能出血之機制"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及血小板數值127,000接近正常值之具體數據",
+     "reason": "預測摘要未提及血小板數值127,000接近正常值之具體數據"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未詳細比較出血性DIC與羊水栓塞性DIC之差異",
+     "reason": "預測摘要未詳細比較出血性DIC與羊水栓塞性DIC之差異"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未描述急救過程中腹部變大、出血加重之細節",
+     "reason": "預測摘要未描述急救過程中腹部變大、出血加重之細節"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及到院時腹部無明顯腫大之觀察",
+     "reason": "預測摘要未提及到院時腹部無明顯腫大之觀察"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及出血時會有疼痛、腹部變硬之主述判斷",
+     "reason": "預測摘要未提及出血時會有疼痛、腹部變硬之主述判斷"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及護理紀錄中晚上6時腹部疼痛之具體時間和情況",
+     "reason": "預測摘要未提及護理紀錄中晚上6時腹部疼痛之具體時間和情況"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未比較持續疼痛與陣發性疼痛之差異",
+     "reason": "預測摘要未比較持續疼痛與陣發性疼痛之差異"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及血壓不正常波動時心跳會持續加速之判斷",
+     "reason": "預測摘要未提及血壓不正常波動時心跳會持續加速之判斷"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要概括說血壓心跳正常，未特指下午4時至晚上8時時間範圍",
+     "reason": "預測摘要概括說血壓心跳正常，未特指下午4時至晚上8時時間範圍"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提供具體生命徵象數值和時間點",
+     "reason": "預測摘要未提供具體生命徵象數值和時間點"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及如已出血則血壓會持續下降、心跳會持續加速之判斷",
+     "reason": "預測摘要未提及如已出血則血壓會持續下降、心跳會持續加速之判斷"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及晚上7-8時無出血現象否則心跳會達140次/分以上之判斷",
+     "reason": "預測摘要未提及晚上7-8時無出血現象否則心跳會達140次/分以上之判斷"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及超音波照片時間（晚上9:34-35）和無明顯腹水之發現",
+     "reason": "預測摘要未提及超音波照片時間（晚上9:34-35）和無明顯腹水之發現"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及超音波照片時間（晚上11:31-43）和有明顯腹水之發現",
+     "reason": "預測摘要未提及超音波照片時間（晚上11:31-43）和有明顯腹水之發現"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未明確描述出血在呼吸心跳停止之後的時間順序，影響羊水栓塞與產後出血之鑑別診斷理解",
+     "reason": "預測摘要未明確描述出血在呼吸心跳停止之後的時間順序，影響羊水栓塞與產後出血之鑑別診斷理解"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未詳細說明DIC機制導致全身黏膜傷口軟組織出血",
+     "reason": "預測摘要未詳細說明DIC機制導致全身黏膜傷口軟組織出血"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及紫斑非屍斑之判斷",
+     "reason": "預測摘要未提及紫斑非屍斑之判斷"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及正常孕婦血液中亦有羊水內容物之醫學背景",
+     "reason": "預測摘要未提及正常孕婦血液中亦有羊水內容物之醫學背景"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要與GT對血管內羊水成份之解讀不同，GT傾向認為有羊水栓塞可能，預測摘要則認為無羊水栓塞病理變化",
+     "reason": "預測摘要與GT對血管內羊水成份之解讀不同，GT傾向認為有羊水栓塞可能，預測摘要則認為無羊水栓塞病理變化"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及超音波照片無法判讀腹部有無液體",
+     "reason": "預測摘要未提及超音波照片無法判讀腹部有無液體"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及超音波照片12點方向黑色陰影微量液體之發現",
+     "reason": "預測摘要未提及超音波照片12點方向黑色陰影微量液體之發現"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及剖腹產後少量液體在腹部內可接受之判斷",
+     "reason": "預測摘要未提及剖腹產後少量液體在腹部內可接受之判斷"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及超音波照片可辨識有液體但無法判斷量之描述",
+     "reason": "預測摘要未提及超音波照片可辨識有液體但無法判斷量之描述"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及若無其他症狀只需觀察之臨床處置判斷",
+     "reason": "預測摘要未提及若無其他症狀只需觀察之臨床處置判斷"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及DIC診斷需要抽血報告、觀察休克之判斷",
+     "reason": "預測摘要未提及DIC診斷需要抽血報告、觀察休克之判斷"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要僅說羊水栓塞併發DIC，未說明DIC可能由羊水栓塞或腹內大出血引起",
+     "reason": "預測摘要僅說羊水栓塞併發DIC，未說明DIC可能由羊水栓塞或腹內大出血引起"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未詳細說明羊水栓塞發生DIC與出血之關係",
+     "reason": "預測摘要未詳細說明羊水栓塞發生DIC與出血之關係"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未詳細說明羊水栓塞病程順序",
+     "reason": "預測摘要未詳細說明羊水栓塞病程順序"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未詳細說明羊水栓塞先休克再出現DIC而死亡之病程",
+     "reason": "預測摘要未詳細說明羊水栓塞先休克再出現DIC而死亡之病程"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及腹內大出血或子宮收縮異常之產後大出血病程",
+     "reason": "預測摘要未提及腹內大出血或子宮收縮異常之產後大出血病程"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未詳細說明因DIC死亡應全身大出血之表現",
+     "reason": "預測摘要未詳細說明因DIC死亡應全身大出血之表現"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及羊水栓塞臨床進展快速與腹內出血緩慢之對比",
+     "reason": "預測摘要未提及羊水栓塞臨床進展快速與腹內出血緩慢之對比"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及羊水栓塞診斷難點（未發現呼吸道水腫不能排除羊水栓塞）",
+     "reason": "預測摘要未提及羊水栓塞診斷難點（未發現呼吸道水腫不能排除羊水栓塞）"
+    },
+    {
+     "gt_claim_id": 171,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及下午4時至晚上9時前並無腹腔出血之時間區間資訊",
+     "reason": "預測摘要未提及下午4時至晚上9時前並無腹腔出血之時間區間資訊"
+    },
+    {
+     "gt_claim_id": 172,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未明確描述休克與腹腔出血時序關係及病程判斷，影響鑑別診斷理解",
+     "reason": "預測摘要未明確描述休克與腹腔出血時序關係及病程判斷，影響鑑別診斷理解"
+    },
+    {
+     "gt_claim_id": 173,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及鑑定人與證人無虛構迴護被告之證據評價",
+     "reason": "預測摘要未提及鑑定人與證人無虛構迴護被告之證據評價"
+    },
+    {
+     "gt_claim_id": 174,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及鑑定人與證人證述與其他鑑定結果相符、應採信之評價",
+     "reason": "預測摘要未提及鑑定人與證人證述與其他鑑定結果相符、應採信之評價"
+    },
+    {
+     "gt_claim_id": 177,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及肺水腫之發現及其與羊水栓塞過敏反應之關聯",
+     "reason": "預測摘要未提及肺水腫之發現及其與羊水栓塞過敏反應之關聯"
+    },
+    {
+     "gt_claim_id": 179,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及法醫研究所鑑定結果不足以作為不利被告認定",
+     "reason": "預測摘要未提及法醫研究所鑑定結果不足以作為不利被告認定"
+    },
+    {
+     "gt_claim_id": 180,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及皮膚表面無點狀出血之發現",
+     "reason": "預測摘要未提及皮膚表面無點狀出血之發現"
+    },
+    {
+     "gt_claim_id": 181,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及轉院時口腔黏膜出血及皮膚點狀出血之觀察",
+     "reason": "預測摘要未提及轉院時口腔黏膜出血及皮膚點狀出血之觀察"
+    },
+    {
+     "gt_claim_id": 182,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及紫斑並非屍斑之判斷",
+     "reason": "預測摘要未提及紫斑並非屍斑之判斷"
+    },
+    {
+     "gt_claim_id": 183,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及證人觀察較早、紫斑為DIC造成之點狀出血之推論",
+     "reason": "預測摘要未提及證人觀察較早、紫斑為DIC造成之點狀出血之推論"
+    },
+    {
+     "gt_claim_id": 187,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告自承筆錄日期為程序性細節，不影響案情理解",
+     "reason": "被告自承筆錄日期為程序性細節，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 188,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "鑑定證人甲之具體身份及筆錄頁碼為程序性資訊",
+     "reason": "鑑定證人甲之具體身份及筆錄頁碼為程序性資訊"
+    },
+    {
+     "gt_claim_id": 190,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "檢察官囑託鑑定之程序細節，屬程序性事實",
+     "reason": "檢察官囑託鑑定之程序細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 191,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法醫研究所函件具體文號為細節性引用資訊",
+     "reason": "法醫研究所函件具體文號為細節性引用資訊"
+    },
+    {
+     "gt_claim_id": 195,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "胎盤剝離處血流量數值為醫學背景細節",
+     "reason": "胎盤剝離處血流量數值為醫學背景細節"
+    },
+    {
+     "gt_claim_id": 196,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "止血機轉詳細說明為背景知識，核心概念已於section_05呈現",
+     "reason": "止血機轉詳細說明為背景知識，核心概念已於section_05呈現"
+    },
+    {
+     "gt_claim_id": 197,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "婦產科醫學會函之具體文號為引用細節",
+     "reason": "婦產科醫學會函之具體文號為引用細節"
+    },
+    {
+     "gt_claim_id": 198,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "謝聰哲之具體服務機關及筆錄頁碼為程序性身份細節，證述內容已有涵蓋",
+     "reason": "謝聰哲之具體服務機關及筆錄頁碼為程序性身份細節，證述內容已有涵蓋"
+    },
+    {
+     "gt_claim_id": 202,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "鑑定人丙之委員身份及筆錄頁碼為程序性資訊",
+     "reason": "鑑定人丙之委員身份及筆錄頁碼為程序性資訊"
+    },
+    {
+     "gt_claim_id": 205,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "較大靜脈是否需縫合之醫學爭議為重要醫療處置判斷依據，影響過失認定",
+     "reason": "較大靜脈是否需縫合之醫學爭議為重要醫療處置判斷依據，影響過失認定"
+    },
+    {
+     "gt_claim_id": 206,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「手術房觀察血腫及需縫合之判斷標準為重要醫療常規論述，影響過失認定",
+     "reason": "「手術房觀察血腫及需縫合之判斷標準為重要醫療常規論述，影響過失認定"
+    },
+    {
+     "gt_claim_id": 209,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "鑑定證人甲關於血管斷裂須縫合之證述為關鍵醫學爭議論點",
+     "reason": "鑑定證人甲關於血管斷裂須縫合之證述為關鍵醫學爭議論點"
+    },
+    {
+     "gt_claim_id": 210,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各種醫療止血方式均有風險之一般性說明",
+     "reason": "各種醫療止血方式均有風險之一般性說明"
+    },
+    {
+     "gt_claim_id": 211,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "因果推論排除之法律結論為重要法律論述",
+     "reason": "因果推論排除之法律結論為重要法律論述"
+    },
+    {
+     "gt_claim_id": 212,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "解剖發現符合事理常情之認定為細節性論證",
+     "reason": "解剖發現符合事理常情之認定為細節性論證"
+    },
+    {
+     "gt_claim_id": 213,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "婦產科醫學會函與法院認定相同為細節性比較",
+     "reason": "婦產科醫學會函與法院認定相同為細節性比較"
+    },
+    {
+     "gt_claim_id": 215,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "鑑定證人甲關於醫療風險及血壓變化可能導致滲血之完整證述為重要醫學論證",
+     "reason": "鑑定證人甲關於醫療風險及血壓變化可能導致滲血之完整證述為重要醫學論證"
+    },
+    {
+     "gt_claim_id": 216,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "解剖發現12×12公分血腫之具體數值為重要病理證據",
+     "reason": "解剖發現12×12公分血腫之具體數值為重要病理證據"
+    },
+    {
+     "gt_claim_id": 217,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "腹腔出血4,000毫升休克死亡之事實為重要死因證據",
+     "reason": "腹腔出血4,000毫升休克死亡之事實為重要死因證據"
+    },
+    {
+     "gt_claim_id": 219,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉過程中血壓穩定之結論為重要生理狀態認定",
+     "reason": "麻醉過程中血壓穩定之結論為重要生理狀態認定"
+    },
+    {
+     "gt_claim_id": 220,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉醫師控制血壓之事實為重要醫療處置背景",
+     "reason": "麻醉醫師控制血壓之事實為重要醫療處置背景"
+    },
+    {
+     "gt_claim_id": 221,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "子宮收縮輔助封閉靜脈之機制說明為醫療常規細節",
+     "reason": "子宮收縮輔助封閉靜脈之機制說明為醫療常規細節"
+    },
+    {
+     "gt_claim_id": 222,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "謝聰哲關於麻醉消退不會導致出血之臨床證述為重要醫學論點",
+     "reason": "謝聰哲關於麻醉消退不會導致出血之臨床證述為重要醫學論點"
+    },
+    {
+     "gt_claim_id": 223,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "二基醫院麻醉紀錄之具體引用為證據細節",
+     "reason": "二基醫院麻醉紀錄之具體引用為證據細節"
+    },
+    {
+     "gt_claim_id": 224,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "下午4時許之血壓及昏迷指數具體數值已於section_01呈現",
+     "reason": "下午4時許之血壓及昏迷指數具體數值已於section_01呈現"
+    },
+    {
+     "gt_claim_id": 228,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "晚間7時許心跳及血壓具體數值為時間點細節",
+     "reason": "晚間7時許心跳及血壓具體數值為時間點細節"
+    },
+    {
+     "gt_claim_id": 235,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "明確否定腹腔出血與被告止血方式之因果關係為重要法律結論",
+     "reason": "明確否定腹腔出血與被告止血方式之因果關係為重要法律結論"
+    },
+    {
+     "gt_claim_id": 243,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "反事實醫學推理論述（如已出血則血壓下降、心跳加速）為重要論證依據",
+     "reason": "反事實醫學推理論述（如已出血則血壓下降、心跳加速）為重要論證依據"
+    },
+    {
+     "gt_claim_id": 247,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「注射點滴排除麻醉藥作用」之醫療常規論述為重要判斷依據",
+     "reason": "「注射點滴排除麻醉藥作用」之醫療常規論述為重要判斷依據"
+    },
+    {
+     "gt_claim_id": 248,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「維持生命跡象並觀察後續變化」之醫療常規論述為重要處置原則",
+     "reason": "「維持生命跡象並觀察後續變化」之醫療常規論述為重要處置原則"
+    },
+    {
+     "gt_claim_id": 249,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「點滴後血壓回復需再觀察」之條件判斷為重要診療邏輯",
+     "reason": "「點滴後血壓回復需再觀察」之條件判斷為重要診療邏輯"
+    },
+    {
+     "gt_claim_id": 254,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「被告未親自返回病房、仍在門診看診」之具體行為描述為重要事實",
+     "reason": "「被告未親自返回病房、仍在門診看診」之具體行為描述為重要事實"
+    },
+    {
+     "gt_claim_id": 255,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「產後病房觀察由護士負責」之制度性說明為一般性背景",
+     "reason": "「產後病房觀察由護士負責」之制度性說明為一般性背景"
+    },
+    {
+     "gt_claim_id": 256,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫師無法隨侍病房之論述可從現有內容推論",
+     "reason": "醫師無法隨侍病房之論述可從現有內容推論"
+    },
+    {
+     "gt_claim_id": 257,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "權責分工制度論述為一般性制度說明",
+     "reason": "權責分工制度論述為一般性制度說明"
+    },
+    {
+     "gt_claim_id": 263,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療過失定義性論述雖為法律概念，但實質內容已於『不違反注意義務』論述中體現",
+     "reason": "醫療過失定義性論述雖為法律概念，但實質內容已於『不違反注意義務』論述中體現"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 274,
+   "pred_total": 99,
+   "matched": 118,
+   "partial": 31,
+   "missing": 125,
+   "hallucinated": 0
+  },
+  "section_balance": 0.3333
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -126,5 +126,96 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7824,
+  "fact_recall": 0.8378,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9118,
+  "quality_overall": 4.7893,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9714,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.955,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "頸靜脈鼓脹是否記載於病歷屬於鑑定意見中補充說明性質的事實，非核心醫療過失論點，不影響判決主文理解",
+     "reason": "頸靜脈鼓脹是否記載於病歷屬於鑑定意見中補充說明性質的事實，非核心醫療過失論點，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（上訴期間未上訴），生成摘要僅記載判決結果，未提及後續程序狀態，不影響判決主文理解",
+     "reason": "程序性事實（上訴期間未上訴），生成摘要僅記載判決結果，未提及後續程序狀態，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性結果（判決確定），生成摘要未提及，不影響定罪量刑內容理解",
+     "reason": "程序性結果（判決確定），生成摘要未提及，不影響定罪量刑內容理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "手術決定者資訊(T主治醫師)屬於背景事實，reasoning段落聚焦於過失認定而非手術決策過程，遺漏不影響過失判斷理解",
+     "reason": "手術決定者資訊(T主治醫師)屬於背景事實，reasoning段落聚焦於過失認定而非手術決策過程，遺漏不影響過失判斷理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「無誤判之醫療過失」是法院重要的過失認定前提，雖opinions段落有提及，但reasoning段落遺漏影響過失認定邏輯完整性",
+     "reason": "「無誤判之醫療過失」是法院重要的過失認定前提，雖opinions段落有提及，但reasoning段落遺漏影響過失認定邏輯完整性"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "解剖報告具體數值(80cc、75公克、纖維蛋白塊)是判斷死因嚴重程度的關鍵醫學證據，影響心臟填塞嚴重性評估",
+     "reason": "解剖報告具體數值(80cc、75公克、纖維蛋白塊)是判斷死因嚴重程度的關鍵醫學證據，影響心臟填塞嚴重性評估"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "心包膜變性導致心內壓增高之病理機轉，是法院推論被告應注意心臟問題的醫學依據，屬過失認定核心邏輯",
+     "reason": "心包膜變性導致心內壓增高之病理機轉，是法院推論被告應注意心臟問題的醫學依據，屬過失認定核心邏輯"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 74,
+   "pred_total": 63,
+   "matched": 57,
+   "partial": 10,
+   "missing": 7,
+   "hallucinated": 0
+  },
+  "section_balance": 0.7143
+ }
 }

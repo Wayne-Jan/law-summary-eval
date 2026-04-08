@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -125,5 +126,222 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7972,
+  "fact_recall": 0.7951,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8859,
+  "quality_overall": 4.95,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9902,
+  "uncited_rate": 0.152,
+  "faithfulness_combined": {
+   "score": 0.9088,
+   "citation_fidelity": 0.848,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 22
+  },
+  "weighted_recall": 0.9097,
+  "missing_severity": {
+   "critical": 0,
+   "important": 14,
+   "minor": 11,
+   "details": [
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "動靜脈畸形發現與鑑定結果之關係性論述，雖在 GT 中存在（gt_claims.json 第70項），但 section_01_facts.txt 確實提及'此一發現並未影響及鑑定之結果'。屬於醫療鑑定結論的重要補充說明，確認維持 missing。",
+     "reason": "動靜脈畸形發現與鑑定結果之關係性論述，雖在 GT 中存在（gt_claims.json 第70項），但 section_01_facts.txt 確實提及'此一發現並未影響及鑑定之結果'。屬於醫療鑑定結論的重要補充說明，確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "'血管攝影指出出血病因所在，也未作任何治療之建議'是醫審會第二次鑑定的關鍵指控，與院方'未做任何處置'的時間點相關。此為過失認定的核心依據，確認維持 missing。",
+     "reason": "'血管攝影指出出血病因所在，也未作任何治療之建議'是醫審會第二次鑑定的關鍵指控，與院方'未做任何處置'的時間點相關。此為過失認定的核心依據，確認維持 missing。"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "CT 解剖發現的具體描述（帶狀迴脫出、顳葉鉤狀迴脫出）屬專業醫學術語細節，summary_grounded.txt 第一段已提及類似內容但簡化表述。雖影響醫學精確性，但不影響整體案情理解。",
+     "reason": "CT 解剖發現的具體描述（帶狀迴脫出、顳葉鉤狀迴脫出）屬專業醫學術語細節，summary_grounded.txt 第一段已提及類似內容但簡化表述。雖影響醫學精確性，但不影響整體案情理解。"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "CT 解剖發現（腦幹四周顱底池不見）與 gt_claim_id 77 類似，屬專業影像細節。summary_grounded.txt 已提及'腦幹四周之顱底池皆...看不見'，確實未完整提及，但屬次要細節。",
+     "reason": "CT 解剖發現（腦幹四周顱底池不見）與 gt_claim_id 77 類似，屬專業影像細節。summary_grounded.txt 已提及'腦幹四周之顱底池皆...看不見'，確實未完整提及，但屬次要細節。"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "年輕病患自發性出血應懷疑動靜脈畸形的臨床指引\"是台灣神經外科醫學會鑑定的重要醫療常規依據，section_05_reasoning.txt 有詳細記載但未在 opinions section 出現。屬於鑑定意見的關鍵醫學依據，影響過失判斷的醫學背景。",
+     "reason": "年輕病患自發性出血應懷疑動靜脈畸形的臨床指引\"是台灣神經外科醫學會鑑定的重要醫療常規依據，section_05_reasoning.txt 有詳細記載但未在 opinions section 出現。屬於鑑定意見的關鍵醫學依據，影響過失判斷的醫學背景。"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腦血管攝影為必要檢查\"的臨床指引是醫審會認定延遲治療的重要依據（血管攝影結果出來後未處置），section_05_reasoning.txt 詳載但 opinions section 缺失。影響過失認定的關鍵證據評價。",
+     "reason": "腦血管攝影為必要檢查\"的臨床指引是醫審會認定延遲治療的重要依據（血管攝影結果出來後未處置），section_05_reasoning.txt 詳載但 opinions section 缺失。影響過失認定的關鍵證據評價。"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "意識清楚患者應先檢查再手術\"的臨床指引，直接反駁醫審會'應立即開刀'的鑑定意見，是法院認定無過失的關鍵醫學依據。section_05_reasoning.txt 有完整記載。",
+     "reason": "意識清楚患者應先檢查再手術\"的臨床指引，直接反駁醫審會'應立即開刀'的鑑定意見，是法院認定無過失的關鍵醫學依據。section_05_reasoning.txt 有完整記載。"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "動靜脈畸形不一定需要手術\"是法院反駁檢方'應立即開刀'指控的關鍵醫學依據，section_05_reasoning.txt 有詳細說明。屬於鑑定意見對比的核心論點。",
+     "reason": "動靜脈畸形不一定需要手術\"是法院反駁檢方'應立即開刀'指控的關鍵醫學依據，section_05_reasoning.txt 有詳細說明。屬於鑑定意見對比的核心論點。"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療需視畸形大小、部位、深度等多重因素\"是法院認定醫師無過失的核心論點，說明手術決策的複雜性，反駁單純以血腫大小決定的鑑定意見。",
+     "reason": "治療需視畸形大小、部位、深度等多重因素\"是法院認定醫師無過失的核心論點，說明手術決策的複雜性，反駁單純以血腫大小決定的鑑定意見。"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "栓塞、放射治療等替代手術方法\"是法院論證治療選擇多樣性的重要內容，section_05_reasoning.txt 提及'尚可採栓塞或放射手術'，但 opinions section 確實缺失。",
+     "reason": "栓塞、放射治療等替代手術方法\"是法院論證治療選擇多樣性的重要內容，section_05_reasoning.txt 提及'尚可採栓塞或放射手術'，但 opinions section 確實缺失。"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "觀察追蹤的治療選項\"雖為鑑定內容，但屬於選擇性治療方案的補充說明，非核心爭議焦點。section_05_reasoning.txt 有所提及。",
+     "reason": "觀察追蹤的治療選項\"雖為鑑定內容，但屬於選擇性治療方案的補充說明，非核心爭議焦點。section_05_reasoning.txt 有所提及。"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "動靜脈畸形手術危險性高\"的細節描述在 section_05_reasoning.txt 有記載，解釋為何醫師可能選擇非手術治療，但 summary_grounded.txt 已簡要涵蓋'風險極高之手術'概念。",
+     "reason": "動靜脈畸形手術危險性高\"的細節描述在 section_05_reasoning.txt 有記載，解釋為何醫師可能選擇非手術治療，但 summary_grounded.txt 已簡要涵蓋'風險極高之手術'概念。"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "動靜脈畸形引起血腫危險性較高\"雖為鑑定內容，但屬於醫學背景補充，非直接影響過失認定的核心事實。",
+     "reason": "動靜脈畸形引起血腫危險性較高\"雖為鑑定內容，但屬於醫學背景補充，非直接影響過失認定的核心事實。"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "需考慮動靜脈畸形為真正原因\"的論述與 gt_claim_id 93 類似，屬醫學原理闡述，非關鍵法律事實。",
+     "reason": "需考慮動靜脈畸形為真正原因\"的論述與 gt_claim_id 93 類似，屬醫學原理闡述，非關鍵法律事實。"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血管攝影為必要檢查\"是醫審會認定延遲治療的重要依據（因院方做完血管攝影後未處置），與 gt_claim_id 86 重複強調，屬關鍵醫學證據評價。",
+     "reason": "血管攝影為必要檢查\"是醫審會認定延遲治療的重要依據（因院方做完血管攝影後未處置），與 gt_claim_id 86 重複強調，屬關鍵醫學證據評價。"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血腫可自然吸收\"雖為醫學會鑑定的內容，但 summary_grounded.txt 第一段已提及'讓病患在治療過程中自行吸收腦內之血塊'，基本語義已涵蓋。",
+     "reason": "血腫可自然吸收\"雖為醫學會鑑定的內容，但 summary_grounded.txt 第一段已提及'讓病患在治療過程中自行吸收腦內之血塊'，基本語義已涵蓋。"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "開刀利益大於風險時建議開刀\"是醫學會鑑定支持醫處置的正確性的核心論點，直接回應醫審會'延遲治療'的指控，是法院無罪判決的重要依據。",
+     "reason": "開刀利益大於風險時建議開刀\"是醫學會鑑定支持醫處置的正確性的核心論點，直接回應醫審會'延遲治療'的指控，是法院無罪判決的重要依據。"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "昏迷指數7分時仍有機會挽救生命\"反駁了醫審會'為時已晚'的絕對性論斷，是法院認定醫療處置合規的關鍵依據。",
+     "reason": "昏迷指數7分時仍有機會挽救生命\"反駁了醫審會'為時已晚'的絕對性論斷，是法院認定醫療處置合規的關鍵依據。"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦內出血病患治療基本原則\"的詳細列舉（呼吸道、血壓、顱內壓等）雖完整，但 summary_grounded.txt 已以'先行以藥物控制治療為主要治療方式'簡化涵蓋治療原則。",
+     "reason": "腦內出血病患治療基本原則\"的詳細列舉（呼吸道、血壓、顱內壓等）雖完整，但 summary_grounded.txt 已以'先行以藥物控制治療為主要治療方式'簡化涵蓋治療原則。"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "V醫院診斷證明書之記載為背景性事實，不影響法院對醫療過失之核心認定",
+     "reason": "V醫院診斷證明書之記載為背景性事實，不影響法院對醫療過失之核心認定"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會第二次鑑定之具體發現（小型畸形、假性動脈）屬重要醫療事實，影響對鑑定意見可靠性的判斷",
+     "reason": "醫審會第二次鑑定之具體發現（小型畸形、假性動脈）屬重要醫療事實，影響對鑑定意見可靠性的判斷"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "第二次鑑定意見關於2月1日大片血腫及腦壓上升之認定，與法院心證形成有關，屬重要事實",
+     "reason": "第二次鑑定意見關於2月1日大片血腫及腦壓上升之認定，與法院心證形成有關，屬重要事實"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "60CC血腫手術標準為醫療常規判斷之重要依據",
+     "reason": "60CC血腫手術標準為醫療常規判斷之重要依據"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血腫侵犯基核或腦幹之例外情形為補充性說明，非核心爭點",
+     "reason": "血腫侵犯基核或腦幹之例外情形為補充性說明，非核心爭點"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "士林地院另案審理為程序性背景，不影響本案判決結論",
+     "reason": "士林地院另案審理為程序性背景，不影響本案判決結論"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 144,
+   "pred_total": 105,
+   "matched": 110,
+   "partial": 9,
+   "missing": 25,
+   "hallucinated": 0
+  },
+  "section_balance": 0.5957
+ }
 }

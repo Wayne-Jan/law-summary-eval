@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -129,5 +130,292 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7581,
+  "fact_recall": 0.7267,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8417,
+  "quality_overall": null,
+  "citation_accuracy": 0.9792,
+  "citation_support_score": 0.9729,
+  "uncited_rate": 0.13,
+  "faithfulness_combined": {
+   "score": 0.9111,
+   "citation_fidelity": 0.8519,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 18,
+   "correct": 18
+  },
+  "weighted_recall": 0.9006,
+  "missing_severity": {
+   "critical": 2,
+   "important": 9,
+   "minor": 24,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "GT Claim 1 與 GT Claim 2 構成一組角色身分配對。summary 將兩位醫師的科別完全顛倒（內科vs外科），導致案件基本事實理解錯誤，屬於嚴重的角色混淆，影響對案情和過失責任分配的理解。",
+     "reason": "GT Claim 1 與 GT Claim 2 構成一組角色身分配對。summary 將兩位醫師的科別完全顛倒（內科vs外科），導致案件基本事實理解錯誤，屬於嚴重的角色混淆，影響對案情和過失責任分配的理解。"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "與 GT Claim 1 同為角色身分配對錯誤。summary 中『醫師乙係內科主任醫師，醫師甲係外科醫師』與 GT 的『醫師甲係內科主任醫師，醫師乙係外科主任醫師』完全相反，屬於嚴重事實錯誤。",
+     "reason": "與 GT Claim 1 同為角色身分配對錯誤。summary 中『醫師乙係內科主任醫師，醫師甲係外科醫師』與 GT 的『醫師甲係內科主任醫師，醫師乙係外科主任醫師』完全相反，屬於嚴重事實錯誤。"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要僅提及高血壓心臟病診斷，未說明『需有心臟肥大才是高血壓心臟病』的醫學判斷標準，屬細節性遺漏",
+     "reason": "摘要僅提及高血壓心臟病診斷，未說明『需有心臟肥大才是高血壓心臟病』的醫學判斷標準，屬細節性遺漏"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要描述被告乙依據症狀診斷，但未提及『緊急情況』此背景條件",
+     "reason": "摘要描述被告乙依據症狀診斷，但未提及『緊急情況』此背景條件"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要客觀陳述事實，未提及對檢察官起訴書結構錯誤（內科外科混淆、過程前後倒置）的指控",
+     "reason": "摘要客觀陳述事實，未提及對檢察官起訴書結構錯誤（內科外科混淆、過程前後倒置）的指控"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要未提及檢察官『誤以為家屬有提到馬凡氏症病史』的具體錯誤認定",
+     "reason": "摘要未提及檢察官『誤以為家屬有提到馬凡氏症病史』的具體錯誤認定"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要雖多次引用病歷，但未明確論述『病歷記載對診斷或醫療糾紛的重要性』",
+     "reason": "摘要雖多次引用病歷，但未明確論述『病歷記載對診斷或醫療糾紛的重要性』"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要提及『投藥治療』，但未說明『降血壓藥物、胃腸科藥物、開兩天藥』等具體用藥細節",
+     "reason": "摘要提及『投藥治療』，但未說明『降血壓藥物、胃腸科藥物、開兩天藥』等具體用藥細節"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要說安排檢查，但未明確說明檢查目的是『判斷有無急性心臟病』",
+     "reason": "摘要說安排檢查，但未明確說明檢查目的是『判斷有無急性心臟病』"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要說證人A安排檢查，未說明『被告乙安排腹部X光檢查』",
+     "reason": "摘要說證人A安排檢查，未說明『被告乙安排腹部X光檢查』"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要無『外科實習住院醫師丙』角色、『問到家屬馬凡氏症病史』及『記載病歷』等關鍵情節，影響對醫療分工的理解",
+     "reason": "摘要無『外科實習住院醫師丙』角色、『問到家屬馬凡氏症病史』及『記載病歷』等關鍵情節，影響對醫療分工的理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要無『外科住院醫生丙』角色及『將急性闌尾炎診斷寫在病歷上』的關鍵情節",
+     "reason": "摘要無『外科住院醫生丙』角色及『將急性闌尾炎診斷寫在病歷上』的關鍵情節"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要無『外科住院醫生丙向丁醫生報告』的醫師間溝通情節，影響對診療流程的理解",
+     "reason": "摘要無『外科住院醫生丙向丁醫生報告』的醫師間溝通情節，影響對診療流程的理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要未提及『檢察官起訴提到家屬要求會診心臟科內容不正確』的具體指控",
+     "reason": "摘要未提及『檢察官起訴提到家屬要求會診心臟科內容不正確』的具體指控"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要有『升主動脈剝離』相關論述，但無『劇烈胸痛、轉移到背部、嗎啡無法控制』等典型症狀描述，此為重要醫學背景資訊",
+     "reason": "摘要有『升主動脈剝離』相關論述，但無『劇烈胸痛、轉移到背部、嗎啡無法控制』等典型症狀描述，此為重要醫學背景資訊"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要無『解一次大便』等治療過程細節",
+     "reason": "摘要無『解一次大便』等治療過程細節"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要有『8時後』但未明確提及『會診時間大概是十點左右』的具體時間",
+     "reason": "摘要有『8時後』但未明確提及『會診時間大概是十點左右』的具體時間"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要無『丙醫生會診後向丁醫生報告並記載病歷』的關鍵溝通情節",
+     "reason": "摘要無『丙醫生會診後向丁醫生報告並記載病歷』的關鍵溝通情節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要提及術前詢問，但未說明『家屬說有心臟病』及『評估不影響開刀才決定』的決策過程",
+     "reason": "摘要提及術前詢問，但未說明『家屬說有心臟病』及『評估不影響開刀才決定』的決策過程"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要無『被告丁拿病歷表詢問家屬馬凡氏症』的具體對話內容",
+     "reason": "摘要無『被告丁拿病歷表詢問家屬馬凡氏症』的具體對話內容"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要無『檢察官問家屬是否可以結案』的偵查庭對話",
+     "reason": "摘要無『檢察官問家屬是否可以結案』的偵查庭對話"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要未提及『先天性疾病不需都到醫學中心看』的一般性論述",
+     "reason": "摘要未提及『先天性疾病不需都到醫學中心看』的一般性論述"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要有『推論家屬並未向被告乙提及』，但未明確『相驗時一直否認家族心臟病史』",
+     "reason": "摘要有『推論家屬並未向被告乙提及』，但未明確『相驗時一直否認家族心臟病史』"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要無『既然家屬否認則不會提出會診心臟科』的推論內容",
+     "reason": "摘要無『既然家屬否認則不會提出會診心臟科』的推論內容"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要時間為『上午7時50分』而非『六點多』，且角色為『證人A』而非『值班黃醫生』",
+     "reason": "摘要時間為『上午7時50分』而非『六點多』，且角色為『證人A』而非『值班黃醫生』"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要無『八點快九點、丙醫生會診、報告不像盲腸炎、丁醫生說再觀察』等關鍵時間線和醫師溝通情節",
+     "reason": "摘要無『八點快九點、丙醫生會診、報告不像盲腸炎、丁醫生說再觀察』等關鍵時間線和醫師溝通情節"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要無『十一點近十二點、丁醫生看到病歷記載馬凡氏症』的關鍵時間點和病歷發現過程，影響對手術決策背景的理解",
+     "reason": "摘要無『十一點近十二點、丁醫生看到病歷記載馬凡氏症』的關鍵時間點和病歷發現過程，影響對手術決策背景的理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "右心房破裂作為心包膜填塞的具體原因，雖屬醫學專業細節，但不影響對死因機轉（主動脈剝離致心包膜填塞）的理解。摘要已涵蓋主要死因，此為次要醫學細節。",
+     "reason": "右心房破裂作為心包膜填塞的具體原因，雖屬醫學專業細節，但不影響對死因機轉（主動脈剝離致心包膜填塞）的理解。摘要已涵蓋主要死因，此為次要醫學細節。"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "馬凡氏症的醫學背景（自體顯性遺傳、膠原缺陷）屬疾病背景知識，非案件核心事實。摘要已涵蓋馬凡氏症家族史及心臟血管風險，此為補充醫學資訊。",
+     "reason": "馬凡氏症的醫學背景（自體顯性遺傳、膠原缺陷）屬疾病背景知識，非案件核心事實。摘要已涵蓋馬凡氏症家族史及心臟血管風險，此為補充醫學資訊。"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "基因突變比例屬馬凡氏症的背景醫學統計，與本案醫療過失爭議無直接關聯。",
+     "reason": "基因突變比例屬馬凡氏症的背景醫學統計，與本案醫療過失爭議無直接關聯。"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "診斷方法（骨骼肌肉系統、眼睛病變等）屬馬凡氏症的醫學診斷標準，非本案鑑定爭點。",
+     "reason": "診斷方法（骨骼肌肉系統、眼睛病變等）屬馬凡氏症的醫學診斷標準，非本案鑑定爭點。"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心臟血管異常比例（95%）屬疾病統計，摘要已涵蓋「升主動脈瘤」等關鍵風險。",
+     "reason": "心臟血管異常比例（95%）屬疾病統計，摘要已涵蓋「升主動脈瘤」等關鍵風險。"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖屬重要醫學資訊，但摘要已在其他處提及「升主動脈剝離」相關內容。",
+     "reason": "雖屬重要醫學資訊，但摘要已在其他處提及「升主動脈剝離」相關內容。"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "動脈瘤剝離是馬凡氏症主要死因，屬重要因果關係資訊，遺漏會影響對死因機轉的理解。",
+     "reason": "動脈瘤剝離是馬凡氏症主要死因，屬重要因果關係資訊，遺漏會影響對死因機轉的理解。"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "轉送醫學中心的建議是第二次鑑定的重要結論，涉及醫療處置適當性判斷，屬重要遺漏。",
+     "reason": "轉送醫學中心的建議是第二次鑑定的重要結論，涉及醫療處置適當性判斷，屬重要遺漏。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 161,
+   "pred_total": 102,
+   "matched": 108,
+   "partial": 18,
+   "missing": 35,
+   "hallucinated": 0
+  },
+  "section_balance": 0.537
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,72 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.9286,
+  "fact_recall": 0.9313,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9644,
+  "quality_overall": 4.7429,
+  "citation_accuracy": 0.9783,
+  "citation_support_score": 0.9783,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.987,
+   "citation_fidelity": 0.9783,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": null,
+  "numerical_detail": null,
+  "weighted_recall": 0.975,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "雖然事實段落提到「經臺北縣政府消防局...以救護車送往A醫院急診」，但缺少「家屬報請」之行為主體描述。此為程序性細節，不影響核心案情理解。",
+     "reason": "雖然事實段落提到「經臺北縣政府消防局...以救護車送往A醫院急診」，但缺少「家屬報請」之行為主體描述。此為程序性細節，不影響核心案情理解。"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告回應段落未明確提及『病患於手術後死亡』的時序事實。GT摘要此句為被告抗辯因果關係之背景鋪陳（死亡時序），雖非核心辯駁要點，但影響對被告抗辯完整性的理解，應列為重要遺漏",
+     "reason": "被告回應段落未明確提及『病患於手術後死亡』的時序事實。GT摘要此句為被告抗辯因果關係之背景鋪陳（死亡時序），雖非核心辯駁要點，但影響對被告抗辯完整性的理解，應列為重要遺漏"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告回應段落明確描述『本件病患X之死亡係因該病症本身之治療之困難，並非伊之過失』，確實未提及『手術失敗』之因果抗辯。此乃被告主張死亡原因為後續G醫院手術問題的重要抗辯，遺漏影響對被告抗辯立場的完整理解",
+     "reason": "被告回應段落明確描述『本件病患X之死亡係因該病症本身之治療之困難，並非伊之過失』，確實未提及『手術失敗』之因果抗辯。此乃被告主張死亡原因為後續G醫院手術問題的重要抗辯，遺漏影響對被告抗辯立場的完整理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患如廁細節（攙扶至廁所門口、自行進入如廁）在全文中均未提及，且屬於背景性事實，不影響過失認定與判決結果理解",
+     "reason": "病患如廁細節（攙扶至廁所門口、自行進入如廁）在全文中均未提及，且屬於背景性事實，不影響過失認定與判決結果理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 80,
+   "pred_total": 99,
+   "matched": 73,
+   "partial": 3,
+   "missing": 4,
+   "hallucinated": 0
+  },
+  "section_balance": 0.9259
+ }
 }

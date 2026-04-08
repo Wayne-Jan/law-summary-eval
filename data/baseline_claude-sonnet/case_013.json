@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -146,5 +146,229 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7867,
+  "fact_recall": 0.772,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8713,
+  "quality_overall": 4.7857,
+  "citation_accuracy": 0.9545,
+  "citation_support_score": 0.9435,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9727,
+   "citation_fidelity": 0.9545,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.8907,
+  "missing_severity": {
+   "critical": 0,
+   "important": 15,
+   "minor": 11,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "Section_01_facts 原文僅提及『預供氧氣』之注意義務，未提及『鼻管(Cannula)』具體工具。全文搜尋無對應內容，確認為遺漏。屬工具細節，不影響案情理解。",
+     "reason": "Section_01_facts 原文僅提及『預供氧氣』之注意義務，未提及『鼻管(Cannula)』具體工具。全文搜尋無對應內容，確認為遺漏。屬工具細節，不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "Section_01_facts 原文描述『病患X於同日晚間九時四十五分送達C醫院急診室...雖經急救後暫時恢復...不治死亡』，未提及『轉入加護病房繼續救治』之過程。全文搜尋未找到對應描述，確認為遺漏。屬後續處置細節。",
+     "reason": "Section_01_facts 原文描述『病患X於同日晚間九時四十五分送達C醫院急診室...雖經急救後暫時恢復...不治死亡』，未提及『轉入加護病房繼續救治』之過程。全文搜尋未找到對應描述，確認為遺漏。屬後續處置細節。"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "Section_01_facts 檢察官起訴主張段落僅提及『應注意預供氧氣、連續監測心跳及血氧飽和度』，未明確提及『喉頭痙攣而產生暫時性窒息現象』之副作用主張。全文搜尋無對應內容，確認為遺漏。屬檢察官重要論點，影響過失認定理解。",
+     "reason": "Section_01_facts 檢察官起訴主張段落僅提及『應注意預供氧氣、連續監測心跳及血氧飽和度』，未明確提及『喉頭痙攣而產生暫時性窒息現象』之副作用主張。全文搜尋無對應內容，確認為遺漏。屬檢察官重要論點，影響過失認定理解。"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "Section_01_facts 提到『應注意預供氧氣』，但未強調『充分』預供氧氣之程度要求。全文搜尋無『充分』字樣，確認為遺漏。屬程度副詞差異，核心意義已有。",
+     "reason": "Section_01_facts 提到『應注意預供氧氣』，但未強調『充分』預供氧氣之程度要求。全文搜尋無『充分』字樣，確認為遺漏。屬程度副詞差異，核心意義已有。"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "Section_01_facts 全文未提及『藥物防止垂涎』之注意事項。全文搜尋無對應內容，確認為遺漏。屬麻醉準備細節。",
+     "reason": "Section_01_facts 全文未提及『藥物防止垂涎』之注意事項。全文搜尋無對應內容，確認為遺漏。屬麻醉準備細節。"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "Section_01_facts 提到『連續監測』但未提及『即時查悉』之注意義務。全文搜尋無『即時查悉』字樣，確認為遺漏。屬關鍵注意義務描述，影響過失時點認定。",
+     "reason": "Section_01_facts 提到『連續監測』但未提及『即時查悉』之注意義務。全文搜尋無『即時查悉』字樣，確認為遺漏。屬關鍵注意義務描述，影響過失時點認定。"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "Section_01_facts 提到『置放氣管內管等積極急救措施』，但未明確區分『即時供應氧氣』之獨立注意義務。全文搜尋無『即時供應氧氣』對應，確認為遺漏。屬急救時效性，影響過失認定。",
+     "reason": "Section_01_facts 提到『置放氣管內管等積極急救措施』，但未明確區分『即時供應氧氣』之獨立注意義務。全文搜尋無『即時供應氧氣』對應，確認為遺漏。屬急救時效性，影響過失認定。"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "Section_01_facts 提到『未設置合乎麻醉標準監視系統之B診所』但未完整表達『如設備不足則不應從事全身麻醉手術』之檢察官主張。全文搜尋未找到此設備限制條件之完整論述，確認為遺漏。屬重要法律論證基礎。",
+     "reason": "Section_01_facts 提到『未設置合乎麻醉標準監視系統之B診所』但未完整表達『如設備不足則不應從事全身麻醉手術』之檢察官主張。全文搜尋未找到此設備限制條件之完整論述，確認為遺漏。屬重要法律論證基礎。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "Section_01_facts 提及『置放氣管內管』但未提及『置放人工口腔、鼻腔通氣道』之替代措施。全文搜尋無『口腔、鼻腔通氣道』對應內容，確認為遺漏。屬關鍵急救措施描述。",
+     "reason": "Section_01_facts 提及『置放氣管內管』但未提及『置放人工口腔、鼻腔通氣道』之替代措施。全文搜尋無『口腔、鼻腔通氣道』對應內容，確認為遺漏。屬關鍵急救措施描述。"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "雖摘要 Section 01-facts 提及 Demerol 為麻醉藥劑，但未明確說明其為『止痛』藥之性質，此為鑑定意見中的藥理分類細節",
+     "reason": "雖摘要 Section 01-facts 提及 Demerol 為麻醉藥劑，但未明確說明其為『止痛』藥之性質，此為鑑定意見中的藥理分類細節"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及 Diprivan 是『麻醉誘導劑』之藥理分類，影響對鑑定內容的理解",
+     "reason": "摘要未提及 Diprivan 是『麻醉誘導劑』之藥理分類，影響對鑑定內容的理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及 Diprivan 引起過敏反應時會發生喉頭水腫抑制呼吸之機制，此為法醫所鑑定之重要內容",
+     "reason": "摘要未提及 Diprivan 引起過敏反應時會發生喉頭水腫抑制呼吸之機制，此為法醫所鑑定之重要內容"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要 Section 01-facts 已提及『陰道整形手術』，此處重複出現在opinions為鑑定引述背景，屬次要遺漏",
+     "reason": "摘要 Section 01-facts 已提及『陰道整形手術』，此處重複出現在opinions為鑑定引述背景，屬次要遺漏"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及『心肺功能衰竭』之醫學診斷，此為法醫所鑑定中對死因機轉之重要描述",
+     "reason": "摘要未提及『心肺功能衰竭』之醫學診斷，此為法醫所鑑定中對死因機轉之重要描述"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及『急送Z醫院急救顯已來不及』之法醫所鑑定判斷，影響對急救時效性之理解",
+     "reason": "摘要未提及『急送Z醫院急救顯已來不及』之法醫所鑑定判斷，影響對急救時效性之理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要 Section 01-facts 僅簡略提及『合併感染敗血症死亡』，但未完整涵蓋法醫所鑑定所述『發生腦缺氧病變住院五天後合併感染敗血症宣告死亡』之完整過程",
+     "reason": "摘要 Section 01-facts 僅簡略提及『合併感染敗血症死亡』，但未完整涵蓋法醫所鑑定所述『發生腦缺氧病變住院五天後合併感染敗血症宣告死亡』之完整過程"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及『心肺功能衰竭程度嚴重時，死亡來臨之時刻很短』之法醫所醫學判斷，此為重要專業意見",
+     "reason": "摘要未提及『心肺功能衰竭程度嚴重時，死亡來臨之時刻很短』之法醫所醫學判斷，此為重要專業意見"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及『恐未能及時以血液顏色之深淺為察知之方法』之法醫所見解，此為影響過失判斷之關鍵醫學評估",
+     "reason": "摘要未提及『恐未能及時以血液顏色之深淺為察知之方法』之法醫所見解，此為影響過失判斷之關鍵醫學評估"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要 Section 01-facts 已提及『陰道整形手術』，此處為臺大醫學院鑑定引述之手術名稱，屬次要重複",
+     "reason": "摘要 Section 01-facts 已提及『陰道整形手術』，此處為臺大醫學院鑑定引述之手術名稱，屬次要重複"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要 Section 01-facts 已提及施打 Demerol 及 Diprivan，此處為鑑定引述之重複內容",
+     "reason": "摘要 Section 01-facts 已提及施打 Demerol 及 Diprivan，此處為鑑定引述之重複內容"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及臺大醫學院鑑定認為『兩種藥物使用於上述手術之劑量與給予方式，尚稱妥適』之重要見解，此為影響過失認定之關鍵評估",
+     "reason": "摘要未提及臺大醫學院鑑定認為『兩種藥物使用於上述手術之劑量與給予方式，尚稱妥適』之重要見解，此為影響過失認定之關鍵評估"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未明確提及『本病患屬全身麻醉病患』之鑑定陳述，此為臺大醫學院鑑定對醫師注意義務的重要前提認定",
+     "reason": "摘要未明確提及『本病患屬全身麻醉病患』之鑑定陳述，此為臺大醫學院鑑定對醫師注意義務的重要前提認定"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "被告前科狀況為量刑（緩刑）考量因素之一，但屬程序性事實，不影響業務過失致死罪之成立與否的核心判斷",
+     "reason": "被告前科狀況為量刑（緩刑）考量因素之一，但屬程序性事實，不影響業務過失致死罪之成立與否的核心判斷"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "被告與家屬成立和解為量刑（緩刑）考量因素之一，但屬程序性事實，不影響業務過失致死罪之成立與否的核心判斷",
+     "reason": "被告與家屬成立和解為量刑（緩刑）考量因素之一，但屬程序性事實，不影響業務過失致死罪之成立與否的核心判斷"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "上訴情況為純粹程序性事實，不影響判決主文（罪名、刑期、緩刑）的實質理解",
+     "reason": "上訴情況為純粹程序性事實，不影響判決主文（罪名、刑期、緩刑）的實質理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態為純粹程序性事實，不影響判決主文（罪名、刑期、緩刑）的實質理解",
+     "reason": "判決確定狀態為純粹程序性事實，不影響判決主文（罪名、刑期、緩刑）的實質理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 125,
+   "pred_total": 65,
+   "matched": 94,
+   "partial": 5,
+   "missing": 26,
+   "hallucinated": 0
+  },
+  "section_balance": 0.48
+ }
 }

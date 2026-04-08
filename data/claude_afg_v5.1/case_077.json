@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -145,5 +146,159 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7098,
+  "fact_recall": 0.8178,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8998,
+  "quality_overall": 4.8571,
+  "citation_accuracy": 0.85,
+  "citation_support_score": 0.8744,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.91,
+   "citation_fidelity": 0.85,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 25
+  },
+  "weighted_recall": 0.9435,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 12,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告所涉罪名（刑法第276條第2項業務過失致死罪）雖在 reasoning section 有提及，但 facts 段落作為案件背景介紹，理應包含此刑事法律基礎。目前 facts 段落僅提及『過失行為』而未明確說明罪名，影響讀者對案件性質的完整理解，屬重要缺失。",
+     "reason": "被告所涉罪名（刑法第276條第2項業務過失致死罪）雖在 reasoning section 有提及，但 facts 段落作為案件背景介紹，理應包含此刑事法律基礎。目前 facts 段落僅提及『過失行為』而未明確說明罪名，影響讀者對案件性質的完整理解，屬重要缺失。"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT 主張『手術前冠狀動脈嚴重狹窄合併心肌缺血，心臟收縮功能不良也是死亡原因須合併考慮』屬被告辯護中的替代死因論述（強調既有病況）。section_02_defense.txt 僅提及死因為『大量出血合併低血容積休克致心臟衰竭』，未提及術前冠狀動脈狹窄與心臟收縮功能不良作為並列死因，pred 確實未涵蓋此辯護要點",
+     "reason": "GT 主張『手術前冠狀動脈嚴重狹窄合併心肌缺血，心臟收縮功能不良也是死亡原因須合併考慮』屬被告辯護中的替代死因論述（強調既有病況）。section_02_defense.txt 僅提及死因為『大量出血合併低血容積休克致心臟衰竭』，未提及術前冠狀動脈狹窄與心臟收縮功能不良作為並列死因，pred 確實未涵蓋此辯護要點"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "GT 主張『大出血引起血流不夠，導致心肌無法正常收縮及血壓降低』屬被告辯護中對病理過程的詳細描述。pred 以『大量出血合併低血容積休克致心臟衰竭』概括表達相同概念，雖簡化了『血流不夠→心肌無法正常收縮→血壓降低』的詳細因果鏈，但核心意涵已涵蓋於死因陳述中，屬次要層級遺漏",
+     "reason": "GT 主張『大出血引起血流不夠，導致心肌無法正常收縮及血壓降低』屬被告辯護中對病理過程的詳細描述。pred 以『大量出血合併低血容積休克致心臟衰竭』概括表達相同概念，雖簡化了『血流不夠→心肌無法正常收縮→血壓降低』的詳細因果鏈，但核心意涵已涵蓋於死因陳述中，屬次要層級遺漏"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "GT 主張『血壓降低導致心肌缺血更加惡化，最後是心臟嚴重衰竭而需以體外循環維生系統救治』。section_02_defense.txt 記載被告於『同日上午5時許為病患X進行急救及第二次開刀』且提到『人工心肺機輔助治療』（section_01_facts.txt），但 pred 僅提及『緊急縱膈腔止血與人工心肺機輔助治療』，未明確描述『體外循環維生系統』與前述病理過程的關聯，屬次要層級遺漏",
+     "reason": "GT 主張『血壓降低導致心肌缺血更加惡化，最後是心臟嚴重衰竭而需以體外循環維生系統救治』。section_02_defense.txt 記載被告於『同日上午5時許為病患X進行急救及第二次開刀』且提到『人工心肺機輔助治療』（section_01_facts.txt），但 pred 僅提及『緊急縱膈腔止血與人工心肺機輔助治療』，未明確描述『體外循環維生系統』與前述病理過程的關聯，屬次要層級遺漏"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT 主張『血管夾脫落之原因實無法確切得知』屬被告關鍵辯護要點（否定因果關係可證性）。section_02_defense.txt 雖提及『血管夾鬆脫導致繞道血管之分支出血，文獻European Journal of Cardiothoracic Surgery已有登載曾有病人發生此種情形』，但未明確陳述『原因實無法確切得知』此一免責主張。pred 遺漏此重要辯護論點，影響對被告立場的理解",
+     "reason": "GT 主張『血管夾脫落之原因實無法確切得知』屬被告關鍵辯護要點（否定因果關係可證性）。section_02_defense.txt 雖提及『血管夾鬆脫導致繞道血管之分支出血，文獻European Journal of Cardiothoracic Surgery已有登載曾有病人發生此種情形』，但未明確陳述『原因實無法確切得知』此一免責主張。pred 遺漏此重要辯護論點，影響對被告立場的理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "出血點解剖部位為鑑定意見核心醫療事實，雖 facts、defense 段有提及，但 opinions section 確實未明確記載",
+     "reason": "出血點解剖部位為鑑定意見核心醫療事實，雖 facts、defense 段有提及，但 opinions section 確實未明確記載"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions 段提及「無法判斷與血壓升高有關」為原因不明的間接表述，但未明確直言「脫落原因不明」，屬背景性事實",
+     "reason": "opinions 段提及「無法判斷與血壓升高有關」為原因不明的間接表述，但未明確直言「脫落原因不明」，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾用途說明屬背景醫療知識，未影響判決結論理解",
+     "reason": "血管夾用途說明屬背景醫療知識，未影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明適用範圍屬輔助性事實，非核心爭點",
+     "reason": "使用說明適用範圍屬輔助性事實，非核心爭點"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾裝置位置細節屬醫療技術事實，未影響判決主文",
+     "reason": "血管夾裝置位置細節屬醫療技術事實，未影響判決主文"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明限制屬輔助論證，非關鍵事實",
+     "reason": "使用說明限制屬輔助論證，非關鍵事實"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "其他處理方式說明屬背景性醫療資訊",
+     "reason": "其他處理方式說明屬背景性醫療資訊"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術紀錄記載內容屬程序性事實",
+     "reason": "手術紀錄記載內容屬程序性事實"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明書規範細節屬輔助性事實",
+     "reason": "使用說明書規範細節屬輔助性事實"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療法第63條第1項前段之具體條文內容確未於摘要中明確引用。然摘要已於「（五）判決理由」段落說明告知義務之法律評價（「一般手術前之告知項目不致包含所有手術步驟細節」），實質已涵蓋法條適用結果，具體條文為次要技術性細節。",
+     "reason": "醫療法第63條第1項前段之具體條文內容確未於摘要中明確引用。然摘要已於「（五）判決理由」段落說明告知義務之法律評價（「一般手術前之告知項目不致包含所有手術步驟細節」），實質已涵蓋法條適用結果，具體條文為次要技術性細節。"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「上有護理紀錄單在卷可參」屬卷證引用格式用語，為程序性證據標記，非實體事實。摘要已於「（二）被告回應」及「（五）判決理由」段落充分說明嗎啡使用時間之相關事實，無需保留此形式性用語。",
+     "reason": "「上有護理紀錄單在卷可參」屬卷證引用格式用語，為程序性證據標記，非實體事實。摘要已於「（二）被告回應」及「（五）判決理由」段落充分說明嗎啡使用時間之相關事實，無需保留此形式性用語。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 118,
+   "pred_total": 100,
+   "matched": 91,
+   "partial": 11,
+   "missing": 16,
+   "hallucinated": 0
+  },
+  "section_balance": 0.7692
+ }
 }

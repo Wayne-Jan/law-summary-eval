@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -130,5 +130,110 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8882,
+  "fact_recall": 0.6757,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8065,
+  "quality_overall": 3.9,
+  "citation_accuracy": 0.7143,
+  "citation_support_score": 0.7412,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.8286,
+   "citation_fidelity": 0.7143,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 16,
+   "correct": 16
+  },
+  "weighted_recall": 0.9009,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "查無 pred claim 明確提及「丙提起告訴」，僅有檢察官公訴及撤回告訴。此為程序性事實，不影響案情核心理解",
+     "reason": "查無 pred claim 明確提及「丙提起告訴」，僅有檢察官公訴及撤回告訴。此為程序性事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要僅提及「法務部法醫研究所鑑定書」，未提及「臺灣桃園地方法院檢察署相驗證明書」。此為鑑定文件種類的程序性事實，非關鍵醫療鑑定意見。",
+     "reason": "預測摘要僅提及「法務部法醫研究所鑑定書」，未提及「臺灣桃園地方法院檢察署相驗證明書」。此為鑑定文件種類的程序性事實，非關鍵醫療鑑定意見。"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要完全未提及「心肌炎」之診斷結果，而 gt_facts 中 EXP_1 明確記載「死亡原因研判為心肌炎導致呼吸停止」。此為關鍵鑑定結論，遺漏會影響案情完整理解。",
+     "reason": "預測摘要完全未提及「心肌炎」之診斷結果，而 gt_facts 中 EXP_1 明確記載「死亡原因研判為心肌炎導致呼吸停止」。此為關鍵鑑定結論，遺漏會影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（上訴期間未上訴），不影響判決主文理解",
+     "reason": "程序性事實（上訴期間未上訴），不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（判決確定），不影響判決主文理解",
+     "reason": "程序性事實（判決確定），不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "原文第四點附記事項確有「被告與被害人父母丙○○、戊○○已達成和解」，生成摘要之 reasoning 段落未提及此事實，但屬附記事項之性質，非核心案情",
+     "reason": "原文第四點附記事項確有「被告與被害人父母丙○○、戊○○已達成和解」，生成摘要之 reasoning 段落未提及此事實，但屬附記事項之性質，非核心案情"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "原文第四點附記事項確有「被害人父親丙○○並於96年10月31日向本院撤回對被告之告訴」，生成摘要之 reasoning 段落未提及此日期及撤回告訴事實，屬程序性事實",
+     "reason": "原文第四點附記事項確有「被害人父親丙○○並於96年10月31日向本院撤回對被告之告訴」，生成摘要之 reasoning 段落未提及此日期及撤回告訴事實，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "原文第四點附記事項確有「表明不再追究被告刑事責任」，生成摘要之 reasoning 段落未提及，屬程序性事實",
+     "reason": "原文第四點附記事項確有「表明不再追究被告刑事責任」，生成摘要之 reasoning 段落未提及，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "本案為協商判決，原文第三點明確記載「本院爰不經言詞辯論，於協商合意範圍內為協商判決」，GT claim 37 指出「判決書內文無判決理由」屬實，生成摘要未提及此 meta 事實，影響對判決結構之理解",
+     "reason": "本案為協商判決，原文第三點明確記載「本院爰不經言詞辯論，於協商合意範圍內為協商判決」，GT claim 37 指出「判決書內文無判決理由」屬實，生成摘要未提及此 meta 事實，影響對判決結構之理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 37,
+   "pred_total": 30,
+   "matched": 22,
+   "partial": 6,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "section_balance": 0.3333
+ }
 }

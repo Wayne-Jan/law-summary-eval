@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -146,5 +146,187 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8599,
+  "fact_recall": 0.796,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8864,
+  "quality_overall": 4.5625,
+  "citation_accuracy": 0.9825,
+  "citation_support_score": 0.9825,
+  "uncited_rate": 0.021,
+  "faithfulness_combined": {
+   "score": 0.9771,
+   "citation_fidelity": 0.9619,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.9333,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 15,
+   "details": [
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經查全部5個section原文，均未提及「加護病房」住院治療之相關內容。gt_facts timeline僅記載仁愛醫院急診室急救及後續死亡，無加護病房資訊。此為醫療過程重要事實，影響完整案情理解，標記為important",
+     "reason": "經查全部5個section原文，均未提及「加護病房」住院治療之相關內容。gt_facts timeline僅記載仁愛醫院急診室急救及後續死亡，無加護病房資訊。此為醫療過程重要事實，影響完整案情理解，標記為important"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經查全部5個section原文，均未提及「肌肉弛鬆劑」此一具體醫療處置。section_05_reasoning.txt僅提及「氣管內管」等標準措施，未提及肌肉弛鬆劑。此為檢察官起訴主張之關鍵醫療措施，遺漏影響對起訴論點的理解，標記為important",
+     "reason": "經查全部5個section原文，均未提及「肌肉弛鬆劑」此一具體醫療處置。section_05_reasoning.txt僅提及「氣管內管」等標準措施，未提及肌肉弛鬆劑。此為檢察官起訴主張之關鍵醫療措施，遺漏影響對起訴論點的理解，標記為important"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Demerol的藥理作用（止痛）屬背景知識，非鑑定結論核心，不影響案情理解",
+     "reason": "Demerol的藥理作用（止痛）屬背景知識，非鑑定結論核心，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Diprivan的藥理分類（麻醉誘導劑）屬背景知識，非鑑定結論核心，不影響案情理解",
+     "reason": "Diprivan的藥理分類（麻醉誘導劑）屬背景知識，非鑑定結論核心，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "法醫所鑑定提及「心肺功能衰竭」為死因機轉，雖facts段有提及腦缺氧及敗血症，但心肺衰竭為關鍵中間環節，屬重要鑑定見解",
+     "reason": "法醫所鑑定提及「心肺功能衰竭」為死因機轉，雖facts段有提及腦缺氧及敗血症，但心肺衰竭為關鍵中間環節，屬重要鑑定見解"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「急送Z醫院急救顯已來不及」為法醫所鑑定的補充說明，但急救時效性已在reasoning段落[CH_09]闡述",
+     "reason": "「急送Z醫院急救顯已來不及」為法醫所鑑定的補充說明，但急救時效性已在reasoning段落[CH_09]闡述"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "完整的死亡過程（腦缺氧病變→住院五天→敗血症→死亡）雖在facts段提及，但opinions段未完整呈現法醫所的死亡原因描述",
+     "reason": "完整的死亡過程（腦缺氧病變→住院五天→敗血症→死亡）雖在facts段提及，但opinions段未完整呈現法醫所的死亡原因描述"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「本病患屬全身麻醉病患」為事實背景，facts段已明確記載施行全身麻醉手術",
+     "reason": "「本病患屬全身麻醉病患」為事實背景，facts段已明確記載施行全身麻醉手術"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "『被告、檢察官於法定上訴期間未上訴』為判決確定前的程序性事實，摘要未提及，但不影響判決結論理解，屬於程序性背景資訊",
+     "reason": "『被告、檢察官於法定上訴期間未上訴』為判決確定前的程序性事實，摘要未提及，但不影響判決結論理解，屬於程序性背景資訊"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "『本案判決即確定』為程序性事實，摘要未提及，不影響判決主文（有期徒刑十月、緩刑三年）的理解",
+     "reason": "『本案判決即確定』為程序性事實，摘要未提及，不影響判決主文（有期徒刑十月、緩刑三年）的理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "預測 claims 雖提及陰道整形手術，但未在 reasoning section 特別強調「全身麻醉進行中突然發生心肺功能衰竭」的因果描述。此為醫療過失認定的關鍵背景事實。",
+     "reason": "預測 claims 雖提及陰道整形手術，但未在 reasoning section 特別強調「全身麻醉進行中突然發生心肺功能衰竭」的因果描述。此為醫療過失認定的關鍵背景事實。"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "預測 claims 雖有「僅任由護士以目測方式觀察」等內容，但未明確提及「很難以目視及早發現呼吸道阻塞之窒息現象」的鑑定結論。此為輔助性鑑定意見，非核心過失認定。",
+     "reason": "預測 claims 雖有「僅任由護士以目測方式觀察」等內容，但未明確提及「很難以目視及早發現呼吸道阻塞之窒息現象」的鑑定結論。此為輔助性鑑定意見，非核心過失認定。"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院向法醫研究所函詢的程序性事實，預測 claims 未提及。此為法院程序事項，不影響過失認定結論。",
+     "reason": "法院向法醫研究所函詢的程序性事實，預測 claims 未提及。此為法院程序事項，不影響過失認定結論。"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法醫研究所簡略回覆「是」的程序性事實，預測 claims 未提及。此為程序事項，影響較小。",
+     "reason": "法醫研究所簡略回覆「是」的程序性事實，預測 claims 未提及。此為程序事項，影響較小。"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "預測 claims 提及「證人即麻醉醫療糾紛鑑定委員會委員」，但未明確證人B（召集人）及證人C（委員）的具體身份區分。此為證人身份細節，核心證詞內容已涵蓋。",
+     "reason": "預測 claims 提及「證人即麻醉醫療糾紛鑑定委員會委員」，但未明確證人B（召集人）及證人C（委員）的具體身份區分。此為證人身份細節，核心證詞內容已涵蓋。"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "預測 claims 未提及「舌頭會阻塞到氣管」的具體證詞內容。此為證人B的專業證詞細節。",
+     "reason": "預測 claims 未提及「舌頭會阻塞到氣管」的具體證詞內容。此為證人B的專業證詞細節。"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "預測 claims 未提及「若使用監測系統，就可以馬上有反應及早發現」的證人C證詞。此為監測重要性的輔助證言。",
+     "reason": "預測 claims 未提及「若使用監測系統，就可以馬上有反應及早發現」的證人C證詞。此為監測重要性的輔助證言。"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "預測 claims 未引用「醫療法第四十條」。此為法律依據引用，法院實質論述已涵蓋相關法理。",
+     "reason": "預測 claims 未引用「醫療法第四十條」。此為法律依據引用，法院實質論述已涵蓋相關法理。"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "預測 claims 未提及「麻醉設備之設置標準雖可能因醫療機構係屬醫院、醫學中心或診所而有所不同」。此為法院對設備標準差異性的論述，核心過失認定已涵蓋。",
+     "reason": "預測 claims 未提及「麻醉設備之設置標準雖可能因醫療機構係屬醫院、醫學中心或診所而有所不同」。此為法院對設備標準差異性的論述，核心過失認定已涵蓋。"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "預測 claims 提及救護人員證稱現場狀況，但未具體提及「到庭結證」的程序性描述。此為程序性事實，證詞內容實質已涵蓋。",
+     "reason": "預測 claims 提及救護人員證稱現場狀況，但未具體提及「到庭結證」的程序性描述。此為程序性事實，證詞內容實質已涵蓋。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 125,
+   "pred_total": 96,
+   "matched": 94,
+   "partial": 11,
+   "missing": 20,
+   "hallucinated": 0
+  },
+  "section_balance": 0.75
+ }
 }

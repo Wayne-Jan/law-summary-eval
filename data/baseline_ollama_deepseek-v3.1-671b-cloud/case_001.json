@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -128,5 +128,173 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.756,
+  "fact_recall": 0.7688,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8693,
+  "quality_overall": 4.5214,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9842,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 7,
+   "correct": 7
+  },
+  "weighted_recall": 0.8961,
+  "missing_severity": {
+   "critical": 0,
+   "important": 11,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "出院決策行為主體（病患X之妻）及具體時間（29日上午9時許）為關鍵案情節點，影響轉院時機理解，摘要完全未提及",
+     "reason": "出院決策行為主體（病患X之妻）及具體時間（29日上午9時許）為關鍵案情節點，影響轉院時機理解，摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "到院後突發癲癇及意識喪失為病情惡化關鍵症狀，影響病情嚴重性認知，摘要完全未提及",
+     "reason": "到院後突發癲癇及意識喪失為病情惡化關鍵症狀，影響病情嚴重性認知，摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "具體 CPK 值 198U/L 為否定心肌梗塞診斷之關鍵客觀數據，雖 opinions/reasoning 提及「無明顉證據顯示心肌梗塞」，但具體數值仍缺失，影響醫療過失認定理解",
+     "reason": "具體 CPK 值 198U/L 為否定心肌梗塞診斷之關鍵客觀數據，雖 opinions/reasoning 提及「無明顉證據顯示心肌梗塞」，但具體數值仍缺失，影響醫療過失認定理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "心肌梗塞判定標準 300 U/L 與 CPK 值 198U/L 對照，構成醫師誤診之關鍵醫學依據，摘要完全未提及",
+     "reason": "心肌梗塞判定標準 300 U/L 與 CPK 值 198U/L 對照，構成醫師誤診之關鍵醫學依據，摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "法院事實認定結論「本件事證明確」雖可由「認定被告二人均成立...罪」推論，但摘要未明確提及「事證明確」或類似表述，屬重要事實遺漏，影響對法院心證形成過程的理解",
+     "reason": "法院事實認定結論「本件事證明確」雖可由「認定被告二人均成立...罪」推論，但摘要未明確提及「事證明確」或類似表述，屬重要事實遺漏，影響對法院心證形成過程的理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "上訴情況（被告、檢察官於法定上訴期間未上訴）為程序性事實，不影響判決結論（罪名、刑度）之理解，屬次要事實",
+     "reason": "上訴情況（被告、檢察官於法定上訴期間未上訴）為程序性事實，不影響判決結論（罪名、刑度）之理解，屬次要事實"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態（本案判決即確定）為程序性後續事實，不影響判決結論理解，屬次要事實",
+     "reason": "判決確定狀態（本案判決即確定）為程序性後續事實，不影響判決結論理解，屬次要事實"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "跨 section 檢查所有 section 原文（section_03_opinions、section_05_reasoning），均未提及「開具診斷證明書」之事實，確認為 truly missing。此為程序性細節事實，不影響判決結論理解",
+     "reason": "跨 section 檢查所有 section 原文（section_03_opinions、section_05_reasoning），均未提及「開具診斷證明書」之事實，確認為 truly missing。此為程序性細節事實，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "跨 section 檢查：section_05_reasoning 有提及被告戊○○認定急性心肌梗塞，但缺少「迄於翌日（即二十九日）出院時止」的具體時間節點。該時間節點涉及關鍵過失持續期間的認定，屬重要事實",
+     "reason": "跨 section 檢查：section_05_reasoning 有提及被告戊○○認定急性心肌梗塞，但缺少「迄於翌日（即二十九日）出院時止」的具體時間節點。該時間節點涉及關鍵過失持續期間的認定，屬重要事實"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "跨 section 檢查所有 section 原文，均未提及「主治醫師通常係對住院病患負責診治之醫師」之法律定義，確認為 truly missing。此為背景性法律概念，不影響主要案情理解",
+     "reason": "跨 section 檢查所有 section 原文，均未提及「主治醫師通常係對住院病患負責診治之醫師」之法律定義，確認為 truly missing。此為背景性法律概念，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "跨 section 檢查：claims.json 中 claim_id 1（facts section）提及丙○○兼任院長，但 section_05_reasoning 原文未明確提及「院長」身分。由於屬於 background 身世事實，不影響過失認定的核心 reasoning",
+     "reason": "跨 section 檢查：claims.json 中 claim_id 1（facts section）提及丙○○兼任院長，但 section_05_reasoning 原文未明確提及「院長」身分。由於屬於 background 身世事實，不影響過失認定的核心 reasoning"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "跨 section 檢查所有 section 原文（section_03_opinions、section_05_reasoning），均未提及「該院僅有被告甲、被告乙醫師二名」之事實，確認為 truly missing。此為醫院規模背景資訊，不影響判決結論理解",
+     "reason": "跨 section 檢查所有 section 原文（section_03_opinions、section_05_reasoning），均未提及「該院僅有被告甲、被告乙醫師二名」之事實，確認為 truly missing。此為醫院規模背景資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "跨 section 檢查：section_05_reasoning 提及「被告二人均成立業務過失致死罪」及「自屬診治行為，而非其辯稱之會診行為」，但未明確「二人均為主治醫師」之角色認定。主治醫師身分涉及責任歸屬，屬重要事實",
+     "reason": "跨 section 檢查：section_05_reasoning 提及「被告二人均成立業務過失致死罪」及「自屬診治行為，而非其辯稱之會診行為」，但未明確「二人均為主治醫師」之角色認定。主治醫師身分涉及責任歸屬，屬重要事實"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "跨 section 檢查：gt_facts.json timeline 中有記載 X光檢查和藥劑開立事實（TL_9），但 section_05_reasoning 原文未提及此細節。此為被告乙的具體醫療處置細節，雖出現在 GT，但非 reasoning 核心論點",
+     "reason": "跨 section 檢查：gt_facts.json timeline 中有記載 X光檢查和藥劑開立事實（TL_9），但 section_05_reasoning 原文未提及此細節。此為被告乙的具體醫療處置細節，雖出現在 GT，但非 reasoning 核心論點"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "跨 section 檢查：section_05_reasoning 提及「與證人證詞不符」，但未載明證人 A 具體證述內容「有向被告乙建議是否為病患 X 作頭部電腦斷層掃描」。此為法院否定被告辯解之關鍵證據依據，屬重要事實",
+     "reason": "跨 section 檢查：section_05_reasoning 提及「與證人證詞不符」，但未載明證人 A 具體證述內容「有向被告乙建議是否為病患 X 作頭部電腦斷層掃描」。此為法院否定被告辯解之關鍵證據依據，屬重要事實"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "跨 section 檢查所有 section 原文，均未提及「被告乙當時告訴證人 A 病患 X 係罹患心肌梗塞不會有生命危險」之對話內容。此為證人證詞細節，涉及法院對被告辯解心證形成之基礎，屬重要事實",
+     "reason": "跨 section 檢查所有 section 原文，均未提及「被告乙當時告訴證人 A 病患 X 係罹患心肌梗塞不會有生命危險」之對話內容。此為證人證詞細節，涉及法院對被告辯解心證形成之基礎，屬重要事實"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "跨 section 檢查：gt_facts.json timeline 中有記載 CPK 值為 198U/L（TL_7），但 section_05_reasoning 原文未提及具體數字。CPK 值與心肌梗塞標準之比較是認定誤診之關鍵醫學證據，屬重要事實",
+     "reason": "跨 section 檢查：gt_facts.json timeline 中有記載 CPK 值為 198U/L（TL_7），但 section_05_reasoning 原文未提及具體數字。CPK 值與心肌梗塞標準之比較是認定誤診之關鍵醫學證據，屬重要事實"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "跨 section 檢查：雖然 section_03_opinions 有「無明顯證據顯示心肌梗塞發作」（已於 gt_claim 85 改判 matched），但 section_05_reasoning 未明確「無明顯心肌梗塞之病情」之醫學判斷。此為排除心肌梗塞正確診斷之關鍵認定，屬重要事實",
+     "reason": "跨 section 檢查：雖然 section_03_opinions 有「無明顯證據顯示心肌梗塞發作」（已於 gt_claim 85 改判 matched），但 section_05_reasoning 未明確「無明顯心肌梗塞之病情」之醫學判斷。此為排除心肌梗塞正確診斷之關鍵認定，屬重要事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 50,
+   "matched": 68,
+   "partial": 7,
+   "missing": 18,
+   "hallucinated": 0
+  },
+  "section_balance": 0.5714
+ }
 }

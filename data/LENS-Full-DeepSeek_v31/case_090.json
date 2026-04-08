@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -131,5 +132,124 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7208,
+  "fact_recall": 0.8885,
+  "fact_precision": 1.0,
+  "fact_f1": 0.941,
+  "quality_overall": 4.3967,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.996,
+  "uncited_rate": 0.006,
+  "faithfulness_combined": {
+   "score": 0.9964,
+   "citation_fidelity": 0.994,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 0.976,
+  "numerical_detail": {
+   "total_numerical": 42,
+   "correct": 41
+  },
+  "weighted_recall": 0.964,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "病患6月起右頸淋巴結腫大疼痛的病史背景，在 section_01_facts.txt 及 section_05_reasoning.txt 均未提及。屬於疾病發展背景資訊，非核心案情事實，略去不影響對本案醫療過失爭點的理解",
+     "reason": "病患6月起右頸淋巴結腫大疼痛的病史背景，在 section_01_facts.txt 及 section_05_reasoning.txt 均未提及。屬於疾病發展背景資訊，非核心案情事實，略去不影響對本案醫療過失爭點的理解"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "骨髓檢查結果（淋巴瘤未侵入骨髓）是理解「第一期」分期的重要依據，影響對病情嚴重程度及治療決策的判斷。section_01_facts.txt 僅提及確診為第一期，未說明骨髓檢查佐證，屬重要事實遺漏",
+     "reason": "骨髓檢查結果（淋巴瘤未侵入骨髓）是理解「第一期」分期的重要依據，影響對病情嚴重程度及治療決策的判斷。section_01_facts.txt 僅提及確診為第一期，未說明骨髓檢查佐證，屬重要事實遺漏"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指控『未考慮癌症輕重緩急與病患本身可能罹患潛在風險其他疾病』是醫療過失論證的重要環節，涉及被告是否已盡注意義務。section_01_facts.txt 檢察官起訴段落未包含此項指控，屬重要辯論要點遺漏",
+     "reason": "檢察官指控『未考慮癌症輕重緩急與病患本身可能罹患潛在風險其他疾病』是醫療過失論證的重要環節，涉及被告是否已盡注意義務。section_01_facts.txt 檢察官起訴段落未包含此項指控，屬重要辯論要點遺漏"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "骨髓抑制的醫學定義屬於背景醫學知識，雖有助理解死因，但非判決書核心事實。section_01_facts.txt 提及『因病患X骨髓抑制導致敗血性休克死亡』，已足夠理解因果關係，定義省略不影響案情理解",
+     "reason": "骨髓抑制的醫學定義屬於背景醫學知識，雖有助理解死因，但非判決書核心事實。section_01_facts.txt 提及『因病患X骨髓抑制導致敗血性休克死亡』，已足夠理解因果關係，定義省略不影響案情理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions 僅提及糞便潛血陽性反應，未涵蓋其他檢查結果正常之敘述，屬細節性遺漏",
+     "reason": "section_03_opinions 僅提及糞便潛血陽性反應，未涵蓋其他檢查結果正常之敘述，屬細節性遺漏"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及 SDH/LDH 檢驗結果，屬細節性遺漏",
+     "reason": "摘要未提及 SDH/LDH 檢驗結果，屬細節性遺漏"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及具體生命徵象數值，屬細節性遺漏",
+     "reason": "摘要未提及具體生命徵象數值，屬細節性遺漏"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions 僅提及『無標準劑量、無標準給藥天數』，未提及『約2至3週』之治療週期，屬醫療常規細節遺漏",
+     "reason": "section_03_opinions 僅提及『無標準劑量、無標準給藥天數』，未提及『約2至3週』之治療週期，屬醫療常規細節遺漏"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "雖 Pred claim 15（reasoning section）有類似內容，但 opinions section 確實未明確涵蓋『未檢查→無從查知出血症狀』之因果推論，影響對鑑定意見邏輯的理解",
+     "reason": "雖 Pred claim 15（reasoning section）有類似內容，但 opinions section 確實未明確涵蓋『未檢查→無從查知出血症狀』之因果推論，影響對鑑定意見邏輯的理解"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "Pred 個別提及未內視鏡檢查、未會診、給予 prednisolone 和克多炎，但未明確得出『確有違反醫療常規』之綜合結論，影響對鑑定意見核心認定的理解",
+     "reason": "Pred 個別提及未內視鏡檢查、未會診、給予 prednisolone 和克多炎，但未明確得出『確有違反醫療常規』之綜合結論，影響對鑑定意見核心認定的理解"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及 MTX 適應症（急性白血病與高惡性淋巴瘤），屬細節性遺漏",
+     "reason": "摘要未提及 MTX 適應症（急性白血病與高惡性淋巴瘤），屬細節性遺漏"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 166,
+   "matched": 119,
+   "partial": 9,
+   "missing": 11,
+   "hallucinated": 0
+  },
+  "section_balance": 0.8108
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -158,5 +158,194 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7569,
+  "fact_recall": 0.7815,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8774,
+  "quality_overall": 4.9595,
+  "citation_accuracy": 0.8788,
+  "citation_support_score": 0.8289,
+  "uncited_rate": 0.1375,
+  "faithfulness_combined": {
+   "score": 0.8548,
+   "citation_fidelity": 0.758,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.9216,
+  "missing_severity": {
+   "critical": 0,
+   "important": 7,
+   "minor": 14,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅在檢察官起訴意旨中間接提及被告知悉病史，未獨立陳述『病患L有高血壓、腎盂、腎炎等病史』之事實本身，影響對病史因素與死亡因果關係的完整理解",
+     "reason": "section_01_facts.txt 僅在檢察官起訴意旨中間接提及被告知悉病史，未獨立陳述『病患L有高血壓、腎盂、腎炎等病史』之事實本身，影響對病史因素與死亡因果關係的完整理解"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "120公分高木梯跌下之受傷機轉確實未於 defense section 摘要提及，雖 minor 但確實缺失",
+     "reason": "120公分高木梯跌下之受傷機轉確實未於 defense section 摘要提及，雖 minor 但確實缺失"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "『3、4點送到醫院』的具體時間點在 defense context 下確實未提及",
+     "reason": "『3、4點送到醫院』的具體時間點在 defense context 下確實未提及"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "因皮下出血瘀血而縫合傷口之辯護內容確實未提及",
+     "reason": "因皮下出血瘀血而縫合傷口之辯護內容確實未提及"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "雖提及隔天早上超音波，但『8點』時間與『局部出血』發現確實缺失，屬次要細節",
+     "reason": "雖提及隔天早上超音波，但『8點』時間與『局部出血』發現確實缺失，屬次要細節"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "『醫學界對於胖的病患就很注意』之一般性醫學說明確實未以相同語義呈現",
+     "reason": "『醫學界對於胖的病患就很注意』之一般性醫學說明確實未以相同語義呈現"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "工作場所安全設施問題屬案件背景資訊，雖然在 GT claims 中有記載，但在 section_01_facts.txt 及 section_05_reasoning.txt 主要聚焦於醫療過失部分。此項缺失不影響對醫療過失及判決結論的理解，屬次要資訊。",
+     "reason": "工作場所安全設施問題屬案件背景資訊，雖然在 GT claims 中有記載，但在 section_01_facts.txt 及 section_05_reasoning.txt 主要聚焦於醫療過失部分。此項缺失不影響對醫療過失及判決結論的理解，屬次要資訊。"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "傷口探查的條件規則（未穿透腹膜則無需進一步檢查）是鑑定意見中的重要醫療準則，用於判斷醫師處置是否適當。雖非判決結果本身，但影響對鑑定意見完整性的理解，屬重要事實。",
+     "reason": "傷口探查的條件規則（未穿透腹膜則無需進一步檢查）是鑑定意見中的重要醫療準則，用於判斷醫師處置是否適當。雖非判決結果本身，但影響對鑑定意見完整性的理解，屬重要事實。"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "單純腹壁穿刺傷的症狀特徵及探查必要性是鑑定意見的核心醫理說明，與判斷醫師是否應進行傷口探查直接相關。缺少此項會影響對鑑定意見論證邏輯的完整理解，屬重要事實。",
+     "reason": "單純腹壁穿刺傷的症狀特徵及探查必要性是鑑定意見的核心醫理說明，與判斷醫師是否應進行傷口探查直接相關。缺少此項會影響對鑑定意見論證邏輯的完整理解，屬重要事實。"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "法醫解剖顯微鏡觀察的具體發現（心肌細胞肥大、急性腎盂腎炎、輸卵管積水）是鑑定意見中關於死因爭議的重要依據，直接影響對「死亡原因無法斷定為敗血症」這一結論的理解。屬重要事實。",
+     "reason": "法醫解剖顯微鏡觀察的具體發現（心肌細胞肥大、急性腎盂腎炎、輸卵管積水）是鑑定意見中關於死因爭議的重要依據，直接影響對「死亡原因無法斷定為敗血症」這一結論的理解。屬重要事實。"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實：判決確定狀態。摘要（四）判決結果部分僅提及判決日期、罪名、刑度及緩刑，未提及上訴期間或判決確定與否，此為單純程序性背景資訊，不影響判決主文理解。",
+     "reason": "程序性事實：判決確定狀態。摘要（四）判決結果部分僅提及判決日期、罪名、刑度及緩刑，未提及上訴期間或判決確定與否，此為單純程序性背景資訊，不影響判決主文理解。"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "護理紀錄具體入院時間15時15分，屬程序性事實細節，不影響判決結論理解",
+     "reason": "護理紀錄具體入院時間15時15分，屬程序性事實細節，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "17時腹痛「可忍」之具體時間點描述，屬背景性症狀細節",
+     "reason": "17時腹痛「可忍」之具體時間點描述，屬背景性症狀細節"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "18時30分腹痛「難忍、冒汗」之具體時間點描述，屬背景性症狀細節",
+     "reason": "18時30分腹痛「難忍、冒汗」之具體時間點描述，屬背景性症狀細節"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "21時30分腹痛範圍較廣之具體時間點描述，屬背景性症狀細節",
+     "reason": "21時30分腹痛範圍較廣之具體時間點描述，屬背景性症狀細節"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "23時腹痛難忍、表情痛苦之具體時間點描述，屬背景性症狀細節",
+     "reason": "23時腹痛難忍、表情痛苦之具體時間點描述，屬背景性症狀細節"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "11月6日7時腹痛難忍、哭泣之具體時間點描述，屬背景性症狀細節",
+     "reason": "11月6日7時腹痛難忍、哭泣之具體時間點描述，屬背景性症狀細節"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "11時腹痛「沿著腹股溝往上痛」涉及疼痛部位特徵，影響疝氣診斷之案情理解",
+     "reason": "11時腹痛「沿著腹股溝往上痛」涉及疼痛部位特徵，影響疝氣診斷之案情理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "12時30分照X光後具體症狀描述，屬程序性時間點細節",
+     "reason": "12時30分照X光後具體症狀描述，屬程序性時間點細節"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會鑑定「正確診斷治療或可避免敗血症猝死」為專業鑑定核心結論，影響判決理由及因果關係之完整理解",
+     "reason": "醫審會鑑定「正確診斷治療或可避免敗血症猝死」為專業鑑定核心結論，影響判決理由及因果關係之完整理解"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法醫研究所關於「腸道疝入未被發現、似未給予適當治療處置」為關鍵鑑定意見，影響過失認定之案情理解",
+     "reason": "法醫研究所關於「腸道疝入未被發現、似未給予適當治療處置」為關鍵鑑定意見，影響過失認定之案情理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 119,
+   "pred_total": 80,
+   "matched": 88,
+   "partial": 10,
+   "missing": 21,
+   "hallucinated": 0
+  },
+  "section_balance": 0.8131
+ }
 }

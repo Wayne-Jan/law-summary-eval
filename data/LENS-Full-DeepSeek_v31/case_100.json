@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,152 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7019,
+  "fact_recall": 0.7083,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8293,
+  "quality_overall": 4.8714,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9571,
+  "uncited_rate": 0.025,
+  "faithfulness_combined": {
+   "score": 0.985,
+   "citation_fidelity": 0.975,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 22
+  },
+  "weighted_recall": 0.8889,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未明確記載「醫師甲於調劑及施打過程應注意無菌技術操作」之注意義務宣示。此為過失責任成立的核心法律要件，雖 reasoning 有引用鑑定意見提及無菌操作，但缺乏明確的被告注意義務之陳述。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未明確記載「醫師甲於調劑及施打過程應注意無菌技術操作」之注意義務宣示。此為過失責任成立的核心法律要件，雖 reasoning 有引用鑑定意見提及無菌操作，但缺乏明確的被告注意義務之陳述。"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "所有 section 原文均未提及「亦無不能注意之情形」或被告具有注意能力之相關陳述。此為過失責任「應注意、能注意而不注意」中「能注意」要件之關鍵論述，影響過失構成要件之完整性。",
+     "reason": "所有 section 原文均未提及「亦無不能注意之情形」或被告具有注意能力之相關陳述。此為過失責任「應注意、能注意而不注意」中「能注意」要件之關鍵論述，影響過失構成要件之完整性。"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 及 section_05_reasoning.txt 均未明確記載檢察官起訴之具體罪名為「刑法第二百八十四條第二項之業務過失傷害罪」。雖有提及「業務過失傷害」罪名，但缺乏具體條文編號之法律定性，影響案件法律架構之完整性。",
+     "reason": "section_01_facts.txt 及 section_05_reasoning.txt 均未明確記載檢察官起訴之具體罪名為「刑法第二百八十四條第二項之業務過失傷害罪」。雖有提及「業務過失傷害」罪名，但缺乏具體條文編號之法律定性，影響案件法律架構之完整性。"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "屬分類學補充說明，非案件核心事實，原文未提及『查無相關文獻報告』之表述",
+     "reason": "屬分類學補充說明，非案件核心事實，原文未提及『查無相關文獻報告』之表述"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 僅提及『有可能於注射當日急性發病，抑或數日內發病』，未明確記載『1天至數10日不等，平均時間約1週』之統計數據",
+     "reason": "section_03_opinions.txt 僅提及『有可能於注射當日急性發病，抑或數日內發病』，未明確記載『1天至數10日不等，平均時間約1週』之統計數據"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 提及針劑輸入血液導致感染之具體描述，但未明確總結『遭輸入遭污染之輸液為感染途徑之一』之概括性陳述",
+     "reason": "section_03_opinions.txt 提及針劑輸入血液導致感染之具體描述，但未明確總結『遭輸入遭污染之輸液為感染途徑之一』之概括性陳述"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "全部 section 原文均未提及『植物劃傷之皮膚軟組織感染、原發性血液感染及腸胃道感染』等其他感染途徑",
+     "reason": "全部 section 原文均未提及『植物劃傷之皮膚軟組織感染、原發性血液感染及腸胃道感染』等其他感染途徑"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 雖提及無菌技術與感染關聯，未明確總結『感染機率』之相關因素",
+     "reason": "section_03_opinions.txt 雖提及無菌技術與感染關聯，未明確總結『感染機率』之相關因素"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未詳細列舉無菌技術操作之具體項目（洗手、皮膚消毒、包裝檢查等）",
+     "reason": "section_03_opinions.txt 未詳細列舉無菌技術操作之具體項目（洗手、皮膚消毒、包裝檢查等）"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "原判決明確記載『病患所受感染應為Pantoea.dispersa及Pantoea.aggsomerans此2類種名菌其中之一』之推論步驟，pred reasoning僅提及『僅Pantoea dispersa及Pantoea agglomerans可造成人類感染』但未明確連結到『病患所受感染應為其中之一』，此為關鍵的因果推論環節遺漏",
+     "reason": "原判決明確記載『病患所受感染應為Pantoea.dispersa及Pantoea.aggsomerans此2類種名菌其中之一』之推論步驟，pred reasoning僅提及『僅Pantoea dispersa及Pantoea agglomerans可造成人類感染』但未明確連結到『病患所受感染應為其中之一』，此為關鍵的因果推論環節遺漏"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "原判決確有『證人曾祥洸於偵查中亦證稱：Pantoea菌是一個屬名，需要再進一步鑑定才能鑑定他的種名為何』之記載，pred reasoning未提及證人Z此段證詞，但此為證據來源細節，非核心法律推論",
+     "reason": "原判決確有『證人曾祥洸於偵查中亦證稱：Pantoea菌是一個屬名，需要再進一步鑑定才能鑑定他的種名為何』之記載，pred reasoning未提及證人Z此段證詞，但此為證據來源細節，非核心法律推論"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "原判決明確記載『淡水馬偕醫院用的是自動化儀器鑑定，無法再進行種名鑑定』，pred reasoning確未提及此檢驗方法細節，屬技術性事實遺漏",
+     "reason": "原判決明確記載『淡水馬偕醫院用的是自動化儀器鑑定，無法再進行種名鑑定』，pred reasoning確未提及此檢驗方法細節，屬技術性事實遺漏"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "原判決確有載明美白針劑係以南光製藥公司出品之生理食鹽水、諾貝爾注射液、的剎美剎松注射液、ANTISAMIN注射液調劑而成，pred reasoning未於此段詳列成分，但此等成分細節雖於opinions pred claims中出現，reasoning段落確實未完整呈現。屬事實細節遺漏。",
+     "reason": "原判決確有載明美白針劑係以南光製藥公司出品之生理食鹽水、諾貝爾注射液、的剎美剎松注射液、ANTISAMIN注射液調劑而成，pred reasoning未於此段詳列成分，但此等成分細節雖於opinions pred claims中出現，reasoning段落確實未完整呈現。屬事實細節遺漏。"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "原判決明確載明『這些都是各別包裝的注射液』，pred reasoning確未提及此包裝細節，屬技術性事實遺漏",
+     "reason": "原判決明確載明『這些都是各別包裝的注射液』，pred reasoning確未提及此包裝細節，屬技術性事實遺漏"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "原判決明確載明『本院對被告是否有業務過失傷害犯行，猶存有合理之懷疑，認尚未達有罪之確信』，pred reasoning僅提及『基於無罪推定之原則』，未明確表達『存有合理懷疑』及『未達有罪確信』之法院具體心證，此為法院判決關鍵態度，其遺漏影響判決邏輯之完整呈現",
+     "reason": "原判決明確載明『本院對被告是否有業務過失傷害犯行，猶存有合理之懷疑，認尚未達有罪之確信』，pred reasoning僅提及『基於無罪推定之原則』，未明確表達『存有合理懷疑』及『未達有罪確信』之法院具體心證，此為法院判決關鍵態度，其遺漏影響判決邏輯之完整呈現"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 60,
+   "pred_total": 80,
+   "matched": 40,
+   "partial": 5,
+   "missing": 15,
+   "hallucinated": 0
+  },
+  "section_balance": 0.625
+ }
 }

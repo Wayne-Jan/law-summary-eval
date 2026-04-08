@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -169,5 +170,173 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8526,
+  "fact_recall": 0.9084,
+  "fact_precision": 1.0,
+  "fact_f1": 0.952,
+  "quality_overall": 4.9429,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9965,
+  "uncited_rate": 0.029,
+  "faithfulness_combined": {
+   "score": 0.9826,
+   "citation_fidelity": 0.971,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 46,
+   "correct": 46
+  },
+  "weighted_recall": 0.9761,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 18,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 雖提及『被告乙（健檢中心主治醫師）』，但未明確描述其『理學檢查、報告解說、諮詢及建議』之職務內容，屬職務細節遺漏",
+     "reason": "section_01_facts.txt 雖提及『被告乙（健檢中心主治醫師）』，但未明確描述其『理學檢查、報告解說、諮詢及建議』之職務內容，屬職務細節遺漏"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred 中雖提及被告丁為放射線科主任醫師，但未明確說明其『64切電腦斷層掃瞄、MRI等放射科的監督業務』職責範圍",
+     "reason": "pred 中雖提及被告丁為放射線科主任醫師，但未明確說明其『64切電腦斷層掃瞄、MRI等放射科的監督業務』職責範圍"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred claims 未明確提到被告丁（GT被告甲）對64切電腦斷層檢查者開立口服Inderal之處方權",
+     "reason": "pred claims 未明確提到被告丁（GT被告甲）對64切電腦斷層檢查者開立口服Inderal之處方權"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『證人A前往...介紹』，但未收錄專員D回答『放心，現場我們會有醫師做評估』之對話內容",
+     "reason": "section_01_facts.txt 提及『證人A前往...介紹』，但未收錄專員D回答『放心，現場我們會有醫師做評估』之對話內容"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及『被告丙離開後再返回MRI檢查室』，未明確說明『協助J躺上64切心臟電腦斷層檢查檯』之具體行為",
+     "reason": "section_01_facts.txt 僅提及『被告丙離開後再返回MRI檢查室』，未明確說明『協助J躺上64切心臟電腦斷層檢查檯』之具體行為"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『意識欠清』，但未明確陳述『休息室內沒有醫師在場』之場景描述",
+     "reason": "section_01_facts.txt 提及『意識欠清』，但未明確陳述『休息室內沒有醫師在場』之場景描述"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "所有 sections 均未提及『不知病患對藥物有無過敏應先做試驗驗證』之醫療常規描述",
+     "reason": "所有 sections 均未提及『不知病患對藥物有無過敏應先做試驗驗證』之醫療常規描述"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred 雖提及Inderal為禁忌藥物，但未詳細說明其『交感神經阻斷劑』之藥理分類及適應症",
+     "reason": "pred 雖提及Inderal為禁忌藥物，但未詳細說明其『交感神經阻斷劑』之藥理分類及適應症"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred 未提及『開立Inderal處方之醫師必須具有之專業常識』此一要求",
+     "reason": "pred 未提及『開立Inderal處方之醫師必須具有之專業常識』此一要求"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred 提及氣喘病史與禁忌，但未完整描述『事前評估、用藥過敏測試、急救準備』之程序要求",
+     "reason": "pred 提及氣喘病史與禁忌，但未完整描述『事前評估、用藥過敏測試、急救準備』之程序要求"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 雖提及處方由被告丁開立，但 pred 未說明『被告丙係依據處方明細給藥』之給藥依據",
+     "reason": "section_05_reasoning.txt 雖提及處方由被告丁開立，但 pred 未說明『被告丙係依據處方明細給藥』之給藥依據"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "pred 報告『未立即插管』之事實，但未陳述『彼時應立即插管』之醫療判斷標準",
+     "reason": "pred 報告『未立即插管』之事實，但未陳述『彼時應立即插管』之醫療判斷標準"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 最後段落提及『又姑息被告丁...』，但未完整涵蓋『被告甲姑息被告丁...』之論述結構",
+     "reason": "section_01_facts.txt 最後段落提及『又姑息被告丁...』，但未完整涵蓋『被告甲姑息被告丁...』之論述結構"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT 以普拿疼(acetaminophen)為例說明 PRN 醫囑使用方式，但 summary 僅泛述「PRN醫囑使用方式係讓護士有一限度之裁量權」，未提及普拿疼具體例子。屬醫學概念例示省略，不影響核心案情理解",
+     "reason": "GT 以普拿疼(acetaminophen)為例說明 PRN 醫囑使用方式，但 summary 僅泛述「PRN醫囑使用方式係讓護士有一限度之裁量權」，未提及普拿疼具體例子。屬醫學概念例示省略，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT 提及被告乙○○（醫審會鑑定書中人物）加護病房急救處置符合醫療常規，但此部分 GT 已標註「此部分非本案自訴之範圍」。Summary 確實未提及此邊緣事實，屬合理省略",
+     "reason": "GT 提及被告乙○○（醫審會鑑定書中人物）加護病房急救處置符合醫療常規，但此部分 GT 已標註「此部分非本案自訴之範圍」。Summary 確實未提及此邊緣事實，屬合理省略"
+    },
+    {
+     "gt_claim_id": 165,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決法院名稱與日期屬程序性資訊，facts段落未提及此資訊，摘要確實未涵蓋",
+     "reason": "判決法院名稱與日期屬程序性資訊，facts段落未提及此資訊，摘要確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "案件程序性質為自訴屬程序性背景事實，facts段落中僅提及『案經檢察官起訴』，未明確標示為自訴程序，摘要未涵蓋此資訊",
+     "reason": "案件程序性質為自訴屬程序性背景事實，facts段落中僅提及『案經檢察官起訴』，未明確標示為自訴程序，摘要未涵蓋此資訊"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "合併審理、合併辯論屬程序性事項，facts段落未提及，摘要確實未涵蓋",
+     "reason": "合併審理、合併辯論屬程序性事項，facts段落未提及，摘要確實未涵蓋"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 251,
+   "pred_total": 175,
+   "matched": 224,
+   "partial": 8,
+   "missing": 19,
+   "hallucinated": 0
+  },
+  "section_balance": 0.4
+ }
 }

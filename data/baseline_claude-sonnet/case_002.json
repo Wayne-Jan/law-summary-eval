@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -142,5 +142,418 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8721,
+  "fact_recall": 0.6007,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7505,
+  "quality_overall": 4.9571,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.7778,
+  "missing_severity": {
+   "critical": 8,
+   "important": 27,
+   "minor": 18,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "defense段僅提及『死亡前一小時二十分護士探視』，無『經護士通知立即趕至施以急救』之完整描述，跨section無法補足",
+     "reason": "defense段僅提及『死亡前一小時二十分護士探視』，無『經護士通知立即趕至施以急救』之完整描述，跨section無法補足"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT主張『對一意識清楚之病患，僅得依神經學指數及臨床症狀推斷其有無顱內壓昇高之情形』為被告關於診斷方法限制的核心辯護論點。摘要雖在『判決理由』段落提及『後顱窩受傷病變之特徵本就是臨床症狀不明顯』及被告未進行平衡功能測試等內容，但係法院對被告主張的評價與反駁，並非被告辯稱『僅得依神經學指數推斷』之主張本身，該辯護要點確未出現在『被告回應』段落中。",
+     "reason": "GT主張『對一意識清楚之病患，僅得依神經學指數及臨床症狀推斷其有無顱內壓昇高之情形』為被告關於診斷方法限制的核心辯護論點。摘要雖在『判決理由』段落提及『後顱窩受傷病變之特徵本就是臨床症狀不明顯』及被告未進行平衡功能測試等內容，但係法院對被告主張的評價與反駁，並非被告辯稱『僅得依神經學指數推斷』之主張本身，該辯護要點確未出現在『被告回應』段落中。"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "止痛劑量是否適當屬於鑑定細節，摘要已提及「施以止痛劑」，劑量細節不影響判決結論理解",
+     "reason": "止痛劑量是否適當屬於鑑定細節，摘要已提及「施以止痛劑」，劑量細節不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "顱骨底下解剖構造屬背景醫學知識，非案件事實陳述",
+     "reason": "顱骨底下解剖構造屬背景醫學知識，非案件事實陳述"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "骨折無血腫效應的具體判斷未在事實陳述中明確提及，屬鑑定細節",
+     "reason": "骨折無血腫效應的具體判斷未在事實陳述中明確提及，屬鑑定細節"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "9月9日後無追蹤CT檢查屬於關鍵時間點資訊，影響醫療處置時機判斷",
+     "reason": "9月9日後無追蹤CT檢查屬於關鍵時間點資訊，影響醫療處置時機判斷"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "兩側腦室擴大為第二次CT的具體發現，摘要已概括提及「水腦症」",
+     "reason": "兩側腦室擴大為第二次CT的具體發現，摘要已概括提及「水腦症」"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第四腦室阻塞已於摘要其他 claim 中提及，未標註「第二次」不影響理解",
+     "reason": "第四腦室阻塞已於摘要其他 claim 中提及，未標註「第二次」不影響理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "放射科報告結論為背景資訊，水腦症結論已於事實陳述中呈現",
+     "reason": "放射科報告結論為背景資訊，水腦症結論已於事實陳述中呈現"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "完整病理機制鏈「枕骨骨折→小腦受損→水腫→壓迫腦幹→室阻塞→水腦症」為因果關係論證重要依據",
+     "reason": "完整病理機制鏈「枕骨骨折→小腦受損→水腫→壓迫腦幹→室阻塞→水腦症」為因果關係論證重要依據"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病理現象整合標籤為鑑定用語，個別病徵已於摘要中分述",
+     "reason": "病理現象整合標籤為鑑定用語，個別病徵已於摘要中分述"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "顱內壓監視器未置入為重要醫療處置資訊，關係被告是否盡到監測義務",
+     "reason": "顱內壓監視器未置入為重要醫療處置資訊，關係被告是否盡到監測義務"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "後顱窩與大腦病變差異為法院認定過失之重要醫學依據",
+     "reason": "後顱窩與大腦病變差異為法院認定過失之重要醫學依據"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "後顱窩病變特徵（症狀不明顯）為法院認定被告應注意之重要醫學知識",
+     "reason": "後顱窩病變特徵（症狀不明顯）為法院認定被告應注意之重要醫學知識"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "瞳孔變化特徵屬於詳細鑑定內容，摘要已提及「突發性致死」",
+     "reason": "瞳孔變化特徵屬於詳細鑑定內容，摘要已提及「突發性致死」"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心跳呼吸停止特徵已有涵蓋，摘要已提及「突發性心跳呼吸停止」",
+     "reason": "心跳呼吸停止特徵已有涵蓋，摘要已提及「突發性心跳呼吸停止」"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療指標與致死原因區分屬於鑑定意見核心，影響醫療處置適當性判斷",
+     "reason": "治療指標與致死原因區分屬於鑑定意見核心，影響醫療處置適當性判斷"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦室外引流的具體名稱雖未明確提及，但「放置引流管」已涵蓋此治療概念",
+     "reason": "腦室外引流的具體名稱雖未明確提及，但「放置引流管」已涵蓋此治療概念"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術安全性分類為鑑定背景資訊，不影響判決結論理解",
+     "reason": "手術安全性分類為鑑定背景資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "引流手術局限性說明屬於治療建議完整內容，影響醫療決策評估",
+     "reason": "引流手術局限性說明屬於治療建議完整內容，影響醫療決策評估"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "更積極治療法（後顱窩切除手術）為鑑定建議之核心內容，法院據此認定被告應採取之措施",
+     "reason": "更積極治療法（後顱窩切除手術）為鑑定建議之核心內容，法院據此認定被告應採取之措施"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決書原文僅記載上訴教示條款（『對於本件判決如有不服，應於收受送達後十日內...提出上訴』），並未記載『被告、檢察官未上訴』或『判決確定』之程序事實。此為判決確定之法定推論效果，非判決書記載的具體內容。生成摘要正確省略此程序性資訊，不影響判決結論理解。",
+     "reason": "判決書原文僅記載上訴教示條款（『對於本件判決如有不服，應於收受送達後十日內...提出上訴』），並未記載『被告、檢察官未上訴』或『判決確定』之程序事實。此為判決確定之法定推論效果，非判決書記載的具體內容。生成摘要正確省略此程序性資訊，不影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告辯稱遲發性顱內出血並質疑醫審會鑑定，屬重要辯護論點，但摘要未提及",
+     "reason": "被告辯稱遲發性顱內出血並質疑醫審會鑑定，屬重要辯護論點，但摘要未提及"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "高檢署法醫中心解剖報告內容為重要醫學證據，雖reasoning section未詳載細節，但屬法院判斷依據之一",
+     "reason": "高檢署法醫中心解剖報告內容為重要醫學證據，雖reasoning section未詳載細節，但屬法院判斷依據之一"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法醫中心病理檢查結果為死因判斷基礎，屬重要醫學證據",
+     "reason": "法醫中心病理檢查結果為死因判斷基礎，屬重要醫學證據"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法醫中心未詳細記載組織病變為技術性細節，非核心爭點",
+     "reason": "法醫中心未詳細記載組織病變為技術性細節，非核心爭點"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "高檢署法醫中心死因認定（顱內出血→腦水腫→腦壓增高→肺水腫→心肺衰竭）為本案核心死因機轉，影響判決結論理解",
+     "reason": "高檢署法醫中心死因認定（顱內出血→腦水腫→腦壓增高→肺水腫→心肺衰竭）為本案核心死因機轉，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法醫中心認定醫療有未儘周全之處為過失認定相關證據",
+     "reason": "法醫中心認定醫療有未儘周全之處為過失認定相關證據"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院對神經學指數指示真實情形之判斷為法院心證形成過程",
+     "reason": "法院對神經學指數指示真實情形之判斷為法院心證形成過程"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告甲主張心跳呼吸停止前神經學指數正常為重要辯護論點",
+     "reason": "被告甲主張心跳呼吸停止前神經學指數正常為重要辯護論點"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Handbook of Neurosurgery醫學文獻引用為法院論理基礎",
+     "reason": "Handbook of Neurosurgery醫學文獻引用為法院論理基礎"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫學文獻關於病因論述為法院心證依據",
+     "reason": "醫學文獻關於病因論述為法院心證依據"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "腦幹受壓迫即可致命之醫學知識為法院論理基礎",
+     "reason": "腦幹受壓迫即可致命之醫學知識為法院論理基礎"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "小腦扁桃體疝脫時意識可能清醒之醫學知識為法院反駁被告論點之依據",
+     "reason": "小腦扁桃體疝脫時意識可能清醒之醫學知識為法院反駁被告論點之依據"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告辯稱小腦受損應有嘔吐等症狀為重要辯護論點",
+     "reason": "被告辯稱小腦受損應有嘔吐等症狀為重要辯護論點"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告依無症狀推論小腦無病變為重要辯護邏輯",
+     "reason": "被告依無症狀推論小腦無病變為重要辯護邏輯"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告辯稱電腦斷層干擾可能誤判為重要辯護論點",
+     "reason": "被告辯稱電腦斷層干擾可能誤判為重要辯護論點"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "後顱窩電腦斷層可能受干擾為技術性背景說明",
+     "reason": "後顱窩電腦斷層可能受干擾為技術性背景說明"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "枕骨凹陷性骨折向內擠壓腦組織為法院認定之物理機制",
+     "reason": "枕骨凹陷性骨折向內擠壓腦組織為法院認定之物理機制"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "若及時採取減壓措施可防止水腫波及腦幹，涉及過失與因果關係判斷",
+     "reason": "若及時採取減壓措施可防止水腫波及腦幹，涉及過失與因果關係判斷"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "醫審會第一次鑑定建議腦室外引流為具體醫療建議，影響過失判斷",
+     "reason": "醫審會第一次鑑定建議腦室外引流為具體醫療建議，影響過失判斷"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "醫審會第二次鑑定建議腦室外引流為重要鑑定意見",
+     "reason": "醫審會第二次鑑定建議腦室外引流為重要鑑定意見"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "水腦症並非真正致命病灶為法院對鑑定意見之解讀",
+     "reason": "水腦症並非真正致命病灶為法院對鑑定意見之解讀"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "醫審會建議後顱窩切除手術併腦膜整形為替代治療方案，影響過失判斷",
+     "reason": "醫審會建議後顱窩切除手術併腦膜整形為替代治療方案，影響過失判斷"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告辯稱後顱窩切除手術無醫學文獻記載為重要抗辯",
+     "reason": "被告辯稱後顱窩切除手術無醫學文獻記載為重要抗辯"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "健保局給付項目為程序性背景說明",
+     "reason": "健保局給付項目為程序性背景說明"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "G醫院無手術經驗為背景性事實",
+     "reason": "G醫院無手術經驗為背景性事實"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "後顱窩切除手術非臨床通用手術為法院審酌被告抗辯之內容",
+     "reason": "後顱窩切除手術非臨床通用手術為法院審酌被告抗辯之內容"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "手術建議性質為法院認定注意義務範圍之考量",
+     "reason": "手術建議性質為法院認定注意義務範圍之考量"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "依臨床實踐醫療水準並非束手無策涉及過失認定標準",
+     "reason": "依臨床實踐醫療水準並非束手無策涉及過失認定標準"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "不能以手術非通行而推卸注意義務為法院過失認定核心論點",
+     "reason": "不能以手術非通行而推卸注意義務為法院過失認定核心論點"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "發現後顱窩凹陷性骨折時應負注意義務為過失認定基準",
+     "reason": "發現後顱窩凹陷性骨折時應負注意義務為過失認定基準"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "聲請第三次鑑定經核無必要為程序性事項，不影響案情理解",
+     "reason": "聲請第三次鑑定經核無必要為程序性事項，不影響案情理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 144,
+   "pred_total": 69,
+   "matched": 82,
+   "partial": 9,
+   "missing": 53,
+   "hallucinated": 0
+  },
+  "section_balance": 0.5012
+ }
 }

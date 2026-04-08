@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -126,5 +126,110 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6595,
+  "fact_recall": 0.8378,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9118,
+  "quality_overall": 4.8786,
+  "citation_accuracy": 0.92,
+  "citation_support_score": 0.8885,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.952,
+   "citation_fidelity": 0.92,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 17
+  },
+  "weighted_recall": 0.9595,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 9,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "手術後按時洗腎屬於背景性醫療程序事實，不影響過失致死的案情理解與判決結論",
+     "reason": "手術後按時洗腎屬於背景性醫療程序事實，不影響過失致死的案情理解與判決結論"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定意見數量配置（醫審會兩件、法醫研究所一件）雖為 GT 明確記載，但屬程序性細節，不影響鑑定結論理解。pred已提及有醫審會及法醫研究所鑑定意見",
+     "reason": "鑑定意見數量配置（醫審會兩件、法醫研究所一件）雖為 GT 明確記載，但屬程序性細節，不影響鑑定結論理解。pred已提及有醫審會及法醫研究所鑑定意見"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病歷未記載頸靜脈鼓脹屬否定性發現，雖影響臨床徵兆完整性分析，但 pred 已提及教科書所述之頸靜脈鼓脹徵象，讀者可推知實際病歷情況",
+     "reason": "病歷未記載頸靜脈鼓脹屬否定性發現，雖影響臨床徵兆完整性分析，但 pred 已提及教科書所述之頸靜脈鼓脹徵象，讀者可推知實際病歷情況"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢察官督同法醫師相驗為程序性事實，pred僅提及「法醫研究所大體解剖」，已涵蓋相驗核心內容，程序細節遺漏不影響死因認定理解",
+     "reason": "檢察官督同法醫師相驗為程序性事實，pred僅提及「法醫研究所大體解剖」，已涵蓋相驗核心內容，程序細節遺漏不影響死因認定理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（上訴期間未上訴），不影響判決主文與罪責理解",
+     "reason": "程序性事實（上訴期間未上訴），不影響判決主文與罪責理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（判決確定），不影響判決主文與罪責理解",
+     "reason": "程序性事實（判決確定），不影響判決主文與罪責理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「洗腎所需血流量不夠」「T主治醫師決定」雖為重要背景，但摘要已涵蓋手術決定與執行，此為細節性遺漏，不影響過失認定理解",
+     "reason": "「洗腎所需血流量不夠」「T主治醫師決定」雖為重要背景，但摘要已涵蓋手術決定與執行，此為細節性遺漏，不影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法醫解剖具體數據（80cc、75公克、纖維蛋白塊）為專業細節，摘要已提及「心包膜積血」之死因，具體數據不影響判決結論理解",
+     "reason": "法醫解剖具體數據（80cc、75公克、纖維蛋白塊）為專業細節，摘要已提及「心包膜積血」之死因，具體數據不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「專業訓練」「期待可能性」為法理論述細節，摘要以「過失犯罪事證堪認定」完整表達歸責結論，不影響理解",
+     "reason": "「專業訓練」「期待可能性」為法理論述細節，摘要以「過失犯罪事證堪認定」完整表達歸責結論，不影響理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 74,
+   "pred_total": 82,
+   "matched": 59,
+   "partial": 6,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "section_balance": 0.7143
+ }
 }

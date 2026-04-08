@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,10 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
-  "LENS-NoAFG-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -158,5 +158,229 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.9042,
+  "fact_recall": 0.7731,
+  "fact_precision": 1.0,
+  "fact_f1": 0.872,
+  "quality_overall": 4.5857,
+  "citation_accuracy": 0.5122,
+  "citation_support_score": 0.5238,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.7073,
+   "citation_fidelity": 0.5122,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 24,
+   "correct": 24
+  },
+  "weighted_recall": 0.9048,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 18,
+   "details": [
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「3、4點」送醫時間屬被告證詞之具體時間記憶，與事實段「14時許」略有出入，屬證詞細節而非核心爭點。傷口處置（清理、擴創術）已於事實段涵蓋。",
+     "reason": "「3、4點」送醫時間屬被告證詞之具體時間記憶，與事實段「14時許」略有出入，屬證詞細節而非核心爭點。傷口處置（清理、擴創術）已於事實段涵蓋。"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「因皮下出血瘀血而縫合」之具體理由未見於任何 section。雖傷口處置已於事實段提及，但被告辯稱之縫合動機（止血處置的正當性說明）遺漏，屬次要辯護細節。",
+     "reason": "「因皮下出血瘀血而縫合」之具體理由未見於任何 section。雖傷口處置已於事實段提及，但被告辯稱之縫合動機（止血處置的正當性說明）遺漏，屬次要辯護細節。"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「整個過程都在醫院值班」、「狀況都在掌握中」屬被告自我宣稱之盡責表述，Pred 於 section_02 已提及「晚上值班」、「隨時注意」等語，雖非完全一致，但核心值班事實已涵蓋。此為被告主觀辯護主張，屬次要細節。",
+     "reason": "「整個過程都在醫院值班」、「狀況都在掌握中」屬被告自我宣稱之盡責表述，Pred 於 section_02 已提及「晚上值班」、「隨時注意」等語，雖非完全一致，但核心值班事實已涵蓋。此為被告主觀辯護主張，屬次要細節。"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「一般外科醫師」之具體科別與「專長腹部手術」之專業背景說明未見於任何 section。Pred 於 section_01 標示為「急診外科醫師」，雖略有差異，但醫師專業身分已確立。此屬專業背景細節，非影響過失認定之關鍵事實。",
+     "reason": "「一般外科醫師」之具體科別與「專長腹部手術」之專業背景說明未見於任何 section。Pred 於 section_01 標示為「急診外科醫師」，雖略有差異，但醫師專業身分已確立。此屬專業背景細節，非影響過失認定之關鍵事實。"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「已盡專業上所有努力」為被告核心辯護主張，屬業務過失案件中最關鍵之「已盡相當注意義務」抗辯。雖 Pred 於 section_02 列舉多項醫療處置（禁食、點滴、抗生素、持續觸診、超音波等），但未明確總結被告「已盡全力」之主張語句。於過失責任認定脈絡中，此遺漏影響對被告辯護立場之完整理解，屬重要辯護要點遺漏。",
+     "reason": "「已盡專業上所有努力」為被告核心辯護主張，屬業務過失案件中最關鍵之「已盡相當注意義務」抗辯。雖 Pred 於 section_02 列舉多項醫療處置（禁食、點滴、抗生素、持續觸診、超音波等），但未明確總結被告「已盡全力」之主張語句。於過失責任認定脈絡中，此遺漏影響對被告辯護立場之完整理解，屬重要辯護要點遺漏。"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要 opinions section 僅提及『原有疾病包括高血壓、腎盂、腎炎等』，未明確提及『心肌細胞肥大』此一解剖發現，亦未提及『死亡原因無法斷定為敗血症』的鑑定結論。經查 section_03_opinions.txt 及 section_04_reasoning.txt，均未找到對應內容。",
+     "reason": "摘要 opinions section 僅提及『原有疾病包括高血壓、腎盂、腎炎等』，未明確提及『心肌細胞肥大』此一解剖發現，亦未提及『死亡原因無法斷定為敗血症』的鑑定結論。經查 section_03_opinions.txt 及 section_04_reasoning.txt，均未找到對應內容。"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "雖然 facts section 提及『工地意外』，但『從梯子跌倒』、『混凝土突出之鋼筋插到下腹部』等意外發生背景細節均未在摘要 opinions section 出現。經查 section_01_facts.txt，亦僅簡略提及『工地意外致鋼筋插入』，無細節描述。",
+     "reason": "雖然 facts section 提及『工地意外』，但『從梯子跌倒』、『混凝土突出之鋼筋插到下腹部』等意外發生背景細節均未在摘要 opinions section 出現。經查 section_01_facts.txt，亦僅簡略提及『工地意外致鋼筋插入』，無細節描述。"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要 opinions section 未提及工作場所安全設施缺失、鋼筋裸露、防護裝備闕如等事故原因分析，亦未提及『是此件死亡意外的主因』之結論。經查全部 sections，均未找到對應內容。",
+     "reason": "摘要 opinions section 未提及工作場所安全設施缺失、鋼筋裸露、防護裝備闕如等事故原因分析，亦未提及『是此件死亡意外的主因』之結論。經查全部 sections，均未找到對應內容。"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要 opinions section 提到『似未針對前述傷害給予適當治療處置』，但未明確提及『失去了挽救生命的機會』此一鑑定結論性陳述。經查 section_03_opinions.txt，無此明確對應。",
+     "reason": "摘要 opinions section 提到『似未針對前述傷害給予適當治療處置』，但未明確提及『失去了挽救生命的機會』此一鑑定結論性陳述。經查 section_03_opinions.txt，無此明確對應。"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要 opinions section 未提及『直接的死亡原因為意外事故』之事故成因分析，亦未完整呈現『或可避免這種敗血症猝死』的死亡原因分析。雖 reasoning section 引用鑑定書時有提及『或可避免這種敗血症猝死』，但 opinions section 本身確實遺漏此重要鑑定內容。",
+     "reason": "摘要 opinions section 未提及『直接的死亡原因為意外事故』之事故成因分析，亦未完整呈現『或可避免這種敗血症猝死』的死亡原因分析。雖 reasoning section 引用鑑定書時有提及『或可避免這種敗血症猝死』，但 opinions section 本身確實遺漏此重要鑑定內容。"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要 opinions section 雖提及『傷口探查』及『確定穿刺傷是否深及腹腔』，但未提及『單純腹壁穿刺傷常會有傷口疼痛、血腫』的症狀描述以及『沒有其他特殊症狀可以判斷此穿刺傷已深及腹腔』的醫學說明。屬於教科書原則的補充說明，為次要資訊。",
+     "reason": "摘要 opinions section 雖提及『傷口探查』及『確定穿刺傷是否深及腹腔』，但未提及『單純腹壁穿刺傷常會有傷口疼痛、血腫』的症狀描述以及『沒有其他特殊症狀可以判斷此穿刺傷已深及腹腔』的醫學說明。屬於教科書原則的補充說明，為次要資訊。"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，摘要雖提及判決結果（有罪、刑期、緩刑），但未提及上訴期間及判決確定狀態，屬次要遺漏",
+     "reason": "程序性事實，摘要雖提及判決結果（有罪、刑期、緩刑），但未提及上訴期間及判決確定狀態，屬次要遺漏"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary reasoning 段雖提及『腹部穿刺傷業已穿通腹壁』，但未明確說明『腹壁及腹腔內側各有一開口』之解剖學細節，屬次要事實",
+     "reason": "summary reasoning 段雖提及『腹部穿刺傷業已穿通腹壁』，但未明確說明『腹壁及腹腔內側各有一開口』之解剖學細節，屬次要事實"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary 未引用被告偵訊時『右下腹部刺傷，怕會刺到腹腔』之供述，屬被告陳述細節",
+     "reason": "summary 未引用被告偵訊時『右下腹部刺傷，怕會刺到腹腔』之供述，屬被告陳述細節"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary 未提及被告知悉『膀胱破裂、小腸破裂』可能性之具體項目",
+     "reason": "summary 未提及被告知悉『膀胱破裂、小腸破裂』可能性之具體項目"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary 未提及『傷口是直線的』之檢查細節敘述",
+     "reason": "summary 未提及『傷口是直線的』之檢查細節敘述"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary 未說明判斷穿刺傷之一般方法論（摸、X光、氣體）",
+     "reason": "summary 未說明判斷穿刺傷之一般方法論（摸、X光、氣體）"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary reasoning 未引用法醫研究所關於臨床確認腹壁穿通傷方法（理學檢查、放射影像學檢查）之鑑定內容",
+     "reason": "summary reasoning 未引用法醫研究所關於臨床確認腹壁穿通傷方法（理學檢查、放射影像學檢查）之鑑定內容"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "summary 雖提及腸道疝入，但未詳述『穿刺物剛拔出時即隨之疝入傷口、外部氣體尚無法易進入腹腔』之關鍵病理機制，影響案情理解",
+     "reason": "summary 雖提及腸道疝入，但未詳述『穿刺物剛拔出時即隨之疝入傷口、外部氣體尚無法易進入腹腔』之關鍵病理機制，影響案情理解"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary 雖提及法醫研究所載明肥胖患者檢查困難，但未明確表述『與被告甲所供承...內容若相符合』之相符性判斷",
+     "reason": "summary 雖提及法醫研究所載明肥胖患者檢查困難，但未明確表述『與被告甲所供承...內容若相符合』之相符性判斷"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary reasoning 未提入院時間『15時15分』之護理紀錄細節",
+     "reason": "summary reasoning 未提入院時間『15時15分』之護理紀錄細節"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary reasoning 未提『21時30分腹痛範圍有較廣』之護理紀錄細節",
+     "reason": "summary reasoning 未提『21時30分腹痛範圍有較廣』之護理紀錄細節"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary reasoning 僅提『凌晨仍腹痛難忍、表情痛苦』，未提『7時』及『哭泣』之具體症狀描述",
+     "reason": "summary reasoning 僅提『凌晨仍腹痛難忍、表情痛苦』，未提『7時』及『哭泣』之具體症狀描述"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary reasoning 未提『11時冒冷汗，訴腹痛及沿著腹股溝往上痛』之護理紀錄細節",
+     "reason": "summary reasoning 未提『11時冒冷汗，訴腹痛及沿著腹股溝往上痛』之護理紀錄細節"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "summary reasoning 未提『12時30分照X光返室，坐於床旁，訴痛難忍，四肢冒冷汗，冰冷』之護理紀錄細節",
+     "reason": "summary reasoning 未提『12時30分照X光返室，坐於床旁，訴痛難忍，四肢冒冷汗，冰冷』之護理紀錄細節"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "summary reasoning 未引用法醫研究所『似未針對前述傷害給予適當治療處置』之關鍵鑑定意見，影響過失責任認定理解",
+     "reason": "summary reasoning 未引用法醫研究所『似未針對前述傷害給予適當治療處置』之關鍵鑑定意見，影響過失責任認定理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 119,
+   "pred_total": 84,
+   "matched": 91,
+   "partial": 2,
+   "missing": 26,
+   "hallucinated": 0
+  },
+  "section_balance": 0.6889
+ }
 }

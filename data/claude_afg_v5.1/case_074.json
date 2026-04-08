@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,201 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.701,
+  "fact_recall": 0.7184,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8362,
+  "quality_overall": 4.9107,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9625,
+  "uncited_rate": 0.048,
+  "faithfulness_combined": {
+   "score": 0.9712,
+   "citation_fidelity": 0.952,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 0.952,
+  "numerical_detail": {
+   "total_numerical": 42,
+   "correct": 40
+  },
+  "weighted_recall": 0.8932,
+  "missing_severity": {
+   "critical": 3,
+   "important": 5,
+   "minor": 14,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要中「證人K」僅提及「發現病患無意識」等情節，未明確說明其擔任「心導管檢查醫師」之身份。經查全文，雖 section_01_facts 提及「由證人C醫師為病患X進行心導管檢查」，但此處主體為證人C而非證人K，且證人K之角色確未明確對應。",
+     "reason": "摘要中「證人K」僅提及「發現病患無意識」等情節，未明確說明其擔任「心導管檢查醫師」之身份。經查全文，雖 section_01_facts 提及「由證人C醫師為病患X進行心導管檢查」，但此處主體為證人C而非證人K，且證人K之角色確未明確對應。"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要中「證人C」僅出現於「進行心導管檢查」之描述，未明確說明其擔任「普通病房之主治醫師」身份。經 cross section 檢查，其他段落亦無補充此身份資訊。",
+     "reason": "摘要中「證人C」僅出現於「進行心導管檢查」之描述，未明確說明其擔任「普通病房之主治醫師」身份。經 cross section 檢查，其他段落亦無補充此身份資訊。"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「依當時情形，又無不能注意之情事」為刑法過失犯注意義務之法定構成要件用語，屬過失認定的客觀判斷標準。經全文檢查，摘要未明確提及此法律要件，影響過失責任之理解。",
+     "reason": "「依當時情形，又無不能注意之情事」為刑法過失犯注意義務之法定構成要件用語，屬過失認定的客觀判斷標準。經全文檢查，摘要未明確提及此法律要件，影響過失責任之理解。"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「被告疏未注意」為過失認定之法律判斷用語。摘要雖提及被告使用藥物等事實，但未明確以「疏未注意」表述過失。此為關鍵法律要件，影響過失責任之完整理解。",
+     "reason": "「被告疏未注意」為過失認定之法律判斷用語。摘要雖提及被告使用藥物等事實，但未明確以「疏未注意」表述過失。此為關鍵法律要件，影響過失責任之完整理解。"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「致病患L急性心包膜炎之病症並未改善」為關鍵因果事實，涉及病程發展與治療無效之基礎事實。摘要雖提及進行心導管檢查等處置，但未明確描述急性心包膜炎病症未改善之狀態。此為影響案情理解之重要事實。",
+     "reason": "「致病患L急性心包膜炎之病症並未改善」為關鍵因果事實，涉及病程發展與治療無效之基礎事實。摘要雖提及進行心導管檢查等處置，但未明確描述急性心包膜炎病症未改善之狀態。此為影響案情理解之重要事實。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「病患L反於嗣後出現心包膜炎填塞之症狀」為關鍵因果事實，涉及死因機轉。雖 opinions section 提及「有引起心包膜填塞致死之可能」，但此為鑑定意見中之風險推論，非敘述「嗣後出現」之實際症狀事實。摘要未明確提及病患確實出現心包膜炎填塞症狀，影響死因理解。",
+     "reason": "「病患L反於嗣後出現心包膜炎填塞之症狀」為關鍵因果事實，涉及死因機轉。雖 opinions section 提及「有引起心包膜填塞致死之可能」，但此為鑑定意見中之風險推論，非敘述「嗣後出現」之實際症狀事實。摘要未明確提及病患確實出現心包膜炎填塞症狀，影響死因理解。"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「被告因未及時發覺並施予心包膜放液手術」為關鍵過失事實，涉及未及時採取之救命處置。opinions section 提及「需要及時追蹤心臟超音波檢查確認並施行心包膜放液手術」，但此為鑑定建議，非摘要所述被告未施予之事實。摘要未明確提及被告未及時施行心包膜放液手術之過失事實。",
+     "reason": "「被告因未及時發覺並施予心包膜放液手術」為關鍵過失事實，涉及未及時採取之救命處置。opinions section 提及「需要及時追蹤心臟超音波檢查確認並施行心包膜放液手術」，但此為鑑定建議，非摘要所述被告未施予之事實。摘要未明確提及被告未及時施行心包膜放液手術之過失事實。"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "丙醫師（證人C醫師）研判急性心包膜炎之重要診斷事實，facts、defense、reasoning 三段均未提及，影響對鑑定意見差異之理解",
+     "reason": "丙醫師（證人C醫師）研判急性心包膜炎之重要診斷事實，facts、defense、reasoning 三段均未提及，影響對鑑定意見差異之理解"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "死亡具體時間（1月20日上午6時10分）僅見於 facts 段急救過程描述，reasoning 段僅稱「上午發生死亡」，時點資訊不完整",
+     "reason": "死亡具體時間（1月20日上午6時10分）僅見於 facts 段急救過程描述，reasoning 段僅稱「上午發生死亡」，時點資訊不完整"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴人在起訴書排除細菌感染敗血症之主張，確未見於任何 section，惟屬起訴書內容細節，非核心事實",
+     "reason": "公訴人在起訴書排除細菌感染敗血症之主張，確未見於任何 section，惟屬起訴書內容細節，非核心事實"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "長庚醫院臨床病理檢驗報告單2紙之具體證據記載，屬證據細節引用",
+     "reason": "長庚醫院臨床病理檢驗報告單2紙之具體證據記載，屬證據細節引用"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「告訴人上開爭執並無可採」之法院明確判斷語句，摘要僅陳述血液檢驗結果與鑑定意見，未以明確否定句式回應爭執",
+     "reason": "「告訴人上開爭執並無可採」之法院明確判斷語句，摘要僅陳述血液檢驗結果與鑑定意見，未以明確否定句式回應爭執"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "心導管檢查後在加護病房觀察之具體情形，reasoning 段未提及",
+     "reason": "心導管檢查後在加護病房觀察之具體情形，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫師安排在翌日檢查追查病因，屬醫療處置連續性重要事實，三段均未提及，影響對醫療照護完整性的理解",
+     "reason": "醫師安排在翌日檢查追查病因，屬醫療處置連續性重要事實，三段均未提及，影響對醫療照護完整性的理解"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「並非轉出後即不加以理睬」之否定句式明確判斷，摘要未以該句式表達，雖有轉出合理之論述",
+     "reason": "「並非轉出後即不加以理睬」之否定句式明確判斷，摘要未以該句式表達，雖有轉出合理之論述"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "實際診治醫師較能通盤瞭解病情之一般性原則，屬法院論證基礎，三段均未提及",
+     "reason": "實際診治醫師較能通盤瞭解病情之一般性原則，屬法院論證基礎，三段均未提及"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "是否有繼續留在加護病房之必要應以實際負責醫師判斷為準之具體標準，reasoning 段僅提及醫師建議但未明確該判斷標準",
+     "reason": "是否有繼續留在加護病房之必要應以實際負責醫師判斷為準之具體標準，reasoning 段僅提及醫師建議但未明確該判斷標準"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴人請求傳喚加護病房另外2位醫師之審理程序細節，屬程序性事實",
+     "reason": "公訴人請求傳喚加護病房另外2位醫師之審理程序細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴人請求傳喚告訴代理人乙之審理程序細節，屬程序性事實",
+     "reason": "公訴人請求傳喚告訴代理人乙之審理程序細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療行為已記錄在病歷中之明確陳述，reasoning 段未提及",
+     "reason": "醫療行為已記錄在病歷中之明確陳述，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "檢察官亦委託醫審會鑑定之事實，reasoning 段僅提及「本院再次囑託」，未完整說明檢察官亦曾委託",
+     "reason": "檢察官亦委託醫審會鑑定之事實，reasoning 段僅提及「本院再次囑託」，未完整說明檢察官亦曾委託"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "本院認傳喚證人並無必要之法院判斷，reasoning 段未提及",
+     "reason": "本院認傳喚證人並無必要之法院判斷，reasoning 段未提及"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 103,
+   "pred_total": 104,
+   "matched": 67,
+   "partial": 14,
+   "missing": 22,
+   "hallucinated": 0
+  },
+  "section_balance": 0.6154
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,138 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7918,
+  "fact_recall": 0.8739,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9327,
+  "quality_overall": 4.65,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 17
+  },
+  "weighted_recall": 0.958,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 11,
+   "details": [
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT陳述「對施以甦醒球之治療毫無反應」此關鍵因果關係細節，經查section_01_facts.txt起訴書及section_05_reasoning.txt法院理由，雖有提及證人A懷疑「鼻胃管刺激造成氣管痙攣收縮」，但summary完全未提及「甦醒球治療無效」或「對氧氣治療無反應」之情節。此为重要因果關係事實，影響案情理解",
+     "reason": "GT陳述「對施以甦醒球之治療毫無反應」此關鍵因果關係細節，經查section_01_facts.txt起訴書及section_05_reasoning.txt法院理由，雖有提及證人A懷疑「鼻胃管刺激造成氣管痙攣收縮」，但summary完全未提及「甦醒球治療無效」或「對氧氣治療無反應」之情節。此为重要因果關係事實，影響案情理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT陳述「直至插入氣管內管後，氧氣始能順利進入肺部」。經查全部section原文，雖section_05_reasoning.txt提及證人A根據「接氣管內管前對氧氣治療毫無反應」而作推測，但summary完全未提及氣管內管置入程序，亦未描述氧氣進入肺部之因果關係。此为重要急救處置事實",
+     "reason": "GT陳述「直至插入氣管內管後，氧氣始能順利進入肺部」。經查全部section原文，雖section_05_reasoning.txt提及證人A根據「接氣管內管前對氧氣治療毫無反應」而作推測，但summary完全未提及氣管內管置入程序，亦未描述氧氣進入肺部之因果關係。此为重要急救處置事實"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及隔天早上發現肺水腫的具體時間點，屬事實性細節而非核心論點",
+     "reason": "reasoning section 未提及隔天早上發現肺水腫的具體時間點，屬事實性細節而非核心論點"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未說明肺水腫的具體原因（左心衰竭或水喝太多），屬背景性事實",
+     "reason": "reasoning section 未說明肺水腫的具體原因（左心衰竭或水喝太多），屬背景性事實"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及醫師使用利尿劑治療肺水腫的具體處置，屬治療細節而非核心論點",
+     "reason": "reasoning section 未提及醫師使用利尿劑治療肺水腫的具體處置，屬治療細節而非核心論點"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及病患口鼻分泌物的症狀，屬背景性病情描述而非因果論證核心",
+     "reason": "reasoning section 未提及病患口鼻分泌物的症狀，屬背景性病情描述而非因果論證核心"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及證人囑咐鼻胃管接引流袋以避免吸入性肺炎的具體說明",
+     "reason": "reasoning section 未提及證人囑咐鼻胃管接引流袋以避免吸入性肺炎的具體說明"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 提及高濃度氧氣面罩，但未明確記載98%血氧濃度之具體數值",
+     "reason": "reasoning section 提及高濃度氧氣面罩，但未明確記載98%血氧濃度之具體數值"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未明確引用證人對氧氣面罩必要性的看法",
+     "reason": "reasoning section 未明確引用證人對氧氣面罩必要性的看法"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未引用證人說明置放鼻胃管原因",
+     "reason": "reasoning section 未引用證人說明置放鼻胃管原因"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未引用證人表示會將鼻胃管置放回去的陳述",
+     "reason": "reasoning section 未引用證人表示會將鼻胃管置放回去的陳述"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 已提及「高濃度氧氣面罩」概念，但未使用「輸入大量氧氣」之表述，屬同義不同詞",
+     "reason": "reasoning section 已提及「高濃度氧氣面罩」概念，但未使用「輸入大量氧氣」之表述，屬同義不同詞"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 提及醫審會鑑定意見，但未指明「第二點」之具體條次",
+     "reason": "reasoning section 提及醫審會鑑定意見，但未指明「第二點」之具體條次"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 119,
+   "pred_total": 129,
+   "matched": 102,
+   "partial": 4,
+   "missing": 13,
+   "hallucinated": 0
+  },
+  "section_balance": 0.8
+ }
 }

@@ -12,6 +12,9 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
+  "LENS-NoAFG-DeepSeek_v31",
   "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
@@ -20,9 +23,7 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,75 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7192,
+  "fact_recall": 0.9128,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9544,
+  "quality_overall": 4.9214,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9909,
+  "uncited_rate": 0.014,
+  "faithfulness_combined": {
+   "score": 0.9916,
+   "citation_fidelity": 0.986,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 0.92,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 23
+  },
+  "weighted_recall": 0.9845,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "搜尋 section_01_facts.txt 及 section_05_reasoning.txt，均未找到「病患及家屬多次向被告反應病情」的相關描述。此屬於情節細節遺漏，不影響核心案情（疝氣手術、併發症、睪丸切除）的理解",
+     "reason": "搜尋 section_01_facts.txt 及 section_05_reasoning.txt，均未找到「病患及家屬多次向被告反應病情」的相關描述。此屬於情節細節遺漏，不影響核心案情（疝氣手術、併發症、睪丸切除）的理解"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「3個月之病徵」為背景病情細節，不影響鑑定意見核心結論",
+     "reason": "「3個月之病徵」為背景病情細節，不影響鑑定意見核心結論"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性細節，非鑑定實質內容",
+     "reason": "程序性細節，非鑑定實質內容"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "機構名稱細節，不影響醫學意見理解",
+     "reason": "機構名稱細節，不影響醫學意見理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 86,
+   "pred_total": 74,
+   "matched": 73,
+   "partial": 11,
+   "missing": 2,
+   "hallucinated": 0
+  },
+  "section_balance": 0.9333
+ }
 }
