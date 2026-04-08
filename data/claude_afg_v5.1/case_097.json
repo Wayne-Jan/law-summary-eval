@@ -15,7 +15,6 @@
   "LENS-Full-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
-  "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -35,7 +34,6 @@
   "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
   "baseline_gpt-5.3": "GPT-5.3 Instant",
   "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
   "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
@@ -58,7 +56,6 @@
   "baseline_gemini-3.1-pro": "商用模型",
   "baseline_gpt-5.3": "商用模型",
   "baseline_gpt-5.4-thinking": "商用模型",
-  "baseline_ollama_cogito-2.1-671b-cloud": "開源模型",
   "baseline_ollama_deepseek-v3.1-671b-cloud": "開源模型",
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
@@ -154,6 +151,121 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8543,
-  "fact_recall_avg": null
+  "fact_recall": 0.8656,
+  "fact_precision": 1.0,
+  "fact_f1": 0.928,
+  "quality_overall": 4.8571,
+  "checklist_pass_rate": 0.973,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.018,
+  "faithfulness_combined": {
+   "score": 0.9892,
+   "citation_fidelity": 0.982,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 30,
+   "correct": 30
+  },
+  "weighted_recall": 0.9462,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要中確實未提及『依當時情形，客觀上並無不能注意之情事』，此為過失構成要件之客觀注意能力判斷前提，影響過失責任理解",
+     "reason": "摘要中確實未提及『依當時情形，客觀上並無不能注意之情事』，此為過失構成要件之客觀注意能力判斷前提，影響過失責任理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "搜尋 facts/defense/opinions 各段落均無家屬質疑病歷竄改及 EMT 救護紀錄單比對之內容，確認摘要未提及",
+     "reason": "搜尋 facts/defense/opinions 各段落均無家屬質疑病歷竄改及 EMT 救護紀錄單比對之內容，確認摘要未提及"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 僅提到『少量滲血』，但未包含『脈搏40下、血壓79/59mmHg』及『嚴重低血容積性休克，身體所剩血量不足以造成傷口繼續大量失血』之完整病理推論，跨 section 合併後仍不完整",
+     "reason": "opinions section 僅提到『少量滲血』，但未包含『脈搏40下、血壓79/59mmHg』及『嚴重低血容積性休克，身體所剩血量不足以造成傷口繼續大量失血』之完整病理推論，跨 section 合併後仍不完整"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及急救病人標準程序『應盡力在第一時間內打上周邊靜脈血管』之具體要求，確認摘要未提及",
+     "reason": "opinions section 未提及急救病人標準程序『應盡力在第一時間內打上周邊靜脈血管』之具體要求，確認摘要未提及"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及靜脈穿刺困難『為創傷或兒科患者常遇到的狀況』之背景說明，確認摘要未提及",
+     "reason": "opinions section 未提及靜脈穿刺困難『為創傷或兒科患者常遇到的狀況』之背景說明，確認摘要未提及"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 僅提到『切開皮膚方式施打點滴』，未詳細說明第二選擇方案（中央靜脈導管或皮膚切開術）為替代選項，確認摘要未完整提及",
+     "reason": "opinions section 僅提到『切開皮膚方式施打點滴』，未詳細說明第二選擇方案（中央靜脈導管或皮膚切開術）為替代選項，確認摘要未完整提及"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及中央靜脈導管與皮膚切開術『效果差異不大』及『取決於醫師熟練度』之比較說明，確認摘要未提及",
+     "reason": "opinions section 未提及中央靜脈導管與皮膚切開術『效果差異不大』及『取決於醫師熟練度』之比較說明，確認摘要未提及"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及兩種替代方案『皆須準備特殊器材，進行廣泛性消毒，耗費時間較長』之執行細節，確認摘要未提及",
+     "reason": "opinions section 未提及兩種替代方案『皆須準備特殊器材，進行廣泛性消毒，耗費時間較長』之執行細節，確認摘要未提及"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及嚴重休克患者靜脈穿刺『往往需要耗費許多時間，甚至是1-2小時以上』之臨床經驗說明，此為鑑定意見支持 32 分鐘輸血屬合理處置之重要論據，確認摘要遺漏",
+     "reason": "opinions section 未提及嚴重休克患者靜脈穿刺『往往需要耗費許多時間，甚至是1-2小時以上』之臨床經驗說明，此為鑑定意見支持 32 分鐘輸血屬合理處置之重要論據，確認摘要遺漏"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "GT reasoning section 確實記載「病患R所受之左膕部傷口深可見骨，面積約10×6×5cm」，但生成摘要僅提及「傷口很大」而未含具體尺寸（10×6×5cm）。此為傷口尺寸的具體數值描述，雖有助於理解傷勢嚴重程度，但非影響判決結論之關鍵事實，屬次要資訊。",
+     "reason": "GT reasoning section 確實記載「病患R所受之左膕部傷口深可見骨，面積約10×6×5cm」，但生成摘要僅提及「傷口很大」而未含具體尺寸（10×6×5cm）。此為傷口尺寸的具體數值描述，雖有助於理解傷勢嚴重程度，但非影響判決結論之關鍵事實，屬次要資訊。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 114,
+   "matched": 78,
+   "partial": 5,
+   "missing": 10,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6322,
+  "compression_afg_chars": 4669,
+  "compression_source_chars": 12694,
+  "gt_length_ratio": 1.5652,
+  "gt_length_afg_chars": 4669,
+  "gt_length_gt_chars": 2983,
+  "section_balance": 0.6364
  }
 }

@@ -43,6 +43,7 @@ EXCLUDED_CONDITIONS = {
     "opensource_afg_v11_5_writer_nemotron_super",
     "opensource_afg_v11_5_no_react_writer_nemotron_super",
     "opensource_afg_v11_5_no_afg_writer_nemotron_super",
+    "baseline_ollama_cogito-2.1-671b-cloud",
 }
 
 EXTRA_CONDITIONS = OrderedDict(
@@ -67,7 +68,6 @@ DISPLAY_LABELS = {
     "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
     "baseline_gemini-3.0-flash": "Gemini 3.0 Flash",
     "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
-    "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
     "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
     "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
     "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",

@@ -15,7 +15,6 @@
   "LENS-Full-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
-  "baseline_ollama_cogito-2.1-671b-cloud",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -35,7 +34,6 @@
   "baseline_gemini-3.1-pro": "Gemini 3.1 Pro",
   "baseline_gpt-5.3": "GPT-5.3 Instant",
   "baseline_gpt-5.4-thinking": "GPT-5.4 Thinking",
-  "baseline_ollama_cogito-2.1-671b-cloud": "Cogito 2.1 (671B / 37A)",
   "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1 (671B / 37A)",
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
@@ -58,7 +56,6 @@
   "baseline_gemini-3.1-pro": "商用模型",
   "baseline_gpt-5.3": "商用模型",
   "baseline_gpt-5.4-thinking": "商用模型",
-  "baseline_ollama_cogito-2.1-671b-cloud": "開源模型",
   "baseline_ollama_deepseek-v3.1-671b-cloud": "開源模型",
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
@@ -135,6 +132,164 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.934
+  "rule_based_avg": 0.934,
+  "fact_recall": 0.8036,
+  "fact_precision": 0.9623,
+  "fact_f1": 0.8758,
+  "quality_overall": 4.9429,
+  "checklist_pass_rate": 0.9973,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.987,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9849,
+   "citation_fidelity": 1.0,
+   "fact_precision": 0.9623,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.9048,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 8,
+   "details": [
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "文件數量（解剖報告書及鑑定報告書各1份）為程序性細節，summary僅提及報告內容，未特別標註份數",
+     "reason": "文件數量（解剖報告書及鑑定報告書各1份）為程序性細節，summary僅提及報告內容，未特別標註份數"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "死亡方式分類（病死/自然死）為鑑定意見重要結論，summary未明確提及此分類",
+     "reason": "死亡方式分類（病死/自然死）為鑑定意見重要結論，summary未明確提及此分類"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "機構全名（長庚醫療財團法人林口長庚紀念醫院等）及文件數量為次要細節，summary僅以「C醫院」「D醫院」簡稱呈現",
+     "reason": "機構全名（長庚醫療財團法人林口長庚紀念醫院等）及文件數量為次要細節，summary僅以「C醫院」「D醫院」簡稱呈現"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "足夠設備的具體清單（插管工具、急救藥物及人工換氣設備等）為醫療規範重要內容，summary僅泛稱「足夠設備」未列舉細項",
+     "reason": "足夠設備的具體清單（插管工具、急救藥物及人工換氣設備等）為醫療規範重要內容，summary僅泛稱「足夠設備」未列舉細項"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "propofol「不應由執行手術或診斷之人給予」的具體限制條款為重要醫療規範細節，summary僅提及需由「受過麻醉或加護照顧訓練之醫師」給藥",
+     "reason": "propofol「不應由執行手術或診斷之人給予」的具體限制條款為重要醫療規範細節，summary僅提及需由「受過麻醉或加護照顧訓練之醫師」給藥"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷」為鑑定意見重要內容，summary未提及診斷困難及資料不足",
+     "reason": "「導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷」為鑑定意見重要內容，summary未提及診斷困難及資料不足"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「麻醉藥物劑量對於正常病患而言在安全範圍」為背景性說明，summary未特別強調此點",
+     "reason": "「麻醉藥物劑量對於正常病患而言在安全範圍」為背景性說明，summary未特別強調此點"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「此病患並非普通病患」為鑑定意見關鍵定性，summary未明確陳述此特殊情況",
+     "reason": "「此病患並非普通病患」為鑑定意見關鍵定性，summary未明確陳述此特殊情況"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「綜觀上述二點，被告並不符合醫學專業要求與規範」為綜合性結論陳述，summary已於pred_claim_id 9呈現核心結論，此特定表述方式遺漏為次要",
+     "reason": "「綜觀上述二點，被告並不符合醫學專業要求與規範」為綜合性結論陳述，summary已於pred_claim_id 9呈現核心結論，此特定表述方式遺漏為次要"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及簡式審判程序裁定細節，屬程序性事實",
+     "reason": "section_05_reasoning.txt 未提及簡式審判程序裁定細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及判決確定或上訴期間資訊，屬程序性事實",
+     "reason": "section_05_reasoning.txt 未提及判決確定或上訴期間資訊，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要提及「由受過麻醉訓練之醫師給藥」但未明確陳述「不應由執行手術或診斷之人給予」的禁止性規範，屬重要醫療規範細節遺漏",
+     "reason": "摘要提及「由受過麻醉訓練之醫師給藥」但未明確陳述「不應由執行手術或診斷之人給予」的禁止性規範，屬重要醫療規範細節遺漏"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及15萬元報酬金額，此為被告動機細節，不影響核心過失認定",
+     "reason": "摘要未提及15萬元報酬金額，此為被告動機細節，不影響核心過失認定"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要雖在事實段提及設備不足，但理由段未明確論述法院認定被告「明知」設備不足的主觀要件",
+     "reason": "摘要雖在事實段提及設備不足，但理由段未明確論述法院認定被告「明知」設備不足的主觀要件"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "理由段未明確陳述法院認定「未注意相關醫學麻醉規範」，雖事實段有提及",
+     "reason": "理由段未明確陳述法院認定「未注意相關醫學麻醉規範」，雖事實段有提及"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要已提及業務過失致死罪認定，「應依法論罰」屬結論性語句，遺漏不影響核心理解",
+     "reason": "摘要已提及業務過失致死罪認定，「應依法論罰」屬結論性語句，遺漏不影響核心理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 84,
+   "pred_total": 53,
+   "matched": 67,
+   "partial": 1,
+   "missing": 16,
+   "hallucinated": 2
+  },
+  "compression_ratio": 0.6169,
+  "compression_afg_chars": 1669,
+  "compression_source_chars": 4357,
+  "gt_length_ratio": 0.5536,
+  "gt_length_afg_chars": 1669,
+  "gt_length_gt_chars": 3015,
+  "section_balance": 0.6667
  }
 }
