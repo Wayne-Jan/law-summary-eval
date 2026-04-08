@@ -142,5 +142,116 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8247,
+  "fact_recall": 0.79,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8827,
+  "quality_overall": 4.7095,
+  "checklist_pass_rate": 0.9784,
+  "citation_accuracy": 0.9286,
+  "citation_support_score": 0.9563,
+  "uncited_rate": 0.07,
+  "faithfulness_combined": {
+   "score": 0.9182,
+   "citation_fidelity": 0.8636,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.92,
+  "missing_severity": {
+   "critical": 1,
+   "important": 1,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 原文僅提及『告知病患X』，但無『抽血檢驗』之具體內容；屬程序性細節事實",
+     "reason": "section_01_facts.txt 原文僅提及『告知病患X』，但無『抽血檢驗』之具體內容；屬程序性細節事實"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及『未評估身體檢查、詢問病史、判斷手術危險性』，但未明確對應『是否適於施行臉部拉皮手術』之評估疏失；屬案情核心事實",
+     "reason": "section_05_reasoning.txt 雖提及『未評估身體檢查、詢問病史、判斷手術危險性』，但未明確對應『是否適於施行臉部拉皮手術』之評估疏失；屬案情核心事實"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "GT 事實涉及『貿然施行手術將導致病患缺氧／缺血』之風險預見，section_01_facts.txt 與 section_05_reasoning.txt 皆無此風險說明；影響過失認定理解",
+     "reason": "GT 事實涉及『貿然施行手術將導致病患缺氧／缺血』之風險預見，section_01_facts.txt 與 section_05_reasoning.txt 皆無此風險說明；影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要確實未明確提及「本件有法醫解剖鑑定報告書一份」此存在性事實。雖摘要於法醫解剖鑑定報告段落中引用該報告內容，但僅屬間接暗示而非明確陳述。此為證據文件存在性的程序性背景事實，不影響死因機轉的醫學理解，故維持 missing 並標記為 minor。",
+     "reason": "生成摘要確實未明確提及「本件有法醫解剖鑑定報告書一份」此存在性事實。雖摘要於法醫解剖鑑定報告段落中引用該報告內容，但僅屬間接暗示而非明確陳述。此為證據文件存在性的程序性背景事實，不影響死因機轉的醫學理解，故維持 missing 並標記為 minor。"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（未上訴），不影響案情實體內容與判決結論理解",
+     "reason": "程序性事實（未上訴），不影響案情實體內容與判決結論理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（判決確定），屬判決生效狀態說明，不影響過失認定與量刑理解",
+     "reason": "程序性事實（判決確定），屬判決生效狀態說明，不影響過失認定與量刑理解"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 雖提及『證人陳述』，但明確標註證人A證述『該診尚在籌備中』之事實來源未出現。診所狀態雖於 facts section 提及，但非證人A證述之引用，故維持 missing。屬程序性/背景性事實，不影響判決結論理解。",
+     "reason": "reasoning section 雖提及『證人陳述』，但明確標註證人A證述『該診尚在籌備中』之事實來源未出現。診所狀態雖於 facts section 提及，但非證人A證述之引用，故維持 missing。屬程序性/背景性事實，不影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未明確標註『證人B證述』來源，亦未提及『因診所籌備中而沒有病患X之護士紀錄及病歷紀錄』之因果關係敘述。雖病歷缺失於 opinions section 提及，但非證人B證述。屬程序性/背景性事實。",
+     "reason": "reasoning section 未明確標註『證人B證述』來源，亦未提及『因診所籌備中而沒有病患X之護士紀錄及病歷紀錄』之因果關係敘述。雖病歷缺失於 opinions section 提及，但非證人B證述。屬程序性/背景性事實。"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 提及『被告前有違反醫師法之前科』，但未明確提及『臺灣高等法院被告前案紀錄表』此證據名稱。雖前科事實已涵蓋，但證據來源標註不完整。屬程序性/背景性事實。",
+     "reason": "reasoning section 提及『被告前有違反醫師法之前科』，但未明確提及『臺灣高等法院被告前案紀錄表』此證據名稱。雖前科事實已涵蓋，但證據來源標註不完整。屬程序性/背景性事實。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 50,
+   "pred_total": 43,
+   "matched": 38,
+   "partial": 3,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6445,
+  "compression_afg_chars": 1108,
+  "compression_source_chars": 3117,
+  "gt_length_ratio": 0.906,
+  "gt_length_afg_chars": 1108,
+  "gt_length_gt_chars": 1223,
+  "section_balance": 0.6667
+ }
 }

@@ -147,6 +147,424 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.6143
+  "rule_based_avg": 0.6143,
+  "fact_recall": 0.6931,
+  "fact_precision": 0.9938,
+  "fact_f1": 0.8167,
+  "quality_overall": 4.4786,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9656,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9975,
+   "citation_fidelity": 1.0,
+   "fact_precision": 0.9938,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "cross_validation": null,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 44,
+   "correct": 44
+  },
+  "weighted_recall": 0.8307,
+  "missing_severity": {
+   "critical": 3,
+   "important": 36,
+   "minor": 15,
+   "details": [
+    {
+     "gt_claim_id": 47,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "此為法院在 reasoning 中的反事實推論（counterfactual），非核心案件事實，摘要未提及不影響案情理解",
+     "reason": "此為法院在 reasoning 中的反事實推論（counterfactual），非核心案件事實，摘要未提及不影響案情理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告辯稱『肺部浸潤實為肺纖維化而非肺炎』之關鍵醫療事實辯護，預測 defense section 確實未涵蓋，影響對被告辯護要點之完整理解",
+     "reason": "被告辯稱『肺部浸潤實為肺纖維化而非肺炎』之關鍵醫療事實辯護，預測 defense section 確實未涵蓋，影響對被告辯護要點之完整理解"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions 及 section_05_reasoning 均未提及病歷僅記載配偶捐贈而未提及其他家屬之細節",
+     "reason": "section_03_opinions 及 section_05_reasoning 均未提及病歷僅記載配偶捐贈而未提及其他家屬之細節"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 雖提及HLA配對結果，但未明確記載『二項相符（四項錯配）』之論述，僅提及『2項吻合』，語意不完整",
+     "reason": "section_05_reasoning 雖提及HLA配對結果，但未明確記載『二項相符（四項錯配）』之論述，僅提及『2項吻合』，語意不完整"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 記載之PRA數值為10.69%及71.90%，與 GT claim 之8.61%不同，且無『易排斥體質』之綜合判定",
+     "reason": "section_05_reasoning 記載之PRA數值為10.69%及71.90%，與 GT claim 之8.61%不同，且無『易排斥體質』之綜合判定"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 雖提及3次血漿置換，但未提及3次免疫球蛋白注射、2次抗B型淋巴球單株抗體注射及口服藥物",
+     "reason": "section_05_reasoning 雖提及3次血漿置換，但未提及3次免疫球蛋白注射、2次抗B型淋巴球單株抗體注射及口服藥物"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及抑制免疫治療之目的為『去除受贈者體內預存之抗體』",
+     "reason": "未於任何 section 明確提及抑制免疫治療之目的為『去除受贈者體內預存之抗體』"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及抑制免疫治療『主要針對血型不相容之捐贈者及受贈者』",
+     "reason": "未於任何 section 明確提及抑制免疫治療『主要針對血型不相容之捐贈者及受贈者』"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未於任何 section 明確提及『移植前會再檢測受贈者體內之血型抗體』之程序",
+     "reason": "未於任何 section 明確提及『移植前會再檢測受贈者體內之血型抗體』之程序"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『病患即使未接受抑制免疫治療，而直接接受腎移植手術，亦無不可』之判定",
+     "reason": "未於任何 section 明確提及『病患即使未接受抑制免疫治療，而直接接受腎移植手術，亦無不可』之判定"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 雖提及無肺部感染症狀，但未明確判定『移植前肺部無問題』及『6月8日處置符合醫療常規』",
+     "reason": "section_05_reasoning 雖提及無肺部感染症狀，但未明確判定『移植前肺部無問題』及『6月8日處置符合醫療常規』"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 記載為『8月6日』胸部X光檢查，與 GT claim『8月7日』日期不符",
+     "reason": "section_05_reasoning 記載為『8月6日』胸部X光檢查，與 GT claim『8月7日』日期不符"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions 雖提及『符合醫療常規』，但未明確針對『術後一連串治療』之整體評價",
+     "reason": "section_03_opinions 雖提及『符合醫療常規』，但未明確針對『術後一連串治療』之整體評價"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未於任何 section 提及『未開立會診單而以電話告知』之具體程序細節",
+     "reason": "未於任何 section 提及『未開立會診單而以電話告知』之具體程序細節"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『電話溝通未違反醫療常規』之判定",
+     "reason": "未於任何 section 明確提及『電話溝通未違反醫療常規』之判定"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 記載為『吸不到氣』，與 GT claim『全身不舒服及呼吸不順暢』語意涵蓋範圍不同",
+     "reason": "section_05_reasoning 記載為『吸不到氣』，與 GT claim『全身不舒服及呼吸不順暢』語意涵蓋範圍不同"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 記載為『有肺炎情況』，但未提及『疑似PCP感染』之鑑別診斷",
+     "reason": "section_05_reasoning 記載為『有肺炎情況』，但未提及『疑似PCP感染』之鑑別診斷"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 提及『提高Tienam藥物之劑量』，但未明確說明『提高抗生素劑量治療』（藥物類別描述不完整）",
+     "reason": "section_05_reasoning 提及『提高Tienam藥物之劑量』，但未明確說明『提高抗生素劑量治療』（藥物類別描述不完整）"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『器官移植術後1個月內容易有PCP之感染』之臨床醫學說明",
+     "reason": "未於任何 section 明確提及『器官移植術後1個月內容易有PCP之感染』之臨床醫學說明"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確針對9月29日處置做出『符合醫療常規』之判定",
+     "reason": "未於任何 section 明確針對9月29日處置做出『符合醫療常規』之判定"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『檢測至手術時間僅2個月，不致發生變化，故無需再度進行交叉配型』之判定",
+     "reason": "未於任何 section 明確提及『檢測至手術時間僅2個月，不致發生變化，故無需再度進行交叉配型』之判定"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『無需再次接受上述抑制免疫治療』之判定",
+     "reason": "未於任何 section 明確提及『無需再次接受上述抑制免疫治療』之判定"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未於任何 section 明確提及『抑制免疫治療時程及次數醫學上並無定論』之說明",
+     "reason": "未於任何 section 明確提及『抑制免疫治療時程及次數醫學上並無定論』之說明"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 雖提及『並非以放射線檢查之報告為唯一之判斷依據』，但未完整對應『需同時配合病患之臨床症狀及其他抽血報告』之論述",
+     "reason": "section_05_reasoning 雖提及『並非以放射線檢查之報告為唯一之判斷依據』，但未完整對應『需同時配合病患之臨床症狀及其他抽血報告』之論述"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『X光結果可能為腎功能異常或感染所造成，無法據此判定』之鑑別診斷說明",
+     "reason": "未於任何 section 明確提及『X光結果可能為腎功能異常或感染所造成，無法據此判定』之鑑別診斷說明"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『因Cr 7.79 mg/dl而較可認係腎功能惡化所造成』之因果判定（section_05記載Cr為8.17及8.26，數值不符）",
+     "reason": "未於任何 section 明確提及『因Cr 7.79 mg/dl而較可認係腎功能惡化所造成』之因果判定（section_05記載Cr為8.17及8.26，數值不符）"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 雖提及『尚無法認為其已罹患肺炎』，但未完整對應『臨床症狀及血液檢查結果並未發現移植前有肺部感染之徵象』之綜合判定",
+     "reason": "section_05_reasoning 雖提及『尚無法認為其已罹患肺炎』，但未完整對應『臨床症狀及血液檢查結果並未發現移植前有肺部感染之徵象』之綜合判定"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『胸腔X光檢查結果亦無惡化之情況，故可進行移植手術』之判斷依據",
+     "reason": "未於任何 section 明確提及『胸腔X光檢查結果亦無惡化之情況，故可進行移植手術』之判斷依據"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『無肺部感染之徵象，故無積極醫療處置之必要』之判定",
+     "reason": "未於任何 section 明確提及『無肺部感染之徵象，故無積極醫療處置之必要』之判定"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions 雖提及整體醫療行為符合醫療常規，但未明確針對『移植前處置』做出符合醫療常規之判定",
+     "reason": "section_03_opinions 雖提及整體醫療行為符合醫療常規，但未明確針對『移植前處置』做出符合醫療常規之判定"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 提及發燒、畏寒及大腸桿菌培養，但未明確整合為『符合敗血症診斷』之判定",
+     "reason": "section_05_reasoning 提及發燒、畏寒及大腸桿菌培養，但未明確整合為『符合敗血症診斷』之判定"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "未於任何 section 明確提及『尚未到達敗血性休克之程度』之關鍵判定，影響過失認定理解",
+     "reason": "未於任何 section 明確提及『尚未到達敗血性休克之程度』之關鍵判定，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確針對9月9日敗血症之『藥物治療符合醫療常規』做出判定",
+     "reason": "未於任何 section 明確針對9月9日敗血症之『藥物治療符合醫療常規』做出判定"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 雖提及免疫抑制劑治療，但未明確說明『服用抗免疫抑制劑屬於免疫能力低下，產生感染之機會本即較高』之因果關係",
+     "reason": "section_05_reasoning 雖提及免疫抑制劑治療，但未明確說明『服用抗免疫抑制劑屬於免疫能力低下，產生感染之機會本即較高』之因果關係"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未於任何 section 明確提及『病菌種類繁多，要全部預防實屬不易』之說明",
+     "reason": "未於任何 section 明確提及『病菌種類繁多，要全部預防實屬不易』之說明"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『依病程時序及臨床症狀進行鑑別診斷時，黴菌感染非首要考量』之鑑別診斷說明",
+     "reason": "未於任何 section 明確提及『依病程時序及臨床症狀進行鑑別診斷時，黴菌感染非首要考量』之鑑別診斷說明"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 雖提及多種抗生素，但未明確指出『術後持續有服用預防性抗生素治療』之意圖",
+     "reason": "section_05_reasoning 雖提及多種抗生素，但未明確指出『術後持續有服用預防性抗生素治療』之意圖"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確提及『預防PCP、黴菌感染為較後期之考量』之治療優先順序說明",
+     "reason": "未於任何 section 明確提及『預防PCP、黴菌感染為較後期之考量』之治療優先順序說明"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning 雖提及醫師裁量權概念，但未明確對應『究要使用何種藥物治療需依病患臨床症狀及相關檢驗結果而定』",
+     "reason": "section_05_reasoning 雖提及醫師裁量權概念，但未明確對應『究要使用何種藥物治療需依病患臨床症狀及相關檢驗結果而定』"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning 雖提及『本屬臨床專業醫師裁量、判斷之範疇』，但未完整涵蓋『何時使用何種藥物治療屬醫師之臨床專業裁量權』之論述",
+     "reason": "section_05_reasoning 雖提及『本屬臨床專業醫師裁量、判斷之範疇』，但未完整涵蓋『何時使用何種藥物治療屬醫師之臨床專業裁量權』之論述"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未於任何 section 明確針對9月29日及10月4日之『治療處置符合醫療常規』做出判定",
+     "reason": "未於任何 section 明確針對9月29日及10月4日之『治療處置符合醫療常規』做出判定"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "未於任何 section 提及『嘉義縣新港鄉衛生所於100年10月8日所出具之死亡證明書』之程序性文件資訊",
+     "reason": "未於任何 section 提及『嘉義縣新港鄉衛生所於100年10月8日所出具之死亡證明書』之程序性文件資訊"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "未於任何 section 明確提及『病患於100年10月7日15時26分因尿毒症腎臟移植術後引起肺炎併敗血性休克死亡』之死亡時間及死因，影響判決結論理解",
+     "reason": "未於任何 section 明確提及『病患於100年10月7日15時26分因尿毒症腎臟移植術後引起肺炎併敗血性休克死亡』之死亡時間及死因，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未記載被告乙關於術後解釋雙輸尿管情形的完整供稱內容，屬被告辯護細節遺漏",
+     "reason": "section_05_reasoning.txt 未記載被告乙關於術後解釋雙輸尿管情形的完整供稱內容，屬被告辯護細節遺漏"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及『殊難採信』，但未明確對應『血漿置換術後未再檢測是否達可移植數值』之具體主張，屬關鍵醫療爭議遺漏",
+     "reason": "section_05_reasoning.txt 雖提及『殊難採信』，但未明確對應『血漿置換術後未再檢測是否達可移植數值』之具體主張，屬關鍵醫療爭議遺漏"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未記載被告甲關於ATG療法、血漿透析、抗體注射之詳細供稱內容，屬醫療處置細節遺漏",
+     "reason": "section_05_reasoning.txt 未記載被告甲關於ATG療法、血漿透析、抗體注射之詳細供稱內容，屬醫療處置細節遺漏"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未記載『開刀兩週後完全沒有小便，腎臟穿刺發現嚴重排斥』之詳細醫療過程，屬病程細節遺漏",
+     "reason": "section_05_reasoning.txt 未記載『開刀兩週後完全沒有小便，腎臟穿刺發現嚴重排斥』之詳細醫療過程，屬病程細節遺漏"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未完整記載『ATG降低排斥但發生感染是併發症』之因果說明，屬醫療機制解釋遺漏",
+     "reason": "section_05_reasoning.txt 未完整記載『ATG降低排斥但發生感染是併發症』之因果說明，屬醫療機制解釋遺漏"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 僅概括提及『曾有37.5℃以上之表現』，未明確列出9月1-3日、8-12日、15-20日、29-30日之具體日期，屬時間細節遺漏",
+     "reason": "section_05_reasoning.txt 僅概括提及『曾有37.5℃以上之表現』，未明確列出9月1-3日、8-12日、15-20日、29-30日之具體日期，屬時間細節遺漏"
+    },
+    {
+     "gt_claim_id": 178,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及『對話錄音光碟』及『對話過程非常和善』之證據內容，屬證據細節遺漏",
+     "reason": "section_05_reasoning.txt 未提及『對話錄音光碟』及『對話過程非常和善』之證據內容，屬證據細節遺漏"
+    },
+    {
+     "gt_claim_id": 179,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及『無人以不悅語氣要求對方』之對話過程描述，屬證據細節遺漏",
+     "reason": "section_05_reasoning.txt 未提及『無人以不悅語氣要求對方』之對話過程描述，屬證據細節遺漏"
+    },
+    {
+     "gt_claim_id": 184,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及『被告甲所為或有違反醫學倫理之問題』之法院評論，屬法院道德評價遺漏",
+     "reason": "section_05_reasoning.txt 未提及『被告甲所為或有違反醫學倫理之問題』之法院評論，屬法院道德評價遺漏"
+    },
+    {
+     "gt_claim_id": 188,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 雖有被告否認犯行之暗示，但未明確陳述『被告否認犯行尚非子虛，應可採信』之法院認定，屬被告抗辯評價遺漏",
+     "reason": "section_05_reasoning.txt 雖有被告否認犯行之暗示，但未明確陳述『被告否認犯行尚非子虛，應可採信』之法院認定，屬被告抗辯評價遺漏"
+    },
+    {
+     "gt_claim_id": 189,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及『罪疑唯輕原則之適用』及『無罪諭知之法律依據』，屬重要法律原則遺漏",
+     "reason": "section_05_reasoning.txt 未提及『罪疑唯輕原則之適用』及『無罪諭知之法律依據』，屬重要法律原則遺漏"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 189,
+   "pred_total": 162,
+   "matched": 127,
+   "partial": 8,
+   "missing": 54,
+   "hallucinated": 1
+  },
+  "section_balance": 0.2115
  }
 }

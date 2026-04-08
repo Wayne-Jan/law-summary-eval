@@ -130,5 +130,130 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8107,
+  "fact_recall": 0.6622,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7967,
+  "quality_overall": 3.9762,
+  "checklist_pass_rate": 0.922,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 21,
+   "correct": 21
+  },
+  "weighted_recall": 0.8649,
+  "missing_severity": {
+   "critical": 1,
+   "important": 2,
+   "minor": 8,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "所有 sections 皆使用『病患X』，『丙、戊』之名稱及親屬關係未在任何 section 出現，屬背景性資訊",
+     "reason": "所有 sections 皆使用『病患X』，『丙、戊』之名稱及親屬關係未在任何 section 出現，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "『丙提起告訴』之事實未出現於任何 section，僅 facts section 提及『檢察官提起公訴』，屬程序性事實",
+     "reason": "『丙提起告訴』之事實未出現於任何 section，僅 facts section 提及『檢察官提起公訴』，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要完全未提及『因協商判決導致鑑定內容未明載』之事實，屬程序性/背景性資訊，對判決結論理解影響較小",
+     "reason": "生成摘要完全未提及『因協商判決導致鑑定內容未明載』之事實，屬程序性/背景性資訊，對判決結論理解影響較小"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "法院訊問被告及自白犯罪為程序性事實，不影響判決主文（罪名、刑度、減刑、緩刑）之理解",
+     "reason": "法院訊問被告及自白犯罪為程序性事實，不影響判決主文（罪名、刑度、減刑、緩刑）之理解"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢察官聲請協商判決為程序性動作，生成摘要已提及『達成協商之合意』，聲請程序本身不占重要資訊地位",
+     "reason": "檢察官聲請協商判決為程序性動作，生成摘要已提及『達成協商之合意』，聲請程序本身不占重要資訊地位"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "雙方未上訴為判決確定前的程序性過程，事實上判決確定即已隱含未上訴之意，不影響判決內容理解",
+     "reason": "雙方未上訴為判決確定前的程序性過程，事實上判決確定即已隱含未上訴之意，不影響判決內容理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定為程序性終結狀態，對理解判決主文（罪名與刑罰）無實質影響",
+     "reason": "判決確定為程序性終結狀態，對理解判決主文（罪名與刑罰）無實質影響"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "生成摘要與 GT claims 中確實未提及「和解」事實，僅提及「協商合意」。協商與和解在法律上為不同概念，summary_grounded.txt 的 (二) 被告回應段落僅有協商內容，無和解相關敘述。",
+     "reason": "生成摘要與 GT claims 中確實未提及「和解」事實，僅提及「協商合意」。協商與和解在法律上為不同概念，summary_grounded.txt 的 (二) 被告回應段落僅有協商內容，無和解相關敘述。"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "生成摘要未提及「96年10月31日撤回告訴」之具體日期與行為。跨 section 檢查（facts、defense、opinions、verdict）均無此資訊，確認為遺漏。",
+     "reason": "生成摘要未提及「96年10月31日撤回告訴」之具體日期與行為。跨 section 檢查（facts、defense、opinions、verdict）均無此資訊，確認為遺漏。"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「表明不再追究刑事責任」屬於撤回告訴的配套法律效果說明，生成摘要雖提及緩刑結果，但未明確提及家屬表明不再追究之聲明。此為程序性事實，不影響核心判決理解。",
+     "reason": "「表明不再追究刑事責任」屬於撤回告訴的配套法律效果說明，生成摘要雖提及緩刑結果，但未明確提及家屬表明不再追究之聲明。此為程序性事實，不影響核心判決理解。"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "此為本案關鍵特徵：原判決書為協商判決，依刑事訴訟法第455條之4第1項，內文確實無一般判決之詳細理由。然而生成摘要竟產出 (五) 判決理由 段落，包含「過失行為認定」、「因果關係認定」等詳細內容，與原判決書結構嚴重不符。此遺漏導致讀者誤以為本案有完整判決理由論述，影響對協商判決性質之理解。",
+     "reason": "此為本案關鍵特徵：原判決書為協商判決，依刑事訴訟法第455條之4第1項，內文確實無一般判決之詳細理由。然而生成摘要竟產出 (五) 判決理由 段落，包含「過失行為認定」、「因果關係認定」等詳細內容，與原判決書結構嚴重不符。此遺漏導致讀者誤以為本案有完整判決理由論述，影響對協商判決性質之理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 37,
+   "pred_total": 36,
+   "matched": 23,
+   "partial": 3,
+   "missing": 11,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.2065,
+  "compression_afg_chars": 1406,
+  "compression_source_chars": 1772,
+  "gt_length_ratio": 1.448,
+  "gt_length_afg_chars": 1406,
+  "gt_length_gt_chars": 971,
+  "section_balance": 0.3333
+ }
 }
