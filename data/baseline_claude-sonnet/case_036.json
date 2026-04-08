@@ -132,5 +132,368 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7605,
+  "fact_recall": 0.4556,
+  "fact_precision": 1.0,
+  "fact_f1": 0.626,
+  "quality_overall": 4.6929,
+  "checklist_pass_rate": 0.9919,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9714,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.7741,
+  "missing_severity": {
+   "critical": 2,
+   "important": 12,
+   "minor": 31,
+   "details": [
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "預測摘要僅稱『被告乙之具體辯解，現有資料未見明確記載，從略』，未明確陳述被告乙否認業務過失傷害犯行。此為被告乙的基本態度主張，影響對其辯護立場的理解。",
+     "reason": "預測摘要僅稱『被告乙之具體辯解，現有資料未見明確記載，從略』，未明確陳述被告乙否認業務過失傷害犯行。此為被告乙的基本態度主張，影響對其辯護立場的理解。"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "預測摘要完全未提及被告乙『依照醫師處方箋正確施打』之核心辯護主張。此為被告乙辯解的關鍵內容，與被告甲辯解形成對照，影響案情完整理解。",
+     "reason": "預測摘要完全未提及被告乙『依照醫師處方箋正確施打』之核心辯護主張。此為被告乙辯解的關鍵內容，與被告甲辯解形成對照，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經查核 summary_grounded.txt 及 reasoning section，生成摘要僅提及醫審會鑑定意見，未包含屏東縣醫師公會關於『合法藥物使用方法即屬正當使用』之專業意見，此為實質性專業見解，影響對醫療標準之完整理解",
+     "reason": "經查核 summary_grounded.txt 及 reasoning section，生成摘要僅提及醫審會鑑定意見，未包含屏東縣醫師公會關於『合法藥物使用方法即屬正當使用』之專業意見，此為實質性專業見解，影響對醫療標準之完整理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢察官上訴與否屬判決後程序性事實，於原始判決書正文未見明確記載，且對案情實體理解（無罪判決及理由）無關鍵影響",
+     "reason": "檢察官上訴與否屬判決後程序性事實，於原始判決書正文未見明確記載，且對案情實體理解（無罪判決及理由）無關鍵影響"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定屬程序性狀態事實，非判決書實體內容；摘要已提及無罪判決結果，此項遺漏不影響對判決結論之理解",
+     "reason": "判決確定屬程序性狀態事實，非判決書實體內容；摘要已提及無罪判決結果，此項遺漏不影響對判決結論之理解"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告訴人以證人身分證述屬實雖出現在GT原文reasoning段，但僅為程序性事實陳述，預測摘要中已涵蓋95年9月18日注射Ketoprofen無不良反應的核心事實，證人身分非關鍵法律判斷要素",
+     "reason": "告訴人以證人身分證述屬實雖出現在GT原文reasoning段，但僅為程序性事實陳述，預測摘要中已涵蓋95年9月18日注射Ketoprofen無不良反應的核心事實，證人身分非關鍵法律判斷要素"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Dyphylline治療支氣管炎雖為GT原文細節，但預測摘要在facts段已提及Dyphyllin注射，且Dyphylline作為支氣管擴張劑之用途屬背景醫療知識，不影響過失判斷之核心理解",
+     "reason": "Dyphylline治療支氣管炎雖為GT原文細節，但預測摘要在facts段已提及Dyphyllin注射，且Dyphylline作為支氣管擴張劑之用途屬背景醫療知識，不影響過失判斷之核心理解"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Ketoprofen用於治療頭痛、腰痠背痛雖為被告甲辯解內容，但GT原文reasoning中法院已指出醫審會認定不符醫療常規係因適應症問題（非癌症/手術後疼痛），非關治療目的之爭議，屬次要細節",
+     "reason": "Ketoprofen用於治療頭痛、腰痠背痛雖為被告甲辯解內容，但GT原文reasoning中法院已指出醫審會認定不符醫療常規係因適應症問題（非癌症/手術後疼痛），非關治療目的之爭議，屬次要細節"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告訴人患急性支氣管炎之診斷，預測摘要在facts段已明確提及（claim 2），雖GT claim標註為reasoning段，但核心事實已於前段呈現，屬重複資訊",
+     "reason": "告訴人患急性支氣管炎之診斷，預測摘要在facts段已明確提及（claim 2），雖GT claim標註為reasoning段，但核心事實已於前段呈現，屬重複資訊"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "85年函示對Ketoprofen適應症之限縮（癌症或手術後疼痛）係法院論證被告甲用藥是否符合常規之關鍵法規依據，預測摘要僅提及醫審會認定用藥與常規不符但未詳述85年函示之具體內容，影響法律論證完整性",
+     "reason": "85年函示對Ketoprofen適應症之限縮（癌症或手術後疼痛）係法院論證被告甲用藥是否符合常規之關鍵法規依據，預測摘要僅提及醫審會認定用藥與常規不符但未詳述85年函示之具體內容，影響法律論證完整性"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Ketoprofen可能引起氣喘或循環性崩潰之警語雖為藥品仿單重要資訊，但預測摘要reasoning段已提及「對Voren過敏者原則上不應使用Ketoprofen」之核心風險，具體副作用描述屬補充說明",
+     "reason": "Ketoprofen可能引起氣喘或循環性崩潰之警語雖為藥品仿單重要資訊，但預測摘要reasoning段已提及「對Voren過敏者原則上不應使用Ketoprofen」之核心風險，具體副作用描述屬補充說明"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "克得注射液製造商為安星製藥係具體藥品資訊，屬事實性細節，預測摘要已涵蓋藥品經衛生署核准合法之核心論點，製造商名稱不影響法律判斷",
+     "reason": "克得注射液製造商為安星製藥係具體藥品資訊，屬事實性細節，預測摘要已涵蓋藥品經衛生署核准合法之核心論點，製造商名稱不影響法律判斷"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥品許可證字號（衛署藥製字第030442號）為具體行政資訊，預測摘要強調藥品合法即可，詳細證號屬次要細節",
+     "reason": "藥品許可證字號（衛署藥製字第030442號）為具體行政資訊，預測摘要強調藥品合法即可，詳細證號屬次要細節"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "克得注射液中文品名之完整記載屬藥品完整名稱細節，預測摘要使用Ketoprofen已足資識別，完整品名非必要資訊",
+     "reason": "克得注射液中文品名之完整記載屬藥品完整名稱細節，預測摘要使用Ketoprofen已足資識別，完整品名非必要資訊"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "克得注射液英文品名為次要技術細節，不影響案情理解",
+     "reason": "克得注射液英文品名為次要技術細節，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "克得注射液許可證記載之完整適應症雖詳細，但預測摘要已涵蓋「依合法藥物使用方法開立處方應符合正當使用」之核心論述，完整適應症列表屬補充",
+     "reason": "克得注射液許可證記載之完整適應症雖詳細，但預測摘要已涵蓋「依合法藥物使用方法開立處方應符合正當使用」之核心論述，完整適應症列表屬補充"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Ketoprofen為合法藥物之認定係法院論證被告甲用藥無疏失之重要前提，預測摘要於opinions段提及「依合法藥物使用方法」但於reasoning段未明確論述藥品合法性對過失判斷之影響，屬重要法律論證遺漏",
+     "reason": "Ketoprofen為合法藥物之認定係法院論證被告甲用藥無疏失之重要前提，預測摘要於opinions段提及「依合法藥物使用方法」但於reasoning段未明確論述藥品合法性對過失判斷之影響，屬重要法律論證遺漏"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告訴人病狀符合藥品適應症係支持用藥無不當之論證細節，預測摘要已強調依藥品記載開立處方無疏失之結論，具體符合與否之論證屬推演過程",
+     "reason": "告訴人病狀符合藥品適應症係支持用藥無不當之論證細節，預測摘要已強調依藥品記載開立處方無疏失之結論，具體符合與否之論證屬推演過程"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "85年函示發布對象為相關公協會係行政程序細節，預測摘要聚焦於法院對過失之認定，函示發布流程屬背景性事實",
+     "reason": "85年函示發布對象為相關公協會係行政程序細節，預測摘要聚焦於法院對過失之認定，函示發布流程屬背景性事實"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "85年函示通知方式係行政程序細節，預測摘要未提及此層論證，但不影響最終過失認定之理解",
+     "reason": "85年函示通知方式係行政程序細節，預測摘要未提及此層論證，但不影響最終過失認定之理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥事法第48之1條規定係法院論證藥品標籤可信性之法源依據，預測摘要已涵蓋標籤記載可周知之結論，具體條文引用屬次要",
+     "reason": "藥事法第48之1條規定係法院論證藥品標籤可信性之法源依據，預測摘要已涵蓋標籤記載可周知之結論，具體條文引用屬次要"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥事法第75條規定係法院論證藥品記載可信性之另一法源，預測摘要以「經行政院衛生署核准」概括涵蓋，具體條文編號屬次要",
+     "reason": "藥事法第75條規定係法院論證藥品記載可信性之另一法源，預測摘要以「經行政院衛生署核准」概括涵蓋，具體條文編號屬次要"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經核准之藥品記載屬可信係法院論證環節，預測摘要於opinions段提及屏東縣醫師公會之意見，reasoning段雖未詳述但已傳達依合法藥物使用即無疏失之結論",
+     "reason": "經核准之藥品記載屬可信係法院論證環節，預測摘要於opinions段提及屏東縣醫師公會之意見，reasoning段雖未詳述但已傳達依合法藥物使用即無疏失之結論"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "標籤仿單須附隨藥品且醫療人員應周知係論證前提，預測摘要已於opinions段涵蓋醫師依合法藥物使用方法開立處方即符合正當使用之意旨",
+     "reason": "標籤仿單須附隨藥品且醫療人員應周知係論證前提，預測摘要已於opinions段涵蓋醫師依合法藥物使用方法開立處方即符合正當使用之意旨"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遵循標籤仿單記載用藥即無疏失係法院認定被告甲無過失之核心法律原則，預測摘要於opinions段提及醫師公會意見但reasoning段未明確論述此原則對本案之適用，影響判決理由完整性",
+     "reason": "遵循標籤仿單記載用藥即無疏失係法院認定被告甲無過失之核心法律原則，預測摘要於opinions段提及醫師公會意見但reasoning段未明確論述此原則對本案之適用，影響判決理由完整性"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "依藥品記載開立Ketoprofen難認不當係法院關於用藥過失之直接結論，預測摘要reasoning段雖提及「尚難僅憑醫審會意見遽認過失」但未明確論述依藥品記載用藥無不當之法律原則，屬重要論證環節遺漏",
+     "reason": "依藥品記載開立Ketoprofen難認不當係法院關於用藥過失之直接結論，預測摘要reasoning段雖提及「尚難僅憑醫審會意見遽認過失」但未明確論述依藥品記載用藥無不當之法律原則，屬重要論證環節遺漏"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告訴人注射後產生過敏性休克傷害之事實，預測摘要於facts段已詳細描述注射後發生呼吸困難等症狀並診斷為過敏性休克，reasoning段雖未重複提及但事實前提已於前段確立",
+     "reason": "告訴人注射後產生過敏性休克傷害之事實，預測摘要於facts段已詳細描述注射後發生呼吸困難等症狀並診斷為過敏性休克，reasoning段雖未重複提及但事實前提已於前段確立"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "藥物過敏發生之三種模式（首次使用、慢性接觸、再次使用才過敏）係法院論證過敏無法預測之關鍵醫學依據，預測摘要僅提及「並非所有對Voren過敏之病人均必然對Ketoprofen產生過敏」，未涵蓋過敏發生機制之具體論述，影響因果關係論證完整性",
+     "reason": "藥物過敏發生之三種模式（首次使用、慢性接觸、再次使用才過敏）係法院論證過敏無法預測之關鍵醫學依據，預測摘要僅提及「並非所有對Voren過敏之病人均必然對Ketoprofen產生過敏」，未涵蓋過敏發生機制之具體論述，影響因果關係論證完整性"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "使用NSAIDs須注意過敏症狀係醫療常識性陳述，預測摘要已涵蓋被告甲採取適當急救措施之論述，具體注意義務之描述屬細節補充",
+     "reason": "使用NSAIDs須注意過敏症狀係醫療常識性陳述，預測摘要已涵蓋被告甲採取適當急救措施之論述，具體注意義務之描述屬細節補充"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "臨床上無常規檢查可預測過敏係法院論證被告甲無法預見過敏發生之關鍵醫學依據，預測摘要未涵蓋此重要免責事由論述，影響過失認定之完整理解",
+     "reason": "臨床上無常規檢查可預測過敏係法院論證被告甲無法預見過敏發生之關鍵醫學依據，預測摘要未涵蓋此重要免責事由論述，影響過失認定之完整理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "過去不過敏仍可能發生過敏性休克係補充論證，預測摘要已於defense及reasoning段強調95年9月18日無不良反應後再次使用之合理性，此論點屬重複強調",
+     "reason": "過去不過敏仍可能發生過敏性休克係補充論證，預測摘要已於defense及reasoning段強調95年9月18日無不良反應後再次使用之合理性，此論點屬重複強調"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "注射後應注意過敏並即時處理係醫療處置規範，預測摘要已涵蓋被告甲即時採取急救措施並轉診之論述，具體處理步驟描述屬細節",
+     "reason": "注射後應注意過敏並即時處理係醫療處置規範，預測摘要已涵蓋被告甲即時採取急救措施並轉診之論述，具體處理步驟描述屬細節"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告甲注射後細察身體變化係急救處置之前提事實，預測摘要雖未明確提及「細察」但已涵蓋「即時採取適當急救措施」之結論",
+     "reason": "被告甲注射後細察身體變化係急救處置之前提事實，預測摘要雖未明確提及「細察」但已涵蓋「即時採取適當急救措施」之結論"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告甲即時急救並轉診之事實，預測摘要於facts段已明確提及告訴人經轉診至B醫院救治，雖reasoning段未重複引述但核心事實已呈現",
+     "reason": "被告甲即時急救並轉診之事實，預測摘要於facts段已明確提及告訴人經轉診至B醫院救治，雖reasoning段未重複引述但核心事實已呈現"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "檢察官關於指示無護理資格者施打之主張係起訴事實，預測摘要於facts段已涵蓋「明知被告乙未具護理人員資格仍囑由施打」，此處為reasoning段重複提及",
+     "reason": "檢察官關於指示無護理資格者施打之主張係起訴事實，預測摘要於facts段已涵蓋「明知被告乙未具護理人員資格仍囑由施打」，此處為reasoning段重複提及"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "護理人員法第37條處罰規定係法源依據，預測摘要已提及「違反護理人員法」但未明確條號，屬次要法規細節",
+     "reason": "護理人員法第37條處罰規定係法源依據，預測摘要已提及「違反護理人員法」但未明確條號，屬次要法規細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "護理人員法第37條僅為行政管理非謂醫療行為一概有過失係法院區分行政責任與刑事責任之關鍵法律論述，預測摘要未涵蓋此重要法理區分，影響判決理由之法律論證完整性",
+     "reason": "護理人員法第37條僅為行政管理非謂醫療行為一概有過失係法院區分行政責任與刑事責任之關鍵法律論述，預測摘要未涵蓋此重要法理區分，影響判決理由之法律論證完整性"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "告訴人傷害肇因於體質無法預測之過敏係法院認定被告甲無過失之核心事實基礎與免責事由，預測摘要雖提及「並非所有對Voren過敏之病人均必然對Ketoprofen產生過敏反應」但未明確論述傷害係源於無法預測之體質因素，屬關鍵因果關係論述遺漏",
+     "reason": "告訴人傷害肇因於體質無法預測之過敏係法院認定被告甲無過失之核心事實基礎與免責事由，預測摘要雖提及「並非所有對Voren過敏之病人均必然對Ketoprofen產生過敏反應」但未明確論述傷害係源於無法預測之體質因素，屬關鍵因果關係論述遺漏"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "由具護理資格人員注射亦無法避免過敏之假設論證係法院否定因果關係之關鍵推理，預測摘要未涵蓋此重要替代因果分析，影響判決理由完整性",
+     "reason": "由具護理資格人員注射亦無法避免過敏之假設論證係法院否定因果關係之關鍵推理，預測摘要未涵蓋此重要替代因果分析，影響判決理由完整性"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "難認傷害與指示無護理資格者注射有因果關係係法院核心判斷之一，預測摘要僅於verdict段提及無罪判決但未於reasoning段詳細論述因果關係否定之推理過程，屬判決基礎論證之重要遺漏",
+     "reason": "難認傷害與指示無護理資格者注射有因果關係係法院核心判斷之一，預測摘要僅於verdict段提及無罪判決但未於reasoning段詳細論述因果關係否定之推理過程，屬判決基礎論證之重要遺漏"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告甲僱用未具護理資格之被告乙執行護理業務之事實，預測摘要於facts段已明確提及「明知被告乙未具護理人員資格仍囑由施打」，reasoning段之重複陳述未涵蓋",
+     "reason": "被告甲僱用未具護理資格之被告乙執行護理業務之事實，預測摘要於facts段已明確提及「明知被告乙未具護理人員資格仍囑由施打」，reasoning段之重複陳述未涵蓋"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告甲乙違反護理人員法第37條之認定係法條適用結論，預測摘要提及「違反護理人員法」但未標示具體條號，屬次要法規細節",
+     "reason": "被告甲乙違反護理人員法第37條之認定係法條適用結論，預測摘要提及「違反護理人員法」但未標示具體條號，屬次要法規細節"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "違反護理人員法僅涉行政罰不涉刑責係法院區分行政與刑事責任之重要法律論述，預測摘要未明確論述此責任性質區分，影響判決理由之法律論證完整性",
+     "reason": "違反護理人員法僅涉行政罰不涉刑責係法院區分行政與刑事責任之重要法律論述，預測摘要未明確論述此責任性質區分，影響判決理由之法律論證完整性"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "移送衛生主管機關裁處係程序性處理建議，預測摘要聚焦於刑事判決結果，行政處理程序屬附隨說明",
+     "reason": "移送衛生主管機關裁處係程序性處理建議，預測摘要聚焦於刑事判決結果，行政處理程序屬附隨說明"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "違反護理人員法第29條係針對A診所之行政違規認定，與第37條並列提及，預測摘要雖未明確區分兩條文但已涵蓋違反護理人員法之論述，具體條號屬次要細節",
+     "reason": "違反護理人員法第29條係針對A診所之行政違規認定，與第37條並列提及，預測摘要雖未明確區分兩條文但已涵蓋違反護理人員法之論述，具體條號屬次要細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 90,
+   "pred_total": 41,
+   "matched": 37,
+   "partial": 8,
+   "missing": 45,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8284,
+  "compression_afg_chars": 1522,
+  "compression_source_chars": 8867,
+  "gt_length_ratio": 0.4012,
+  "gt_length_afg_chars": 1522,
+  "gt_length_gt_chars": 3794,
+  "section_balance": 0.2308
+ }
 }

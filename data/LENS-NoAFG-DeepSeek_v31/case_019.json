@@ -124,5 +124,116 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.9231,
+  "fact_recall": 0.8241,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9036,
+  "quality_overall": 4.8714,
+  "checklist_pass_rate": 0.9757,
+  "citation_accuracy": 0.9286,
+  "citation_support_score": 0.9333,
+  "uncited_rate": 0.061,
+  "faithfulness_combined": {
+   "score": 0.9232,
+   "citation_fidelity": 0.872,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.9198,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生成摘要僅提及被告甲之協商，未說明被告乙（骨科醫師）業經先以協商判決確定之背景事實。雖為程序性事實，但屬另一被告之獨立處理狀態，不影響本案被告甲犯罪事實之理解。",
+     "reason": "生成摘要僅提及被告甲之協商，未說明被告乙（骨科醫師）業經先以協商判決確定之背景事實。雖為程序性事實，但屬另一被告之獨立處理狀態，不影響本案被告甲犯罪事實之理解。"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要雖提及『認罪協商』、『坦承犯行』等協商實質內容，但未明確提及『刑事宣示筆錄』此一特定文件類型。此為程序性細節，不影響對案件實質內容（被告認罪及協議內容）的理解。",
+     "reason": "摘要雖提及『認罪協商』、『坦承犯行』等協商實質內容，但未明確提及『刑事宣示筆錄』此一特定文件類型。此為程序性細節，不影響對案件實質內容（被告認罪及協議內容）的理解。"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "GT claim 主張『刑事宣示筆錄內容未載被告回應』，但摘要 defense 段明確記載『被告甲坦承犯行』、『表明協同意願』、『認諾願受有期徒刑』等被告回應內容。GT claim 與實際文本矛盾，惟摘要確實未以『刑事宣示筆錄未載被告回應』之否定形式表述，故維持 missing。此為形式表述差異，不影響案情實質理解。",
+     "reason": "GT claim 主張『刑事宣示筆錄內容未載被告回應』，但摘要 defense 段明確記載『被告甲坦承犯行』、『表明協同意願』、『認諾願受有期徒刑』等被告回應內容。GT claim 與實際文本矛盾，惟摘要確實未以『刑事宣示筆錄未載被告回應』之否定形式表述，故維持 missing。此為形式表述差異，不影響案情實質理解。"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要僅提及『匯款完畢』，未提及『郵政劃撥儲金存款收據在卷可參』之證據記載，屬程序性細節不影響判決主文理解",
+     "reason": "摘要僅提及『匯款完畢』，未提及『郵政劃撥儲金存款收據在卷可參』之證據記載，屬程序性細節不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要未提及『被告、檢察官於法定上訴期間未上訴，本案判決即確定』之程序性事實，不影響判決結果理解",
+     "reason": "摘要未提及『被告、檢察官於法定上訴期間未上訴，本案判決即確定』之程序性事實，不影響判決結果理解"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "生成摘要僅聚焦被告甲（麻醉科醫師），未提及骨科主治醫生乙（證人A）之過失事實。雖 section_01_facts.txt 有提及證人A明知病患甲狀腺亢進，但生成摘要完全未涵蓋醫師乙相關資訊，影響案情完整理解",
+     "reason": "生成摘要僅聚焦被告甲（麻醉科醫師），未提及骨科主治醫生乙（證人A）之過失事實。雖 section_01_facts.txt 有提及證人A明知病患甲狀腺亢進，但生成摘要完全未涵蓋醫師乙相關資訊，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "生成摘要未提及醫師乙應負之注意義務（會診專科醫師、重新抽血、待報告完成、控制甲狀腺功能後再手術）。此為醫師乙過失判斷之關鍵事實，遺漏影響對其過失之完整理解",
+     "reason": "生成摘要未提及醫師乙應負之注意義務（會診專科醫師、重新抽血、待報告完成、控制甲狀腺功能後再手術）。此為醫師乙過失判斷之關鍵事實，遺漏影響對其過失之完整理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "生成摘要未提及醫師乙疏未做術前手術風險完整評估之過失。此為 GT 中醫師乙之關鍵過失事實，完全未涵蓋",
+     "reason": "生成摘要未提及醫師乙疏未做術前手術風險完整評估之過失。此為 GT 中醫師乙之關鍵過失事實，完全未涵蓋"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "生成摘要未提及醫師乙於抽血檢驗報告完成前當日十二時十五分許進行非急迫性手術之具體時間與手術性質。此為醫師乙過失行為之關鍵細節，遺漏影響案情理解",
+     "reason": "生成摘要未提及醫師乙於抽血檢驗報告完成前當日十二時十五分許進行非急迫性手術之具體時間與手術性質。此為醫師乙過失行為之關鍵細節，遺漏影響案情理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 54,
+   "pred_total": 33,
+   "matched": 44,
+   "partial": 1,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.0476,
+  "compression_afg_chars": 1340,
+  "compression_source_chars": 1407,
+  "gt_length_ratio": 1.0332,
+  "gt_length_afg_chars": 1340,
+  "gt_length_gt_chars": 1297,
+  "section_balance": 0.0
+ }
 }

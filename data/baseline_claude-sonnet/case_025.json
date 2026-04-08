@@ -129,6 +129,423 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.8105
+  "rule_based_avg": 0.8105,
+  "fact_recall": 0.5861,
+  "fact_precision": 1.0,
+  "fact_f1": 0.739,
+  "quality_overall": 4.9,
+  "checklist_pass_rate": 0.981,
+  "citation_accuracy": 0.963,
+  "citation_support_score": 0.9741,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.9778,
+   "citation_fidelity": 0.963,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 19
+  },
+  "weighted_recall": 0.8764,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 50,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「呼吸音粗」係第二次急診病歷重要臨床發現（判決書：「體溫三十七．三（Ｒ）、呼吸音粗」），為判斷病情嚴重程度之關鍵徵候，預測摘要未提及",
+     "reason": "「呼吸音粗」係第二次急診病歷重要臨床發現（判決書：「體溫三十七．三（Ｒ）、呼吸音粗」），為判斷病情嚴重程度之關鍵徵候，預測摘要未提及"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「給予氧氣及靜脈點滴注射」雖於判決書有記載（「經給予氧氣及靜脈點滴注射」），惟屬輔助性治療措施，未影響主要案情理解",
+     "reason": "「給予氧氣及靜脈點滴注射」雖於判決書有記載（「經給予氧氣及靜脈點滴注射」），惟屬輔助性治療措施，未影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告告知家屬回診事項雖見於原文，但屬程序性告知細節，pred claims 確實未涵蓋",
+     "reason": "被告告知家屬回診事項雖見於原文，但屬程序性告知細節，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "母親陳述發燒帶來急診之細節，pred claims 未明確涵蓋",
+     "reason": "母親陳述發燒帶來急診之細節，pred claims 未明確涵蓋"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "咳嗽流鼻水症狀描述雖在原文，pred claim 5 僅提及「半夜發燒」未提及「咳嗽流鼻水」，確實 missing",
+     "reason": "咳嗽流鼻水症狀描述雖在原文，pred claim 5 僅提及「半夜發燒」未提及「咳嗽流鼻水」，確實 missing"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "母親告知曾帶H童看過醫生之細節，pred claims 確實未涵蓋",
+     "reason": "母親告知曾帶H童看過醫生之細節，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "診所醫生說是感冒之轉述內容，pred claims 確實未涵蓋",
+     "reason": "診所醫生說是感冒之轉述內容，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未建議留院觀察之細節，pred claims 確實未涵蓋",
+     "reason": "未建議留院觀察之細節，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "發燒時間對診斷差異之論點為被告重要辯護理由，pred claims 確實未涵蓋此論證邏輯",
+     "reason": "發燒時間對診斷差異之論點為被告重要辯護理由，pred claims 確實未涵蓋此論證邏輯"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "量體重、打開喉嚨等檢查細節，pred claims 確實未涵蓋",
+     "reason": "量體重、打開喉嚨等檢查細節，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "腎上腺出血現象為被告辯稱之醫學判斷基礎，pred claims 確實未涵蓋",
+     "reason": "腎上腺出血現象為被告辯稱之醫學判斷基礎，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "解剖報告未說明腎上腺病變之論點，pred claims 確實未涵蓋",
+     "reason": "解剖報告未說明腎上腺病變之論點，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "婦幼科主任在解剖現場之事實，pred claims 確實未涵蓋",
+     "reason": "婦幼科主任在解剖現場之事實，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "法醫鑑定報告無腎上腺論述之論點，pred claims 確實未涵蓋",
+     "reason": "法醫鑑定報告無腎上腺論述之論點，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "鏈珠菌感染造成臟器出血之病理機制為被告重要辯護論點，pred claims 確實未涵蓋",
+     "reason": "鏈珠菌感染造成臟器出血之病理機制為被告重要辯護論點，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "18日上午5時許之具體送醫時間，pred claim 雖提及就診事實但未明確記載此時間點",
+     "reason": "18日上午5時許之具體送醫時間，pred claim 雖提及就診事實但未明確記載此時間點"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告陳述依據（回院急診及解剖資料及文獻）之說明，pred claims 確實未涵蓋",
+     "reason": "被告陳述依據（回院急診及解剖資料及文獻）之說明，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告現在對一般病童診斷仍如此之陳述，pred claims 確實未涵蓋",
+     "reason": "被告現在對一般病童診斷仍如此之陳述，pred claims 確實未涵蓋"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖為就診時間細節，但section_01_facts.txt及section_05_reasoning.txt已有相關時間記載（五時八分），屬於可跨section補充之背景資訊",
+     "reason": "雖為就診時間細節，但section_01_facts.txt及section_05_reasoning.txt已有相關時間記載（五時八分），屬於可跨section補充之背景資訊"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "頸部、胸腔、肺部、心臟、腹部檢查正常之細節，屬第一份鑑定書之詳細檢查內容，summary未提及",
+     "reason": "頸部、胸腔、肺部、心臟、腹部檢查正常之細節，屬第一份鑑定書之詳細檢查內容，summary未提及"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "12時26分重返急診時間已記載於section_01_facts.txt及section_05_reasoning.txt，屬跨section補充資訊",
+     "reason": "12時26分重返急診時間已記載於section_01_facts.txt及section_05_reasoning.txt，屬跨section補充資訊"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "哭泣、躁動、盜汗、發紺之主訴症狀，summary未於opinions段提及",
+     "reason": "哭泣、躁動、盜汗、發紺之主訴症狀，summary未於opinions段提及"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第二次急診生命徵象數值（血壓無法測得、心跳112次/分等），summary未提及",
+     "reason": "第二次急診生命徵象數值（血壓無法測得、心跳112次/分等），summary未提及"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "神智狀態及主訴疼痛之細節，summary未提及",
+     "reason": "神智狀態及主訴疼痛之細節，summary未提及"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "胸部退縮、呼吸音粗等觀察細節，summary未提及",
+     "reason": "胸部退縮、呼吸音粗等觀察細節，summary未提及"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "12時50分住進加護病房之時間及處置細節，summary未提及",
+     "reason": "12時50分住進加護病房之時間及處置細節，summary未提及"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "住院後生命徵象及症狀細節（心跳170次/分、出血點等），summary未提及",
+     "reason": "住院後生命徵象及症狀細節（心跳170次/分、出血點等），summary未提及"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急救措施細節（氣管插管、呼吸器、升血壓藥物），summary未提及",
+     "reason": "急救措施細節（氣管插管、呼吸器、升血壓藥物），summary未提及"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "13時意識喪失時間，已於section_01_facts.txt記載",
+     "reason": "13時意識喪失時間，已於section_01_facts.txt記載"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "14時10分死亡時間，已於section_01_facts.txt記載",
+     "reason": "14時10分死亡時間，已於section_01_facts.txt記載"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "死後檢測數值吻合敗血症、休克、血管內凝血之細節，summary未提及",
+     "reason": "死後檢測數值吻合敗血症、休克、血管內凝血之細節，summary未提及"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢驗室檢查項目（白血球、血紅素、發炎反應等）細節，屬鑑定書背景說明，summary未提及",
+     "reason": "檢驗室檢查項目（白血球、血紅素、發炎反應等）細節，屬鑑定書背景說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肺音清晰、心跳規則無雜音、頸部柔軟等檢查結果細節，summary未提及",
+     "reason": "肺音清晰、心跳規則無雜音、頸部柔軟等檢查結果細節，summary未提及"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肺炎鏈球菌感染症狀依部位及嚴重性有不同表現之背景說明，summary未提及",
+     "reason": "肺炎鏈球菌感染症狀依部位及嚴重性有不同表現之背景說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肺炎症狀（高燒、呼吸窘迫、咳嗽）列表，屬鑑定書背景說明，summary未提及",
+     "reason": "肺炎症狀（高燒、呼吸窘迫、咳嗽）列表，屬鑑定書背景說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦膜炎症狀詳細列表，屬鑑定書背景說明，summary未提及",
+     "reason": "腦膜炎症狀詳細列表，屬鑑定書背景說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "敗血症完整症狀列表，屬鑑定書背景說明，summary未提及",
+     "reason": "敗血症完整症狀列表，屬鑑定書背景說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「除了發燒、活力較差外無其他敗血症徵候」之結論性說明，summary未提及",
+     "reason": "「除了發燒、活力較差外無其他敗血症徵候」之結論性說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肺炎鏈球菌感染最常見位置為肺部之醫學文獻說明，summary未提及",
+     "reason": "肺炎鏈球菌感染最常見位置為肺部之醫學文獻說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "25%~37%菌血症比例數據，屬鑑定書詳細背景說明，summary未提及",
+     "reason": "25%~37%菌血症比例數據，屬鑑定書詳細背景說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫師無法預見感染引起敗血症之醫學說明，summary未提及",
+     "reason": "醫師無法預見感染引起敗血症之醫學說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肺炎鏈球菌感染可引起全身感染之醫學說明，summary未提及",
+     "reason": "肺炎鏈球菌感染可引起全身感染之醫學說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "文獻無敗血症、腦膜炎出現時間記載之說明，summary未提及",
+     "reason": "文獻無敗血症、腦膜炎出現時間記載之說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「如有特殊變化當可發現並早期診治」之說明，summary未提及",
+     "reason": "「如有特殊變化當可發現並早期診治」之說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5時8分到達、5時15分離開之具體時間，已於section_01_facts.txt及section_05_reasoning.txt記載",
+     "reason": "5時8分到達、5時15分離開之具體時間，已於section_01_facts.txt及section_05_reasoning.txt記載"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "39℃可能為敗血症症狀但不能只以發高燒診斷敗血症之說明，summary未提及",
+     "reason": "39℃可能為敗血症症狀但不能只以發高燒診斷敗血症之說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "敗血症徵候多、體溫可能正常或低溫之說明，summary未提及",
+     "reason": "敗血症徵候多、體溫可能正常或低溫之說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "咽喉發炎原因及與敗血症關係之醫學說明，summary未提及",
+     "reason": "咽喉發炎原因及與敗血症關係之醫學說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "三歲幼童可測得血壓之說明，summary未提及",
+     "reason": "三歲幼童可測得血壓之說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "敗血症時血壓可能降低或正常引起休克之說明，summary未提及",
+     "reason": "敗血症時血壓可能降低或正常引起休克之說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "上呼吸道感染常規檢查不含測量血壓之說明，summary未提及",
+     "reason": "上呼吸道感染常規檢查不含測量血壓之說明，summary未提及"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（檢察官未上訴），不影響判決結論理解，摘要未提及",
+     "reason": "程序性事實（檢察官未上訴），不影響判決結論理解，摘要未提及"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（判決確定），不影響判決結論理解，摘要未提及",
+     "reason": "程序性事實（判決確定），不影響判決結論理解，摘要未提及"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 151,
+   "pred_total": 57,
+   "matched": 79,
+   "partial": 19,
+   "missing": 53,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7869,
+  "compression_afg_chars": 1981,
+  "compression_source_chars": 9295,
+  "gt_length_ratio": 0.4084,
+  "gt_length_afg_chars": 1981,
+  "gt_length_gt_chars": 4851,
+  "section_balance": 0.3529
  }
 }
