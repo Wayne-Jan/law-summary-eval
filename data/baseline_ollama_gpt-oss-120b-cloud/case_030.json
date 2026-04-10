@@ -124,6 +124,234 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.8333
+  "rule_based_avg": 0.8333,
+  "fact_recall": 0.5323,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6947,
+  "quality_overall": 4.3571,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.7473,
+  "missing_severity": {
+   "critical": 4,
+   "important": 13,
+   "minor": 9,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "病童曾於I醫院就診之事實確未出現在 section_01_facts.txt 中，僅提及C醫院。此為就診序列的重要背景事實，影響案情時序理解。",
+     "reason": "病童曾於I醫院就診之事實確未出現在 section_01_facts.txt 中，僅提及C醫院。此為就診序列的重要背景事實，影響案情時序理解。"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「若早些診斷正確可增加存活機會」之假設性情境未在 facts section 出現。此事實雖屬檢方論述，但為理解鑑定爭點之重要背景，應標記為 important missing。",
+     "reason": "「若早些診斷正確可增加存活機會」之假設性情境未在 facts section 出現。此事實雖屬檢方論述，但為理解鑑定爭點之重要背景，應標記為 important missing。"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "GT被告回應段明確提及「故再照第二張X光片」，但生成摘要之被告回應段未提及此細節，屬程序性處置事實遺漏",
+     "reason": "GT被告回應段明確提及「故再照第二張X光片」，但生成摘要之被告回應段未提及此細節，屬程序性處置事實遺漏"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "GT被告回應段明確提及「並會外科且將病童丙送加護病房待外科主治醫師作決定」，生成摘要完全未提及此辯護要點，屬程序性處置事實遺漏",
+     "reason": "GT被告回應段明確提及「並會外科且將病童丙送加護病房待外科主治醫師作決定」，生成摘要完全未提及此辯護要點，屬程序性處置事實遺漏"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要僅提及『行政院衛生署醫事審議委員會之鑑定』，未明確說明法院送鑑定的程序細節（將I醫院、C醫院病歷及X光片送請鑑定），影響鑑定程序完整性理解",
+     "reason": "預測摘要僅提及『行政院衛生署醫事審議委員會之鑑定』，未明確說明法院送鑑定的程序細節（將I醫院、C醫院病歷及X光片送請鑑定），影響鑑定程序完整性理解"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未列出鑑定事項的詳細內容（診斷方法、X光片環境條件、四張X光片差異、治癒率存活率等），影響對鑑定範圍的完整理解",
+     "reason": "預測摘要未列出鑑定事項的詳細內容（診斷方法、X光片環境條件、四張X光片差異、治癒率存活率等），影響對鑑定範圍的完整理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未提及觸診發現腹膜炎反應的臨床徵象（腹肌繃緊、壓痛、放開更痛、肚臍周圍紅腫），影響完整理解診斷依據",
+     "reason": "預測摘要未提及觸診發現腹膜炎反應的臨床徵象（腹肌繃緊、壓痛、放開更痛、肚臍周圍紅腫），影響完整理解診斷依據"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未說明I醫院X光片為站立照及左上方有氣體之特徵，影響對兩院X光片條件差異的理解",
+     "reason": "預測摘要未說明I醫院X光片為站立照及左上方有氣體之特徵，影響對兩院X光片條件差異的理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未提及I醫院X光片游離氣體判讀困難（須經驗極豐富醫師始能發現），影響對診斷難度的評估",
+     "reason": "預測摘要未提及I醫院X光片游離氣體判讀困難（須經驗極豐富醫師始能發現），影響對診斷難度的評估"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要雖提及『未含橫膈膜』，但未完整說明診斷條件（應含腹部全部、黑白對比足夠），影響對診斷標準的完整理解",
+     "reason": "預測摘要雖提及『未含橫膈膜』，但未完整說明診斷條件（應含腹部全部、黑白對比足夠），影響對診斷標準的完整理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "預測摘要明確寫『未含橫膈膜』，但GT主張『I醫院X光片包括有橫膈膜』，此為關鍵事實矛盾，影響對X光片診斷條件的判斷",
+     "reason": "預測摘要明確寫『未含橫膈膜』，但GT主張『I醫院X光片包括有橫膈膜』，此為關鍵事實矛盾，影響對X光片診斷條件的判斷"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及三張X光片均可見腸道漲氣現象，屬於輔助性醫學細節，對判決結論影響較小",
+     "reason": "預測摘要未提及三張X光片均可見腸道漲氣現象，屬於輔助性醫學細節，對判決結論影響較小"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未提及胃破裂併發症（失血性休克、酸中毒、嚴重腹膜炎），影響對病情嚴重性的完整理解",
+     "reason": "預測摘要未提及胃破裂併發症（失血性休克、酸中毒、嚴重腹膜炎），影響對病情嚴重性的完整理解"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要雖提及『難以挽救生命』但未給出具體存活率數據（45%），屬於背景性統計資訊",
+     "reason": "預測摘要雖提及『難以挽救生命』但未給出具體存活率數據（45%），屬於背景性統計資訊"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及兒童胃破裂在文獻上的稀少性，屬於背景性醫學資訊",
+     "reason": "預測摘要未提及兒童胃破裂在文獻上的稀少性，屬於背景性醫學資訊"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "預測摘要未提及『滑倒腹部猛撞浴缸致胃破裂』的特殊罕見性（全世界難得一見），影響對本案特殊性的理解",
+     "reason": "預測摘要未提及『滑倒腹部猛撞浴缸致胃破裂』的特殊罕見性（全世界難得一見），影響對本案特殊性的理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及C醫院照會社會服務部查詢兒虐程序，屬於程序性細節",
+     "reason": "預測摘要未提及C醫院照會社會服務部查詢兒虐程序，屬於程序性細節"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預測摘要未提及三歲半兒童身高與浴缸關係分析，屬於背景性分析",
+     "reason": "預測摘要未提及三歲半兒童身高與浴缸關係分析，屬於背景性分析"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "預測摘要未提及『死因是否由其他原因造成值得質疑』，影響對鑑定結論的理解，屬於關鍵質疑事項",
+     "reason": "預測摘要未提及『死因是否由其他原因造成值得質疑』，影響對鑑定結論的理解，屬於關鍵質疑事項"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，判決是否確定不影響案情核心理解",
+     "reason": "程序性事實，判決是否確定不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，與判決確定相關，不影響案情要點理解",
+     "reason": "程序性事實，與判決確定相關，不影響案情要點理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "第一張X光片『有腸道漲氣但無腹腔積氣』之對比關係未於reasoning section明確提及，影響對診斷困難之理解",
+     "reason": "第一張X光片『有腸道漲氣但無腹腔積氣』之對比關係未於reasoning section明確提及，影響對診斷困難之理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『僅第二張X光片』方可見游離氣體之排他性描述未於reasoning section提及，section_03_opinions.txt雖提及第二張有疑似游離氣體但未強調『僅』此張",
+     "reason": "『僅第二張X光片』方可見游離氣體之排他性描述未於reasoning section提及，section_03_opinions.txt雖提及第二張有疑似游離氣體但未強調『僅』此張"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『三時十五分』及『血液酸性值六．九四○』之具體生理數據未於任何section提及，影響病情嚴重程度之理解",
+     "reason": "『三時十五分』及『血液酸性值六．九四○』之具體生理數據未於任何section提及，影響病情嚴重程度之理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "『即使立刻手術也無法救回』之核心因果論點雖見於section_03_opinions.txt，但reasoning section簡化為『錯過救治時機』未完整表達；此為判決關鍵論點，影響無罪結論之理解",
+     "reason": "『即使立刻手術也無法救回』之核心因果論點雖見於section_03_opinions.txt，但reasoning section簡化為『錯過救治時機』未完整表達；此為判決關鍵論點，影響無罪結論之理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "『縱然正確診斷亦無法救回』之假設性論點未於reasoning section明確陳述，section_03_opinions.txt第3點雖有類似意涵但未於reasoning section獨立呈現；此為無罪判決之核心理由",
+     "reason": "『縱然正確診斷亦無法救回』之假設性論點未於reasoning section明確陳述，section_03_opinions.txt第3點雖有類似意涵但未於reasoning section獨立呈現；此為無罪判決之核心理由"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 34,
+   "matched": 30,
+   "partial": 6,
+   "missing": 26,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6526,
+  "compression_afg_chars": 1027,
+  "compression_source_chars": 2956,
+  "gt_length_ratio": 0.4715,
+  "gt_length_afg_chars": 1027,
+  "gt_length_gt_chars": 2178,
+  "section_balance": 0.4058
  }
 }
