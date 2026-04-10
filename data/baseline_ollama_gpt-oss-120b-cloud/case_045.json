@@ -133,5 +133,438 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.706,
+  "fact_recall": 0.4272,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5986,
+  "quality_overall": 4.0286,
+  "checklist_pass_rate": 0.8913,
+  "citation_accuracy": 0.4545,
+  "citation_support_score": 0.4818,
+  "uncited_rate": 0.22,
+  "faithfulness_combined": {
+   "score": 0.6127,
+   "citation_fidelity": 0.3545,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.7087,
+  "missing_severity": {
+   "critical": 8,
+   "important": 19,
+   "minor": 28,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經查全部 5 個 section 原文，僅 section_01_facts.txt 提及「乙○○於八十九年一月二十六日提起自訴」，但這是「提起自訴」而非 GT claim 所說的「因陰道點狀出血至 Y 醫院門診」。兩者為不同事件，確認摘要未提及該就診事實",
+     "reason": "經查全部 5 個 section 原文，僅 section_01_facts.txt 提及「乙○○於八十九年一月二十六日提起自訴」，但這是「提起自訴」而非 GT claim 所說的「因陰道點狀出血至 Y 醫院門診」。兩者為不同事件，確認摘要未提及該就診事實"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經查 section_02_defense.txt 提及「被告甲亦否認有過失，辯稱其以超音波檢查排除子宮內膜問題」、section_05_reasoning.txt 提及「法院指出甲於診治期間已為乙○○施行內診與超音波檢查」，均指「被告甲」而非 GT claim 所說的「被告乙」。確認摘要未提及被告乙執行超音波檢查",
+     "reason": "經查 section_02_defense.txt 提及「被告甲亦否認有過失，辯稱其以超音波檢查排除子宮內膜問題」、section_05_reasoning.txt 提及「法院指出甲於診治期間已為乙○○施行內診與超音波檢查」，均指「被告甲」而非 GT claim 所說的「被告乙」。確認摘要未提及被告乙執行超音波檢查"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經查全部 5 個 section 原文，section_01_facts.txt 僅說「於九十年八月二日因不治死亡」，section_05_reasoning.txt 提及「延誤治療」但未說明具體治療方式。確認摘要未提及需做「同步放射線治療及化學治療」",
+     "reason": "經查全部 5 個 section 原文，section_01_facts.txt 僅說「於九十年八月二日因不治死亡」，section_05_reasoning.txt 提及「延誤治療」但未說明具體治療方式。確認摘要未提及需做「同步放射線治療及化學治療」"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經查 section_01_facts.txt 提及「先後於八十九年三月至十月之多次門診」，section_03_opinions.txt 提及「被告乙診斷此患者近 30 餘天之過程」及「88 年 10 月 25 日因經血過多，由被告乙診斷」，均未提及 88 年 11 月 1 日、11 月 29 日的兩次診療。確認摘要未提及這兩次具體門診日期",
+     "reason": "經查 section_01_facts.txt 提及「先後於八十九年三月至十月之多次門診」，section_03_opinions.txt 提及「被告乙診斷此患者近 30 餘天之過程」及「88 年 10 月 25 日因經血過多，由被告乙診斷」，均未提及 88 年 11 月 1 日、11 月 29 日的兩次診療。確認摘要未提及這兩次具體門診日期"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "經查 section_05_reasoning.txt 法院理由部分提及「被告甲未違反醫師之注意義務，未成立業務過失致死罪」，但此為法院判決結論而非「被告甲並無不能注意之情事」之事實認定。該 GT claim 屬法律事實主張，確認摘要未明確提及",
+     "reason": "經查 section_05_reasoning.txt 法院理由部分提及「被告甲未違反醫師之注意義務，未成立業務過失致死罪」，但此為法院判決結論而非「被告甲並無不能注意之情事」之事實認定。該 GT claim 屬法律事實主張，確認摘要未明確提及"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT「被告乙僅看診四星期」在 Pred 所有 section 中均未找到對應。Pred defense 提到被告甲（對應GT被告乙）「施以藥物治療」但未提及「四星期」之具體期間，僅在 facts 提及被告丁有「長達十個月之診療期間」。此為被告看診時長關鍵事實，影響過失判斷，故標記為 important",
+     "reason": "GT「被告乙僅看診四星期」在 Pred 所有 section 中均未找到對應。Pred defense 提到被告甲（對應GT被告乙）「施以藥物治療」但未提及「四星期」之具體期間，僅在 facts 提及被告丁有「長達十個月之診療期間」。此為被告看診時長關鍵事實，影響過失判斷，故標記為 important"
+    },
+    {
+     "gt_claim_id": 1,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 僅簡述行政院衛生署醫事審議委員會鑑定書內容，未提及患者於89年11月14日住進V醫院之具體時間、病期及醫院資訊",
+     "reason": "section_03_opinions.txt 僅簡述行政院衛生署醫事審議委員會鑑定書內容，未提及患者於89年11月14日住進V醫院之具體時間、病期及醫院資訊"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及患者在Y醫院就診十個月之就診歷程",
+     "reason": "section_03_opinions.txt 未提及患者在Y醫院就診十個月之就診歷程"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及癌症病程時間之醫學判斷（短時間內發生第三B期之不可能性），此為鑑定意見核心內容",
+     "reason": "section_03_opinions.txt 未提及癌症病程時間之醫學判斷（短時間內發生第三B期之不可能性），此為鑑定意見核心內容"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及患者曾表示做過抹片且為正常之陳述",
+     "reason": "section_03_opinions.txt 未提及患者曾表示做過抹片且為正常之陳述"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及被告甲以更年期經血不正常診斷並長期給予荷爾蒙治療之具體診療方式，此為評價醫療行為之關鍵事實",
+     "reason": "section_03_opinions.txt 未提及被告甲以更年期經血不正常診斷並長期給予荷爾蒙治療之具體診療方式，此為評價醫療行為之關鍵事實"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未出現「此做法雖有不合理」之表述，且GT中無「被告丁」之相關記錄",
+     "reason": "section_03_opinions.txt 未出現「此做法雖有不合理」之表述，且GT中無「被告丁」之相關記錄"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確提及「失去早日檢查、發現疾病之時機」之因果描述，雖有提到延誤診斷與死亡具因果關係，但未明確對應「失去時機」之表述",
+     "reason": "section_03_opinions.txt 未明確提及「失去早日檢查、發現疾病之時機」之因果描述，雖有提到延誤診斷與死亡具因果關係，但未明確對應「失去時機」之表述"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及荷爾蒙療法應週期性評估及定期檢查之醫療規範",
+     "reason": "section_03_opinions.txt 未提及荷爾蒙療法應週期性評估及定期檢查之醫療規範"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及「病患拒作檢查而無法施行詳細檢查是主要原因」之因果歸因表述，僅提到病歷記錄疑似事後加載",
+     "reason": "section_03_opinions.txt 未提及「病患拒作檢查而無法施行詳細檢查是主要原因」之因果歸因表述，僅提到病歷記錄疑似事後加載"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及被告甲在十個月期間未警覺患者異常之期間描述",
+     "reason": "section_03_opinions.txt 未提及被告甲在十個月期間未警覺患者異常之期間描述"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及患者拒絕內診之說法，但未完整表達「病患每次拒絕內診檢查，因而病情無法早日發現」之因果關係",
+     "reason": "section_03_opinions.txt 雖提及患者拒絕內診之說法，但未完整表達「病患每次拒絕內診檢查，因而病情無法早日發現」之因果關係"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及初診時患者臨床表現與一般肌腺瘤併出血者無異之描述",
+     "reason": "section_03_opinions.txt 未提及初診時患者臨床表現與一般肌腺瘤併出血者無異之描述"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及先行治療、繼續觀察是否合理之判斷",
+     "reason": "section_03_opinions.txt 未提及先行治療、繼續觀察是否合理之判斷"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及病患於88年10月25日因經血過多由被告乙診斷之具體時間與症狀",
+     "reason": "section_03_opinions.txt 未提及病患於88年10月25日因經血過多由被告乙診斷之具體時間與症狀"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及被告乙發現子宮頸有乳突狀糜爛現象之臨床發現",
+     "reason": "section_03_opinions.txt 未提及被告乙發現子宮頸有乳突狀糜爛現象之臨床發現"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及經血過多與子宮腔內病變之關聯性醫學說明",
+     "reason": "section_03_opinions.txt 未提及經血過多與子宮腔內病變之關聯性醫學說明"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及子宮頸病變與不規則出血之關聯性醫學說明",
+     "reason": "section_03_opinions.txt 未提及子宮頸病變與不規則出血之關聯性醫學說明"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及先以超音波檢查排除子宮內膜病灶之適當性評價",
+     "reason": "section_03_opinions.txt 未提及先以超音波檢查排除子宮內膜病灶之適當性評價"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及被告乙診斷子宮肌腺症之診斷結果",
+     "reason": "section_03_opinions.txt 未提及被告乙診斷子宮肌腺症之診斷結果"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及先以藥物治療止血、未即予子宮頸組織切片是否違反一般治療方式之評價",
+     "reason": "section_03_opinions.txt 未提及先以藥物治療止血、未即予子宮頸組織切片是否違反一般治療方式之評價"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及被告乙診斷此患者30餘天過程是否合理之評估",
+     "reason": "section_03_opinions.txt 未提及被告乙診斷此患者30餘天過程是否合理之評估"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 雖提到被告甲「未見延誤診斷之事實」，但未明確對應被告乙「無證據可資證明對於本案患者之子宮頸癌疏於診斷」之表述，且GT中被告乙為另一不同醫師",
+     "reason": "section_03_opinions.txt 雖提到被告甲「未見延誤診斷之事實」，但未明確對應被告乙「無證據可資證明對於本案患者之子宮頸癌疏於診斷」之表述，且GT中被告乙為另一不同醫師"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未明確提及「尚難認有醫療疏失」之結論性表述",
+     "reason": "section_03_opinions.txt 未明確提及「尚難認有醫療疏失」之結論性表述"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及「本案無法醫鑑定」之結論",
+     "reason": "section_03_opinions.txt 未提及「本案無法醫鑑定」之結論"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "自訴程序屬事實背景資訊，雖於 section_01_facts.txt 中有提及，但非 verdict section 核心內容，遺漏不影響判決結果理解",
+     "reason": "自訴程序屬事實背景資訊，雖於 section_01_facts.txt 中有提及，但非 verdict section 核心內容，遺漏不影響判決結果理解"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "承受訴訟人資訊屬程序性事實，雖於 section_01_facts.txt 中有提及，但非 verdict section 核心內容，遺漏不影響判決結果理解",
+     "reason": "承受訴訟人資訊屬程序性事實，雖於 section_01_facts.txt 中有提及，但非 verdict section 核心內容，遺漏不影響判決結果理解"
+    },
+    {
+     "gt_claim_id": 1,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及鑑定報告具體依據 Y 醫院病歷之細節，屬重要證據基礎資訊",
+     "reason": "摘要未提及鑑定報告具體依據 Y 醫院病歷之細節，屬重要證據基礎資訊"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「拒絕內診」字樣在戳章下方空白處之具體細節，屬程序性事實",
+     "reason": "摘要未提及「拒絕內診」字樣在戳章下方空白處之具體細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及字跡蓋過電腦列印紙之細節，屬程序性事實",
+     "reason": "摘要未提及字跡蓋過電腦列印紙之細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及被告甲關於病歷製作程序之供述",
+     "reason": "摘要未提及被告甲關於病歷製作程序之供述"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及病患 88-89 年就診於多名醫師（含 T 醫院醫師 S、V 醫院醫師 U）之時間軸",
+     "reason": "摘要未提及病患 88-89 年就診於多名醫師（含 T 醫院醫師 S、V 醫院醫師 U）之時間軸"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及法院「病患對於被告甲之女性醫師，自更無拒絕內診之理」之邏輯推論，此為法院採信患者未拒絕內診之關鍵理由",
+     "reason": "摘要未提及法院「病患對於被告甲之女性醫師，自更無拒絕內診之理」之邏輯推論，此為法院採信患者未拒絕內診之關鍵理由"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要已提及「行政院鑑定書」但未具體提及「醫事審議委員會函覆在卷」之證據描述",
+     "reason": "摘要已提及「行政院鑑定書」但未具體提及「醫事審議委員會函覆在卷」之證據描述"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "摘要未明確提及「本件病患之死亡係因被告甲之延誤診斷及未為適當之處理所致」，此為被告甲部分之因果關係認定，影響判決結論理解",
+     "reason": "摘要未明確提及「本件病患之死亡係因被告甲之延誤診斷及未為適當之處理所致」，此為被告甲部分之因果關係認定，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "摘要未明確提及「二者間顯有相當因果關係」之獨立陳述，影響判決結論理解",
+     "reason": "摘要未明確提及「二者間顯有相當因果關係」之獨立陳述，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及「事證明確，被告甲所辯，應無可取，其犯行堪予認定」之結論性論述",
+     "reason": "摘要未提及「事證明確，被告甲所辯，應無可取，其犯行堪予認定」之結論性論述"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及被告乙續開處方之具體日期（88 年 11 月 1 日）",
+     "reason": "摘要未提及被告乙續開處方之具體日期（88 年 11 月 1 日）"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及 88 年 11 月 29 日回診之具體症狀「點狀出血」",
+     "reason": "摘要未提及 88 年 11 月 29 日回診之具體症狀「點狀出血」"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及具體用藥（子宮收縮劑、止血劑、胃藥）之細節",
+     "reason": "摘要未提及具體用藥（子宮收縮劑、止血劑、胃藥）之細節"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「此後病患即未再回被告甲門診」之事實",
+     "reason": "摘要未提及「此後病患即未再回被告甲門診」之事實"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「有病歷表影本在卷可憑」之證據描述",
+     "reason": "摘要未提及「有病歷表影本在卷可憑」之證據描述"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「出血情形有略見改善」之細節",
+     "reason": "摘要未提及「出血情形有略見改善」之細節"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「其後病患即未再至被告乙門診」之事實",
+     "reason": "摘要未提及「其後病患即未再至被告乙門診」之事實"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及「縱有後續治療之方法，實亦無機會施行」之論述，影響對被告乙無罪理由的理解",
+     "reason": "摘要未提及「縱有後續治療之方法，實亦無機會施行」之論述，影響對被告乙無罪理由的理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "摘要未提及被告乙與死亡無因果關係之具體日期（90 年 8 月 2 日），影響判決結論理解",
+     "reason": "摘要未提及被告乙與死亡無因果關係之具體日期（90 年 8 月 2 日），影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及自訴人關於被告乙未診斷子宮頸癌之具體指控",
+     "reason": "摘要未提及自訴人關於被告乙未診斷子宮頸癌之具體指控"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及法院「被告乙前開所辯，應堪採信」之認定",
+     "reason": "摘要未提及法院「被告乙前開所辯，應堪採信」之認定"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及「自訴人所指事證，尚難作為認定被告乙涉有業務過失致死罪之論據」之論述",
+     "reason": "摘要未提及「自訴人所指事證，尚難作為認定被告乙涉有業務過失致死罪之論據」之論述"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及「復查無其他積極證據足資證明被告乙犯罪」之論述",
+     "reason": "摘要未提及「復查無其他積極證據足資證明被告乙犯罪」之論述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 103,
+   "pred_total": 52,
+   "matched": 40,
+   "partial": 8,
+   "missing": 55,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7945,
+  "compression_afg_chars": 1129,
+  "compression_source_chars": 5494,
+  "gt_length_ratio": 0.343,
+  "gt_length_afg_chars": 1129,
+  "gt_length_gt_chars": 3292,
+  "section_balance": 0.1916
+ }
 }
