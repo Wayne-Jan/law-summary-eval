@@ -143,5 +143,396 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.776,
+  "fact_recall": 0.5565,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7151,
+  "quality_overall": 4.6929,
+  "checklist_pass_rate": 0.9701,
+  "citation_accuracy": 0.8846,
+  "citation_support_score": 0.8607,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9308,
+   "citation_fidelity": 0.8846,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 19
+  },
+  "weighted_recall": 0.8087,
+  "missing_severity": {
+   "critical": 0,
+   "important": 17,
+   "minor": 32,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要在section_01_facts.txt中錯誤地將「由醫師甲診視」寫成「由醫師乙診視」，屬人物事實錯誤。Ground truth明確記載為醫師甲。此錯誤影響對案情人物關係的理解。",
+     "reason": "生成摘要在section_01_facts.txt中錯誤地將「由醫師甲診視」寫成「由醫師乙診視」，屬人物事實錯誤。Ground truth明確記載為醫師甲。此錯誤影響對案情人物關係的理解。"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生成摘要僅提及「氣喘合併呼吸道感染」，遺漏GT記載的「腎疾病」診斷。跨section檢查確認所有section均未提及腎疾病診斷。此為醫療診斷細節遺漏，不影響主要案情理解。",
+     "reason": "生成摘要僅提及「氣喘合併呼吸道感染」，遺漏GT記載的「腎疾病」診斷。跨section檢查確認所有section均未提及腎疾病診斷。此為醫療診斷細節遺漏，不影響主要案情理解。"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生成摘要提及5月9日下午施行ERCP，但未提及「腹部電腦斷層掃描檢查顯示極輕微總膽管腫大」之事實。跨section檢查確認所有section均未提及此檢查。此為檢查時序細節，對案情核心理解影響較小。",
+     "reason": "生成摘要提及5月9日下午施行ERCP，但未提及「腹部電腦斷層掃描檢查顯示極輕微總膽管腫大」之事實。跨section檢查確認所有section均未提及此檢查。此為檢查時序細節，對案情核心理解影響較小。"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要未提及術後當日18時護理紀錄顯示無身體不適之事實。此時間點重要，因GT記載19時30分開始腹痛，18時紀錄可作為病情變化的時間基準。遺漏影響病情時序完整理解。",
+     "reason": "生成摘要未提及術後當日18時護理紀錄顯示無身體不適之事實。此時間點重要，因GT記載19時30分開始腹痛，18時紀錄可作為病情變化的時間基準。遺漏影響病情時序完整理解。"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生成摘要提及腹部電腦斷層顯示膽汁排泄不良，但未明確提及「3天前ERCP所打入之造影劑仍存留在膽道及膽囊中」之具體發現。雖reasoning section有提及造影劑存留，但generated summary在facts section未完整覆蓋此細節。此為技術性檢查細節。",
+     "reason": "生成摘要提及腹部電腦斷層顯示膽汁排泄不良，但未明確提及「3天前ERCP所打入之造影劑仍存留在膽道及膽囊中」之具體發現。雖reasoning section有提及造影劑存留，但generated summary在facts section未完整覆蓋此細節。此為技術性檢查細節。"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要僅提及「同月13日轉送至B醫院」，未提及精確時間「06時30分開始出現生命跡象不穩定」。此時間點對病情惡化時序至關重要，影響對醫療處置時間窗口的理解。",
+     "reason": "生成摘要僅提及「同月13日轉送至B醫院」，未提及精確時間「06時30分開始出現生命跡象不穩定」。此時間點對病情惡化時序至關重要，影響對醫療處置時間窗口的理解。"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要提及「引流管未引流出任何液體」，但未詳細說明檢察官起訴主張的具體原因（「引流手術失敗、發生阻塞或引流管脫落」）。雖opinions section鑑定意見提及可能原因，但generated summary在facts section未完整呈現檢察官起訴論述。此影響對起訴要旨的完整理解。",
+     "reason": "生成摘要提及「引流管未引流出任何液體」，但未詳細說明檢察官起訴主張的具體原因（「引流手術失敗、發生阻塞或引流管脫落」）。雖opinions section鑑定意見提及可能原因，但generated summary在facts section未完整呈現檢察官起訴論述。此影響對起訴要旨的完整理解。"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生成摘要簡略提及「依其專業知識無不能注意之情事」，未完整引用檢察官起訴主張「依被告之專業知識及當時客觀環境，並無不能注意之情事」。此為法律論證完整性細節。",
+     "reason": "生成摘要簡略提及「依其專業知識無不能注意之情事」，未完整引用檢察官起訴主張「依被告之專業知識及當時客觀環境，並無不能注意之情事」。此為法律論證完整性細節。"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告甲診斷行為的重要醫療事實：95年5月12日上午安排腹部電腦斷層檢查及發現造影劑殘留。雖見於facts段（腹部電腦斷層掃描顯示...），但defense段未提及被告對此檢查的主張，影響辯方論點完整性",
+     "reason": "被告甲診斷行為的重要醫療事實：95年5月12日上午安排腹部電腦斷層檢查及發現造影劑殘留。雖見於facts段（腹部電腦斷層掃描顯示...），但defense段未提及被告對此檢查的主張，影響辯方論點完整性"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "關鍵診斷「急性壞死性胰臟炎」的確認時間（同日下午1時許）。facts段僅提及「懷疑」壞死性胰臟炎，defense段未提及被告對此確診的主張，影響病情嚴重性之辯護論點",
+     "reason": "關鍵診斷「急性壞死性胰臟炎」的確認時間（同日下午1時許）。facts段僅提及「懷疑」壞死性胰臟炎，defense段未提及被告對此確診的主張，影響病情嚴重性之辯護論點"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「留置3小時許觀察」為程序性細節，說明被告留置引流管的考量理由。雖有重要性但不影響主要案情理解，屬次要事實",
+     "reason": "「留置3小時許觀察」為程序性細節，說明被告留置引流管的考量理由。雖有重要性但不影響主要案情理解，屬次要事實"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "關鍵時間點「下午6時5分拔除引流管」。facts段雖有「18時5分拔除引流管」之記載，但defense段未包含被告主張「觀察至未引流才拔除」之辯解，影響醫療處置合理性之辯護論證",
+     "reason": "關鍵時間點「下午6時5分拔除引流管」。facts段雖有「18時5分拔除引流管」之記載，但defense段未包含被告主張「觀察至未引流才拔除」之辯解，影響醫療處置合理性之辯護論證"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "重要法律論點：鑑定意見未量化「存活機會喪失比例」。此為被告核心抗辯之一，關乎因果關係認定標準，影響判決法律邏輯理解",
+     "reason": "重要法律論點：鑑定意見未量化「存活機會喪失比例」。此為被告核心抗辯之一，關乎因果關係認定標準，影響判決法律邏輯理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術名稱及術式完整資訊影響醫療流程理解，雖非判決核心因素，但屬鑑定意見重要背景",
+     "reason": "手術名稱及術式完整資訊影響醫療流程理解，雖非判決核心因素，但屬鑑定意見重要背景"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術併發症列表係醫審會鑑定之重要醫療常規說明，有助理解手術風險評估",
+     "reason": "手術併發症列表係醫審會鑑定之重要醫療常規說明，有助理解手術風險評估"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "胰臟炎發生機率係鑑定意見中的關鍵數據，影響對併發症可預見性的理解",
+     "reason": "胰臟炎發生機率係鑑定意見中的關鍵數據，影響對併發症可預見性的理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "壞死性胰臟炎機率係評估手術風險的重要數據",
+     "reason": "壞死性胰臟炎機率係評估手術風險的重要數據"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "壞死性膽囊炎機率係評估手術風險的重要數據",
+     "reason": "壞死性膽囊炎機率係評估手術風險的重要數據"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術死亡率係醫療常規說明之關鍵數據",
+     "reason": "手術死亡率係醫療常規說明之關鍵數據"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫師檢查處置行為已在facts段有所涵蓋，此處係鑑定意見中的事實重述",
+     "reason": "醫師檢查處置行為已在facts段有所涵蓋，此處係鑑定意見中的事實重述"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病情變化已在facts段涵蓋",
+     "reason": "病情變化已在facts段涵蓋"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "電腦斷層發現已在facts段提及「已懷疑有壞死性胰臟炎」",
+     "reason": "電腦斷層發現已在facts段提及「已懷疑有壞死性胰臟炎」"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "ERCP併發症機率數據係鑑定意見重要內容",
+     "reason": "ERCP併發症機率數據係鑑定意見重要內容"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療性ERCP死亡機率係重要數據",
+     "reason": "治療性ERCP死亡機率係重要數據"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "護理紀錄時間點細節屬事實細節",
+     "reason": "護理紀錄時間點細節屬事實細節"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "護理紀錄時間點細節屬事實細節",
+     "reason": "護理紀錄時間點細節屬事實細節"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "症狀發生時間推斷屬鑑定細節",
+     "reason": "症狀發生時間推斷屬鑑定細節"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "確診時間點屬事實細節",
+     "reason": "確診時間點屬事實細節"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "壞死性胰臟炎發現時間屬事實細節",
+     "reason": "壞死性胰臟炎發現時間屬事實細節"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫療判斷條件屬鑑定意見中的專業說明",
+     "reason": "醫療判斷條件屬鑑定意見中的專業說明"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "細菌培養常規屬醫療專業細節說明",
+     "reason": "細菌培養常規屬醫療專業細節說明"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "細菌培養適應症屬醫療專業細節",
+     "reason": "細菌培養適應症屬醫療專業細節"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "ENBD與一般引流管差異屬專業說明",
+     "reason": "ENBD與一般引流管差異屬專業說明"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "ENBD目的已在pred opinions中以「維持膽汁流出順暢」涵蓋",
+     "reason": "ENBD目的已在pred opinions中以「維持膽汁流出順暢」涵蓋"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "ENBD目的屬重複資訊",
+     "reason": "ENBD目的屬重複資訊"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "ENBD施行地點屬程序性細節",
+     "reason": "ENBD施行地點屬程序性細節"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "引流管目的屬重複資訊",
+     "reason": "引流管目的屬重複資訊"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5月12日護理紀錄時間點屬事實細節，pred已提及「未引流出任何液體」",
+     "reason": "5月12日護理紀錄時間點屬事實細節，pred已提及「未引流出任何液體」"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "KUB檢查囑咐屬程序性細節",
+     "reason": "KUB檢查囑咐屬程序性細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "KUB檢查報告發現雖重要，但reasoning段已提及「造影劑仍存留在膽囊中」",
+     "reason": "KUB檢查報告發現雖重要，但reasoning段已提及「造影劑仍存留在膽囊中」"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "黃疸併發症已在facts段涵蓋",
+     "reason": "黃疸併發症已在facts段涵蓋"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "法務部法醫研究所鑑定意見係獨立於醫審會的鑑定來源，雖pred opinions提及法醫意見內容，但明確標示「法務部法醫研究所鑑定意見一份」此實體資訊確實遺漏",
+     "reason": "法務部法醫研究所鑑定意見係獨立於醫審會的鑑定來源，雖pred opinions提及法醫意見內容，但明確標示「法務部法醫研究所鑑定意見一份」此實體資訊確實遺漏"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "上訴資訊屬程序性事實，摘要確實未提及，維持 missing",
+     "reason": "上訴資訊屬程序性事實，摘要確實未提及，維持 missing"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態屬程序性事實，摘要確實未提及，維持 missing",
+     "reason": "判決確定狀態屬程序性事實，摘要確實未提及，維持 missing"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "ERCP 手術名稱之完整描述雖見於 GT，但屬背景性技術細節，不影響過失認定與因果關係之理解",
+     "reason": "ERCP 手術名稱之完整描述雖見於 GT，但屬背景性技術細節，不影響過失認定與因果關係之理解"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "ERCP 併發症機率之統計數據屬背景性醫學資訊，pred summary 已在 opinions section 提及相關併發症，不影響判決理由理解",
+     "reason": "ERCP 併發症機率之統計數據屬背景性醫學資訊，pred summary 已在 opinions section 提及相關併發症，不影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "壞死性胰臟炎發生機率之統計數據屬背景性醫學資訊，pred summary 已於 opinions section 說明併發症風險，不影響判決理由理解",
+     "reason": "壞死性胰臟炎發生機率之統計數據屬背景性醫學資訊，pred summary 已於 opinions section 說明併發症風險，不影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "壞死性膽囊炎發生機率之統計數據屬背景性醫學資訊，不影響過失認定與因果關係之理解",
+     "reason": "壞死性膽囊炎發生機率之統計數據屬背景性醫學資訊，不影響過失認定與因果關係之理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "手術死亡率統計數據屬背景性醫學資訊，pred summary 已於 opinions section 提及相關風險，不影響判決理由理解",
+     "reason": "手術死亡率統計數據屬背景性醫學資訊，pred summary 已於 opinions section 提及相關風險，不影響判決理由理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 115,
+   "pred_total": 52,
+   "matched": 62,
+   "partial": 4,
+   "missing": 49,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8902,
+  "compression_afg_chars": 1418,
+  "compression_source_chars": 12918,
+  "gt_length_ratio": 0.3399,
+  "gt_length_afg_chars": 1418,
+  "gt_length_gt_chars": 4172,
+  "section_balance": 0.2862
+ }
 }

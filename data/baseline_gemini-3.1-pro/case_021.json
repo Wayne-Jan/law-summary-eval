@@ -131,5 +131,277 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7859,
+  "fact_recall": 0.4702,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6397,
+  "quality_overall": 4.7714,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.9,
+  "citation_support_score": 0.9048,
+  "uncited_rate": 0.086,
+  "faithfulness_combined": {
+   "score": 0.8936,
+   "citation_fidelity": 0.8226,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.7817,
+  "missing_severity": {
+   "critical": 0,
+   "important": 23,
+   "minor": 9,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「貿然開立藥劑」，未具體說明藥物名稱（Fentanyl、Midazolam、Propofol）及劑量，影響對醫療過失程度的完整理解",
+     "reason": "section_01_facts.txt 僅提及「貿然開立藥劑」，未具體說明藥物名稱（Fentanyl、Midazolam、Propofol）及劑量，影響對醫療過失程度的完整理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「護理師丙」，未說明其護理師證書及麻醉訓練合格資格，屬背景性資格說明",
+     "reason": "section_01_facts.txt 僅提及「護理師丙」，未說明其護理師證書及麻醉訓練合格資格，屬背景性資格說明"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「送往B醫院急救」，未提及「電請消防救護人員到場救護」的詳細過程，屬程序性細節",
+     "reason": "section_01_facts.txt 僅提及「送往B醫院急救」，未提及「電請消防救護人員到場救護」的詳細過程，屬程序性細節"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "死亡方式分類屬於法醫鑑定的重要結論，影響對死亡性質的理解，但在 facts 與 opinions section 中均未提及",
+     "reason": "死亡方式分類屬於法醫鑑定的重要結論，影響對死亡性質的理解，但在 facts 與 opinions section 中均未提及"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "法律對非麻醉專科醫師執行麻醉的規定是鑑定意見的重要法律見解，影響過失認定，但在 sections 中未提及",
+     "reason": "法律對非麻醉專科醫師執行麻醉的規定是鑑定意見的重要法律見解，影響過失認定，但在 sections 中未提及"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "足夠設備的具體項目（插管工具、急救藥物及人工換氣設備）是判斷診所設備是否充足的關鍵標準，屬鑑定意見核心內容，但未在 sections 中詳細列舉",
+     "reason": "足夠設備的具體項目（插管工具、急救藥物及人工換氣設備）是判斷診所設備是否充足的關鍵標準，屬鑑定意見核心內容，但未在 sections 中詳細列舉"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "假設性情境（若適當醫師在場可發現呼吸抑制）是鑑定意見判斷因果關係的重要依據，影響過失與結果的關聯性理解，sections 中未提及",
+     "reason": "假設性情境（若適當醫師在場可發現呼吸抑制）是鑑定意見判斷因果關係的重要依據，影響過失與結果的關聯性理解，sections 中未提及"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "假設性情境（若即時急救可避免死亡）是鑑定意見判斷結果避免可能性的關鍵，屬因果關係認定核心，sections 中未提及",
+     "reason": "假設性情境（若即時急救可避免死亡）是鑑定意見判斷結果避免可能性的關鍵，屬因果關係認定核心，sections 中未提及"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患長期服用類固醇且記載於麻醉紀錄，是判斷特殊體質與風險評估的重要背景事實，影響過失認定，sections 中未明確提及",
+     "reason": "病患長期服用類固醇且記載於麻醉紀錄，是判斷特殊體質與風險評估的重要背景事實，影響過失認定，sections 中未明確提及"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血壓血氧下降至無法偵測的具體狀況，是判斷病況嚴重程度與急救必要性的關鍵醫療事實，屬鑑定意見重要發現，sections 中未詳細提及",
+     "reason": "血壓血氧下降至無法偵測的具體狀況，是判斷病況嚴重程度與急救必要性的關鍵醫療事實，屬鑑定意見重要發現，sections 中未詳細提及"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "被告具體處置（atropine 0.5毫克、調高氧氣濃度）是判斷急救措施是否合規的核心事實，屬鑑定意見比對標準程序的關鍵內容，sections 中未明確提及",
+     "reason": "被告具體處置（atropine 0.5毫克、調高氧氣濃度）是判斷急救措施是否合規的核心事實，屬鑑定意見比對標準程序的關鍵內容，sections 中未明確提及"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "診斷困難之判斷（資料不足）屬鑑定意见的限制性說明，雖為專業陳述，但對案情主軸理解影響較小",
+     "reason": "診斷困難之判斷（資料不足）屬鑑定意见的限制性說明，雖為專業陳述，但對案情主軸理解影響較小"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "劑量對正常病患的安全性評估（在安全範圍）是鑑定意見對病患特殊性的重要對比說明，影響對風險評估缺失的理解，sections 中未提及",
+     "reason": "劑量對正常病患的安全性評估（在安全範圍）是鑑定意見對病患特殊性的重要對比說明，影響對風險評估缺失的理解，sections 中未提及"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患非普通病患的風險評估是鑑定意見強調特殊體質處理要求的關鍵論點，直接關聯過失認定，sections 中未明確提及",
+     "reason": "病患非普通病患的風險評估是鑑定意見強調特殊體質處理要求的關鍵論點，直接關聯過失認定，sections 中未明確提及"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "對麻醉評估與生理反應處置的綜合評估結論是鑑定意見的最終專業判斷，整合多項缺失，影響整體案情理解，sections 中未提及",
+     "reason": "對麻醉評估與生理反應處置的綜合評估結論是鑑定意見的最終專業判斷，整合多項缺失，影響整體案情理解，sections 中未提及"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要僅提及「法院依簡式審判程序審理」，未提及「合議庭裁定由受命法官獨任」的程序細節。此為程序性事實，不影響實體判決結果理解",
+     "reason": "摘要僅提及「法院依簡式審判程序審理」，未提及「合議庭裁定由受命法官獨任」的程序細節。此為程序性事實，不影響實體判決結果理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "摘要未提及告訴人與被告達成和解及取得賠償金，此為法院量刑時考量之重要情狀，影響判決理由理解",
+     "reason": "摘要未提及告訴人與被告達成和解及取得賠償金，此為法院量刑時考量之重要情狀，影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "摘要未提及告訴人撤回告訴之程序事實，此為配合簡式審判程序的重要量刑考量因素",
+     "reason": "摘要未提及告訴人撤回告訴之程序事實，此為配合簡式審判程序的重要量刑考量因素"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要未提及判決確定之程序性事實，此為判決後程序狀態，一般判決書主文不會記載，屬程序性背景事實",
+     "reason": "摘要未提及判決確定之程序性事實，此為判決後程序狀態，一般判決書主文不會記載，屬程序性背景事實"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "propofol使用規範（仿單及ASA guideline）為關鍵醫療標準，影響過失認定理解",
+     "reason": "propofol使用規範（仿單及ASA guideline）為關鍵醫療標準，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "propofol執行者限制為重要醫療安全規範，遺漏影響案情完整理解",
+     "reason": "propofol執行者限制為重要醫療安全規範，遺漏影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告明知診所設備不足為過失認定關鍵事實，直接影響業務過失判斷",
+     "reason": "被告明知診所設備不足為過失認定關鍵事實，直接影響業務過失判斷"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "報酬金額15萬元為動機描述，屬附隨事實，不影響法律要件理解",
+     "reason": "報酬金額15萬元為動機描述，屬附隨事實，不影響法律要件理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "具體藥劑名稱及劑量為事實認定基礎，影響麻醉處置適當性判斷",
+     "reason": "具體藥劑名稱及劑量為事實認定基礎，影響麻醉處置適當性判斷"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "護士資格及施打方式（一次vs漸進）為重要過失事實",
+     "reason": "護士資格及施打方式（一次vs漸進）為重要過失事實"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "施打後具體症狀為因果關係認定重要依據",
+     "reason": "施打後具體症狀為因果關係認定重要依據"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Atropine藥物名稱為急救措施具體內容，影響事實認定",
+     "reason": "Atropine藥物名稱為急救措施具體內容，影響事實認定"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "心跳呼吸持續下降為病況演變關鍵事實",
+     "reason": "心跳呼吸持續下降為病況演變關鍵事實"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "送醫過程細節為程序性事實",
+     "reason": "送醫過程細節為程序性事實"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院認定診所設備不足為判決基礎要件事實",
+     "reason": "法院認定診所設備不足為判決基礎要件事實"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "刑度及緩刑屬verdict section內容，reasoning不詳述為合理簡化",
+     "reason": "刑度及緩刑屬verdict section內容，reasoning不詳述為合理簡化"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "上訴及判決確定為程序性結論",
+     "reason": "上訴及判決確定為程序性結論"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 84,
+   "pred_total": 35,
+   "matched": 27,
+   "partial": 25,
+   "missing": 32,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.804,
+  "compression_afg_chars": 854,
+  "compression_source_chars": 4357,
+  "gt_length_ratio": 0.2833,
+  "gt_length_afg_chars": 854,
+  "gt_length_gt_chars": 3015,
+  "section_balance": 0.48
+ }
 }

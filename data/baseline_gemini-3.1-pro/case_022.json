@@ -139,5 +139,263 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8611,
+  "fact_recall": 0.4677,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6374,
+  "quality_overall": 4.2533,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 0.8333,
+  "citation_support_score": 0.7348,
+  "uncited_rate": 0.111,
+  "faithfulness_combined": {
+   "score": 0.8445,
+   "citation_fidelity": 0.7408,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 16,
+   "correct": 16
+  },
+  "weighted_recall": 0.7796,
+  "missing_severity": {
+   "critical": 2,
+   "important": 7,
+   "minor": 21,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "術前超音波檢查診斷及手術同意程序為背景性事實，不影響判決結論理解",
+     "reason": "術前超音波檢查診斷及手術同意程序為背景性事實，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "GT claim 14 明確記載被告辯稱「腹腔內的出血係因急救施行CPR對胸部按摩方造成大量出血」，此為本案重要防禦主張。生成摘要之 defense section 僅描述「被告甲自白犯罪...為有罪之陳述...達成協商合意」，完全未提及此項實質抗辯理由，導致讀者誤以為本案係單純認罪協商而無爭議防禦。經查詢全部 sections（包含 reasoning 段提及之 claims 22-27），均無「CPR造成出血」之相關辯稱內容。此遺漏影響對被告防禦策略及法院事實認定過程之完整理解，屬致命性 missing。",
+     "reason": "GT claim 14 明確記載被告辯稱「腹腔內的出血係因急救施行CPR對胸部按摩方造成大量出血」，此為本案重要防禦主張。生成摘要之 defense section 僅描述「被告甲自白犯罪...為有罪之陳述...達成協商合意」，完全未提及此項實質抗辯理由，導致讀者誤以為本案係單純認罪協商而無爭議防禦。經查詢全部 sections（包含 reasoning 段提及之 claims 22-27），均無「CPR造成出血」之相關辯稱內容。此遺漏影響對被告防禦策略及法院事實認定過程之完整理解，屬致命性 missing。"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖CHUNK_16記載「丙、膽結石內視鏡手術」為死因之一，但就醫學實質而言，此為手術類型背景資訊，非直接致死原因。摘要之opinions段已完整涵蓋核心死因（腸繫膜穿刺傷併大量出血、出血性休克）及排除性鑑定（無麻藥過敏或氣體栓塞），此細節遺漏不影響案情理解。",
+     "reason": "雖CHUNK_16記載「丙、膽結石內視鏡手術」為死因之一，但就醫學實質而言，此為手術類型背景資訊，非直接致死原因。摘要之opinions段已完整涵蓋核心死因（腸繫膜穿刺傷併大量出血、出血性休克）及排除性鑑定（無麻藥過敏或氣體栓塞），此細節遺漏不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要中確實未提及「本院查上開協商合意並無刑事訴訟法第455條之4第1項所列情形之一」之法條審查程序細節，屬程序性事實，不影響案情理解",
+     "reason": "摘要中確實未提及「本院查上開協商合意並無刑事訴訟法第455條之4第1項所列情形之一」之法條審查程序細節，屬程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要雖提及「協商合意」與「協商判決」，但未明確記載「檢察官聲請改依協商程序而為判決」之檢察官動作，屬程序性事實，不影響案情理解",
+     "reason": "摘要雖提及「協商合意」與「協商判決」，但未明確記載「檢察官聲請改依協商程序而為判決」之檢察官動作，屬程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要雖提及「不得上訴」，但未明確記載「被告、檢察官於法定上訴期間未上訴」之事實陳述，屬程序性事實",
+     "reason": "摘要雖提及「不得上訴」，但未明確記載「被告、檢察官於法定上訴期間未上訴」之事實陳述，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要「不得上訴」已隱含判決確定之意，但未明確記載「本案判決即確定」之文字，屬程序性狀態描述",
+     "reason": "摘要「不得上訴」已隱含判決確定之意，但未明確記載「本案判決即確定」之文字，屬程序性狀態描述"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 僅提及『腹腔鏡』，未提及具體手術類型『膽囊切除』，屬細節遺漏",
+     "reason": "pred reasoning 僅提及『腹腔鏡』，未提及具體手術類型『膽囊切除』，屬細節遺漏"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及 Trocar 套管特性，屬器械細節遺漏",
+     "reason": "pred reasoning 未提及 Trocar 套管特性，屬器械細節遺漏"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred reasoning 未提及被告 CPR 辯稱內容，辯方主張遺漏影響案情完整理解",
+     "reason": "pred reasoning 未提及被告 CPR 辯稱內容，辯方主張遺漏影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及具體時間和生命徵象數值，屬時序細節遺漏",
+     "reason": "pred reasoning 未提及具體時間和生命徵象數值，屬時序細節遺漏"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及 CPR 後麻醉師詢問的具體情境，屬互動細節遺漏",
+     "reason": "pred reasoning 未提及 CPR 後麻醉師詢問的具體情境，屬互動細節遺漏"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred reasoning 未提及被告『手術還沒開始，不可能是內出血』之具體回應，影響過失認定脈絡理解",
+     "reason": "pred reasoning 未提及被告『手術還沒開始，不可能是內出血』之具體回應，影響過失認定脈絡理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及加護病房抽血結果，屬醫療數據細節遺漏",
+     "reason": "pred reasoning 未提及加護病房抽血結果，屬醫療數據細節遺漏"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及麻醉師『肚子有漲』觀察，屬徵兆細節遺漏",
+     "reason": "pred reasoning 未提及麻醉師『肚子有漲』觀察，屬徵兆細節遺漏"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及加護病房血壓下降及持續急救過程，屬時序細節遺漏",
+     "reason": "pred reasoning 未提及加護病房血壓下降及持續急救過程，屬時序細節遺漏"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及急救最後時被告考慮開腹之表述，屬關鍵時間點細節遺漏",
+     "reason": "pred reasoning 未提及急救最後時被告考慮開腹之表述，屬關鍵時間點細節遺漏"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及護理紀錄具體內容及時間，屬書證細節遺漏",
+     "reason": "pred reasoning 未提及護理紀錄具體內容及時間，屬書證細節遺漏"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及具體血液檢驗數值，屬檢驗數據細節遺漏",
+     "reason": "pred reasoning 未提及具體血液檢驗數值，屬檢驗數據細節遺漏"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及手術前基準檢驗值，屬對照數據遺漏",
+     "reason": "pred reasoning 未提及手術前基準檢驗值，屬對照數據遺漏"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 未提及數值前後對比，屬趨勢分析遺漏",
+     "reason": "pred reasoning 未提及數值前後對比，屬趨勢分析遺漏"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred reasoning 提及『刺傷病患臟器』但沒有明確『腸道及腸繫膜』等具體機制，影響死因機轉完整理解",
+     "reason": "pred reasoning 提及『刺傷病患臟器』但沒有明確『腸道及腸繫膜』等具體機制，影響死因機轉完整理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "pred reasoning 雖提及『大量出血』但未明確提及『休克而死亡』之結果，影響判決結論理解",
+     "reason": "pred reasoning 雖提及『大量出血』但未明確提及『休克而死亡』之結果，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred reasoning 未提及被告關於麻醉、氣體拴塞等替代死因辯稱，屬辯護要點遺漏",
+     "reason": "pred reasoning 未提及被告關於麻醉、氣體拴塞等替代死因辯稱，屬辯護要點遺漏"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred reasoning 未明確陳述『卸責之詞，不足採信』等法院駁回辯稱之理由，影響法院心證理解",
+     "reason": "pred reasoning 未明確陳述『卸責之詞，不足採信』等法院駁回辯稱之理由，影響法院心證理解"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 提及『未採納麻醉師提醒』但未提及『3次詢問』具體頻次，屬次數細節遺漏",
+     "reason": "pred reasoning 提及『未採納麻醉師提醒』但未提及『3次詢問』具體頻次，屬次數細節遺漏"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred reasoning 雖可推導出有出血徵兆（否則不會有『錯失察覺』），但未明確陳述『自始確有內出血徵兆』，影響徵兆存在性認定",
+     "reason": "pred reasoning 雖可推導出有出血徵兆（否則不會有『錯失察覺』），但未明確陳述『自始確有內出血徵兆』，影響徵兆存在性認定"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred reasoning 提及『未採納提醒』但未提及『一再提醒』『率爾否定』之具體描述，屬程度細節遺漏",
+     "reason": "pred reasoning 提及『未採納提醒』但未提及『一再提醒』『率爾否定』之具體描述，屬程度細節遺漏"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "gt_claim_id 60 與 46 內容重複（護理紀錄腹部變大趨勢），pred reasoning 均未提及，屬書證細節遺漏",
+     "reason": "gt_claim_id 60 與 46 內容重複（護理紀錄腹部變大趨勢），pred reasoning 均未提及，屬書證細節遺漏"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred reasoning 提及『錯失察覺』但未明確陳述被告『明知』內出血徵兆，影響過失程度（間接故意 vs 疏失）之理解",
+     "reason": "pred reasoning 提及『錯失察覺』但未明確陳述被告『明知』內出血徵兆，影響過失程度（間接故意 vs 疏失）之理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 27,
+   "matched": 26,
+   "partial": 6,
+   "missing": 30,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7654,
+  "compression_afg_chars": 784,
+  "compression_source_chars": 3342,
+  "gt_length_ratio": 0.3717,
+  "gt_length_afg_chars": 784,
+  "gt_length_gt_chars": 2109,
+  "section_balance": 0.0
+ }
 }

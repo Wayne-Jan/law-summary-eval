@@ -139,5 +139,263 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.824,
+  "fact_recall": 0.4435,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6145,
+  "quality_overall": 4.2429,
+  "checklist_pass_rate": 0.9511,
+  "citation_accuracy": 0.8421,
+  "citation_support_score": 0.85,
+  "uncited_rate": 0.034,
+  "faithfulness_combined": {
+   "score": 0.8881,
+   "citation_fidelity": 0.8135,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 0.909,
+  "numerical_detail": {
+   "total_numerical": 11,
+   "correct": 10
+  },
+  "weighted_recall": 0.7312,
+  "missing_severity": {
+   "critical": 2,
+   "important": 16,
+   "minor": 12,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要僅提及「檢察官依起訴書指控」，未提及病患C之母、夫委由告訴代理人告訴等告訴人身份資訊，跨section檢查亦無此內容。此為案件來源事實，影響案情完整性理解。",
+     "reason": "生成摘要僅提及「檢察官依起訴書指控」，未提及病患C之母、夫委由告訴代理人告訴等告訴人身份資訊，跨section檢查亦無此內容。此為案件來源事實，影響案情完整性理解。"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要僅提及「未注意腹腔鏡套管尖端」之過失事實，未明確交代「應注意謹慎操作以避免刺傷器官或血管」之注意義務內容。雖reasoning section提及「應注意腹腔鏡套管之安全操作」，但非facts section內容。此為過失認定之核心法律要素，影響案情完整理解。",
+     "reason": "生成摘要僅提及「未注意腹腔鏡套管尖端」之過失事實，未明確交代「應注意謹慎操作以避免刺傷器官或血管」之注意義務內容。雖reasoning section提及「應注意腹腔鏡套管之安全操作」，但非facts section內容。此為過失認定之核心法律要素，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要未提及被告疏未發現內出血、未能及時開腹探查、未能縫合止血等關鍵過失細節。雖reasoning section提及「未即時開腹探查，僅施CPR，致出血未止」，但未涵蓋「縫合、止血」及「疏未發現內出血」等要件。此為醫療過失之關鍵事實，影響案情完整理解。",
+     "reason": "生成摘要未提及被告疏未發現內出血、未能及時開腹探查、未能縫合止血等關鍵過失細節。雖reasoning section提及「未即時開腹探查，僅施CPR，致出血未止」，但未涵蓋「縫合、止血」及「疏未發現內出血」等要件。此為醫療過失之關鍵事實，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "『膽結石內視鏡手術』係手術名稱的另一種表述，在 facts 段已提及『腹腔鏡膽囊切除術』，且此處為鑑定書中的手術描述，屬背景性資訊，不影響死因認定",
+     "reason": "『膽結石內視鏡手術』係手術名稱的另一種表述，在 facts 段已提及『腹腔鏡膽囊切除術』，且此處為鑑定書中的手術描述，屬背景性資訊，不影響死因認定"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "迴腸表銳器刺傷細節雖為解剖發現，但 opinions 段核心已涵蓋『腸繫膜刺傷致大量出血』之結論，此解剖細節屬補充性醫學發現",
+     "reason": "迴腸表銳器刺傷細節雖為解剖發現，但 opinions 段核心已涵蓋『腸繫膜刺傷致大量出血』之結論，此解剖細節屬補充性醫學發現"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "『附近之腸繫膜有大面積出血，為出血最嚴重的區域』雖為解剖細節，但摘要已涵蓋『大量出血』核心資訊，位置細節不影響死因判斷",
+     "reason": "『附近之腸繫膜有大面積出血，為出血最嚴重的區域』雖為解剖細節，但摘要已涵蓋『大量出血』核心資訊，位置細節不影響死因判斷"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "『解剖報告中並無本件發生麻藥過敏、氣體拴塞之解剖證據』係排除其他死因的重要鑑定結論，直接反駁被告辯稱（見 reasoning 段 gt_claim_id 54、55），缺失影響對鑑定意見完整性的理解",
+     "reason": "『解剖報告中並無本件發生麻藥過敏、氣體拴塞之解剖證據』係排除其他死因的重要鑑定結論，直接反駁被告辯稱（見 reasoning 段 gt_claim_id 54、55），缺失影響對鑑定意見完整性的理解"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "summary_verdict 僅記載判決主文（罪名、刑度、緩刑），未提及被告認罪之情節。雖 facts/defense/reasoning 段落有提及被告認罪，但 verdict section 摘要確實未涵蓋此資訊",
+     "reason": "summary_verdict 僅記載判決主文（罪名、刑度、緩刑），未提及被告認罪之情節。雖 facts/defense/reasoning 段落有提及被告認罪，但 verdict section 摘要確實未涵蓋此資訊"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "summary_verdict 未提及檢察官與被告於審判外達成協商合意之程序。雖其他 section 有提及協商，但 verdict section 摘要僅記載判決結果，未涵蓋協商合意達成過程",
+     "reason": "summary_verdict 未提及檢察官與被告於審判外達成協商合意之程序。雖其他 section 有提及協商，但 verdict section 摘要僅記載判決結果，未涵蓋協商合意達成過程"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "summary_verdict 未提及法院對協商合意之合法性審查（刑事訴訟法第455條之4第1項）。此為協商程序之程序性要件，屬於協商判決書格式內容",
+     "reason": "summary_verdict 未提及法院對協商合意之合法性審查（刑事訴訟法第455條之4第1項）。此為協商程序之程序性要件，屬於協商判決書格式內容"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "summary_verdict 未提及檢察官聲請改依協商程序而為判決之程序。此為協商程序啟動之程序性事實",
+     "reason": "summary_verdict 未提及檢察官聲請改依協商程序而為判決之程序。此為協商程序啟動之程序性事實"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "summary_verdict 未提及「不經言詞辯論」之協商判決程序特徵。此為協商程序與一般審判程序不同之程序性特點",
+     "reason": "summary_verdict 未提及「不經言詞辯論」之協商判決程序特徵。此為協商程序與一般審判程序不同之程序性特點"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "summary_verdict 未提及上訴期間經過之事實。此為判決確定之程序性條件",
+     "reason": "summary_verdict 未提及上訴期間經過之事實。此為判決確定之程序性條件"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "summary_verdict 未提及「本案判決即確定」之法律狀態。此為協商判確定之程序性結論",
+     "reason": "summary_verdict 未提及「本案判決即確定」之法律狀態。此為協商判確定之程序性結論"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉科醫師L詢問內出血及被告回應之對話細節，屬關鍵事實經過，影響案情完整理解",
+     "reason": "麻醉科醫師L詢問內出血及被告回應之對話細節，屬關鍵事實經過，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告具體辯稱內容（CPR造成出血）是法院駁斥的重要對象，影響過失認定理解",
+     "reason": "被告具體辯稱內容（CPR造成出血）是法院駁斥的重要對象，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉師L詢問有無內出血之對話，屬關鍵互動過程",
+     "reason": "麻醉師L詢問有無內出血之對話，屬關鍵互動過程"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告答稱手術還沒開始之對話內容，反映其當時判斷",
+     "reason": "被告答稱手術還沒開始之對話內容，反映其當時判斷"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉師CPR時觀察到肚子有漲之具體細節",
+     "reason": "麻醉師CPR時觀察到肚子有漲之具體細節"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉師持續懷疑及再次詢問過程，屬關鍵事實經過",
+     "reason": "麻醉師持續懷疑及再次詢問過程，屬關鍵事實經過"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "加護病房持續急救過程之描述",
+     "reason": "加護病房持續急救過程之描述"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告在急救最後考慮開腹探查之想法，反映其認知過程",
+     "reason": "被告在急救最後考慮開腹探查之想法，反映其認知過程"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血液檢驗具體數值雖有遺漏，但摘要有『血紅素、血小板顯著下降』已表達趨勢，屬次要資訊",
+     "reason": "血液檢驗具體數值雖有遺漏，但摘要有『血紅素、血小板顯著下降』已表達趨勢，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "101年11月13日檢驗報告具體數值，屬輔助性醫療數據",
+     "reason": "101年11月13日檢驗報告具體數值，屬輔助性醫療數據"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告關於麻醉、氣體拴塞等替代死因辯稱",
+     "reason": "被告關於麻醉、氣體拴塞等替代死因辯稱"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "法院對被告辯稱之具體駁斥結論，屬判決核心認定",
+     "reason": "法院對被告辯稱之具體駁斥結論，屬判決核心認定"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人L 3次詢問被告甲之事實，屬關鍵互動過程",
+     "reason": "證人L 3次詢問被告甲之事實，屬關鍵互動過程"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院認定自始即有內出血徵兆之判斷",
+     "reason": "法院認定自始即有內出血徵兆之判斷"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人一再提醒遭被告否定之過程",
+     "reason": "證人一再提醒遭被告否定之過程"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "內出血徵兆為被告所明知之認定，屬過失成立的關鍵事實",
+     "reason": "內出血徵兆為被告所明知之認定，屬過失成立的關鍵事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 29,
+   "matched": 23,
+   "partial": 9,
+   "missing": 30,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7669,
+  "compression_afg_chars": 779,
+  "compression_source_chars": 3342,
+  "gt_length_ratio": 0.3694,
+  "gt_length_afg_chars": 779,
+  "gt_length_gt_chars": 2109,
+  "section_balance": 0.4167
+ }
 }

@@ -127,5 +127,102 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8015,
+  "fact_recall": 0.6622,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7967,
+  "quality_overall": 4.4286,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.2353,
+  "citation_support_score": 0.295,
+  "uncited_rate": null,
+  "faithfulness_combined": {
+   "score": 0.5412,
+   "citation_fidelity": 0.2353,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.9099,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要以匿名化方式『家屬』、『病患X』呈現，雖在reasoning section有提及『病患K父母丙、戊』，但facts section本身未明確建立病患K與丙、戊的親屬關係",
+     "reason": "生成摘要以匿名化方式『家屬』、『病患X』呈現，雖在reasoning section有提及『病患K父母丙、戊』，但facts section本身未明確建立病患K與丙、戊的親屬關係"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生成摘要僅提及『案經檢察官提起公訴』，未明確說明告訴人（病患K之父丙）身份。雖reasoning section提及『撤回對被告之告訴』，但facts section起訴事實中確實遺漏告訴人資訊",
+     "reason": "生成摘要僅提及『案經檢察官提起公訴』，未明確說明告訴人（病患K之父丙）身份。雖reasoning section提及『撤回對被告之告訴』，但facts section起訴事實中確實遺漏告訴人資訊"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "跨 section 檢查：opinions section 僅提及『鑑定意見內文未於判決文中詳細呈現』，未提及具體結論；facts section 雖有檢察官起訴提到『罹患心肌炎』，但屬檢察官主張而非鑑定意見。無 section 明確陳述『鑑定意見為病患K係罹患心肌炎』此一鑑定結論，確認維持 missing。此乃鑑定意見之核心醫療發現，影響死因理解，屬重要資訊遺漏。",
+     "reason": "跨 section 檢查：opinions section 僅提及『鑑定意見內文未於判決文中詳細呈現』，未提及具體結論；facts section 雖有檢察官起訴提到『罹患心肌炎』，但屬檢察官主張而非鑑定意見。無 section 明確陳述『鑑定意見為病患K係罹患心肌炎』此一鑑定結論，確認維持 missing。此乃鑑定意見之核心醫療發現，影響死因理解，屬重要資訊遺漏。"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "任何 section 均未提及「協商合意內容為被告甲願受科刑範圍為拘役20日」之具體協商內容，對理解判決刑度來源屬重要資訊",
+     "reason": "任何 section 均未提及「協商合意內容為被告甲願受科刑範圍為拘役20日」之具體協商內容，對理解判決刑度來源屬重要資訊"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "任何 section 均未提及「被告、檢察官於法定上訴期間未上訴」，屬判決程序性結尾事實，不影響案情理解",
+     "reason": "任何 section 均未提及「被告、檢察官於法定上訴期間未上訴」，屬判決程序性結尾事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "任何 section 均未提及「本案判決即確定」，屬判決程序性結尾事實，不影響案情理解",
+     "reason": "任何 section 均未提及「本案判決即確定」，屬判決程序性結尾事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "此為協商判決案件，『判決書內文無判決理由』指原始判決因協商程序而理由簡化，屬程序性背景事實。預測摘要已有簡略理由段落，此背景資訊雖未明確提及但不影響核心案情理解，屬次要資訊。",
+     "reason": "此為協商判決案件，『判決書內文無判決理由』指原始判決因協商程序而理由簡化，屬程序性背景事實。預測摘要已有簡略理由段落，此背景資訊雖未明確提及但不影響核心案情理解，屬次要資訊。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 37,
+   "pred_total": 26,
+   "matched": 19,
+   "partial": 11,
+   "missing": 7,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6591,
+  "compression_afg_chars": 604,
+  "compression_source_chars": 1772,
+  "gt_length_ratio": 0.622,
+  "gt_length_afg_chars": 604,
+  "gt_length_gt_chars": 971,
+  "section_balance": 0.7273
+ }
 }
