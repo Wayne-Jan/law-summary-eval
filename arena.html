@@ -259,6 +259,17 @@
             display: flex; align-items: center; justify-content: center;
             gap: 10px; z-index: 100;
         }
+        .vote-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .vote-reason {
+            position: absolute;
+            left: 24px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
 
         .vote-btn {
             padding: 7px 20px; border-radius: 8px;
@@ -1340,7 +1351,14 @@
                 height: auto; flex-wrap: wrap; justify-content: center;
                 padding: 8px 12px; gap: 6px;
             }
+            .vote-reason {
+                position: static;
+                transform: none;
+                width: 100%;
+                order: 99;
+            }
             .vote-reason textarea { width: 100%; }
+            .vote-actions { flex-wrap: wrap; justify-content: center; }
             .main { bottom: auto; top: calc(var(--toolbar-h) + var(--subbar-h)); }
             .toolbar .spacer { display: none; }
             .toolbar { padding: 0 12px; gap: 8px; flex-wrap: nowrap; overflow-x: auto; }
@@ -1529,12 +1547,14 @@
 <!-- Vote bar -->
 <div class="vote-bar" id="voteBar">
     <div class="vote-reason">
-        <textarea id="reasonText" placeholder="理由（選填）"></textarea>
+        <textarea id="reasonText" placeholder="選擇理由"></textarea>
     </div>
-    <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：←">A 較好<span class="kbd-key">←</span></button>
-    <button class="vote-btn" data-vote="tie" title="快捷鍵：Space">難分高下<span class="kbd-key">Space</span></button>
-    <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：→">B 較好<span class="kbd-key">→</span></button>
-    <button class="submit-btn" id="submitBtn" disabled title="快捷鍵：S">送出<span class="kbd-key">S</span></button>
+    <div class="vote-actions">
+        <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：←">A 較好<span class="kbd-key">←</span></button>
+        <button class="vote-btn" data-vote="tie" title="快捷鍵：Space">難分高下<span class="kbd-key">Space</span></button>
+        <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：→">B 較好<span class="kbd-key">→</span></button>
+        <button class="submit-btn" id="submitBtn" disabled title="快捷鍵：S">送出<span class="kbd-key">S</span></button>
+    </div>
 </div>
 
 <!-- Leaderboard toggle -->
