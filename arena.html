@@ -233,10 +233,10 @@
             to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
-        /* ─── Evaluator Modal ─── */
+        /* ─── Login Overlay ─── */
         .modal-overlay {
             position: fixed; inset: 0;
-            background: rgba(0,0,0,0.4);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(15, 118, 110, 0.88));
             z-index: 9000;
             display: flex; align-items: center; justify-content: center;
         }
@@ -244,38 +244,67 @@
 
         .modal-card {
             background: #fff; border-radius: 12px;
-            padding: 28px 32px; width: 360px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+            padding: 32px; width: 380px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.22);
             text-align: center;
+            border: 1px solid #dbe4ea;
         }
         .modal-card h2 {
-            font-size: 18px; font-weight: 700; color: #111827;
+            font-size: 22px; font-weight: 700; color: #111827;
             margin-bottom: 6px;
         }
         .modal-card p {
-            font-size: 14px; color: #6b7280; margin-bottom: 20px;
-        }
-        .modal-radios {
-            display: flex; justify-content: center; gap: 16px;
-            margin-bottom: 24px;
-        }
-        .modal-radios label {
-            display: flex; align-items: center; gap: 6px;
-            font-size: 16px; font-weight: 600; color: #374151;
-            cursor: pointer;
-        }
-        .modal-radios input[type="radio"] {
-            accent-color: var(--primary);
-            width: 18px; height: 18px;
+            font-size: 14px; color: #6b7280; margin-bottom: 18px;
         }
         .modal-confirm {
             padding: 10px 36px; border-radius: 10px; border: none;
-            background: var(--primary); color: white;
+            background: #0f766e; color: white;
             font-size: 15px; font-weight: 600; cursor: pointer;
             font-family: inherit; transition: all 0.15s;
         }
-        .modal-confirm:hover { background: var(--primary-hover); }
+        .modal-confirm:hover { background: #115e59; }
         .modal-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
+        .login-fields {
+            display: grid;
+            gap: 12px;
+        }
+        .login-fields select,
+        .login-fields input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #334155;
+            background: #fff;
+        }
+        .login-fields select:focus,
+        .login-fields input:focus {
+            outline: none;
+            border-color: #0f766e;
+            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+        }
+        .login-error {
+            min-height: 18px;
+            color: #dc2626;
+            font-size: 13px;
+            text-align: center;
+        }
+        .login-links {
+            margin-top: 16px;
+            padding-top: 14px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .login-links a {
+            color: #64748b;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        .login-links a:hover { color: #0f766e; }
 
         /* ─── Leaderboard ─── */
         .leaderboard-toggle {
@@ -369,16 +398,29 @@
             .leaderboard-panel { width: calc(100% - 24px); right: 12px; }
         }
     </style>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
 
-<!-- Evaluator selection modal -->
-<div class="modal-overlay" id="evalModal">
+<!-- Login overlay -->
+<div class="modal-overlay" id="loginOverlay">
     <div class="modal-card">
-        <h2>選擇評審代號</h2>
-        <p>你的投票紀錄將依代號分別儲存</p>
-        <div class="modal-radios" id="evalRadios"></div>
-        <button class="modal-confirm" id="evalConfirm" disabled>開始評估</button>
+        <h2>LENS Arena</h2>
+        <p>登入後會先從雲端同步你的 arena 投票紀錄</p>
+        <div class="login-fields">
+            <select id="loginUser">
+                <option value="">-- 選擇評審者 --</option>
+            </select>
+            <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()">
+            <div class="login-error" id="loginError"></div>
+            <button class="modal-confirm" id="loginSubmit" onclick="doLogin()">登入</button>
+        </div>
+        <div class="login-links">
+            <a href="#" id="adminLoginLink" onclick="event.preventDefault();toggleAdminLogin()">管理員入口</a>
+            <a href="index.html">返回首頁</a>
+        </div>
     </div>
 </div>
 
@@ -387,12 +429,15 @@
     <h1>LENS Arena</h1>
     <span class="progress-badge" id="progressBadge">載入中...</span>
     <span class="spacer"></span>
+    <span class="progress-badge" id="cloudStatus">雲端待命</span>
     <span class="eval-label">評審：</span>
     <select id="evalSelect"></select>
+    <span class="progress-badge" id="userBadge">未登入</span>
     <button class="btn-sm btn-timeline" id="btnTimeline">案件時間軸</button>
     <a class="nav-link" href="index.html">首頁</a>
     <button class="btn-sm" id="btnExport">匯出 JSON</button>
     <button class="btn-sm" id="btnClear">清除紀錄</button>
+    <button class="btn-sm" id="btnLogout">登出</button>
 </div>
 
 <!-- Dual panels -->
@@ -462,62 +507,271 @@
 (function() {
     'use strict';
 
-    /* ─── State ─── */
+    const firebaseConfig = {
+        apiKey: "AIzaSyCIs5MX4evekzi3o8Coz8alRhXFAqAkJuA",
+        authDomain: "law-eval-2f86e.firebaseapp.com",
+        projectId: "law-eval-2f86e",
+        storageBucket: "law-eval-2f86e.firebasestorage.app",
+        messagingSenderId: "850825118261",
+        appId: "1:850825118261:web:dab7cc69af88d0d99b277c"
+    };
+
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    const ARENA_STORAGE_VERSION = 'v1';
+    const ARENA_CAMPAIGN_ID = 'arena_20260411_5eval_4cond_15case';
+    const ARENA_AUTH_USER_KEY = 'arena_v1_auth_user';
+    const ARENA_AUTH_ROLE_KEY = 'arena_v1_auth_role';
+    const ARENA_USERS = {
+        'A': { role: 'evaluator', email: 'arena-a@law-eval.local' },
+        'B': { role: 'evaluator', email: 'arena-b@law-eval.local' },
+        'C': { role: 'evaluator', email: 'arena-c@law-eval.local' },
+        'D': { role: 'evaluator', email: 'arena-d@law-eval.local' },
+        'E': { role: 'evaluator', email: 'arena-e@law-eval.local' },
+        'admin': { role: 'admin', email: 'arena-admin@law-eval.local' }
+    };
+    const ARENA_USER_BY_EMAIL = Object.fromEntries(
+        Object.entries(ARENA_USERS).map(([name, info]) => [info.email, { name, role: info.role, email: info.email }])
+    );
+
     let config = null;
     let currentEvaluator = null;
-    let currentPair = null; // { case_id, condA, condB, displayOrder, loadedAt }
+    let currentPair = null;
     let selectedVote = null;
     let dataA = null, dataB = null;
+    let currentCaseName = '';
+    let cloudStatusTimer = null;
+    let appReady = false;
+    let adminLoginMode = false;
+    let currentDataUid = '';
 
-    const STORAGE_KEY = 'arena_data';
-
-    /* ─── Storage helpers ─── */
-    function loadStorage() {
-        try {
-            const raw = localStorage.getItem(STORAGE_KEY);
-            if (raw) return JSON.parse(raw);
-        } catch(e) { /* ignore */ }
-        return { current_evaluator: null, votes: [] };
+    function getArenaVotesStorageKey(evaluator) {
+        return `arena_v1_votes_${evaluator}`;
     }
 
-    function saveStorage(data) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    function setLocalSessionProfile(name, role) {
+        localStorage.setItem(ARENA_AUTH_USER_KEY, name);
+        localStorage.setItem(ARENA_AUTH_ROLE_KEY, role);
+    }
+
+    function clearLocalSessionProfile() {
+        localStorage.removeItem(ARENA_AUTH_USER_KEY);
+        localStorage.removeItem(ARENA_AUTH_ROLE_KEY);
+    }
+
+    function loadVotesForEvaluator(evaluator) {
+        if (!evaluator) return [];
+        try {
+            const raw = localStorage.getItem(getArenaVotesStorageKey(evaluator));
+            return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+            return [];
+        }
+    }
+
+    function saveVotesForEvaluator(evaluator, votes) {
+        if (!evaluator) return;
+        localStorage.setItem(getArenaVotesStorageKey(evaluator), JSON.stringify(votes));
     }
 
     function getVotes(evaluator) {
-        const store = loadStorage();
-        return store.votes.filter(v => v.evaluator === evaluator);
-    }
-
-    function addVote(vote) {
-        const store = loadStorage();
-        store.votes.push(vote);
-        store.current_evaluator = currentEvaluator;
-        saveStorage(store);
+        return loadVotesForEvaluator(evaluator).filter(v => v.evaluator === evaluator);
     }
 
     function setEvaluator(ev) {
         currentEvaluator = ev;
-        const store = loadStorage();
-        store.current_evaluator = ev;
-        saveStorage(store);
     }
 
-    /* ─── Escape HTML ─── */
+    function setCloudStatus(text, state) {
+        const el = document.getElementById('cloudStatus');
+        if (!el) return;
+        el.textContent = text;
+        el.dataset.state = state || '';
+    }
+
+    function getAuthProfile(user = auth.currentUser) {
+        if (!user || !user.email) return null;
+        return ARENA_USER_BY_EMAIL[user.email] || null;
+    }
+
+    function getCloudEvaluatorId() {
+        return auth.currentUser ? auth.currentUser.uid : '';
+    }
+
+    function fsDocId(key) {
+        return encodeURIComponent(key).substring(0, 1400);
+    }
+
+    function cloudRecordRef(uid, key) {
+        return db.collection('arena_evals').doc(uid).collection('records').doc(fsDocId(key));
+    }
+
+    function makeArenaRecordKey(vote) {
+        const pair = [vote.condition_a, vote.condition_b].sort();
+        return `arena_v1_${vote.case_id}__${pair[0]}__${pair[1]}`;
+    }
+
+    function stampVote(vote) {
+        return {
+            ...vote,
+            _campaign_id: ARENA_CAMPAIGN_ID,
+            _storage_version: ARENA_STORAGE_VERSION
+        };
+    }
+
+    async function writeCloudRecord(vote) {
+        const uid = getCloudEvaluatorId();
+        if (!uid) return;
+        const key = makeArenaRecordKey(vote);
+        setCloudStatus('同步中', 'syncing');
+        clearTimeout(cloudStatusTimer);
+        await cloudRecordRef(uid, key).set({
+            key,
+            data: vote,
+            updated: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        setCloudStatus('已同步', 'synced');
+        cloudStatusTimer = setTimeout(() => setCloudStatus('雲端待命', ''), 2500);
+    }
+
+    async function syncArenaUserIndex(user, profile) {
+        if (!user || !profile) return;
+        await db.collection('arena_users').doc(user.uid).set({
+            uid: user.uid,
+            email: user.email || '',
+            name: profile.name,
+            role: profile.role,
+            updated: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+    }
+
+    async function lookupArenaUidByName(name) {
+        const snapshot = await db.collection('arena_users').where('name', '==', name).limit(1).get();
+        if (snapshot.empty) return '';
+        return snapshot.docs[0].id;
+    }
+
+    async function restoreArenaVotes(evaluator, uidOverride) {
+        const uid = uidOverride || getCloudEvaluatorId();
+        if (!uid || !evaluator) return;
+        currentDataUid = uid;
+        setCloudStatus('同步中', 'syncing');
+        const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+        const votes = [];
+        snapshot.forEach(doc => {
+            const payload = doc.data() || {};
+            if (!payload.data) return;
+            votes.push(payload.data);
+        });
+        votes.sort((a, b) => String(a.timestamp || '').localeCompare(String(b.timestamp || '')));
+        saveVotesForEvaluator(evaluator, votes);
+        setCloudStatus('已同步', 'synced');
+        cloudStatusTimer = setTimeout(() => setCloudStatus('雲端待命', ''), 2500);
+    }
+
+    async function clearArenaVotes() {
+        const uid = currentDataUid || getCloudEvaluatorId();
+        if (!uid || !currentEvaluator) return;
+        const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+        const batch = db.batch();
+        snapshot.forEach(doc => batch.delete(doc.ref));
+        if (!snapshot.empty) await batch.commit();
+        saveVotesForEvaluator(currentEvaluator, []);
+    }
+
+    async function doLogin() {
+        const userSel = document.getElementById('loginUser');
+        const passInput = document.getElementById('loginPassword');
+        const errorEl = document.getElementById('loginError');
+        const name = adminLoginMode ? 'admin' : userSel.value;
+        const password = passInput.value;
+
+        errorEl.textContent = '';
+        if (!name) { errorEl.textContent = '請選擇評審者'; return; }
+        if (!password) { errorEl.textContent = '請輸入密碼'; return; }
+        const user = ARENA_USERS[name];
+        if (!user) { errorEl.textContent = '使用者不存在'; return; }
+
+        try {
+            await auth.signInWithEmailAndPassword(user.email, password);
+        } catch (e) {
+            console.error('Arena login failed:', e);
+            errorEl.textContent = '登入失敗，請確認帳號與密碼';
+        }
+    }
+    window.doLogin = doLogin;
+
+    async function logout() {
+        try {
+            await auth.signOut();
+        } finally {
+            currentDataUid = '';
+            clearLocalSessionProfile();
+            location.reload();
+        }
+    }
+
+    function hideLoginOverlay() {
+        document.getElementById('loginOverlay').classList.add('hidden');
+    }
+
+    function showLoginOverlay() {
+        const overlay = document.getElementById('loginOverlay');
+        const sel = document.getElementById('loginUser');
+        adminLoginMode = false;
+        overlay.classList.remove('hidden');
+        sel.disabled = false;
+        if (sel.options.length <= 1) {
+            Object.keys(ARENA_USERS).filter(name => name !== 'admin').forEach(name => {
+                const opt = document.createElement('option');
+                opt.value = name;
+                opt.textContent = '評審 ' + name;
+                sel.appendChild(opt);
+            });
+        }
+        document.getElementById('adminLoginLink').textContent = '管理員入口';
+        document.getElementById('loginPassword').placeholder = '密碼';
+        document.getElementById('loginPassword').value = '';
+        document.getElementById('loginError').textContent = '';
+    }
+
+    function toggleAdminLogin() {
+        adminLoginMode = !adminLoginMode;
+        const sel = document.getElementById('loginUser');
+        const link = document.getElementById('adminLoginLink');
+        if (adminLoginMode) {
+            sel.value = '';
+            sel.disabled = true;
+            link.textContent = '返回評審登入';
+            document.getElementById('loginPassword').placeholder = '管理者密碼';
+        } else {
+            sel.disabled = false;
+            link.textContent = '管理員入口';
+            document.getElementById('loginPassword').placeholder = '密碼';
+        }
+        document.getElementById('loginError').textContent = '';
+    }
+    window.toggleAdminLogin = toggleAdminLogin;
+
+    function applyReadOnlyMode(isReadOnly) {
+        document.getElementById('voteBar').style.display = isReadOnly ? 'none' : 'flex';
+        document.getElementById('btnClear').style.display = isReadOnly ? 'none' : '';
+    }
+
     function escapeHtml(str) {
         const div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
     }
 
-    /* ─── Render citations ─── */
     function renderContent(text) {
         if (!text) return '<div class="empty-content">此版本無此章節內容</div>';
         const escaped = escapeHtml(text);
         return escaped.replace(/\[CH_(\d+)\]/g, '<span class="citation">[CH_$1]</span>');
     }
 
-    /* ─── Pairing logic ─── */
     function getAllPairs() {
         const conds = config.conditions;
         const pairs = [];
@@ -585,7 +839,6 @@
         const pick = weightedRandomPick(pool);
         if (!pick) return null;
 
-        // Randomly assign left/right
         const swap = Math.random() < 0.5;
         return {
             case_id: pick.case_id,
@@ -596,7 +849,6 @@
         };
     }
 
-    /* ─── Data fetching ─── */
     async function fetchJson(url) {
         const resp = await fetch(url);
         if (!resp.ok) throw new Error('fetch failed: ' + url);
@@ -611,7 +863,6 @@
         return { a, b };
     }
 
-    /* ─── UI Updates ─── */
     function updateProgress() {
         const votes = getVotes(currentEvaluator);
         const casesWithVotes = new Set(votes.map(v => v.case_id));
@@ -648,8 +899,6 @@
         document.getElementById('metaB').innerHTML = calcCompressionMeta(dataB);
     }
 
-    let currentCaseName = '';
-
     window.closeTlModal = function(event) {
         if (event && event.target !== event.currentTarget) return;
         document.getElementById('tlModal').classList.add('hidden');
@@ -681,10 +930,11 @@
     function showPairUI() {
         document.getElementById('mainArea').querySelectorAll('.panel').forEach(p => p.style.display = 'flex');
         document.getElementById('allDone').style.display = 'none';
-        document.getElementById('voteBar').style.display = 'flex';
+        document.getElementById('voteBar').style.display = getAuthProfile() && getAuthProfile().role === 'admin' ? 'none' : 'flex';
     }
 
     async function loadNextPair() {
+        if (!currentEvaluator) return;
         const pair = pickNextPair();
         if (!pair) {
             showAllDone();
@@ -696,10 +946,7 @@
         currentPair = pair;
         resetVoteUI();
 
-        // Show case name
         const caseInfo = config.cases.find(c => c.case_id === pair.case_id);
-        // case name used for timeline link only
-
 
         try {
             const { a, b } = await loadPairData(pair);
@@ -717,7 +964,6 @@
         updateProgress();
     }
 
-    /* ─── Vote handling ─── */
     function initVoteButtons() {
         document.querySelectorAll('.vote-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -739,11 +985,13 @@
         document.getElementById('submitBtn').addEventListener('click', submitVote);
     }
 
-    function submitVote() {
+    async function submitVote() {
         if (!selectedVote || !currentPair) return;
 
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
         const durationSec = Math.round((Date.now() - currentPair.loadedAt) / 1000);
-        const vote = {
+        const vote = stampVote({
             evaluator: currentEvaluator,
             case_id: currentPair.case_id,
             condition_a: currentPair.condA,
@@ -753,10 +1001,23 @@
             reason: document.getElementById('reasonText').value.trim(),
             timestamp: new Date().toISOString(),
             duration_sec: durationSec
-        };
+        });
 
-        addVote(vote);
-        showFlash();
+        const votes = getVotes(currentEvaluator);
+        const key = makeArenaRecordKey(vote);
+        const nextVotes = votes.filter(v => makeArenaRecordKey(v) !== key);
+        nextVotes.push(vote);
+        saveVotesForEvaluator(currentEvaluator, nextVotes);
+
+        try {
+            await writeCloudRecord(vote);
+            showFlash();
+        } catch (e) {
+            console.error('Arena vote sync failed:', e);
+            setCloudStatus('同步失敗', 'error');
+            document.getElementById('loginError').textContent = '投票已暫存本機，但雲端同步失敗';
+            submitBtn.disabled = false;
+        }
     }
 
     function showFlash() {
@@ -768,7 +1029,6 @@
         }, 600);
     }
 
-    /* ─── Leaderboard / Elo ─── */
     function calcElo() {
         const votes = getVotes(currentEvaluator);
         const elo = {};
@@ -844,7 +1104,6 @@
         });
     }
 
-    /* ─── Export / Clear ─── */
     function initTimeline() {
         document.getElementById('btnTimeline').addEventListener('click', openTlModal);
         document.addEventListener('keydown', (e) => {
@@ -854,8 +1113,8 @@
 
     function initExportClear() {
         document.getElementById('btnExport').addEventListener('click', () => {
-            const store = loadStorage();
-            const blob = new Blob([JSON.stringify(store.votes, null, 2)], { type: 'application/json' });
+            const votes = getVotes(currentEvaluator);
+            const blob = new Blob([JSON.stringify(votes, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -864,73 +1123,101 @@
             URL.revokeObjectURL(url);
         });
 
-        document.getElementById('btnClear').addEventListener('click', () => {
+        document.getElementById('btnClear').addEventListener('click', async () => {
             if (confirm('確定要清除所有投票紀錄嗎？此操作無法復原。')) {
-                localStorage.removeItem(STORAGE_KEY);
-                currentEvaluator = null;
-                showModal();
+                await clearArenaVotes();
+                updateProgress();
+                loadNextPair();
             }
         });
+
+        document.getElementById('btnLogout').addEventListener('click', logout);
     }
 
-    /* ─── Evaluator selector (toolbar) ─── */
     function initEvalSelector() {
         const select = document.getElementById('evalSelect');
-        select.addEventListener('change', () => {
+        select.addEventListener('change', async () => {
+            const profile = getAuthProfile();
+            if (!profile || profile.role !== 'admin') return;
             setEvaluator(select.value);
-            loadNextPair();
+            document.getElementById('userBadge').textContent = '管理員檢視 ' + currentEvaluator;
+            const uid = await lookupArenaUidByName(currentEvaluator);
+            if (uid) await restoreArenaVotes(currentEvaluator, uid);
+            else saveVotesForEvaluator(currentEvaluator, []);
+            updateProgress();
+            await loadNextPair();
         });
     }
 
     function populateEvalSelector() {
         const select = document.getElementById('evalSelect');
         select.innerHTML = '';
-        for (const ev of config.evaluators) {
+        const profile = getAuthProfile();
+        const evaluators = Object.keys(ARENA_USERS).filter(name => name !== 'admin');
+        const visibleEvaluators = profile && profile.role === 'admin' ? evaluators : [currentEvaluator];
+        visibleEvaluators.forEach(ev => {
             const opt = document.createElement('option');
             opt.value = ev;
             opt.textContent = '評審 ' + ev;
             if (ev === currentEvaluator) opt.selected = true;
             select.appendChild(opt);
-        }
+        });
+        select.disabled = !(profile && profile.role === 'admin');
     }
 
-    /* ─── Modal ─── */
-    function showModal() {
-        const overlay = document.getElementById('evalModal');
-        overlay.classList.remove('hidden');
-
-        const radios = document.getElementById('evalRadios');
-        radios.innerHTML = '';
-        for (const ev of config.evaluators) {
-            const label = document.createElement('label');
-            const input = document.createElement('input');
-            input.type = 'radio';
-            input.name = 'evalChoice';
-            input.value = ev;
-            input.addEventListener('change', () => {
-                document.getElementById('evalConfirm').disabled = false;
-            });
-            label.appendChild(input);
-            label.appendChild(document.createTextNode(' ' + ev));
-            radios.appendChild(label);
+    function applyAuthProfile(profile) {
+        if (!profile) return;
+        if (profile.role === 'admin') {
+            currentEvaluator = currentEvaluator || 'A';
+            document.getElementById('userBadge').textContent = '管理員';
+            applyReadOnlyMode(true);
+        } else {
+            currentEvaluator = profile.name;
+            document.getElementById('userBadge').textContent = '評審 ' + profile.name;
+            applyReadOnlyMode(false);
         }
-
-        document.getElementById('evalConfirm').disabled = true;
-        document.getElementById('evalConfirm').onclick = () => {
-            const chosen = document.querySelector('input[name="evalChoice"]:checked');
-            if (!chosen) return;
-            setEvaluator(chosen.value);
-            overlay.classList.add('hidden');
-            populateEvalSelector();
-            loadNextPair();
-        };
+        populateEvalSelector();
     }
 
-    /* ─── Init ─── */
+    async function handleAuthStateChanged(user) {
+        if (!user) {
+            clearLocalSessionProfile();
+            currentEvaluator = null;
+            showLoginOverlay();
+            document.getElementById('userBadge').textContent = '未登入';
+            setCloudStatus('雲端待命', '');
+            return;
+        }
+
+        const profile = getAuthProfile(user);
+        if (!profile) {
+            await auth.signOut();
+            return;
+        }
+
+        hideLoginOverlay();
+        setLocalSessionProfile(profile.name, profile.role);
+        document.getElementById('loginError').textContent = '';
+        await syncArenaUserIndex(user, profile);
+        applyAuthProfile(profile);
+        if (profile.role !== 'admin') {
+            await restoreArenaVotes(profile.name, user.uid);
+        } else {
+            const target = currentEvaluator || 'A';
+            currentEvaluator = target;
+            const targetUid = await lookupArenaUidByName(target);
+            if (targetUid) await restoreArenaVotes(target, targetUid);
+            else saveVotesForEvaluator(target, []);
+            setCloudStatus('管理模式', '');
+        }
+        updateProgress();
+        await loadNextPair();
+    }
+
     async function init() {
         try {
             config = await fetchJson('./data/arena_config.json');
-        } catch(e) {
+        } catch (e) {
             document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#ef4444;">無法載入 arena_config.json</div>';
             return;
         }
@@ -940,17 +1227,15 @@
         initExportClear();
         initEvalSelector();
         initTimeline();
-
-        // Check existing evaluator
-        const store = loadStorage();
-        if (store.current_evaluator && config.evaluators.includes(store.current_evaluator)) {
-            currentEvaluator = store.current_evaluator;
-            document.getElementById('evalModal').classList.add('hidden');
-            populateEvalSelector();
-            loadNextPair();
-        } else {
-            showModal();
-        }
+        showLoginOverlay();
+        appReady = true;
+        auth.onAuthStateChanged((user) => {
+            if (!appReady) return;
+            handleAuthStateChanged(user).catch(err => {
+                console.error('Arena auth flow failed:', err);
+                document.getElementById('loginError').textContent = '初始化失敗，請重新整理';
+            });
+        });
     }
 
     init();
