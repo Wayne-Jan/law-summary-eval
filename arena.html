@@ -505,6 +505,25 @@
             border-color: #fecdd3 !important;
             color: #be123c !important;
         }
+        .admin-mini-danger {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 26px;
+            height: 24px;
+            padding: 0 8px;
+            border-radius: 8px;
+            border: 1px solid #fecdd3;
+            background: #fff1f2;
+            color: #be123c;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .admin-mini-danger:hover {
+            background: #ffe4e6;
+            border-color: #fda4af;
+        }
         .admin-progress-empty { color: #94a3b8; }
         .admin-progress-partial {
             color: #b45309;
@@ -512,6 +531,12 @@
             border-radius: 999px;
             padding: 3px 8px;
             display: inline-flex;
+        }
+        .admin-progress-cell {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
         .admin-progress-done {
             color: #047857;
@@ -947,13 +972,28 @@
         cloudStatusTimer = setTimeout(() => setCloudStatus('雲端待命', ''), 2500);
     }
 
+    async function getCampaignRecordRefs(uid) {
+        if (!uid) return [];
+        const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+        const refs = [];
+        snapshot.forEach(doc => {
+            const payload = doc.data() || {};
+            if (payload.data && isCurrentCampaignVote(payload.data)) refs.push(doc.ref);
+        });
+        return refs;
+    }
+
     async function clearArenaVotes() {
         const uid = currentDataUid || getCloudEvaluatorId();
         if (!uid || !currentEvaluator) return;
-        const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+        const refs = await getCampaignRecordRefs(uid);
+        if (!refs.length) {
+            saveVotesForEvaluator(currentEvaluator, []);
+            return;
+        }
         const batch = db.batch();
-        snapshot.forEach(doc => batch.delete(doc.ref));
-        if (!snapshot.empty) await batch.commit();
+        refs.forEach(ref => batch.delete(ref));
+        await batch.commit();
         saveVotesForEvaluator(currentEvaluator, []);
     }
 
@@ -963,12 +1003,38 @@
             saveVotesForEvaluator(name, []);
             return false;
         }
-        const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+        const refs = await getCampaignRecordRefs(uid);
+        if (!refs.length) {
+            saveVotesForEvaluator(name, []);
+            return true;
+        }
         const batch = db.batch();
-        snapshot.forEach(doc => batch.delete(doc.ref));
-        if (!snapshot.empty) await batch.commit();
+        refs.forEach(ref => batch.delete(ref));
         saveVotesForEvaluator(name, []);
+        await batch.commit();
         return true;
+    }
+
+    async function deleteArenaCaseVotesForEvaluator(name, caseId) {
+        const uid = await lookupArenaUidByName(name);
+        if (!uid) {
+            const remaining = getVotes(name).filter(v => v.case_id !== caseId);
+            saveVotesForEvaluator(name, remaining);
+            return false;
+        }
+        const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+        const refs = [];
+        snapshot.forEach(doc => {
+            const payload = doc.data() || {};
+            if (!payload.data || !isCurrentCampaignVote(payload.data)) return;
+            if (payload.data.case_id === caseId) refs.push(doc.ref);
+        });
+        const batch = db.batch();
+        refs.forEach(ref => batch.delete(ref));
+        if (refs.length) await batch.commit();
+        const remaining = getVotes(name).filter(v => v.case_id !== caseId);
+        saveVotesForEvaluator(name, remaining);
+        return refs.length > 0;
     }
 
     async function doLogin() {
@@ -1391,7 +1457,11 @@
             rows.forEach(row => {
                 const done = row.votes.filter(v => v.case_id === item.case_id).length;
                 const cls = getCaseProgressClass(done, totalPairs);
-                html += `<td><span class="${cls}">${done}/${totalPairs}</span></td>`;
+                const badge = `<span class="${cls}">${done}/${totalPairs}</span>`;
+                const del = done > 0
+                    ? `<button class="admin-mini-danger" onclick="adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})" title="刪除 ${escapeHtml(row.name)} 在此案的資料">×</button>`
+                    : '';
+                html += `<td><div class="admin-progress-cell">${badge}${del}</div></td>`;
             });
             html += '</tr>';
         });
@@ -1431,6 +1501,24 @@
         }
     }
     window.adminDeleteEvaluator = adminDeleteEvaluator;
+
+    async function adminDeleteEvaluatorCase(name, caseId) {
+        const caseInfo = config.cases.find(item => item.case_id === caseId);
+        const label = caseInfo ? (caseInfo.short_name || caseId) : caseId;
+        if (!confirm(`刪除 ${name} 在「${label}」的全部配對投票？此操作無法復原。`)) return;
+        try {
+            await deleteArenaCaseVotesForEvaluator(name, caseId);
+            if (currentEvaluator === name) {
+                updateProgress();
+                await loadNextPair();
+            }
+            await renderAdminContent();
+        } catch (e) {
+            console.error('Admin case delete failed:', e);
+            alert('刪除失敗，請查看 console。');
+        }
+    }
+    window.adminDeleteEvaluatorCase = adminDeleteEvaluatorCase;
 
     async function adminExportAll() {
         const dataset = await fetchAdminDataset();
