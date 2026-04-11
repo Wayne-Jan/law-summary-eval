@@ -436,36 +436,360 @@
         }
         body.is-admin.admin-inspect .admin-inspect-banner { display: inline-flex; }
 
-        /* Keyboard shortcut hints */
-        .kbd {
+        /* ─── Keyboard shortcut help panel (eval-style) ─── */
+        .toolbar-help {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+        .toolbar-shortcut-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 12px;
+            background: #fff;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            color: #64748b;
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+        }
+        .toolbar-shortcut-btn:hover {
+            background: #f8fafc;
+            color: #334155;
+            border-color: #94a3b8;
+        }
+        .toolbar-shortcut-icon {
+            width: 15px;
+            height: 15px;
+            color: #64748b;
+            flex-shrink: 0;
+        }
+        .toolbar-shortcut-panel {
+            position: absolute;
+            top: calc(100% + 8px);
+            right: 0;
+            width: 240px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+            display: none;
+            z-index: 120;
+        }
+        .toolbar-shortcut-panel.show { display: block; }
+        .toolbar-shortcut-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        .toolbar-shortcut-list {
+            display: flex;
+            flex-direction: column;
+            gap: 9px;
+        }
+        .toolbar-shortcut-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .toolbar-shortcut-keys {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .toolbar-shortcut-desc {
+            font-size: 11px;
+            color: #64748b;
+            text-align: right;
+            line-height: 1.35;
+        }
+        .kbd-key {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 18px;
-            padding: 1px 5px;
-            margin-left: 6px;
-            border-radius: 5px;
-            border: 1px solid #d1d5db;
-            background: #f9fafb;
-            color: #6b7280;
-            font-size: 10px;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 7px;
+            border-radius: 7px;
+            border: 1px solid #cbd5e1;
+            background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+            box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9), 0 1px 4px rgba(15, 23, 42, 0.05);
+            font-size: 11px;
             font-weight: 700;
-            font-family: -apple-system, BlinkMacSystemFont, monospace;
-            line-height: 1.2;
-            box-shadow: 0 1px 0 rgba(15, 23, 42, 0.05);
+            color: #334155;
+            white-space: nowrap;
         }
-        .vote-btn.selected-a .kbd,
-        .vote-btn.selected-b .kbd,
-        .vote-btn.selected-tie .kbd {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.4);
-            color: rgba(255, 255, 255, 0.9);
+        .toolbar-shortcut-note {
+            margin-top: 9px;
+            padding-top: 8px;
+            border-top: 1px solid #f1f5f9;
+            font-size: 11px;
+            color: #94a3b8;
+            line-height: 1.5;
         }
-        .submit-btn .kbd {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 255, 255, 0.4);
-            color: rgba(255, 255, 255, 0.95);
+
+        /* ─── Role-based visibility ─── */
+        .evaluator-only { display: inline-flex; }
+        body.is-admin .evaluator-only { display: none !important; }
+        body.is-admin.admin-inspect .evaluator-only { display: none !important; }
+        .admin-or-inspect { display: none; }
+        body.is-admin .admin-or-inspect { display: inline-flex; }
+
+        /* ─── Review page (evaluator's own records) ─── */
+        .review-page {
+            display: none;
+            margin-top: calc(var(--toolbar-h) + var(--subbar-h));
+            min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h));
+            padding: 32px 24px 56px;
+            background: #f8fafc;
         }
+        body.is-review .review-page { display: block; }
+        body.is-review .main,
+        body.is-review .vote-bar,
+        body.is-review .progress-subbar,
+        body.is-review .leaderboard-toggle,
+        body.is-review .leaderboard-panel { display: none !important; }
+
+        .review-shell {
+            width: min(1100px, calc(100vw - 48px));
+            margin: 0 auto;
+        }
+        .review-panel {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 28px 32px;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.06);
+        }
+        .review-panel-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .review-panel-head h2 {
+            font-size: 19px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+        .review-panel-head p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.65;
+            max-width: 640px;
+        }
+        .review-panel-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .review-summary {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+        .review-stat {
+            flex: 1;
+            min-width: 140px;
+            padding: 14px 16px;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            background: #fafbfc;
+        }
+        .review-stat-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #64748b;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .review-stat-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+        }
+        .review-stat-sub {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        .review-case {
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            background: #fff;
+        }
+        .review-case-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: #fafbfc;
+            border-bottom: 1px solid #f1f5f9;
+            cursor: pointer;
+            user-select: none;
+        }
+        .review-case-head:hover { background: #f1f5f9; }
+        .review-case-title {
+            flex: 1;
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .review-case-sub {
+            font-size: 11px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .review-case-count {
+            display: inline-flex;
+            align-items: center;
+            padding: 3px 10px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .review-case-count.done {
+            background: #ecfdf5;
+            color: #059669;
+            border-color: #a7f3d0;
+        }
+        .review-case-count.partial {
+            background: #fffbeb;
+            color: #d97706;
+            border-color: #fcd34d;
+        }
+        .review-case-count.empty {
+            background: #f1f5f9;
+            color: #64748b;
+            border-color: #cbd5e1;
+        }
+        .review-case-chevron {
+            width: 16px;
+            height: 16px;
+            color: #94a3b8;
+            transition: transform 0.15s;
+        }
+        .review-case.open .review-case-chevron { transform: rotate(90deg); }
+        .review-case-body {
+            display: none;
+        }
+        .review-case.open .review-case-body { display: block; }
+
+        .review-vote-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto auto;
+            gap: 14px;
+            align-items: center;
+            padding: 12px 18px;
+            border-top: 1px solid #f1f5f9;
+            font-size: 13px;
+        }
+        .review-vote-row:first-child { border-top: none; }
+        .review-vote-pair {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+        .review-vote-conds {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: #334155;
+        }
+        .review-vote-conds .vs {
+            font-size: 10px;
+            color: #94a3b8;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+        .review-vote-reason {
+            font-size: 11px;
+            color: #64748b;
+            line-height: 1.45;
+            padding: 3px 0 0;
+            word-break: break-word;
+        }
+        .review-vote-result {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 11px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .review-vote-result.winner-a {
+            background: #eef2ff;
+            color: #4338ca;
+            border-color: #c7d2fe;
+        }
+        .review-vote-result.winner-b {
+            background: #fff7ed;
+            color: #c2410c;
+            border-color: #fed7aa;
+        }
+        .review-vote-result.winner-tie {
+            background: #f1f5f9;
+            color: #475569;
+            border-color: #cbd5e1;
+        }
+        .review-vote-time {
+            font-size: 11px;
+            color: #94a3b8;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        .review-empty {
+            padding: 48px 20px;
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 14px;
+            background: #f8fafc;
+        }
+
+        .review-editing-banner {
+            display: none;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 11px;
+            border-radius: 999px;
+            background: #fffbeb;
+            color: #b45309;
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+            border: 1px solid #fcd34d;
+        }
+        body.is-editing .review-editing-banner { display: inline-flex; }
+        .is-editing-only { display: none; }
+        body.is-editing .is-editing-only { display: inline-flex; }
 
         /* ─── Admin Page ─── */
         .admin-page {
@@ -890,10 +1214,11 @@
             .elo-rank-badge { width: 40px; height: 40px; }
         }
 
-        /* ─── Leaderboard ─── */
+        /* ─── Leaderboard (legacy — hidden; admin uses Elo list in admin panel) ─── */
         .leaderboard-toggle {
             position: fixed; bottom: var(--votebar-h); right: 24px;
             z-index: 101;
+            display: none;
         }
         .leaderboard-toggle button {
             padding: 6px 14px; border-radius: 8px 8px 0 0;
@@ -1037,12 +1362,47 @@
     <select id="evalSelect"></select>
     <span class="progress-badge" id="userBadge">未登入</span>
     <span class="admin-inspect-banner" id="adminInspectBanner">唯讀檢視</span>
+    <span class="review-editing-banner" id="reviewEditingBanner">編輯模式</span>
+    <div class="toolbar-help">
+        <button class="toolbar-shortcut-btn" type="button" onclick="toggleShortcutHelp()" title="快捷鍵">
+            <svg class="toolbar-shortcut-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="1.25" y="3" width="13.5" height="10" rx="2.25" stroke="currentColor" stroke-width="1.25"/>
+                <path d="M4 6.25h.01M6.25 6.25h.01M8.5 6.25h.01M10.75 6.25h.01M4 8.5h.01M6.25 8.5h.01M8.5 8.5h.01M10.75 8.5h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M4.25 10.75h7.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+            </svg>
+            <span>快捷鍵</span>
+        </button>
+        <div class="toolbar-shortcut-panel" id="shortcutHelpPanel">
+            <div class="toolbar-shortcut-title">投票快捷鍵</div>
+            <div class="toolbar-shortcut-list">
+                <div class="toolbar-shortcut-row">
+                    <div class="toolbar-shortcut-keys"><span class="kbd-key">←</span></div>
+                    <div class="toolbar-shortcut-desc">選擇 A 較好</div>
+                </div>
+                <div class="toolbar-shortcut-row">
+                    <div class="toolbar-shortcut-keys"><span class="kbd-key">→</span></div>
+                    <div class="toolbar-shortcut-desc">選擇 B 較好</div>
+                </div>
+                <div class="toolbar-shortcut-row">
+                    <div class="toolbar-shortcut-keys"><span class="kbd-key">Space</span></div>
+                    <div class="toolbar-shortcut-desc">選擇難分高下</div>
+                </div>
+                <div class="toolbar-shortcut-row">
+                    <div class="toolbar-shortcut-keys"><span class="kbd-key">S</span></div>
+                    <div class="toolbar-shortcut-desc">送出本題</div>
+                </div>
+            </div>
+            <div class="toolbar-shortcut-note">輸入理由時快捷鍵會自動停用。</div>
+        </div>
+    </div>
     <button class="btn-sm admin-only" id="btnAdminPanel">管理總覽</button>
     <button class="btn-sm admin-inspect-only" id="btnAdminBack">← 返回管理</button>
+    <button class="btn-sm evaluator-only" id="btnMyRecords">我的紀錄</button>
+    <button class="btn-sm is-editing-only" id="btnCancelEdit">取消編輯</button>
     <button class="btn-sm btn-timeline" id="btnTimeline">案件時間軸</button>
     <a class="nav-link" href="index.html">首頁</a>
-    <button class="btn-sm" id="btnExport">匯出 JSON</button>
-    <button class="btn-sm" id="btnClear">清除紀錄</button>
+    <button class="btn-sm admin-or-inspect" id="btnExport">匯出 JSON</button>
+    <button class="btn-sm admin-or-inspect" id="btnClear">清除紀錄</button>
     <button class="btn-sm" id="btnLogout">登出</button>
 </div>
 
@@ -1077,6 +1437,24 @@
     </div>
 </div>
 
+<div class="review-page" id="reviewPage">
+    <div class="review-shell">
+        <div class="review-panel">
+            <div class="review-panel-head">
+                <div>
+                    <h2>我的作答紀錄</h2>
+                    <p>顯示你在本次 campaign 中所有已完成的配對。點「重新投票」可回到該配對修改原本的選擇。</p>
+                </div>
+                <div class="review-panel-actions">
+                    <button class="admin-mini-btn" id="reviewRefreshBtn">重新整理</button>
+                    <button class="admin-mini-btn" id="reviewExitBtn">返回投票</button>
+                </div>
+            </div>
+            <div id="reviewContent"></div>
+        </div>
+    </div>
+</div>
+
 <div class="admin-page" id="adminPage">
     <div class="admin-shell">
         <div class="admin-panel">
@@ -1097,13 +1475,13 @@
 
 <!-- Vote bar -->
 <div class="vote-bar" id="voteBar">
-    <button class="vote-btn vote-a" data-vote="a">A 較好<span class="kbd">←</span></button>
+    <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：←">A 較好</button>
     <button class="vote-btn" data-vote="tie">難分高下</button>
-    <button class="vote-btn vote-b" data-vote="b">B 較好<span class="kbd">→</span></button>
+    <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：→">B 較好</button>
     <div class="vote-reason">
         <textarea id="reasonText" placeholder="理由（選填）"></textarea>
     </div>
-    <button class="submit-btn" id="submitBtn" disabled>送出<span class="kbd">S</span></button>
+    <button class="submit-btn" id="submitBtn" disabled title="快捷鍵：S">送出 →</button>
 </div>
 
 <!-- Leaderboard toggle -->
@@ -1951,6 +2329,28 @@
         document.getElementById('adminExportBtn').addEventListener('click', adminExportAll);
     }
 
+    function initReviewPage() {
+        const btnOpen = document.getElementById('btnMyRecords');
+        if (btnOpen) btnOpen.addEventListener('click', showReviewPage);
+        const btnExit = document.getElementById('reviewExitBtn');
+        if (btnExit) btnExit.addEventListener('click', hideReviewPage);
+        const btnRefresh = document.getElementById('reviewRefreshBtn');
+        if (btnRefresh) btnRefresh.addEventListener('click', renderReviewContent);
+        const btnCancelEdit = document.getElementById('btnCancelEdit');
+        if (btnCancelEdit) btnCancelEdit.addEventListener('click', () => {
+            document.body.classList.remove('is-editing');
+            showReviewPage();
+        });
+    }
+
+    function isVoteBarVisible() {
+        const voteBar = document.getElementById('voteBar');
+        if (!voteBar) return false;
+        // offsetParent is always null for position:fixed elements — can't use it.
+        const cs = window.getComputedStyle(voteBar);
+        return cs.display !== 'none' && cs.visibility !== 'hidden';
+    }
+
     function initKeyboardShortcuts() {
         document.addEventListener('keydown', (e) => {
             if (e.repeat) return;
@@ -1961,7 +2361,7 @@
                 if (tag === 'TEXTAREA' || tag === 'INPUT' || tag === 'SELECT') return;
                 if (target.isContentEditable) return;
             }
-            // Don't fire when login overlay or timeline modal is visible
+            // Don't fire when login overlay, timeline modal, or shortcut panel is open
             const loginOverlay = document.getElementById('loginOverlay');
             if (loginOverlay && !loginOverlay.classList.contains('hidden')) return;
             const tlModal = document.getElementById('tlModal');
@@ -1970,9 +2370,10 @@
             if (document.body.classList.contains('is-admin') && !document.body.classList.contains('admin-inspect')) return;
             // Admin inspect mode is read-only — skip shortcuts too
             if (document.body.classList.contains('admin-inspect')) return;
-            // Skip if vote bar is hidden (e.g., all-done screen)
-            const voteBar = document.getElementById('voteBar');
-            if (!voteBar || voteBar.offsetParent === null) return;
+            // Review page is its own view — skip
+            if (document.body.classList.contains('is-review')) return;
+            // Skip if vote bar is not visible (e.g., all-done screen)
+            if (!isVoteBarVisible()) return;
 
             if (e.key === 'ArrowLeft') {
                 const btn = document.querySelector('.vote-btn[data-vote="a"]');
@@ -1980,12 +2381,30 @@
             } else if (e.key === 'ArrowRight') {
                 const btn = document.querySelector('.vote-btn[data-vote="b"]');
                 if (btn) { e.preventDefault(); btn.click(); }
+            } else if (e.key === ' ' || e.code === 'Space') {
+                const btn = document.querySelector('.vote-btn[data-vote="tie"]');
+                if (btn) { e.preventDefault(); btn.click(); }
             } else if (e.key === 's' || e.key === 'S') {
                 const submit = document.getElementById('submitBtn');
                 if (submit && !submit.disabled) { e.preventDefault(); submit.click(); }
             }
         });
     }
+
+    window.toggleShortcutHelp = function() {
+        const panel = document.getElementById('shortcutHelpPanel');
+        if (!panel) return;
+        panel.classList.toggle('show');
+    };
+
+    // Close shortcut panel when clicking outside
+    document.addEventListener('click', (e) => {
+        const panel = document.getElementById('shortcutHelpPanel');
+        const btn = document.querySelector('.toolbar-shortcut-btn');
+        if (!panel || !panel.classList.contains('show')) return;
+        if (panel.contains(e.target) || (btn && btn.contains(e.target))) return;
+        panel.classList.remove('show');
+    });
 
     window.closeTlModal = function(event) {
         if (event && event.target !== event.currentTarget) return;
@@ -2062,6 +2481,195 @@
         updateProgress();
     }
 
+    // Load a specific (possibly already-voted) pair for editing.
+    // Preserves original display order and pre-selects the previous vote.
+    async function loadPairForEdit(caseId, condA, condB) {
+        if (!currentEvaluator || !config) return;
+        // Find pairIndex from effective pairs (order-independent)
+        const effectivePairs = getEffectivePairs();
+        let pairIndex = -1;
+        let canonicalCondA = condA;
+        let canonicalCondB = condB;
+        for (let i = 0; i < effectivePairs.length; i++) {
+            const p = effectivePairs[i];
+            if (p.condA === condA && p.condB === condB) {
+                pairIndex = i;
+                break;
+            }
+            if (p.condA === condB && p.condB === condA) {
+                pairIndex = i;
+                canonicalCondA = p.condA;
+                canonicalCondB = p.condB;
+                break;
+            }
+        }
+        if (pairIndex === -1) {
+            console.warn('loadPairForEdit: pair not found in effective pairs', condA, condB);
+            return;
+        }
+
+        // Retrieve previous vote to reproduce display order + selection
+        const prev = getVotes(currentEvaluator).find(v =>
+            v.case_id === caseId &&
+            ((v.condition_a === condA && v.condition_b === condB) ||
+             (v.condition_a === condB && v.condition_b === condA))
+        );
+        const displayOrder = prev ? prev.display_order : 'a_left';
+        // Use the order stored in the prior vote so the panels look the same
+        const shownA = prev ? prev.condition_a : canonicalCondA;
+        const shownB = prev ? prev.condition_b : canonicalCondB;
+
+        const pair = {
+            case_id: caseId,
+            condA: shownA,
+            condB: shownB,
+            displayOrder,
+            loadedAt: Date.now(),
+            pairIndex
+        };
+
+        // Exit any admin-inspect or review state and show the pair UI
+        document.body.classList.remove('is-review');
+        document.body.classList.add('is-editing');
+        showPairUI();
+        currentPair = pair;
+        resetVoteUI();
+
+        const caseInfo = config.cases.find(c => c.case_id === caseId);
+        try {
+            const { a, b } = await loadPairData(pair);
+            dataA = a;
+            dataB = b;
+            renderPanels();
+        } catch (e) {
+            console.error('Failed to load pair data for edit:', e);
+            document.getElementById('bodyA').innerHTML = '<div class="empty-content">載入失敗</div>';
+            document.getElementById('bodyB').innerHTML = '<div class="empty-content">載入失敗</div>';
+        }
+        currentCaseName = (dataA && dataA.case_name) || (caseInfo && caseInfo.short_name) || caseId;
+
+        // Pre-select previous vote
+        if (prev && prev.winner) {
+            selectedVote = prev.winner;
+            const btn = document.querySelector('.vote-btn[data-vote="' + prev.winner + '"]');
+            if (btn) {
+                if (prev.winner === 'a') btn.classList.add('selected-a');
+                else if (prev.winner === 'b') btn.classList.add('selected-b');
+                else btn.classList.add('selected-tie');
+            }
+            const reasonEl = document.getElementById('reasonText');
+            if (reasonEl && prev.reason) reasonEl.value = prev.reason;
+            document.getElementById('submitBtn').disabled = false;
+        }
+
+        updateProgress();
+    }
+    window.loadPairForEdit = loadPairForEdit;
+
+    function formatReviewTime(iso) {
+        if (!iso) return '';
+        try {
+            const d = new Date(iso);
+            const pad = (n) => String(n).padStart(2, '0');
+            return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        } catch { return iso; }
+    }
+
+    function conditionLabel(cond) {
+        return (config && config.condition_labels && config.condition_labels[cond]) || cond;
+    }
+
+    function winnerLabel(winner) {
+        if (winner === 'a') return 'A 較好';
+        if (winner === 'b') return 'B 較好';
+        return '難分高下';
+    }
+
+    function renderReviewContent() {
+        const container = document.getElementById('reviewContent');
+        if (!container || !config) return;
+        const votes = getVotes(currentEvaluator);
+        const totalCases = config.cases.length;
+        const totalPairs = getPairsPerCase();
+        const completedCases = config.cases.filter(c => getCaseVoteCount(c.case_id) >= totalPairs).length;
+
+        let html = '<div class="review-summary">';
+        html += `<div class="review-stat"><div class="review-stat-label">已投票配對</div><div class="review-stat-value">${votes.length}</div><div class="review-stat-sub">共 ${totalCases * totalPairs} 題</div></div>`;
+        html += `<div class="review-stat"><div class="review-stat-label">完成案件</div><div class="review-stat-value">${completedCases} / ${totalCases}</div><div class="review-stat-sub">每案 ${totalPairs} 題</div></div>`;
+        const aWins = votes.filter(v => v.winner === 'a').length;
+        const bWins = votes.filter(v => v.winner === 'b').length;
+        const ties = votes.filter(v => v.winner === 'tie').length;
+        html += `<div class="review-stat"><div class="review-stat-label">我的選擇分佈</div><div class="review-stat-value" style="font-size:16px;">${aWins} · ${ties} · ${bWins}</div><div class="review-stat-sub">A 較好 · 平手 · B 較好</div></div>`;
+        html += '</div>';
+
+        if (!votes.length) {
+            html += '<div class="review-empty">你還沒有投過票。關閉此頁面開始投票。</div>';
+            container.innerHTML = html;
+            return;
+        }
+
+        // Group by case, preserve config order
+        const byCase = {};
+        votes.forEach(v => {
+            if (!byCase[v.case_id]) byCase[v.case_id] = [];
+            byCase[v.case_id].push(v);
+        });
+
+        config.cases.forEach((item, idx) => {
+            const caseVotes = byCase[item.case_id] || [];
+            if (!caseVotes.length) return;
+            caseVotes.sort((x, y) => String(x.timestamp || '').localeCompare(String(y.timestamp || '')));
+            const done = caseVotes.length;
+            let cntCls = 'empty';
+            if (done >= totalPairs) cntCls = 'done';
+            else if (done > 0) cntCls = 'partial';
+
+            html += `<div class="review-case open" data-case="${escapeHtml(item.case_id)}">`;
+            html += '<div class="review-case-head" onclick="toggleReviewCase(this)">';
+            html += '<svg class="review-case-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 4 10 8 6 12"></polyline></svg>';
+            html += `<div class="review-case-title">${idx + 1}. ${escapeHtml(item.short_name || item.case_id)}`;
+            const meta = [item.volume, item.verdict, item.big_specialty].filter(Boolean).join(' · ');
+            if (meta) html += ` <span class="review-case-sub">(${escapeHtml(meta)})</span>`;
+            html += '</div>';
+            html += `<span class="review-case-count ${cntCls}">${done}/${totalPairs}</span>`;
+            html += '</div>';
+            html += '<div class="review-case-body">';
+            caseVotes.forEach(v => {
+                const wCls = v.winner === 'a' ? 'winner-a' : v.winner === 'b' ? 'winner-b' : 'winner-tie';
+                html += '<div class="review-vote-row">';
+                html += '<div class="review-vote-pair">';
+                html += `<div class="review-vote-conds"><span>${escapeHtml(conditionLabel(v.condition_a))}</span><span class="vs">vs</span><span>${escapeHtml(conditionLabel(v.condition_b))}</span></div>`;
+                if (v.reason) html += `<div class="review-vote-reason">${escapeHtml(v.reason)}</div>`;
+                html += '</div>';
+                html += `<div class="review-vote-result ${wCls}">${escapeHtml(winnerLabel(v.winner))}</div>`;
+                html += `<div class="review-vote-time">${escapeHtml(formatReviewTime(v.timestamp))}</div>`;
+                html += `<button class="admin-mini-btn" onclick="window.loadPairForEdit(${JSON.stringify(item.case_id)}, ${JSON.stringify(v.condition_a)}, ${JSON.stringify(v.condition_b)})">重新投票</button>`;
+                html += '</div>';
+            });
+            html += '</div></div>';
+        });
+
+        container.innerHTML = html;
+    }
+
+    window.toggleReviewCase = function(head) {
+        const wrap = head && head.closest('.review-case');
+        if (wrap) wrap.classList.toggle('open');
+    };
+
+    function showReviewPage() {
+        document.body.classList.add('is-review');
+        document.body.classList.remove('is-editing');
+        renderReviewContent();
+    }
+
+    function hideReviewPage() {
+        document.body.classList.remove('is-review');
+        document.body.classList.remove('is-editing');
+        // Resume normal flow: advance to next pending pair
+        if (currentEvaluator) loadNextPair();
+    }
+
     function initVoteButtons() {
         document.querySelectorAll('.vote-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -2121,9 +2729,16 @@
     function showFlash() {
         const flash = document.getElementById('successFlash');
         flash.style.display = 'block';
+        const wasEditing = document.body.classList.contains('is-editing');
         setTimeout(() => {
             flash.style.display = 'none';
-            loadNextPair();
+            if (wasEditing) {
+                // Returning from edit — go back to review page with updated data
+                document.body.classList.remove('is-editing');
+                showReviewPage();
+            } else {
+                loadNextPair();
+            }
         }, 600);
     }
 
@@ -2331,6 +2946,7 @@
         initEvalSelector();
         initTimeline();
         initAdminPanel();
+        initReviewPage();
         initKeyboardShortcuts();
         showLoginOverlay();
         appReady = true;
