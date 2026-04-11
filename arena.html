@@ -377,6 +377,27 @@
             padding: 8px 12px;
             font-size: 13px;
         }
+        .admin-grid {
+            display: grid;
+            gap: 16px;
+            margin-top: 16px;
+        }
+        .admin-subcard {
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            background: #fcfdff;
+            padding: 16px 18px;
+        }
+        .admin-subcard h3 {
+            font-size: 15px;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        .admin-subcard p {
+            font-size: 12px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
         .admin-table-wrap {
             overflow-x: auto;
             margin-top: 16px;
@@ -418,6 +439,21 @@
             background: #fff1f2 !important;
             border-color: #fecdd3 !important;
             color: #be123c !important;
+        }
+        .admin-progress-empty { color: #94a3b8; }
+        .admin-progress-partial {
+            color: #b45309;
+            background: #fffbeb;
+            border-radius: 999px;
+            padding: 3px 8px;
+            display: inline-flex;
+        }
+        .admin-progress-done {
+            color: #047857;
+            background: #ecfdf5;
+            border-radius: 999px;
+            padding: 3px 8px;
+            display: inline-flex;
         }
         .admin-empty {
             margin-top: 16px;
@@ -1077,9 +1113,14 @@
         document.getElementById('metaB').innerHTML = calcCompressionMeta(dataB);
     }
 
-    async function fetchAdminSummaryRows() {
+    function getPairsPerCase() {
+        const n = (config && Array.isArray(config.conditions)) ? config.conditions.length : 0;
+        return n >= 2 ? (n * (n - 1)) / 2 : 0;
+    }
+
+    async function fetchAdminDataset() {
         const names = Object.keys(ARENA_USERS).filter(name => name !== 'admin');
-        return Promise.all(names.map(async (name) => {
+        const evaluators = await Promise.all(names.map(async (name) => {
             const uid = await lookupArenaUidByName(name);
             const votes = [];
             if (uid) {
@@ -1089,17 +1130,18 @@
                     if (payload.data) votes.push(payload.data);
                 });
             }
-            return {
-                name,
-                uid,
-                voteCount: votes.length,
-                caseCount: new Set(votes.map(v => v.case_id)).size,
-                lastTimestamp: votes.reduce((latest, v) => {
-                    const ts = String(v.timestamp || '');
-                    return ts > latest ? ts : latest;
-                }, '')
-            };
+            const voteCount = votes.length;
+            const caseCount = new Set(votes.map(v => v.case_id)).size;
+            const lastTimestamp = votes.reduce((latest, v) => {
+                const ts = String(v.timestamp || '');
+                return ts > latest ? ts : latest;
+            }, '');
+            return { name, uid, votes, voteCount, caseCount, lastTimestamp };
         }));
+        return {
+            evaluators,
+            allVotes: evaluators.flatMap(item => item.votes)
+        };
     }
 
     function formatAdminTime(ts) {
@@ -1107,16 +1149,55 @@
         return ts.replace('T', ' ').replace('Z', '');
     }
 
-    async function renderAdminContent() {
-        const container = document.getElementById('adminContent');
-        container.innerHTML = '<div class="admin-empty">載入中...</div>';
-        const rows = await fetchAdminSummaryRows();
-        if (!rows.length) {
-            container.innerHTML = '<div class="admin-empty">尚無可顯示的評審資料</div>';
-            return;
+    function calcAggregateElo(votes) {
+        const elo = {};
+        for (const cond of config.conditions) {
+            elo[cond] = { rating: 1000, wins: 0, draws: 0, losses: 0, matches: 0, cases: new Set() };
         }
+        for (const v of votes) {
+            const a = v.condition_a;
+            const b = v.condition_b;
+            if (!elo[a] || !elo[b]) continue;
+            elo[a].matches++;
+            elo[b].matches++;
+            elo[a].cases.add(v.case_id);
+            elo[b].cases.add(v.case_id);
+            const ea = 1 / (1 + Math.pow(10, (elo[b].rating - elo[a].rating) / 400));
+            const eb = 1 - ea;
+            const K = 32;
+            let sa;
+            let sb;
+            if (v.winner === 'a') {
+                sa = 1; sb = 0; elo[a].wins++; elo[b].losses++;
+            } else if (v.winner === 'b') {
+                sa = 0; sb = 1; elo[b].wins++; elo[a].losses++;
+            } else {
+                sa = 0.5; sb = 0.5; elo[a].draws++; elo[b].draws++;
+            }
+            elo[a].rating += K * (sa - ea);
+            elo[b].rating += K * (sb - eb);
+        }
+        return Object.entries(elo).map(([cond, data]) => ({
+            condition: cond,
+            label: config.condition_labels[cond] || cond,
+            rating: Math.round(data.rating),
+            wins: data.wins,
+            draws: data.draws,
+            losses: data.losses,
+            matches: data.matches,
+            caseCount: data.cases.size
+        })).sort((x, y) => y.rating - x.rating);
+    }
 
-        let html = '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
+    function getCaseProgressClass(done, total) {
+        if (!done) return 'admin-progress-empty';
+        if (done >= total) return 'admin-progress-done';
+        return 'admin-progress-partial';
+    }
+
+    function renderAdminSummaryTable(rows) {
+        let html = '<div class="admin-subcard"><h3>評審進度摘要</h3><p>顯示每位評審目前累積票數、案件覆蓋數與最後更新時間。</p>';
+        html += '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
         html += '<th>評審</th><th>狀態</th><th>已投票</th><th>案件數</th><th>最後更新</th><th>操作</th>';
         html += '</tr></thead><tbody>';
         rows.forEach(row => {
@@ -1130,7 +1211,65 @@
             html += `<td><button class="btn-sm admin-danger" onclick="adminDeleteEvaluator(${JSON.stringify(row.name)})">刪除 ${escapeHtml(row.name)} 資料</button></td>`;
             html += '</tr>';
         });
-        html += '</tbody></table></div>';
+        html += '</tbody></table></div></div>';
+        return html;
+    }
+
+    function renderAggregateEloTable(votes) {
+        const rows = calcAggregateElo(votes);
+        let html = '<div class="admin-subcard"><h3>全體合併 Elo</h3><p>彙總 A-E 全部投票，顯示整體偏好排序。</p>';
+        html += '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
+        html += '<th>#</th><th>Condition</th><th>Elo</th><th>W / D / L</th><th>比較次數</th><th>覆蓋案件</th>';
+        html += '</tr></thead><tbody>';
+        rows.forEach((row, idx) => {
+            html += '<tr>';
+            html += `<td>${idx + 1}</td>`;
+            html += `<td><strong>${escapeHtml(row.label)}</strong></td>`;
+            html += `<td>${row.rating}</td>`;
+            html += `<td>${row.wins} / ${row.draws} / ${row.losses}</td>`;
+            html += `<td>${row.matches}</td>`;
+            html += `<td>${row.caseCount}</td>`;
+            html += '</tr>';
+        });
+        html += '</tbody></table></div></div>';
+        return html;
+    }
+
+    function renderProgressMatrix(rows) {
+        const totalPairs = getPairsPerCase();
+        let html = '<div class="admin-subcard"><h3>案件進度矩陣</h3><p>每格顯示該評審在該案件已完成的配對票數。</p>';
+        html += '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
+        html += '<th>案件</th>';
+        rows.forEach(row => { html += `<th>${escapeHtml(row.name)}</th>`; });
+        html += '</tr></thead><tbody>';
+        config.cases.forEach(item => {
+            html += '<tr>';
+            html += `<td><strong>${escapeHtml(item.short_name || item.case_id)}</strong></td>`;
+            rows.forEach(row => {
+                const done = row.votes.filter(v => v.case_id === item.case_id).length;
+                const cls = getCaseProgressClass(done, totalPairs);
+                html += `<td><span class="${cls}">${done}/${totalPairs}</span></td>`;
+            });
+            html += '</tr>';
+        });
+        html += '</tbody></table></div></div>';
+        return html;
+    }
+
+    async function renderAdminContent() {
+        const container = document.getElementById('adminContent');
+        container.innerHTML = '<div class="admin-empty">載入中...</div>';
+        const dataset = await fetchAdminDataset();
+        const rows = dataset.evaluators;
+        if (!rows.length) {
+            container.innerHTML = '<div class="admin-empty">尚無可顯示的評審資料</div>';
+            return;
+        }
+        let html = '<div class="admin-grid">';
+        html += renderAggregateEloTable(dataset.allVotes);
+        html += renderAdminSummaryTable(rows);
+        html += renderProgressMatrix(rows);
+        html += '</div>';
         container.innerHTML = html;
     }
 
@@ -1151,18 +1290,10 @@
     window.adminDeleteEvaluator = adminDeleteEvaluator;
 
     async function adminExportAll() {
-        const rows = await fetchAdminSummaryRows();
+        const dataset = await fetchAdminDataset();
         const output = {};
-        for (const row of rows) {
-            const uid = row.uid;
-            const votes = [];
-            if (uid) {
-                const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
-                snapshot.forEach(doc => {
-                    const payload = doc.data() || {};
-                    if (payload.data) votes.push(payload.data);
-                });
-            }
+        for (const row of dataset.evaluators) {
+            const votes = row.votes.slice();
             output[row.name] = {
                 vote_count: votes.length,
                 case_count: new Set(votes.map(v => v.case_id)).size,
