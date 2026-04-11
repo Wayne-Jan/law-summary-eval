@@ -401,71 +401,263 @@
         body.is-admin .leaderboard-toggle,
         body.is-admin .leaderboard-panel { display: none !important; }
 
+        /* ─── Admin Page ─── */
         .admin-page {
+            --a-slate-900: #0f172a;
+            --a-slate-700: #334155;
+            --a-slate-600: #475569;
+            --a-slate-500: #64748b;
+            --a-slate-400: #94a3b8;
+            --a-slate-300: #cbd5e1;
+            --a-slate-200: #e2e8f0;
+            --a-slate-100: #f1f5f9;
+            --a-slate-50: #f8fafc;
+            --a-indigo: #4f46e5;
+            --a-indigo-light: #eef2ff;
+            --a-emerald: #059669;
+            --a-emerald-light: #ecfdf5;
+            --a-amber: #d97706;
+            --a-amber-light: #fffbeb;
+            --a-rose: #e11d48;
+
             display: none;
             margin-top: calc(var(--toolbar-h) + var(--subbar-h));
             min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h));
-            padding: 24px;
-            background: linear-gradient(180deg, #f8fafc, #eef6f5);
+            padding: 32px 24px 56px;
+            background: var(--a-slate-50);
         }
         body.is-admin .admin-page { display: block; }
         .admin-shell {
-            width: min(1180px, calc(100vw - 48px));
+            width: min(1280px, calc(100vw - 48px));
             margin: 0 auto;
-            display: grid;
-            gap: 18px;
         }
-        .admin-card {
+        .admin-panel {
             background: #fff;
-            border: 1px solid #dbe4ea;
-            border-radius: 16px;
-            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
-            padding: 22px 24px;
+            border: 1px solid var(--a-slate-200);
+            border-radius: 18px;
+            padding: 28px 32px;
+            box-shadow: 0 20px 60px rgba(15, 23, 42, 0.06);
         }
-        .admin-card h2 {
-            font-size: 18px;
-            color: #0f172a;
-            margin-bottom: 6px;
-        }
-        .admin-card p {
-            font-size: 13px;
-            color: #64748b;
-            line-height: 1.7;
-        }
-        .admin-actions {
+        .admin-panel-head {
             display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .admin-panel-head h2 {
+            font-size: 19px;
+            font-weight: 700;
+            color: var(--a-slate-900);
+            margin-bottom: 6px;
+            letter-spacing: -0.01em;
+        }
+        .admin-panel-head p {
+            font-size: 13px;
+            color: var(--a-slate-500);
+            line-height: 1.65;
+            max-width: 640px;
+        }
+        .admin-panel-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex-shrink: 0;
+        }
+        .admin-mini-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid var(--a-slate-300);
+            background: #fff;
+            color: var(--a-slate-700);
+            border-radius: 999px;
+            padding: 7px 15px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            text-decoration: none;
+            transition: all 0.15s;
+        }
+        .admin-mini-btn:hover {
+            border-color: var(--a-indigo);
+            color: var(--a-indigo);
+            background: var(--a-indigo-light);
+        }
+        .admin-mini-btn.danger {
+            border-color: #fecaca;
+            color: #b91c1c;
+            background: #fff;
+        }
+        .admin-mini-btn.danger:hover {
+            background: #fef2f2;
+            border-color: #fca5a5;
+            color: #991b1b;
+        }
+
+        .admin-section + .admin-section {
+            margin-top: 32px;
+            padding-top: 28px;
+            border-top: 1px solid var(--a-slate-100);
+        }
+        .admin-section-head {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+        .admin-section-head h3 {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--a-slate-900);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .admin-section-head .section-desc {
+            font-size: 12px;
+            color: var(--a-slate-500);
+        }
+
+        /* ─── Elo Leaderboard Card List ─── */
+        .elo-list {
+            display: grid;
+            gap: 10px;
+        }
+        .elo-card {
+            display: grid;
+            grid-template-columns: 52px 1fr auto;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 20px;
+            border: 1px solid var(--a-slate-200);
+            border-radius: 14px;
+            background: #fff;
+            transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+        }
+        .elo-card:hover {
+            border-color: var(--a-slate-300);
+            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
+            transform: translateY(-1px);
+        }
+        .elo-rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.01em;
+            color: #fff;
+            background: var(--a-slate-400);
+            font-variant-numeric: tabular-nums;
+        }
+        .elo-rank-badge.rank-1 {
+            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
+            box-shadow: 0 6px 14px rgba(217, 119, 6, 0.32);
+        }
+        .elo-rank-badge.rank-2 {
+            background: linear-gradient(135deg, #e2e8f0 0%, #64748b 100%);
+            box-shadow: 0 6px 14px rgba(100, 116, 139, 0.24);
+        }
+        .elo-rank-badge.rank-3 {
+            background: linear-gradient(135deg, #d6a27a 0%, #92400e 100%);
+            box-shadow: 0 6px 14px rgba(146, 64, 14, 0.24);
+        }
+        .elo-card-main { min-width: 0; }
+        .elo-label-row {
+            display: flex;
+            align-items: center;
             gap: 10px;
             flex-wrap: wrap;
-            margin-top: 16px;
+            margin-bottom: 7px;
         }
-        .admin-actions .btn-sm {
-            padding: 8px 12px;
-            font-size: 13px;
+        .elo-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--a-slate-900);
+            letter-spacing: -0.01em;
         }
-        .admin-grid {
-            display: grid;
-            gap: 16px;
-            margin-top: 16px;
+        .elo-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 2px 9px;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            border: 1px solid transparent;
         }
-        .admin-subcard {
-            border: 1px solid #e2e8f0;
-            border-radius: 14px;
-            background: #fcfdff;
-            padding: 16px 18px;
+        .elo-tag.bb-haiku {
+            background: #eef2ff;
+            color: #4338ca;
+            border-color: #c7d2fe;
         }
-        .admin-subcard h3 {
-            font-size: 15px;
-            color: #0f172a;
-            margin-bottom: 6px;
+        .elo-tag.bb-deepseek {
+            background: #ecfeff;
+            color: #0e7490;
+            border-color: #a5f3fc;
         }
-        .admin-subcard p {
+        .elo-tag.role-full {
+            background: var(--a-emerald-light);
+            color: var(--a-emerald);
+            border-color: #a7f3d0;
+        }
+        .elo-tag.role-baseline {
+            background: var(--a-slate-100);
+            color: var(--a-slate-600);
+            border-color: var(--a-slate-300);
+        }
+        .elo-meta {
             font-size: 12px;
-            color: #64748b;
-            margin-bottom: 12px;
+            color: var(--a-slate-500);
+            font-variant-numeric: tabular-nums;
         }
+        .elo-score {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 7px;
+        }
+        .elo-rating {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--a-slate-900);
+            font-variant-numeric: tabular-nums;
+            line-height: 1;
+            letter-spacing: -0.02em;
+        }
+        .elo-wdl {
+            display: flex;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+        .elo-wdl .wdl-w { color: var(--a-emerald); }
+        .elo-wdl .wdl-d { color: var(--a-slate-500); }
+        .elo-wdl .wdl-l { color: var(--a-rose); }
+
+        .elo-empty {
+            padding: 32px 20px;
+            text-align: center;
+            color: var(--a-slate-500);
+            font-size: 13px;
+            border: 1px dashed var(--a-slate-300);
+            border-radius: 14px;
+            background: var(--a-slate-50);
+        }
+
+        /* ─── Admin tables ─── */
         .admin-table-wrap {
             overflow-x: auto;
-            margin-top: 16px;
+            border: 1px solid var(--a-slate-200);
+            border-radius: 14px;
+            background: #fff;
         }
         .admin-table {
             width: 100%;
@@ -474,86 +666,162 @@
         }
         .admin-table th,
         .admin-table td {
-            border-bottom: 1px solid #edf2f7;
-            padding: 10px 12px;
+            padding: 12px 14px;
             text-align: left;
-            color: #334155;
             vertical-align: middle;
+            border-bottom: 1px solid var(--a-slate-100);
+            color: var(--a-slate-700);
         }
-        .admin-table th {
-            font-size: 12px;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            color: #64748b;
-            background: #f8fafc;
-        }
-        .admin-table td strong {
-            color: #0f172a;
-        }
-        .admin-stat {
-            display: inline-flex;
-            align-items: center;
-            border-radius: 999px;
-            padding: 4px 10px;
-            font-size: 12px;
-            font-weight: 600;
-            background: #ecfeff;
-            color: #0f766e;
-        }
-        .admin-danger {
-            background: #fff1f2 !important;
-            border-color: #fecdd3 !important;
-            color: #be123c !important;
-        }
-        .admin-mini-danger {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 26px;
-            height: 24px;
-            padding: 0 8px;
-            border-radius: 8px;
-            border: 1px solid #fecdd3;
-            background: #fff1f2;
-            color: #be123c;
-            font-size: 12px;
+        .admin-table thead th {
+            background: var(--a-slate-50);
+            font-size: 10px;
             font-weight: 700;
-            cursor: pointer;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--a-slate-500);
+            border-bottom: 1px solid var(--a-slate-200);
+            white-space: nowrap;
         }
-        .admin-mini-danger:hover {
-            background: #ffe4e6;
-            border-color: #fda4af;
+        .admin-table tbody tr:last-child td { border-bottom: none; }
+        .admin-table td strong {
+            color: var(--a-slate-900);
+            font-weight: 700;
         }
-        .admin-progress-empty { color: #94a3b8; }
-        .admin-progress-partial {
-            color: #b45309;
-            background: #fffbeb;
-            border-radius: 999px;
-            padding: 3px 8px;
+        .admin-table td.num { font-variant-numeric: tabular-nums; }
+
+        .admin-status-pill {
             display: inline-flex;
-        }
-        .admin-progress-cell {
-            display: flex;
             align-items: center;
-            justify-content: center;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            white-space: nowrap;
+        }
+        .admin-status-pill.done {
+            background: var(--a-emerald-light);
+            color: var(--a-emerald);
+            border-color: #a7f3d0;
+        }
+        .admin-status-pill.partial {
+            background: var(--a-amber-light);
+            color: var(--a-amber);
+            border-color: #fcd34d;
+        }
+        .admin-status-pill.empty {
+            background: var(--a-slate-100);
+            color: var(--a-slate-500);
+            border-color: var(--a-slate-300);
+        }
+
+        /* Progress matrix — case × evaluator status cells */
+        .admin-matrix th,
+        .admin-matrix td {
+            text-align: center;
+        }
+        .admin-matrix thead th:first-child,
+        .admin-matrix tbody td.case-name {
+            text-align: left;
+        }
+        .admin-matrix td.case-name {
+            font-weight: 600;
+            color: var(--a-slate-900);
+            white-space: nowrap;
+            background: #fff !important;
+        }
+        .admin-matrix td.state-cell {
+            padding: 10px 12px;
+            transition: background 0.15s;
+        }
+        .admin-matrix td.state-cell.done { background: var(--a-emerald-light); }
+        .admin-matrix td.state-cell.partial { background: var(--a-amber-light); }
+        .admin-matrix td.state-cell.empty { background: #fff; }
+        .admin-matrix .state-inner {
+            display: inline-flex;
+            align-items: center;
             gap: 6px;
         }
-        .admin-progress-done {
-            color: #047857;
-            background: #ecfdf5;
-            border-radius: 999px;
-            padding: 3px 8px;
+        .admin-version-chip {
             display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 40px;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            border: 1px solid transparent;
         }
+        .admin-version-chip.done {
+            background: #fff;
+            color: var(--a-emerald);
+            border-color: #a7f3d0;
+        }
+        .admin-version-chip.partial {
+            background: #fff;
+            color: var(--a-amber);
+            border-color: #fcd34d;
+        }
+        .admin-version-chip.empty {
+            background: var(--a-slate-50);
+            color: var(--a-slate-400);
+            border-color: var(--a-slate-200);
+        }
+        .admin-version-delete {
+            width: 20px;
+            height: 20px;
+            border-radius: 999px;
+            border: 1px solid #fecaca;
+            background: #fff;
+            color: #b91c1c;
+            font-size: 11px;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            font-family: inherit;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .admin-version-delete:hover {
+            background: #fef2f2;
+            border-color: #fca5a5;
+            transform: translateY(-1px);
+        }
+
         .admin-empty {
-            margin-top: 16px;
-            padding: 24px;
-            border: 1px dashed #cbd5e1;
-            border-radius: 14px;
+            padding: 40px 20px;
             text-align: center;
-            color: #64748b;
+            color: var(--a-slate-500);
             font-size: 13px;
-            background: #f8fafc;
+            border: 1px dashed var(--a-slate-300);
+            border-radius: 14px;
+            background: var(--a-slate-50);
+        }
+
+        @media (max-width: 768px) {
+            .admin-page { padding: 20px 12px 40px; }
+            .admin-panel { padding: 20px 16px; border-radius: 16px; }
+            .admin-panel-head { flex-direction: column; }
+            .admin-panel-actions { width: 100%; }
+            .elo-card {
+                grid-template-columns: 44px 1fr;
+                gap: 14px;
+                padding: 14px 16px;
+            }
+            .elo-score {
+                grid-column: 1 / -1;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                border-top: 1px solid var(--a-slate-100);
+                padding-top: 10px;
+                margin-top: 4px;
+            }
+            .elo-rank-badge { width: 40px; height: 40px; }
         }
 
         /* ─── Leaderboard ─── */
@@ -743,12 +1011,16 @@
 
 <div class="admin-page" id="adminPage">
     <div class="admin-shell">
-        <div class="admin-card">
-            <h2>Arena 管理總覽</h2>
-            <p>查看 A-E 的完成票數與案件覆蓋數，並可匯出全部投票或刪除單一評審者資料。</p>
-            <div class="admin-actions">
-                <button class="btn-sm" id="adminRefreshBtn">重新整理</button>
-                <button class="btn-sm" id="adminExportBtn">匯出全部 vote</button>
+        <div class="admin-panel">
+            <div class="admin-panel-head">
+                <div>
+                    <h2>Arena 管理總覽</h2>
+                    <p>合併全部評審者的投票，顯示整體 Elo 排行、每位評審完成度，以及案件 × 評審的進度格子。</p>
+                </div>
+                <div class="admin-panel-actions">
+                    <button class="admin-mini-btn" id="adminRefreshBtn">重新整理</button>
+                    <button class="admin-mini-btn" id="adminExportBtn">匯出全部 vote</button>
+                </div>
             </div>
             <div id="adminContent"></div>
         </div>
@@ -1395,46 +1667,89 @@
         })).sort((x, y) => y.rating - x.rating);
     }
 
-    function getCaseProgressClass(done, total) {
-        if (!done) return 'admin-progress-empty';
-        if (done >= total) return 'admin-progress-done';
-        return 'admin-progress-partial';
+    function getBackboneKey(cond) {
+        const bb = (config.backbone_map && config.backbone_map[cond]) || '';
+        return bb.toLowerCase();
     }
 
-    function renderAdminSummaryTable(rows) {
-        let html = '<div class="admin-subcard"><h3>評審進度摘要</h3><p>顯示每位評審目前累積票數、案件覆蓋數與最後更新時間。</p>';
-        html += '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
-        html += '<th>評審</th><th>狀態</th><th>已投票</th><th>案件數</th><th>最後更新</th><th>操作</th>';
-        html += '</tr></thead><tbody>';
-        rows.forEach(row => {
-            const statusLabel = row.voteCount > 0 ? '已有資料' : '尚未開始';
-            html += '<tr>';
-            html += `<td><strong>${escapeHtml(row.name)}</strong></td>`;
-            html += `<td><span class="admin-stat">${statusLabel}</span></td>`;
-            html += `<td>${row.voteCount}</td>`;
-            html += `<td>${row.caseCount} / ${config.cases.length}</td>`;
-            html += `<td>${escapeHtml(formatAdminTime(row.lastTimestamp))}</td>`;
-            html += `<td><button class="btn-sm admin-danger" onclick="adminDeleteEvaluator(${JSON.stringify(row.name)})">刪除 ${escapeHtml(row.name)} 資料</button></td>`;
-            html += '</tr>';
+    function getRoleKey(cond) {
+        const role = (config.role_map && config.role_map[cond]) || '';
+        return role.toLowerCase();
+    }
+
+    function renderEloLeaderboard(votes) {
+        const rows = calcAggregateElo(votes);
+        let html = '<div class="admin-section">';
+        html += '<div class="admin-section-head"><h3>全體合併 Elo 排行</h3>';
+        html += `<span class="section-desc">彙總 ${Object.keys(ARENA_USERS).filter(n => n !== 'admin').length} 位評審者的全部投票</span></div>`;
+
+        const hasVotes = rows.some(r => r.matches > 0);
+        if (!hasVotes) {
+            html += '<div class="elo-empty">尚無投票紀錄</div></div>';
+            return html;
+        }
+
+        html += '<div class="elo-list">';
+        rows.forEach((row, idx) => {
+            const rank = idx + 1;
+            const rankCls = rank <= 3 ? `rank-${rank}` : '';
+            const bb = getBackboneKey(row.condition);
+            const role = getRoleKey(row.condition);
+            const bbLabel = bb ? bb : '';
+            const roleLabel = role ? role : '';
+            const bbTag = bb ? `<span class="elo-tag bb-${escapeHtml(bb)}">${escapeHtml(bbLabel)}</span>` : '';
+            const roleTag = role ? `<span class="elo-tag role-${escapeHtml(role)}">${escapeHtml(roleLabel)}</span>` : '';
+
+            html += '<div class="elo-card">';
+            html += `<div class="elo-rank-badge ${rankCls}">#${rank}</div>`;
+            html += '<div class="elo-card-main">';
+            html += '<div class="elo-label-row">';
+            html += `<span class="elo-label">${escapeHtml(row.label)}</span>`;
+            html += bbTag + roleTag;
+            html += '</div>';
+            html += `<div class="elo-meta">${row.matches} 場比較 · ${row.caseCount} 案覆蓋</div>`;
+            html += '</div>';
+            html += '<div class="elo-score">';
+            html += `<div class="elo-rating">${row.rating}</div>`;
+            html += '<div class="elo-wdl">';
+            html += `<span class="wdl-w">${row.wins}W</span>`;
+            html += `<span class="wdl-d">${row.draws}D</span>`;
+            html += `<span class="wdl-l">${row.losses}L</span>`;
+            html += '</div>';
+            html += '</div>';
+            html += '</div>';
         });
-        html += '</tbody></table></div></div>';
+        html += '</div></div>';
         return html;
     }
 
-    function renderAggregateEloTable(votes) {
-        const rows = calcAggregateElo(votes);
-        let html = '<div class="admin-subcard"><h3>全體合併 Elo</h3><p>彙總 A-E 全部投票，顯示整體偏好排序。</p>';
+    function renderAdminSummaryTable(rows) {
+        let html = '<div class="admin-section">';
+        html += '<div class="admin-section-head"><h3>評審進度摘要</h3>';
+        html += '<span class="section-desc">每位評審的累積票數與最後更新時間</span></div>';
         html += '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
-        html += '<th>#</th><th>Condition</th><th>Elo</th><th>W / D / L</th><th>比較次數</th><th>覆蓋案件</th>';
+        html += '<th>評審</th><th>狀態</th><th>已投票</th><th>案件數</th><th>最後更新</th><th></th>';
         html += '</tr></thead><tbody>';
-        rows.forEach((row, idx) => {
+        rows.forEach(row => {
+            let statusCls = 'empty';
+            let statusLabel = '尚未開始';
+            if (row.caseCount >= config.cases.length && row.voteCount > 0) {
+                statusCls = 'done';
+                statusLabel = '已完成';
+            } else if (row.voteCount > 0) {
+                statusCls = 'partial';
+                statusLabel = '進行中';
+            }
             html += '<tr>';
-            html += `<td>${idx + 1}</td>`;
-            html += `<td><strong>${escapeHtml(row.label)}</strong></td>`;
-            html += `<td>${row.rating}</td>`;
-            html += `<td>${row.wins} / ${row.draws} / ${row.losses}</td>`;
-            html += `<td>${row.matches}</td>`;
-            html += `<td>${row.caseCount}</td>`;
+            html += `<td><strong>${escapeHtml(row.name)}</strong></td>`;
+            html += `<td><span class="admin-status-pill ${statusCls}">${statusLabel}</span></td>`;
+            html += `<td class="num">${row.voteCount}</td>`;
+            html += `<td class="num">${row.caseCount} / ${config.cases.length}</td>`;
+            html += `<td class="num">${escapeHtml(formatAdminTime(row.lastTimestamp))}</td>`;
+            const delBtn = row.voteCount > 0
+                ? `<button class="admin-mini-btn danger" onclick="adminDeleteEvaluator(${JSON.stringify(row.name)})">刪除此評審資料</button>`
+                : '';
+            html += `<td style="text-align:right;">${delBtn}</td>`;
             html += '</tr>';
         });
         html += '</tbody></table></div></div>';
@@ -1443,22 +1758,26 @@
 
     function renderProgressMatrix(rows) {
         const totalPairs = getPairsPerCase();
-        let html = '<div class="admin-subcard"><h3>案件進度矩陣</h3><p>每格顯示該評審在該案件已完成的配對票數。</p>';
-        html += '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
+        let html = '<div class="admin-section">';
+        html += '<div class="admin-section-head"><h3>案件進度矩陣</h3>';
+        html += `<span class="section-desc">每格顯示該評審在該案件已完成的配對票數（滿分 ${totalPairs}）</span></div>`;
+        html += '<div class="admin-table-wrap"><table class="admin-table admin-matrix"><thead><tr>';
         html += '<th>案件</th>';
         rows.forEach(row => { html += `<th>${escapeHtml(row.name)}</th>`; });
         html += '</tr></thead><tbody>';
         config.cases.forEach(item => {
             html += '<tr>';
-            html += `<td><strong>${escapeHtml(item.short_name || item.case_id)}</strong></td>`;
+            html += `<td class="case-name">${escapeHtml(item.short_name || item.case_id)}</td>`;
             rows.forEach(row => {
                 const done = row.votes.filter(v => v.case_id === item.case_id).length;
-                const cls = getCaseProgressClass(done, totalPairs);
-                const badge = `<span class="${cls}">${done}/${totalPairs}</span>`;
+                let stateCls = 'empty';
+                if (done >= totalPairs && totalPairs > 0) stateCls = 'done';
+                else if (done > 0) stateCls = 'partial';
+                const chip = `<span class="admin-version-chip ${stateCls}">${done}/${totalPairs}</span>`;
                 const del = done > 0
-                    ? `<button class="admin-mini-danger" onclick="adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})" title="刪除 ${escapeHtml(row.name)} 在此案的資料">×</button>`
+                    ? `<button class="admin-version-delete" onclick="adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})" title="刪除 ${escapeHtml(row.name)} 在此案的資料">×</button>`
                     : '';
-                html += `<td><div class="admin-progress-cell">${badge}${del}</div></td>`;
+                html += `<td class="state-cell ${stateCls}"><div class="state-inner">${chip}${del}</div></td>`;
             });
             html += '</tr>';
         });
@@ -1475,11 +1794,10 @@
             container.innerHTML = '<div class="admin-empty">尚無可顯示的評審資料</div>';
             return;
         }
-        let html = '<div class="admin-grid">';
-        html += renderAggregateEloTable(dataset.allVotes);
+        let html = '';
+        html += renderEloLeaderboard(dataset.allVotes);
         html += renderAdminSummaryTable(rows);
         html += renderProgressMatrix(rows);
-        html += '</div>';
         container.innerHTML = html;
     }
 
