@@ -9,6 +9,7 @@
         :root {
             --toolbar-h: 52px;
             --votebar-h: 52px;
+            --subbar-h: 42px;
             --primary: #4f46e5;
             --primary-hover: #4338ca;
         }
@@ -53,21 +54,84 @@
         .toolbar a.nav-link:hover { background: #eef2ff; color: #4f46e5; }
 
         .toolbar .btn-sm {
-            font-size: 12px; color: #6b7280; background: #f9fafb;
-            border: 1px solid #e5e7eb; border-radius: 8px;
-            padding: 4px 10px; cursor: pointer; font-family: inherit;
+            font-size: 12px; color: #64748b; background: #fff;
+            border: 1px solid #cbd5e1; border-radius: 10px;
+            padding: 7px 12px; cursor: pointer; font-family: inherit;
             transition: all 0.15s;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
         }
-        .toolbar .btn-sm:hover { background: #f3f4f6; color: #374151; }
+        .toolbar .btn-sm:hover { background: #f8fafc; color: #334155; border-color: #94a3b8; }
         .toolbar .btn-timeline {
             background: #fef9c3; color: #92400e; border-color: #fde68a;
         }
         .toolbar .btn-timeline:hover { background: #fde68a; }
 
+        .progress-subbar {
+            position: fixed;
+            top: var(--toolbar-h);
+            left: 0;
+            right: 0;
+            height: var(--subbar-h);
+            background: #fff;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0 16px;
+            z-index: 99;
+            overflow-x: auto;
+        }
+        .case-pills, .pair-indicators {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .subbar-label {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        .case-pill, .pair-pill {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid #cbd5e1;
+            background: #fff;
+            color: #64748b;
+            font-weight: 600;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .case-pill:hover, .pair-pill:hover {
+            background: #f8fafc;
+            border-color: #94a3b8;
+        }
+        .case-pill.active, .pair-pill.active {
+            border-color: #4f46e5;
+            background: #eef2ff;
+            color: #4338ca;
+        }
+        .case-pill.done, .pair-pill.done {
+            border-color: #a7f3d0;
+            background: #ecfdf5;
+            color: #047857;
+        }
+        .case-pill.partial, .pair-pill.partial {
+            border-color: #fde68a;
+            background: #fffbeb;
+            color: #b45309;
+        }
+        .pair-pill.locked {
+            opacity: 0.55;
+            cursor: default;
+        }
+
         /* ─── Main Area ─── */
         .main {
             position: fixed;
-            top: var(--toolbar-h);
+            top: calc(var(--toolbar-h) + var(--subbar-h));
             left: 0; right: 0;
             bottom: var(--votebar-h);
             display: flex; gap: 12px;
@@ -333,13 +397,14 @@
         body.is-admin .admin-only { display: inline-flex; }
         body.is-admin .main,
         body.is-admin .vote-bar,
+        body.is-admin .progress-subbar,
         body.is-admin .leaderboard-toggle,
         body.is-admin .leaderboard-panel { display: none !important; }
 
         .admin-page {
             display: none;
-            margin-top: var(--toolbar-h);
-            min-height: calc(100vh - var(--toolbar-h));
+            margin-top: calc(var(--toolbar-h) + var(--subbar-h));
+            min-height: calc(100vh - var(--toolbar-h) - var(--subbar-h));
             padding: 24px;
             background: linear-gradient(180deg, #f8fafc, #eef6f5);
         }
@@ -552,9 +617,10 @@
                 padding: 8px 12px; gap: 6px;
             }
             .vote-reason textarea { width: 100%; }
-            .main { bottom: auto; }
+            .main { bottom: auto; top: calc(var(--toolbar-h) + var(--subbar-h)); }
             .toolbar .spacer { display: none; }
             .toolbar { padding: 0 12px; gap: 8px; flex-wrap: nowrap; overflow-x: auto; }
+            .progress-subbar { padding: 0 12px; }
             .leaderboard-panel { width: calc(100% - 24px); right: 12px; }
         }
     </style>
@@ -617,6 +683,13 @@
     <button class="btn-sm" id="btnExport">匯出 JSON</button>
     <button class="btn-sm" id="btnClear">清除紀錄</button>
     <button class="btn-sm" id="btnLogout">登出</button>
+</div>
+
+<div class="progress-subbar" id="progressSubbar">
+    <span class="subbar-label">案件進度</span>
+    <div class="case-pills" id="casePills"></div>
+    <span class="subbar-label">本案配對</span>
+    <div class="pair-indicators" id="pairIndicators"></div>
 </div>
 
 <!-- Dual panels -->
@@ -714,7 +787,7 @@
     const db = firebase.firestore();
 
     const ARENA_STORAGE_VERSION = 'v1';
-    const ARENA_CAMPAIGN_ID = 'arena_20260411_5eval_4cond_15case';
+    const ARENA_CAMPAIGN_ID = 'arena_20260411_5eval_4cond_15case_core5pair_v2';
     const ARENA_AUTH_USER_KEY = 'arena_v1_auth_user';
     const ARENA_AUTH_ROLE_KEY = 'arena_v1_auth_role';
     const ARENA_USERS = {
@@ -740,6 +813,7 @@
     let adminLoginMode = false;
     let currentDataUid = '';
     let adminPanelLoaded = false;
+    let pendingCaseOverride = '';
 
     function getArenaVotesStorageKey(evaluator) {
         return `arena_v1_votes_${evaluator}`;
@@ -771,7 +845,7 @@
     }
 
     function getVotes(evaluator) {
-        return loadVotesForEvaluator(evaluator).filter(v => v.evaluator === evaluator);
+        return loadVotesForEvaluator(evaluator).filter(v => v.evaluator === evaluator && isCurrentCampaignVote(v));
     }
 
     function setEvaluator(ev) {
@@ -813,6 +887,13 @@
             _campaign_id: ARENA_CAMPAIGN_ID,
             _storage_version: ARENA_STORAGE_VERSION
         };
+    }
+
+    function isCurrentCampaignVote(vote) {
+        if (!vote || typeof vote !== 'object') return false;
+        if (vote._campaign_id !== ARENA_CAMPAIGN_ID) return false;
+        const pair = [vote.condition_a, vote.condition_b].sort();
+        return config.conditions.includes(pair[0]) && config.conditions.includes(pair[1]) && getPairWeight(pair[0], pair[1]) > 0;
     }
 
     async function writeCloudRecord(vote) {
@@ -857,6 +938,7 @@
         snapshot.forEach(doc => {
             const payload = doc.data() || {};
             if (!payload.data) return;
+            if (!isCurrentCampaignVote(payload.data)) return;
             votes.push(payload.data);
         });
         votes.sort((a, b) => String(a.timestamp || '').localeCompare(String(b.timestamp || '')));
@@ -997,6 +1079,18 @@
         return pairs;
     }
 
+    function getEffectivePairs() {
+        return getAllPairs()
+            .map(([condA, condB]) => ({ condA, condB, weight: getPairWeight(condA, condB) }))
+            .filter(item => item.weight > 0)
+            .sort((a, b) => b.weight - a.weight || a.condA.localeCompare(b.condA) || a.condB.localeCompare(b.condB));
+    }
+
+    function getPairStorageKey(caseId, condA, condB) {
+        const cs = [condA, condB].sort().join('||');
+        return `${caseId}||${cs}`;
+    }
+
     function getPairWeight(condA, condB) {
         const backA = config.backbone_map[condA], backB = config.backbone_map[condB];
         const roleA = config.role_map[condA], roleB = config.role_map[condB];
@@ -1017,49 +1111,48 @@
     }
 
     function buildPool() {
-        const pairs = getAllPairs();
+        const pairs = getEffectivePairs();
         const votes = getVotes(currentEvaluator);
         const voted = new Set(votes.map(v => {
-            const cs = [v.condition_a, v.condition_b].sort().join('||');
-            return v.case_id + '||' + cs;
+            return getPairStorageKey(v.case_id, v.condition_a, v.condition_b);
         }));
 
         const pool = [];
-        for (const c of config.cases) {
-            for (const [condA, condB] of pairs) {
-                const cs = [condA, condB].sort().join('||');
-                const key = c.case_id + '||' + cs;
-                if (voted.has(key)) continue;
-                const w = getPairWeight(condA, condB);
-                pool.push({ case_id: c.case_id, condA, condB, weight: w });
+        const caseOrder = pendingCaseOverride
+            ? [pendingCaseOverride, ...config.cases.map(c => c.case_id).filter(id => id !== pendingCaseOverride)]
+            : config.cases.map(c => c.case_id);
+
+        for (const caseId of caseOrder) {
+            const remaining = [];
+            pairs.forEach((pair, pairIndex) => {
+                const key = getPairStorageKey(caseId, pair.condA, pair.condB);
+                if (voted.has(key)) return;
+                remaining.push({ case_id: caseId, condA: pair.condA, condB: pair.condB, weight: pair.weight, pairIndex });
+            });
+            if (remaining.length > 0) {
+                pool.push(...remaining);
+                break;
             }
         }
         return pool;
     }
 
-    function weightedRandomPick(pool) {
-        if (pool.length === 0) return null;
-        const totalW = pool.reduce((s, p) => s + p.weight, 0);
-        let r = Math.random() * totalW;
-        for (const item of pool) {
-            r -= item.weight;
-            if (r <= 0) return item;
-        }
-        return pool[pool.length - 1];
-    }
-
     function pickNextPair() {
         const pool = buildPool();
-        const pick = weightedRandomPick(pool);
-        if (!pick) return null;
+        if (!pool.length) return null;
+        const topWeight = pool[0].weight;
+        const candidates = pool.filter(item => item.weight === topWeight);
+        const pick = candidates[Math.floor(Math.random() * candidates.length)];
 
         const swap = Math.random() < 0.5;
+        pendingCaseOverride = '';
         return {
             case_id: pick.case_id,
             condA: swap ? pick.condB : pick.condA,
             condB: swap ? pick.condA : pick.condB,
             displayOrder: swap ? 'b_left' : 'a_left',
-            loadedAt: Date.now()
+            loadedAt: Date.now(),
+            pairIndex: pick.pairIndex
         };
     }
 
@@ -1079,10 +1172,61 @@
 
     function updateProgress() {
         const votes = getVotes(currentEvaluator);
-        const casesWithVotes = new Set(votes.map(v => v.case_id));
         const totalCases = config.cases.length;
+        const totalPairs = getPairsPerCase();
+        const completedCases = config.cases.filter(item => getCaseVoteCount(item.case_id) >= totalPairs).length;
+        const totalVotes = totalCases * totalPairs;
         const badge = document.getElementById('progressBadge');
-        badge.textContent = '案件 ' + casesWithVotes.size + '/' + totalCases + ' \u00b7 已投票 ' + votes.length;
+        badge.textContent = '案件 ' + completedCases + '/' + totalCases + ' \u00b7 已投票 ' + votes.length + '/' + totalVotes;
+        renderCasePills();
+        renderPairIndicators();
+    }
+
+    function getCaseVoteCount(caseId) {
+        return getVotes(currentEvaluator).filter(v => v.case_id === caseId).length;
+    }
+
+    function renderCasePills() {
+        const wrap = document.getElementById('casePills');
+        if (!wrap || !config) return;
+        const total = getPairsPerCase();
+        wrap.innerHTML = '';
+        config.cases.forEach((item, idx) => {
+            const done = getCaseVoteCount(item.case_id);
+            const btn = document.createElement('button');
+            btn.className = 'case-pill';
+            if (currentPair && currentPair.case_id === item.case_id) btn.classList.add('active');
+            else if (done >= total) btn.classList.add('done');
+            else if (done > 0) btn.classList.add('partial');
+            btn.textContent = String(idx + 1);
+            btn.title = `${item.short_name || item.case_id} (${done}/${total})`;
+            btn.addEventListener('click', async () => {
+                pendingCaseOverride = item.case_id;
+                await loadNextPair();
+            });
+            wrap.appendChild(btn);
+        });
+    }
+
+    function renderPairIndicators() {
+        const wrap = document.getElementById('pairIndicators');
+        if (!wrap || !config || !currentEvaluator) return;
+        const activeCaseId = currentPair ? currentPair.case_id : (pendingCaseOverride || config.cases[0].case_id);
+        const effectivePairs = getEffectivePairs();
+        const votes = getVotes(currentEvaluator);
+        const voted = new Set(votes.filter(v => v.case_id === activeCaseId).map(v => getPairStorageKey(v.case_id, v.condition_a, v.condition_b)));
+        wrap.innerHTML = '';
+        effectivePairs.forEach((pair, idx) => {
+            const pill = document.createElement('span');
+            pill.className = 'pair-pill';
+            const key = getPairStorageKey(activeCaseId, pair.condA, pair.condB);
+            if (currentPair && currentPair.case_id === activeCaseId && currentPair.pairIndex === idx) pill.classList.add('active');
+            else if (voted.has(key)) pill.classList.add('done');
+            else pill.classList.add('partial');
+            pill.textContent = String(idx + 1);
+            pill.title = `Pair ${idx + 1}`;
+            wrap.appendChild(pill);
+        });
     }
 
     function renderAllSections(sections) {
@@ -1114,8 +1258,7 @@
     }
 
     function getPairsPerCase() {
-        const n = (config && Array.isArray(config.conditions)) ? config.conditions.length : 0;
-        return n >= 2 ? (n * (n - 1)) / 2 : 0;
+        return config ? getEffectivePairs().length : 0;
     }
 
     async function fetchAdminDataset() {
@@ -1127,7 +1270,7 @@
                 const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
                 snapshot.forEach(doc => {
                     const payload = doc.data() || {};
-                    if (payload.data) votes.push(payload.data);
+                    if (payload.data && isCurrentCampaignVote(payload.data)) votes.push(payload.data);
                 });
             }
             const voteCount = votes.length;

@@ -1,22 +1,16 @@
 {
-  "description": "Arena POC 設定：7 conditions × 15 cases",
-  "evaluators": ["A", "B", "C"],
+  "description": "Arena 設定：4 conditions × 15 cases × 5 evaluators × 5 effective pairs per case",
+  "evaluators": ["A", "B", "C", "D", "E"],
   "conditions": [
     "claude_afg_v5.1",
-    "ablation_no_afg",
-    "ablation_no_react",
     "baseline_claude-haiku",
     "LENS-Full-DeepSeek_v31",
-    "LENS-NoReact-DeepSeek_v31",
     "baseline_ollama_deepseek-v3.1-671b-cloud"
   ],
   "condition_labels": {
     "claude_afg_v5.1": "LENS-Haiku-Full",
-    "ablation_no_afg": "LENS-Haiku-NoAFG",
-    "ablation_no_react": "LENS-Haiku-NoReact",
     "baseline_claude-haiku": "Haiku Baseline",
     "LENS-Full-DeepSeek_v31": "LENS-DeepSeek-Full",
-    "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek-NoReact",
     "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek Baseline"
   },
   "cases": [
@@ -37,30 +31,24 @@
     {"case_id": "case_081", "short_name": "健檢中心Inderal藥物案", "volume": "下冊", "verdict": "無罪"}
   ],
   "pair_weights": {
+    "cross_backbone_full_vs_full": 5,
     "same_backbone_full_vs_baseline": 3,
-    "same_backbone_full_vs_ablation": 3,
-    "same_backbone_ablation_vs_ablation": 2,
-    "same_backbone_ablation_vs_baseline": 2,
-    "cross_backbone_full_vs_full": 2,
-    "cross_backbone_baseline_vs_baseline": 1,
-    "cross_backbone_other": 1
+    "cross_backbone_other": 2,
+    "cross_backbone_baseline_vs_baseline": 0,
+    "same_backbone_full_vs_ablation": 0,
+    "same_backbone_ablation_vs_ablation": 0,
+    "same_backbone_ablation_vs_baseline": 0
   },
   "backbone_map": {
     "claude_afg_v5.1": "haiku",
-    "ablation_no_afg": "haiku",
-    "ablation_no_react": "haiku",
     "baseline_claude-haiku": "haiku",
     "LENS-Full-DeepSeek_v31": "deepseek",
-    "LENS-NoReact-DeepSeek_v31": "deepseek",
     "baseline_ollama_deepseek-v3.1-671b-cloud": "deepseek"
   },
   "role_map": {
     "claude_afg_v5.1": "full",
-    "ablation_no_afg": "ablation",
-    "ablation_no_react": "ablation",
     "baseline_claude-haiku": "baseline",
     "LENS-Full-DeepSeek_v31": "full",
-    "LENS-NoReact-DeepSeek_v31": "ablation",
     "baseline_ollama_deepseek-v3.1-671b-cloud": "baseline"
   }
 }
