@@ -3175,7 +3175,7 @@ async function loadPhase1() {
   renderAISummary('p1SummaryBody', aiData);
   // Show word count + compression ratio
   const summaryChars = aiData && aiData.sections
-    ? aiData.sections.reduce((sum, s) => sum + (s.content || '').replace(/\[CH_\d+(?:,\s*CH_\d+)*\]/g, '').length, 0)
+    ? aiData.sections.reduce((sum, s) => sum + (s.content || '').replace(/\[CH_\d+(?:\s*[,，、]\s*CH_\d+)*\]/g, '').length, 0)
     : 0;
   const sourceChars = aiData && aiData.chunks
     ? Object.values(aiData.chunks).reduce((sum, c) => sum + (c || '').length, 0)
@@ -4580,8 +4580,10 @@ function renderAISummary(bodyId, aiData) {
 
 function renderCitations(text) {
   let html = esc(text);
-  html = html.replace(/\[CH_(\d+(?:,\s*CH_\d+)*)\]/g, (match, inner) => {
-    const aliases = inner.split(/,\s*/).map(s => s.startsWith('CH_') ? s : 'CH_' + s).map(normAlias);
+  // Accept [CH_NN] and multi-citation variants separated by ASCII comma,
+  // fullwidth comma (，), or 頓號 (、) — all three appear across model outputs.
+  html = html.replace(/\[(CH_\d+(?:\s*[,，、]\s*CH_\d+)*)\]/g, (match, inner) => {
+    const aliases = inner.split(/\s*[,，、]\s*/).map(normAlias);
     return aliases.map(a =>
       `<span class="citation-tag" data-alias="${a}" title="點擊查看原文 ${a}">${a}</span>`
     ).join(' ');
