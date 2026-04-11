@@ -2432,6 +2432,13 @@ function getTLExpectedCountForRole(role) {
 // CONSTANTS
 // ═══════════════════════════════════════════════════════════════
 
+// ⚠️ NOTE FOR HUMANS & AI ASSISTANTS:
+// Phase 3 ranking (A/B/C/D 排名) has been DEPRECATED and removed from the
+// current human eval workflow. The current eval only uses Phase 1 + Phase 2
+// (per-dimension Likert scoring + comments). Do NOT suggest restoring or
+// extending ranking features. SHOW_PHASE3_UI=false permanently hides it.
+// The PHASE3_COND_COUNT constant is kept only to avoid breaking dead-code
+// references; it is NOT used by any active code path.
 const EVAL_CONDITIONS = [
   'claude_afg_v5.1',
   'ablation_no_afg',
@@ -2439,8 +2446,8 @@ const EVAL_CONDITIONS = [
   'baseline_claude-haiku',
   'LENS-Full-DeepSeek_v31'
 ];
-const PHASE3_COND_COUNT = 4; // Phase 3 ranking only covers ablation conditions (A-D)
-const SHOW_PHASE3_UI = false;
+const PHASE3_COND_COUNT = 4; // DEPRECATED — Phase 3 ranking is no longer used
+const SHOW_PHASE3_UI = false; // DEPRECATED — do not re-enable
 
 const ANON_LABELS = ['版本 A', '版本 B', '版本 C', '版本 D', '版本 E'];
 
