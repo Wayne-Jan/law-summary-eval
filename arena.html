@@ -54,17 +54,26 @@
         .toolbar a.nav-link:hover { background: #eef2ff; color: #4f46e5; }
 
         .toolbar .btn-sm {
+            display: inline-flex; align-items: center; gap: 5px;
             font-size: 12px; color: #64748b; background: #fff;
             border: 1px solid #cbd5e1; border-radius: 10px;
             padding: 7px 12px; cursor: pointer; font-family: inherit;
             transition: all 0.15s;
             box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            white-space: nowrap;
         }
+        .toolbar .btn-sm svg { flex-shrink: 0; }
         .toolbar .btn-sm:hover { background: #f8fafc; color: #334155; border-color: #94a3b8; }
         .toolbar .btn-timeline {
-            background: #fef9c3; color: #92400e; border-color: #fde68a;
+            background: #1e40af; color: #ffffff; border-color: #1e40af;
+            font-weight: 700;
+            padding: 7px 16px;
+            box-shadow: 0 2px 6px rgba(30, 64, 175, 0.25);
         }
-        .toolbar .btn-timeline:hover { background: #fde68a; }
+        .toolbar .btn-timeline:hover {
+            background: #1e3a8a; color: #ffffff; border-color: #1e3a8a;
+            box-shadow: 0 3px 10px rgba(30, 58, 138, 0.32);
+        }
 
         .progress-subbar {
             position: fixed;
@@ -108,10 +117,15 @@
             background: #f8fafc;
             border-color: #94a3b8;
         }
-        .case-pill.active, .pair-pill.active {
+        .case-pill.active {
             border-color: #4f46e5;
             background: #eef2ff;
             color: #4338ca;
+        }
+        .pair-pill.active {
+            border-color: #f59e0b;
+            background: #fef3c7;
+            color: #92400e;
         }
         .case-pill.done, .pair-pill.done {
             border-color: #a7f3d0;
@@ -1356,13 +1370,36 @@
 <div class="toolbar">
     <h1>LENS Arena</h1>
     <span class="progress-badge" id="progressBadge">載入中...</span>
-    <span class="spacer"></span>
-    <span class="progress-badge" id="cloudStatus">雲端待命</span>
-    <span class="eval-label">評審：</span>
-    <select id="evalSelect"></select>
+    <span class="eval-label admin-or-inspect">切換：</span>
+    <select id="evalSelect" class="admin-or-inspect"></select>
     <span class="progress-badge" id="userBadge">未登入</span>
     <span class="admin-inspect-banner" id="adminInspectBanner">唯讀檢視</span>
     <span class="review-editing-banner" id="reviewEditingBanner">編輯模式</span>
+    <button class="btn-sm admin-only" id="btnAdminPanel">管理總覽</button>
+    <button class="btn-sm admin-inspect-only" id="btnAdminBack">← 返回管理</button>
+    <button class="btn-sm is-editing-only" id="btnCancelEdit">取消編輯</button>
+    <span class="spacer"></span>
+    <button class="btn-sm btn-timeline" id="btnTimeline">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="8" cy="8" r="6.25"/>
+            <polyline points="8 4.5 8 8 10.5 9.25"/>
+        </svg>
+        案件時間軸
+    </button>
+    <span class="spacer"></span>
+    <a class="nav-link" href="index.html">首頁</a>
+    <button class="btn-sm admin-or-inspect" id="btnExport">匯出 JSON</button>
+    <button class="btn-sm admin-or-inspect" id="btnClear">清除紀錄</button>
+    <button class="btn-sm" id="btnLogout">登出</button>
+    <button class="btn-sm evaluator-only" id="btnMyRecords" title="我的作答紀錄">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3.25" y="2.25" width="9.5" height="11.5" rx="1.25"/>
+            <line x1="5.5" y1="5.25" x2="10.5" y2="5.25"/>
+            <line x1="5.5" y1="8" x2="10.5" y2="8"/>
+            <line x1="5.5" y1="10.75" x2="8.75" y2="10.75"/>
+        </svg>
+        我的紀錄
+    </button>
     <div class="toolbar-help">
         <button class="toolbar-shortcut-btn" type="button" onclick="toggleShortcutHelp()" title="快捷鍵">
             <svg class="toolbar-shortcut-icon" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -1395,15 +1432,7 @@
             <div class="toolbar-shortcut-note">輸入理由時快捷鍵會自動停用。</div>
         </div>
     </div>
-    <button class="btn-sm admin-only" id="btnAdminPanel">管理總覽</button>
-    <button class="btn-sm admin-inspect-only" id="btnAdminBack">← 返回管理</button>
-    <button class="btn-sm evaluator-only" id="btnMyRecords">我的紀錄</button>
-    <button class="btn-sm is-editing-only" id="btnCancelEdit">取消編輯</button>
-    <button class="btn-sm btn-timeline" id="btnTimeline">案件時間軸</button>
-    <a class="nav-link" href="index.html">首頁</a>
-    <button class="btn-sm admin-or-inspect" id="btnExport">匯出 JSON</button>
-    <button class="btn-sm admin-or-inspect" id="btnClear">清除紀錄</button>
-    <button class="btn-sm" id="btnLogout">登出</button>
+    <span class="progress-badge" id="cloudStatus">雲端待命</span>
 </div>
 
 <div class="progress-subbar" id="progressSubbar">
@@ -1475,12 +1504,12 @@
 
 <!-- Vote bar -->
 <div class="vote-bar" id="voteBar">
-    <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：←">A 較好</button>
-    <button class="vote-btn" data-vote="tie">難分高下</button>
-    <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：→">B 較好</button>
     <div class="vote-reason">
         <textarea id="reasonText" placeholder="理由（選填）"></textarea>
     </div>
+    <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：←">A 較好</button>
+    <button class="vote-btn" data-vote="tie" title="快捷鍵：Space">難分高下</button>
+    <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：→">B 較好</button>
     <button class="submit-btn" id="submitBtn" disabled title="快捷鍵：S">送出 →</button>
 </div>
 
