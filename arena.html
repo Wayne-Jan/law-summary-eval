@@ -1165,15 +1165,12 @@
 
         if (sameBB) {
             if (roles === 'baseline_full') return config.pair_weights.same_backbone_full_vs_baseline;
-            if (roles === 'ablation_full') return config.pair_weights.same_backbone_full_vs_ablation;
-            if (roles === 'ablation_ablation') return config.pair_weights.same_backbone_ablation_vs_ablation;
-            if (roles === 'ablation_baseline') return config.pair_weights.same_backbone_ablation_vs_baseline;
+            return 0;
         } else {
             if (roles === 'full_full') return config.pair_weights.cross_backbone_full_vs_full;
             if (roles === 'baseline_baseline') return config.pair_weights.cross_backbone_baseline_vs_baseline;
             return config.pair_weights.cross_backbone_other;
         }
-        return 1;
     }
 
     function buildPool() {
