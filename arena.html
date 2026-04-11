@@ -1412,10 +1412,8 @@
         案件時間軸
     </button>
     <span class="spacer"></span>
-    <a class="nav-link" href="index.html">首頁</a>
     <button class="btn-sm admin-or-inspect" id="btnExport">匯出 JSON</button>
     <button class="btn-sm admin-or-inspect" id="btnClear">清除紀錄</button>
-    <button class="btn-sm" id="btnLogout">登出</button>
     <button class="btn-sm evaluator-only" id="btnMyRecords" title="我的作答紀錄">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3.25" y="2.25" width="9.5" height="11.5" rx="1.25"/>
@@ -1457,7 +1455,8 @@
             <div class="toolbar-shortcut-note">輸入理由時快捷鍵會自動停用。</div>
         </div>
     </div>
-    <span class="progress-badge" id="cloudStatus">雲端待命</span>
+    <button class="btn-sm" id="btnLogout">登出</button>
+    <span class="progress-badge" id="cloudStatus">雲端狀態</span>
 </div>
 
 <div class="progress-subbar" id="progressSubbar">
@@ -1705,7 +1704,7 @@
             updated: firebase.firestore.FieldValue.serverTimestamp()
         });
         setCloudStatus('已同步', 'synced');
-        cloudStatusTimer = setTimeout(() => setCloudStatus('雲端待命', ''), 2500);
+        cloudStatusTimer = setTimeout(() => setCloudStatus('雲端狀態', ''), 2500);
     }
 
     async function syncArenaUserIndex(user, profile) {
@@ -1741,7 +1740,7 @@
         votes.sort((a, b) => String(a.timestamp || '').localeCompare(String(b.timestamp || '')));
         saveVotesForEvaluator(evaluator, votes);
         setCloudStatus('已同步', 'synced');
-        cloudStatusTimer = setTimeout(() => setCloudStatus('雲端待命', ''), 2500);
+        cloudStatusTimer = setTimeout(() => setCloudStatus('雲端狀態', ''), 2500);
     }
 
     async function getCampaignRecordRefs(uid) {
@@ -2956,7 +2955,7 @@
             currentEvaluator = null;
             showLoginOverlay();
             document.getElementById('userBadge').textContent = '未登入';
-            setCloudStatus('雲端待命', '');
+            setCloudStatus('雲端狀態', '');
             return;
         }
 
