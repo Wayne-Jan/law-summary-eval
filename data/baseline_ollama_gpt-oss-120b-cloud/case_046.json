@@ -149,6 +149,695 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.706,
-  "fact_recall_avg": null
+  "fact_recall": 0.3917,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5629,
+  "quality_overall": 4.2714,
+  "checklist_pass_rate": 0.962,
+  "citation_accuracy": 0.9,
+  "citation_support_score": 0.8619,
+  "uncited_rate": 0.25,
+  "faithfulness_combined": {
+   "score": 0.805,
+   "citation_fidelity": 0.675,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 16,
+   "correct": 16
+  },
+  "weighted_recall": 0.7219,
+  "missing_severity": {
+   "critical": 3,
+   "important": 33,
+   "minor": 56,
+   "details": [
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要僅提到『持續抗生素治療』，未明確說明『仍未見效』的治療狀態，跨 section 查閱後仍無此資訊",
+     "reason": "摘要僅提到『持續抗生素治療』，未明確說明『仍未見效』的治療狀態，跨 section 查閱後仍無此資訊"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要提到『未即時安排超音波檢查』，但未從『應考慮是否罹患腎膿瘍』的注意義務角度描述，跨 section 後仍無此明確表述",
+     "reason": "摘要提到『未即時安排超音波檢查』，但未從『應考慮是否罹患腎膿瘍』的注意義務角度描述，跨 section 後仍無此明確表述"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要從『未即時安排』角度描述，未明確提及『應立即施以超音波檢查，以明確認定』的醫療義務，跨 section 後仍無此表述",
+     "reason": "摘要從『未即時安排』角度描述，未明確提及『應立即施以超音波檢查，以明確認定』的醫療義務，跨 section 後仍無此表述"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要未提及『開刀引流』醫療處置義務，跨 section 查閱後仍未發現此內容",
+     "reason": "摘要未提及『開刀引流』醫療處置義務，跨 section 查閱後仍未發現此內容"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要提到『床邊超音波檢查』但未明確說『在床邊即可執行，並無不能注意之情事』，跨 section 後仍無此法律判斷表述",
+     "reason": "摘要提到『床邊超音波檢查』但未明確說『在床邊即可執行，並無不能注意之情事』，跨 section 後仍無此法律判斷表述"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 已提及『依醫院規定超音波檢查僅於每週一、三、五執行』，但未從『疏於注意』行為缺失角度描述，屬程序性事實",
+     "reason": "section_01_facts.txt 已提及『依醫院規定超音波檢查僅於每週一、三、五執行』，但未從『疏於注意』行為缺失角度描述，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要未提及『並無不能注意情事』的法律判斷，跨 section 查閱後仍未發現此明確表述",
+     "reason": "摘要未提及『並無不能注意情事』的法律判斷，跨 section 查閱後仍未發現此明確表述"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "敗血症醫學定義背景性事實，非抗辯核心",
+     "reason": "敗血症醫學定義背景性事實，非抗辯核心"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "臨床表現細節，非抗辯核心",
+     "reason": "臨床表現細節，非抗辯核心"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫學判斷背景，非抗辯核心",
+     "reason": "醫學判斷背景，非抗辯核心"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "summary僅提及「高燒不退及嘔吐」，未涵蓋寒顫、腰痛、噁心、解尿不適等其他症狀",
+     "reason": "summary僅提及「高燒不退及嘔吐」，未涵蓋寒顫、腰痛、噁心、解尿不適等其他症狀"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "summary雖提及主治醫師及抗生素，但未明確陳述「病況毫無改善持續惡化」之語義",
+     "reason": "summary雖提及主治醫師及抗生素，但未明確陳述「病況毫無改善持續惡化」之語義"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五段summary均未提及臨床醫師應考慮之其他可能性診斷（腎膿瘍、腰肌膿瘍、肝膿瘍、急性膽囊炎）",
+     "reason": "五段summary均未提及臨床醫師應考慮之其他可能性診斷（腎膿瘍、腰肌膿瘍、肝膿瘍、急性膽囊炎）"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "summary未明確提及「應開始記錄液量」之醫學建議，僅於reasoning提及過失認定",
+     "reason": "summary未明確提及「應開始記錄液量」之醫學建議，僅於reasoning提及過失認定"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "雖reasoning提及敗血性休克相關徵象，但未有「25日病況急劇惡化」之明確時間點陳述，影響病程理解",
+     "reason": "雖reasoning提及敗血性休克相關徵象，但未有「25日病況急劇惡化」之明確時間點陳述，影響病程理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "雖pred claim 3提及相關內容，但GT中「於敗血性休克狀態才開始記錄」之時間點對應關係未於summary明確呈現",
+     "reason": "雖pred claim 3提及相關內容，但GT中「於敗血性休克狀態才開始記錄」之時間點對應關係未於summary明確呈現"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary未引用哈里遜內科學關於寒顫與感染之論述",
+     "reason": "summary未引用哈里遜內科學關於寒顫與感染之論述"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary未引用哈里遜內科學關於腎盂腎炎併發症標準",
+     "reason": "summary未引用哈里遜內科學關於腎盂腎炎併發症標準"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary未引用哈里遜內科學關於腎膿瘍症狀統計",
+     "reason": "summary未引用哈里遜內科學關於腎膿瘍症狀統計"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary未引用哈里遜內科學關於發燒持續觀察標準",
+     "reason": "summary未引用哈里遜內科學關於發燒持續觀察標準"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary未引用哈里遜內科學關於急性腎盂腎炎症狀發展時間",
+     "reason": "summary未引用哈里遜內科學關於急性腎盂腎炎症狀發展時間"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary未引用哈里遜內科學關於治療反應時間",
+     "reason": "summary未引用哈里遜內科學關於治療反應時間"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary未引用哈里遜內科學關於腎臟超音波重要性之論述",
+     "reason": "summary未引用哈里遜內科學關於腎臟超音波重要性之論述"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "summary未提及臺大醫院說明函關於診斷考量未盡善盡美之評論，影響鑑定意見完整理解",
+     "reason": "summary未提及臺大醫院說明函關於診斷考量未盡善盡美之評論，影響鑑定意見完整理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "summary未提及臺大醫院說明函關於「等四或五天若無效再安排超音波」之治療策略，影響醫療常規判斷理解",
+     "reason": "summary未提及臺大醫院說明函關於「等四或五天若無效再安排超音波」之治療策略，影響醫療常規判斷理解"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "summary未提及臺大醫院說明函關於已安排10/26超音波檢查之事實，影響延誤認定之完整理解",
+     "reason": "summary未提及臺大醫院說明函關於已安排10/26超音波檢查之事實，影響延誤認定之完整理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "summary整體判斷為有過失，未呈現臺大醫院說明函「做法不能謂之有錯」之不同意見，影響多元觀點理解",
+     "reason": "summary整體判斷為有過失，未呈現臺大醫院說明函「做法不能謂之有錯」之不同意見，影響多元觀點理解"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及 10 月 21 日外院診斷細節",
+     "reason": "section 原文未提及 10 月 21 日外院診斷細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及 G 醫院具體就診日期",
+     "reason": "section 原文未提及 G 醫院具體就診日期"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文提及「持續高燒不退」但未提及具體 38.8 度數據",
+     "reason": "section 原文提及「持續高燒不退」但未提及具體 38.8 度數據"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文提及「敗血性休克」但未提及「間歇熱、敗血性熱」等臨床術語",
+     "reason": "section 原文提及「敗血性休克」但未提及「間歇熱、敗血性熱」等臨床術語"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文提及「持續高燒不退」但未明確說明「超過一星期」",
+     "reason": "section 原文提及「持續高燒不退」但未明確說明「超過一星期」"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及 flank pain（腰痛）症狀",
+     "reason": "section 原文未提及 flank pain（腰痛）症狀"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及 10/23 護理紀錄「噁心」",
+     "reason": "section 原文未提及 10/23 護理紀錄「噁心」"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文提及「嘔吐」但未提及 10/24 下午 2:10 具體時間",
+     "reason": "section 原文提及「嘔吐」但未提及 10/24 下午 2:10 具體時間"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及 10/24 晚上 7 時起禁食期間",
+     "reason": "section 原文未提及 10/24 晚上 7 時起禁食期間"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及背痛（back pain）症狀",
+     "reason": "section 原文未提及背痛（back pain）症狀"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文未明確提及「病情並未有效治療」",
+     "reason": "section 原文未明確提及「病情並未有效治療」"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文提及腎膿瘍但未提及腰肌膿瘍、肝膿瘍、急性膽囊炎等鑑別診斷",
+     "reason": "section 原文提及腎膿瘍但未提及腰肌膿瘍、肝膿瘍、急性膽囊炎等鑑別診斷"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文提及敗血性休克但未明確強調「10 月 24 日上午」時間點",
+     "reason": "section 原文提及敗血性休克但未明確強調「10 月 24 日上午」時間點"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文提及腎盂腎炎但未明確說明自 10/21 起之診斷起始日期",
+     "reason": "section 原文提及腎盂腎炎但未明確說明自 10/21 起之診斷起始日期"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文提及抗生素治療但未提及「腎毒性抗生素」",
+     "reason": "section 原文提及抗生素治療但未提及「腎毒性抗生素」"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文提及部分症狀（血壓下降、呼吸困難），但未完整提及「高燒不退、反覆排尿少、無法進食、嘔吐不止、腎灌注不足」等症狀群",
+     "reason": "section 原文提及部分症狀（血壓下降、呼吸困難），但未完整提及「高燒不退、反覆排尿少、無法進食、嘔吐不止、腎灌注不足」等症狀群"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文未提及「腎功能不全」及「應立即作腎臟超音波檢查」之義務",
+     "reason": "section 原文未提及「腎功能不全」及「應立即作腎臟超音波檢查」之義務"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及超音波檢查重要性之說明",
+     "reason": "section 原文未提及超音波檢查重要性之說明"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文提及 10/26 安排檢查，但未提及 10/23 已安排檢查",
+     "reason": "section 原文提及 10/26 安排檢查，但未提及 10/23 已安排檢查"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文提及 10/26 才安排檢查，但未提及 10/24 取消檢查之關鍵事實",
+     "reason": "section 原文提及 10/26 才安排檢查，但未提及 10/24 取消檢查之關鍵事實"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及被告偵查中供述內容",
+     "reason": "section 原文未提及被告偵查中供述內容"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文未提及「取消檢查」與「引發敗血症」之因果關係論述",
+     "reason": "section 原文未提及「取消檢查」與「引發敗血症」之因果關係論述"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及急診時即陳述尿量很少",
+     "reason": "section 原文未提及急診時即陳述尿量很少"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及 10/23 護理紀錄「解尿不適存、灼熱感」",
+     "reason": "section 原文未提及 10/23 護理紀錄「解尿不適存、灼熱感」"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文未提及「成人呼吸窘迫症侯群」診斷",
+     "reason": "section 原文未提及「成人呼吸窘迫症侯群」診斷"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文提及值班及記錄義務，但未明確連結「身為值班醫師即有記載尿量義務」",
+     "reason": "section 原文提及值班及記錄義務，但未明確連結「身為值班醫師即有記載尿量義務」"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文未提及「嚴重急性腎衰竭之可能」",
+     "reason": "section 原文未提及「嚴重急性腎衰竭之可能」"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及「以每小時為記錄單位」之具體要求",
+     "reason": "section 原文未提及「以每小時為記錄單位」之具體要求"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及「一舉記錄共 8 個小時」之過失描述",
+     "reason": "section 原文未提及「一舉記錄共 8 個小時」之過失描述"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文未提及腎盂腎炎「常見、非難治、死亡率低」之醫學評估",
+     "reason": "section 原文未提及腎盂腎炎「常見、非難治、死亡率低」之醫學評估"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section 原文未提及外院及 G 醫院診斷均為腎盂腎炎",
+     "reason": "section 原文未提及外院及 G 醫院診斷均為腎盂腎炎"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section 原文未明確提及「被告甲為主治醫師」之角色定位",
+     "reason": "section 原文未明確提及「被告甲為主治醫師」之角色定位"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section 原文提及超音波但未提及「腹部超音波、電腦斷層、外科急症排除」等義務，影響過失認定範圍",
+     "reason": "section 原文提及超音波但未提及「腹部超音波、電腦斷層、外科急症排除」等義務，影響過失認定範圍"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning 段雖提及敗血性休克及血壓下降，但未明確說明『自 10 月 24 日起病況轉壞』的時間點",
+     "reason": "reasoning 段雖提及敗血性休克及血壓下降，但未明確說明『自 10 月 24 日起病況轉壞』的時間點"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning 段提到『未即時記錄』但未明確表述『應開始記錄』之義務認定",
+     "reason": "reasoning 段提到『未即時記錄』但未明確表述『應開始記錄』之義務認定"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning 段提及敗血性休克徵象，但未完整描述『低血氧、代謝性酸中毒』等全部內容與『25 日』時間點",
+     "reason": "reasoning 段提及敗血性休克徵象，但未完整描述『低血氧、代謝性酸中毒』等全部內容與『25 日』時間點"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning 段提到『直至十月二十五日才開始』但未明確說『此時才開始記錄，被告乙亦有過失』的雙重認定",
+     "reason": "reasoning 段提到『直至十月二十五日才開始』但未明確說『此時才開始記錄，被告乙亦有過失』的雙重認定"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『外院就診』及『抗生素治療仍持續發燒』等事實",
+     "reason": "遍查 5 個 sections，均未提及『外院就診』及『抗生素治療仍持續發燒』等事實"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查 5 個 sections，均未提及『抗生素治療無效情形應已知悉』的法院認定",
+     "reason": "遍查 5 個 sections，均未提及『抗生素治療無效情形應已知悉』的法院認定"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查 5 個 sections，均未提及『臨床上即應懷疑有腎膿瘍之可能』的醫療標準表述",
+     "reason": "遍查 5 個 sections，均未提及『臨床上即應懷疑有腎膿瘍之可能』的醫療標準表述"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查 5 個 sections，均未提及『堅持從最基本之病況著手治療』『不能謂之有錯』等法院評判用語",
+     "reason": "遍查 5 個 sections，均未提及『堅持從最基本之病況著手治療』『不能謂之有錯』等法院評判用語"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『一再反映排尿問題』『護理紀錄上亦有上開紀錄』",
+     "reason": "遍查 5 個 sections，均未提及『一再反映排尿問題』『護理紀錄上亦有上開紀錄』"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查 5 個 sections，均未單獨陳述『被告乙亦難認無過失』之認定",
+     "reason": "遍查 5 個 sections，均未單獨陳述『被告乙亦難認無過失』之認定"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『T 醫院函文內容本院並未加以採認』",
+     "reason": "遍查 5 個 sections，均未提及『T 醫院函文內容本院並未加以採認』"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『10 月 26 日晚上 10 時許會議室召開醫療過程說明會』的時間地點細節",
+     "reason": "遍查 5 個 sections，均未提及『10 月 26 日晚上 10 時許會議室召開醫療過程說明會』的時間地點細節"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『病歷彌封於 G 醫院提供之牛皮紙袋中』",
+     "reason": "遍查 5 個 sections，均未提及『病歷彌封於 G 醫院提供之牛皮紙袋中』"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『52 頁病歷』等紙袋記載細節",
+     "reason": "遍查 5 個 sections，均未提及『52 頁病歷』等紙袋記載細節"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『彌封之處簽名』『透明膠帶黏貼』等細節",
+     "reason": "遍查 5 個 sections，均未提及『彌封之處簽名』『透明膠帶黏貼』等細節"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『承辦檢察官函 G 醫院調取上揭病歷』",
+     "reason": "遍查 5 個 sections，均未提及『承辦檢察官函 G 醫院調取上揭病歷』"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『病歷正本共計 46 張』",
+     "reason": "遍查 5 個 sections，均未提及『病歷正本共計 46 張』"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『88 年 1 月 26 日』『病患 P 之女出庭應訊』",
+     "reason": "遍查 5 個 sections，均未提及『88 年 1 月 26 日』『病患 P 之女出庭應訊』"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『手稿內容字跡潦草』『記錄之匆忙』",
+     "reason": "遍查 5 個 sections，均未提及『手稿內容字跡潦草』『記錄之匆忙』"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『解說過程中並有病患家屬打斷詢問』",
+     "reason": "遍查 5 個 sections，均未提及『解說過程中並有病患家屬打斷詢問』"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『蓋章係於說明、記錄完畢之後』『僅憑記憶即時更正』",
+     "reason": "遍查 5 個 sections，均未提及『蓋章係於說明、記錄完畢之後』『僅憑記憶即時更正』"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未詳細說明『手稿與病歷不符不構成竄改』之詳細理由",
+     "reason": "遍查 5 個 sections，均未詳細說明『手稿與病歷不符不構成竄改』之詳細理由"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『日期誤載』『文書記載通常可能發生之錯誤』",
+     "reason": "遍查 5 個 sections，均未提及『日期誤載』『文書記載通常可能發生之錯誤』"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『巡房日期、CRP 檢驗日期』『口誤或耳誤之可能』",
+     "reason": "遍查 5 個 sections，均未提及『巡房日期、CRP 檢驗日期』『口誤或耳誤之可能』"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『尿液記錄時間、昇壓劑使用之方式』『醫囑時間與實際用藥時間差異』",
+     "reason": "遍查 5 個 sections，均未提及『尿液記錄時間、昇壓劑使用之方式』『醫囑時間與實際用藥時間差異』"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『竄改尚要經過十數人加以配合』",
+     "reason": "遍查 5 個 sections，均未提及『竄改尚要經過十數人加以配合』"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『護理人員亦均到庭證稱伊未重新謄寫護理紀錄』",
+     "reason": "遍查 5 個 sections，均未提及『護理人員亦均到庭證稱伊未重新謄寫護理紀錄』"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『檢驗報告列印日期為 87 年 10 月 26 日以後』",
+     "reason": "遍查 5 個 sections，均未提及『檢驗報告列印日期為 87 年 10 月 26 日以後』"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『檢驗報告檢查日期均在 10 月 26 日以前』",
+     "reason": "遍查 5 個 sections，均未提及『檢驗報告檢查日期均在 10 月 26 日以前』"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『公訴人亦未質疑檢驗內容不實』",
+     "reason": "遍查 5 個 sections，均未提及『公訴人亦未質疑檢驗內容不實』"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『開拆病歷後加以黏貼於病歷』『非登載不實』",
+     "reason": "遍查 5 個 sections，均未提及『開拆病歷後加以黏貼於病歷』『非登載不實』"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 5 個 sections，均未提及『公訴人僅以病歷頁數或病歷遭開封』『均屬率斷』",
+     "reason": "遍查 5 個 sections，均未提及『公訴人僅以病歷頁數或病歷遭開封』『均屬率斷』"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 157,
+   "pred_total": 40,
+   "matched": 58,
+   "partial": 7,
+   "missing": 92,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8655,
+  "compression_afg_chars": 1346,
+  "compression_source_chars": 10010,
+  "gt_length_ratio": 0.21,
+  "gt_length_afg_chars": 1346,
+  "gt_length_gt_chars": 6410,
+  "section_balance": 0.1975
  }
 }

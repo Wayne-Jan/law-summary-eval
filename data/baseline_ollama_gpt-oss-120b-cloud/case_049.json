@@ -140,6 +140,514 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.6774
+  "rule_based_avg": 0.6774,
+  "fact_recall": 0.4784,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6472,
+  "quality_overall": 4.1857,
+  "checklist_pass_rate": 0.9402,
+  "citation_accuracy": 0.6842,
+  "citation_support_score": 0.8025,
+  "uncited_rate": 0.211,
+  "faithfulness_combined": {
+   "score": 0.7239,
+   "citation_fidelity": 0.5398,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 16,
+   "correct": 16
+  },
+  "weighted_recall": 0.7338,
+  "missing_severity": {
+   "critical": 10,
+   "important": 25,
+   "minor": 31,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "全部5個section均未提及下午5時30分測量生命徵象及其後未再測量的細節，屬關鍵時間節點遺漏",
+     "reason": "全部5個section均未提及下午5時30分測量生命徵象及其後未再測量的細節，屬關鍵時間節點遺漏"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "確認facts段僅提及發現無生命跡象，未明確描述『通知值班醫師及醫師甲到場』的程序性動作",
+     "reason": "確認facts段僅提及發現無生命跡象，未明確描述『通知值班醫師及醫師甲到場』的程序性動作"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "『本應注意...且無不能注意之情形』屬法律形式描述，facts段無此形式用語，為法律論述而非具體事實",
+     "reason": "『本應注意...且無不能注意之情形』屬法律形式描述，facts段無此形式用語，為法律論述而非具體事實"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts段有『發現患者已無呼吸及心跳』，但未明確『開始急救』之動作描述，屬程序性細節",
+     "reason": "facts段有『發現患者已無呼吸及心跳』，但未明確『開始急救』之動作描述，屬程序性細節"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「facts段未提及術前血紅素13.2g/dl，opinions段雖有提及但屬鑑定意見回顧，非起訴事實本身；此為關鍵醫療數據遺漏」",
+     "reason": "「facts段未提及術前血紅素13.2g/dl，opinions段雖有提及但屬鑑定意見回顧，非起訴事實本身；此為關鍵醫療數據遺漏」"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts段未提及『輸血濃縮紅血球二單位』之具體醫療處置細節",
+     "reason": "facts段未提及『輸血濃縮紅血球二單位』之具體醫療處置細節"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 僅提及「術後生命徵象均正常」，未提及「定時測量」的程序性做法，維持missing",
+     "reason": "section_defense 僅提及「術後生命徵象均正常」，未提及「定時測量」的程序性做法，維持missing"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "被告主張疼痛與出血未必有關、血紅素下降非真實出血指標，但未明確主張「病患非急性大出血致死」之否定性結論，影響防禦主張完整性",
+     "reason": "被告主張疼痛與出血未必有關、血紅素下降非真實出血指標，但未明確主張「病患非急性大出血致死」之否定性結論，影響防禦主張完整性"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 未明確提及「8時30分發現時即已呈死亡狀態」之主張，維持missing",
+     "reason": "section_defense 未明確提及「8時30分發現時即已呈死亡狀態」之主張，維持missing"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "併發症罕見性屬背景性醫學評估，未影響案情核心理解",
+     "reason": "併發症罕見性屬背景性醫學評估，未影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血紅素下降與出血關聯之因果推論未提及，影響案情理解",
+     "reason": "血紅素下降與出血關聯之因果推論未提及，影響案情理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腹腔出血與醫療事件關聯性未明確陳述，影響案情理解",
+     "reason": "腹腔出血與醫療事件關聯性未明確陳述，影響案情理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "護理人員探視時間為程序性細節，未影響判決結論理解",
+     "reason": "護理人員探視時間為程序性細節，未影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "護理紀錄缺失屬程序性事實",
+     "reason": "護理紀錄缺失屬程序性事實"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "護理人員疏失認定未明確指涉，影響責任歸屬理解",
+     "reason": "護理人員疏失認定未明確指涉，影響責任歸屬理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "21:20超音波檢查時間點未提及，影響時間軸完整性",
+     "reason": "21:20超音波檢查時間點未提及，影響時間軸完整性"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "超音波可檢測性之醫學判斷未提及，影響過失認定",
+     "reason": "超音波可檢測性之醫學判斷未提及，影響過失認定"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "醫師未能及時偵測內出血之疏失認定為核心過失要點",
+     "reason": "醫師未能及時偵測內出血之疏失認定為核心過失要點"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "CBC採血時間延遲之具體時間點未提及，影響急救常規判斷",
+     "reason": "CBC採血時間延遲之具體時間點未提及，影響急救常規判斷"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急救常規評論屬專家意見背景",
+     "reason": "急救常規評論屬專家意見背景"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫療人員未及早考慮出血之推論未提及",
+     "reason": "醫療人員未及早考慮出血之推論未提及"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "輸血2單位之處置細節未提及",
+     "reason": "輸血2單位之處置細節未提及"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "輸血量是否足夠之評估未提及",
+     "reason": "輸血量是否足夠之評估未提及"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "醫護人員積極度與方式之疏失認定為核心要點",
+     "reason": "醫護人員積極度與方式之疏失認定為核心要點"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血液檢驗時間對精確度影響屬背景醫學說明",
+     "reason": "血液檢驗時間對精確度影響屬背景醫學說明"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術前完整血液數值屬細節性數據",
+     "reason": "術前完整血液數值屬細節性數據"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急救後完整血液報告數值未提及，影響失血評估",
+     "reason": "急救後完整血液報告數值未提及，影響失血評估"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "血液檢查參考價值之結論為鑑定核心要點",
+     "reason": "血液檢查參考價值之結論為鑑定核心要點"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "體重及血液量計算屬背景數據",
+     "reason": "體重及血液量計算屬背景數據"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血紅素流失量計算屬細節數據",
+     "reason": "血紅素流失量計算屬細節數據"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血液流失量精確計算屬細節數據",
+     "reason": "血液流失量精確計算屬細節數據"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "出血量占血液總量60%為死因認定關鍵數據",
+     "reason": "出血量占血液總量60%為死因認定關鍵數據"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血量與症狀關係屬醫學背景說明",
+     "reason": "出血量與症狀關係屬醫學背景說明"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血量與症狀關係屬醫學背景說明",
+     "reason": "出血量與症狀關係屬醫學背景說明"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血量與症狀關係屬醫學背景說明",
+     "reason": "出血量與症狀關係屬醫學背景說明"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血量與症狀關係屬醫學背景說明",
+     "reason": "出血量與症狀關係屬醫學背景說明"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血分布位置細節屬解剖細節",
+     "reason": "出血分布位置細節屬解剖細節"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "骨盤腔積血及破裂處血液流出細節未完整描述",
+     "reason": "骨盤腔積血及破裂處血液流出細節未完整描述"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血量超過620c.c.之具體數值屬細節數據",
+     "reason": "出血量超過620c.c.之具體數值屬細節數據"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "內臟鬱血現象屬解剖細節",
+     "reason": "內臟鬱血現象屬解剖細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管硬化檢查結果屬排除性細節",
+     "reason": "血管硬化檢查結果屬排除性細節"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "內臟缺血性變化為死因認定重要證據",
+     "reason": "內臟缺血性變化為死因認定重要證據"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "台大法醫學科出血量估計結論未提及",
+     "reason": "台大法醫學科出血量估計結論未提及"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "陰道斷端縫合處為唯一出血來源之結論為核心要點",
+     "reason": "陰道斷端縫合處為唯一出血來源之結論為核心要點"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "十小時心肺急救對腹腔影響之評估未提及",
+     "reason": "十小時心肺急救對腹腔影響之評估未提及"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急救施力位置對傷口影響之判斷屬專業論證細節",
+     "reason": "急救施力位置對傷口影響之判斷屬專業論證細節"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要僅提及「出血量約2600cc」但未提及解剖發現「超過620c.c.」之具體數值，屬鑑定細節遺漏",
+     "reason": "摘要僅提及「出血量約2600cc」但未提及解剖發現「超過620c.c.」之具體數值，屬鑑定細節遺漏"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有section均未提及「肝臟、腎臟、脾臟均有中度鬱血現象」之解剖細節",
+     "reason": "所有section均未提及「肝臟、腎臟、脾臟均有中度鬱血現象」之解剖細節"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有section均未提及「腸繫膜有大量血塊積聚」之解剖細節",
+     "reason": "所有section均未提及「腸繫膜有大量血塊積聚」之解剖細節"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有section均未提及「冠狀動脈、上升主動脈、胸腔主動脈、腹部主動脈均無血管硬化現象」之解剖細節",
+     "reason": "所有section均未提及「冠狀動脈、上升主動脈、胸腔主動脈、腹部主動脈均無血管硬化現象」之解剖細節"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "所有section均未提及「解剖發現腹腔手術縫合處有破裂」之關鍵解剖發現",
+     "reason": "所有section均未提及「解剖發現腹腔手術縫合處有破裂」之關鍵解剖發現"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「10時36分才發現血紅素劇降」但未明確標示為「第二次抽血」之專業用語",
+     "reason": "section_01_facts.txt 提及「10時36分才發現血紅素劇降」但未明確標示為「第二次抽血」之專業用語"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_03_opinions.txt 提及「血液檢驗未因輸液而失真」但未明確提及「第二次抽血之血液既無明顯被稀釋之情形」之論證細節",
+     "reason": "section_03_opinions.txt 提及「血液檢驗未因輸液而失真」但未明確提及「第二次抽血之血液既無明顯被稀釋之情形」之論證細節"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有section均未提及「二次抽血均係在同一實驗室所完成」之程序性事實",
+     "reason": "所有section均未提及「二次抽血均係在同一實驗室所完成」之程序性事實"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有section均未明確提及「第二次抽血時亦以維生系統維持血液循環」之細節",
+     "reason": "所有section均未明確提及「第二次抽血時亦以維生系統維持血液循環」之細節"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 提及「國立台灣大學醫學院法醫學系鑑定」但未明確提及「法院依被告之聲請，囑託」之程序背景",
+     "reason": "section_03_opinions.txt 提及「國立台灣大學醫學院法醫學系鑑定」但未明確提及「法院依被告之聲請，囑託」之程序背景"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_03_opinions.txt 提及「與法醫研究所結論一致」「血液檢驗未因輸液而失真」，但未明確提及「醫審會鑑定報告所憑據之二次血液報告及推算方法，並無違誤」之具體認定",
+     "reason": "section_03_opinions.txt 提及「與法醫研究所結論一致」「血液檢驗未因輸液而失真」，但未明確提及「醫審會鑑定報告所憑據之二次血液報告及推算方法，並無違誤」之具體認定"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「5時15分改用自控式止痛器」「5時30分後未再測量生命徵象」但並未提及「下午2:30、3:30、5:30與7:15之生命徵象維持穩定」之關鍵爭議時間點",
+     "reason": "section_01_facts.txt 提及「5時15分改用自控式止痛器」「5時30分後未再測量生命徵象」但並未提及「下午2:30、3:30、5:30與7:15之生命徵象維持穩定」之關鍵爭議時間點"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "所有section均未提及「體溫紀錄表處方欄所記載之生命跡象紀錄…係同一人之筆跡，且係使用同一支原子筆所記錄」之關鍵事實認定",
+     "reason": "所有section均未提及「體溫紀錄表處方欄所記載之生命跡象紀錄…係同一人之筆跡，且係使用同一支原子筆所記錄」之關鍵事實認定"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "所有section均未提及「證人乙於法院審理時證稱…係其所記載」之證述內容",
+     "reason": "所有section均未提及「證人乙於法院審理時證稱…係其所記載」之證述內容"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 雖提及「未依患者極度疼痛之警訊」但並未明確得出「體溫量表處方欄所載之四次病患生命徵象紀錄，顯屬事後一次記載，不足採信」之法院認定",
+     "reason": "section_05_reasoning.txt 雖提及「未依患者極度疼痛之警訊」但並未明確得出「體溫量表處方欄所載之四次病患生命徵象紀錄，顯屬事後一次記載，不足採信」之法院認定"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "所有section均未提及「證人丁證稱其於下午5點左右到醫院，約七點半左右才離開病房」之證人證述",
+     "reason": "所有section均未提及「證人丁證稱其於下午5點左右到醫院，約七點半左右才離開病房」之證人證述"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「晚間8時30分護士巡房始發現患者已無呼吸及心跳」，但未明確與GT「晚間8:30發現病患無呼吸心跳及血壓」對應視為意外事件之首見時間",
+     "reason": "section_01_facts.txt 提及「晚間8時30分護士巡房始發現患者已無呼吸及心跳」，但未明確與GT「晚間8:30發現病患無呼吸心跳及血壓」對應視為意外事件之首見時間"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 未明確提及法院否定「病患自術後當日下午5:30起至7:15止之生命徵象均屬正常」之認定過程",
+     "reason": "section_05_reasoning.txt 未明確提及法院否定「病患自術後當日下午5:30起至7:15止之生命徵象均屬正常」之認定過程"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 未明確提及法院「不得據此推論病患之死亡原因非係基於急性大量出血導致之低容性休克而死亡」之駁回邏輯",
+     "reason": "section_05_reasoning.txt 未明確提及法院「不得據此推論病患之死亡原因非係基於急性大量出血導致之低容性休克而死亡」之駁回邏輯"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_02_defense.txt 明確記載被告抗辯「主張術後生命徵象均正常」「疼痛與出血未必有直接關聯」，但section_05_reasoning.txt並未明確提及「被告辯稱病患非因術後急性大出血死亡」之法院駁斥",
+     "reason": "section_02_defense.txt 明確記載被告抗辯「主張術後生命徵象均正常」「疼痛與出血未必有直接關聯」，但section_05_reasoning.txt並未明確提及「被告辯稱病患非因術後急性大出血死亡」之法院駁斥"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 38,
+   "matched": 60,
+   "partial": 13,
+   "missing": 66,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8952,
+  "compression_afg_chars": 1236,
+  "compression_source_chars": 11793,
+  "gt_length_ratio": 0.19,
+  "gt_length_afg_chars": 1236,
+  "gt_length_gt_chars": 6505,
+  "section_balance": 0.2885
  }
 }
