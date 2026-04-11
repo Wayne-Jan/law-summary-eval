@@ -2259,7 +2259,7 @@
             html += `<td class="num">${row.caseCount} / ${config.cases.length}</td>`;
             html += `<td class="num">${escapeHtml(formatAdminTime(row.lastTimestamp))}</td>`;
             const delBtn = row.voteCount > 0
-                ? `<button class="admin-mini-btn danger" onclick="adminDeleteEvaluator(${JSON.stringify(row.name)})">刪除此評審資料</button>`
+                ? `<button class="admin-mini-btn danger" onclick='adminDeleteEvaluator(${JSON.stringify(row.name)})'>刪除此評審資料</button>`
                 : '';
             html += `<td style="text-align:right;">${delBtn}</td>`;
             html += '</tr>';
@@ -2287,7 +2287,7 @@
                 else if (done > 0) stateCls = 'partial';
                 const chip = `<span class="admin-version-chip ${stateCls}">${done}/${totalPairs}</span>`;
                 const del = done > 0
-                    ? `<button class="admin-version-delete" onclick="adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})" title="刪除 ${escapeHtml(row.name)} 在此案的資料">×</button>`
+                    ? `<button class="admin-version-delete" onclick='adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})' title="刪除 ${escapeHtml(row.name)} 在此案的資料">×</button>`
                     : '';
                 html += `<td class="state-cell ${stateCls}"><div class="state-inner">${chip}${del}</div></td>`;
             });
@@ -2696,7 +2696,7 @@
                 html += '</div>';
                 html += `<div class="review-vote-result ${wCls}">${escapeHtml(winnerLabel(v.winner))}</div>`;
                 html += `<div class="review-vote-time">${escapeHtml(formatReviewTime(v.timestamp))}</div>`;
-                html += `<button class="admin-mini-btn" onclick="window.loadPairForEdit(${JSON.stringify(item.case_id)}, ${JSON.stringify(v.condition_a)}, ${JSON.stringify(v.condition_b)})">重新投票</button>`;
+                html += `<button class="admin-mini-btn" onclick='window.loadPairForEdit(${JSON.stringify(item.case_id)}, ${JSON.stringify(v.condition_a)}, ${JSON.stringify(v.condition_b)})'>重新投票</button>`;
                 html += '</div>';
             });
             html += '</div></div>';
