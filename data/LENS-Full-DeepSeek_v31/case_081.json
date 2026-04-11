@@ -169,6 +169,443 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.765,
-  "fact_recall_avg": null
+  "fact_recall": 0.745,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8539,
+  "quality_overall": 4.7286,
+  "checklist_pass_rate": 0.9521,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 42,
+   "correct": 42
+  },
+  "weighted_recall": 0.8592,
+  "missing_severity": {
+   "critical": 14,
+   "important": 22,
+   "minor": 20,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt使用『A醫院健檢中心』，未提及『保康健檢中心』此特定機構名稱，屬背景性機構資訊",
+     "reason": "section_01_facts.txt使用『A醫院健檢中心』，未提及『保康健檢中心』此特定機構名稱，屬背景性機構資訊"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt僅描述健檢項目內容，未說明『早期發現疾病、及早治療』之服務目的，屬背景性說明",
+     "reason": "section_01_facts.txt僅描述健檢項目內容，未說明『早期發現疾病、及早治療』之服務目的，屬背景性說明"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt提及『急診室醫師即證人A』，但未詳細說明其『負責對於生命、身體瀕臨危急狀態者進行急救醫療』之職責內容，跨section檢查亦無此詳細職責描述",
+     "reason": "section_01_facts.txt提及『急診室醫師即證人A』，但未詳細說明其『負責對於生命、身體瀕臨危急狀態者進行急救醫療』之職責內容，跨section檢查亦無此詳細職責描述"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt中『被告丙』為護理科護理師，GT claim描述為『加護病房主任、胸腔內科醫師』，角色不符，且pred中無對應描述",
+     "reason": "section_01_facts.txt中『被告丙』為護理科護理師，GT claim描述為『加護病房主任、胸腔內科醫師』，角色不符，且pred中無對應描述"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt描述各人員職責但未明確總結『上開6人均為從事醫療業務之專業人員』，屬概括性陳述",
+     "reason": "section_01_facts.txt描述各人員職責但未明確總結『上開6人均為從事醫療業務之專業人員』，屬概括性陳述"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt及各section均未提及『被告乙應負業務過失致死之刑責』之法律結論性陳述，屬重要法律責任認定",
+     "reason": "section_01_facts.txt及各section均未提及『被告乙應負業務過失致死之刑責』之法律結論性陳述，屬重要法律責任認定"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt未提及『應先做試驗驗證』之醫療常規，此為判斷過失之重要依據，跨section檢查亦無此內容",
+     "reason": "section_01_facts.txt未提及『應先做試驗驗證』之醫療常規，此為判斷過失之重要依據，跨section檢查亦無此內容"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt僅提及藥物名稱『思特來錠（Inderal）』，未詳細說明其『交感神經阻斷劑』藥理分類及完整适应症，屬重要醫療事實",
+     "reason": "section_01_facts.txt僅提及藥物名稱『思特來錠（Inderal）』，未詳細說明其『交感神經阻斷劑』藥理分類及完整适应症，屬重要醫療事實"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt僅提及『患有氣喘病史』，未明確說明Inderal『支氣管氣喘或支氣管痙攣之患者禁用』之禁忌，屬重要醫療安全資訊",
+     "reason": "section_01_facts.txt僅提及『患有氣喘病史』，未明確說明Inderal『支氣管氣喘或支氣管痙攣之患者禁用』之禁忌，屬重要醫療安全資訊"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt未明確陳述『此為開立Inderal處方之醫師必須具有之專業常識』，屬醫療專業標準論述",
+     "reason": "section_01_facts.txt未明確陳述『此為開立Inderal處方之醫師必須具有之專業常識』，屬醫療專業標準論述"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt提及『健檢中心主治醫師乙』但未明確其『應親自到場診察、評估受檢者實際健康狀況』之法定義務",
+     "reason": "section_01_facts.txt提及『健檢中心主治醫師乙』但未明確其『應親自到場診察、評估受檢者實際健康狀況』之法定義務"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt未明確記載『應就受檢者之病史做必要之瞭解，如此始得對協助健檢之護理人員為適當之指示』之義務要求",
+     "reason": "section_01_facts.txt未明確記載『應就受檢者之病史做必要之瞭解，如此始得對協助健檢之護理人員為適當之指示』之義務要求"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt雖提及主治醫師未指示給藥，但未明確論述『任令被告乙對有氣喘病史之病患G投用Inderal藥劑』之疏失歸責，屬關鍵過失認定",
+     "reason": "section_01_facts.txt雖提及主治醫師未指示給藥，但未明確論述『任令被告乙對有氣喘病史之病患G投用Inderal藥劑』之疏失歸責，屬關鍵過失認定"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt僅說明『依Ｆ醫院保康門診之處方明細』，未明確指出『該處方是由被告甲所開立』之責任歸屬",
+     "reason": "section_01_facts.txt僅說明『依Ｆ醫院保康門診之處方明細』，未明確指出『該處方是由被告甲所開立』之責任歸屬"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt未提及『被告甲未曾親自為病患G診療，竟逕以事先開立之處方箋供護理人員列印』之具體違規情節",
+     "reason": "section_01_facts.txt未提及『被告甲未曾親自為病患G診療，竟逕以事先開立之處方箋供護理人員列印』之具體違規情節"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt未提及『被告甲之行為對於病患G之死亡，應有直接關係，具重大疏失』之因果關係與過失程度論述",
+     "reason": "section_01_facts.txt未提及『被告甲之行為對於病患G之死亡，應有直接關係，具重大疏失』之因果關係與過失程度論述"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt及各section均未提及『被告甲應負業務過失致死之罪責』之法律結論",
+     "reason": "section_01_facts.txt及各section均未提及『被告甲應負業務過失致死之罪責』之法律結論"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt記載『未及時予插管治療』但未明確說明『彼時應立即插管』之醫療常規要求，屬關鍵醫療處置標準",
+     "reason": "section_01_facts.txt記載『未及時予插管治療』但未明確說明『彼時應立即插管』之醫療常規要求，屬關鍵醫療處置標準"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt雖提及『怠至10時45分始予插管』但未明確論述『已因太晚施予插管而錯過急救時間，嚴重違反氣喘急救醫療常規』之違規認定",
+     "reason": "section_01_facts.txt雖提及『怠至10時45分始予插管』但未明確論述『已因太晚施予插管而錯過急救時間，嚴重違反氣喘急救醫療常規』之違規認定"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt提及『因延誤治療病情加重』但未明確論述『顯有延誤急救致病患G死亡』之因果關係，屬死因認定關鍵",
+     "reason": "section_01_facts.txt提及『因延誤治療病情加重』但未明確論述『顯有延誤急救致病患G死亡』之因果關係，屬死因認定關鍵"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt及各section均未提及『被告己應負業務過失致死罪責』之法律結論",
+     "reason": "section_01_facts.txt及各section均未提及『被告己應負業務過失致死罪責』之法律結論"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt提及『院長甲』但未明確其『負責督導全院醫事人員』之管理職責範圍",
+     "reason": "section_01_facts.txt提及『院長甲』但未明確其『負責督導全院醫事人員』之管理職責範圍"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt未提及『應注意、並能注意該院之醫師暨護理人員...應依醫事法律之規定執行醫療業務』之法定注意義務",
+     "reason": "section_01_facts.txt未提及『應注意、並能注意該院之醫師暨護理人員...應依醫事法律之規定執行醫療業務』之法定注意義務"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt記載主治醫師未到場指示，但未明確論述『被告丁疏於注意，任由被告甲於病患G接受健檢前未予諮詢、診療及評估』之管理疏失",
+     "reason": "section_01_facts.txt記載主治醫師未到場指示，但未明確論述『被告丁疏於注意，任由被告甲於病患G接受健檢前未予諮詢、診療及評估』之管理疏失"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt提及放射科主任醫師未到場診斷，但未明確論述『姑息被告甲對於放射科之病患未經親自診療...即以預先開立處方箋供護理人員施用藥物』之縱容行為",
+     "reason": "section_01_facts.txt提及放射科主任醫師未到場診斷，但未明確論述『姑息被告甲對於放射科之病患未經親自診療...即以預先開立處方箋供護理人員施用藥物』之縱容行為"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt未明確論述『被告丁疏於督導醫療人員，導致病患G死亡』之管理疏失與結果因果關係",
+     "reason": "section_01_facts.txt未明確論述『被告丁疏於督導醫療人員，導致病患G死亡』之管理疏失與結果因果關係"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt及各section均未提及『被告丁之管理督導之失，與病患G之死亡間，亦具有相當因果關係』之法律因果認定",
+     "reason": "section_01_facts.txt及各section均未提及『被告丁之管理督導之失，與病患G之死亡間，亦具有相當因果關係』之法律因果認定"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt及各section均未提及『被告丁應負業務過失致死之刑事責任』之法律結論",
+     "reason": "section_01_facts.txt及各section均未提及『被告丁應負業務過失致死之刑事責任』之法律結論"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt與其他section中『被告丙』為護理師，GT claim描述為『加護病房主任、胸腔內科醫師』，角色不符，且pred中無對應描述",
+     "reason": "section_01_facts.txt與其他section中『被告丙』為護理師，GT claim描述為『加護病房主任、胸腔內科醫師』，角色不符，且pred中無對應描述"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt未提及『被告丙明知病患G是因該院之醫師及護理人員等醫療疏失而送至加護病房』之主觀認知要件",
+     "reason": "section_01_facts.txt未提及『被告丙明知病患G是因該院之醫師及護理人員等醫療疏失而送至加護病房』之主觀認知要件"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt未明確記載『死亡種類屬於「意外死亡」或「不詳」』，此為判斷登載不實之重要依據",
+     "reason": "section_01_facts.txt未明確記載『死亡種類屬於「意外死亡」或「不詳」』，此為判斷登載不實之重要依據"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt雖提及死亡證明書登載內容，但未詳細描述『死亡種類欄選項中之「病死或自然死亡」前的□（空格），塗成■』之具體填寫行為",
+     "reason": "section_01_facts.txt雖提及死亡證明書登載內容，但未詳細描述『死亡種類欄選項中之「病死或自然死亡」前的□（空格），塗成■』之具體填寫行為"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt未提及『因攸關自訴人等對於病患G身故之保險金請求權，足以生損害於自訴人』之損害後果",
+     "reason": "section_01_facts.txt未提及『因攸關自訴人等對於病患G身故之保險金請求權，足以生損害於自訴人』之損害後果"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt及各section均未提及『被告丙之行為顯應負業務登載不實之罪責』之法律結論",
+     "reason": "section_01_facts.txt及各section均未提及『被告丙之行為顯應負業務登載不實之罪責』之法律結論"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt及各section均未提及『被告甲、乙、丙、丁、戊及己等人涉犯刑法第276條第2項之業務過失致死罪嫌』之起訴法條",
+     "reason": "section_01_facts.txt及各section均未提及『被告甲、乙、丙、丁、戊及己等人涉犯刑法第276條第2項之業務過失致死罪嫌』之起訴法條"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt及各section均未提及『被告丙涉犯刑法第215條之業務登載不實罪嫌』之起訴法條",
+     "reason": "section_01_facts.txt及各section均未提及『被告丙涉犯刑法第215條之業務登載不實罪嫌』之起訴法條"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 僅提及「醫事審議委員會鑑定意見」，未引用具體編號「0000000號」，屬引用格式細節",
+     "reason": "section_opinions.txt 僅提及「醫事審議委員會鑑定意見」，未引用具體編號「0000000號」，屬引用格式細節"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 全文聚焦鑑定結論，未說明 PRN 醫囑之臨床使用方式範例",
+     "reason": "section_opinions.txt 全文聚焦鑑定結論，未說明 PRN 醫囑之臨床使用方式範例"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及 PRN 醫囑賦予護士裁量權之背景論述",
+     "reason": "section_opinions.txt 未提及 PRN 醫囑賦予護士裁量權之背景論述"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未說明 PRN 醫囑開立前提（應無禁忌症）之專業規範",
+     "reason": "section_opinions.txt 未說明 PRN 醫囑開立前提（應無禁忌症）之專業規範"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未說明「有禁忌症時應不開立 PRN 醫囑」之論點",
+     "reason": "section_opinions.txt 未說明「有禁忌症時應不開立 PRN 醫囑」之論點"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未論及醫師開立預設醫囑時應詳問病史之義務",
+     "reason": "section_opinions.txt 未論及醫師開立預設醫囑時應詳問病史之義務"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未使用「同上鑑定書可按」之引用用語",
+     "reason": "section_opinions.txt 未使用「同上鑑定書可按」之引用用語"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "案件類型「業務過失致死等案件」未於任何 section 明確提及，影響對案件性質之完整理解",
+     "reason": "案件類型「業務過失致死等案件」未於任何 section 明確提及，影響對案件性質之完整理解"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "合併審理、合併辯論之程序性事實未於任何 section 提及，屬程序細節不影響判決結論理解",
+     "reason": "合併審理、合併辯論之程序性事實未於任何 section 提及，屬程序細節不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 183,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred_claim 19 僅提及「患有氣喘」，未明確提及「心肌梗塞及心肌缺氧之病史」，確認維持 missing",
+     "reason": "pred_claim 19 僅提及「患有氣喘」，未明確提及「心肌梗塞及心肌缺氧之病史」，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 189,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要確實未提及護理士公會函覆意見，屬程序性參考資料，非關鍵事實認定",
+     "reason": "摘要確實未提及護理士公會函覆意見，屬程序性參考資料，非關鍵事實認定"
+    },
+    {
+     "gt_claim_id": 190,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要確實未提及PRN醫囑臨床使用方式的舉例說明，屬背景性論述",
+     "reason": "摘要確實未提及PRN醫囑臨床使用方式的舉例說明，屬背景性論述"
+    },
+    {
+     "gt_claim_id": 191,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要確實未提及PRN醫囑前提之規範性論述（應是可被執行且無禁忌症），屬法律論理背景",
+     "reason": "摘要確實未提及PRN醫囑前提之規範性論述（應是可被執行且無禁忌症），屬法律論理背景"
+    },
+    {
+     "gt_claim_id": 192,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要確實未提及「倘藥物在不該使用情況下開立PRN醫囑不恰當」之規範性論述，屬法律論理背景",
+     "reason": "摘要確實未提及「倘藥物在不該使用情況下開立PRN醫囑不恰當」之規範性論述，屬法律論理背景"
+    },
+    {
+     "gt_claim_id": 215,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要確實未提及自訴人對急診醫師（陳大中）延誤插管之質疑內容，屬重要攻防事實",
+     "reason": "摘要確實未提及自訴人對急診醫師（陳大中）延誤插管之質疑內容，屬重要攻防事實"
+    },
+    {
+     "gt_claim_id": 216,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_facts.txt 有送達急診室時（10時7分）之生命徵象數據，但摘要 section_reasoning.txt 未完整涵蓋，屬重要醫療時點資訊",
+     "reason": "section_facts.txt 有送達急診室時（10時7分）之生命徵象數據，但摘要 section_reasoning.txt 未完整涵蓋，屬重要醫療時點資訊"
+    },
+    {
+     "gt_claim_id": 221,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要 pred_claim 33-40 描述急救過程，但未提及「入住加護病房」或「裝置心跳節律器」，屬重要醫療處置事實",
+     "reason": "摘要 pred_claim 33-40 描述急救過程，但未提及「入住加護病房」或「裝置心跳節律器」，屬重要醫療處置事實"
+    },
+    {
+     "gt_claim_id": 230,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred_claim 19 僅提及「患有氣喘」，未明確提及「心肌梗塞及心肌缺氧之病史」，確認維持 missing",
+     "reason": "pred_claim 19 僅提及「患有氣喘」，未明確提及「心肌梗塞及心肌缺氧之病史」，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 250,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要確實未提及「查無其他積極證據證明業務登載不實」之證據評價表述，屬論理過程細節",
+     "reason": "摘要確實未提及「查無其他積極證據證明業務登載不實」之證據評價表述，屬論理過程細節"
+    },
+    {
+     "gt_claim_id": 251,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要確實未明確提及「應對被告乙業務登載不實部分為無罪之諭知」之判決結論，屬判決主文細節",
+     "reason": "摘要確實未明確提及「應對被告乙業務登載不實部分為無罪之諭知」之判決結論，屬判決主文細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 251,
+   "pred_total": 131,
+   "matched": 179,
+   "partial": 16,
+   "missing": 56,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.4815,
+  "compression_afg_chars": 5563,
+  "compression_source_chars": 10728,
+  "gt_length_ratio": 0.5624,
+  "gt_length_afg_chars": 5563,
+  "gt_length_gt_chars": 9891,
+  "section_balance": 0.5955
  }
 }

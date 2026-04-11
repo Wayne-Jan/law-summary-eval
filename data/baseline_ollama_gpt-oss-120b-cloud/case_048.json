@@ -137,6 +137,415 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.522,
-  "fact_recall_avg": null
+  "fact_recall": 0.5287,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6917,
+  "quality_overall": 3.9143,
+  "checklist_pass_rate": 0.9355,
+  "citation_accuracy": 0.8667,
+  "citation_support_score": 0.7947,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.92,
+   "citation_fidelity": 0.8667,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.929,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 13
+  },
+  "weighted_recall": 0.8033,
+  "missing_severity": {
+   "critical": 4,
+   "important": 12,
+   "minor": 36,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section，「胸痛」一詞確未出現於任何 section。摘要僅提及「腹部瘀血」「腹部強烈脹痛」等腹部症狀。雖 GT 與實際症狀描述有出入（應為腹痛非胸痛），但作為複審員僅確認 claim 是否被覆蓋，該項維持 missing，屬次要資訊遺漏。",
+     "reason": "經掃描全部 5 個 section，「胸痛」一詞確未出現於任何 section。摘要僅提及「腹部瘀血」「腹部強烈脹痛」等腹部症狀。雖 GT 與實際症狀描述有出入（應為腹痛非胸痛），但作為複審員僅確認 claim 是否被覆蓋，該項維持 missing，屬次要資訊遺漏。"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 提到「急診醫師」但未提及「醫師 T」之具體姓名身份，經掃描全部 5 個 section 均未找到「醫師 T」或對應急診醫師姓名。屬次要身份資訊遺漏，不影響案情核心理解。",
+     "reason": "section_facts 提到「急診醫師」但未提及「醫師 T」之具體姓名身份，經掃描全部 5 個 section 均未找到「醫師 T」或對應急診醫師姓名。屬次要身份資訊遺漏，不影響案情核心理解。"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section，「創傷圖示」欄之具體記載未出現，僅提及「初步診斷為腹部瘀血」等概括性描述，未見病歷欄位細節。屬病歷記載細節遺漏，影響較小。",
+     "reason": "經掃描全部 5 個 section，「創傷圖示」欄之具體記載未出現，僅提及「初步診斷為腹部瘀血」等概括性描述，未見病歷欄位細節。屬病歷記載細節遺漏，影響較小。"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，「肺部鈍挫傷」此特定診斷未出現。section_facts 僅提及「左側肋骨斷裂、氣胸與血胸」及「腹部鈍挫傷」，未涵蓋肺部鈍挫傷。屬重要傷勢診斷遺漏。",
+     "reason": "經掃描全部 5 個 section，「肺部鈍挫傷」此特定診斷未出現。section_facts 僅提及「左側肋骨斷裂、氣胸與血胸」及「腹部鈍挫傷」，未涵蓋肺部鈍挫傷。屬重要傷勢診斷遺漏。"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section，「手術中發現...心肺衰竭」此關鍵術中發現未出現，僅提及「左側腔管插入手術」及「腹部鈍挫傷、外傷性小腸穿孔、腹膜炎併敗血症」。心肺衰竭為重要病情變化，影響案情完整理解。",
+     "reason": "經掃描全部 5 個 section，「手術中發現...心肺衰竭」此關鍵術中發現未出現，僅提及「左側腔管插入手術」及「腹部鈍挫傷、外傷性小腸穿孔、腹膜炎併敗血症」。心肺衰竭為重要病情變化，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section，「應注意車禍事故極易造成胸、腹部之傷害」此注意義務的具體內容未出現。section_reasoning 雖提及「應具備較一般人更高之注意義務」但未明確表述此具體注意事項，屬過失認定的關鍵法律要件遺漏。",
+     "reason": "經掃描全部 5 個 section，「應注意車禍事故極易造成胸、腹部之傷害」此注意義務的具體內容未出現。section_reasoning 雖提及「應具備較一般人更高之注意義務」但未明確表述此具體注意事項，屬過失認定的關鍵法律要件遺漏。"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section，「明知病患 C 係因車禍事故到院急救」此主觀認知狀態未明確表述。section_facts 提及「因車禍受傷」係客觀事實陳述，未明確被告「明知」之主觀要素。雖可推論但非明確記載。",
+     "reason": "經掃描全部 5 個 section，「明知病患 C 係因車禍事故到院急救」此主觀認知狀態未明確表述。section_facts 提及「因車禍受傷」係客觀事實陳述，未明確被告「明知」之主觀要素。雖可推論但非明確記載。"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，「左側腔管插入手術」此一特定處置名稱未出現，僅提及「以鼻胃管、減壓、禁食等消極措施處置」。重要醫療處置細節遺漏，影響診療經過的完整性。",
+     "reason": "經掃描全部 5 個 section，「左側腔管插入手術」此一特定處置名稱未出現，僅提及「以鼻胃管、減壓、禁食等消極措施處置」。重要醫療處置細節遺漏，影響診療經過的完整性。"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section，「接替實際負責診治」之工作交接細節未出現。section_facts 提及被告甲前往急診室診治，但未說明係接替他人。屬工作情境細節遺漏。",
+     "reason": "經掃描全部 5 個 section，「接替實際負責診治」之工作交接細節未出現。section_facts 提及被告甲前往急診室診治，但未說明係接替他人。屬工作情境細節遺漏。"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section，「應施以適當之檢查及診治」此注意義務的具體內容未明確出現。section_reasoning 雖泛稱「應具備較一般人更高之注意義務」，但未具體化至此程度。屬過失認定核心要件遺漏。",
+     "reason": "經掃描全部 5 個 section，「應施以適當之檢查及診治」此注意義務的具體內容未明確出現。section_reasoning 雖泛稱「應具備較一般人更高之注意義務」，但未具體化至此程度。屬過失認定核心要件遺漏。"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，「依當時情形，並無不能注意之情事」此法律判斷前提未出現。屬過失要件的重要前提敘述，影響注意義務成立的完整理解。",
+     "reason": "經掃描全部 5 個 section，「依當時情形，並無不能注意之情事」此法律判斷前提未出現。屬過失要件的重要前提敘述，影響注意義務成立的完整理解。"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section，「失去重新評估、及早診斷與手術搶救之先機」此因果關係鏈的重要環節未出現。雖提及「診斷延誤與死亡」但未明確表述「失去搶救先機」之因果論述，屬關鍵因果關係遺漏。",
+     "reason": "經掃描全部 5 個 section，「失去重新評估、及早診斷與手術搶救之先機」此因果關係鏈的重要環節未出現。雖提及「診斷延誤與死亡」但未明確表述「失去搶救先機」之因果論述，屬關鍵因果關係遺漏。"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告坦承診治事實乃程序性背景，summary的defense段落聚焦於被告辯解理由而非事實承認，不影響主要辯護意旨理解",
+     "reason": "被告坦承診治事實乃程序性背景，summary的defense段落聚焦於被告辯解理由而非事實承認，不影響主要辯護意旨理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "summary雖未明確用「矢口否認」字眼，但整段被告辯稱內容已表達否認過失之立場，語意等價性已達",
+     "reason": "summary雖未明確用「矢口否認」字眼，但整段被告辯稱內容已表達否認過失之立場，語意等價性已達"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "小腸斷裂機率百分之16為辯方引用的學術數據細節，屬辯護細節論證，非核心事實",
+     "reason": "小腸斷裂機率百分之16為辯方引用的學術數據細節，屬辯護細節論證，非核心事實"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "4月3日7時30分的具體探視時間及詳細醫療處置屬於辯方主張的積極作為辯護細節，跨section檢查後確實未被任何段落明確涵蓋",
+     "reason": "4月3日7時30分的具體探視時間及詳細醫療處置屬於辯方主張的積極作為辯護細節，跨section檢查後確實未被任何段落明確涵蓋"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "歐洲腹部創傷處理原則為辯方提出的學術引用依據，屬論證支撐材料而非核心事實",
+     "reason": "歐洲腹部創傷處理原則為辯方提出的學術引用依據，屬論證支撐材料而非核心事實"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "提出9紙醫學文獻影本為程序性證據事實，不影響被告辯護要旨理解",
+     "reason": "提出9紙醫學文獻影本為程序性證據事實，不影響被告辯護要旨理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "電腦斷層判讀報告未附卷為辯方指摘鑑定程序瑕疵之關鍵論點，影響對被告辯護策略完整理解",
+     "reason": "電腦斷層判讀報告未附卷為辯方指摘鑑定程序瑕疵之關鍵論點，影響對被告辯護策略完整理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "鑑定機關未參酌被告無庸到院執行業務之事實，為辯方指摘鑑定意見公正性之重要抗辯，影響對鑑定意見可信度的評估",
+     "reason": "鑑定機關未參酌被告無庸到院執行業務之事實，為辯方指摘鑑定意見公正性之重要抗辯，影響對鑑定意見可信度的評估"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "辯護方請求重新鑑定屬於程序性請求，summary已涵蓋主要辯護論點",
+     "reason": "辯護方請求重新鑑定屬於程序性請求，summary已涵蓋主要辯護論點"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions 鑑定意見僅提及腹部自由氣體與小腸穿裂之關聯（『表明小腸穿裂的高度可能性』），未明確提及『胸腹部鈍挫傷害已造成腸胃道破裂』之因果關係。section_facts 雖提及『腹部鈍挫傷、外傷性小腸穿孔』，但屬事實階段發現，非 opinions section 之鑑定分析結論",
+     "reason": "section_opinions 鑑定意見僅提及腹部自由氣體與小腸穿裂之關聯（『表明小腸穿裂的高度可能性』），未明確提及『胸腹部鈍挫傷害已造成腸胃道破裂』之因果關係。section_facts 雖提及『腹部鈍挫傷、外傷性小腸穿孔』，但屬事實階段發現，非 opinions section 之鑑定分析結論"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 為鑑定意見摘要，聚焦於醫療過失與因果關係分析，未包含病患症狀持續時間線之描述。section_facts 提及『腹部強烈脹痛』但未完整覆蓋『持續腹漲，腹部不適、疼痛』之期間描述。屬程序性細節，不影響鑑定結論理解",
+     "reason": "section_opinions 為鑑定意見摘要，聚焦於醫療過失與因果關係分析，未包含病患症狀持續時間線之描述。section_facts 提及『腹部強烈脹痛』但未完整覆蓋『持續腹漲，腹部不適、疼痛』之期間描述。屬程序性細節，不影響鑑定結論理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "所有五個 section 原文均未提及病患原有高血壓、心臟疾病病史。屬背景性事實，不影響業務過失致死罪之核心認定",
+     "reason": "所有五個 section 原文均未提及病患原有高血壓、心臟疾病病史。屬背景性事實，不影響業務過失致死罪之核心認定"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 鑑定意見聚焦於腹部傷情分析與醫療過失，未提及胸部鈍挫傷和骨折、血胸。section_facts 雖有提及胸部傷勢，但屬不同 section。opinions section 本身未覆蓋此項",
+     "reason": "section_opinions 鑑定意見聚焦於腹部傷情分析與醫療過失，未提及胸部鈍挫傷和骨折、血胸。section_facts 雖有提及胸部傷勢，但屬不同 section。opinions section 本身未覆蓋此項"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions 未提及胸部傷勢對心肺功能之影響。section_facts 提及『氣胸與血胸』但未說明其對心肺功能之負擔。此為理解傷情嚴重性與醫療處置複雜度之重要醫學背景，遺漏影響對案情之完整理解",
+     "reason": "section_opinions 未提及胸部傷勢對心肺功能之影響。section_facts 提及『氣胸與血胸』但未說明其對心肺功能之負擔。此為理解傷情嚴重性與醫療處置複雜度之重要醫學背景，遺漏影響對案情之完整理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "主治醫師分類定義為法院學理論述，摘要簡化省略，屬概念性背景知識",
+     "reason": "主治醫師分類定義為法院學理論述，摘要簡化省略，屬概念性背景知識"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫師職級三類分類為醫院制度背景，摘要未詳細展開",
+     "reason": "醫師職級三類分類為醫院制度背景，摘要未詳細展開"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "主治醫師行政編制區分為背景論述，非案件核心事實",
+     "reason": "主治醫師行政編制區分為背景論述，非案件核心事實"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "主治醫師功能定義為法律概念說明，摘要簡化處理",
+     "reason": "主治醫師功能定義為法律概念說明，摘要簡化處理"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "主治醫師概念區分為學理論述，非案件事實陳述",
+     "reason": "主治醫師概念區分為學理論述，非案件事實陳述"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公立醫院編制限制細節未於摘要中提及，屬職位背景資訊",
+     "reason": "公立醫院編制限制細節未於摘要中提及，屬職位背景資訊"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "F醫院僅有一位胸腔外科醫師之細節未於摘要中明示",
+     "reason": "F醫院僅有一位胸腔外科醫師之細節未於摘要中明示"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患胸腔問題處理流程細節未於摘要中提及",
+     "reason": "病患胸腔問題處理流程細節未於摘要中提及"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告甲確屬病患C主治醫師之法院認定結論未明確出現在摘要中，屬關鍵事實認定",
+     "reason": "被告甲確屬病患C主治醫師之法院認定結論未明確出現在摘要中，屬關鍵事實認定"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "小腸鈍性創傷機率百分之16之統計數據未於摘要中提及",
+     "reason": "小腸鈍性創傷機率百分之16之統計數據未於摘要中提及"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各器官創傷機率比較之詳細統計數據未於摘要中展開",
+     "reason": "各器官創傷機率比較之詳細統計數據未於摘要中展開"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「機率不可略而不察」之法律論述未於摘要中呈現",
+     "reason": "「機率不可略而不察」之法律論述未於摘要中呈現"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CT判讀雙重確認程序之制度細節未於摘要中提及",
+     "reason": "CT判讀雙重確認程序之制度細節未於摘要中提及"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "胸腔外科須先具備一般外科資格之資格關係未明確陳述",
+     "reason": "胸腔外科須先具備一般外科資格之資格關係未明確陳述"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "CT片事前未經放射科判讀之關鍵程序事實未於摘要中提及，影響過失責任判斷",
+     "reason": "CT片事前未經放射科判讀之關鍵程序事實未於摘要中提及，影響過失責任判斷"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "腹部脹氣診斷方法之醫療知識論述未於摘要中呈現",
+     "reason": "腹部脹氣診斷方法之醫療知識論述未於摘要中呈現"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CT掃描目的之說明未於摘要中明確提及",
+     "reason": "CT掃描目的之說明未於摘要中明確提及"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "丁看X光片及建議CT之人物細節未於摘要中提及",
+     "reason": "丁看X光片及建議CT之人物細節未於摘要中提及"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「乙個人看圖不準」之陳述未於摘要中提及",
+     "reason": "「乙個人看圖不準」之陳述未於摘要中提及"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告係院內唯一胸腔外科醫師之細節未於摘要中明示",
+     "reason": "被告係院內唯一胸腔外科醫師之細節未於摘要中明示"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "請護士聯絡被告協助判讀之具體流程細節未完整呈現",
+     "reason": "請護士聯絡被告協助判讀之具體流程細節未完整呈現"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患原有高血壓、心臟疾病之病史未於摘要中提及，影響病情理解",
+     "reason": "病患原有高血壓、心臟疾病之病史未於摘要中提及，影響病情理解"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "CT醫囑由誰開立之人物細節未於摘要中提及",
+     "reason": "CT醫囑由誰開立之人物細節未於摘要中提及"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "93年4月3日具體日期之醫療處置細節未於摘要中提及（摘要僅泛稱處置措施）",
+     "reason": "93年4月3日具體日期之醫療處置細節未於摘要中提及（摘要僅泛稱處置措施）"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院認定被告抗辯矛盾之理由論述未於摘要中呈現，屬重要法律心證",
+     "reason": "法院認定被告抗辯矛盾之理由論述未於摘要中呈現，屬重要法律心證"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「當時並無不能注意之情事」之注意能力判斷要件未於摘要中提及，屬過失認定關鍵",
+     "reason": "「當時並無不能注意之情事」之注意能力判斷要件未於摘要中提及，屬過失認定關鍵"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 122,
+   "pred_total": 35,
+   "matched": 59,
+   "partial": 11,
+   "missing": 52,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8626,
+  "compression_afg_chars": 1108,
+  "compression_source_chars": 8062,
+  "gt_length_ratio": 0.2271,
+  "gt_length_afg_chars": 1108,
+  "gt_length_gt_chars": 4879,
+  "section_balance": 0.4375
  }
 }
