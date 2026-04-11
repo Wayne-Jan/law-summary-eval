@@ -865,7 +865,7 @@ def build():
     rewritten_outputs = 0
     unchanged_outputs = 0
 
-    log_stage(build_started, "Stage 1/7: collecting cases and conditions")
+    log_stage(build_started, "Stage 1/6: collecting cases and conditions")
     # Collect all conditions and cases (volume-aware)
     # all_conditions: cond -> {case_name -> {"dir": case_dir, "volume": vol}}
     all_conditions = {}
@@ -918,7 +918,7 @@ def build():
     for idx, case in enumerate(all_cases, start=1):
         case_slugs[case] = f"case_{idx:03d}"
 
-    log_stage(build_started, "Stage 2/7: building slug and GT mappings")
+    log_stage(build_started, "Stage 2/6: building slug and GT mappings")
     # Also build slug mapping for ALL GT cases (may include cases not in predictions)
     # GT names may differ from prediction names:
     #   prediction: "原始判決書_04_第四案 車禍未做神經學檢查案"
@@ -976,7 +976,7 @@ def build():
             c for c in cond_list if case in all_conditions.get(c, {})
         ]
 
-    log_stage(build_started, "Stage 3/7: writing per-condition case data")
+    log_stage(build_started, "Stage 3/6: writing per-condition case data")
     # Build per-condition per-case JSON (same format as /api/view/{case})
     manifest_conditions = {}
     for cond in cond_list:
@@ -1067,7 +1067,7 @@ def build():
         }
         print(f"  {cond:45s}  {len(cases):3d} cases  {eval_count:3d} evals")
 
-    log_stage(build_started, "Stage 4/7: writing cases and GT summaries")
+    log_stage(build_started, "Stage 4/6: writing cases and GT summaries")
     # Build cases list (same as /api/view-cases)
     cases_json_path = os.path.join(SITE_DATA, "cases.json")
     if write_json_if_changed(cases_json_path, all_cases):
@@ -1105,123 +1105,7 @@ def build():
             gt_count += 1
         print(f"  {'_gt (teacher summaries)':45s}  {gt_count:3d} cases")
 
-    log_stage(build_started, "Stage 5/7: building timeline v3.9 cache")
-    # Build timeline data (extraction v3.9 only, volume-aware)
-    tl_out_dir = os.path.join(SITE_DATA, "timeline")
-    os.makedirs(tl_out_dir, exist_ok=True)
-    tl_count = 0
-    tl_realign_count = 0
-    tl_cache_hits = 0
-    tl_cache_misses = 0
-    extraction_dir = EXTRACTIONS_DIR_V39
-    if not os.path.isdir(extraction_dir):
-        print("  WARNING: extraction v3.9 directory not found, skipping timeline")
-        extraction_dir = None
-
-    if extraction_dir:
-        for vol in VOLUMES:
-            vol_dir = os.path.join(extraction_dir, vol)
-            if not os.path.isdir(vol_dir):
-                continue
-            for case_name in sorted(os.listdir(vol_dir)):
-                master_path = os.path.join(vol_dir, case_name, "master.json")
-                if not os.path.exists(master_path):
-                    continue
-                master = read_json(master_path)
-                if not isinstance(master, dict):
-                    continue
-                tl_result = master.get("timeline", master.get("timeline_result", {}))
-                events = tl_result.get("timeline", tl_result.get("events", []))
-                if not events:
-                    continue
-
-                cache_key = f"{vol}/{case_name}"
-                source_path = os.path.join(SOURCE_TEXT_DIR, vol, case_name + ".txt")
-                source_sig = None
-                if os.path.exists(source_path):
-                    st = os.stat(source_path)
-                    source_sig = f"{st.st_mtime_ns}:{st.st_size}"
-                text_sig = fingerprint_event_texts(events)
-                cached = timeline_align_cases.get(cache_key)
-                if (
-                    isinstance(cached, dict)
-                    and cached.get("source_sig") == source_sig
-                    and cached.get("text_sig") == text_sig
-                    and isinstance(cached.get("events"), list)
-                ):
-                    events = cached["events"]
-                    tl_realign_count += int(cached.get("realigned", 0) or 0)
-                    tl_cache_hits += 1
-                else:
-                    # Realign char_start/char_end using smart_align (volume-aware)
-                    if os.path.exists(source_path):
-                        source_text = open(source_path, encoding="utf-8").read()
-                        realigned = 0
-                        for evt in events:
-                            txt = (evt.get("extraction_text") or "").strip()
-                            if not txt:
-                                continue
-                            hit = smart_align(source_text, txt)
-                            if hit:
-                                evt["char_start"] = hit.start
-                                evt["char_end"] = hit.end
-                                realigned += 1
-                        if realigned:
-                            tl_realign_count = tl_realign_count + realigned
-                    else:
-                        realigned = 0
-                    timeline_align_cases[cache_key] = {
-                        "source_sig": source_sig,
-                        "text_sig": text_sig,
-                        "realigned": realigned,
-                        "events": events,
-                    }
-                    tl_cache_misses += 1
-
-                # Load chunks for this case (volume-aware)
-                chunk_path = os.path.join(CHUNKS_DIR, vol, case_name + ".json")
-                chunks_data = []
-                if os.path.exists(chunk_path):
-                    raw_chunks = read_json(chunk_path)
-                    if isinstance(raw_chunks, list):
-                        chunks_data = [
-                            {
-                                "chunk_id": c.get("chunk_id", ""),
-                                "title": c.get("title", ""),
-                                "content": c.get("content", ""),
-                                "start_char": c.get("start_char", 0),
-                                "end_char": c.get("end_char", 0),
-                            }
-                            for c in raw_chunks
-                        ]
-                tl_summary = tl_result.get("timeline_summary", {})
-                time_gaps = tl_result.get("time_gaps", tl_summary.get("time_gaps", []))
-                tl_data = {
-                    "case_name": case_name,
-                    "volume": vol,
-                    "events": events,
-                    "timeline_summary": tl_summary,
-                    "time_gaps": time_gaps,
-                    "causation_chain": tl_result.get("causation_chain", []),
-                    "chunks": chunks_data,
-                }
-                slug = case_slugs.get(case_name)
-                if not slug:
-                    slug = f"case_{next_idx:03d}"
-                    case_slugs[case_name] = slug
-                    next_idx += 1
-                    case_volumes[case_name] = vol
-                tl_path = os.path.join(tl_out_dir, slug + ".json")
-                if write_json_if_changed(tl_path, tl_data):
-                    rewritten_outputs += 1
-                else:
-                    unchanged_outputs += 1
-                tl_count += 1
-
-    print(f"  {'timeline (extraction v3.9 only)':45s}  {tl_count:3d} cases  ({tl_realign_count} spans realigned)")
-    print(f"  {'timeline alignment cache':45s}  {tl_cache_hits:3d} hits  {tl_cache_misses:3d} misses")
-
-    log_stage(build_started, "Stage 6/7: building timeline v3.10.4 views")
+    log_stage(build_started, "Stage 5/6: building timeline v3.10.4 views")
     # Build timeline data (extraction v3.10.4 via timeline_v310 artifact path)
     tl_v310_out_dir = os.path.join(SITE_DATA, "timeline_v310")
     os.makedirs(tl_v310_out_dir, exist_ok=True)
@@ -1275,7 +1159,7 @@ def build():
             f"  {'timeline (extraction v3.10.4 patched only)':45s}  {tl_v310_count:3d} cases"
         )
 
-    log_stage(build_started, "Stage 7/7: writing eval whitelist and manifest")
+    log_stage(build_started, "Stage 6/6: writing eval whitelist and manifest")
     # Load human eval 30-case whitelist
     eval_candidates_path = os.path.join(DATA_PROJECT, "data", "human_eval_30_candidates.json")
     eval_case_set = {}   # case_name -> {"volume": vol, "short_name": str}

@@ -141,5 +141,172 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.908,
+  "fact_recall": 0.8577,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9234,
+  "quality_overall": 4.7857,
+  "checklist_pass_rate": 0.962,
+  "citation_accuracy": 0.9623,
+  "citation_support_score": 0.963,
+  "uncited_rate": 0.153,
+  "faithfulness_combined": {
+   "score": 0.889,
+   "citation_fidelity": 0.8151,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 24,
+   "correct": 24
+  },
+  "weighted_recall": 0.9295,
+  "missing_severity": {
+   "critical": 0,
+   "important": 9,
+   "minor": 8,
+   "details": [
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 和 section_reasoning 均只提到「B醫院眼科求診」和「醫師C診治」，未具體提及「眼科醫師S」這一就診對象，屬程序性事實遺漏，不影響案情理解",
+     "reason": "section_facts 和 section_reasoning 均只提到「B醫院眼科求診」和「醫師C診治」，未具體提及「眼科醫師S」這一就診對象，屬程序性事實遺漏，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 內容為具體辯護理由（已盡告知義務、信賴眼科診斷等），未明確陳述「堅決否認有何業務過失傷害犯行」之基本立場；其他 sections 亦無此否認聲明，維持 missing",
+     "reason": "section_02_defense.txt 內容為具體辯護理由（已盡告知義務、信賴眼科診斷等），未明確陳述「堅決否認有何業務過失傷害犯行」之基本立場；其他 sections 亦無此否認聲明，維持 missing"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "「檢察官於法定上訴期間未上訴，本案判決即確定」屬判決後續程序性事實，section_04_verdict.txt 僅敘述「臺灣高雄地方法院於108年3月13日作成判決，認定被告甲無罪」，未提及檢察官上訴與否及判決確定與否。此為程序性資訊，不影響判決結論（無罪）之理解。",
+     "reason": "「檢察官於法定上訴期間未上訴，本案判決即確定」屬判決後續程序性事實，section_04_verdict.txt 僅敘述「臺灣高雄地方法院於108年3月13日作成判決，認定被告甲無罪」，未提及檢察官上訴與否及判決確定與否。此為程序性資訊，不影響判決結論（無罪）之理解。"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未明確提及『初次開立』時點，且該指控內容之核心（公訴認未告知副作用）已由其他claims覆蓋",
+     "reason": "reasoning section未明確提及『初次開立』時點，且該指控內容之核心（公訴認未告知副作用）已由其他claims覆蓋"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section雖提及『信賴』概念，但未明確闡述容許信賴原則之完整法律定義，僅應用於具體事實判斷",
+     "reason": "reasoning section雖提及『信賴』概念，但未明確闡述容許信賴原則之完整法律定義，僅應用於具體事實判斷"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section未見信賴原則之完整定義說明，僅於事實認定中提及『信賴基礎』",
+     "reason": "reasoning section未見信賴原則之完整定義說明，僅於事實認定中提及『信賴基礎』"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人G證述屬程序性證據記載，summary通常不涵蓋此類程序性事實",
+     "reason": "證人G證述屬程序性證據記載，summary通常不涵蓋此類程序性事實"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section雖論述『難認有過失』，但未使用GT claim所示之問句式法律評價表述",
+     "reason": "reasoning section雖論述『難認有過失』，但未使用GT claim所示之問句式法律評價表述"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "此為被告直接陳述引用，reasoning section以第三人稱論述，未直接引用被告原話",
+     "reason": "此為被告直接陳述引用，reasoning section以第三人稱論述，未直接引用被告原話"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section雖有刑罰權相關論述（如『阻卻違法』、『容許之醫療業務行為』），但未明確闡述『刑罰權成立基礎需具備不法及罪責』之基本原則",
+     "reason": "reasoning section雖有刑罰權相關論述（如『阻卻違法』、『容許之醫療業務行為』），但未明確闡述『刑罰權成立基礎需具備不法及罪責』之基本原則"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section未見『不法』概念之明確定義闡述",
+     "reason": "reasoning section未見『不法』概念之明確定義闡述"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "此為社會生活一般性描述，非判決核心法律論述",
+     "reason": "此為社會生活一般性描述，非判決核心法律論述"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section雖有類似意涵（『阻卻違法』相關論述），但未明確闡述『並非舉凡有法益侵害行為均一律為法律所禁止』之原則",
+     "reason": "reasoning section雖有類似意涵（『阻卻違法』相關論述），但未明確闡述『並非舉凡有法益侵害行為均一律為法律所禁止』之原則"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section提及『阻卻違法』但係直接應用於事實，未完整闡述阻卻違法事由之概念定義",
+     "reason": "reasoning section提及『阻卻違法』但係直接應用於事實，未完整闡述阻卻違法事由之概念定義"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section雖有『阻卻違法』意涵，但未明確闡述『具備阻卻違法事由即不具違法性』之法律效果",
+     "reason": "reasoning section雖有『阻卻違法』意涵，但未明確闡述『具備阻卻違法事由即不具違法性』之法律效果"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section雖論述『保護較高價值之生命法益』，但未完整闡述阻卻違法事由之立論基礎（法益衡量理論）",
+     "reason": "reasoning section雖論述『保護較高價值之生命法益』，但未完整闡述阻卻違法事由之立論基礎（法益衡量理論）"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "此為背景事實組合陳述，相關核心事實（結核性心包膜炎、被告主治醫師身分）已由其他claims覆蓋",
+     "reason": "此為背景事實組合陳述，相關核心事實（結核性心包膜炎、被告主治醫師身分）已由其他claims覆蓋"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 124,
+   "matched": 105,
+   "partial": 1,
+   "missing": 17,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.4298,
+  "compression_afg_chars": 4591,
+  "compression_source_chars": 8051,
+  "gt_length_ratio": 1.007,
+  "gt_length_afg_chars": 4591,
+  "gt_length_gt_chars": 4559,
+  "section_balance": 0.6667
+ }
 }
