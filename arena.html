@@ -1926,7 +1926,13 @@
     function renderContent(text) {
         if (!text) return '<div class="empty-content">此版本無此章節內容</div>';
         const escaped = escapeHtml(text);
-        return escaped.replace(/\[CH_(\d+)\]/g, '<span class="citation">[CH_$1]</span>');
+        // Match [CH_NN] and multi-citation forms: [CH_01, CH_02], [CH_01，CH_02], [CH_01、CH_02]
+        // (ASCII comma, fullwidth comma, and 頓號 are all used across model outputs.)
+        // Each CH_NN becomes its own pill.
+        return escaped.replace(/\[(CH_\d+(?:\s*[,，、]\s*CH_\d+)*)\]/g, (match, inner) => {
+            const ids = inner.match(/CH_\d+/g) || [];
+            return ids.map(id => `<span class="citation">[${id}]</span>`).join('');
+        });
     }
 
     function getAllPairs() {
