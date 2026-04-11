@@ -236,33 +236,41 @@
         /* ─── Login Overlay ─── */
         .modal-overlay {
             position: fixed; inset: 0;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(15, 118, 110, 0.88));
+            background:
+                radial-gradient(circle at top left, rgba(255, 244, 214, 0.92), transparent 34%),
+                radial-gradient(circle at top right, rgba(255, 226, 213, 0.88), transparent 30%),
+                linear-gradient(135deg, #fffaf3 0%, #fff3e8 48%, #fdf7ef 100%);
             z-index: 9000;
             display: flex; align-items: center; justify-content: center;
         }
         .modal-overlay.hidden { display: none; }
 
         .modal-card {
-            background: #fff; border-radius: 12px;
-            padding: 32px; width: 380px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.22);
+            background: linear-gradient(180deg, #fffdf9 0%, #fff8f0 100%);
+            border-radius: 18px;
+            padding: 36px; width: 392px;
+            box-shadow: 0 24px 70px rgba(132, 84, 39, 0.16);
             text-align: center;
-            border: 1px solid #dbe4ea;
+            border: 1px solid #f1deca;
         }
         .modal-card h2 {
-            font-size: 22px; font-weight: 700; color: #111827;
-            margin-bottom: 6px;
+            font-size: 24px; font-weight: 700; color: #6f4e37;
+            margin-bottom: 10px;
         }
-        .modal-card p {
-            font-size: 14px; color: #6b7280; margin-bottom: 18px;
+        .login-card-head {
+            display: block;
+            margin-bottom: 20px;
         }
         .modal-confirm {
             padding: 10px 36px; border-radius: 10px; border: none;
-            background: #0f766e; color: white;
+            background: linear-gradient(180deg, #d89563 0%, #c97a45 100%);
+            color: white;
             font-size: 15px; font-weight: 600; cursor: pointer;
             font-family: inherit; transition: all 0.15s;
         }
-        .modal-confirm:hover { background: #115e59; }
+        .modal-confirm:hover {
+            background: linear-gradient(180deg, #cf8656 0%, #b86e3f 100%);
+        }
         .modal-confirm:disabled { opacity: 0.5; cursor: not-allowed; }
         .login-fields {
             display: grid;
@@ -271,19 +279,19 @@
         .login-fields select,
         .login-fields input {
             width: 100%;
-            padding: 10px 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 10px;
+            padding: 11px 13px;
+            border: 1px solid #ead8c8;
+            border-radius: 12px;
             font-size: 14px;
             font-family: inherit;
-            color: #334155;
-            background: #fff;
+            color: #5b4636;
+            background: rgba(255, 255, 255, 0.88);
         }
         .login-fields select:focus,
         .login-fields input:focus {
             outline: none;
-            border-color: #0f766e;
-            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
+            border-color: #d69464;
+            box-shadow: 0 0 0 3px rgba(216, 148, 100, 0.16);
         }
         .login-error {
             min-height: 18px;
@@ -300,11 +308,124 @@
             gap: 12px;
         }
         .login-links a {
-            color: #64748b;
+            color: #9a7356;
             text-decoration: none;
             font-size: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
-        .login-links a:hover { color: #0f766e; }
+        .login-links a:hover { color: #c97a45; }
+        .login-mini-icon {
+            width: 14px;
+            height: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: currentColor;
+            flex-shrink: 0;
+        }
+
+        .admin-only { display: none; }
+        body.is-admin .admin-only { display: inline-flex; }
+        body.is-admin .main,
+        body.is-admin .vote-bar,
+        body.is-admin .leaderboard-toggle,
+        body.is-admin .leaderboard-panel { display: none !important; }
+
+        .admin-page {
+            display: none;
+            margin-top: var(--toolbar-h);
+            min-height: calc(100vh - var(--toolbar-h));
+            padding: 24px;
+            background: linear-gradient(180deg, #f8fafc, #eef6f5);
+        }
+        body.is-admin .admin-page { display: block; }
+        .admin-shell {
+            width: min(1180px, calc(100vw - 48px));
+            margin: 0 auto;
+            display: grid;
+            gap: 18px;
+        }
+        .admin-card {
+            background: #fff;
+            border: 1px solid #dbe4ea;
+            border-radius: 16px;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+            padding: 22px 24px;
+        }
+        .admin-card h2 {
+            font-size: 18px;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+        .admin-card p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        .admin-actions .btn-sm {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+        .admin-table-wrap {
+            overflow-x: auto;
+            margin-top: 16px;
+        }
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .admin-table th,
+        .admin-table td {
+            border-bottom: 1px solid #edf2f7;
+            padding: 10px 12px;
+            text-align: left;
+            color: #334155;
+            vertical-align: middle;
+        }
+        .admin-table th {
+            font-size: 12px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #64748b;
+            background: #f8fafc;
+        }
+        .admin-table td strong {
+            color: #0f172a;
+        }
+        .admin-stat {
+            display: inline-flex;
+            align-items: center;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            background: #ecfeff;
+            color: #0f766e;
+        }
+        .admin-danger {
+            background: #fff1f2 !important;
+            border-color: #fecdd3 !important;
+            color: #be123c !important;
+        }
+        .admin-empty {
+            margin-top: 16px;
+            padding: 24px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 14px;
+            text-align: center;
+            color: #64748b;
+            font-size: 13px;
+            background: #f8fafc;
+        }
 
         /* ─── Leaderboard ─── */
         .leaderboard-toggle {
@@ -407,8 +528,9 @@
 <!-- Login overlay -->
 <div class="modal-overlay" id="loginOverlay">
     <div class="modal-card">
-        <h2>LENS Arena</h2>
-        <p>登入後會先從雲端同步你的 arena 投票紀錄</p>
+        <div class="login-card-head">
+            <h2>LENS Arena</h2>
+        </div>
         <div class="login-fields">
             <select id="loginUser">
                 <option value="">-- 選擇評審者 --</option>
@@ -418,8 +540,25 @@
             <button class="modal-confirm" id="loginSubmit" onclick="doLogin()">登入</button>
         </div>
         <div class="login-links">
-            <a href="#" id="adminLoginLink" onclick="event.preventDefault();toggleAdminLogin()">管理員入口</a>
-            <a href="index.html">返回首頁</a>
+            <a href="#" id="adminLoginLink" onclick="event.preventDefault();toggleAdminLogin()">
+                <span class="login-mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="11" width="14" height="9" rx="2"></rect>
+                        <path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
+                    </svg>
+                </span>
+                <span>管理員入口</span>
+            </a>
+            <a href="index.html">
+                <span class="login-mini-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 11.5 12 4l9 7.5"></path>
+                        <path d="M6 10.5V20h12v-9.5"></path>
+                        <path d="M10 20v-5h4v5"></path>
+                    </svg>
+                </span>
+                <span>返回首頁</span>
+            </a>
         </div>
     </div>
 </div>
@@ -433,6 +572,7 @@
     <span class="eval-label">評審：</span>
     <select id="evalSelect"></select>
     <span class="progress-badge" id="userBadge">未登入</span>
+    <button class="btn-sm admin-only" id="btnAdminPanel">管理總覽</button>
     <button class="btn-sm btn-timeline" id="btnTimeline">案件時間軸</button>
     <a class="nav-link" href="index.html">首頁</a>
     <button class="btn-sm" id="btnExport">匯出 JSON</button>
@@ -461,6 +601,20 @@
     <div class="all-done" id="allDone">
         <h2>所有配對已完成投票</h2>
         <p>感謝你的評估！可開啟排行榜查看目前結果。</p>
+    </div>
+</div>
+
+<div class="admin-page" id="adminPage">
+    <div class="admin-shell">
+        <div class="admin-card">
+            <h2>Arena 管理總覽</h2>
+            <p>查看 A-E 的完成票數與案件覆蓋數，並可匯出全部投票或刪除單一評審者資料。</p>
+            <div class="admin-actions">
+                <button class="btn-sm" id="adminRefreshBtn">重新整理</button>
+                <button class="btn-sm" id="adminExportBtn">匯出全部 vote</button>
+            </div>
+            <div id="adminContent"></div>
+        </div>
     </div>
 </div>
 
@@ -546,6 +700,7 @@
     let appReady = false;
     let adminLoginMode = false;
     let currentDataUid = '';
+    let adminPanelLoaded = false;
 
     function getArenaVotesStorageKey(evaluator) {
         return `arena_v1_votes_${evaluator}`;
@@ -681,6 +836,20 @@
         saveVotesForEvaluator(currentEvaluator, []);
     }
 
+    async function deleteArenaVotesForEvaluator(name) {
+        const uid = await lookupArenaUidByName(name);
+        if (!uid) {
+            saveVotesForEvaluator(name, []);
+            return false;
+        }
+        const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+        const batch = db.batch();
+        snapshot.forEach(doc => batch.delete(doc.ref));
+        if (!snapshot.empty) await batch.commit();
+        saveVotesForEvaluator(name, []);
+        return true;
+    }
+
     async function doLogin() {
         const userSel = document.getElementById('loginUser');
         const passInput = document.getElementById('loginPassword');
@@ -721,6 +890,7 @@
         const overlay = document.getElementById('loginOverlay');
         const sel = document.getElementById('loginUser');
         adminLoginMode = false;
+        setAdminMode(false);
         overlay.classList.remove('hidden');
         sel.disabled = false;
         if (sel.options.length <= 1) {
@@ -731,7 +901,7 @@
                 sel.appendChild(opt);
             });
         }
-        document.getElementById('adminLoginLink').textContent = '管理員入口';
+        document.querySelector('#adminLoginLink span:last-child').textContent = '管理員入口';
         document.getElementById('loginPassword').placeholder = '密碼';
         document.getElementById('loginPassword').value = '';
         document.getElementById('loginError').textContent = '';
@@ -741,14 +911,15 @@
         adminLoginMode = !adminLoginMode;
         const sel = document.getElementById('loginUser');
         const link = document.getElementById('adminLoginLink');
+        const label = link.querySelector('span:last-child');
         if (adminLoginMode) {
             sel.value = '';
             sel.disabled = true;
-            link.textContent = '返回評審登入';
+            label.textContent = '返回評審登入';
             document.getElementById('loginPassword').placeholder = '管理者密碼';
         } else {
             sel.disabled = false;
-            link.textContent = '管理員入口';
+            label.textContent = '管理員入口';
             document.getElementById('loginPassword').placeholder = '密碼';
         }
         document.getElementById('loginError').textContent = '';
@@ -758,6 +929,10 @@
     function applyReadOnlyMode(isReadOnly) {
         document.getElementById('voteBar').style.display = isReadOnly ? 'none' : 'flex';
         document.getElementById('btnClear').style.display = isReadOnly ? 'none' : '';
+    }
+
+    function setAdminMode(enabled) {
+        document.body.classList.toggle('is-admin', !!enabled);
     }
 
     function escapeHtml(str) {
@@ -897,6 +1072,117 @@
         document.getElementById('bodyB').innerHTML = renderAllSections(dataB.sections);
         document.getElementById('metaA').innerHTML = calcCompressionMeta(dataA);
         document.getElementById('metaB').innerHTML = calcCompressionMeta(dataB);
+    }
+
+    async function fetchAdminSummaryRows() {
+        const names = Object.keys(ARENA_USERS).filter(name => name !== 'admin');
+        return Promise.all(names.map(async (name) => {
+            const uid = await lookupArenaUidByName(name);
+            const votes = [];
+            if (uid) {
+                const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+                snapshot.forEach(doc => {
+                    const payload = doc.data() || {};
+                    if (payload.data) votes.push(payload.data);
+                });
+            }
+            return {
+                name,
+                uid,
+                voteCount: votes.length,
+                caseCount: new Set(votes.map(v => v.case_id)).size,
+                lastTimestamp: votes.reduce((latest, v) => {
+                    const ts = String(v.timestamp || '');
+                    return ts > latest ? ts : latest;
+                }, '')
+            };
+        }));
+    }
+
+    function formatAdminTime(ts) {
+        if (!ts) return '尚無資料';
+        return ts.replace('T', ' ').replace('Z', '');
+    }
+
+    async function renderAdminContent() {
+        const container = document.getElementById('adminContent');
+        container.innerHTML = '<div class="admin-empty">載入中...</div>';
+        const rows = await fetchAdminSummaryRows();
+        if (!rows.length) {
+            container.innerHTML = '<div class="admin-empty">尚無可顯示的評審資料</div>';
+            return;
+        }
+
+        let html = '<div class="admin-table-wrap"><table class="admin-table"><thead><tr>';
+        html += '<th>評審</th><th>狀態</th><th>已投票</th><th>案件數</th><th>最後更新</th><th>操作</th>';
+        html += '</tr></thead><tbody>';
+        rows.forEach(row => {
+            const statusLabel = row.voteCount > 0 ? '已有資料' : '尚未開始';
+            html += '<tr>';
+            html += `<td><strong>${escapeHtml(row.name)}</strong></td>`;
+            html += `<td><span class="admin-stat">${statusLabel}</span></td>`;
+            html += `<td>${row.voteCount}</td>`;
+            html += `<td>${row.caseCount} / ${config.cases.length}</td>`;
+            html += `<td>${escapeHtml(formatAdminTime(row.lastTimestamp))}</td>`;
+            html += `<td><button class="btn-sm admin-danger" onclick="adminDeleteEvaluator(${JSON.stringify(row.name)})">刪除 ${escapeHtml(row.name)} 資料</button></td>`;
+            html += '</tr>';
+        });
+        html += '</tbody></table></div>';
+        container.innerHTML = html;
+    }
+
+    async function adminDeleteEvaluator(name) {
+        if (!confirm(`刪除 ${name} 的全部 arena 投票資料？此操作無法復原。`)) return;
+        try {
+            await deleteArenaVotesForEvaluator(name);
+            if (currentEvaluator === name) {
+                updateProgress();
+                await loadNextPair();
+            }
+            await renderAdminContent();
+        } catch (e) {
+            console.error('Admin delete failed:', e);
+            alert('刪除失敗，請查看 console。');
+        }
+    }
+    window.adminDeleteEvaluator = adminDeleteEvaluator;
+
+    async function adminExportAll() {
+        const rows = await fetchAdminSummaryRows();
+        const output = {};
+        for (const row of rows) {
+            const uid = row.uid;
+            const votes = [];
+            if (uid) {
+                const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+                snapshot.forEach(doc => {
+                    const payload = doc.data() || {};
+                    if (payload.data) votes.push(payload.data);
+                });
+            }
+            output[row.name] = {
+                vote_count: votes.length,
+                case_count: new Set(votes.map(v => v.case_id)).size,
+                votes
+            };
+        }
+        const blob = new Blob([JSON.stringify(output, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `arena_admin_all_${new Date().toISOString().slice(0,10)}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+
+    function initAdminPanel() {
+        document.getElementById('btnAdminPanel').addEventListener('click', async () => {
+            setAdminMode(true);
+            adminPanelLoaded = true;
+            await renderAdminContent();
+        });
+        document.getElementById('adminRefreshBtn').addEventListener('click', renderAdminContent);
+        document.getElementById('adminExportBtn').addEventListener('click', adminExportAll);
     }
 
     window.closeTlModal = function(event) {
@@ -1127,7 +1413,7 @@
             if (confirm('確定要清除所有投票紀錄嗎？此操作無法復原。')) {
                 await clearArenaVotes();
                 updateProgress();
-                loadNextPair();
+                await loadNextPair();
             }
         });
 
@@ -1171,10 +1457,12 @@
             currentEvaluator = currentEvaluator || 'A';
             document.getElementById('userBadge').textContent = '管理員';
             applyReadOnlyMode(true);
+            setAdminMode(true);
         } else {
             currentEvaluator = profile.name;
             document.getElementById('userBadge').textContent = '評審 ' + profile.name;
             applyReadOnlyMode(false);
+            setAdminMode(false);
         }
         populateEvalSelector();
     }
@@ -1209,6 +1497,7 @@
             if (targetUid) await restoreArenaVotes(target, targetUid);
             else saveVotesForEvaluator(target, []);
             setCloudStatus('管理模式', '');
+            await renderAdminContent();
         }
         updateProgress();
         await loadNextPair();
@@ -1227,6 +1516,7 @@
         initExportClear();
         initEvalSelector();
         initTimeline();
+        initAdminPanel();
         showLoginOverlay();
         appReady = true;
         auth.onAuthStateChanged((user) => {
