@@ -961,126 +961,90 @@
             color: var(--a-slate-500);
         }
 
-        /* ─── Elo Leaderboard Card List ─── */
+        /* ─── Elo Leaderboard Card List (minimal) ─── */
         .elo-list {
             display: grid;
-            gap: 10px;
+            gap: 6px;
         }
         .elo-card {
             display: grid;
-            grid-template-columns: 52px 1fr auto;
+            grid-template-columns: 28px 1fr auto;
             align-items: center;
-            gap: 20px;
-            padding: 16px 20px;
+            gap: 18px;
+            padding: 14px 18px;
             border: 1px solid var(--a-slate-200);
-            border-radius: 14px;
+            border-radius: 12px;
             background: #fff;
-            transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+            transition: border-color 0.15s, background 0.15s;
         }
         .elo-card:hover {
             border-color: var(--a-slate-300);
-            box-shadow: 0 8px 24px rgba(15, 23, 42, 0.07);
-            transform: translateY(-1px);
+            background: var(--a-slate-50);
         }
-        .elo-rank-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 46px;
-            height: 46px;
-            border-radius: 14px;
+        .elo-rank {
             font-size: 14px;
-            font-weight: 800;
-            letter-spacing: 0.01em;
-            color: #fff;
-            background: var(--a-slate-400);
+            font-weight: 700;
+            color: var(--a-slate-400);
             font-variant-numeric: tabular-nums;
+            text-align: center;
         }
-        .elo-rank-badge.rank-1 {
-            background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-            box-shadow: 0 6px 14px rgba(217, 119, 6, 0.32);
-        }
-        .elo-rank-badge.rank-2 {
-            background: linear-gradient(135deg, #e2e8f0 0%, #64748b 100%);
-            box-shadow: 0 6px 14px rgba(100, 116, 139, 0.24);
-        }
-        .elo-rank-badge.rank-3 {
-            background: linear-gradient(135deg, #d6a27a 0%, #92400e 100%);
-            box-shadow: 0 6px 14px rgba(146, 64, 14, 0.24);
-        }
-        .elo-card-main { min-width: 0; }
-        .elo-label-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 7px;
-        }
+        .elo-card.rank-1 .elo-rank { color: #b45309; }
+        .elo-card.rank-2 .elo-rank { color: #475569; }
+        .elo-card.rank-3 .elo-rank { color: #92400e; }
+        .elo-card-main { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
         .elo-label {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             color: var(--a-slate-900);
             letter-spacing: -0.01em;
         }
+        .elo-tags {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 11px;
+            color: var(--a-slate-500);
+        }
         .elo-tag {
             display: inline-flex;
             align-items: center;
-            padding: 2px 9px;
-            border-radius: 999px;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            border: 1px solid transparent;
+            gap: 4px;
+            font-weight: 600;
         }
-        .elo-tag.bb-haiku {
-            background: #eef2ff;
-            color: #4338ca;
-            border-color: #c7d2fe;
-        }
-        .elo-tag.bb-deepseek {
-            background: #ecfeff;
-            color: #0e7490;
-            border-color: #a5f3fc;
-        }
-        .elo-tag.role-full {
-            background: var(--a-emerald-light);
-            color: var(--a-emerald);
-            border-color: #a7f3d0;
-        }
-        .elo-tag.role-baseline {
-            background: var(--a-slate-100);
-            color: var(--a-slate-600);
-            border-color: var(--a-slate-300);
-        }
-        .elo-meta {
-            font-size: 12px;
-            color: var(--a-slate-500);
-            font-variant-numeric: tabular-nums;
+        .elo-tag svg { flex-shrink: 0; }
+        .elo-tag.bb-haiku { color: #4338ca; }
+        .elo-tag.bb-deepseek { color: #0e7490; }
+        .elo-tag.role-full { color: var(--a-emerald); }
+        .elo-tag.role-baseline { color: var(--a-slate-500); }
+        .elo-tag-sep {
+            display: inline-block;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: var(--a-slate-300);
         }
         .elo-score {
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 7px;
+            gap: 4px;
         }
         .elo-rating {
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 22px;
+            font-weight: 700;
             color: var(--a-slate-900);
             font-variant-numeric: tabular-nums;
             line-height: 1;
             letter-spacing: -0.02em;
         }
         .elo-wdl {
-            display: flex;
-            gap: 6px;
             font-size: 11px;
-            font-weight: 700;
+            color: var(--a-slate-500);
             font-variant-numeric: tabular-nums;
+            font-weight: 600;
         }
         .elo-wdl .wdl-w { color: var(--a-emerald); }
-        .elo-wdl .wdl-d { color: var(--a-slate-500); }
         .elo-wdl .wdl-l { color: var(--a-rose); }
 
         .elo-empty {
@@ -1181,34 +1145,61 @@
         .admin-matrix .state-inner {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
-        .admin-version-chip {
+        .admin-pair-grid {
+            display: inline-flex;
+            gap: 4px;
+            align-items: center;
+        }
+        .pair-chip {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 40px;
-            padding: 3px 10px;
-            border-radius: 999px;
-            font-size: 11px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1.5px solid var(--a-slate-300);
+            background: #fff;
+            color: var(--a-slate-400);
+            font-size: 10px;
             font-weight: 700;
             font-variant-numeric: tabular-nums;
-            border: 1px solid transparent;
+            cursor: pointer;
+            padding: 0;
+            font-family: inherit;
+            transition: all 0.12s;
         }
-        .admin-version-chip.done {
-            background: #fff;
-            color: var(--a-emerald);
-            border-color: #a7f3d0;
+        .pair-chip:hover {
+            border-color: var(--a-indigo);
+            color: var(--a-indigo);
+            background: var(--a-indigo-light);
+            transform: scale(1.08);
         }
-        .admin-version-chip.partial {
-            background: #fff;
-            color: var(--a-amber);
-            border-color: #fcd34d;
+        .pair-chip.status-done {
+            background: var(--a-emerald);
+            color: #fff;
+            border-color: var(--a-emerald);
         }
-        .admin-version-chip.empty {
-            background: var(--a-slate-50);
-            color: var(--a-slate-400);
-            border-color: var(--a-slate-200);
+        .pair-chip.status-done:hover {
+            background: #047857;
+            border-color: #047857;
+            color: #fff;
+        }
+        .pair-chip.status-a {
+            background: #4f46e5;
+            color: #fff;
+            border-color: #4f46e5;
+        }
+        .pair-chip.status-b {
+            background: #ea580c;
+            color: #fff;
+            border-color: #ea580c;
+        }
+        .pair-chip.status-tie {
+            background: #64748b;
+            color: #fff;
+            border-color: #64748b;
         }
         .admin-version-delete {
             width: 20px;
@@ -1547,7 +1538,7 @@
 <!-- Vote bar -->
 <div class="vote-bar" id="voteBar">
     <div class="vote-reason">
-        <textarea id="reasonText" placeholder="選擇理由"></textarea>
+        <textarea id="reasonText" placeholder="選擇理由 (選填)"></textarea>
     </div>
     <div class="vote-actions">
         <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：←">A 較好<span class="kbd-key">←</span></button>
@@ -2221,33 +2212,36 @@
             return html;
         }
 
+        // Small inline icons: chip (backbone) + layers (full) / square (baseline)
+        const ICON_CHIP = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M6 1.5v2M10 1.5v2M6 12.5v2M10 12.5v2M1.5 6h2M1.5 10h2M12.5 6h2M12.5 10h2"/></svg>';
+        const ICON_LAYERS = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5l6.5 3L8 7.5 1.5 4.5 8 1.5z"/><path d="M1.5 8L8 11l6.5-3"/><path d="M1.5 11.5L8 14.5l6.5-3"/></svg>';
+        const ICON_SQUARE = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="2.5" width="11" height="11" rx="1.5"/></svg>';
+
         html += '<div class="elo-list">';
         rows.forEach((row, idx) => {
             const rank = idx + 1;
             const rankCls = rank <= 3 ? `rank-${rank}` : '';
             const bb = getBackboneKey(row.condition);
             const role = getRoleKey(row.condition);
-            const bbLabel = bb ? bb : '';
-            const roleLabel = role ? role : '';
-            const bbTag = bb ? `<span class="elo-tag bb-${escapeHtml(bb)}">${escapeHtml(bbLabel)}</span>` : '';
-            const roleTag = role ? `<span class="elo-tag role-${escapeHtml(role)}">${escapeHtml(roleLabel)}</span>` : '';
+            const roleIcon = role === 'full' ? ICON_LAYERS : ICON_SQUARE;
+            const bbTag = bb ? `<span class="elo-tag bb-${escapeHtml(bb)}">${ICON_CHIP}${escapeHtml(bb)}</span>` : '';
+            const roleTag = role ? `<span class="elo-tag role-${escapeHtml(role)}">${roleIcon}${escapeHtml(role)}</span>` : '';
 
-            html += '<div class="elo-card">';
-            html += `<div class="elo-rank-badge ${rankCls}">#${rank}</div>`;
+            html += `<div class="elo-card ${rankCls}">`;
+            html += `<div class="elo-rank">${rank}</div>`;
             html += '<div class="elo-card-main">';
-            html += '<div class="elo-label-row">';
-            html += `<span class="elo-label">${escapeHtml(row.label)}</span>`;
-            html += bbTag + roleTag;
+            html += `<div class="elo-label">${escapeHtml(row.label)}</div>`;
+            html += '<div class="elo-tags">';
+            html += bbTag;
+            if (bb && role) html += '<span class="elo-tag-sep"></span>';
+            html += roleTag;
+            if (role) html += '<span class="elo-tag-sep"></span>';
+            html += `<span>${row.matches} 場 · ${row.caseCount} 案</span>`;
             html += '</div>';
-            html += `<div class="elo-meta">${row.matches} 場比較 · ${row.caseCount} 案覆蓋</div>`;
             html += '</div>';
             html += '<div class="elo-score">';
             html += `<div class="elo-rating">${row.rating}</div>`;
-            html += '<div class="elo-wdl">';
-            html += `<span class="wdl-w">${row.wins}W</span>`;
-            html += `<span class="wdl-d">${row.draws}D</span>`;
-            html += `<span class="wdl-l">${row.losses}L</span>`;
-            html += '</div>';
+            html += `<div class="elo-wdl"><span class="wdl-w">${row.wins}</span> · ${row.draws} · <span class="wdl-l">${row.losses}</span></div>`;
             html += '</div>';
             html += '</div>';
         });
@@ -2290,9 +2284,10 @@
 
     function renderProgressMatrix(rows) {
         const totalPairs = getPairsPerCase();
+        const effectivePairs = getEffectivePairs();
         let html = '<div class="admin-section">';
         html += '<div class="admin-section-head"><h3>案件進度矩陣</h3>';
-        html += `<span class="section-desc">每格顯示該評審在該案件已完成的配對票數（滿分 ${totalPairs}）</span></div>`;
+        html += `<span class="section-desc">每格 ${totalPairs} 顆圈對應本案的 ${totalPairs} 個配對；綠色＝已投票，灰色＝未投票。點擊可進入唯讀檢視。</span></div>`;
         html += '<div class="admin-table-wrap"><table class="admin-table admin-matrix"><thead><tr>';
         html += '<th>案件</th>';
         rows.forEach(row => { html += `<th>${escapeHtml(row.name)}</th>`; });
@@ -2301,15 +2296,36 @@
             html += '<tr>';
             html += `<td class="case-name">${escapeHtml(item.short_name || item.case_id)}</td>`;
             rows.forEach(row => {
-                const done = row.votes.filter(v => v.case_id === item.case_id).length;
+                const caseVotes = row.votes.filter(v => v.case_id === item.case_id);
+                const done = caseVotes.length;
                 let stateCls = 'empty';
                 if (done >= totalPairs && totalPairs > 0) stateCls = 'done';
                 else if (done > 0) stateCls = 'partial';
-                const chip = `<span class="admin-version-chip ${stateCls}">${done}/${totalPairs}</span>`;
+
+                // Build chip per effective pair
+                let chips = '<div class="admin-pair-grid">';
+                effectivePairs.forEach((p, idx) => {
+                    const vote = caseVotes.find(v =>
+                        (v.condition_a === p.condA && v.condition_b === p.condB) ||
+                        (v.condition_a === p.condB && v.condition_b === p.condA)
+                    );
+                    let chipCls = 'pair-chip';
+                    let title = `配對 ${idx + 1}：${conditionLabel(p.condA)} vs ${conditionLabel(p.condB)}`;
+                    if (vote) {
+                        chipCls += ' status-done';
+                        const wLabel = vote.winner === 'a' ? '（A 較好）' : vote.winner === 'b' ? '（B 較好）' : '（難分高下）';
+                        title += ' · 已投票 ' + wLabel + ' · 點擊檢視';
+                    } else {
+                        title += ' · 未投票 · 點擊檢視';
+                    }
+                    chips += `<button class="${chipCls}" type="button" title="${escapeHtml(title)}" onclick='window.adminInspectPair(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)}, ${JSON.stringify(p.condA)}, ${JSON.stringify(p.condB)})'>${idx + 1}</button>`;
+                });
+                chips += '</div>';
+
                 const del = done > 0
-                    ? `<button class="admin-version-delete" onclick='adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})' title="刪除 ${escapeHtml(row.name)} 在此案的資料">×</button>`
+                    ? `<button class="admin-version-delete" onclick='adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})' title="刪除 ${escapeHtml(row.name)} 在此案的全部紀錄">×</button>`
                     : '';
-                html += `<td class="state-cell ${stateCls}"><div class="state-inner">${chip}${del}</div></td>`;
+                html += `<td class="state-cell ${stateCls}"><div class="state-inner">${chips}${del}</div></td>`;
             });
             html += '</tr>';
         });
@@ -2554,9 +2570,9 @@
         updateProgress();
     }
 
-    // Load a specific (possibly already-voted) pair for editing.
+    // Load a specific (possibly already-voted) pair for editing or read-only inspection.
     // Preserves original display order and pre-selects the previous vote.
-    async function loadPairForEdit(caseId, condA, condB) {
+    async function loadPairForEdit(caseId, condA, condB, asInspect) {
         if (!currentEvaluator || !config) return;
         // Find pairIndex from effective pairs (order-independent)
         const effectivePairs = getEffectivePairs();
@@ -2601,9 +2617,13 @@
             pairIndex
         };
 
-        // Exit any admin-inspect or review state and show the pair UI
+        // Exit review state; switch into edit or admin-inspect as requested
         document.body.classList.remove('is-review');
-        document.body.classList.add('is-editing');
+        if (asInspect) {
+            document.body.classList.remove('is-editing');
+        } else {
+            document.body.classList.add('is-editing');
+        }
         showPairUI();
         currentPair = pair;
         resetVoteUI();
@@ -2638,6 +2658,24 @@
         updateProgress();
     }
     window.loadPairForEdit = loadPairForEdit;
+
+    // Admin: switch to evaluator X's data, enter admin-inspect, and load a specific pair read-only
+    async function adminInspectPair(name, caseId, condA, condB) {
+        const profile = getAuthProfile();
+        if (!profile || profile.role !== 'admin') return;
+        setEvaluator(name);
+        document.getElementById('userBadge').textContent = '管理員檢視 ' + name;
+        const uid = await lookupArenaUidByName(name);
+        if (uid) await restoreArenaVotes(name, uid);
+        else saveVotesForEvaluator(name, []);
+        // Rebuild the evaluator dropdown selection
+        const sel = document.getElementById('evalSelect');
+        if (sel) sel.value = name;
+        // Enter inspect mode and jump to the specific pair
+        setAdminInspectMode(true);
+        await loadPairForEdit(caseId, condA, condB, true);
+    }
+    window.adminInspectPair = adminInspectPair;
 
     function formatReviewTime(iso) {
         if (!iso) return '';
