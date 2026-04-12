@@ -2543,31 +2543,39 @@
     noDataEl.style.display = 'none';
     detailEl.classList.add('active');
 
+    const hasMetricData = (dataKey) =>
+      matches.some(({ caseData }) =>
+        Object.entries(caseData[dataKey] || {}).some(([k, v]) => k !== 'avg' && v != null)
+      );
+    const hasAggregateData = (dataKey) =>
+      matches.some(({ caseData }) => (caseData[dataKey] || {}).avg != null);
+    const hasRougeBert = matches.some(({ caseData }) =>
+      Object.values(caseData.rouge_bertscore || {}).some(v => v != null)
+    );
+
     // Define tabs
     const tabs = [
-      { id: 'overview', label: '總覽' },
-      { id: 'rule', label: 'Rule-Based' },
-      { id: 'fact', label: 'Fact Recall' },
-      { id: 'quality', label: 'Quality' },
-      { id: 'rouge_bert', label: 'ROUGE / BERTScore' },
+      { id: 'overview', label: '總覽', enabled: true },
+      { id: 'rule', label: 'Rule-Based', enabled: hasMetricData('rule_based') || hasAggregateData('rule_based') },
+      { id: 'fact', label: 'Fact Recall', enabled: hasMetricData('fact_recall') || hasAggregateData('fact_recall') },
+      { id: 'quality', label: 'Quality', enabled: hasMetricData('quality') || hasAggregateData('quality') },
+      { id: 'rouge_bert', label: 'ROUGE / BERTScore', enabled: hasRougeBert },
     ];
 
-    // Check if any match has rouge_bertscore data
-    const hasRougeBert = matches.some(m => m.caseData.rouge_bertscore);
+    const enabledTabs = tabs.filter(tab => tab.enabled);
+    const activeTabId = enabledTabs[0]?.id || 'overview';
 
-    for (const tab of tabs) {
-      // Skip ROUGE/BERTScore tab if no data
-      if (tab.id === 'rouge_bert' && !hasRougeBert) continue;
+    for (const tab of enabledTabs) {
 
       const btn = document.createElement('button');
-      btn.className = 'tab-btn' + (tab.id === 'overview' ? ' active' : '');
+      btn.className = 'tab-btn' + (tab.id === activeTabId ? ' active' : '');
       btn.textContent = tab.label;
       btn.dataset.tab = tab.id;
       btn.addEventListener('click', () => switchTab(tab.id));
       tabBar.appendChild(btn);
 
       const panel = document.createElement('div');
-      panel.className = 'tab-panel' + (tab.id === 'overview' ? ' active' : '');
+      panel.className = 'tab-panel' + (tab.id === activeTabId ? ' active' : '');
       panel.id = 'panel_' + tab.id;
 
       if (tab.id === 'overview') {
@@ -2670,7 +2678,9 @@
     const allKeys = new Set();
     for (const { caseData } of matches) {
       const data = caseData[dataKey] || {};
-      Object.keys(data).filter(k => k !== 'avg').forEach(k => allKeys.add(k));
+      Object.entries(data)
+        .filter(([k, v]) => k !== 'avg' && v != null)
+        .forEach(([k]) => allKeys.add(k));
     }
     if (allKeys.size === 0) return '<div class="no-data-msg">此案件無此類指標資料。</div>';
 

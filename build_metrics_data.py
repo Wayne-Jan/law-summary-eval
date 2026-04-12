@@ -200,8 +200,6 @@ def extract_fact(fact_path: Path):
         summary = obj.get("summary", {})
         if summary and summary.get("recall") is not None:
             result = OrderedDict()
-            for out_key in FACT_KEYS:
-                result[out_key] = None
             result["avg"] = safe_float(summary.get("recall"))
             result["precision"] = safe_float(summary.get("precision"))
             result["f1"] = safe_float(summary.get("f1"))
@@ -213,8 +211,6 @@ def extract_fact(fact_path: Path):
         scores = report.get("scores", {})
         if scores.get("fact_recall") is not None:
             result = OrderedDict()
-            for out_key in FACT_KEYS:
-                result[out_key] = None
             result["avg"] = safe_float(scores.get("fact_recall"))
             result["precision"] = safe_float(scores.get("fact_precision"))
             result["f1"] = safe_float(scores.get("fact_f1"))
@@ -238,8 +234,6 @@ def extract_quality(quality_path: Path):
         scores = report.get("scores", {})
         if scores.get("quality_overall") is not None:
             result = OrderedDict()
-            for out_key in QUALITY_KEYS:
-                result[out_key] = None
             result["avg"] = safe_float(scores.get("quality_overall"))
             return result
     return None
