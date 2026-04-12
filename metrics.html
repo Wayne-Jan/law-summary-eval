@@ -1166,15 +1166,26 @@
     <div class="panel-hero">
       <div class="panel-kicker">維度分析</div>
       <div class="panel-title">用圖表看各維度的分布與差異</div>
-      <div class="panel-desc">啞鈴圖呈現各模型在事實涵蓋度（Precision / Recall / F1）的表現，熱力圖呈現寫作品質 14 個維度的分數分布。</div>
+      <div class="panel-desc">左側看事實涵蓋，右側看漏失事實的重要性；下方熱力圖呈現寫作品質 14 個維度的分數分布。</div>
     </div>
     <div class="analysis-section">
-      <h3 style="margin:1.5rem 0 0.5rem;font-size:1.1rem;color:var(--slate-700)">Fact Recall — 商用模型</h3>
-      <img id="analysisDbCommercial" src="" alt="Fact Recall Dumbbell — Commercial" style="width:100%;max-width:900px;margin:0 auto;display:block">
-      <h3 style="margin:1.5rem 0 0.5rem;font-size:1.1rem;color:var(--slate-700)">Fact Recall — 開源模型</h3>
-      <img id="analysisDbOpensource" src="" alt="Fact Recall Dumbbell — Open-Source" style="width:100%;max-width:900px;margin:0 auto;display:block">
-      <div style="text-align:center;margin:0.5rem 0 1.5rem">
-        <img id="analysisDbLegend" src="" alt="Dumbbell Legend" style="max-width:220px">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:1.75rem;align-items:start;">
+        <div>
+          <h3 style="margin:1.5rem 0 0.5rem;font-size:1.1rem;color:var(--slate-700)">Fact Recall — 商用模型</h3>
+          <img id="analysisDbCommercial" src="" alt="Fact Recall Dumbbell — Commercial" style="width:100%;max-width:900px;margin:0 auto;display:block">
+          <h3 style="margin:1.5rem 0 0.5rem;font-size:1.1rem;color:var(--slate-700)">Fact Recall — 開源模型</h3>
+          <img id="analysisDbOpensource" src="" alt="Fact Recall Dumbbell — Open-Source" style="width:100%;max-width:900px;margin:0 auto;display:block">
+          <div style="text-align:center;margin:0.5rem 0 1.5rem">
+            <img id="analysisDbLegend" src="" alt="Dumbbell Legend" style="max-width:220px">
+          </div>
+        </div>
+        <div>
+          <h3 style="margin:1.5rem 0 0.5rem;font-size:1.1rem;color:var(--slate-700)">Fact Coverage &amp; Omission Severity</h3>
+          <img id="analysisSeverityTrial" src="" alt="Fact Coverage &amp; Omission Severity" style="width:100%;max-width:980px;margin:0 auto;display:block">
+          <div style="text-align:center;margin:0.5rem 0 1.5rem">
+            <img id="analysisSeverityLegend" src="" alt="Omission Severity Legend" style="max-width:260px">
+          </div>
+        </div>
       </div>
       <h3 style="margin:1.5rem 0 0.5rem;font-size:1.1rem;color:var(--slate-700)">Quality 維度熱力圖</h3>
       <img id="analysisHeatmap" src="" alt="Quality Heatmap" style="width:100%;max-width:1000px;margin:0 auto;display:block">
@@ -1748,6 +1759,7 @@
   // Fact Recall: support both old (8 sub-dimensions) and new (claim-level) formats
   const FACT_LABELS = {
     avg: '召回率',
+    weighted_recall: '加權召回率',
     precision: '精確率',
     f1: 'F1',
     timeline_recall: '時間軸',
@@ -1761,6 +1773,7 @@
   };
   const FACT_TIPS = {
     avg: 'GT claims 中被摘要涵蓋的比例（matched + partial / total）',
+    weighted_recall: '依遺漏事實的重要性加權後的召回率；漏掉關鍵事實會扣更多分',
     precision: '摘要 claims 中有 GT 依據的比例（無 hallucination 越高）',
     f1: '召回率與精確率的調和平均',
     timeline_recall: '關鍵時間事件（就診、手術、轉診、死亡等）的召回率',
@@ -2794,7 +2807,7 @@
     const factSample = Object.values(cond.cases || {})[0]?.fact_recall || {};
     const isNewFactFormat = factSample.precision != null || factSample.f1 != null;
     const factKeys = isNewFactFormat
-      ? ['avg', 'precision', 'f1']
+      ? ['avg', 'weighted_recall', 'precision', 'f1']
       : ['timeline_recall', 'entity_recall', 'allegation_coverage', 'defense_recall', 'expert_opinion_recall', 'reasoning_coverage', 'causation_chain_recall', 'sentence_accuracy'];
     const factItems = factKeys.map(key => ({ key, label: FACT_LABELS[key] || key, tip: FACT_TIPS[key] || '' }));
     const qualityItems = Object.entries(QUALITY_LABELS).map(([key, label]) => ({ key, label, tip: QUALITY_TIPS[key] || '' }));
@@ -3228,10 +3241,13 @@
   function updateAnalysisFigures() {
     const vol = VOLUME_FIG_KEY[currentVolume] || 'upper';
     const base = 'figures/metric_heatmaps/';
+    const trialBase = 'figures/weighted_recall_trials/';
     const el = (id) => document.getElementById(id);
     el('analysisDbCommercial').src = base + vol + '_fact_recall_dumbbell_commercial_zoom.png';
     el('analysisDbOpensource').src = base + vol + '_fact_recall_dumbbell_opensource_zoom.png';
     el('analysisDbLegend').src = base + vol + '_fact_recall_dumbbell_legend.png';
+    el('analysisSeverityTrial').src = trialBase + vol + '_trial_omission_only.png';
+    el('analysisSeverityLegend').src = trialBase + vol + '_trial_omission_only_legend.png';
     el('analysisHeatmap').src = base + vol + '_quality_all_heatmap.png';
   }
 

@@ -1236,3 +1236,8 @@ if __name__ == "__main__":
     print()
     from build_metrics_data import main as build_metrics
     build_metrics()
+
+    # Rebuild static analysis figures consumed by metrics.html
+    print()
+    from scripts.build_analysis_figures import main as build_analysis_figures
+    build_analysis_figures()

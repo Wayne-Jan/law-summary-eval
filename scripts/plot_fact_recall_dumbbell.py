@@ -96,6 +96,21 @@ EXCLUDED_CONDITIONS = {
     "baseline_ollama_nemotron-3-super-cloud",  # 120B / 12A
 }
 
+CANONICAL_PRIORITY = {
+    "claude_afg_v5.1": 0,
+    "ablation_no_afg": 1,
+    "ablation_no_react": 2,
+    "baseline_claude-sonnet": 10,
+    "baseline_claude-haiku": 11,
+    "baseline_gpt-5.4-thinking": 12,
+    "baseline_gpt-5.3": 13,
+    "baseline_gemini-3.1-pro": 14,
+    "baseline_gemini-3.0-flash": 15,
+    "LENS-Full-DeepSeek_v31": 20,
+    "LENS-NoReact-DeepSeek_v31": 21,
+    "LENS-NoAFG-DeepSeek_v31": 22,
+}
+
 
 def classify_group(cond_key: str) -> str | None:
     """Return 'commercial', 'opensource', or None (excluded)."""
@@ -113,12 +128,14 @@ def classify_group(cond_key: str) -> str | None:
 
 
 def group_sort_key(cond_key: str, src_order: int) -> tuple:
-    """Within each split, LENS variants first, then baselines."""
-    if cond_key in ("claude_afg_v5.1", "ablation_no_afg", "ablation_no_react"):
-        return (0, src_order)  # LENS Haiku first in commercial
-    if cond_key.startswith("LENS-"):
-        return (0, src_order)  # LENS DeepSeek first in opensource
-    return (1, src_order)      # baselines after
+    """Match the metrics page ordering within each split."""
+    if cond_key in CANONICAL_PRIORITY:
+        return (CANONICAL_PRIORITY[cond_key], src_order)
+    if cond_key.startswith("baseline_ollama_"):
+        return (200, src_order)
+    if cond_key.startswith("baseline_"):
+        return (100, src_order)
+    return (300, src_order)
 
 
 def build_dataframe(snapshot: dict, target_group: str, sort_by: str,
@@ -150,7 +167,7 @@ def build_dataframe(snapshot: dict, target_group: str, sort_by: str,
         return df
     if sort_by == "source":
         df["_sort"] = df.apply(lambda r: group_sort_key(r["cond_key"], r["src_order"]), axis=1)
-        df = df.sort_values("_sort", ascending=False).drop(columns="_sort").reset_index(drop=True)
+        df = df.sort_values("_sort", ascending=True).drop(columns="_sort").reset_index(drop=True)
     else:
         df = df.sort_values(sort_by, ascending=True).reset_index(drop=True)
     return df
@@ -202,6 +219,7 @@ def plot_single(df: pd.DataFrame, title: str, zoom: bool,
 
     ax.set_yticks(list(range(n)))
     ax.set_yticklabels(df["label"], fontsize=9)
+    ax.invert_yaxis()
 
     x_lo = 0.4 if zoom else 0.0
     ax.set_xlim(x_lo, 1.06)

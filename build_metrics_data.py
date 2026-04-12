@@ -18,6 +18,7 @@ import sys
 from collections import OrderedDict
 from pathlib import Path
 from statistics import mean
+from functools import lru_cache
 
 
 REPO_ROOT = Path(__file__).resolve().parent
@@ -140,6 +141,26 @@ def mean_or_none(values):
     return mean(vals) if vals else None
 
 
+@lru_cache(maxsize=None)
+def load_local_case_eval_index():
+    index = {}
+    for cond_dir in DATA_DIR.iterdir():
+        if not cond_dir.is_dir():
+            continue
+        if cond_dir.name in {"gt"} or cond_dir.name.startswith("timeline"):
+            continue
+        for case_path in cond_dir.glob("case_*.json"):
+            obj = read_json(case_path)
+            if not obj:
+                continue
+            case_name = obj.get("case_name")
+            volume = obj.get("volume")
+            if not case_name or not volume:
+                continue
+            index[(cond_dir.name, volume, case_name)] = obj.get("eval") or {}
+    return index
+
+
 def load_existing_template():
     data = read_json(CURRENT_METRICS)
     if not data:
@@ -175,6 +196,15 @@ def extract_rule(rule_path: Path):
 
 
 def extract_fact(fact_path: Path):
+    local_eval = None
+    try:
+        case_name = fact_path.parents[1].name
+        volume = fact_path.parents[2].name
+        cond = fact_path.parents[3].name
+        local_eval = load_local_case_eval_index().get((cond, volume, case_name)) or {}
+    except IndexError:
+        local_eval = {}
+
     obj = read_json(fact_path)
     if obj:
         # Old format: metrics.{key}.score + overall_fact_recall
@@ -190,6 +220,9 @@ def extract_fact(fact_path: Path):
         if summary and summary.get("recall") is not None:
             result = OrderedDict()
             result["avg"] = safe_float(summary.get("recall"))
+            result["weighted_recall"] = safe_float(summary.get("weighted_recall"))
+            if result["weighted_recall"] is None:
+                result["weighted_recall"] = safe_float(local_eval.get("weighted_recall"))
             result["precision"] = safe_float(summary.get("precision"))
             result["f1"] = safe_float(summary.get("f1"))
             return result
@@ -201,9 +234,20 @@ def extract_fact(fact_path: Path):
         if scores.get("fact_recall") is not None:
             result = OrderedDict()
             result["avg"] = safe_float(scores.get("fact_recall"))
+            result["weighted_recall"] = safe_float(scores.get("weighted_recall"))
+            if result["weighted_recall"] is None:
+                result["weighted_recall"] = safe_float(local_eval.get("weighted_recall"))
             result["precision"] = safe_float(scores.get("fact_precision"))
             result["f1"] = safe_float(scores.get("fact_f1"))
             return result
+
+    if local_eval and local_eval.get("fact_recall") is not None:
+        result = OrderedDict()
+        result["avg"] = safe_float(local_eval.get("fact_recall"))
+        result["weighted_recall"] = safe_float(local_eval.get("weighted_recall"))
+        result["precision"] = safe_float(local_eval.get("fact_precision"))
+        result["f1"] = safe_float(local_eval.get("fact_f1"))
+        return result
     return None
 
 
@@ -332,6 +376,9 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
 
     avg_rule = mean_or_none(case["rule_based"].get("avg") for _, case in raw_cases if case["rule_based"])
     avg_fact = mean_or_none(case["fact_recall"].get("avg") for _, case in raw_cases if case["fact_recall"])
+    avg_weighted_fact = mean_or_none(
+        case["fact_recall"].get("weighted_recall") for _, case in raw_cases if case["fact_recall"]
+    )
     avg_quality = mean_or_none(case["quality"].get("avg") for _, case in raw_cases if case["quality"])
     avg_faithfulness = mean_or_none(
         case.get("faithfulness") for _, case in raw_cases if case.get("faithfulness") is not None
@@ -344,6 +391,7 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
     payload["averages"] = {
         "rule_based_avg": avg_rule,
         "fact_recall_avg": avg_fact,
+        "fact_weighted_recall_avg": avg_weighted_fact,
         "quality_avg": avg_quality,
         "faithfulness_avg": avg_faithfulness,
     }
