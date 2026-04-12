@@ -192,8 +192,10 @@ def load_rows(volume: str) -> pd.DataFrame:
     return df.sort_values(by="cond_key", key=lambda s: s.map(lambda x: sort_key(x))).reset_index(drop=True)
 
 
-def plot_omission_only(df: pd.DataFrame, volume: str, out_path: Path, dpi: int) -> None:
-    fig_h = max(4.0, 0.5 * len(df) + 1.6)
+def plot_omission_only(df: pd.DataFrame, volume: str, out_path: Path, dpi: int,
+                       group_label: str = "") -> None:
+    n = len(df)
+    fig_h = max(3.5, 0.45 * n + 1.0)
     fig, ax = plt.subplots(figsize=(12.8, fig_h))
     y = np.arange(len(df))
     left = np.zeros(len(df))
@@ -232,8 +234,9 @@ def plot_omission_only(df: pd.DataFrame, volume: str, out_path: Path, dpi: int) 
     ax.set_xlim(0, 100)
     ax.set_xticks(list(range(0, 101, 20)))
     ax.set_xlabel("Omitted GT Claims (%)", fontsize=10)
+    title_suffix = f" — {group_label}" if group_label else ""
     ax.set_title(
-        f"Fact Coverage & Omission Severity ({volume.title()})",
+        f"Fact Coverage & Omission Severity{title_suffix}  ({volume.title()})",
         fontsize=12,
         pad=12,
         color="#1e293b",
@@ -270,10 +273,19 @@ def main() -> int:
     if df.empty:
         raise SystemExit("No data")
     out_base = OUT_DIR
-    plot_omission_only(df, args.volume, out_base / f"{args.volume}_trial_omission_only.png", args.dpi)
-    save_legend(args.dpi, out_base / f"{args.volume}_trial_omission_only_legend.png")
-    print(out_base / f"{args.volume}_trial_omission_only.png")
-    print(out_base / f"{args.volume}_trial_omission_only_legend.png")
+
+    for grp, grp_label in [("commercial", "Commercial"), ("opensource", "Open-Source")]:
+        df_grp = df[df["group"] == grp].reset_index(drop=True)
+        if df_grp.empty:
+            print(f"  (skipped — no data for {grp_label})")
+            continue
+        out_path = out_base / f"{args.volume}_trial_omission_only_{grp}.png"
+        plot_omission_only(df_grp, args.volume, out_path, args.dpi, group_label=grp_label)
+        print(out_path)
+
+    legend_path = out_base / f"{args.volume}_trial_omission_only_legend.png"
+    save_legend(args.dpi, legend_path)
+    print(legend_path)
     return 0
 
 

@@ -131,5 +131,319 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7507,
+  "fact_recall": 0.731,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8446,
+  "quality_overall": 4.8714,
+  "checklist_pass_rate": 0.962,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9829,
+  "uncited_rate": 0.01,
+  "faithfulness_combined": {
+   "score": 0.994,
+   "citation_fidelity": 0.99,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 0.882,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 15
+  },
+  "weighted_recall": 0.8924,
+  "missing_severity": {
+   "critical": 1,
+   "important": 11,
+   "minor": 26,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 原文「案經檢察官起訴指出」而非「案經檢察官提起公訴」，雖語義相近但原文確實未使用「提起公訴」一詞。此為程序性事實，不影響案件實體理解",
+     "reason": "section_facts 原文「案經檢察官起訴指出」而非「案經檢察官提起公訴」，雖語義相近但原文確實未使用「提起公訴」一詞。此為程序性事實，不影響案件實體理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 原文中「且當時並無不能注意之情事」出現在檢察官指控內容中，但並非作為事實陳述，而是起訴理由的一部分。GT 中可能視為事實認定，但摘要中僅作為起訴觀點陳述，並非法院認定之事實",
+     "reason": "section_facts 原文中「且當時並無不能注意之情事」出現在檢察官指控內容中，但並非作為事實陳述，而是起訴理由的一部分。GT 中可能視為事實認定，但摘要中僅作為起訴觀點陳述，並非法院認定之事實"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions.txt僅記載反向條件『若病患X無法提供相關資訊，醫師自無從追查』，GT claim為正向條件『若提供有效線索而不追查則有疏失』，語義不同，確認missing",
+     "reason": "section_opinions.txt僅記載反向條件『若病患X無法提供相關資訊，醫師自無從追查』，GT claim為正向條件『若提供有效線索而不追查則有疏失』，語義不同，確認missing"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "critical",
+     "text": "section_04_verdict.txt 記載日期為「101年3月29日」，與GT「101年11月27日」不符，屬判決主文關鍵日期錯誤，影響判決身分識別",
+     "reason": "section_04_verdict.txt 記載日期為「101年3月29日」，與GT「101年11月27日」不符，屬判決主文關鍵日期錯誤，影響判決身分識別"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt CH_07雖提及『提出健保卡影本為憑』，但GT claim特別強調『二紙』數量細節，pred未明確對應此細節",
+     "reason": "section_05_reasoning.txt CH_07雖提及『提出健保卡影本為憑』，但GT claim特別強調『二紙』數量細節，pred未明確對應此細節"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "GT claim提及『告訴人之子跌倒外傷到C醫院打針過敏』之背景事實，遍查section_05_reasoning.txt確無此特定細節描述",
+     "reason": "GT claim提及『告訴人之子跌倒外傷到C醫院打針過敏』之背景事實，遍查section_05_reasoning.txt確無此特定細節描述"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt全文，確未提及『病患W送告訴人之子去中興醫院』之事實",
+     "reason": "遍查section_05_reasoning.txt全文，確未提及『病患W送告訴人之子去中興醫院』之事實"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『病患W在健保卡背面註明過敏資訊』之具體細節",
+     "reason": "遍查section_05_reasoning.txt，確未提及『病患W在健保卡背面註明過敏資訊』之具體細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『A醫院住院病歷紀錄是護理師Z打的』之人員分工細節",
+     "reason": "遍查section_05_reasoning.txt，確未提及『A醫院住院病歷紀錄是護理師Z打的』之人員分工細節"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『被告甲不會在急診處理事情』之工作範圍描述",
+     "reason": "遍查section_05_reasoning.txt，確未提及『被告甲不會在急診處理事情』之工作範圍描述"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『緊急狀況由值班住院醫師處理』之醫療分工流程",
+     "reason": "遍查section_05_reasoning.txt，確未提及『緊急狀況由值班住院醫師處理』之醫療分工流程"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『病房護理人員L專職照顧病人』之職務描述",
+     "reason": "遍查section_05_reasoning.txt，確未提及『病房護理人員L專職照顧病人』之職務描述"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『病房護理人員L於97年7月16日值大夜班』之具體排班細節",
+     "reason": "遍查section_05_reasoning.txt，確未提及『病房護理人員L於97年7月16日值大夜班』之具體排班細節"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查section_05_reasoning.txt，確未提及『97年7月16日大夜班期間未見被告甲到病房』之關鍵證人證詞",
+     "reason": "遍查section_05_reasoning.txt，確未提及『97年7月16日大夜班期間未見被告甲到病房』之關鍵證人證詞"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『病房護理人員L通知值班醫師探視』之處置流程",
+     "reason": "遍查section_05_reasoning.txt，確未提及『病房護理人員L通知值班醫師探視』之處置流程"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt CH_08提及『A醫院住院病歷紀錄』，但未特別提及『護理紀錄單等可憑』之具體證據類型",
+     "reason": "section_05_reasoning.txt CH_08提及『A醫院住院病歷紀錄』，但未特別提及『護理紀錄單等可憑』之具體證據類型"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查section_05_reasoning.txt，確未明確提及『被告甲與告訴人就此所證亦與事實不符』之證詞評價",
+     "reason": "遍查section_05_reasoning.txt，確未明確提及『被告甲與告訴人就此所證亦與事實不符』之證詞評價"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『J醫院病歷記載Ulex、Voren過敏』之歷史病歷細節",
+     "reason": "遍查section_05_reasoning.txt，確未提及『J醫院病歷記載Ulex、Voren過敏』之歷史病歷細節"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『B醫院病歷記載Ulex、Voren、Scanol過敏』之歷史病歷細節",
+     "reason": "遍查section_05_reasoning.txt，確未提及『B醫院病歷記載Ulex、Voren、Scanol過敏』之歷史病歷細節"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『96年1月9日至H耳鼻喉科診所告知多種藥物過敏』之歷史就醫紀錄",
+     "reason": "遍查section_05_reasoning.txt，確未提及『96年1月9日至H耳鼻喉科診所告知多種藥物過敏』之歷史就醫紀錄"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『藥品種類不完全相同』之比較細節",
+     "reason": "遍查section_05_reasoning.txt，確未提及『藥品種類不完全相同』之比較細節"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『96年3月29日至M醫院自訴NSAID過敏』之歷史就醫紀錄",
+     "reason": "遍查section_05_reasoning.txt，確未提及『96年3月29日至M醫院自訴NSAID過敏』之歷史就醫紀錄"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查section_05_reasoning.txt，雖有提及病患無法明確表示過敏，但未明確陳述『病患就醫時並非每次都會詳細告知過敏藥物名稱』之通用性事實",
+     "reason": "遍查section_05_reasoning.txt，雖有提及病患無法明確表示過敏，但未明確陳述『病患就醫時並非每次都會詳細告知過敏藥物名稱』之通用性事實"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『97年7月16日晚間7時18分救護人員出勤護送』之具體時間點",
+     "reason": "遍查section_05_reasoning.txt，確未提及『97年7月16日晚間7時18分救護人員出勤護送』之具體時間點"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查section_05_reasoning.txt，確未提及『救護人員詢問過敏未獲告知』之關鍵事實",
+     "reason": "遍查section_05_reasoning.txt，確未提及『救護人員詢問過敏未獲告知』之關鍵事實"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『臺北縣政府消防局救護紀錄表及函文』之具體證據名稱",
+     "reason": "遍查section_05_reasoning.txt，確未提及『臺北縣政府消防局救護紀錄表及函文』之具體證據名稱"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『護士T證稱急診輪值時詢問過敏病史』之證人證詞細節",
+     "reason": "遍查section_05_reasoning.txt，確未提及『護士T證稱急診輪值時詢問過敏病史』之證人證詞細節"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查section_05_reasoning.txt，確未提及『急診病歷首頁藥物過敏勾無』之關鍵文書細節",
+     "reason": "遍查section_05_reasoning.txt，確未提及『急診病歷首頁藥物過敏勾無』之關鍵文書細節"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『護士T親自問過病患有無過敏』之具體行為描述",
+     "reason": "遍查section_05_reasoning.txt，確未提及『護士T親自問過病患有無過敏』之具體行為描述"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt雖提及『病患X確無法明確表示個人抗生素過敏情事』，但GT claim強調『確曾有未做任何表示之情形』，二者語義不完全等同，維持missing",
+     "reason": "section_05_reasoning.txt雖提及『病患X確無法明確表示個人抗生素過敏情事』，但GT claim強調『確曾有未做任何表示之情形』，二者語義不完全等同，維持missing"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查section_05_reasoning.txt CH_08提及『問病人疾病史...病人沒有說對藥物，但有說對海鮮過敏』，但未明確提及『將海鮮過敏記載於先前病史欄位』之記錄位置細節",
+     "reason": "遍查section_05_reasoning.txt CH_08提及『問病人疾病史...病人沒有說對藥物，但有說對海鮮過敏』，但未明確提及『將海鮮過敏記載於先前病史欄位』之記錄位置細節"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查section_05_reasoning.txt，確未提及『若告知藥物過敏應記入獨立欄位而非病人自述無過敏』之邏輯推論",
+     "reason": "遍查section_05_reasoning.txt，確未提及『若告知藥物過敏應記入獨立欄位而非病人自述無過敏』之邏輯推論"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt CH_09提及『未敘明係對U-save A或何特定藥物過敏』，但未明確提及『未記載病患W對不明藥物過敏』之否定表述",
+     "reason": "遍查section_05_reasoning.txt CH_09提及『未敘明係對U-save A或何特定藥物過敏』，但未明確提及『未記載病患W對不明藥物過敏』之否定表述"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『醫師C就此記憶顯有錯誤』之證人能力評價",
+     "reason": "遍查section_05_reasoning.txt，確未提及『醫師C就此記憶顯有錯誤』之證人能力評價"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt CH_11提及『經檢察官送C醫院鑑定』，與GT claim『臺北V醫院』機構名稱不一致，無法確認為同一機構",
+     "reason": "section_05_reasoning.txt CH_11提及『經檢察官送C醫院鑑定』，與GT claim『臺北V醫院』機構名稱不一致，無法確認為同一機構"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『79年12月18日至A醫院初診』之歷史就醫日期",
+     "reason": "遍查section_05_reasoning.txt，確未提及『79年12月18日至A醫院初診』之歷史就醫日期"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查section_05_reasoning.txt，確未提及『A醫院函文及病歷冊封面可憑』之具體證據",
+     "reason": "遍查section_05_reasoning.txt，確未提及『A醫院函文及病歷冊封面可憑』之具體證據"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查section_05_reasoning.txt，確未明確提及『97年7月16日急診顯已非首次在該醫療單位就醫』之就醫歷史認定",
+     "reason": "遍查section_05_reasoning.txt，確未明確提及『97年7月16日急診顯已非首次在該醫療單位就醫』之就醫歷史認定"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 158,
+   "pred_total": 100,
+   "matched": 113,
+   "partial": 5,
+   "missing": 40,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.4309,
+  "compression_afg_chars": 4879,
+  "compression_source_chars": 8573,
+  "gt_length_ratio": 0.919,
+  "gt_length_afg_chars": 4879,
+  "gt_length_gt_chars": 5309,
+  "section_balance": 0.6604
+ }
 }
