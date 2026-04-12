@@ -2149,6 +2149,22 @@
             btn.textContent = String(idx + 1);
             btn.title = `${item.short_name || item.case_id} (${done}/${total})`;
             btn.addEventListener('click', async () => {
+                const isInspect = document.body.classList.contains('admin-inspect');
+                if (isInspect) {
+                    const effectivePairs = getEffectivePairs();
+                    if (!effectivePairs.length) return;
+                    const caseVotes = getVotes(currentEvaluator).filter(v => v.case_id === item.case_id);
+                    const selectedVote = caseVotes.length
+                        ? [...caseVotes].sort((a, b) => String(a.timestamp || '').localeCompare(String(b.timestamp || '')))[0]
+                        : null;
+                    if (selectedVote) {
+                        await loadPairForEdit(item.case_id, selectedVote.condition_a, selectedVote.condition_b, true);
+                        return;
+                    }
+                    const firstPair = effectivePairs[0];
+                    await loadPairForEdit(item.case_id, firstPair.condA, firstPair.condB, true);
+                    return;
+                }
                 pendingCaseOverride = item.case_id;
                 await loadNextPair();
             });
