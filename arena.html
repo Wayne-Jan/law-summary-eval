@@ -2244,7 +2244,10 @@
 
     function formatAdminTime(ts) {
         if (!ts) return '尚無資料';
-        return ts.replace('T', ' ').replace('Z', '');
+        try {
+            const d = new Date(ts);
+            return d.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12: false });
+        } catch { return ts; }
     }
 
     function calcAggregateElo(votes) {
@@ -2544,7 +2547,7 @@
                 if (ev.last_timestamp) {
                     const d = typeof ev.last_timestamp === 'string' ? new Date(ev.last_timestamp)
                         : ev.last_timestamp.toDate ? ev.last_timestamp.toDate() : new Date(ev.last_timestamp);
-                    lastTs = d.toLocaleString('zh-TW', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+                    lastTs = d.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12: false });
                 }
                 detail += `<tr><td>${escapeHtml(name)}</td><td>${votes}</td><td>${cases}</td><td>${completed}</td><td>${lastTs}</td></tr>`;
             }
@@ -2911,8 +2914,7 @@
         if (!iso) return '';
         try {
             const d = new Date(iso);
-            const pad = (n) => String(n).padStart(2, '0');
-            return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+            return d.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12: false });
         } catch { return iso; }
     }
 
