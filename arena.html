@@ -430,7 +430,8 @@
         body.is-admin .leaderboard-panel { display: none !important; }
         body.is-admin #userBadge,
         body.is-admin #progressBadge,
-        body.is-admin #btnAdminPanel { display: none !important; }
+        body.is-admin #btnAdminPanel,
+        body.is-admin #btnTimeline { display: none !important; }
 
         /* Admin read-only inspect: re-expose the arena view while admin panel hides */
         .admin-inspect-only { display: none !important; }
@@ -1489,7 +1490,6 @@
 <div class="toolbar">
     <h1>LENS Arena</h1>
     <span class="progress-badge" id="progressBadge">載入中...</span>
-    <select id="evalSelect" class="admin-or-inspect"></select>
     <span class="progress-badge" id="userBadge">未登入</span>
     <span class="admin-inspect-banner" id="adminInspectBanner">唯讀檢視</span>
     <span class="review-editing-banner" id="reviewEditingBanner">編輯模式</span>
@@ -1548,7 +1548,7 @@
             <div class="toolbar-shortcut-note">輸入理由時快捷鍵會自動停用。</div>
         </div>
     </div>
-    <button class="btn-sm" id="btnLogout">登出</button>
+    <button class="btn-sm" id="btnLogout"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2H3.5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1H6"/><path d="M10.5 11.5 14 8l-3.5-3.5M5.5 8H14"/></svg> 登出</button>
     <span class="progress-badge" id="cloudStatus">雲端狀態</span>
 </div>
 
@@ -2905,8 +2905,7 @@
         if (uid) await restoreArenaVotes(name, uid);
         else saveVotesForEvaluator(name, []);
         // Rebuild the evaluator dropdown selection
-        const sel = document.getElementById('evalSelect');
-        if (sel) sel.value = name;
+        // evalSelect removed — evaluator switching handled via admin matrix
         // Enter inspect mode and jump to the specific pair
         setAdminInspectMode(true);
         await loadPairForEdit(caseId, condA, condB, true);
@@ -3195,38 +3194,9 @@
         document.getElementById('btnLogout').addEventListener('click', logout);
     }
 
-    function initEvalSelector() {
-        const select = document.getElementById('evalSelect');
-        select.addEventListener('change', async () => {
-            const profile = getAuthProfile();
-            if (!profile || profile.role !== 'admin') return;
-            setEvaluator(select.value);
-            document.getElementById('userBadge').textContent = '管理員檢視 ' + currentEvaluator;
-            const uid = await lookupArenaUidByName(currentEvaluator);
-            if (uid) await restoreArenaVotes(currentEvaluator, uid);
-            else saveVotesForEvaluator(currentEvaluator, []);
-            // Enter read-only inspect mode so admin actually sees that evaluator's view
-            setAdminInspectMode(true);
-            updateProgress();
-            await loadNextPair();
-        });
-    }
-
-    function populateEvalSelector() {
-        const select = document.getElementById('evalSelect');
-        select.innerHTML = '';
-        const profile = getAuthProfile();
-        const evaluators = Object.keys(ARENA_USERS).filter(name => name !== 'admin');
-        const visibleEvaluators = profile && profile.role === 'admin' ? evaluators : [currentEvaluator];
-        visibleEvaluators.forEach(ev => {
-            const opt = document.createElement('option');
-            opt.value = ev;
-            opt.textContent = '評審 ' + ev;
-            if (ev === currentEvaluator) opt.selected = true;
-            select.appendChild(opt);
-        });
-        select.disabled = !(profile && profile.role === 'admin');
-    }
+    // evalSelect removed — evaluator switching handled via admin matrix
+    function initEvalSelector() {}
+    function populateEvalSelector() {}
 
     function applyAuthProfile(profile) {
         if (!profile) return;
