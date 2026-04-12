@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,95 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7704,
+  "fact_recall": 0.9398,
+  "fact_precision": 1.0,
+  "fact_f1": 0.969,
+  "quality_overall": 4.8714,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 0.9184,
+  "citation_support_score": 0.9093,
+  "uncited_rate": 0.033,
+  "faithfulness_combined": {
+   "score": 0.9329,
+   "citation_fidelity": 0.8881,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 23,
+   "correct": 23
+  },
+  "weighted_recall": 0.9753,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "所有section原文均未提及『代行告訴人』之程序性事實，屬訴訟背景資訊，不影響案情理解",
+     "reason": "所有section原文均未提及『代行告訴人』之程序性事實，屬訴訟背景資訊，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "『被告甲依其自身之專業智識、能力亦無不能注意之情事』係檢察官對被告注意能力之認定，section_05_reasoning.txt雖有過失認定但未明確觸及此項敘述，影響對注意義務成立要件之完整理解",
+     "reason": "『被告甲依其自身之專業智識、能力亦無不能注意之情事』係檢察官對被告注意能力之認定，section_05_reasoning.txt雖有過失認定但未明確觸及此項敘述，影響對注意義務成立要件之完整理解"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，均未見「法醫」或「法醫意見」之記載，確屬遺漏",
+     "reason": "遍查全部 5 個 section 原文，均未見「法醫」或「法醫意見」之記載，確屬遺漏"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部 5 個 section，未見明確記載「被告應注意冠狀動脈疾病乃是胸部不適症狀最重要之鑑別診斷之一」之法院論述；facts section 有檢察官起訴提及此點，但 reasoning section 未見法院重述或採納此論述作為判決理由",
+     "reason": "遍查全部 5 個 section，未見明確記載「被告應注意冠狀動脈疾病乃是胸部不適症狀最重要之鑑別診斷之一」之法院論述；facts section 有檢察官起訴提及此點，但 reasoning section 未見法院重述或採納此論述作為判決理由"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section，未見詳細記載病患L在F醫院病歷資料中特定日期（1月8、10、11、14、15、17、18日）之完整IV處方名稱（Alinamin-f Inj.、Deca Inj.、Tagament Inj.）；reasoning section 第三段僅提及「密集就診七次」，未詳列具體藥名",
+     "reason": "遍查全部 5 個 section，未見詳細記載病患L在F醫院病歷資料中特定日期（1月8、10、11、14、15、17、18日）之完整IV處方名稱（Alinamin-f Inj.、Deca Inj.、Tagament Inj.）；reasoning section 第三段僅提及「密集就診七次」，未詳列具體藥名"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section，未見明確記載「於89年1月22日更易為Tagament Inj.、Deca Inj.」之處方變更描述；reasoning section 第三段提及「更易為Tagamet inj、Deca inj」，但拼寫略有差異（Tagament vs Tagamet），且未明確標註為1月22日之變更",
+     "reason": "遍查全部 5 個 section，未見明確記載「於89年1月22日更易為Tagament Inj.、Deca Inj.」之處方變更描述；reasoning section 第三段提及「更易為Tagamet inj、Deca inj」，但拼寫略有差異（Tagament vs Tagamet），且未明確標註為1月22日之變更"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 130,
+   "matched": 98,
+   "partial": 7,
+   "missing": 3,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6469,
+  "compression_afg_chars": 4145,
+  "compression_source_chars": 11739,
+  "gt_length_ratio": 1.0157,
+  "gt_length_afg_chars": 4145,
+  "gt_length_gt_chars": 4081,
+  "section_balance": 0.9412
+ }
 }

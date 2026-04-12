@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -143,5 +144,214 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8564,
+  "fact_recall": 0.7913,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8835,
+  "quality_overall": 4.8857,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 0.9688,
+  "citation_support_score": 0.9441,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9813,
+   "citation_fidelity": 0.9688,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 22
+  },
+  "weighted_recall": 0.9101,
+  "missing_severity": {
+   "critical": 2,
+   "important": 4,
+   "minor": 17,
+   "details": [
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 僅提及『下午之電腦斷層可見造影劑仍留在膽道及膽囊』與『當日13時施行ENBD』，未明確提及『急性壞死性胰臟炎』於下午1時許證實；section_01_facts.txt 雖有『壞死性胰臟炎』但時間為上午9時，與GT claim時間不符",
+     "reason": "section_02_defense.txt 僅提及『下午之電腦斷層可見造影劑仍留在膽道及膽囊』與『當日13時施行ENBD』，未明確提及『急性壞死性胰臟炎』於下午1時許證實；section_01_facts.txt 雖有『壞死性胰臟炎』但時間為上午9時，與GT claim時間不符"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 僅提及 ERCP，未完整提及手術名稱全部細節（膽胰管擴約肌切開術及總膽管結石取出術），屬技術性細節",
+     "reason": "section_opinions.txt 僅提及 ERCP，未完整提及手術名稱全部細節（膽胰管擴約肌切開術及總膽管結石取出術），屬技術性細節"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及 ERCP 併發症完整列表，屬背景醫學知識",
+     "reason": "section_opinions.txt 未提及 ERCP 併發症完整列表，屬背景醫學知識"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及胰臟炎 5% 發生機率統計數據，該數據見於其他 section",
+     "reason": "section_opinions.txt 未提及胰臟炎 5% 發生機率統計數據，該數據見於其他 section"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及壞死性胰臟炎 0.4～0.6% 機率，該數據見於其他 section",
+     "reason": "section_opinions.txt 未提及壞死性胰臟炎 0.4～0.6% 機率，該數據見於其他 section"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及壞死性膽囊炎 0.2～0.5% 機率，該數據見於其他 section",
+     "reason": "section_opinions.txt 未提及壞死性膽囊炎 0.2～0.5% 機率，該數據見於其他 section"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及 0.49% 死亡率，該數據見於其他 section",
+     "reason": "section_opinions.txt 未提及 0.49% 死亡率，該數據見於其他 section"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及 ERCP 引發胰臟炎 1～7% 併發症機率",
+     "reason": "section_opinions.txt 未提及 ERCP 引發胰臟炎 1～7% 併發症機率"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及治療性 ERCP 死亡機率 0.4%",
+     "reason": "section_opinions.txt 未提及治療性 ERCP 死亡機率 0.4%"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未明確提及細菌培養的適應症條件（發燒、感染跡象、壞死性胰臟炎）",
+     "reason": "section_opinions.txt 未明確提及細菌培養的適應症條件（發燒、感染跡象、壞死性胰臟炎）"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及 ENBD 引流管與一般手術後引流管目的不同，此內容見於 section_reasoning.txt",
+     "reason": "section_opinions.txt 未提及 ENBD 引流管與一般手術後引流管目的不同，此內容見於 section_reasoning.txt"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 未提及向醫師報告及囑咐進行 KUB 檢查的過程，此內容見於 section_reasoning.txt",
+     "reason": "section_opinions.txt 未提及向醫師報告及囑咐進行 KUB 檢查的過程，此內容見於 section_reasoning.txt"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，檢視全部5個section原文均未提及「被告、檢察官於法定上訴期間未上訴」",
+     "reason": "程序性事實，檢視全部5個section原文均未提及「被告、檢察官於法定上訴期間未上訴」"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，檢視全部5個section原文均未提及「本案判決即確定」",
+     "reason": "程序性事實，檢視全部5個section原文均未提及「本案判決即確定」"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "死因（急性壞死性膽囊炎及胰臟炎併發腹膜炎）是判決核心事實，section_reasoning雖提及死亡結果但未明確載明具體死因機轉，影響判決理由完整性理解",
+     "reason": "死因（急性壞死性膽囊炎及胰臟炎併發腹膜炎）是判決核心事實，section_reasoning雖提及死亡結果但未明確載明具體死因機轉，影響判決理由完整性理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "ERCP等手術名稱雖見於facts段落，但reasoning段落未明確複述被告施行之具體手術內容，影響因果關係論述完整性",
+     "reason": "ERCP等手術名稱雖見於facts段落，但reasoning段落未明確複述被告施行之具體手術內容，影響因果關係論述完整性"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "胰臟炎發生機率（5%）為背景醫學統計數據，屬補充性資訊，reasoning段落未提及不影響過失判斷核心邏輯",
+     "reason": "胰臟炎發生機率（5%）為背景醫學統計數據，屬補充性資訊，reasoning段落未提及不影響過失判斷核心邏輯"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "壞死性胰臟炎機率（0.4～0.6%）為背景醫學統計數據，屬補充性資訊，reasoning段落未提及不影響過失判斷核心邏輯",
+     "reason": "壞死性胰臟炎機率（0.4～0.6%）為背景醫學統計數據，屬補充性資訊，reasoning段落未提及不影響過失判斷核心邏輯"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "壞死性膽囊炎機率（0.2～0.5%）為背景醫學統計數據，屬補充性資訊，reasoning段落未提及不影響過失判斷核心邏輯",
+     "reason": "壞死性膽囊炎機率（0.2～0.5%）為背景醫學統計數據，屬補充性資訊，reasoning段落未提及不影響過失判斷核心邏輯"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "手術死亡率（0.49%）為背景醫學統計數據，屬補充性資訊，reasoning段落未提及不影響過失判斷核心邏輯",
+     "reason": "手術死亡率（0.49%）為背景醫學統計數據，屬補充性資訊，reasoning段落未提及不影響過失判斷核心邏輯"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "注意義務的具體基礎（醫療專業知識及客觀環境）是過失認定的重要前提，reasoning雖有提及「依專業知識」但未完整對應GT claim的表述",
+     "reason": "注意義務的具體基礎（醫療專業知識及客觀環境）是過失認定的重要前提，reasoning雖有提及「依專業知識」但未完整對應GT claim的表述"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告了解膽汁引流必要性之事實認定，是後續論證其應照會外科的關鍵前提，reasoning段落未明確提及此認知狀態",
+     "reason": "被告了解膽汁引流必要性之事實認定，是後續論證其應照會外科的關鍵前提，reasoning段落未明確提及此認知狀態"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "具體死因（急性壞死性膽囊炎）是判決核心事實，reasoning段落僅泛稱「死亡結果」而未明確載明死因，影響判決理由完整性理解",
+     "reason": "具體死因（急性壞死性膽囊炎）是判決核心事實，reasoning段落僅泛稱「死亡結果」而未明確載明死因，影響判決理由完整性理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 115,
+   "pred_total": 83,
+   "matched": 90,
+   "partial": 2,
+   "missing": 23,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7538,
+  "compression_afg_chars": 3180,
+  "compression_source_chars": 12918,
+  "gt_length_ratio": 0.7622,
+  "gt_length_afg_chars": 3180,
+  "gt_length_gt_chars": 4172,
+  "section_balance": 0.6667
+ }
 }

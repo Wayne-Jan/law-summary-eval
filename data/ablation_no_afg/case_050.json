@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -151,5 +152,130 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8726,
+  "fact_recall": 0.8811,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9368,
+  "quality_overall": 4.9143,
+  "checklist_pass_rate": 0.9893,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9913,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 29,
+   "correct": 29
+  },
+  "weighted_recall": 0.9557,
+  "missing_severity": {
+   "critical": 1,
+   "important": 6,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查全部5個section，僅見『透過護理師A急電召』、『呼叫被告』等描述，未見『院內每位醫生均配有呼叫器』或『總機的呼叫系統』之記載。此為醫院設施背景細節，非影響判決理解的關鍵事實。",
+     "reason": "遍查全部5個section，僅見『透過護理師A急電召』、『呼叫被告』等描述，未見『院內每位醫生均配有呼叫器』或『總機的呼叫系統』之記載。此為醫院設施背景細節，非影響判決理解的關鍵事實。"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense確實未提及被告坦認係C醫院外科醫師、為病患H病症之主治醫師及主刀醫師的身份供述，僅於section_facts提及簡要身份",
+     "reason": "section_defense確實未提及被告坦認係C醫院外科醫師、為病患H病症之主治醫師及主刀醫師的身份供述，僅於section_facts提及簡要身份"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense有「已盡力處置並無任何疏失」的實質內容，但缺少明確的「否認有何業務過失傷害犯行」法律表述",
+     "reason": "section_defense有「已盡力處置並無任何疏失」的實質內容，但缺少明確的「否認有何業務過失傷害犯行」法律表述"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense僅提「因義務衝突無法立刻離開門診」，未明確提及「術後即離開手術室，進行當日之門診」的事實起點",
+     "reason": "section_defense僅提「因義務衝突無法立刻離開門診」，未明確提及「術後即離開手術室，進行當日之門診」的事實起點"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense確實未提及內出血時點不明確、距離第二次開刀時間不會太久的評估，屬被告辯護的關鍵時間論證",
+     "reason": "section_defense確實未提及內出血時點不明確、距離第二次開刀時間不會太久的評估，屬被告辯護的關鍵時間論證"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense僅提及第二次鑑定書，未提及「第一次鑑定書未盡詳備」的評價，影響對兩次鑑定對比的完整理解",
+     "reason": "section_defense僅提及第二次鑑定書，未提及「第一次鑑定書未盡詳備」的評價，影響對兩次鑑定對比的完整理解"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "「臺灣臺中地方法院」及「民國94年12月22日」之判決法院與日期資訊未見於摘要任何段落，屬程序性背景資訊",
+     "reason": "「臺灣臺中地方法院」及「民國94年12月22日」之判決法院與日期資訊未見於摘要任何段落，屬程序性背景資訊"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「接二連三呼叫時更應提高注意」此特定價值判斷論述確實未見於摘要，僅有呼叫時間次數之客觀記載",
+     "reason": "「接二連三呼叫時更應提高注意」此特定價值判斷論述確實未見於摘要，僅有呼叫時間次數之客觀記載"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「更無辯護意旨所謂已澄清病人病情與被告之處置無因果關係之情事」此加強語氣之否定論述摘要未明確提及",
+     "reason": "「更無辯護意旨所謂已澄清病人病情與被告之處置無因果關係之情事」此加強語氣之否定論述摘要未明確提及"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「被告及辯護意旨所辯，均不足採信」之整體結論句未見於摘要，僅分散於各部分之「不足採信」",
+     "reason": "「被告及辯護意旨所辯，均不足採信」之整體結論句未見於摘要，僅分散於各部分之「不足採信」"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「本件事證明確，被告犯行堪以認定，應予依法論科」之最終論罪結論完全遺漏，影響判決主文理解",
+     "reason": "「本件事證明確，被告犯行堪以認定，應予依法論科」之最終論罪結論完全遺漏，影響判決主文理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 143,
+   "pred_total": 132,
+   "matched": 120,
+   "partial": 12,
+   "missing": 11,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5314,
+  "compression_afg_chars": 5249,
+  "compression_source_chars": 11201,
+  "gt_length_ratio": 0.8396,
+  "gt_length_afg_chars": 5249,
+  "gt_length_gt_chars": 6252,
+  "section_balance": 0.6667
+ }
 }

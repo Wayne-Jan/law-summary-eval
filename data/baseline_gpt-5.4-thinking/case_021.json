@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -131,5 +132,130 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8275,
+  "fact_recall": 0.8631,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9265,
+  "quality_overall": 4.9714,
+  "checklist_pass_rate": 1.0,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9423,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.9524,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 雖提及「法醫解剖鑑定」，但未明確提及「法務部法醫研究所解剖報告書及鑑定報告書各1份」之文件數量與名稱，屬程序性文件記載遺漏",
+     "reason": "section_03_opinions.txt 雖提及「法醫解剖鑑定」，但未明確提及「法務部法醫研究所解剖報告書及鑑定報告書各1份」之文件數量與名稱，屬程序性文件記載遺漏"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要提及「急性缺氧致缺氧性腦症併發肺炎而多重器官衰竭死亡」之死因描述，「病死/自然死」之法醫學死亡方式分類未明確出現，屬專業分類細節遺漏",
+     "reason": "摘要提及「急性缺氧致缺氧性腦症併發肺炎而多重器官衰竭死亡」之死因描述，「病死/自然死」之法醫學死亡方式分類未明確出現，屬專業分類細節遺漏"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 提及「具足夠設備之治療單位」，但「插管工具、急救藥物及人工換氣設備」等具體設備清單未逐項列出，屬細節性列舉遺漏",
+     "reason": "section_03_opinions.txt 提及「具足夠設備之治療單位」，但「插管工具、急救藥物及人工換氣設備」等具體設備清單未逐項列出，屬細節性列舉遺漏"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「血壓血氧無法量測」，section_03_opinions.txt 提及「收縮壓下降」，但「血壓血氧下降至無法偵測」之完整描述未明確呈現，屬醫療狀況重要細節遺漏",
+     "reason": "section_01_facts.txt 提及「血壓血氧無法量測」，section_03_opinions.txt 提及「收縮壓下降」，但「血壓血氧下降至無法偵測」之完整描述未明確呈現，屬醫療狀況重要細節遺漏"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 與 section_05_reasoning.txt 概括提及急救程序「不符合醫學專業要求與規範」，但未明確區分「於其他救護人員抵達現場前」之時間節點，屬時間細節遺漏",
+     "reason": "section_03_opinions.txt 與 section_05_reasoning.txt 概括提及急救程序「不符合醫學專業要求與規範」，但未明確區分「於其他救護人員抵達現場前」之時間節點，屬時間細節遺漏"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷」之鑑定意見細節，屬鑑定報告內容遺漏",
+     "reason": "五個 section 原文均未提及「導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷」之鑑定意見細節，屬鑑定報告內容遺漏"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 與 section_05_reasoning.txt 概括提及處置「不符合醫學專業要求與規範」，但未明確列出「麻醉評估、麻醉後生理反應處置」等具體項目，屬細節列舉遺漏",
+     "reason": "section_03_opinions.txt 與 section_05_reasoning.txt 概括提及處置「不符合醫學專業要求與規範」，但未明確列出「麻醉評估、麻醉後生理反應處置」等具體項目，屬細節列舉遺漏"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "「簡式審判程序」相關程序性描述未出現於任何section之摘要中，屬程序性事實",
+     "reason": "「簡式審判程序」相關程序性描述未出現於任何section之摘要中，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "「撤回告訴」之具體表述未出現於任何section，僅reasoning段提及家屬「希望給被告甲一個機會」，未明確表示撤回告訴",
+     "reason": "「撤回告訴」之具體表述未出現於任何section，僅reasoning段提及家屬「希望給被告甲一個機會」，未明確表示撤回告訴"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "「上訴期間」、「確定」等判決確定性資訊未出現於任何section之摘要中",
+     "reason": "「上訴期間」、「確定」等判決確定性資訊未出現於任何section之摘要中"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section，均未提及「被告、檢察官於法定上訴期間未上訴，本案判決即確定」。此為程序性事實，不影響案情實體理解。",
+     "reason": "經查全部5個section，均未提及「被告、檢察官於法定上訴期間未上訴，本案判決即確定」。此為程序性事實，不影響案情實體理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 84,
+   "pred_total": 37,
+   "matched": 72,
+   "partial": 1,
+   "missing": 11,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6027,
+  "compression_afg_chars": 1731,
+  "compression_source_chars": 4357,
+  "gt_length_ratio": 0.5741,
+  "gt_length_afg_chars": 1731,
+  "gt_length_gt_chars": 3015,
+  "section_balance": 0.625
+ }
 }

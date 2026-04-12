@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,81 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7973,
+  "fact_recall": 0.8966,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9455,
+  "quality_overall": 4.7857,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.985,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 25
+  },
+  "weighted_recall": 0.9713,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查全部5個section，均未提及X護士、R護士不起訴處分之程序性事實，屬背景性資訊不影響案情核心理解",
+     "reason": "遍查全部5個section，均未提及X護士、R護士不起訴處分之程序性事實，屬背景性資訊不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部5個section，雖有過失相關論述，但未明確出現「依當時之客觀狀況並無不能注意之情事」之過失責任構成要件表述，影響對過失認定的完整理解",
+     "reason": "遍查全部5個section，雖有過失相關論述，但未明確出現「依當時之客觀狀況並無不能注意之情事」之過失責任構成要件表述，影響對過失認定的完整理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "reasoning段落雖提及「簡式審判程序」，但未涵蓋「合議庭裁定由受命法官獨任」之具體程序細節，verdict段落亦未提及",
+     "reason": "reasoning段落雖提及「簡式審判程序」，但未涵蓋「合議庭裁定由受命法官獨任」之具體程序細節，verdict段落亦未提及"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "上訴期間及判決確定之程序事實未於任何section原文提及",
+     "reason": "上訴期間及判決確定之程序事實未於任何section原文提及"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 58,
+   "pred_total": 51,
+   "matched": 50,
+   "partial": 4,
+   "missing": 4,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.3938,
+  "compression_afg_chars": 1441,
+  "compression_source_chars": 2377,
+  "gt_length_ratio": 0.94,
+  "gt_length_afg_chars": 1441,
+  "gt_length_gt_chars": 1533,
+  "section_balance": 0.75
+ }
 }

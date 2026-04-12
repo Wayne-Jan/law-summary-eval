@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -131,5 +132,144 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7015,
+  "fact_recall": 0.801,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8895,
+  "quality_overall": 4.5857,
+  "checklist_pass_rate": 0.962,
+  "citation_accuracy": 0.96,
+  "citation_support_score": 0.9594,
+  "uncited_rate": 0.012,
+  "faithfulness_combined": {
+   "score": 0.9691,
+   "citation_fidelity": 0.9485,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 20,
+   "correct": 20
+  },
+  "weighted_recall": 0.9456,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "轉診建議雖在defense段提及「建議轉診進一步檢查」，但「臺北M醫院」名稱未見，且屬病程關鍵轉折",
+     "reason": "轉診建議雖在defense段提及「建議轉診進一步檢查」，但「臺北M醫院」名稱未見，且屬病程關鍵轉折"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "心臟主治醫師駐診C診所及轉院要求細節未在任何section提及，屬轉診過程背景資訊",
+     "reason": "心臟主治醫師駐診C診所及轉院要求細節未在任何section提及，屬轉診過程背景資訊"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "C診所婉拒理由未在任何section提及，屬轉診過程背景資訊",
+     "reason": "C診所婉拒理由未在任何section提及，屬轉診過程背景資訊"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "改轉至S醫院過程未完整呈現，僅defense段提及「轉至B醫院」，屬轉診路徑細節",
+     "reason": "改轉至S醫院過程未完整呈現，僅defense段提及「轉至B醫院」，屬轉診路徑細節"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "轉至S醫院具體時間「下午約三時許」未在任何section提及，僅日期（3月23日）有提及",
+     "reason": "轉至S醫院具體時間「下午約三時許」未在任何section提及，僅日期（3月23日）有提及"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經檢視全五段 section 原文，均未提及「腹部抽脂手術是用小傷口進行、需靠血液凝固及外在加壓止血」之特殊止血特性說明，確認維持 missing，此乃被告辯護時的醫療技術背景說明，屬次要資訊",
+     "reason": "經檢視全五段 section 原文，均未提及「腹部抽脂手術是用小傷口進行、需靠血液凝固及外在加壓止血」之特殊止血特性說明，確認維持 missing，此乃被告辯護時的醫療技術背景說明，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經檢視全五段 section 原文，均未提及「被告甲恐症狀加劇轉變成腹膜炎而有進一步剖腹探查之可能，故仔細檢查其之腹部不敢有所怠忽」之辯詞，確認維持 missing，此乃被告強調其謹慎檢查的論述",
+     "reason": "經檢視全五段 section 原文，均未提及「被告甲恐症狀加劇轉變成腹膜炎而有進一步剖腹探查之可能，故仔細檢查其之腹部不敢有所怠忽」之辯詞，確認維持 missing，此乃被告強調其謹慎檢查的論述"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要僅提及「此種併發症在臨床上極為罕見」，但未提及教科書及文獻記載，屬次要背景資訊",
+     "reason": "生成摘要僅提及「此種併發症在臨床上極為罕見」，但未提及教科書及文獻記載，屬次要背景資訊"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "GT記載當時診斷為「上腸胃道出血」，但生成摘要僅於被告回應段提及「疑有上消化道出血」（非確定診斷），遺漏確切診斷結果影響案情理解",
+     "reason": "GT記載當時診斷為「上腸胃道出血」，但生成摘要僅於被告回應段提及「疑有上消化道出血」（非確定診斷），遺漏確切診斷結果影響案情理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "GT記載三月二十五日胃鏡結果為「只見有一些淺的潰瘍」，生成摘要雖提及「經胃鏡」但未記載此檢查結果，影響對B醫院診斷過程的完整理解",
+     "reason": "GT記載三月二十五日胃鏡結果為「只見有一些淺的潰瘍」，生成摘要雖提及「經胃鏡」但未記載此檢查結果，影響對B醫院診斷過程的完整理解"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要提及「此種併發症在臨床上極為罕見」，但未說明係因「從未見過會是小腸穿孔導致皮下發炎及敗血症」，屬次要解釋性資訊",
+     "reason": "生成摘要提及「此種併發症在臨床上極為罕見」，但未說明係因「從未見過會是小腸穿孔導致皮下發炎及敗血症」，屬次要解釋性資訊"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，所有 section 均未提及上訴狀況",
+     "reason": "程序性事實，所有 section 均未提及上訴狀況"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，所有 section 均未提及判決確定狀態",
+     "reason": "程序性事實，所有 section 均未提及判決確定狀態"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 98,
+   "pred_total": 81,
+   "matched": 72,
+   "partial": 13,
+   "missing": 13,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5284,
+  "compression_afg_chars": 2403,
+  "compression_source_chars": 5095,
+  "gt_length_ratio": 0.7421,
+  "gt_length_afg_chars": 2403,
+  "gt_length_gt_chars": 3238,
+  "section_balance": 0.6667
+ }
 }

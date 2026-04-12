@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -139,5 +140,102 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8209,
+  "fact_recall": 0.84,
+  "fact_precision": 1.0,
+  "fact_f1": 0.913,
+  "quality_overall": 4.8,
+  "checklist_pass_rate": 0.9892,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.9467,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 提到『投資人甲原擬...』但未明確將『病患X』與『投資人』等同起來，兩者關聯未被建立",
+     "reason": "section_01_facts.txt 提到『投資人甲原擬...』但未明確將『病患X』與『投資人』等同起來，兩者關聯未被建立"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，屬判決後續上訴程序狀態，不影響案情核心理解",
+     "reason": "程序性事實，屬判決後續上訴程序狀態，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，屬判決確定狀態，遍查全文五段均未提及",
+     "reason": "程序性事實，屬判決確定狀態，遍查全文五段均未提及"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts.txt雖提及「診所尚未開幕、籌備中」，但係記載「被告甲於警詢及偵查中坦承」，並非「證人A證述」之證據來源，維持missing",
+     "reason": "section_facts.txt雖提及「診所尚未開幕、籌備中」，但係記載「被告甲於警詢及偵查中坦承」，並非「證人A證述」之證據來源，維持missing"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts.txt雖提及「術前僅做抽血及量血壓檢查」，但係起訴意旨之客觀記載，未明確標示為「證人A證述」之證詞內容，維持missing",
+     "reason": "section_facts.txt雖提及「術前僅做抽血及量血壓檢查」，但係起訴意旨之客觀記載，未明確標示為「證人A證述」之證詞內容，維持missing"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_opinions.txt雖提及「未留下任何病歷」，但係醫事審議意見之綜合認定，並非「證人B證述」之具體證詞，且未提及「護士紀錄」部分，維持missing",
+     "reason": "section_opinions.txt雖提及「未留下任何病歷」，但係醫事審議意見之綜合認定，並非「證人B證述」之具體證詞，且未提及「護士紀錄」部分，維持missing"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning.txt雖提及「被告甲前有違反醫師法之前科」及「曾因故意犯罪受判決並經宣告緩刑」，但未明確記載「臺灣高等法院被告前案紀錄表」此一證據文件名稱，維持missing",
+     "reason": "section_reasoning.txt雖提及「被告甲前有違反醫師法之前科」及「曾因故意犯罪受判決並經宣告緩刑」，但未明確記載「臺灣高等法院被告前案紀錄表」此一證據文件名稱，維持missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 50,
+   "pred_total": 47,
+   "matched": 41,
+   "partial": 2,
+   "missing": 7,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5188,
+  "compression_afg_chars": 1500,
+  "compression_source_chars": 3117,
+  "gt_length_ratio": 1.2265,
+  "gt_length_afg_chars": 1500,
+  "gt_length_gt_chars": 1223,
+  "section_balance": 0.6
+ }
 }

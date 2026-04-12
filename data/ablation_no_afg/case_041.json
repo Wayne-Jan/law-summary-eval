@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,74 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6982,
+  "fact_recall": 0.9313,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9644,
+  "quality_overall": 4.8714,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9719,
+  "uncited_rate": 0.1721,
+  "faithfulness_combined": {
+   "score": 0.8967,
+   "citation_fidelity": 0.8279,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 0.938,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 30
+  },
+  "weighted_recall": 0.9873,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 1,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「醫師乙任職於新竹市N綜合醫院」並非本案核心人物（本案核心為被告甲），屬背景性資訊，未影響案情理解",
+     "reason": "「醫師乙任職於新竹市N綜合醫院」並非本案核心人物（本案核心為被告甲），屬背景性資訊，未影響案情理解"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "全文未見「證人乙證述明確」搭配「法醫中心鑑定書」之完整表述，僅分散提及證人證述，無此組合语句",
+     "reason": "全文未見「證人乙證述明確」搭配「法醫中心鑑定書」之完整表述，僅分散提及證人證述，無此組合语句"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "全文引用「法務部法醫研究所」而非「高等法院檢察署法醫中心」，機構名稱不同，GT 特定表述確實未出現",
+     "reason": "全文引用「法務部法醫研究所」而非「高等法院檢察署法醫中心」，機構名稱不同，GT 特定表述確實未出現"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 131,
+   "pred_total": 122,
+   "matched": 116,
+   "partial": 12,
+   "missing": 3,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.3201,
+  "compression_afg_chars": 5318,
+  "compression_source_chars": 7822,
+  "gt_length_ratio": 0.9407,
+  "gt_length_afg_chars": 5318,
+  "gt_length_gt_chars": 5653,
+  "section_balance": 0.95
+ }
 }

@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,270 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.5816,
+  "fact_recall": 0.6701,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8025,
+  "quality_overall": 4.4429,
+  "checklist_pass_rate": 0.9351,
+  "citation_accuracy": 0.8857,
+  "citation_support_score": 0.8429,
+  "uncited_rate": 0.022,
+  "faithfulness_combined": {
+   "score": 0.9197,
+   "citation_fidelity": 0.8662,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.9,
+  "numerical_detail": {
+   "total_numerical": 20,
+   "correct": 18
+  },
+  "weighted_recall": 0.8419,
+  "missing_severity": {
+   "critical": 2,
+   "important": 11,
+   "minor": 18,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「住院待產」，未明確記載「產前檢查」之事實，屬背景性事實不影響案情理解",
+     "reason": "section_01_facts.txt 僅提及「住院待產」，未明確記載「產前檢查」之事實，屬背景性事實不影響案情理解"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 為被告辯護內容，聚焦於「否認使用真空吸引器」及「凝血功能異常抗辯」，並未提及產婦A於90年10月23日10時許前往H診所待產之時間與事件。雖section_facts.txt載有「病患X之妻於民國90年10月23日上午10時許...至皓生診所住院待產」，但此乃事實段內容。GT claim 29標註來源為defense section，經查defense段確無此資訊，維持missing判定。此為事實背景資訊，屬次要事實。",
+     "reason": "section_defense.txt 為被告辯護內容，聚焦於「否認使用真空吸引器」及「凝血功能異常抗辯」，並未提及產婦A於90年10月23日10時許前往H診所待產之時間與事件。雖section_facts.txt載有「病患X之妻於民國90年10月23日上午10時許...至皓生診所住院待產」，但此乃事實段內容。GT claim 29標註來源為defense section，經查defense段確無此資訊，維持missing判定。此為事實背景資訊，屬次要事實。"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文五㈤確實提及兩份鑑定書（92/04/22及94/01/27），但此為程序性細節，不影響案情核心理解",
+     "reason": "原文五㈤確實提及兩份鑑定書（92/04/22及94/01/27），但此為程序性細節，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文未完整附錄鑑定意見內容，摘要未提及此程序性事實，屬次要資訊",
+     "reason": "原文未完整附錄鑑定意見內容，摘要未提及此程序性事實，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "原文三㈢⒈明確記載「右頭側16X14公分血腫」，屬解剖鑑定之重要醫學發現，影響對傷勢範圍之理解",
+     "reason": "原文三㈢⒈明確記載「右頭側16X14公分血腫」，屬解剖鑑定之重要醫學發現，影響對傷勢範圍之理解"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文三㈢⒈記載「右小腿前下部5X3公分點狀出血點（注射所致）」，此為注射所致之次要發現，與死因無直接關係",
+     "reason": "原文三㈢⒈記載「右小腿前下部5X3公分點狀出血點（注射所致）」，此為注射所致之次要發現，與死因無直接關係"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文三㈢⒈提及「肺臟雖部分為完全擴張」，屬次要病理觀察，非核心死因論述",
+     "reason": "原文三㈢⒈提及「肺臟雖部分為完全擴張」，屬次要病理觀察，非核心死因論述"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文三㈢⒈提及「死者生下之時，哭聲宏亮及膚色正常」，屬出生時狀況之背景描述",
+     "reason": "原文三㈢⒈提及「死者生下之時，哭聲宏亮及膚色正常」，屬出生時狀況之背景描述"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文三㈢⒈提及「死後屍體也無窒息表徵」，屬排除性病理觀察，非核心論點",
+     "reason": "原文三㈢⒈提及「死後屍體也無窒息表徵」，屬排除性病理觀察，非核心論點"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文三㈢⒈提及「推定與死因無直接關係」，此為肺臟狀況之次要結論",
+     "reason": "原文三㈢⒈提及「推定與死因無直接關係」，此為肺臟狀況之次要結論"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要僅以「本院」指稱，未載明「臺灣彰化地方法院」全名及確切判決日期「94年12月30日」，此為程序性事實",
+     "reason": "摘要僅以「本院」指稱，未載明「臺灣彰化地方法院」全名及確切判決日期「94年12月30日」，此為程序性事實"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "摘要寫「易科罰金以一元折壹日」，但 GT 為「參佰元折算壹日」，折算比例完全錯誤且影響刑罰內容理解",
+     "reason": "摘要寫「易科罰金以一元折壹日」，但 GT 為「參佰元折算壹日」，折算比例完全錯誤且影響刑罰內容理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section原文，均未見「生產紀錄單、新生兒護理紀錄單、出生證明書及死亡證明書各一紙在卷可稽」之完整記載，確認為missing",
+     "reason": "經查全部5個section原文，均未見「生產紀錄單、新生兒護理紀錄單、出生證明書及死亡證明書各一紙在卷可稽」之完整記載，確認為missing"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，均未見「新生兒得以獨立呼吸、為獨立行為客體」之法律認定論述，確認為missing",
+     "reason": "經查全部5個section原文，均未見「新生兒得以獨立呼吸、為獨立行為客體」之法律認定論述，確認為missing"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section原文，均未提及新生兒之父就出生後處置過失之指稱，確認為missing",
+     "reason": "經查全部5個section原文，均未提及新生兒之父就出生後處置過失之指稱，確認為missing"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，均未明確論述「新生兒為刑法過失致死罪保護客體」之法律見解，確認為missing",
+     "reason": "經查全部5個section原文，均未明確論述「新生兒為刑法過失致死罪保護客體」之法律見解，確認為missing"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section原文，section_03_opinions.txt 雖提及A醫院醫師證言，但未見「真空吸引器導致頭型改變、變成比較長型」之具體描述，確認為missing",
+     "reason": "經查全部5個section原文，section_03_opinions.txt 雖提及A醫院醫師證言，但未見「真空吸引器導致頭型改變、變成比較長型」之具體描述，確認為missing"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，section_03_opinions.txt 雖提及「後腦勺有血塊漫延到頸部」，但未見「後腦勺硬硬的」、「很明顯的帽狀腱膜下出血」等具體症狀描述，確認為missing",
+     "reason": "經查全部5個section原文，section_03_opinions.txt 雖提及「後腦勺有血塊漫延到頸部」，但未見「後腦勺硬硬的」、「很明顯的帽狀腱膜下出血」等具體症狀描述，確認為missing"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section原文，均未見「後腦連到脖子比較厚、前後比較長」之體徵描述，確認為missing",
+     "reason": "經查全部5個section原文，均未見「後腦連到脖子比較厚、前後比較長」之體徵描述，確認為missing"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，section_01_facts.txt 雖提及「無疾病或衰竭、胎兒亦無窘迫或下降、內轉不好等現象」，但未完整記載真空吸引器使用之所有適應症條件，確認為missing",
+     "reason": "經查全部5個section原文，section_01_facts.txt 雖提及「無疾病或衰竭、胎兒亦無窘迫或下降、內轉不好等現象」，但未完整記載真空吸引器使用之所有適應症條件，確認為missing"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，section_01_facts.txt 雖提及部分注意事項（順產道方向往後拉、配合子宮收縮、胎頭拉出時放鬆壓力等），但未詳細記載負壓增加速度、壓力數值（0.6~0.8kg/cm2、40~60cmHg）、牽引方向與帽蓋呈直角等標準操作細節，確認為missing",
+     "reason": "經查全部5個section原文，section_01_facts.txt 雖提及部分注意事項（順產道方向往後拉、配合子宮收縮、胎頭拉出時放鬆壓力等），但未詳細記載負壓增加速度、壓力數值（0.6~0.8kg/cm2、40~60cmHg）、牽引方向與帽蓋呈直角等標準操作細節，確認為missing"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，均未提及「拉曳超過五次、時間超過15分鐘視為使用失敗」之判定標準，確認為missing",
+     "reason": "經查全部5個section原文，均未提及「拉曳超過五次、時間超過15分鐘視為使用失敗」之判定標準，確認為missing"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，均未提及「避免連續置放30分鐘以上」之時間限制，確認為missing",
+     "reason": "經查全部5個section原文，均未提及「避免連續置放30分鐘以上」之時間限制，確認為missing"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section原文，section_01_facts.txt 雖提及「當胎頭拉出時，即應放鬆壓力」，但GT claim將此操作要點獨立列出，原pred未完整提取，確認維持missing",
+     "reason": "經查全部5個section原文，section_01_facts.txt 雖提及「當胎頭拉出時，即應放鬆壓力」，但GT claim將此操作要點獨立列出，原pred未完整提取，確認維持missing"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section原文，均未見「懷孕週數37週」之具體記載，確認為missing",
+     "reason": "經查全部5個section原文，均未見「懷孕週數37週」之具體記載，確認為missing"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，均未見「母體子宮收縮正常、胎兒心跳正常、過程無缺氧」等生產監視紀錄內容，確認為missing",
+     "reason": "經查全部5個section原文，均未見「母體子宮收縮正常、胎兒心跳正常、過程無缺氧」等生產監視紀錄內容，確認為missing"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經查全部5個section原文，均未見「第二產程28分、順產」之具體記載，確認為missing",
+     "reason": "經查全部5個section原文，均未見「第二產程28分、順產」之具體記載，確認為missing"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section原文，雖有「90年10月23日」、「21時58分許」之時間記載，但未見「自然產方式娩出、體重3200公克、頭圍33公分」等具體生產資訊，確認為missing",
+     "reason": "經查全部5個section原文，雖有「90年10月23日」、「21時58分許」之時間記載，但未見「自然產方式娩出、體重3200公克、頭圍33公分」等具體生產資訊，確認為missing"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經查全部5個section原文，雖有「無疾病或衰竭、胎兒亦無窘迫或下降、內轉不好等現象」之類似記載，但未明確表述「無生產困難、第二產程過長、胎兒過大」之結論性語句，此為判斷是否需使用真空吸引器之關鍵事實，確認為missing",
+     "reason": "經查全部5個section原文，雖有「無疾病或衰竭、胎兒亦無窘迫或下降、內轉不好等現象」之類似記載，但未明確表述「無生產困難、第二產程過長、胎兒過大」之結論性語句，此為判斷是否需使用真空吸引器之關鍵事實，確認為missing"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經查全部5個section原文，雖可從「無疾病或衰竭、胎兒亦無窘迫」等內容推論，但未明確記載「無使用真空吸引器輔助生產之需要」此一關鍵法律結論，確認為missing",
+     "reason": "經查全部5個section原文，雖可從「無疾病或衰竭、胎兒亦無窘迫」等內容推論，但未明確記載「無使用真空吸引器輔助生產之需要」此一關鍵法律結論，確認為missing"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全部5個section原文，雖有「依當時情形並無不能注意之情事」之類似記載，但未明確表述「無其他不能注意之情形」，確認為missing",
+     "reason": "經查全部5個section原文，雖有「依當時情形並無不能注意之情事」之類似記載，但未明確表述「無其他不能注意之情形」，確認為missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 97,
+   "pred_total": 90,
+   "matched": 64,
+   "partial": 2,
+   "missing": 31,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6876,
+  "compression_afg_chars": 2998,
+  "compression_source_chars": 9598,
+  "gt_length_ratio": 0.9839,
+  "gt_length_afg_chars": 2998,
+  "gt_length_gt_chars": 3047,
+  "section_balance": 0.3462
+ }
 }

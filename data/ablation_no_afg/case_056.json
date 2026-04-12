@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -143,5 +144,109 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6646,
+  "fact_recall": 0.8519,
+  "fact_precision": 1.0,
+  "fact_f1": 0.92,
+  "quality_overall": 4.9,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.9394,
+  "citation_support_score": 0.9394,
+  "uncited_rate": 0.165,
+  "faithfulness_combined": {
+   "score": 0.8706,
+   "citation_fidelity": 0.7844,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.87,
+  "numerical_detail": {
+   "total_numerical": 23,
+   "correct": 20
+  },
+  "weighted_recall": 0.9506,
+  "missing_severity": {
+   "critical": 1,
+   "important": 2,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "所有 section 原文均未提及93年11月19日申報健保代碼48005C之具體事實",
+     "reason": "所有 section 原文均未提及93年11月19日申報健保代碼48005C之具體事實"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "健保代碼48004C、48005C代表清創手術之編碼對照屬於行政技術細節，未在 opinions section 中完整呈現",
+     "reason": "健保代碼48004C、48005C代表清創手術之編碼對照屬於行政技術細節，未在 opinions section 中完整呈現"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "健保代碼對應傷口大小之技術細節未在 opinions section 中提及",
+     "reason": "健保代碼對應傷口大小之技術細節未在 opinions section 中提及"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "健保代碼對應傷口大小之技術細節未在 opinions section 中提及",
+     "reason": "健保代碼對應傷口大小之技術細節未在 opinions section 中提及"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "膝關節攣縮與抗生素治療無因果關係之鑑定認定屬於關鍵鑑定意見，影響案情完整理解，opinions section 確實未提及此認定",
+     "reason": "膝關節攣縮與抗生素治療無因果關係之鑑定認定屬於關鍵鑑定意見，影響案情完整理解，opinions section 確實未提及此認定"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "96年6月4日鑑定及身心障礙等級判定之結果屬於重要鑑定結論，影響傷害程度認定，opinions section 確實未提及",
+     "reason": "96年6月4日鑑定及身心障礙等級判定之結果屬於重要鑑定結論，影響傷害程度認定，opinions section 確實未提及"
+    },
+    {
+     "gt_claim_id": 1,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "verdict section 確實未提及檢察官提起公訴之程序事實，雖 facts section 有提到檢察官偵查起訴，但 verdict section 本身未涵蓋此資訊",
+     "reason": "verdict section 確實未提及檢察官提起公訴之程序事實，雖 facts section 有提到檢察官偵查起訴，但 verdict section 本身未涵蓋此資訊"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經複審全部5個section原文，GT claim「若未適當治療，慢性骨髓炎不易根除，容易復發」雖見於section_opinions（醫事審議委員會說明）及section_reasoning原文（「被告甲明知...否則不易根除，容易復發」），然claims_reasoning.json之pred claims未完整萃取此醫學風險知識，claim_id 33僅擷取至「感染指數」，缺漏「否則不易根除，容易復發」之後果表述，故維持missing判定。此為重要醫學事實，涉及法院對被告注意義務及因果關係之認定基礎，屬critical等級。",
+     "reason": "經複審全部5個section原文，GT claim「若未適當治療，慢性骨髓炎不易根除，容易復發」雖見於section_opinions（醫事審議委員會說明）及section_reasoning原文（「被告甲明知...否則不易根除，容易復發」），然claims_reasoning.json之pred claims未完整萃取此醫學風險知識，claim_id 33僅擷取至「感染指數」，缺漏「否則不易根除，容易復發」之後果表述，故維持missing判定。此為重要醫學事實，涉及法院對被告注意義務及因果關係之認定基礎，屬critical等級。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 81,
+   "pred_total": 103,
+   "matched": 65,
+   "partial": 8,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5593,
+  "compression_afg_chars": 3974,
+  "compression_source_chars": 9017,
+  "gt_length_ratio": 1.4057,
+  "gt_length_afg_chars": 3974,
+  "gt_length_gt_chars": 2827,
+  "section_balance": 0.7391
+ }
 }

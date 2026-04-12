@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -121,5 +122,123 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.9121,
+  "fact_recall": 0.8056,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8923,
+  "quality_overall": 4.6286,
+  "checklist_pass_rate": 0.9521,
+  "citation_accuracy": 0.875,
+  "citation_support_score": 0.8889,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.925,
+   "citation_fidelity": 0.875,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.9136,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 僅有被告甲，無被告乙相關記載",
+     "reason": "遍查全部 5 個 section 僅有被告甲，無被告乙相關記載"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 僅有被告甲，無被告乙疏失相關記載",
+     "reason": "遍查全部 5 個 section 僅有被告甲，無被告乙疏失相關記載"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_04_verdict.txt未記載給付對象為「財團法人臺灣兒童暨家庭扶助基金會臺南縣分會」，section_05_reasoning.txt僅提及「公益團體」而未明確記載組織全名",
+     "reason": "section_04_verdict.txt未記載給付對象為「財團法人臺灣兒童暨家庭扶助基金會臺南縣分會」，section_05_reasoning.txt僅提及「公益團體」而未明確記載組織全名"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_04_verdict.txt未記載匯款日期，section_05_reasoning.txt雖提及「已匯款完畢」但未載明「九十七年二月一日」之具體日期",
+     "reason": "section_04_verdict.txt未記載匯款日期，section_05_reasoning.txt雖提及「已匯款完畢」但未載明「九十七年二月一日」之具體日期"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_04_verdict.txt未提及郵政劃撥儲金存款收據作為證據，section_05_reasoning.txt僅泛稱「相關收據在卷可參」",
+     "reason": "section_04_verdict.txt未提及郵政劃撥儲金存款收據作為證據，section_05_reasoning.txt僅泛稱「相關收據在卷可參」"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_04_verdict.txt與section_05_reasoning.txt均未提及被告與檢察官未上訴及判決確定之程序性事實",
+     "reason": "section_04_verdict.txt與section_05_reasoning.txt均未提及被告與檢察官未上訴及判決確定之程序性事實"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及被告明知病患甲狀腺功能亢進之具體情節，僅提及術前驗血報告未完成，影響過失認定的完整理解",
+     "reason": "section_05_reasoning.txt 未提及被告明知病患甲狀腺功能亢進之具體情節，僅提及術前驗血報告未完成，影響過失認定的完整理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及會診相關科別專科醫師及控制甲狀腺功能之義務，影響對醫療注意義務範圍的理解",
+     "reason": "section_05_reasoning.txt 未提及會診相關科別專科醫師及控制甲狀腺功能之義務，影響對醫療注意義務範圍的理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 雖提及術前驗血報告未完成，但未明確陳述「未做術前手術風險之完整評估」，屬背景性事實描述",
+     "reason": "section_05_reasoning.txt 雖提及術前驗血報告未完成，但未明確陳述「未做術前手術風險之完整評估」，屬背景性事實描述"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及具體手術時間「當日十二時十五分許」及手術類型「左側股骨骨內釘固定手術」，屬細節性事實",
+     "reason": "section_05_reasoning.txt 未提及具體手術時間「當日十二時十五分許」及手術類型「左側股骨骨內釘固定手術」，屬細節性事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 54,
+   "pred_total": 28,
+   "matched": 43,
+   "partial": 1,
+   "missing": 10,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.3518,
+  "compression_afg_chars": 912,
+  "compression_source_chars": 1407,
+  "gt_length_ratio": 0.7032,
+  "gt_length_afg_chars": 912,
+  "gt_length_gt_chars": 1297,
+  "section_balance": 0.6364
+ }
 }

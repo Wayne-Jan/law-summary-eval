@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -127,5 +128,291 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.655,
+  "fact_recall": 0.6228,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7676,
+  "quality_overall": 4.8286,
+  "checklist_pass_rate": 0.9787,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.8304,
+  "missing_severity": {
+   "critical": 3,
+   "important": 18,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "T醫院入院時間（11時40分）及裝呼吸器細節未在任何 section 出現，屬醫療過程次要細節",
+     "reason": "T醫院入院時間（11時40分）及裝呼吸器細節未在任何 section 出現，屬醫療過程次要細節"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "血壓數值（50/34 mmHg變至50/37 mmHg）未在任何 section 出現，屬醫療數據細節",
+     "reason": "血壓數值（50/34 mmHg變至50/37 mmHg）未在任何 section 出現，屬醫療數據細節"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "雖 section_opinions 提及凝血異常，但缺少「雖仍可進行剖腹探查術」及「血小板低下」之重要醫療狀況描述",
+     "reason": "雖 section_opinions 提及凝血異常，但缺少「雖仍可進行剖腹探查術」及「血小板低下」之重要醫療狀況描述"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "T醫院「原欲手術」之考量及「凝血因子」等具體治療措施未完整呈現，影響醫療過程完整理解",
+     "reason": "T醫院「原欲手術」之考量及「凝血因子」等具體治療措施未完整呈現，影響醫療過程完整理解"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「因病情無法穩定，無從手術」明確結論未直接呈現，影響醫療決策過程理解",
+     "reason": "「因病情無法穩定，無從手術」明確結論未直接呈現，影響醫療決策過程理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「產道過度擴張有可能導致子宮頸或陰道裂傷」之注意義務具體內容未提及，屬重要注意義務要素",
+     "reason": "「產道過度擴張有可能導致子宮頸或陰道裂傷」之注意義務具體內容未提及，屬重要注意義務要素"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "雖 section_opinions 提及凝血異常，但「死亡率極高」之風險描述未在 facts section 呈現",
+     "reason": "雖 section_opinions 提及凝血異常，但「死亡率極高」之風險描述未在 facts section 呈現"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "T醫院超音波檢查及其發現為事實證明之關鍵，屬辯護要點，摘要未涵蓋",
+     "reason": "T醫院超音波檢查及其發現為事實證明之關鍵，屬辯護要點，摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "T醫院病歷記載與事實關聯，證明診斷難度，摘要未提及",
+     "reason": "T醫院病歷記載與事實關聯，證明診斷難度，摘要未提及"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「益證難以診斷」為辯護方結論性論述，任何section均未出現",
+     "reason": "「益證難以診斷」為辯護方結論性論述，任何section均未出現"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「期待不能」為關鍵時間抗辯，任何section均未出現此論點",
+     "reason": "「期待不能」為關鍵時間抗辯，任何section均未出現此論點"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「克盡應盡義務」為辯護核心主張，摘要未明確涵蓋",
+     "reason": "「克盡應盡義務」為辯護核心主張，摘要未明確涵蓋"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「死者所患誠屬難以診斷處置之症」為病症性質總結，5 sections均未出現",
+     "reason": "「死者所患誠屬難以診斷處置之症」為病症性質總結，5 sections均未出現"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「已依醫療常規施以必要之診治」為核心無過失抗辯，任何section均未明確陳述",
+     "reason": "「已依醫療常規施以必要之診治」為核心無過失抗辯，任何section均未明確陳述"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「一一九告以不支援一般醫療院所」為程序細節，不影響轉診過錯認定理解",
+     "reason": "「一一九告以不支援一般醫療院所」為程序細節，不影響轉診過錯認定理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「民間救護車回應暫候回音」為過程細節，不影響案情核心",
+     "reason": "「民間救護車回應暫候回音」為過程細節，不影響案情核心"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「十時四十分再度求援」為關鍵時間點，影響時間軸理解",
+     "reason": "「十時四十分再度求援」為關鍵時間點，影響時間軸理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「一一九告知臺北縣以外不支援」為具體回應內容，屬細節",
+     "reason": "「一一九告知臺北縣以外不支援」為具體回應內容，屬細節"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「等待二、三十分鐘」涉及延誤時間認定",
+     "reason": "「等待二、三十分鐘」涉及延誤時間認定"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「一一九確認已派出」為過程性細節",
+     "reason": "「一一九確認已派出」為過程性細節"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「十一時十分救護車到達」為重要時間節點，影響延誤認定，任何section均未明確提及",
+     "reason": "「十一時十分救護車到達」為重要時間節點，影響延誤認定，任何section均未明確提及"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「等待期間確有依醫事常規急救」為辯護重要主張，摘要未涵蓋",
+     "reason": "「等待期間確有依醫事常規急救」為辯護重要主張，摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「下午一時五十五分陰道大量出血」為關鍵時間節點，與死亡時間關聯重大，任何section均未提及",
+     "reason": "「下午一時五十五分陰道大量出血」為關鍵時間節點，與死亡時間關聯重大，任何section均未提及"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「診斷證明書與病歷不符」為證據質疑，影響對鑑定意見之理解",
+     "reason": "「診斷證明書與病歷不符」為證據質疑，影響對鑑定意見之理解"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 提及DIC之醫學後果但無「醫師懷疑DIC」之診斷描述，section_reasoning 亦僅提及DIC症狀存在，未見醫師懷疑之明確記載，維持 missing",
+     "reason": "section_opinions.txt 提及DIC之醫學後果但無「醫師懷疑DIC」之診斷描述，section_reasoning 亦僅提及DIC症狀存在，未見醫師懷疑之明確記載，維持 missing"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "超音波判斷腹腔出血量之描述僅見於 section_defense.txt（被告抗辯），未見於 section_opinions.txt 之鑑定意見，維持 missing",
+     "reason": "超音波判斷腹腔出血量之描述僅見於 section_defense.txt（被告抗辯），未見於 section_opinions.txt 之鑑定意見，維持 missing"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "超音波穿透力限制之技術說明僅見於 section_defense.txt，未見於 section_opinions.txt，維持 missing",
+     "reason": "超音波穿透力限制之技術說明僅見於 section_defense.txt，未見於 section_opinions.txt，維持 missing"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，遍查全部 section 原文未提及「上訴期間」或「未上訴」，不影響核心案情理解",
+     "reason": "程序性事實，遍查全部 section 原文未提及「上訴期間」或「未上訴」，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，遍查全部 section 原文未提及「判決確定」狀態，不影響核心案情理解",
+     "reason": "程序性事實，遍查全部 section 原文未提及「判決確定」狀態，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 僅提及「即使依被告甲主張曾懷疑子宮收縮不良」，但未提及「懷疑合併瀰漫性血管內凝集症候群（DIC）」的初步懷疑診斷，影響診斷推理過程理解",
+     "reason": "reasoning section 僅提及「即使依被告甲主張曾懷疑子宮收縮不良」，但未提及「懷疑合併瀰漫性血管內凝集症候群（DIC）」的初步懷疑診斷，影響診斷推理過程理解"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖有「依鑑定意見」但缺少「有前揭醫事鑑定委員會之鑑定意見可考」之正式引用格式，屬程序性引用差異",
+     "reason": "雖有「依鑑定意見」但缺少「有前揭醫事鑑定委員會之鑑定意見可考」之正式引用格式，屬程序性引用差異"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 雖提及「多應立即轉送大型醫院處理」，但未明確判斷「轉診固符合一般開業醫師之醫療水準」，影響專業標準認定",
+     "reason": "reasoning section 雖提及「多應立即轉送大型醫院處理」，但未明確判斷「轉診固符合一般開業醫師之醫療水準」，影響專業標準認定"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 雖提及「雖本件屬隱藏式裂傷，肉眼未必能立即發現」，但未完整涵蓋「病徵重疊或可能誤診，難以避免，固不論」之免責排除論述，影響過失認定邏輯",
+     "reason": "reasoning section 雖提及「雖本件屬隱藏式裂傷，肉眼未必能立即發現」，但未完整涵蓋「病徵重疊或可能誤診，難以避免，固不論」之免責排除論述，影響過失認定邏輯"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「依鑑定意見」已足，缺少「有前揭鑑定意見足參」之正式引用格式屬次要程序性差異",
+     "reason": "「依鑑定意見」已足，缺少「有前揭鑑定意見足參」之正式引用格式屬次要程序性差異"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 114,
+   "pred_total": 57,
+   "matched": 63,
+   "partial": 16,
+   "missing": 35,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7088,
+  "compression_afg_chars": 1849,
+  "compression_source_chars": 6349,
+  "gt_length_ratio": 0.5696,
+  "gt_length_afg_chars": 1849,
+  "gt_length_gt_chars": 3246,
+  "section_balance": 0.7143
+ }
 }

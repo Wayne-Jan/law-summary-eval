@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,137 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7361,
+  "fact_recall": 0.8444,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9157,
+  "quality_overall": 4.6714,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 0.9545,
+  "citation_support_score": 0.9125,
+  "uncited_rate": 0.034,
+  "faithfulness_combined": {
+   "score": 0.9532,
+   "citation_fidelity": 0.922,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 0.929,
+  "numerical_detail": {
+   "total_numerical": 42,
+   "correct": 39
+  },
+  "weighted_recall": 0.9259,
+  "missing_severity": {
+   "critical": 1,
+   "important": 6,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "確實未在任何 section 中找到『自訴人欲轉院』的明確表述",
+     "reason": "確實未在任何 section 中找到『自訴人欲轉院』的明確表述"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "確實未在任何 section 中找到『被告乙、丙、丁拒絕轉診要求』的明確表述",
+     "reason": "確實未在任何 section 中找到『被告乙、丙、丁拒絕轉診要求』的明確表述"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "確實未找到『延誤救治時機』因果關係的明確表述，reasoning section 雖有質疑但最終認定無因果關係",
+     "reason": "確實未找到『延誤救治時機』因果關係的明確表述，reasoning section 雖有質疑但最終認定無因果關係"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "雖然 facts section 未提及被告三人應負罪責的主張，但這是案件核心控訴事實，遺漏將影響案情完整理解",
+     "reason": "雖然 facts section 未提及被告三人應負罪責的主張，但這是案件核心控訴事實，遺漏將影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 和 section_reasoning.txt 均提及「贊成兩側可同時開刀之論文發表年份分別為...及其病患平均年齡均未超過70歲」等內容，但「3篇重複，2篇為相同作者，2篇僅是摘要」此細節未被摘要提及，維持 missing",
+     "reason": "section_opinions.txt 和 section_reasoning.txt 均提及「贊成兩側可同時開刀之論文發表年份分別為...及其病患平均年齡均未超過70歲」等內容，但「3篇重複，2篇為相同作者，2篇僅是摘要」此細節未被摘要提及，維持 missing"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 提到「經臺灣臺南地方法院檢察署檢察官函請法務部法醫研究所法醫師A進行解剖屍體鑑定」，但「製作鑑定書一份」此明確表述未在摘要中出現，維持 missing",
+     "reason": "section_opinions.txt 提到「經臺灣臺南地方法院檢察署檢察官函請法務部法醫研究所法醫師A進行解剖屍體鑑定」，但「製作鑑定書一份」此明確表述未在摘要中出現，維持 missing"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及被告甲提出術前檢查評估報告，但未見「醫療上不可避免之結果」此核心辯護用語；section_02_defense.txt 雖有提及，但經查證確認 section_reasoning 確實未完整涵蓋此辯稱內容。此為被告主要辯護理由，影響案情完整理解",
+     "reason": "section_05_reasoning.txt 雖提及被告甲提出術前檢查評估報告，但未見「醫療上不可避免之結果」此核心辯護用語；section_02_defense.txt 雖有提及，但經查證確認 section_reasoning 確實未完整涵蓋此辯稱內容。此為被告主要辯護理由，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 section_05_reasoning.txt 及全部5個 section，均未見「證人等...均僅施行一側」之相關內容。此為證人比較之背景性事實，不影響核心案情理解",
+     "reason": "遍查 section_05_reasoning.txt 及全部5個 section，均未見「證人等...均僅施行一側」之相關內容。此為證人比較之背景性事實，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查 section_05_reasoning.txt 及全部5個 section，均未見「證人等均為5、60歲之年齡層，與本案病患...80餘歲高齡亦顯不相當」之相關內容。此為年齡對比之背景性事實，不影響核心案情理解",
+     "reason": "遍查 section_05_reasoning.txt 及全部5個 section，均未見「證人等均為5、60歲之年齡層，與本案病患...80餘歲高齡亦顯不相當」之相關內容。此為年齡對比之背景性事實，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 第(3)點雖提及「本院二度委託醫事審議委員會鑑定結果」，但 GT claim 73 強調的是「二度委託...有無醫療過失所為之鑑定」此完整程序描述。原判定為 partial 有誤，經複審確認 section_reasoning 確實未完整提及「有無醫療過失」之鑑定目的，應維持 missing。此為程序性事實",
+     "reason": "section_05_reasoning.txt 第(3)點雖提及「本院二度委託醫事審議委員會鑑定結果」，但 GT claim 73 強調的是「二度委託...有無醫療過失所為之鑑定」此完整程序描述。原判定為 partial 有誤，經複審確認 section_reasoning 確實未完整提及「有無醫療過失」之鑑定目的，應維持 missing。此為程序性事實"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖於多處論述被告甲之過失，但並未如 GT claim 75 明確記載「被告甲猶否認其無過失，自無可採」之法院評價語句。此為法院對被告態度的直接評價，影響判決理由理解",
+     "reason": "section_05_reasoning.txt 雖於多處論述被告甲之過失，但並未如 GT claim 75 明確記載「被告甲猶否認其無過失，自無可採」之法院評價語句。此為法院對被告態度的直接評價，影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查 section_05_reasoning.txt，未見「本院復查無其他積極證據足證被告乙、丙、丁有自訴人自訴之罪行」之程序性說明。雖 section_reasoning 提及被告乙、丙、丁無罪之結論，但缺少法院「查無積極證據」之程序性論證，影響判決理論完整性理解",
+     "reason": "遍查 section_05_reasoning.txt，未見「本院復查無其他積極證據足證被告乙、丙、丁有自訴人自訴之罪行」之程序性說明。雖 section_reasoning 提及被告乙、丙、丁無罪之結論，但缺少法院「查無積極證據」之程序性論證，影響判決理論完整性理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 90,
+   "pred_total": 88,
+   "matched": 74,
+   "partial": 4,
+   "missing": 12,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.3525,
+  "compression_afg_chars": 3947,
+  "compression_source_chars": 6096,
+  "gt_length_ratio": 1.1084,
+  "gt_length_afg_chars": 3947,
+  "gt_length_gt_chars": 3561,
+  "section_balance": 0.7895
+ }
 }

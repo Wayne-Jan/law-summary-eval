@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -124,6 +125,108 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7467
+  "rule_based_avg": 0.7467,
+  "fact_recall": 0.8468,
+  "fact_precision": 1.0,
+  "fact_f1": 0.917,
+  "quality_overall": 4.6429,
+  "checklist_pass_rate": 0.9462,
+  "citation_accuracy": 0.9744,
+  "citation_support_score": 0.9667,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9846,
+   "citation_fidelity": 0.9744,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 16,
+   "correct": 16
+  },
+  "weighted_recall": 0.9516,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 僅提及A醫院（對應GT的C醫院），未提及I醫院就診經過；雖 section_opinions/reasoning 提及B醫院（對應I醫院），但 facts section 本身缺少此背景性事實，屬程序性遺漏",
+     "reason": "section_facts 僅提及A醫院（對應GT的C醫院），未提及I醫院就診經過；雖 section_opinions/reasoning 提及B醫院（對應I醫院），但 facts section 本身缺少此背景性事實，屬程序性遺漏"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 提及「疏失」、「起訴」等概念，但未明確提及具體法條「刑法第276條第2項」及罪名「業務過失致死罪」；此為起訴要旨核心資訊，影響案情完整理解",
+     "reason": "section_facts 提及「疏失」、「起訴」等概念，但未明確提及具體法條「刑法第276條第2項」及罪名「業務過失致死罪」；此為起訴要旨核心資訊，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "觸診腹膜炎反應的詳細症狀（腹肌用力繃緊、壓痛、放開更痛、肚臍周圍紅腫）未在任何 section 出現，屬醫學細節遺漏",
+     "reason": "觸診腹膜炎反應的詳細症狀（腹肌用力繃緊、壓痛、放開更痛、肚臍周圍紅腫）未在任何 section 出現，屬醫學細節遺漏"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「I醫院」未在摘要中出現，摘要僅提及A醫院與B醫院，該醫院名稱無法對應",
+     "reason": "「I醫院」未在摘要中出現，摘要僅提及A醫院與B醫院，該醫院名稱無法對應"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「游離氣體須經驗極為豐富之醫師始能發現，一般醫師似不易判斷」之具體描述未在摘要中出現",
+     "reason": "「游離氣體須經驗極為豐富之醫師始能發現，一般醫師似不易判斷」之具體描述未在摘要中出現"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "照會社會服務部查詢兒童受虐之程序性細節未在摘要中提及",
+     "reason": "照會社會服務部查詢兒童受虐之程序性細節未在摘要中提及"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢察官上訴狀況屬程序性事實，五個 section 均未提及，不影響判決結論理解",
+     "reason": "檢察官上訴狀況屬程序性事實，五個 section 均未提及，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態屬程序性事實，五個 section 均未提及，不影響判決結論理解",
+     "reason": "判決確定狀態屬程序性事實，五個 section 均未提及，不影響判決結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 63,
+   "matched": 51,
+   "partial": 3,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.1235,
+  "compression_afg_chars": 2591,
+  "compression_source_chars": 2956,
+  "gt_length_ratio": 1.1896,
+  "gt_length_afg_chars": 2591,
+  "gt_length_gt_chars": 2178,
+  "section_balance": 0.5
  }
 }

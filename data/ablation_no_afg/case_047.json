@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,158 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8935,
+  "fact_recall": 0.8934,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9437,
+  "quality_overall": 4.8429,
+  "checklist_pass_rate": 0.9681,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9969,
+  "uncited_rate": 0.05,
+  "faithfulness_combined": {
+   "score": 0.97,
+   "citation_fidelity": 0.95,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.9636,
+  "missing_severity": {
+   "critical": 1,
+   "important": 3,
+   "minor": 11,
+   "details": [
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告為「急診醫師」於section_02_defense.txt有提及，但「無法作臨床測試」的限制未明確出現，屬辯護背景細節，不影響主要過失認定",
+     "reason": "被告為「急診醫師」於section_02_defense.txt有提及，但「無法作臨床測試」的限制未明確出現，屬辯護背景細節，不影響主要過失認定"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt僅提及「無不穩定之情形」，未完整列出不穩定徵候的定義及症狀列表，屬醫學細節，非核心爭點",
+     "reason": "section_02_defense.txt僅提及「無不穩定之情形」，未完整列出不穩定徵候的定義及症狀列表，屬醫學細節，非核心爭點"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt提到「病情穩定」及「給予抽血及心電圖檢查...未再作第二次心電圖及抽血檢查心肌酵素」，但未完整提及「穩定之陳舊性心肌梗塞」導致未再作檢查的完整無過失論述，影響辯護要點理解",
+     "reason": "section_02_defense.txt提到「病情穩定」及「給予抽血及心電圖檢查...未再作第二次心電圖及抽血檢查心肌酵素」，但未完整提及「穩定之陳舊性心肌梗塞」導致未再作檢查的完整無過失論述，影響辯護要點理解"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「心肌梗塞發生時間在數天之內稱之為急性」為醫學定義細節，section_03_opinions.txt雖提及「急性心肌梗塞」概念，但未明確定義「數天之內」的時間標準，屬背景性醫學知識遺漏",
+     "reason": "GT「心肌梗塞發生時間在數天之內稱之為急性」為醫學定義細節，section_03_opinions.txt雖提及「急性心肌梗塞」概念，但未明確定義「數天之內」的時間標準，屬背景性醫學知識遺漏"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「數個月或半年以上...稱之為陳舊性」為醫學定義細節，section_03_opinions.txt雖提及「陳舊性心肌梗塞」概念，但未明確定義時間標準，屬背景性醫學知識遺漏",
+     "reason": "GT「數個月或半年以上...稱之為陳舊性」為醫學定義細節，section_03_opinions.txt雖提及「陳舊性心肌梗塞」概念，但未明確定義時間標準，屬背景性醫學知識遺漏"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「陳舊性心肌梗塞係心臟功能處於穩定，並非急症」雖section_03_opinions.txt提及「陳舊性心肌梗塞若懷疑有急性冠心症復發」，但未明確對比其「穩定」「非急症」特性，屬醫學對比細節遺漏",
+     "reason": "GT「陳舊性心肌梗塞係心臟功能處於穩定，並非急症」雖section_03_opinions.txt提及「陳舊性心肌梗塞若懷疑有急性冠心症復發」，但未明確對比其「穩定」「非急症」特性，屬醫學對比細節遺漏"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「陳舊性心肌梗塞不須急救」為醫學處置細節，section_03_opinions.txt雖提及陳舊性心肌梗塞住院條件，但未明確提及「不須急救」，屬背景性醫學知識遺漏",
+     "reason": "GT「陳舊性心肌梗塞不須急救」為醫學處置細節，section_03_opinions.txt雖提及陳舊性心肌梗塞住院條件，但未明確提及「不須急救」，屬背景性醫學知識遺漏"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "GT「醫師應該瞭解病患有冠狀動脈疾病」為鑑定意見重要醫囑，section_03_opinions.txt雖提及心電圖異常顯示「心肌缺氧」「心肌梗塞可能性」，但未明確表述醫師應「瞭解」病患冠狀動脈疾病，屬鑑定意見重點遺漏",
+     "reason": "GT「醫師應該瞭解病患有冠狀動脈疾病」為鑑定意見重要醫囑，section_03_opinions.txt雖提及心電圖異常顯示「心肌缺氧」「心肌梗塞可能性」，但未明確表述醫師應「瞭解」病患冠狀動脈疾病，屬鑑定意見重點遺漏"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "GT「審慎評估其心臟病情有無不穩定的情形」為鑑定意見核心建議，section_03_opinions.txt雖提及「心臟呈現極不穩定」，但未明確要求醫師「審慎評估」，屬鑑定意見重點遺漏",
+     "reason": "GT「審慎評估其心臟病情有無不穩定的情形」為鑑定意見核心建議，section_03_opinions.txt雖提及「心臟呈現極不穩定」，但未明確要求醫師「審慎評估」，屬鑑定意見重點遺漏"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「靜脈注射抗凝血藥物及硝化甘油治療」為具體治療方案細節，section_03_opinions.txt雖提及「血栓溶解劑」「冠狀動脈氣球擴張」，但未提及「抗凝血藥物及硝化甘油」，屬治療細節遺漏",
+     "reason": "GT「靜脈注射抗凝血藥物及硝化甘油治療」為具體治療方案細節，section_03_opinions.txt雖提及「血栓溶解劑」「冠狀動脈氣球擴張」，但未提及「抗凝血藥物及硝化甘油」，屬治療細節遺漏"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「冠狀動脈攝影檢查」為檢查項目細節，section_03_opinions.txt提及「冠狀動脈氣球擴張」治療但未提及「攝影檢查」，屬檢查項目細節遺漏",
+     "reason": "GT「冠狀動脈攝影檢查」為檢查項目細節，section_03_opinions.txt提及「冠狀動脈氣球擴張」治療但未提及「攝影檢查」，屬檢查項目細節遺漏"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「可用藥物控制及門診追蹤」為病情穩定時處置，section_03_opinions.txt雖提及「陳舊性心肌梗塞若懷疑有急性冠心症復發時，仍應收住院」，但未明確提及穩定時的「藥物控制及門診追蹤」，屬處置細節遺漏",
+     "reason": "GT「可用藥物控制及門診追蹤」為病情穩定時處置，section_03_opinions.txt雖提及「陳舊性心肌梗塞若懷疑有急性冠心症復發時，仍應收住院」，但未明確提及穩定時的「藥物控制及門診追蹤」，屬處置細節遺漏"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「病情不穩定，有復發之虞，仍須住院治療」雖section_03_opinions.txt提及「應收住院」，但未完整表述「病情不穩定、有復發之虞」的條件邏輯，屬語意不完整",
+     "reason": "GT「病情不穩定，有復發之虞，仍須住院治療」雖section_03_opinions.txt提及「應收住院」，但未完整表述「病情不穩定、有復發之虞」的條件邏輯，屬語意不完整"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT「89年7月25日心電圖T波可恢復正立」與pred_claim 24所述「T波倒轉」確實存在矛盾。section_03_opinions.txt僅提及「T波倒轉現象」，未提及「可恢復正立」，屬醫學發現細節遺漏",
+     "reason": "GT「89年7月25日心電圖T波可恢復正立」與pred_claim 24所述「T波倒轉」確實存在矛盾。section_03_opinions.txt僅提及「T波倒轉現象」，未提及「可恢復正立」，屬醫學發現細節遺漏"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "verdict",
+     "severity": "critical",
+     "text": "判決法院名稱『臺灣嘉義地方法院』及判決日期『民國93年09月20日』為判決書核心資訊，section_verdict 與其他 sections 均未提及，遺漏影響判決主體理解",
+     "reason": "判決法院名稱『臺灣嘉義地方法院』及判決日期『民國93年09月20日』為判決書核心資訊，section_verdict 與其他 sections 均未提及，遺漏影響判決主體理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 183,
+   "pred_total": 159,
+   "matched": 159,
+   "partial": 9,
+   "missing": 15,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.3159,
+  "compression_afg_chars": 6684,
+  "compression_source_chars": 9771,
+  "gt_length_ratio": 1.1946,
+  "gt_length_afg_chars": 6684,
+  "gt_length_gt_chars": 5595,
+  "section_balance": 0.6667
+ }
 }

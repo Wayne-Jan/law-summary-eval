@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -127,5 +128,487 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6796,
+  "fact_recall": 0.5216,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6856,
+  "quality_overall": 4.6143,
+  "checklist_pass_rate": 0.9676,
+  "citation_accuracy": 0.9474,
+  "citation_support_score": 0.942,
+  "uncited_rate": 0.042,
+  "faithfulness_combined": {
+   "score": 0.9446,
+   "citation_fidelity": 0.9076,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.909,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 20
+  },
+  "weighted_recall": 0.7866,
+  "missing_severity": {
+   "critical": 4,
+   "important": 19,
+   "minor": 39,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "初次產檢時間地點，經查全 section 均未提及，屬背景資訊",
+     "reason": "初次產檢時間地點，經查全 section 均未提及，屬背景資訊"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "例行產檢次數和時間範圍，經查全 section 均未提及，屬背景細節",
+     "reason": "例行產檢次數和時間範圍，經查全 section 均未提及，屬背景細節"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "產檢結果，經查全 section 均未提及，屬背景資訊",
+     "reason": "產檢結果，經查全 section 均未提及，屬背景資訊"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "預產期時間（GT為90年11月12日，section_facts為91年11月29日），屬重要事實差異",
+     "reason": "預產期時間（GT為90年11月12日，section_facts為91年11月29日），屬重要事實差異"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "送醫途中出血，經查全 section 均未提及此時間點症狀",
+     "reason": "送醫途中出血，經查全 section 均未提及此時間點症狀"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "剖腹生產後胎兒急救無效，section_facts僅提及『胎死腹中』，未提及剖腹後急救細節",
+     "reason": "剖腹生產後胎兒急救無效，section_facts僅提及『胎死腹中』，未提及剖腹後急救細節"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "轉至一般病房時間細節，經查全 section 均未提及",
+     "reason": "轉至一般病房時間細節，經查全 section 均未提及"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "案夫A隨侍在側照料，經查全 section 均未提及此護理細節",
+     "reason": "案夫A隨侍在側照料，經查全 section 均未提及此護理細節"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "案夫A向護士反應，經查全 section 均未提及此互動細節",
+     "reason": "案夫A向護士反應，經查全 section 均未提及此互動細節"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "護士表示係正常現象，經查全 section 均未提及",
+     "reason": "護士表示係正常現象，經查全 section 均未提及"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「手腳冰冷」症狀，section_facts雖提及「呼吸異常」等症狀，但未明確記載「手腳冰冷」，屬重要症狀遺漏」",
+     "reason": "「手腳冰冷」症狀，section_facts雖提及「呼吸異常」等症狀，但未明確記載「手腳冰冷」，屬重要症狀遺漏」"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「案夫A再度反應、院方無處置，經查全 section 均未完整提及此關鍵過程」",
+     "reason": "「案夫A再度反應、院方無處置，經查全 section 均未完整提及此關鍵過程」"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「案夫A詢問送入加護病房，經查全 section 均未提及」",
+     "reason": "「案夫A詢問送入加護病房，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「被告乙表示會評估看看，經查全 section 均未提及」",
+     "reason": "「被告乙表示會評估看看，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「腰酸背痛、腹痛，經查全 section 均未提及」",
+     "reason": "「腰酸背痛、腹痛，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「使用止痛器、頻換臥姿、輕揉背部等細節護理過程，經查全 section 均未提及」",
+     "reason": "「使用止痛器、頻換臥姿、輕揉背部等細節護理過程，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「案夫A表示呼吸狀況更急更淺，經查全 section 均未提及」",
+     "reason": "「案夫A表示呼吸狀況更急更淺，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「護士換班、更換導尿管，section_facts僅提及『重新裝置』，未提及換班及更換導尿管」",
+     "reason": "「護士換班、更換導尿管，section_facts僅提及『重新裝置』，未提及換班及更換導尿管」"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「凌晨一時許護士呼救，section_facts記載為00時40分，時間有差異」",
+     "reason": "「凌晨一時許護士呼救，section_facts記載為00時40分，時間有差異」"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「被告甲趕至實施急救，經查全 section 均未提及」",
+     "reason": "「被告甲趕至實施急救，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「凌晨2時5分轉入加護病房，經查全 section 均未提及」",
+     "reason": "「凌晨2時5分轉入加護病房，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「死亡時間4時許，section_facts記載為3時30分，時間有差異」",
+     "reason": "「死亡時間4時許，section_facts記載為3時30分，時間有差異」"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「胎盤早期剝離可能造成大量內出血之醫學背景，經查全 section 均未明確陳述」",
+     "reason": "「胎盤早期剝離可能造成大量內出血之醫學背景，經查全 section 均未明確陳述」"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「1000公升（GT單位可能有誤，section_facts為1000毫升），單位差異」",
+     "reason": "「1000公升（GT單位可能有誤，section_facts為1000毫升），單位差異」"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「專業醫師稱應予緊急輸血治療之意見，經查全 section 均未提及」",
+     "reason": "「專業醫師稱應予緊急輸血治療之意見，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「送入醫院前胎兒為死產，section_facts記載為送醫後診斷，時序有差異」",
+     "reason": "「送入醫院前胎兒為死產，section_facts記載為送醫後診斷，時序有差異」"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「剖腹產增加內出血危險之判斷，經查全 section 均未作為明確事實陳述（僅見於自訴人主張）」",
+     "reason": "「剖腹產增加內出血危險之判斷，經查全 section 均未作為明確事實陳述（僅見於自訴人主張）」"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「被告居於可防止之地位而不防止，屬法律評價事實，經查全 section 均未提及」",
+     "reason": "「被告居於可防止之地位而不防止，屬法律評價事實，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「不防止之行為與結果間有相當因果關係，屬法律推論，經查全 section 均未提及」",
+     "reason": "「不防止之行為與結果間有相當因果關係，屬法律推論，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「被告應負業務過失之咎，屬法律責任認定，經查全 section 均未提及」",
+     "reason": "「被告應負業務過失之咎，屬法律責任認定，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「刑法第276條第2項之業務過失致死罪，屬法條引用，經查全 section 均未提及」",
+     "reason": "「刑法第276條第2項之業務過失致死罪，屬法條引用，經查全 section 均未提及」"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "雖 reasoning section 提及「子癇前症」，但未明確陳述「產婦H是妊娠高血壓患者」，屬病情背景事實",
+     "reason": "雖 reasoning section 提及「子癇前症」，但未明確陳述「產婦H是妊娠高血壓患者」，屬病情背景事實"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "reasoning section 僅提「建議提早引產」，未提「三度」建議，影響對被告主張完整理解",
+     "reason": "reasoning section 僅提「建議提早引產」，未提「三度」建議，影響對被告主張完整理解"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未明確提及產婦拒絕提前生產建議",
+     "reason": "未明確提及產婦拒絕提前生產建議"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及術後惡露量",
+     "reason": "未提及術後惡露量"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及肚子鬆軟觸診結果",
+     "reason": "未提及肚子鬆軟觸診結果"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及呼吸沒有變化",
+     "reason": "未提及呼吸沒有變化"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "未提及被告甲判斷心跳快可能因傷口疼痛，影響對被告主張的理解",
+     "reason": "未提及被告甲判斷心跳快可能因傷口疼痛，影響對被告主張的理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及術後血壓恢復正常",
+     "reason": "未提及術後血壓恢復正常"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及一般輸血標準程序",
+     "reason": "未提及一般輸血標準程序"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及血紅素8以下輸血標準",
+     "reason": "未提及血紅素8以下輸血標準"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "summary 僅提凌晨0:40檢查，未提晚上10點檢查及尿液少，影響病情時間軸理解",
+     "reason": "summary 僅提凌晨0:40檢查，未提晚上10點檢查及尿液少，影響病情時間軸理解"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "未提及依病歷及失血量排除大量失血之判斷過程",
+     "reason": "未提及依病歷及失血量排除大量失血之判斷過程"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及檢查產後惡露量",
+     "reason": "未提及檢查產後惡露量"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及觸摸肚子鬆軟可摸到子宮",
+     "reason": "未提及觸摸肚子鬆軟可摸到子宮"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "未明確提及被告乙排除大量出血之臨床判斷",
+     "reason": "未明確提及被告乙排除大量出血之臨床判斷"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及聽診呼吸聲清澈",
+     "reason": "未提及聽診呼吸聲清澈"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "未提及呼吸出問題在12點以後的具體時間描述",
+     "reason": "未提及呼吸出問題在12點以後的具體時間描述"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "全部5個section均未明確提及「鑑定意見書共二件」之程序性事實",
+     "reason": "全部5個section均未明確提及「鑑定意見書共二件」之程序性事實"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "全部5個section均未提及「子宮頸口已成熟可陰道引產」之醫療條件考量",
+     "reason": "全部5個section均未提及「子宮頸口已成熟可陰道引產」之醫療條件考量"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "遍查五個 section 均未見「臺灣彰化地方法院」名稱及「民國92年12月16日」之判決日期，摘要確實未提及",
+     "reason": "遍查五個 section 均未見「臺灣彰化地方法院」名稱及「民國92年12月16日」之判決日期，摘要確實未提及"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "五個 section 均未提及自訴人上訴狀況，摘要確實未包含此程序性事實",
+     "reason": "五個 section 均未提及自訴人上訴狀況，摘要確實未包含此程序性事實"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "五個 section 均未提及判決確定狀態，摘要確實未包含此程序性結果",
+     "reason": "五個 section 均未提及判決確定狀態，摘要確實未包含此程序性結果"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "背景性產檢資訊，雖有提及初次懷孕與預產期，但缺少「10次例行性產檢」及年份差異(90年vs91年)，不影響判決核心理解",
+     "reason": "背景性產檢資訊，雖有提及初次懷孕與預產期，但缺少「10次例行性產檢」及年份差異(90年vs91年)，不影響判決核心理解"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "最後一次產檢時間屬背景性時序資訊，section_05_reasoning.txt 未提及",
+     "reason": "最後一次產檢時間屬背景性時序資訊，section_05_reasoning.txt 未提及"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "胎兒娩出具體時間、體重、Apgar評分等細節未在 section_05_reasoning.txt 出現，屬程序性細節",
+     "reason": "胎兒娩出具體時間、體重、Apgar評分等細節未在 section_05_reasoning.txt 出現，屬程序性細節"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "宣布胎兒死亡具體時間未在 section_05_reasoning.txt 出現，屬程序性時序",
+     "reason": "宣布胎兒死亡具體時間未在 section_05_reasoning.txt 出現，屬程序性時序"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "手術完成時間、胎盤剝離面積百分比、子宮狀態、具體失血數值等術中細節未在 section_05_reasoning.txt 記載",
+     "reason": "手術完成時間、胎盤剝離面積百分比、子宮狀態、具體失血數值等術中細節未在 section_05_reasoning.txt 記載"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術前Fibrinogen與D-dimer檢驗數值屬醫療檢驗細節，section_05_reasoning.txt 未提及",
+     "reason": "術前Fibrinogen與D-dimer檢驗數值屬醫療檢驗細節，section_05_reasoning.txt 未提及"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "民法第535條具體法條號碼雖未明示，但 section_05_reasoning.txt 多次提及「善良管理人之注意義務」概念，法條號碼屬次要資訊",
+     "reason": "民法第535條具體法條號碼雖未明示，但 section_05_reasoning.txt 多次提及「善良管理人之注意義務」概念，法條號碼屬次要資訊"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「完整醫療過程」三段論定義屬法律框架說明，section_05_reasoning.txt 未完整引述此定義",
+     "reason": "「完整醫療過程」三段論定義屬法律框架說明，section_05_reasoning.txt 未完整引述此定義"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「抽血後經送檢驗部門進行檢驗，須相當時間」屬程序性說明，section_05_reasoning.txt 未明確提及",
+     "reason": "「抽血後經送檢驗部門進行檢驗，須相當時間」屬程序性說明，section_05_reasoning.txt 未明確提及"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 72,
+   "matched": 69,
+   "partial": 7,
+   "missing": 63,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6946,
+  "compression_afg_chars": 2389,
+  "compression_source_chars": 7823,
+  "gt_length_ratio": 0.4802,
+  "gt_length_afg_chars": 2389,
+  "gt_length_gt_chars": 4975,
+  "section_balance": 0.2833
+ }
 }

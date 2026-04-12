@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -133,5 +134,109 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8538,
+  "fact_recall": 0.9,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9474,
+  "quality_overall": 4.9,
+  "checklist_pass_rate": 0.984,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9914,
+  "uncited_rate": 0.016,
+  "faithfulness_combined": {
+   "score": 0.9904,
+   "citation_fidelity": 0.984,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 21,
+   "correct": 21
+  },
+  "weighted_recall": 0.9633,
+  "missing_severity": {
+   "critical": 0,
+   "important": 3,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 雖提及護理人員觀察病況，但未明確提及「無家屬在旁照顧時應特別注意」之注意義務細節，屬案情理解相關的重要事實",
+     "reason": "section_01_facts.txt 雖提及護理人員觀察病況，但未明確提及「無家屬在旁照顧時應特別注意」之注意義務細節，屬案情理解相關的重要事實"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 僅提及「家屬到院時亦認為病患是酒醉」，未提及「諒解」一詞。此為被告減輕責任之辯護要點，缺失會影響對辯護完整性的理解",
+     "reason": "section_02_defense.txt 僅提及「家屬到院時亦認為病患是酒醉」，未提及「諒解」一詞。此為被告減輕責任之辯護要點，缺失會影響對辯護完整性的理解"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "雖 facts section 提及傷口檢視與留院觀察，但 opinions section 未涵蓋此醫療處置細節，影響案情完整理解",
+     "reason": "雖 facts section 提及傷口檢視與留院觀察，但 opinions section 未涵蓋此醫療處置細節，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓心跳數值屬程序性生命徵象數據，於 GT claims 中未見對應，且不影響判決結論理解",
+     "reason": "血壓心跳數值屬程序性生命徵象數據，於 GT claims 中未見對應，且不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（上訴期間未上訴），遍查 5 個 section 均未提及，不影響判決主文理解",
+     "reason": "程序性事實（上訴期間未上訴），遍查 5 個 section 均未提及，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（判決確定狀態），遍查 5 個 section 均未提及，不影響判決主文理解",
+     "reason": "程序性事實（判決確定狀態），遍查 5 個 section 均未提及，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查5個section皆無此廣泛性腦病變症狀之醫學詳細描述，屬背景醫學知識，非判決核心要素",
+     "reason": "遍查5個section皆無此廣泛性腦病變症狀之醫學詳細描述，屬背景醫學知識，非判決核心要素"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "全文無喝酒與頭部外傷症狀相似之醫學說明，屬醫學背景性質，不影響判決結論理解",
+     "reason": "全文無喝酒與頭部外傷症狀相似之醫學說明，屬醫學背景性質，不影響判決結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 100,
+   "pred_total": 64,
+   "matched": 88,
+   "partial": 4,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6835,
+  "compression_afg_chars": 2035,
+  "compression_source_chars": 6429,
+  "gt_length_ratio": 0.4595,
+  "gt_length_afg_chars": 2035,
+  "gt_length_gt_chars": 4429,
+  "section_balance": 0.63
+ }
 }

@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -139,5 +140,130 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6092,
+  "fact_recall": 0.8496,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9187,
+  "quality_overall": 4.9143,
+  "checklist_pass_rate": 0.9891,
+  "citation_accuracy": 0.9867,
+  "citation_support_score": 0.9707,
+  "uncited_rate": 0.061,
+  "faithfulness_combined": {
+   "score": 0.9559,
+   "citation_fidelity": 0.9265,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 48,
+   "correct": 48
+  },
+  "weighted_recall": 0.9485,
+  "missing_severity": {
+   "critical": 2,
+   "important": 4,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均未明確提及『一般有胸悶不適時，都會考量到心臟的問題』此一臨床判斷原則",
+     "reason": "所有section原文均未明確提及『一般有胸悶不適時，都會考量到心臟的問題』此一臨床判斷原則"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及『胸悶原因眾多』，但未具體列舉『抽煙、糖尿病』等可能原因",
+     "reason": "section_02_defense.txt 僅提及『胸悶原因眾多』，但未具體列舉『抽煙、糖尿病』等可能原因"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions.txt 提及心室頻脈發生於普通病房，但未記載「12月11日晚上11點到12點之間」的具體時間，section_reasoning.txt雖有記載但非opinions段落內容",
+     "reason": "section_opinions.txt 提及心室頻脈發生於普通病房，但未記載「12月11日晚上11點到12點之間」的具體時間，section_reasoning.txt雖有記載但非opinions段落內容"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查5個section原文，皆未明確提及「心電圖為心室頻脈發生時間之依據」此一細節",
+     "reason": "遍查5個section原文，皆未明確提及「心電圖為心室頻脈發生時間之依據」此一細節"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查5個section原文，皆未提及「病歷之醫囑單符合醫療常規」此一判斷",
+     "reason": "遍查5個section原文，皆未提及「病歷之醫囑單符合醫療常規」此一判斷"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "遍查5個section原文，未見「心因性休克為心室頻脈所造成」之因果關係明確表述，section_facts僅提及「急性心肌梗塞併心因性休克死亡」但死亡機轉不完整",
+     "reason": "遍查5個section原文，未見「心因性休克為心室頻脈所造成」之因果關係明確表述，section_facts僅提及「急性心肌梗塞併心因性休克死亡」但死亡機轉不完整"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文，皆未提及心肌梗塞之病理機轉（動脈硬化、硬化斑急性變化、冠狀動脈阻塞）",
+     "reason": "遍查5個section原文，皆未提及心肌梗塞之病理機轉（動脈硬化、硬化斑急性變化、冠狀動脈阻塞）"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文，皆未提及「心肌梗塞急性發作與動脈硬化慢性過程」之關係",
+     "reason": "遍查5個section原文，皆未提及「心肌梗塞急性發作與動脈硬化慢性過程」之關係"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "遍查5個section原文，未見「當場之心室頻脈為心肌梗塞缺氧引起」之因果關係明確表述，section_reasoning雖提及心肌梗塞與心室頻脈但無oxygen缺乏關聯",
+     "reason": "遍查5個section原文，未見「當場之心室頻脈為心肌梗塞缺氧引起」之因果關係明確表述，section_reasoning雖提及心肌梗塞與心室頻脈但無oxygen缺乏關聯"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions.txt僅提及未施以電擊，未提及「沒有給以抗心室頻脈之藥物」的細節，section_facts雖有提及Tridil等用藥但無法明確對應此claim",
+     "reason": "section_opinions.txt僅提及未施以電擊，未提及「沒有給以抗心室頻脈之藥物」的細節，section_facts雖有提及Tridil等用藥但無法明確對應此claim"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決法院及日期為程序性資訊，未出現在 section_verdict.txt 中，不影響案情實體理解",
+     "reason": "判決法院及日期為程序性資訊，未出現在 section_verdict.txt 中，不影響案情實體理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 115,
+   "matched": 97,
+   "partial": 15,
+   "missing": 11,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7336,
+  "compression_afg_chars": 4912,
+  "compression_source_chars": 18435,
+  "gt_length_ratio": 1.0879,
+  "gt_length_afg_chars": 4912,
+  "gt_length_gt_chars": 4515,
+  "section_balance": 0.6667
+ }
 }

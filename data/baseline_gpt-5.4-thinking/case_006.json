@@ -22,7 +22,8 @@
   "baseline_ollama_mistral-large-3-675b-cloud",
   "baseline_ollama_nemotron-3-super-cloud",
   "baseline_ollama_qwen3-next-80b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_glm-5.1-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -123,5 +124,88 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8237,
+  "fact_recall": 0.8415,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9139,
+  "quality_overall": 4.9571,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.9431,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "facts、defense、opinions、verdict、reasoning 五個 section 均未提及配偶陳述『心痛，有時心電圖作不出來』及要求轉診心臟科之細節，雖屬辯護內容但影響案情背景理解",
+     "reason": "facts、defense、opinions、verdict、reasoning 五個 section 均未提及配偶陳述『心痛，有時心電圖作不出來』及要求轉診心臟科之細節，雖屬辯護內容但影響案情背景理解"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經掃描全部五個 section，未發現「因為簡易判決，判決書未載明鑑定內容」語義之陳述。此為判決程序背景資訊，不影響關鍵法律爭點與判決結果理解",
+     "reason": "經掃描全部五個 section，未發現「因為簡易判決，判決書未載明鑑定內容」語義之陳述。此為判決程序背景資訊，不影響關鍵法律爭點與判決結果理解"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，verdict section 僅提及「不得上訴」，未明確說明被告與檢察官均未上訴",
+     "reason": "程序性事實，verdict section 僅提及「不得上訴」，未明確說明被告與檢察官均未上訴"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，verdict section 未明確提及判決確定狀態",
+     "reason": "程序性事實，verdict section 未明確提及判決確定狀態"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 僅提及『施作心電圖檢查』，未明確提及『檢查結果無變化』之判斷；GT gt_claim_id 32 強調『無變化』之結果，屬重要醫療處置細節，影響後續診斷決策理解",
+     "reason": "section_05_reasoning.txt 僅提及『施作心電圖檢查』，未明確提及『檢查結果無變化』之判斷；GT gt_claim_id 32 強調『無變化』之結果，屬重要醫療處置細節，影響後續診斷決策理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 41,
+   "pred_total": 44,
+   "matched": 33,
+   "partial": 3,
+   "missing": 5,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.3885,
+  "compression_afg_chars": 1335,
+  "compression_source_chars": 2183,
+  "gt_length_ratio": 0.9441,
+  "gt_length_afg_chars": 1335,
+  "gt_length_gt_chars": 1414,
+  "section_balance": 0.5
+ }
 }
