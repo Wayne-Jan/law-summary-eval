@@ -22,10 +22,7 @@ LLM-eval refresh workflow:
        under data/predictions/{cond}/{volume}/{case}/eval/.
     2. Run this script from law-summary-eval:
            python3 build.py
-       to rebuild the static website data in data/.
-    3. If metrics changed, also run:
-           python3 build_metrics_data.py
-       so metrics.html reads the refreshed eval_metrics_*.json files.
+       to rebuild all static website data, including eval_metrics_*.json.
 
 Usage:
     python build.py
@@ -1234,3 +1231,8 @@ def build():
 
 if __name__ == "__main__":
     build()
+
+    # Also rebuild metrics JSON so one build command covers everything
+    print()
+    from build_metrics_data import main as build_metrics
+    build_metrics()

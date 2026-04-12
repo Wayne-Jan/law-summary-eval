@@ -32,21 +32,8 @@ VOLUME_TO_FILE = {
     "中冊": "eval_metrics_middle.json",
     "下冊": "eval_metrics_lower.json",
 }
-EXCLUDED_CONDITIONS = {
-    "LENS-Full-GPT_v1",
-    "opensource_afg_v11",
-    "opensource_afg_v11_no_react",
-    "opensource_afg_v11_no_afg",
-    "opensource_afg_v11_5",
-    "opensource_afg_v11_5_no_react",
-    "opensource_afg_v11_5_no_afg",
-    "opensource_afg_v11_5_writer_nemotron_super",
-    "opensource_afg_v11_5_no_react_writer_nemotron_super",
-    "opensource_afg_v11_5_no_afg_writer_nemotron_super",
-    "baseline_ollama_cogito-2.1-671b-cloud",
-    "baseline_ollama_qwen3-next-80b-cloud",
-    "baseline_ollama_nemotron-3-super-cloud",
-}
+# Import shared exclusion list from build.py to keep them in sync
+from build import EXCLUDED_CONDITIONS
 
 EXTRA_CONDITIONS = OrderedDict(
     [
