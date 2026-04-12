@@ -44,6 +44,8 @@ EXCLUDED_CONDITIONS = {
     "opensource_afg_v11_5_no_react_writer_nemotron_super",
     "opensource_afg_v11_5_no_afg_writer_nemotron_super",
     "baseline_ollama_cogito-2.1-671b-cloud",
+    "baseline_ollama_qwen3-next-80b-cloud",
+    "baseline_ollama_nemotron-3-super-cloud",
 }
 
 EXTRA_CONDITIONS = OrderedDict(
