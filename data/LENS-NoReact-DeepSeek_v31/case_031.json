@@ -13,8 +13,8 @@
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
   "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -41,8 +41,8 @@
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
-  "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
-  "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-C"
+  "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
+  "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -63,8 +63,8 @@
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
   "LENS-Full-DeepSeek_v31": "開源模型",
-  "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-NoAFG-DeepSeek_v31": "開源模型"
+  "LENS-NoAFG-DeepSeek_v31": "開源模型",
+  "LENS-NoReact-DeepSeek_v31": "開源模型"
  },
  "sections": [
   {
@@ -126,6 +126,115 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.777
+  "rule_based_avg": 0.777,
+  "fact_recall": 0.9173,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9568,
+  "quality_overall": 4.6857,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 0.9722,
+  "citation_support_score": 0.9811,
+  "uncited_rate": 0.043,
+  "faithfulness_combined": {
+   "score": 0.9582,
+   "citation_fidelity": 0.9304,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 0.958,
+  "numerical_detail": {
+   "total_numerical": 48,
+   "correct": 46
+  },
+  "weighted_recall": 0.9736,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "全部5個section中皆無此醫學知識性陳述的直接對應，屬背景性醫學常識",
+     "reason": "全部5個section中皆無此醫學知識性陳述的直接對應，屬背景性醫學常識"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "全部5個section中未發現「經詢相關專業醫師」之內容，屬程序性資訊",
+     "reason": "全部5個section中未發現「經詢相關專業醫師」之內容，屬程序性資訊"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section確實未提及妊娠高血壓病史，雖reasoning section有詳述子癇前症，但被告甲辯稱內容集中於輸血必要性與手術後症狀，未涉及妊娠高血壓背景事實",
+     "reason": "defense section確實未提及妊娠高血壓病史，雖reasoning section有詳述子癇前症，但被告甲辯稱內容集中於輸血必要性與手術後症狀，未涉及妊娠高血壓背景事實"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense section未提及血壓數值變化，被告甲僅就輸血標準辯稱，未涉及血壓降至正常值之事實，屬辯護策略選擇性陳述",
+     "reason": "defense section未提及血壓數值變化，被告甲僅就輸血標準辯稱，未涉及血壓降至正常值之事實，屬辯護策略選擇性陳述"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "鑑定意見中「若子宮頸口已成熟，可考慮經由陰道引產」為重要醫療建議，section_opinions 僅提「剖腹生產之處置並無錯誤」，未提及此條件性替代方案，影響對生產方式選擇的理解",
+     "reason": "鑑定意見中「若子宮頸口已成熟，可考慮經由陰道引產」為重要醫療建議，section_opinions 僅提「剖腹生產之處置並無錯誤」，未提及此條件性替代方案，影響對生產方式選擇的理解"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決作成日期屬程序性事實，全部5個section均未提及「12月16日」，不影響案情實質理解",
+     "reason": "判決作成日期屬程序性事實，全部5個section均未提及「12月16日」，不影響案情實質理解"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "自訴人未上訴屬判決後程序狀態，全部5個section均未提及上訴相關內容，不影響判決主文理解",
+     "reason": "自訴人未上訴屬判決後程序狀態，全部5個section均未提及上訴相關內容，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態為程序性結果，全部5個section均未提及，不影響無罪判決的理解",
+     "reason": "判決確定狀態為程序性結果，全部5個section均未提及，不影響無罪判決的理解"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt末段記載「此外，復查無其他積極證據足認被告等二人所為有事實所指之業務過失犯行」，雖核心意旨「復查無其他積極證據足認...業務過失犯行」存在，但缺少「本院」主語及「自訴人所指之」修飾語，與GT-138之表述有差異",
+     "reason": "section_05_reasoning.txt末段記載「此外，復查無其他積極證據足認被告等二人所為有事實所指之業務過失犯行」，雖核心意旨「復查無其他積極證據足認...業務過失犯行」存在，但缺少「本院」主語及「自訴人所指之」修飾語，與GT-138之表述有差異"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 117,
+   "matched": 125,
+   "partial": 5,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.2238,
+  "compression_afg_chars": 6072,
+  "compression_source_chars": 7823,
+  "gt_length_ratio": 1.2205,
+  "gt_length_afg_chars": 6072,
+  "gt_length_gt_chars": 4975,
+  "section_balance": 0.2558
  }
 }

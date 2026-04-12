@@ -117,8 +117,8 @@ CONDITION_LABELS = {
     "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
     "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
-    "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
-    "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
+    "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
+    "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
 }
 
 # Display order: LENS-Haiku → 商用 baseline → LENS-DeepSeek → 開源 baseline
@@ -133,8 +133,8 @@ CONDITION_ORDER = [
     "baseline_gpt-5.3",
     "baseline_gpt-5.4-thinking",
     "LENS-Full-DeepSeek_v31",
-    "LENS-NoReact-DeepSeek_v31",
     "LENS-NoAFG-DeepSeek_v31",
+    "LENS-NoReact-DeepSeek_v31",
     "baseline_ollama_deepseek-v3.1-671b-cloud",
     "baseline_ollama_glm-5-cloud",
     "baseline_ollama_gpt-oss-120b-cloud",
@@ -164,8 +164,8 @@ CONDITION_GROUPS = {
     "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
     "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
     "LENS-Full-DeepSeek_v31": "開源模型",
-    "LENS-NoReact-DeepSeek_v31": "開源模型",
     "LENS-NoAFG-DeepSeek_v31": "開源模型",
+    "LENS-NoReact-DeepSeek_v31": "開源模型",
 }
 
 SECTION_FILES = [

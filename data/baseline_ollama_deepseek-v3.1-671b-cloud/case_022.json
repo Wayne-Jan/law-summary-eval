@@ -13,8 +13,8 @@
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
   "LENS-Full-DeepSeek_v31",
-  "LENS-NoReact-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
+  "LENS-NoReact-DeepSeek_v31",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -41,8 +41,8 @@
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
-  "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
-  "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-C"
+  "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
+  "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -63,8 +63,8 @@
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
   "LENS-Full-DeepSeek_v31": "開源模型",
-  "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-NoAFG-DeepSeek_v31": "開源模型"
+  "LENS-NoAFG-DeepSeek_v31": "開源模型",
+  "LENS-NoReact-DeepSeek_v31": "開源模型"
  },
  "sections": [
   {
@@ -139,6 +139,219 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7444,
-  "fact_recall_avg": null
+  "fact_recall": 0.5887,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7411,
+  "quality_overall": 3.6929,
+  "checklist_pass_rate": 0.913,
+  "citation_accuracy": 0.6667,
+  "citation_support_score": 0.7067,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.8,
+   "citation_fidelity": 0.6667,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.7473,
+  "missing_severity": {
+   "critical": 4,
+   "important": 15,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "5個section原文均未出現「翌日下午超音波檢查」、「膽囊及膽管結石無膽囊炎」診斷結果、以及「病患同意手術」等細節，僅提及就診與手術時間點。屬手術前流程細節遺漏，不影響判決結論理解。",
+     "reason": "5個section原文均未出現「翌日下午超音波檢查」、「膽囊及膽管結石無膽囊炎」診斷結果、以及「病患同意手術」等細節，僅提及就診與手術時間點。屬手術前流程細節遺漏，不影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未見解剖報告排除麻藥過敏、氣體拴塞之相關記載。被告雖曾辯稱可能因麻醉或氣體拴塞致死，但無對應文字說明解剖報告已排除這些因素。此為鑑定關鍵發現，影響死因認定之完整理解。",
+     "reason": "遍查全部 5 個 section 原文，均未見解剖報告排除麻藥過敏、氣體拴塞之相關記載。被告雖曾辯稱可能因麻醉或氣體拴塞致死，但無對應文字說明解剖報告已排除這些因素。此為鑑定關鍵發現，影響死因認定之完整理解。"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "審判外達成協商合意屬程序性背景事實，summary 雖提及「協商合意」但未明確「審判外」，遺漏不影響判決主文理解",
+     "reason": "審判外達成協商合意屬程序性背景事實，summary 雖提及「協商合意」但未明確「審判外」，遺漏不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "上訴期間狀態屬判決後程序性事實，summary 未提及，不影響判決內容理解",
+     "reason": "上訴期間狀態屬判決後程序性事實，summary 未提及，不影響判決內容理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態屬程序性結論，summary 聚焦判決主文與理由，遺漏不影響核心事實理解",
+     "reason": "判決確定狀態屬程序性結論，summary 聚焦判決主文與理由，遺漏不影響核心事實理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告辯稱CPR導致內出血為重要辯護主張，遍查全篇摘要未見完整對應",
+     "reason": "被告辯稱CPR導致內出血為重要辯護主張，遍查全篇摘要未見完整對應"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉師於CPR後詢問內出血之程序事實，影響醫療過程理解",
+     "reason": "麻醉師於CPR後詢問內出血之程序事實，影響醫療過程理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告答稱「手術還沒開始，不可能是內出血」為關鍵抗辯內容，摘要未提及",
+     "reason": "被告答稱「手術還沒開始，不可能是內出血」為關鍵抗辯內容，摘要未提及"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "加護病房後抽血結果異常為重要醫療證據，摘要未涵蓋",
+     "reason": "加護病房後抽血結果異常為重要醫療證據，摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉師執行CPR時觀察到肚子漲脹，為內出血徵兆，摘要未提及",
+     "reason": "麻醉師執行CPR時觀察到肚子漲脹，為內出血徵兆，摘要未提及"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉師持續懷疑並多次詢問，為重要事實經過，摘要僅提及單次詢問",
+     "reason": "麻醉師持續懷疑並多次詢問，為重要事實經過，摘要僅提及單次詢問"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "加護病房後續病情惡化及持續急救為重要病程發展",
+     "reason": "加護病房後續病情惡化及持續急救為重要病程發展"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "急救最後被告考慮開腹探查之表述，反映延誤處理",
+     "reason": "急救最後被告考慮開腹探查之表述，反映延誤處理"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "11時32分護理紀錄載明腹部變大趨勢為關鍵客觀證據",
+     "reason": "11時32分護理紀錄載明腹部變大趨勢為關鍵客觀證據"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "9時34分血液檢驗具體數值（HGB 8.9、PLT 53）為重要醫療證據",
+     "reason": "9時34分血液檢驗具體數值（HGB 8.9、PLT 53）為重要醫療證據"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術前血液檢驗數值雖具參考價值，但屬背景性實驗室數據",
+     "reason": "術前血液檢驗數值雖具參考價值，但屬背景性實驗室數據"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "前後血液數值顯著下降為判斷內出血之重要依據",
+     "reason": "前後血液數值顯著下降為判斷內出血之重要依據"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「法院明確否定被告CPR辯稱「核與解剖結果不符，顯非可採」為判決核心認定，影響過失成立與否",
+     "reason": "「法院明確否定被告CPR辯稱「核與解剖結果不符，顯非可採」為判決核心認定，影響過失成立與否"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「法院評價被告辯稱「為卸責之詞，不足採信」為判決重要心證，影響判決結論",
+     "reason": "「法院評價被告辯稱「為卸責之詞，不足採信」為判決重要心證，影響判決結論"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「證人L三次詢問被告甲內出血可能」為證人關鍵證詞，摘要未完整涵蓋",
+     "reason": "「證人L三次詢問被告甲內出血可能」為證人關鍵證詞，摘要未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「法院認定「自始確有內出血之徵兆」為過失成立之關鍵事實基礎",
+     "reason": "「法院認定「自始確有內出血之徵兆」為過失成立之關鍵事實基礎"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「證人一再提醒而被告率爾否定」之過程描述，反映被告疏忽程度",
+     "reason": "「證人一再提醒而被告率爾否定」之過程描述，反映被告疏忽程度"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「與gt_claim_id 46內容重複，護理紀錄之腹部變大趨勢為內出血重要徵兆",
+     "reason": "「與gt_claim_id 46內容重複，護理紀錄之腹部變大趨勢為內出血重要徵兆"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「法院認定「內出血徵兆為被告甲所明知」為過失主觀要件之關鍵事實",
+     "reason": "「法院認定「內出血徵兆為被告甲所明知」為過失主觀要件之關鍵事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 27,
+   "matched": 35,
+   "partial": 3,
+   "missing": 24,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7367,
+  "compression_afg_chars": 880,
+  "compression_source_chars": 3342,
+  "gt_length_ratio": 0.4173,
+  "gt_length_afg_chars": 880,
+  "gt_length_gt_chars": 2109,
+  "section_balance": 0.3448
  }
 }
