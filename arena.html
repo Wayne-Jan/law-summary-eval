@@ -2164,8 +2164,9 @@
         const votes = getVotes(currentEvaluator);
         const voted = new Set(votes.filter(v => v.case_id === activeCaseId).map(v => getPairStorageKey(v.case_id, v.condition_a, v.condition_b)));
         wrap.innerHTML = '';
+        const isInspect = document.body.classList.contains('admin-inspect');
         effectivePairs.forEach((pair, idx) => {
-            const pill = document.createElement('span');
+            const pill = document.createElement(isInspect ? 'button' : 'span');
             pill.className = 'pair-pill';
             const key = getPairStorageKey(activeCaseId, pair.condA, pair.condB);
             if (currentPair && currentPair.case_id === activeCaseId && currentPair.pairIndex === idx) pill.classList.add('active');
@@ -2173,6 +2174,12 @@
             else pill.classList.add('partial');
             pill.textContent = String(idx + 1);
             pill.title = `Pair ${idx + 1}`;
+            if (isInspect) {
+                pill.addEventListener('click', () => {
+                    loadPairForEdit(activeCaseId, pair.condA, pair.condB, true);
+                });
+                pill.style.cursor = 'pointer';
+            }
             wrap.appendChild(pill);
         });
     }
