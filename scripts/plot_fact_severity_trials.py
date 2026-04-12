@@ -193,7 +193,7 @@ def load_rows(volume: str) -> pd.DataFrame:
 
 
 def plot_omission_only(df: pd.DataFrame, volume: str, out_path: Path, dpi: int,
-                       group_label: str = "") -> None:
+                       group_label: str = "", x_max: int | None = None) -> None:
     n = len(df)
     fig_h = max(3.5, 0.45 * n + 1.0)
     fig, ax = plt.subplots(figsize=(12.8, fig_h))
@@ -231,8 +231,11 @@ def plot_omission_only(df: pd.DataFrame, volume: str, out_path: Path, dpi: int,
         ax.text(x, y[i], f"{v:.1f}%", ha="left", va="center",
                 fontsize=8, color="#991b1b", fontweight="700", clip_on=False)
 
-    ax.set_xlim(0, 100)
-    ax.set_xticks(list(range(0, 101, 20)))
+    if x_max is None:
+        x_max = int(np.ceil(total_vals.max() / 5) * 5) + 5 if len(total_vals) else 65
+        x_max = max(x_max, 20)
+    ax.set_xlim(0, x_max)
+    ax.set_xticks(list(range(0, x_max + 1, 10)))
     ax.set_xlabel("Omitted GT Claims (%)", fontsize=10)
     title_suffix = f" — {group_label}" if group_label else ""
     ax.set_title(
@@ -274,13 +277,18 @@ def main() -> int:
         raise SystemExit("No data")
     out_base = OUT_DIR
 
+    # Compute global x_max across both groups for consistent axes
+    global_max = df[["partial", "minor", "important", "critical"]].fillna(0).sum(axis=1).max()
+    global_x_max = int(np.ceil(global_max / 5) * 5) + 5
+    global_x_max = max(global_x_max, 20)
+
     for grp, grp_label in [("commercial", "Commercial"), ("opensource", "Open-Source")]:
         df_grp = df[df["group"] == grp].reset_index(drop=True)
         if df_grp.empty:
             print(f"  (skipped — no data for {grp_label})")
             continue
         out_path = out_base / f"{args.volume}_trial_omission_only_{grp}.png"
-        plot_omission_only(df_grp, args.volume, out_path, args.dpi, group_label=grp_label)
+        plot_omission_only(df_grp, args.volume, out_path, args.dpi, group_label=grp_label, x_max=global_x_max)
         print(out_path)
 
     legend_path = out_base / f"{args.volume}_trial_omission_only_legend.png"
