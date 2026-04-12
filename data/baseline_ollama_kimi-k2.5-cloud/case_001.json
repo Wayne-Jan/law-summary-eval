@@ -20,8 +20,6 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_nemotron-3-super-cloud",
-  "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
@@ -126,6 +124,87 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.8352
+  "rule_based_avg": 0.8352,
+  "fact_recall": 0.9301,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9638,
+  "quality_overall": 4.8857,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9893,
+  "uncited_rate": 0.0465,
+  "faithfulness_combined": {
+   "score": 0.9721,
+   "citation_fidelity": 0.9535,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.9821,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢察官相驗程序屬於起訴背景事實，非鑑定意見段核心內容。遍查五段摘要均未提及「檢察官督同法醫師相驗」之具體程序",
+     "reason": "檢察官相驗程序屬於起訴背景事實，非鑑定意見段核心內容。遍查五段摘要均未提及「檢察官督同法醫師相驗」之具體程序"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決結果段確實未提及「事證明確」之表述，屬判決書常見法律用語，但非核心事實",
+     "reason": "判決結果段確實未提及「事證明確」之表述，屬判決書常見法律用語，但非核心事實"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "生成摘要未提及上訴狀況，屬程序性事實，不影響判決主文理解",
+     "reason": "生成摘要未提及上訴狀況，屬程序性事實，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "生成摘要未提及判決確定狀態，屬程序性事實",
+     "reason": "生成摘要未提及判決確定狀態，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "none of the 5 sections mention defendant B issuing a diagnosis certificate at discharge; only mentions discharge timing and continued diagnosis",
+     "reason": "none of the 5 sections mention defendant B issuing a diagnosis certificate at discharge; only mentions discharge timing and continued diagnosis"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 86,
+   "matched": 85,
+   "partial": 3,
+   "missing": 5,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.519,
+  "compression_afg_chars": 2395,
+  "compression_source_chars": 4979,
+  "gt_length_ratio": 0.7845,
+  "gt_length_afg_chars": 2395,
+  "gt_length_gt_chars": 3053,
+  "section_balance": 0.5714
  }
 }

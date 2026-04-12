@@ -20,8 +20,6 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_nemotron-3-super-cloud",
-  "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
@@ -127,5 +125,109 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8025,
+  "fact_recall": 0.7838,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8788,
+  "quality_overall": 4.9,
+  "checklist_pass_rate": 0.9892,
+  "citation_accuracy": 0.9231,
+  "citation_support_score": 0.9412,
+  "uncited_rate": 0.029,
+  "faithfulness_combined": {
+   "score": 0.9378,
+   "citation_fidelity": 0.8963,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.9189,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 僅提「由其父母陪同」，未明確陳述「丙、戊之女」之親屬關係，跨 section 檢查亦無補充",
+     "reason": "section_facts 僅提「由其父母陪同」，未明確陳述「丙、戊之女」之親屬關係，跨 section 檢查亦無補充"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 僅提「案經檢察官提起公訴」，未明確提及「病患K之父丙提起告訴」之程序事實",
+     "reason": "section_facts 僅提「案經檢察官提起公訴」，未明確提及「病患K之父丙提起告訴」之程序事實"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions.txt 僅列出文件清單（「行政院衛生署醫事審議委員會鑑定書共2份...」），未說明「因協商判決導致鑑定內容未明載」之因果關係；section_reasoning.txt 雖提及協商判決事實，但未解釋鑑定內容因此被省略，跨 section 合併後仍無法完整覆蓋此資訊",
+     "reason": "section_opinions.txt 僅列出文件清單（「行政院衛生署醫事審議委員會鑑定書共2份...」），未說明「因協商判決導致鑑定內容未明載」之因果關係；section_reasoning.txt 雖提及協商判決事實，但未解釋鑑定內容因此被省略，跨 section 合併後仍無法完整覆蓋此資訊"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 雖列出「行政院衛生署醫事審議委員會鑑定書」等文件，但未摘述鑑定結論（病患罹患心肌炎）；section_facts.txt 雖有提及心肌炎診斷，但屬起訴事實而非鑑定意見，opinions section 作為鑑定意見呈現段落確實遺漏實質結論",
+     "reason": "section_opinions.txt 雖列出「行政院衛生署醫事審議委員會鑑定書」等文件，但未摘述鑑定結論（病患罹患心肌炎）；section_facts.txt 雖有提及心肌炎診斷，但屬起訴事實而非鑑定意見，opinions section 作為鑑定意見呈現段落確實遺漏實質結論"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "摘要提及『為協商判決』但未明確陳述『檢察官聲請協商判決』之程序性事實，屬程序性背景資訊",
+     "reason": "摘要提及『為協商判決』但未明確陳述『檢察官聲請協商判決』之程序性事實，屬程序性背景資訊"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "所有section均未提及上訴期間或上訴狀況，屬程序性事實",
+     "reason": "所有section均未提及上訴期間或上訴狀況，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "所有section均未提及判決確定狀態，屬程序性事實",
+     "reason": "所有section均未提及判決確定狀態，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "協商判決的程序性說明，摘要以闡述協商判決理由為主，未特別提及「判決書內文無判決理由」此程序性標示",
+     "reason": "協商判決的程序性說明，摘要以闡述協商判決理由為主，未特別提及「判決書內文無判決理由」此程序性標示"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 37,
+   "pred_total": 34,
+   "matched": 29,
+   "partial": 0,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5384,
+  "compression_afg_chars": 818,
+  "compression_source_chars": 1772,
+  "gt_length_ratio": 0.8424,
+  "gt_length_afg_chars": 818,
+  "gt_length_gt_chars": 971,
+  "section_balance": 0.5
+ }
 }

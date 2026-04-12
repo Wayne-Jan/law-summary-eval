@@ -20,8 +20,6 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_nemotron-3-super-cloud",
-  "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
@@ -133,5 +131,165 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8482,
+  "fact_recall": 0.678,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8081,
+  "quality_overall": 4.6571,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.9231,
+  "citation_support_score": 0.9105,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9539,
+   "citation_fidelity": 0.9231,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.8475,
+  "missing_severity": {
+   "critical": 1,
+   "important": 9,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "案型分類「業務過失致死罪」存在於 verdict 及 reasoning 段，但 opinions 段確未提及；屬案情理解的必要背景資訊",
+     "reason": "案型分類「業務過失致死罪」存在於 verdict 及 reasoning 段，但 opinions 段確未提及；屬案情理解的必要背景資訊"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「經檢察官偵查起訴」已存在於 facts 段末句，惟 opinions 段確未提及；屬程序性事實",
+     "reason": "「經檢察官偵查起訴」已存在於 facts 段末句，惟 opinions 段確未提及；屬程序性事實"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「法院合議庭裁定改以簡易判決處刑」在全部 5 個 section 中均未出現，摘要確實遺漏此程序事實",
+     "reason": "「法院合議庭裁定改以簡易判決處刑」在全部 5 個 section 中均未出現，摘要確實遺漏此程序事實"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，未發現「上訴期間」或「未上訴」等相關記載，屬影響判決確定狀態理解之程序性事實",
+     "reason": "經掃描全部 5 個 section 原文，未發現「上訴期間」或「未上訴」等相關記載，屬影響判決確定狀態理解之程序性事實"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，未發現「判決確定」相關記載，屬影響案件最終狀態理解之程序性事實",
+     "reason": "經掃描全部 5 個 section 原文，未發現「判決確定」相關記載，屬影響案件最終狀態理解之程序性事實"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "X光檢查由誰負責驗片判讀，section_05_reasoning.txt僅提及放射線科醫師乙，未明確說明係由渠負責驗片判讀，跨section檢查後仍無完整對應",
+     "reason": "X光檢查由誰負責驗片判讀，section_05_reasoning.txt僅提及放射線科醫師乙，未明確說明係由渠負責驗片判讀，跨section檢查後仍無完整對應"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判讀結果上傳時間（下午約一時許）屬作業細節，section_05_reasoning.txt未提及，雖section_01_facts有提及但非reasoning段落內容",
+     "reason": "判讀結果上傳時間（下午約一時許）屬作業細節，section_05_reasoning.txt未提及，雖section_01_facts有提及但非reasoning段落內容"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫院驗片作業流程規定（急診醫師開立屬急件）屬背景性作業程序說明，section_05_reasoning.txt未提及，不影響過失認定之主文理解",
+     "reason": "醫院驗片作業流程規定（急診醫師開立屬急件）屬背景性作業程序說明，section_05_reasoning.txt未提及，不影響過失認定之主文理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "門診X光攝影檢查驗片流程之詳細作業程序屬背景性事實，section_05_reasoning.txt未詳細記載，不影響判決結論理解",
+     "reason": "門診X光攝影檢查驗片流程之詳細作業程序屬背景性事實，section_05_reasoning.txt未詳細記載，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "三天內判讀完畢之時間規定屬作業流程細節，section_05_reasoning.txt未提及，為背景性事實",
+     "reason": "三天內判讀完畢之時間規定屬作業流程細節，section_05_reasoning.txt未提及，為背景性事實"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "配偶丙之證述雖有提及，但未明確作為證人即病患L之妻於法院審理時證稱之獨立證人證述呈現，影響證據形式之完整理解",
+     "reason": "配偶丙之證述雖有提及，但未明確作為證人即病患L之妻於法院審理時證稱之獨立證人證述呈現，影響證據形式之完整理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt提及九十六年四月二十五日病患X回診，但未明確提及九十六年四月十八日門診時開立處方箋之事實，影響時序完整性",
+     "reason": "section_05_reasoning.txt提及九十六年四月二十五日病患X回診，但未明確提及九十六年四月十八日門診時開立處方箋之事實，影響時序完整性"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告未告知可立即取片之事實涉及醫師說明義務，section_05_reasoning.txt未提及，影響過失行為之完整理解",
+     "reason": "被告未告知可立即取片之事實涉及醫師說明義務，section_05_reasoning.txt未提及，影響過失行為之完整理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告未要求返回聽取報告之事實涉及醫療流程妥當性，section_05_reasoning.txt未提及，影響過失認定之理解",
+     "reason": "被告未要求返回聽取報告之事實涉及醫療流程妥當性，section_05_reasoning.txt未提及，影響過失認定之理解"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "法院據此判認依照非急件之一般作業程序為之，係法院之事實認定與法律論證核心，section_05_reasoning.txt完全未提及，影響判決理由之完整理解",
+     "reason": "法院據此判認依照非急件之一般作業程序為之，係法院之事實認定與法律論證核心，section_05_reasoning.txt完全未提及，影響判決理由之完整理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患並無於當日再度返回聽取報告係法院認定之事實，section_05_reasoning.txt未明確提及，影響過失行為時序之完整理解",
+     "reason": "病患並無於當日再度返回聽取報告係法院認定之事實，section_05_reasoning.txt未明確提及，影響過失行為時序之完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 59,
+   "pred_total": 35,
+   "matched": 37,
+   "partial": 6,
+   "missing": 16,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5956,
+  "compression_afg_chars": 1166,
+  "compression_source_chars": 2883,
+  "gt_length_ratio": 0.4899,
+  "gt_length_afg_chars": 1166,
+  "gt_length_gt_chars": 2380,
+  "section_balance": 0.2143
+ }
 }

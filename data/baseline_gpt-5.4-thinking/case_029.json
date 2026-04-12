@@ -20,8 +20,6 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_nemotron-3-super-cloud",
-  "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
@@ -127,5 +125,207 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8089,
+  "fact_recall": 0.7419,
+  "fact_precision": 0.9718,
+  "fact_f1": 0.8415,
+  "quality_overall": 4.9571,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.9143,
+  "citation_support_score": 0.9189,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9373,
+   "citation_fidelity": 0.9143,
+   "fact_precision": 0.9718,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 6,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.8746,
+  "missing_severity": {
+   "critical": 1,
+   "important": 11,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts.txt 中 pred claim 5 描述的是「讓嬰兒躺著吸奶」的方式，而非單純「餵奶」行為，兩者語義不同。經查全部五個 section，摘要確實缺少對「餵奶」此單純護理行為的獨立描述。",
+     "reason": "section_facts.txt 中 pred claim 5 描述的是「讓嬰兒躺著吸奶」的方式，而非單純「餵奶」行為，兩者語義不同。經查全部五個 section，摘要確實缺少對「餵奶」此單純護理行為的獨立描述。"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經查 section_facts.txt，自訴意旨僅提及被告乙「讓嬰兒躺著吸奶」及後續因果關係，未明確提及「應注意、能注意而疏未注意」之過失要件論述。跨 section 檢索後亦無此具體過失指控要件。",
+     "reason": "經查 section_facts.txt，自訴意旨僅提及被告乙「讓嬰兒躺著吸奶」及後續因果關係，未明確提及「應注意、能注意而疏未注意」之過失要件論述。跨 section 檢索後亦無此具體過失指控要件。"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 提及「為掩飾醫療疏失，在A婦產科醫院嬰兒室護理記錄上偽造、更改病歷，為不實登載」，但缺少「明知為不實之事項而登載於其業務上作成之文書」之刑法第215條構成要件明確論述。跨 section 檢索後確認無此完整論述。",
+     "reason": "section_facts.txt 提及「為掩飾醫療疏失，在A婦產科醫院嬰兒室護理記錄上偽造、更改病歷，為不實登載」，但缺少「明知為不實之事項而登載於其業務上作成之文書」之刑法第215條構成要件明確論述。跨 section 檢索後確認無此完整論述。"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "經查全部五個 section，摘要中自訴人對醫療疏失的指控係分散描述（如「讓嬰兒躺著吸奶，致其因溢奶」、「施以心肺復甦術，急救方法恐有不當」等），缺少「治療及照顧病患之方式失當，致病患因而死亡」之總結性因果關係論述。此為影響判決結論理解之關鍵論點，判定為 critical。",
+     "reason": "經查全部五個 section，摘要中自訴人對醫療疏失的指控係分散描述（如「讓嬰兒躺著吸奶，致其因溢奶」、「施以心肺復甦術，急救方法恐有不當」等），缺少「治療及照顧病患之方式失當，致病患因而死亡」之總結性因果關係論述。此為影響判決結論理解之關鍵論點，判定為 critical。"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 主要記載醫審會鑑定意見，未詳述嬰兒被發現發紺及活動力差的具體情境，此為案件關鍵事實 but 屬於事實描述而非鑑定意見內容",
+     "reason": "opinions section 主要記載醫審會鑑定意見，未詳述嬰兒被發現發紺及活動力差的具體情境，此為案件關鍵事實 but 屬於事實描述而非鑑定意見內容"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 雖提及轉送B醫院，但未完整描述「被告等進行急救並轉送」之連續過程，影響對醫療處置完整性的理解",
+     "reason": "opinions section 雖提及轉送B醫院，但未完整描述「被告等進行急救並轉送」之連續過程，影響對醫療處置完整性的理解"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 僅提及「未插氣管急救過程中」，未說明插管、使用呼吸器及入加護病房等具體治療措施，影響對病情嚴重程度的理解",
+     "reason": "opinions section 僅提及「未插氣管急救過程中」，未說明插管、使用呼吸器及入加護病房等具體治療措施，影響對病情嚴重程度的理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及住院時對外界刺激無反應之檢查發現，此為判斷病況之重要理學檢查結果",
+     "reason": "opinions section 未提及住院時對外界刺激無反應之檢查發現，此為判斷病況之重要理學檢查結果"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及住院時依賴呼吸器之檢查發現，此為判斷呼吸功能狀態之重要資訊",
+     "reason": "opinions section 未提及住院時依賴呼吸器之檢查發現，此為判斷呼吸功能狀態之重要資訊"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及呼吸聲粗糙、沒有囉音等細節理學檢查發現，屬次要技術性細節",
+     "reason": "opinions section 未提及呼吸聲粗糙、沒有囉音等細節理學檢查發現，屬次要技術性細節"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及肝臟腫大（二指大）之檢查發現，屬次要理學檢查細節",
+     "reason": "opinions section 未提及肝臟腫大（二指大）之檢查發現，屬次要理學檢查細節"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 雖提及「嚴重性代謝性酸血症及高氨血症」之診斷，但未記載具體檢驗數值（白血球3900、SGOT571等），影響對診斷依據完整性的理解",
+     "reason": "opinions section 雖提及「嚴重性代謝性酸血症及高氨血症」之診斷，但未記載具體檢驗數值（白血球3900、SGOT571等），影響對診斷依據完整性的理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及嬰兒猝死症文獻及已知原因（腦瘤、腦畸型等），屬背景文獻參考資訊",
+     "reason": "opinions section 未提及嬰兒猝死症文獻及已知原因（腦瘤、腦畸型等），屬背景文獻參考資訊"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "經查全部五個section原文（facts、defense、opinions、verdict、reasoning），均無提及「自訴人於法定上訴期間未上訴」之內容。verdict section僅簡述判決結果，未涉及上訴期間狀態。此為判決後程序性事實，不影響案情實質理解。",
+     "reason": "經查全部五個section原文（facts、defense、opinions、verdict、reasoning），均無提及「自訴人於法定上訴期間未上訴」之內容。verdict section僅簡述判決結果，未涉及上訴期間狀態。此為判決後程序性事實，不影響案情實質理解。"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "經查全部五個section原文，均無提及「本案判決即確定」之內容。verdict section僅陳述判決結果，未明確表示判決已確定。此為程序性結論，屬次要資訊。",
+     "reason": "經查全部五個section原文，均無提及「本案判決即確定」之內容。verdict section僅陳述判決結果，未明確表示判決已確定。此為程序性結論，屬次要資訊。"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「醫師能力有限」為一般性法律論述，生成摘要未提及，屬政策性陪襯論點，不影響案情理解",
+     "reason": "「醫師能力有限」為一般性法律論述，生成摘要未提及，屬政策性陪襯論點，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「冀求醫師萬能期望過高」為一般性法律論述，生成摘要未提及，屬政策性陪襯論點，不影響案情理解",
+     "reason": "「冀求醫師萬能期望過高」為一般性法律論述，生成摘要未提及，屬政策性陪襯論點，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「醫師無法預見之突發狀況免責」涉及過失責任認定的重要法學理論，生成摘要雖有提及「縱及時排除呼吸道阻塞仍無法避免死亡」但未明確表達「突發狀況不可預見」概念，屬重要遺漏",
+     "reason": "「醫師無法預見之突發狀況免責」涉及過失責任認定的重要法學理論，生成摘要雖有提及「縱及時排除呼吸道阻塞仍無法避免死亡」但未明確表達「突發狀況不可預見」概念，屬重要遺漏"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「醫師動輒得咎終非病患之福」為政策性論述，生成摘要未提及，不影響具體案情理解",
+     "reason": "「醫師動輒得咎終非病患之福」為政策性論述，生成摘要未提及，不影響具體案情理解"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「自訴人指訴被告乙於護理紀錄為不實記載」為登載不實罪的核心爭點陳述，雖生成摘要有「自訴人主張業務上登載不實不足採信」但缺少「指訴」行為之明確表述，屬爭點陳述遺漏",
+     "reason": "「自訴人指訴被告乙於護理紀錄為不實記載」為登載不實罪的核心爭點陳述，雖生成摘要有「自訴人主張業務上登載不實不足採信」但缺少「指訴」行為之明確表述，屬爭點陳述遺漏"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「有該護理紀錄附卷可稽」為程序性敘述，生成摘要未提及，不影響案情理解",
+     "reason": "「有該護理紀錄附卷可稽」為程序性敘述，生成摘要未提及，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「被告乙堅決否認病歷有何記載不實情形」為登載不實罪的抗辯陳述，生成摘要 defense section 有「無偽造護理紀錄之動機」，但 reasoning section 未明確轉述被告否認態度，屬抗辯理由呈現不完整",
+     "reason": "「被告乙堅決否認病歷有何記載不實情形」為登載不實罪的抗辯陳述，生成摘要 defense section 有「無偽造護理紀錄之動機」，但 reasoning section 未明確轉述被告否認態度，屬抗辯理由呈現不完整"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 71,
+   "matched": 67,
+   "partial": 4,
+   "missing": 22,
+   "hallucinated": 2
+  },
+  "compression_ratio": 0.6438,
+  "compression_afg_chars": 2211,
+  "compression_source_chars": 6208,
+  "gt_length_ratio": 0.6981,
+  "gt_length_afg_chars": 2211,
+  "gt_length_gt_chars": 3167,
+  "section_balance": 0.3333
+ }
 }

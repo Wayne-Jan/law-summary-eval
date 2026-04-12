@@ -20,8 +20,6 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_nemotron-3-super-cloud",
-  "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
@@ -139,5 +137,102 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8903,
+  "fact_recall": 0.83,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9071,
+  "quality_overall": 4.5286,
+  "checklist_pass_rate": 0.9676,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9571,
+  "uncited_rate": 0.026,
+  "faithfulness_combined": {
+   "score": 0.9844,
+   "citation_fidelity": 0.974,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.9467,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "病患X是診所投資人的背景資訊，確實未在摘要任何 section 提及",
+     "reason": "病患X是診所投資人的背景資訊，確實未在摘要任何 section 提及"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅提及「測量血壓」，未提及「告知抽血檢驗」這項術前措施",
+     "reason": "摘要僅提及「測量血壓」，未提及「告知抽血檢驗」這項術前措施"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「貿然施行臉部拉皮手術將導致缺氧缺血」的風險警告語確實未在事實段摘要中提及，雖在判決文中有因果關係描述，但摘要未涵蓋此不必然發生的風險性質陳述",
+     "reason": "「貿然施行臉部拉皮手術將導致缺氧缺血」的風險警告語確實未在事實段摘要中提及，雖在判決文中有因果關係描述，但摘要未涵蓋此不必然發生的風險性質陳述"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確提及「法院依簡易程序、簡易判決處刑」，屬程序性事實，不影響案情核心理解",
+     "reason": "五個 section 原文均未明確提及「法院依簡易程序、簡易判決處刑」，屬程序性事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「被告甲前有違反醫師法之前科」見於 section_verdict.txt（量刑段落），非 reasoning section 內容，屬背景性資訊",
+     "reason": "「被告甲前有違反醫師法之前科」見於 section_verdict.txt（量刑段落），非 reasoning section 內容，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「臺灣高等法院被告前案紀錄表」未於 reasoning section 明確提及，屬佐證文件細節",
+     "reason": "「臺灣高等法院被告前案紀錄表」未於 reasoning section 明確提及，屬佐證文件細節"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「被告素行非佳」見於 section_verdict.txt（量刑評價），非 reasoning section 內容",
+     "reason": "「被告素行非佳」見於 section_verdict.txt（量刑評價），非 reasoning section 內容"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 50,
+   "pred_total": 39,
+   "matched": 40,
+   "partial": 3,
+   "missing": 7,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5823,
+  "compression_afg_chars": 1302,
+  "compression_source_chars": 3117,
+  "gt_length_ratio": 1.0646,
+  "gt_length_afg_chars": 1302,
+  "gt_length_gt_chars": 1223,
+  "section_balance": 0.5
+ }
 }

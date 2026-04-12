@@ -20,8 +20,6 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_nemotron-3-super-cloud",
-  "baseline_ollama_qwen3-next-80b-cloud",
   "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
@@ -135,5 +133,158 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6659,
+  "fact_recall": 0.8333,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9091,
+  "quality_overall": 4.9286,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.8571,
+  "citation_support_score": 0.8605,
+  "uncited_rate": 0.0367,
+  "faithfulness_combined": {
+   "score": 0.8954,
+   "citation_fidelity": 0.8256,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 32
+  },
+  "weighted_recall": 0.9259,
+  "missing_severity": {
+   "critical": 3,
+   "important": 3,
+   "minor": 9,
+   "details": [
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt僅記載「案經病患X之妻訴由臺灣桃園地方法院檢察署檢察官偵查起訴」，未提及檢察官主張之具體罪名「業務過失致死罪」，影響案件性質理解",
+     "reason": "section_01_facts.txt僅記載「案經病患X之妻訴由臺灣桃園地方法院檢察署檢察官偵查起訴」，未提及檢察官主張之具體罪名「業務過失致死罪」，影響案件性質理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt第三段記載「應提高警覺，將病患X留院觀察其他引起腹痛之原因，並安排胸部X光、腹部超音波及電腦斷層攝影檢查」，但缺少GT_claim末尾「以查明急性腹部痛及背部輻射痛之原因」之診斷目的說明，跨section檢查reasoning段雖有類似內容但被告對象不同，不完整覆蓋",
+     "reason": "section_01_facts.txt第三段記載「應提高警覺，將病患X留院觀察其他引起腹痛之原因，並安排胸部X光、腹部超音波及電腦斷層攝影檢查」，但缺少GT_claim末尾「以查明急性腹部痛及背部輻射痛之原因」之診斷目的說明，跨section檢查reasoning段雖有類似內容但被告對象不同，不完整覆蓋"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt第三段記載「竟疏未注意」及被告乙丙之處置，但缺少「依當時之情形，並無不能注意之情事」之前提條件表述，影響過失認定之完整性",
+     "reason": "section_01_facts.txt第三段記載「竟疏未注意」及被告乙丙之處置，但缺少「依當時之情形，並無不能注意之情事」之前提條件表述，影響過失認定之完整性"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt第三段記載「於當日上午8時40分許同意病患X離院返家」及後續「因主動脈剝離破裂...死亡」，但未明確連結「未能發現病因為主動脈剝離」之因果關係，屬核心遺漏影響判決結論理解",
+     "reason": "section_01_facts.txt第三段記載「於當日上午8時40分許同意病患X離院返家」及後續「因主動脈剝離破裂...死亡」，但未明確連結「未能發現病因為主動脈剝離」之因果關係，屬核心遺漏影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "胃鏡檢查準確性之醫學一般知識，未見於各 section 原文中",
+     "reason": "胃鏡檢查準確性之醫學一般知識，未見於各 section 原文中"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "上肢脈搏血壓異常等臨床症狀細節，未見於各 section 原文中",
+     "reason": "上肢脈搏血壓異常等臨床症狀細節，未見於各 section 原文中"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急性主動脈剝離典型症狀之醫學知識，未見於各 section 原文中",
+     "reason": "急性主動脈剝離典型症狀之醫學知識，未見於各 section 原文中"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "併發血管阻塞症狀表現之醫學知識，未見於各 section 原文中",
+     "reason": "併發血管阻塞症狀表現之醫學知識，未見於各 section 原文中"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦血管阻塞中風症狀之醫學知識，未見於各 section 原文中",
+     "reason": "腦血管阻塞中風症狀之醫學知識，未見於各 section 原文中"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腹部血管阻塞腸胃缺血症狀之醫學知識，未見於各 section 原文中",
+     "reason": "腹部血管阻塞腸胃缺血症狀之醫學知識，未見於各 section 原文中"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "下肢血管阻塞缺血症狀之醫學知識，未見於各 section 原文中",
+     "reason": "下肢血管阻塞缺血症狀之醫學知識，未見於各 section 原文中"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "verdict",
+     "severity": "critical",
+     "text": "section_04_verdict.txt 僅有判決主文，未提及判決法院及判決日期，屬判決基本資訊遺漏",
+     "reason": "section_04_verdict.txt 僅有判決主文，未提及判決法院及判決日期，屬判決基本資訊遺漏"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_04_verdict.txt 未具體說明被告之醫療業務人員身分，惟該資訊已於section_01_facts.txt說明，屬次要資訊",
+     "reason": "section_04_verdict.txt 未具體說明被告之醫療業務人員身分，惟該資訊已於section_01_facts.txt說明，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要中被告甲所屬醫院為A醫院，但GT指稱為C醫院，兩者不一致；雖有提及醫師身分但醫院資訊不符",
+     "reason": "摘要中被告甲所屬醫院為A醫院，但GT指稱為C醫院，兩者不一致；雖有提及醫師身分但醫院資訊不符"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要僅提及lipase、GOT等部分檢驗數值，未涵蓋GT所指血紅素、肝功能轉氨酶及心肌指數等全部檢驗項目",
+     "reason": "摘要僅提及lipase、GOT等部分檢驗數值，未涵蓋GT所指血紅素、肝功能轉氨酶及心肌指數等全部檢驗項目"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 109,
+   "matched": 87,
+   "partial": 6,
+   "missing": 15,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5636,
+  "compression_afg_chars": 3862,
+  "compression_source_chars": 8850,
+  "gt_length_ratio": 0.8392,
+  "gt_length_afg_chars": 3862,
+  "gt_length_gt_chars": 4602,
+  "section_balance": 0.5
+ }
 }
