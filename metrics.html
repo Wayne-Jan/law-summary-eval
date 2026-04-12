@@ -1100,7 +1100,7 @@
   <div class="page-tab-bar">
     <button class="page-tab-btn active" data-main-tab="overview" onclick="setMainTab('overview')">總覽</button>
     <button class="page-tab-btn" data-main-tab="relative" onclick="setMainTab('relative')">模型輪廓</button>
-    <button class="page-tab-btn" data-main-tab="analysis" onclick="setMainTab('analysis')">指標分析</button>
+    <button class="page-tab-btn" data-main-tab="analysis" onclick="setMainTab('analysis')">維度分析</button>
     <button class="page-tab-btn" data-main-tab="cases" onclick="setMainTab('cases')">個案比較</button>
   </div>
 
@@ -1110,7 +1110,6 @@
     <div class="panel-title">同一冊別下的整體表現比較</div>
     <div class="panel-desc">比較目前冊別下各模型的整體表現。</div>
     </div>
-    <div id="overviewHeatmap" class="overview-heatmap-wrap"></div>
     <div class="mobile-metrics-overview" id="mobileMetricsOverview"></div>
     <button class="mobile-table-toggle" id="mobileTableToggle" type="button" onclick="toggleMobileMetricsTable()">完整表格</button>
     <div class="mobile-scroll-hint">手機上可左右滑動表格查看完整欄位。</div>
@@ -1157,20 +1156,17 @@
     <div class="panel-hero">
       <div class="panel-kicker">模型輪廓</div>
       <div class="panel-title">用相對位置看各模型的能力輪廓</div>
-      <div class="panel-desc">這裡保留原始分數卡片，但雷達圖改成同冊內的相對位置視覺化。<br>圖上標示 P0 到 P100，方便比較不同量級指標在目前冊別中的相對強弱。</div>
+      <div class="panel-desc">雷達圖以同冊內的百分位（P0–P100）呈現各模型的相對強弱。</div>
       <div class="mobile-relative-note">手機版聚焦模型輪廓比較，只保留最直觀的相對位置視圖。完整表格與逐案比較請改用電腦版查看。</div>
     </div>
-    <div class="split-panel relative-split">
-      <div id="relativeCardGrid" class="model-card-grid"></div>
-      <div id="relativeHeatmap"></div>
-    </div>
+    <div id="relativeCardGrid" class="model-card-grid"></div>
   </div>
 
   <div id="pagePanel_analysis" class="page-panel">
     <div class="panel-hero">
-      <div class="panel-kicker">指標分析</div>
+      <div class="panel-kicker">維度分析</div>
       <div class="panel-title">用圖表看各維度的分布與差異</div>
-      <div class="panel-desc">啞鈴圖呈現 Fact Recall 的 Precision / Recall / F1 三元關係，熱力圖呈現 Quality 14 維度的整體分布。</div>
+      <div class="panel-desc">啞鈴圖呈現各模型在事實涵蓋度（Precision / Recall / F1）的表現，熱力圖呈現寫作品質 14 個維度的分數分布。</div>
     </div>
     <div class="analysis-section">
       <h3 style="margin:1.5rem 0 0.5rem;font-size:1.1rem;color:var(--slate-700)">Fact Recall — 商用模型</h3>
@@ -1189,7 +1185,7 @@
     <div class="panel-hero">
       <div class="panel-kicker">逐案比較</div>
       <div class="panel-title">逐案拆開，觀察模型之間的差異</div>
-      <div class="panel-desc">個案頁適合看同一案件在不同模型下的細部表現。<br>包含規則式指標、事實召回、寫作品質，以及 ROUGE / BERTScore 的逐項比較。</div>
+      <div class="panel-desc">選擇案件，比較各模型在規則式指標、事實召回、寫作品質等維度的細部差異。</div>
     </div>
     <div class="case-selector">
       <label for="caseSelect">選擇案件：</label>
@@ -2224,8 +2220,7 @@
       return;
     }
     const entries = getSortedEntries();
-    if (contextKey === 'overview') renderOverviewHeatmap(entries);
-    if (contextKey === 'relative') renderRelativeHeatmap(entries);
+    // overview and relative heatmaps removed — all heatmaps now in analysis tab
   };
 
   function compositeOverviewScore(cond) {
@@ -2368,11 +2363,9 @@
     const entries = getSortedEntries();
     _computePercentileThresholds(entries);
     renderOverviewRows(entries);
-    renderOverviewHeatmap(entries);
     renderMobileMetricsOverview(entries);
     buildModelCards(entries);
     buildRelativeModelCards(entries);
-    renderRelativeHeatmap(entries);
     if (currentModelDetail && !entries.some(([key]) => key === currentModelDetail)) {
       currentModelDetail = null;
     }

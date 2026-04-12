@@ -2119,6 +2119,16 @@
         document.getElementById('bodyB').innerHTML = renderAllSections(dataB.sections);
         document.getElementById('metaA').innerHTML = calcCompressionMeta(dataA);
         document.getElementById('metaB').innerHTML = calcCompressionMeta(dataB);
+        // In admin inspect mode, reveal real model names in panel headers
+        const titleA = document.querySelector('#panelA .panel-title');
+        const titleB = document.querySelector('#panelB .panel-title');
+        if (document.body.classList.contains('admin-inspect') && currentPair) {
+            titleA.textContent = currentPair.condA;
+            titleB.textContent = currentPair.condB;
+        } else {
+            titleA.textContent = '摘要 A';
+            titleB.textContent = '摘要 B';
+        }
     }
 
     function getPairsPerCase() {
@@ -2693,6 +2703,8 @@
     }
 
     function conditionLabel(cond) {
+        // In admin inspect mode, reveal the real condition key (model name)
+        if (document.body.classList.contains('admin-inspect')) return cond;
         return (config && config.condition_labels && config.condition_labels[cond]) || cond;
     }
 
