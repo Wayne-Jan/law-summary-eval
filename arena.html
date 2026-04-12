@@ -1224,6 +1224,87 @@
             transform: translateY(-1px);
         }
 
+        /* ─── Backup History Cards ─── */
+        .backup-card {
+            background: var(--a-white);
+            border: 1px solid var(--a-slate-100);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 8px;
+        }
+        .backup-card-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .backup-card-date {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--a-slate-900);
+        }
+        .backup-card-sub {
+            font-size: 12px;
+            color: var(--a-slate-500);
+            margin-top: 2px;
+        }
+        .backup-status {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+        .backup-status-ok { background: #d1fae5; color: #065f46; }
+        .backup-status-unchanged { background: #e0e7ff; color: #3730a3; }
+        .backup-status-empty { background: #f1f5f9; color: #64748b; }
+        .backup-detail {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--a-slate-100);
+        }
+        .backup-detail.open { display: block; }
+        .backup-detail-loading {
+            font-size: 12px;
+            color: var(--a-slate-400);
+            padding: 8px 0;
+        }
+        .backup-elo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        .backup-elo-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            padding: 4px 8px;
+            background: var(--a-slate-50);
+            border-radius: 6px;
+        }
+        .backup-elo-item .elo-name { color: var(--a-slate-700); }
+        .backup-elo-item .elo-val { font-weight: 700; color: var(--a-slate-900); }
+        .backup-ev-table {
+            width: 100%;
+            font-size: 12px;
+            border-collapse: collapse;
+        }
+        .backup-ev-table th {
+            text-align: left;
+            font-weight: 600;
+            color: var(--a-slate-500);
+            padding: 4px 8px;
+            border-bottom: 1px solid var(--a-slate-100);
+        }
+        .backup-ev-table td {
+            padding: 5px 8px;
+            color: var(--a-slate-700);
+            border-bottom: 1px solid var(--a-slate-50);
+        }
+
         .admin-empty {
             padding: 40px 20px;
             text-align: center;
@@ -2349,19 +2430,149 @@
         return html;
     }
 
+    // ─── Backup History ───────────────────────────────────────
+    const arenaBackupCache = new Map();
+
+    async function fetchArenaBackupSnapshots(limit = 30) {
+        if (!document.body.classList.contains('is-admin') || !auth.currentUser) return [];
+        const snap = await db.collection('arena_backups_daily')
+            .orderBy('snapshot_date', 'desc').limit(limit).get();
+        return snap.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }));
+    }
+
+    async function fetchArenaBackupEvaluators(snapshotId) {
+        if (!snapshotId) return [];
+        if (arenaBackupCache.has(snapshotId)) return arenaBackupCache.get(snapshotId);
+        const snap = await db.collection('arena_backups_daily')
+            .doc(snapshotId).collection('evaluators').get();
+        const rows = snap.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+            .sort((a, b) => String(a.evaluator || a.id).localeCompare(String(b.evaluator || b.id), 'zh-Hant'));
+        arenaBackupCache.set(snapshotId, rows);
+        return rows;
+    }
+
+    function backupStatusClass(status) {
+        if (status === 'ok') return 'backup-status-ok';
+        if (status === 'unchanged') return 'backup-status-unchanged';
+        return 'backup-status-empty';
+    }
+    function backupStatusLabel(status) {
+        if (status === 'ok') return '已更新';
+        if (status === 'unchanged') return '無變更';
+        if (status === 'empty') return '空';
+        return status || '—';
+    }
+
+    function renderArenaBackupHistory(backups) {
+        let html = '<div class="admin-section">';
+        html += '<div class="admin-section-head"><h3>備份歷史</h3>';
+        html += `<span class="section-desc">共 ${backups.length} 筆快照</span>`;
+        html += '</div>';
+        if (!backups.length) {
+            html += '<div class="admin-empty">尚無備份快照</div>';
+            html += '</div>';
+            return html;
+        }
+        for (const b of backups) {
+            const date = b.snapshot_date || b.id;
+            const status = b.status || 'ok';
+            const evCount = b.evaluator_count ?? '—';
+            const voteCount = b.vote_count ?? '—';
+            const caseCount = b.case_count ?? '—';
+            html += `<div class="backup-card">`;
+            html += `<div class="backup-card-head" onclick="toggleArenaBackupDetail('${escapeHtml(b.id)}')">`;
+            html += `<div><div class="backup-card-date">${escapeHtml(date)}</div>`;
+            html += `<div class="backup-card-sub">${evCount} 位評審 · ${voteCount} 票 · ${caseCount} 案件</div></div>`;
+            html += `<span class="backup-status ${backupStatusClass(status)}">${backupStatusLabel(status)}</span>`;
+            html += `</div>`;
+            html += `<div class="backup-detail" id="backupDetail-${escapeHtml(b.id)}">`;
+            html += `<div class="backup-detail-loading">載入中...</div>`;
+            html += `</div></div>`;
+        }
+        html += '</div>';
+        return html;
+    }
+
+    window.toggleArenaBackupDetail = async function(snapshotId) {
+        const el = document.getElementById('backupDetail-' + snapshotId);
+        if (!el) return;
+        if (el.classList.contains('open')) {
+            el.classList.remove('open');
+            return;
+        }
+        el.classList.add('open');
+        if (el.dataset.loaded) return;
+
+        // Lazy load: snapshot doc for elo + evaluator subdocs
+        const [backups, evRows] = await Promise.all([
+            (async () => {
+                const doc = await db.collection('arena_backups_daily').doc(snapshotId).get();
+                return doc.exists ? doc.data() : {};
+            })(),
+            fetchArenaBackupEvaluators(snapshotId)
+        ]);
+
+        let detail = '';
+
+        // Elo snapshot
+        const elo = backups.elo_snapshot;
+        if (elo && typeof elo === 'object' && Object.keys(elo).length) {
+            detail += '<div style="font-size:12px;font-weight:600;color:var(--a-slate-600);margin-bottom:6px">Elo Snapshot</div>';
+            detail += '<div class="backup-elo-grid">';
+            const sorted = Object.entries(elo).sort((a, b) => b[1] - a[1]);
+            for (const [name, rating] of sorted) {
+                detail += `<div class="backup-elo-item"><span class="elo-name">${escapeHtml(name)}</span><span class="elo-val">${Math.round(rating)}</span></div>`;
+            }
+            detail += '</div>';
+        }
+
+        // Evaluator details
+        if (evRows.length) {
+            detail += '<div style="font-size:12px;font-weight:600;color:var(--a-slate-600);margin-bottom:6px">評審明細</div>';
+            detail += '<table class="backup-ev-table"><thead><tr>';
+            detail += '<th>評審</th><th>票數</th><th>案件</th><th>完成</th><th>最後活動</th>';
+            detail += '</tr></thead><tbody>';
+            for (const ev of evRows) {
+                const name = ev.evaluator || ev.id;
+                const votes = ev.vote_count ?? '—';
+                const cases = ev.case_count ?? '—';
+                const completed = ev.completed_case_count ?? '—';
+                let lastTs = '—';
+                if (ev.last_timestamp) {
+                    const d = typeof ev.last_timestamp === 'string' ? new Date(ev.last_timestamp)
+                        : ev.last_timestamp.toDate ? ev.last_timestamp.toDate() : new Date(ev.last_timestamp);
+                    lastTs = d.toLocaleString('zh-TW', { month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' });
+                }
+                detail += `<tr><td>${escapeHtml(name)}</td><td>${votes}</td><td>${cases}</td><td>${completed}</td><td>${lastTs}</td></tr>`;
+            }
+            detail += '</tbody></table>';
+        }
+
+        if (!detail) detail = '<div style="font-size:12px;color:var(--a-slate-400)">無詳細資料</div>';
+        el.innerHTML = detail;
+        el.dataset.loaded = '1';
+    };
+
+    // ─── Admin Content ───────────────────────────────────────
     async function renderAdminContent() {
         const container = document.getElementById('adminContent');
         container.innerHTML = '<div class="admin-empty">載入中...</div>';
-        const dataset = await fetchAdminDataset();
+        const [dataset, backups] = await Promise.all([
+            fetchAdminDataset(),
+            fetchArenaBackupSnapshots(30)
+        ]);
         const rows = dataset.evaluators;
-        if (!rows.length) {
+        if (!rows.length && !backups.length) {
             container.innerHTML = '<div class="admin-empty">尚無可顯示的評審資料</div>';
             return;
         }
         let html = '';
-        html += renderEloLeaderboard(dataset.allVotes);
-        html += renderAdminSummaryTable(rows);
-        html += renderProgressMatrix(rows);
+        if (rows.length) {
+            html += renderEloLeaderboard(dataset.allVotes);
+            html += renderAdminSummaryTable(rows);
+            html += renderProgressMatrix(rows);
+        }
+        html += renderArenaBackupHistory(backups);
         container.innerHTML = html;
     }
 
