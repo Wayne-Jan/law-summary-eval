@@ -131,5 +131,403 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.5203,
+  "fact_recall": 0.6203,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7656,
+  "quality_overall": 4.6429,
+  "checklist_pass_rate": 1.0,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9889,
+  "uncited_rate": 0.048,
+  "faithfulness_combined": {
+   "score": 0.9712,
+   "citation_fidelity": 0.952,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 7,
+   "correct": 7
+  },
+  "weighted_recall": 0.8819,
+  "missing_severity": {
+   "critical": 0,
+   "important": 6,
+   "minor": 44,
+   "details": [
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "程序性法條引用（刑法第276條第2項），生成摘要雖未明確記載具體條文號碼，但已提及「涉犯刑法業務過失致死罪」，不影響案情理解",
+     "reason": "程序性法條引用（刑法第276條第2項），生成摘要雖未明確記載具體條文號碼，但已提及「涉犯刑法業務過失致死罪」，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「等於是沒有提供資訊」為評價性總結， defense section原文雖有「無法說明具體藥物名稱」等敘述，但未明確出現此評價性主張；opinions section鑑定意見雖有相近概念（「無法提供足以改變用藥決策之有效線索」），但評價用詞不同，故維持missing",
+     "reason": "「等於是沒有提供資訊」為評價性總結， defense section原文雖有「無法說明具體藥物名稱」等敘述，但未明確出現此評價性主張；opinions section鑑定意見雖有相近概念（「無法提供足以改變用藥決策之有效線索」），但評價用詞不同，故維持missing"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及「首次就醫」之判斷情境，僅於 reasoning 段提及病患非首次就醫，此為一般性原則陳述",
+     "reason": "section_03_opinions.txt 未提及「首次就醫」之判斷情境，僅於 reasoning 段提及病患非首次就醫，此為一般性原則陳述"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確提及「低過敏率藥物」之分類，雖 claim 3 提及「常規使用」，但未指明其屬性為低過敏率",
+     "reason": "section_03_opinions.txt 未明確提及「低過敏率藥物」之分類，雖 claim 3 提及「常規使用」，但未指明其屬性為低過敏率"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及「除非明確過敏史才避免使用」之條件判斷，此為重要的醫療決策標準",
+     "reason": "section_03_opinions.txt 未提及「除非明確過敏史才避免使用」之條件判斷，此為重要的醫療決策標準"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確提及醫師「詢問病史之責任」，雖提及醫療人員詢問過敏史，但未上升到責任層級",
+     "reason": "section_03_opinions.txt 未明確提及醫師「詢問病史之責任」，雖提及醫療人員詢問過敏史，但未上升到責任層級"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及病患「提供資訊之義務」，此為雙方責任分配之原則性陳述",
+     "reason": "section_03_opinions.txt 未提及病患「提供資訊之義務」，此為雙方責任分配之原則性陳述"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及「藥品種類繁多」與「比例原則」，雖有相關意涵但未有明確表述",
+     "reason": "section_03_opinions.txt 未提及「藥品種類繁多」與「比例原則」，雖有相關意涵但未有明確表述"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢察官上訴程序屬判決後續程序性事實，所有5個section原文均未提及，不影響案情實體理解",
+     "reason": "檢察官上訴程序屬判決後續程序性事實，所有5個section原文均未提及，不影響案情實體理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態屬程序性事實，section_verdict僅提及無罪判決結果，未提及後續程序，不影響判決結論理解",
+     "reason": "判決確定狀態屬程序性事實，section_verdict僅提及無罪判決結果，未提及後續程序，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未明確提及『未做任何表示之情形』的具體事實描述",
+     "reason": "reasoning section未明確提及『未做任何表示之情形』的具體事實描述"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及『急診病歷在卷可憑』，屬程序性證據文件記載",
+     "reason": "reasoning section未提及『急診病歷在卷可憑』，屬程序性證據文件記載"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section未提及護理師Z、迴診訪視、海鮮過敏記載於『先前病史』欄位等具體情節，但defense section有提及海鮮過敏",
+     "reason": "reasoning section未提及護理師Z、迴診訪視、海鮮過敏記載於『先前病史』欄位等具體情節，但defense section有提及海鮮過敏"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未具體提及護理師記載邏輯之推論",
+     "reason": "reasoning section未具體提及護理師記載邏輯之推論"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section雖提及被告辯稱內容，但未明確表述『要非不能採信』之法院認定語句",
+     "reason": "reasoning section雖提及被告辯稱內容，但未明確表述『要非不能採信』之法院認定語句"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及具體病歷文件之勾選記載細節",
+     "reason": "reasoning section未提及具體病歷文件之勾選記載細節"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師T於99年2月24日之具體證詞時間與內容",
+     "reason": "reasoning section未提及醫師T於99年2月24日之具體證詞時間與內容"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師T對藥物過敏欄位畫斜線之解釋",
+     "reason": "reasoning section未提及醫師T對藥物過敏欄位畫斜線之解釋"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師T詢問過敏之具體過程",
+     "reason": "reasoning section未提及醫師T詢問過敏之具體過程"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未引用護士之具體證詞內容",
+     "reason": "reasoning section未引用護士之具體證詞內容"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未說明護士如何記載過敏史之細節",
+     "reason": "reasoning section未說明護士如何記載過敏史之細節"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及護理記錄之具體填載邏輯",
+     "reason": "reasoning section未提及護理記錄之具體填載邏輯"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師R之身份與職責",
+     "reason": "reasoning section未提及醫師R之身份與職責"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及病患住院之具體時間",
+     "reason": "reasoning section未提及病患住院之具體時間"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師R做術前評估之具體時間",
+     "reason": "reasoning section未提及醫師R做術前評估之具體時間"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師R直接詢問病患過敏情況",
+     "reason": "reasoning section未提及醫師R直接詢問病患過敏情況"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師R對家屬接觸之記憶",
+     "reason": "reasoning section未提及醫師R對家屬接觸之記憶"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師R處理過敏資訊之流程",
+     "reason": "reasoning section未提及醫師R處理過敏資訊之流程"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師C之身份為實際負責麻醉之醫師",
+     "reason": "reasoning section未提及醫師C之身份為實際負責麻醉之醫師"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師C查看術前評估單之程序",
+     "reason": "reasoning section未提及醫師C查看術前評估單之程序"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師C詢問過敏之具體程序",
+     "reason": "reasoning section未提及醫師C詢問過敏之具體程序"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師C對不明過敏之記錄方式",
+     "reason": "reasoning section未提及醫師C對不明過敏之記錄方式"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師C在麻醉紀錄上註明之具體行為",
+     "reason": "reasoning section未提及醫師C在麻醉紀錄上註明之具體行為"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section概括提及『曾表示對不明藥物過敏』，但未具體描述『於該院其他醫師、護士徵詢時』之過程",
+     "reason": "reasoning section概括提及『曾表示對不明藥物過敏』，但未具體描述『於該院其他醫師、護士徵詢時』之過程"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未明確提及『過敏是不可預期的』之醫學判斷",
+     "reason": "reasoning section未明確提及『過敏是不可預期的』之醫學判斷"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未明確提及『U-save A是低過敏藥物』之特性描述",
+     "reason": "reasoning section未明確提及『U-save A是低過敏藥物』之特性描述"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及醫師C於審理時之證詞",
+     "reason": "reasoning section未提及醫師C於審理時之證詞"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未明確陳述『醫師C知道病患W對不明藥物過敏』",
+     "reason": "reasoning section未明確陳述『醫師C知道病患W對不明藥物過敏』"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未說明術後醫囑由何人所下",
+     "reason": "reasoning section未說明術後醫囑由何人所下"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未明確提及『完全無從查證』之表述",
+     "reason": "reasoning section未明確提及『完全無從查證』之表述"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及住院病歷是否記載藥物過敏之細節",
+     "reason": "reasoning section未提及住院病歷是否記載藥物過敏之細節"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未對醫師C之記憶明確做成錯誤之判定",
+     "reason": "reasoning section未對醫師C之記憶明確做成錯誤之判定"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section已有『既無證據證明』之類似表述，但未單獨強調『難憑此認』之語氣",
+     "reason": "reasoning section已有『既無證據證明』之類似表述，但未單獨強調『難憑此認』之語氣"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section雖提及『醫療鑑定』，但未具體說明送臺北V醫院與衛生署醫事審議委員會鑑定之程序",
+     "reason": "reasoning section雖提及『醫療鑑定』，但未具體說明送臺北V醫院與衛生署醫事審議委員會鑑定之程序"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及病患79年至A醫院初診之歷史",
+     "reason": "reasoning section未提及病患79年至A醫院初診之歷史"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及A醫院函文及病歷冊封面之證據",
+     "reason": "reasoning section未提及A醫院函文及病歷冊封面之證據"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及病患非首次在該醫療單位就醫之歷史",
+     "reason": "reasoning section未提及病患非首次在該醫療單位就醫之歷史"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section未提及『證人等徵詢病患過敏史』之具體過程，opinions section雖提及多名醫療人員詢問，但reasoning未明確表述",
+     "reason": "reasoning section未提及『證人等徵詢病患過敏史』之具體過程，opinions section雖提及多名醫療人員詢問，但reasoning未明確表述"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 雖提及被告辯稱內容及其可信性評價，但未明確使用「尚非無稽」這一法院慣用語，維持 missing",
+     "reason": "section_05_reasoning.txt 雖提及被告辯稱內容及其可信性評價，但未明確使用「尚非無稽」這一法院慣用語，維持 missing"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 以「其他證據亦不足以證明...」論述，與 GT「另查無其他積極證據」論證方向雖類似但非同一事實表述，維持 missing",
+     "reason": "section_05_reasoning.txt 以「其他證據亦不足以證明...」論述，與 GT「另查無其他積極證據」論證方向雖類似但非同一事實表述，維持 missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 158,
+   "pred_total": 42,
+   "matched": 88,
+   "partial": 20,
+   "missing": 50,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8341,
+  "compression_afg_chars": 1422,
+  "compression_source_chars": 8573,
+  "gt_length_ratio": 0.2678,
+  "gt_length_afg_chars": 1422,
+  "gt_length_gt_chars": 5309,
+  "section_balance": 0.5227
+ }
 }

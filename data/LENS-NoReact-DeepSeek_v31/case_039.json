@@ -121,5 +121,515 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7692,
+  "fact_recall": 0.5317,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6943,
+  "quality_overall": 4.8429,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.975,
+  "uncited_rate": 0.019,
+  "faithfulness_combined": {
+   "score": 0.9886,
+   "citation_fidelity": 0.981,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 34,
+   "correct": 34
+  },
+  "weighted_recall": 0.8095,
+  "missing_severity": {
+   "critical": 4,
+   "important": 34,
+   "minor": 28,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 記載92年9月29日檢查由「醫師乙」執行，與 GT 主張「醫師甲」不符；section_defense.txt 中被告乙亦自承當日由其檢查，確認 GT 正確但摘要未提及醫師甲執行此檢查。此為被告身分識別事實，影響責任歸屬理解。",
+     "reason": "section_facts.txt 記載92年9月29日檢查由「醫師乙」執行，與 GT 主張「醫師甲」不符；section_defense.txt 中被告乙亦自承當日由其檢查，確認 GT 正確但摘要未提及醫師甲執行此檢查。此為被告身分識別事實，影響責任歸屬理解。"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 記載93年9月24日檢查由「醫師丙」執行，與 GT 主張「醫師乙」不符；section_defense.txt 中被告丙自承當日由其檢查，確認 GT 正確但摘要未提及醫師乙執行此檢查。影響歷次檢查醫師對應關係理解。",
+     "reason": "section_facts.txt 記載93年9月24日檢查由「醫師丙」執行，與 GT 主張「醫師乙」不符；section_defense.txt 中被告丙自承當日由其檢查，確認 GT 正確但摘要未提及醫師乙執行此檢查。影響歷次檢查醫師對應關係理解。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "跨 section 均未提及「膽囊經送檢驗結果僅有發炎、並無膽囊息肉」之病理報告結果。此為案件核心事實，關係到「誤診」指控是否成立，影響判決結論理解。",
+     "reason": "跨 section 均未提及「膽囊經送檢驗結果僅有發炎、並無膽囊息肉」之病理報告結果。此為案件核心事實，關係到「誤診」指控是否成立，影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "跨 section 均未明確提及「電腦斷層掃描、核磁共振比腹部超音波準確」之醫學事實比較。section_reasoning.txt 僅述及超音波為「首要及相當可靠之工具」，未直接對比準確度。影響醫療常規理解。",
+     "reason": "跨 section 均未明確提及「電腦斷層掃描、核磁共振比腹部超音波準確」之醫學事實比較。section_reasoning.txt 僅述及超音波為「首要及相當可靠之工具」，未直接對比準確度。影響醫療常規理解。"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "跨 section 均未提及進階檢查可確認膽囊是否有息肉之醫學事實。section_reasoning.txt 僅提及超音波適合觀察息肉大小變化，未提及 CT/MRI 可「確認」息肉存在。",
+     "reason": "跨 section 均未提及進階檢查可確認膽囊是否有息肉之醫學事實。section_reasoning.txt 僅提及超音波適合觀察息肉大小變化，未提及 CT/MRI 可「確認」息肉存在。"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "跨 section 均未提及「膽囊如無息肉即不用開刀」之醫療決策準則。section_defense.txt 被告甲提及「膽囊息肉大於1公分有惡性變化之可能」建議開刀，但未提及無息肉即不用開刀之準則。",
+     "reason": "跨 section 均未提及「膽囊如無息肉即不用開刀」之醫療決策準則。section_defense.txt 被告甲提及「膽囊息肉大於1公分有惡性變化之可能」建議開刀，但未提及無息肉即不用開刀之準則。"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts.txt 僅記載被告戊為「健康檢查醫師」，未單獨陳述「被告戊是一位專業醫師」。此為背景性身分描述，不影響案情理解。",
+     "reason": "section_facts.txt 僅記載被告戊為「健康檢查醫師」，未單獨陳述「被告戊是一位專業醫師」。此為背景性身分描述，不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 僅概括記載「自訴人主張被告等人誤診膽囊息肉」，未明確提及被告丙於95年10月23日「疏未注意、誤判有息肉」之具體疏失。此為過失指控之核心事實。",
+     "reason": "section_facts.txt 僅概括記載「自訴人主張被告等人誤診膽囊息肉」，未明確提及被告丙於95年10月23日「疏未注意、誤判有息肉」之具體疏失。此為過失指控之核心事實。"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 未提及被告丙將膽囊息肉載於95年10月23日健康檢查報告之具體事實。涉及醫師記載行為與過失認定。",
+     "reason": "section_facts.txt 未提及被告丙將膽囊息肉載於95年10月23日健康檢查報告之具體事實。涉及醫師記載行為與過失認定。"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 未提及被告丙於97年10月20日「應注意且能注意膽囊是否僅有發炎」之注意義務內容。此為過失認定之法律要件事實。",
+     "reason": "section_facts.txt 未提及被告丙於97年10月20日「應注意且能注意膽囊是否僅有發炎」之注意義務內容。此為過失認定之法律要件事實。"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 未明確提及被告丙於97年10月20日「疏未注意、誤判有息肉」之疏失。",
+     "reason": "section_facts.txt 未明確提及被告丙於97年10月20日「疏未注意、誤判有息肉」之疏失。"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 未提及被告丙將膽囊息肉載於97年10月20日健康檢查報告之具體事實。",
+     "reason": "section_facts.txt 未提及被告丙將膽囊息肉載於97年10月20日健康檢查報告之具體事實。"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 未提及被告丁於96年10月5日「應注意且能注意膽囊是否僅有發炎」之注意義務內容。",
+     "reason": "section_facts.txt 未提及被告丁於96年10月5日「應注意且能注意膽囊是否僅有發炎」之注意義務內容。"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 未明確提及被告丁「疏未注意、誤判有息肉」之疏失。",
+     "reason": "section_facts.txt 未明確提及被告丁「疏未注意、誤判有息肉」之疏失。"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 未提及被告丁將膽囊息肉載於96年10月5日健康檢查報告之具體事實。",
+     "reason": "section_facts.txt 未提及被告丁將膽囊息肉載於96年10月5日健康檢查報告之具體事實。"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 未提及被告戊「參閱97年健康檢查報告認定膽囊長有息肉」之具體事實，僅提及被告戊於98年門診之診療行為。",
+     "reason": "section_facts.txt 未提及被告戊「參閱97年健康檢查報告認定膽囊長有息肉」之具體事實，僅提及被告戊於98年門診之診療行為。"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "跨 section 均未明確提及「切除之膽囊經送檢驗結果僅有膽囊發炎、並無膽囊息肉」。section_reasoning.txt 雖提及病理報告為慢性膽囊炎，但未明確否定息肉存在（僅說息肉可能脫落）。此為判斷誤診是否成立之關鍵事實。",
+     "reason": "跨 section 均未明確提及「切除之膽囊經送檢驗結果僅有膽囊發炎、並無膽囊息肉」。section_reasoning.txt 雖提及病理報告為慢性膽囊炎，但未明確否定息肉存在（僅說息肉可能脫落）。此為判斷誤診是否成立之關鍵事實。"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 中被告乙辯稱雖提及診斷過程，但未見「係基於專業及病歷上可見之影像記載，均為專業且正確之診斷及建議」之評價性完整表述，確認本項GT claim在defense section中無完整對應",
+     "reason": "section_defense.txt 中被告乙辯稱雖提及診斷過程，但未見「係基於專業及病歷上可見之影像記載，均為專業且正確之診斷及建議」之評價性完整表述，確認本項GT claim在defense section中無完整對應"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 中被告丁辯稱雖有「已做了完善之醫療行為」語句，但未見「皆是基於影像學所見而留下紀錄」及被告丙之GT claim對應內容，確認本項GT claim在defense section中無對應",
+     "reason": "section_defense.txt 中被告丁辯稱雖有「已做了完善之醫療行為」語句，但未見「皆是基於影像學所見而留下紀錄」及被告丙之GT claim對應內容，確認本項GT claim在defense section中無對應"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 被告丁辯稱內容僅提及「腹部超音波報告是由伊製作」，未提及「總結報告及建議之內容會另外由健康管理中心專任或兼任醫師製作」之製程細節，確認本項GT claim在defense section中無對應",
+     "reason": "section_defense.txt 被告丁辯稱內容僅提及「腹部超音波報告是由伊製作」，未提及「總結報告及建議之內容會另外由健康管理中心專任或兼任醫師製作」之製程細節，確認本項GT claim在defense section中無對應"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學文獻具體統計數據，5個 section 原文均未提及，屬 GT 背景資訊，不影響案情理解",
+     "reason": "醫學文獻具體統計數據，5個 section 原文均未提及，屬 GT 背景資訊，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學文獻百分比統計數據，5個 section 原文均未提及，屬 GT 背景資訊",
+     "reason": "醫學文獻百分比統計數據，5個 section 原文均未提及，屬 GT 背景資訊"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "惡性預測因子論述雖重要，但 section 原文僅片段提及，未完整呈現「年紀、息肉大小、症狀或合併膽結石皆為預測因子」之完整論述",
+     "reason": "惡性預測因子論述雖重要，但 section 原文僅片段提及，未完整呈現「年紀、息肉大小、症狀或合併膽結石皆為預測因子」之完整論述"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫學文獻建議手術切除標準，雖未明確引用文獻，但 section_reasoning 提到醫療常規，此處屬補充性醫學建議",
+     "reason": "醫學文獻建議手術切除標準，雖未明確引用文獻，但 section_reasoning 提到醫療常規，此處屬補充性醫學建議"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告戊處置詳細依據，section_fact 及 section_reasoning 僅提及檢查輪值，未明確陳述「術前超音波報告、息肉大小、年齡」等具體依據",
+     "reason": "被告戊處置詳細依據，section_fact 及 section_reasoning 僅提及檢查輪值，未明確陳述「術前超音波報告、息肉大小、年齡」等具體依據"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "93年9月24日檢查日期已於 section_facts 記載，但「多顆息肉」之具體影像描述為 GT 補充",
+     "reason": "93年9月24日檢查日期已於 section_facts 記載，但「多顆息肉」之具體影像描述為 GT 補充"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體息肉尺寸數據（6.8及9.8公釐），5個 section 原文均未提及",
+     "reason": "具體息肉尺寸數據（6.8及9.8公釐），5個 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "超音波報告製作原則，屬 GT 補充之醫學原則說明",
+     "reason": "超音波報告製作原則，屬 GT 補充之醫學原則說明"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告乙報告診斷正確之鑑定結論，section_opinions 僅綜述「兩份鑑定均認定醫師之診斷正確」，未單獨針對被告乙報告明確結論",
+     "reason": "被告乙報告診斷正確之鑑定結論，section_opinions 僅綜述「兩份鑑定均認定醫師之診斷正確」，未單獨針對被告乙報告明確結論"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "94年11月7日檢查日期已於 section_facts 記載",
+     "reason": "94年11月7日檢查日期已於 section_facts 記載"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體息肉尺寸數據（5.4公釐），5個 section 原文均未提及",
+     "reason": "具體息肉尺寸數據（5.4公釐），5個 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告丙報告診斷正確之鑑定結論，未單獨針對 94 年檢查明確結論",
+     "reason": "被告丙報告診斷正確之鑑定結論，未單獨針對 94 年檢查明確結論"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "95年10月23日檢查日期已於 section_facts 記載",
+     "reason": "95年10月23日檢查日期已於 section_facts 記載"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體息肉尺寸數據（5.8及7.9公釐），5個 section 原文均未提及",
+     "reason": "具體息肉尺寸數據（5.8及7.9公釐），5個 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告丙報告診斷正確之鑑定結論，未單獨針對 95 年檢查明確結論",
+     "reason": "被告丙報告診斷正確之鑑定結論，未單獨針對 95 年檢查明確結論"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "96年10月5日檢查日期已於 section_facts 記載",
+     "reason": "96年10月5日檢查日期已於 section_facts 記載"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體息肉尺寸數據（7.8、7.2、5.0公釐），5個 section 原文均未提及",
+     "reason": "具體息肉尺寸數據（7.8、7.2、5.0公釐），5個 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告丁報告診斷正確之鑑定結論，未單獨針對 96 年檢查明確結論",
+     "reason": "被告丁報告診斷正確之鑑定結論，未單獨針對 96 年檢查明確結論"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "97年10月20日檢查日期已於 section_facts 記載",
+     "reason": "97年10月20日檢查日期已於 section_facts 記載"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體息肉尺寸數據（6.9、10.1、9.4、8.3公釐），5個 section 原文均未提及",
+     "reason": "具體息肉尺寸數據（6.9、10.1、9.4、8.3公釐），5個 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告丙報告診斷正確之鑑定結論，未單獨針對 97 年檢查明確結論",
+     "reason": "被告丙報告診斷正確之鑑定結論，未單獨針對 97 年檢查明確結論"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「大於1公分之息肉並非一定屬惡性病灶」之醫學判斷準則，5個 section 原文均未明確提及",
+     "reason": "「大於1公分之息肉並非一定屬惡性病灶」之醫學判斷準則，5個 section 原文均未明確提及"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「手術切除目的（排除惡性可能或及早處理）」之論述，5個 section 原文均未明確提及",
+     "reason": "「手術切除目的（排除惡性可能或及早處理）」之論述，5個 section 原文均未明確提及"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「CT檢查適應症（高度懷疑膽囊癌時）」之醫學常規論述，雖 section_reasoning 有提及 CT 檢查條件，但未明確對應「高度懷疑膽囊癌」之標準用語",
+     "reason": "「CT檢查適應症（高度懷疑膽囊癌時）」之醫學常規論述，雖 section_reasoning 有提及 CT 檢查條件，但未明確對應「高度懷疑膽囊癌」之標準用語"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「穿刺切片風險（定位困難、癌細胞擴散、膽汁滲漏）」之醫學論述，5個 section 原文均未提及",
+     "reason": "「穿刺切片風險（定位困難、癌細胞擴散、膽汁滲漏）」之醫學論述，5個 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「手術適應症標準（大於1公分且有逐漸增大趨勢）」之完整論述，section_reasoning 雖有提及息肉大小但未明確「逐漸增大趨勢」要件",
+     "reason": "「手術適應症標準（大於1公分且有逐漸增大趨勢）」之完整論述，section_reasoning 雖有提及息肉大小但未明確「逐漸增大趨勢」要件"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「息肉越大惡性可能性越高」之醫學判斷，5個 section 原文均未明確呈現此線性關係論述",
+     "reason": "「息肉越大惡性可能性越高」之醫學判斷，5個 section 原文均未明確呈現此線性關係論述"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「初期惡性變化無法以非侵襲性檢查確診」之關鍵醫學判斷，section_opinions 僅提及「無法完全區別膽囊病變」但未明確對應「初期惡性變化」與「非侵襲性檢查」之關係",
+     "reason": "「初期惡性變化無法以非侵襲性檢查確診」之關鍵醫學判斷，section_opinions 僅提及「無法完全區別膽囊病變」但未明確對應「初期惡性變化」與「非侵襲性檢查」之關係"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「膽囊切除加病理化驗是確定診斷之必要措施」為本案核心醫學論點，影響判決理由，section_opinions 僅提及「術後病理化驗為慢性膽囊炎為可預見之結果」但未對應「確定診斷之必要措施」此關鍵論斷",
+     "reason": "「膽囊切除加病理化驗是確定診斷之必要措施」為本案核心醫學論點，影響判決理由，section_opinions 僅提及「術後病理化驗為慢性膽囊炎為可預見之結果」但未對應「確定診斷之必要措施」此關鍵論斷"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（判決確定），遍查 facts、defense、opinions、verdict、reasoning 五段原文均未提及，不影響案情實體理解",
+     "reason": "程序性事實（判決確定），遍查 facts、defense、opinions、verdict、reasoning 五段原文均未提及，不影響案情實體理解"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning 段雖提及「歷次腹部超音波檢查並無過失」，但未明確涵蓋「醫療過程」整體範圍，其他 section 亦無對應表述",
+     "reason": "reasoning 段雖提及「歷次腹部超音波檢查並無過失」，但未明確涵蓋「醫療過程」整體範圍，其他 section 亦無對應表述"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 均未提及被告戊的手術前告知說明義務，僅提及被告甲的說明責任",
+     "reason": "各 section 均未提及被告戊的手術前告知說明義務，僅提及被告甲的說明責任"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 未提及手術同意書簽署時間、簽署人及疾病名稱之完整記載",
+     "reason": "各 section 未提及手術同意書簽署時間、簽署人及疾病名稱之完整記載"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 未提及手術同意書建議手術名稱及原因之明確記載",
+     "reason": "各 section 未提及手術同意書建議手術名稱及原因之明確記載"
+    },
+    {
+     "gt_claim_id": 165,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 未提及手術同意書聲明事項勾選內容之完整描述",
+     "reason": "各 section 未提及手術同意書聲明事項勾選內容之完整描述"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 未提及「手術同意書影本在卷」之表述",
+     "reason": "各 section 未提及「手術同意書影本在卷」之表述"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 未提及自訴人手術前充分瞭解手術原因、風險、併發症、替代方案等具體內容",
+     "reason": "各 section 未提及自訴人手術前充分瞭解手術原因、風險、併發症、替代方案等具體內容"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 未明確提及自訴人「充分瞭解後始決定選擇接受手術」之完整表述",
+     "reason": "各 section 未明確提及自訴人「充分瞭解後始決定選擇接受手術」之完整表述"
+    },
+    {
+     "gt_claim_id": 169,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 未提及自訴人主張被告未盡說明義務之具體內容",
+     "reason": "各 section 未提及自訴人主張被告未盡說明義務之具體內容"
+    },
+    {
+     "gt_claim_id": 171,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 未提及「病患的自主決定權應以醫師的專業判斷為基礎」之法律論述",
+     "reason": "各 section 未提及「病患的自主決定權應以醫師的專業判斷為基礎」之法律論述"
+    },
+    {
+     "gt_claim_id": 172,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 雖提及手術同意書，但未明確論述「說明義務之目的在於擔保自訴人自主決定」",
+     "reason": "各 section 雖提及手術同意書，但未明確論述「說明義務之目的在於擔保自訴人自主決定」"
+    },
+    {
+     "gt_claim_id": 173,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 未提及「病理報告發現膽囊息肉非說明義務範圍」之法律論述",
+     "reason": "各 section 未提及「病理報告發現膽囊息肉非說明義務範圍」之法律論述"
+    },
+    {
+     "gt_claim_id": 174,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 未明確提及「告知義務範圍應以一般理性病人為準」之判定標準",
+     "reason": "各 section 未明確提及「告知義務範圍應以一般理性病人為準」之判定標準"
+    },
+    {
+     "gt_claim_id": 177,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 未提及被告戊於門診向自訴人說明手術必要性及不予治療風險",
+     "reason": "各 section 未提及被告戊於門診向自訴人說明手術必要性及不予治療風險"
+    },
+    {
+     "gt_claim_id": 178,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 未明確提及「自訴人乃於充分瞭解後始決定選擇接受上開手術」之表述",
+     "reason": "各 section 未明確提及「自訴人乃於充分瞭解後始決定選擇接受上開手術」之表述"
+    },
+    {
+     "gt_claim_id": 187,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "各 section 均未提及「不能以推測或擬制之方法令被告負罪責」之重要法律原則論述",
+     "reason": "各 section 均未提及「不能以推測或擬制之方法令被告負罪責」之重要法律原則論述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 189,
+   "pred_total": 106,
+   "matched": 78,
+   "partial": 45,
+   "missing": 66,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7857,
+  "compression_afg_chars": 7284,
+  "compression_source_chars": 33995,
+  "gt_length_ratio": 1.1634,
+  "gt_length_afg_chars": 7284,
+  "gt_length_gt_chars": 6261,
+  "section_balance": 0.4825
+ }
 }
