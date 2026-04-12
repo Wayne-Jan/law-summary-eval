@@ -2516,11 +2516,14 @@
 
         // Elo snapshot
         const elo = backups.elo_snapshot;
-        if (elo && typeof elo === 'object' && Object.keys(elo).length) {
+        const eloArr = Array.isArray(elo) ? elo : (elo && typeof elo === 'object' ? Object.values(elo) : []);
+        if (eloArr.length) {
             detail += '<div style="font-size:12px;font-weight:600;color:var(--a-slate-600);margin-bottom:6px">Elo Snapshot</div>';
             detail += '<div class="backup-elo-grid">';
-            const sorted = Object.entries(elo).sort((a, b) => b[1] - a[1]);
-            for (const [name, rating] of sorted) {
+            const sorted = eloArr.slice().sort((a, b) => (b.rating || 0) - (a.rating || 0));
+            for (const item of sorted) {
+                const name = item.label || item.condition || '—';
+                const rating = item.rating ?? 0;
                 detail += `<div class="backup-elo-item"><span class="elo-name">${escapeHtml(name)}</span><span class="elo-val">${Math.round(rating)}</span></div>`;
             }
             detail += '</div>';
