@@ -38,8 +38,8 @@ DISPLAY_LABELS = {
     "ablation_no_afg": "LENS-Haiku 4.5-B",
     "ablation_no_react": "LENS-Haiku 4.5-C",
     "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
-    "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
-    "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
+    "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
+    "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
     "baseline_claude-haiku": "Claude Haiku 4.5",
     "baseline_claude-sonnet": "Claude Sonnet 4.6",
     "baseline_gpt-5.3": "GPT-5.3 Instant",
@@ -65,8 +65,8 @@ CANONICAL_PRIORITY = {
     "baseline_gemini-3.1-pro": 14,
     "baseline_gemini-3.0-flash": 15,
     "LENS-Full-DeepSeek_v31": 20,
-    "LENS-NoReact-DeepSeek_v31": 21,
-    "LENS-NoAFG-DeepSeek_v31": 22,
+    "LENS-NoAFG-DeepSeek_v31": 21,
+    "LENS-NoReact-DeepSeek_v31": 22,
 }
 
 EXCLUDED_CONDITIONS = {
