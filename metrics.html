@@ -1102,6 +1102,7 @@
     <button class="filter-btn active" data-filter="all" onclick="setFilter('all')">全部</button>
     <button class="filter-btn" data-filter="商用模型" onclick="setFilter('商用模型')">商用模型</button>
     <button class="filter-btn" data-filter="開源模型" onclick="setFilter('開源模型')">開源模型</button>
+    <button class="filter-btn" data-filter="LENS" onclick="setFilter('LENS')">LENS</button>
   </div>
   <div class="page-tab-bar">
     <button class="page-tab-btn active" data-main-tab="overview" onclick="setMainTab('overview')">總覽</button>
@@ -2039,6 +2040,7 @@
   function getFilteredEntries() {
     const entries = Object.entries(DATA.conditions);
     if (currentFilter === 'all') return entries;
+    if (currentFilter === 'LENS') return entries.filter(([key]) => key.startsWith('LENS-') || key === 'claude_afg_v5.1' || key === 'ablation_no_afg' || key === 'ablation_no_react');
     return entries.filter(([, cond]) => cond.group === currentFilter);
   }
 
