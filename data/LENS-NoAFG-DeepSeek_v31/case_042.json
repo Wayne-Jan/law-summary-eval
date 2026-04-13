@@ -133,5 +133,291 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6888,
+  "fact_recall": 0.5944,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7456,
+  "quality_overall": 4.9,
+  "checklist_pass_rate": 0.9784,
+  "citation_accuracy": 0.9615,
+  "citation_support_score": 0.9321,
+  "uncited_rate": 0.024,
+  "faithfulness_combined": {
+   "score": 0.9631,
+   "citation_fidelity": 0.9384,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 22
+  },
+  "weighted_recall": 0.8148,
+  "missing_severity": {
+   "critical": 3,
+   "important": 10,
+   "minor": 21,
+   "details": [
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "pred claims僅提及「醫師乙為A醫院院長」，但未提及「對聘用之甲醫師有監督之責」此法律義務主張。reasoning段雖有「被告乙僅負行政監督責任」，但係法院認定而非事實主張，且未明確連結「對聘用醫師」之監督",
+     "reason": "pred claims僅提及「醫師乙為A醫院院長」，但未提及「對聘用之甲醫師有監督之責」此法律義務主張。reasoning段雖有「被告乙僅負行政監督責任」，但係法院認定而非事實主張，且未明確連結「對聘用醫師」之監督"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT主張被告乙、丙參與急救，但pred reasoning段僅提及「被告丙、被告丁雖參與術後急救醫療」，被告不同（乙vs丁），無法對應",
+     "reason": "GT主張被告乙、丙參與急救，但pred reasoning段僅提及「被告丙、被告丁雖參與術後急救醫療」，被告不同（乙vs丁），無法對應"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個section原文均未提及「自訴人欲轉至其它醫院」之情節，確認為missing",
+     "reason": "五個section原文均未提及「自訴人欲轉至其它醫院」之情節，確認為missing"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「「設備完善、技術優良、病情已獲控制、無轉診必要」等具體陳述未見於任何section原文，reasoning段僅提及「自訴人主張三人拒絕轉診」，未轉述被告具體說詞",
+     "reason": "「「設備完善、技術優良、病情已獲控制、無轉診必要」等具體陳述未見於任何section原文，reasoning段僅提及「自訴人主張三人拒絕轉診」，未轉述被告具體說詞"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「「延誤其母救治時機」係因果關係主張，屬關鍵事實認定，未見於pred facts。雖reasoning段提及「自訴人主張三人拒絕轉診延誤救治」，但係轉述自訴人主張，非pred facts確認之事實",
+     "reason": "「「延誤其母救治時機」係因果關係主張，屬關鍵事實認定，未見於pred facts。雖reasoning段提及「自訴人主張三人拒絕轉診延誤救治」，但係轉述自訴人主張，非pred facts確認之事實"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「「應負過失業務過失致死罪責」為法律結論主張，影響判決理解，pred facts僅陳述客觀事實，未包含此法律評價主張",
+     "reason": "「「應負過失業務過失致死罪責」為法律結論主張，影響判決理解，pred facts僅陳述客觀事實，未包含此法律評價主張"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section，均無「被告乙、丙、丁否認有拒絕轉診之舉」之表述。section_defense.txt 僅提及三人「均未參與施行手術」，section_reasoning.txt 雖提及「自訴人主張三人拒絕轉診」，但未提及被告否認該主張",
+     "reason": "遍查五個 section，均無「被告乙、丙、丁否認有拒絕轉診之舉」之表述。section_defense.txt 僅提及三人「均未參與施行手術」，section_reasoning.txt 雖提及「自訴人主張三人拒絕轉診」，但未提及被告否認該主張"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "失血量過多導致脂肪栓塞的具體機制細節，屬於醫學文獻的詳細內容，非opinions段落核心重點",
+     "reason": "失血量過多導致脂肪栓塞的具體機制細節，屬於醫學文獻的詳細內容，非opinions段落核心重點"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "18篇文獻中重複、同作者、僅摘要等品質問題細節，屬於細節性資訊，不影響對鑑定意見主張的理解",
+     "reason": "18篇文獻中重複、同作者、僅摘要等品質問題細節，屬於細節性資訊，不影響對鑑定意見主張的理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "贊成論文具體發表年份分佈為詳細文獻資訊，摘要已表達「發表年份較早」即已足夠",
+     "reason": "贊成論文具體發表年份分佈為詳細文獻資訊，摘要已表達「發表年份較早」即已足夠"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "不贊成論文的具體數量、年份為詳細資訊，摘要已表達「部分反對論文指八十歲以上病人併發症較高」已涵蓋核心主張",
+     "reason": "不贊成論文的具體數量、年份為詳細資訊，摘要已表達「部分反對論文指八十歲以上病人併發症較高」已涵蓋核心主張"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫師審慎評估與充分溝通的義務屬於法院認定之醫療過失要件，應見於reasoning段落，opinions段落聚焦於鑑定意見本身",
+     "reason": "醫師審慎評估與充分溝通的義務屬於法院認定之醫療過失要件，應見於reasoning段落，opinions段落聚焦於鑑定意見本身"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告丙、丁參與急救醫療之事實見於reasoning段落，opinions段落聚焦專家鑑定意見，此處遺漏屬合理範圍",
+     "reason": "被告丙、丁參與急救醫療之事實見於reasoning段落，opinions段落聚焦專家鑑定意見，此處遺漏屬合理範圍"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "會診急救措施無不當之判斷見於reasoning段落，opinions段落未涵蓋此項屬合理範圍",
+     "reason": "會診急救措施無不當之判斷見於reasoning段落，opinions段落未涵蓋此項屬合理範圍"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「解剖鑑定」之具體程序已見於facts段落，opinions段落提及「法醫研究所鑑定死因」已足夠表達死因認定結論",
+     "reason": "「解剖鑑定」之具體程序已見於facts段落，opinions段落提及「法醫研究所鑑定死因」已足夠表達死因認定結論"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning 段僅概略提及『審慎評估健康狀況並充分告知手術風險』，未具體描述術前評估併發症機率及與家屬溝通之詳細內容",
+     "reason": "reasoning 段僅概略提及『審慎評估健康狀況並充分告知手術風險』，未具體描述術前評估併發症機率及與家屬溝通之詳細內容"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術前決策過程（先作一側再決定）屬手術細節，reasoning 段未提及",
+     "reason": "術前決策過程（先作一側再決定）屬手術細節，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術中告知家屬並徵詢同意之過程，reasoning 段未提及",
+     "reason": "術中告知家屬並徵詢同意之過程，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning 段提及『過去病史予以審慎評估』但 GT 特指『未審慎評估』之消極事實，摘要語意不完整",
+     "reason": "reasoning 段提及『過去病史予以審慎評估』但 GT 特指『未審慎評估』之消極事實，摘要語意不完整"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "未充分認知併發症機率之具體內容，reasoning 段未明確涵蓋",
+     "reason": "未充分認知併發症機率之具體內容，reasoning 段未明確涵蓋"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術前告知內容與手術種類不符之具體情節，reasoning 段未提及",
+     "reason": "術前告知內容與手術種類不符之具體情節，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "家屬術後才知悉手術內容之情節，reasoning 段未提及",
+     "reason": "家屬術後才知悉手術內容之情節，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患生前向親友表示不願開刀，reasoning 段未提及",
+     "reason": "病患生前向親友表示不願開刀，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術前承諾『注入填充物即可』之具體內容，reasoning 段未提及",
+     "reason": "術前承諾『注入填充物即可』之具體內容，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患手術前意願不高，reasoning 段未提及",
+     "reason": "病患手術前意願不高，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患及家屬不清楚手術種類，reasoning 段未提及",
+     "reason": "病患及家屬不清楚手術種類，reasoning 段未提及"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告辯稱術前檢查項目超出一倍之具體數據，reasoning 段未詳細引述",
+     "reason": "被告辯稱術前檢查項目超出一倍之具體數據，reasoning 段未詳細引述"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「雖 reasoning 段有『顯見被告甲辯詞非實』概括駁回，但未完整引述『已善盡術前評估、死亡係醫療不可避免』之具體辯詞",
+     "reason": "「雖 reasoning 段有『顯見被告甲辯詞非實』概括駁回，但未完整引述『已善盡術前評估、死亡係醫療不可避免』之具體辯詞"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning 段雖涵蓋大意，但未逐字完整引用『關鍵在於...未充分正確評估即逕行手術』之法院關鍵論理",
+     "reason": "reasoning 段雖涵蓋大意，但未逐字完整引用『關鍵在於...未充分正確評估即逕行手術』之法院關鍵論理"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「雖有『亦未告知家屬可能併發脂肪栓塞危險』，但『未充分令家屬了解』之概括表述未完整涵蓋」",
+     "reason": "「雖有『亦未告知家屬可能併發脂肪栓塞危險』，但『未充分令家屬了解』之概括表述未完整涵蓋」"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「證人僅施行一側之證詞內容，reasoning 段未提及」",
+     "reason": "「證人僅施行一側之證詞內容，reasoning 段未提及」"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「證人年齡層與病患年齡比較，reasoning 段未提及」",
+     "reason": "「證人年齡層與病患年齡比較，reasoning 段未提及」"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「二度委託醫審會鑑定之程序事實，reasoning 段未提及」",
+     "reason": "「二度委託醫審會鑑定之程序事實，reasoning 段未提及」"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「『被告甲猶否認其無過失，自無可採』之法院評價用語，reasoning 段以『顯見被告甲辯詞非實』概括，語意不完全等同」",
+     "reason": "「『被告甲猶否認其無過失，自無可採』之法院評價用語，reasoning 段以『顯見被告甲辯詞非實』概括，語意不完全等同」"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 90,
+   "pred_total": 41,
+   "matched": 51,
+   "partial": 5,
+   "missing": 34,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6865,
+  "compression_afg_chars": 1911,
+  "compression_source_chars": 6096,
+  "gt_length_ratio": 0.5366,
+  "gt_length_afg_chars": 1911,
+  "gt_length_gt_chars": 3561,
+  "section_balance": 0.5294
+ }
 }

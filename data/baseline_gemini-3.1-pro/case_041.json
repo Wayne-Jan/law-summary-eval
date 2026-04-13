@@ -12,6 +12,7 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
@@ -137,5 +138,459 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6951,
+  "fact_recall": 0.4618,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6319,
+  "quality_overall": 4.9143,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.9355,
+  "citation_support_score": 0.9179,
+  "uncited_rate": 0.019,
+  "faithfulness_combined": {
+   "score": 0.9506,
+   "citation_fidelity": 0.9177,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 6,
+   "correct": 6
+  },
+  "weighted_recall": 0.7405,
+  "missing_severity": {
+   "critical": 2,
+   "important": 40,
+   "minor": 16,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅提及醫師甲至A醫院代替輪值，未提及醫師乙之任職機構「N綜合醫院」，屬背景資訊遺漏",
+     "reason": "摘要僅提及醫師甲至A醫院代替輪值，未提及醫師乙之任職機構「N綜合醫院」，屬背景資訊遺漏"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要未提及急診室當時僅有一床病患就診之情況，屬程序性事實遺漏",
+     "reason": "摘要未提及急診室當時僅有一床病患就診之情況，屬程序性事實遺漏"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告辯稱『不知道腦部有受創』是核心辯護要點，雖然摘要提到『判斷意識清楚』，但未明確提及『不知腦部受創』此一關鍵抗辯，跨 section 檢視亦無對應",
+     "reason": "被告辯稱『不知道腦部有受創』是核心辯護要點，雖然摘要提到『判斷意識清楚』，但未明確提及『不知腦部受創』此一關鍵抗辯，跨 section 檢視亦無對應"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "腦出血/水腫症狀的醫學理論說明為被告辯護的重要論據，摘要未涵蓋，五個 section 原文均未提及此醫學理論",
+     "reason": "腦出血/水腫症狀的醫學理論說明為被告辯護的重要論據，摘要未涵蓋，五個 section 原文均未提及此醫學理論"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「未做電腦斷層掃描的原因（『無此現象』）是被告關鍵辯解，摘要僅提未檢查未留院，未說明原因，跨 section 無補充」",
+     "reason": "「未做電腦斷層掃描的原因（『無此現象』）是被告關鍵辯解，摘要僅提未檢查未留院，未說明原因，跨 section 無補充」"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「CT掃描盲點為技術性辯護細節，摘要未提及，五個 section 原文均未出現」",
+     "reason": "「CT掃描盲點為技術性辯護細節，摘要未提及，五個 section 原文均未出現」"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「精確時間『凌晨3時9分』雖為事實，但 facts section 已有『凌晨3時許』，精確到分鐘屬次要細節」",
+     "reason": "「精確時間『凌晨3時9分』雖為事實，但 facts section 已有『凌晨3時許』，精確到分鐘屬次要細節」"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「具體血壓脈搏數值（150/79/89）為重要生命徵象，雖摘要提及『血壓、心跳正常』但未給數值，跨 section 亦無具體數值」",
+     "reason": "「具體血壓脈搏數值（150/79/89）為重要生命徵象，雖摘要提及『血壓、心跳正常』但未給數值，跨 section 亦無具體數值」"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「『飲酒、車禍受驚故數據正常』為被告解釋生命徵象的關鍵論點，摘要未涵蓋此因果，跨 section 無對應」",
+     "reason": "「『飲酒、車禍受驚故數據正常』為被告解釋生命徵象的關鍵論點，摘要未涵蓋此因果，跨 section 無對應」"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「GCS指數15分為重要醫療評估量化標準，摘要僅提『意識清楚』未明確GCS數值，五個 section 均未提及GCS」",
+     "reason": "「GCS指數15分為重要醫療評估量化標準，摘要僅提『意識清楚』未明確GCS數值，五個 section 均未提及GCS」"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「病歷欄位『alcohol/clear』記載細節屬病歷形式記載，為次要事實，摘要未提及，跨 section 無出現」",
+     "reason": "「病歷欄位『alcohol/clear』記載細節屬病歷形式記載，為次要事實，摘要未提及，跨 section 無出現」"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「『返回宿舍可自行走路』為被告主張病患狀況良好之要點，摘要未提及，五個 section 原文均未出現」",
+     "reason": "「『返回宿舍可自行走路』為被告主張病患狀況良好之要點，摘要未提及，五個 section 原文均未出現」"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「『診療時及嗣後無腦出血病徵』直接影響過失認定，屬致命遺漏，摘要未明確涵蓋，跨 section 檢視僅 reasoning 段提及『若及時檢查可挽回』但未說當時無病徵」",
+     "reason": "「『診療時及嗣後無腦出血病徵』直接影響過失認定，屬致命遺漏，摘要未明確涵蓋，跨 section 檢視僅 reasoning 段提及『若及時檢查可挽回』但未說當時無病徵」"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「『檢查無法預測嗣後腦出血』為被告核心抗辯論點，直接影響因果關係認定，摘要完全未提及，五個 section 原文均未出現此醫學論點」",
+     "reason": "「『檢查無法預測嗣後腦出血』為被告核心抗辯論點，直接影響因果關係認定，摘要完全未提及，五個 section 原文均未出現此醫學論點」"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及病患堅持出院時醫師應囑咐家屬每1至2小時叫醒病患觀察意識變化之具體醫囑",
+     "reason": "摘要未提及病患堅持出院時醫師應囑咐家屬每1至2小時叫醒病患觀察意識變化之具體醫囑"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及病患單身在外無家屬照顧時醫師應堅持留置觀察之醫療標準",
+     "reason": "摘要未提及病患單身在外無家屬照顧時醫師應堅持留置觀察之醫療標準"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及解剖發現腦實質無腦挫傷、血腫重量約170公克等具體細節",
+     "reason": "摘要未提及解剖發現腦實質無腦挫傷、血腫重量約170公克等具體細節"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及此類血腫若及時診斷治療預效不錯之專業觀點",
+     "reason": "摘要未提及此類血腫若及時診斷治療預效不錯之專業觀點"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及GCS作為全球意識描述標準之背景說明",
+     "reason": "摘要未提及GCS作為全球意識描述標準之背景說明"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及GCS評分標準（15分清楚、3分昏迷）之具體說明",
+     "reason": "摘要未提及GCS評分標準（15分清楚、3分昏迷）之具體說明"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及鑑定對被告未記載檢查結果於病歷之質疑",
+     "reason": "摘要未提及鑑定對被告未記載檢查結果於病歷之質疑"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及頭部外傷後一星期內為急性期、前三天最關鍵之時間框架",
+     "reason": "摘要未提及頭部外傷後一星期內為急性期、前三天最關鍵之時間框架"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及急診室病況僅為病程一部分、不能據以判斷穩定之原則",
+     "reason": "摘要未提及急診室病況僅為病程一部分、不能據以判斷穩定之原則"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及「病況穩定」說法不正確、僅能說暫時正常之釐清",
+     "reason": "摘要未提及「病況穩定」說法不正確、僅能說暫時正常之釐清"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及檢查結果正常則不一定需留院觀察之條件說明",
+     "reason": "摘要未提及檢查結果正常則不一定需留院觀察之條件說明"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及離院時應交付傷後注意事項書面指示予家屬或陪伴者之要求",
+     "reason": "摘要未提及離院時應交付傷後注意事項書面指示予家屬或陪伴者之要求"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及同學與病患同住且能執行醫囑才具有家屬功能之定義",
+     "reason": "摘要未提及同學與病患同住且能執行醫囑才具有家屬功能之定義"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及若有交付書面指示則醫院處置妥適之評價",
+     "reason": "摘要未提及若有交付書面指示則醫院處置妥適之評價"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及意識清楚未能診斷腦挫傷醫療上無疏失但仍應預見後續之原則",
+     "reason": "摘要未提及意識清楚未能診斷腦挫傷醫療上無疏失但仍應預見後續之原則"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及屍體發現現場之具體描述（趴地、面部朝下、下半身赤裸等）",
+     "reason": "摘要未提及屍體發現現場之具體描述（趴地、面部朝下、下半身赤裸等）"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及解剖發現膀胱內留有二西西尿液",
+     "reason": "摘要未提及解剖發現膀胱內留有二西西尿液"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及剛排尿未穿褲跌倒臉部應有擦挫傷之推論",
+     "reason": "摘要未提及剛排尿未穿褲跌倒臉部應有擦挫傷之推論"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及急診病歷記載右側額部擦挫傷",
+     "reason": "摘要未提及急診病歷記載右側額部擦挫傷"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及解剖發現頭部撞擊傷害主要位於右額顳部及右後枕部",
+     "reason": "摘要未提及解剖發現頭部撞擊傷害主要位於右額顳部及右後枕部"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及撞擊方向應為側傾或後傾式非前傾式之推論",
+     "reason": "摘要未提及撞擊方向應為側傾或後傾式非前傾式之推論"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及血腫塊為固體塊狀表面光滑內斂之特徵描述",
+     "reason": "摘要未提及血腫塊為固體塊狀表面光滑內斂之特徵描述"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖pred claim 7提及慢慢凝集產生，但未明確陳述「並非死前數小時發生」此否定性論斷",
+     "reason": "雖pred claim 7提及慢慢凝集產生，但未明確陳述「並非死前數小時發生」此否定性論斷"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要雖提及死亡係硬腦膜上出血所致，但未以「確為頭部外傷所致」之因果陳述",
+     "reason": "摘要雖提及死亡係硬腦膜上出血所致，但未以「確為頭部外傷所致」之因果陳述"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫療標準具體檢查項目（昏迷指數、瞳孔大小及對光反應），屬鑑定意見核心內容，影響過失認定標準理解",
+     "reason": "醫療標準具體檢查項目（昏迷指數、瞳孔大小及對光反應），屬鑑定意見核心內容，影響過失認定標準理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "替代醫療義務（交付傷後注意事項書面指示），影響第二次鑑定條件判定之理解",
+     "reason": "替代醫療義務（交付傷後注意事項書面指示），影響第二次鑑定條件判定之理解"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫師法病歷記載義務之法律依據，影響過失論證完整性",
+     "reason": "醫師法病歷記載義務之法律依據，影響過失論證完整性"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告辯稱檢查內容細節（眼睛張開、抬手踢腳、瞳孔對光反應），屬辯護要點，影響事實爭點理解",
+     "reason": "被告辯稱檢查內容細節（眼睛張開、抬手踢腳、瞳孔對光反應），屬辯護要點，影響事實爭點理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病歷神智欄具體記載雖佐證事實，但摘要已涵蓋神智清楚之認定，此細節不影響核心理解",
+     "reason": "病歷神智欄具體記載雖佐證事實，但摘要已涵蓋神智清楚之認定，此細節不影響核心理解"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "急診室當時狀況（無其他病患、時間寬裕），直接影響『無不能注意之情事』之過失要件判斷",
+     "reason": "急診室當時狀況（無其他病患、時間寬裕），直接影響『無不能注意之情事』之過失要件判斷"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "未記載神經學檢查結果之質疑，屬法院論證被告過失之關鍵邏輯步驟",
+     "reason": "未記載神經學檢查結果之質疑，屬法院論證被告過失之關鍵邏輯步驟"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告專業經驗背景（外科及急診工作饒富經驗），影響注意義務標準之認定（專業人士標準）",
+     "reason": "被告專業經驗背景（外科及急診工作饒富經驗），影響注意義務標準之認定（專業人士標準）"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「被告具體過失認定過程（以手腳活動、言談正常逕認意識清楚），屬過失行為核心描述",
+     "reason": "「被告具體過失認定過程（以手腳活動、言談正常逕認意識清楚），屬過失行為核心描述"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "第二次鑑定之條件性結論（檢查結果正常則處置妥適），影響鑑定意見之正確理解",
+     "reason": "第二次鑑定之條件性結論（檢查結果正常則處置妥適），影響鑑定意見之正確理解"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院對第二次鑑定之反駁論述（檢查結果正常之前提不存在），屬關鍵法律論證",
+     "reason": "法院對第二次鑑定之反駁論述（檢查結果正常之前提不存在），屬關鍵法律論證"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人與證據來源引用屬程序性資訊，不影響案情實質理解",
+     "reason": "證人與證據來源引用屬程序性資訊，不影響案情實質理解"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "急診室僅一床病患之事實，與GT 100互補，共同支持『無不能注意之情事』之過失要件",
+     "reason": "急診室僅一床病患之事實，與GT 100互補，共同支持『無不能注意之情事』之過失要件"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "辯護人關於神智清醒、無腦部出血病徵之主張，屬辯護要點，影響攻防理解",
+     "reason": "辯護人關於神智清醒、無腦部出血病徵之主張，屬辯護要點，影響攻防理解"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法醫中心鑑定書引用屬證據來源標示，不影響死因理解",
+     "reason": "法醫中心鑑定書引用屬證據來源標示，不影響死因理解"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「法院質疑論述（神智清醒不代表瞳孔正常，如何能斷定無腦部出血），屬過失認定核心論證",
+     "reason": "「法院質疑論述（神智清醒不代表瞳孔正常，如何能斷定無腦部出血），屬過失認定核心論證"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "注意義務論述（應斟酌上開情形妥為檢查），屬過失要件判斷基礎",
+     "reason": "注意義務論述（應斟酌上開情形妥為檢查），屬過失要件判斷基礎"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「『無不能注意之情事』屬過失要件之明確表述，影響過失成立與否",
+     "reason": "「『無不能注意之情事』屬過失要件之明確表述，影響過失成立與否"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「具體過失行為過程（逕以手腳活動言談正常認意識清楚、敷藥後讓病患出院），屬過失行為核心描述",
+     "reason": "「具體過失行為過程（逕以手腳活動言談正常認意識清楚、敷藥後讓病患出院），屬過失行為核心描述"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「判決結論『過失犯行堪以認定，自應依法論科』，屬法律適用結論",
+     "reason": "「判決結論『過失犯行堪以認定，自應依法論科』，屬法律適用結論"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 131,
+   "pred_total": 53,
+   "matched": 48,
+   "partial": 25,
+   "missing": 58,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8269,
+  "compression_afg_chars": 1354,
+  "compression_source_chars": 7822,
+  "gt_length_ratio": 0.2395,
+  "gt_length_afg_chars": 1354,
+  "gt_length_gt_chars": 5653,
+  "section_balance": 0.2258
+ }
 }

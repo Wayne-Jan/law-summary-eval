@@ -12,10 +12,10 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
-  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -148,5 +148,515 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.725,
+  "fact_recall": 0.5194,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6837,
+  "quality_overall": 4.6429,
+  "checklist_pass_rate": 0.9891,
+  "citation_accuracy": 0.9412,
+  "citation_support_score": 0.8892,
+  "uncited_rate": 0.02,
+  "faithfulness_combined": {
+   "score": 0.9534,
+   "citation_fidelity": 0.9224,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 11,
+   "correct": 11
+  },
+  "weighted_recall": 0.7484,
+  "missing_severity": {
+   "critical": 15,
+   "important": 21,
+   "minor": 30,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "HSG檢查為手術前背景事件，不影響核心過失認定",
+     "reason": "HSG檢查為手術前背景事件，不影響核心過失認定"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "手壓迫止血為緊急處置細節，影響事實經過完整理解",
+     "reason": "手壓迫止血為緊急處置細節，影響事實經過完整理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "暫不予處理的醫療決策，影響第二次手術處置理解",
+     "reason": "暫不予處理的醫療決策，影響第二次手術處置理解"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "11月3日意識不清為病情惡化關鍵時間節點",
+     "reason": "11月3日意識不清為病情惡化關鍵時間節點"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "備血程序為手術準備細節",
+     "reason": "備血程序為手術準備細節"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "胸腔處理與血管夾止血為第三次手術重要步驟",
+     "reason": "胸腔處理與血管夾止血為第三次手術重要步驟"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "下腔靜脈撕裂傷的認定直接影響被告甲之過失範圍，section_defense明確辯稱此傷係第三次手術所致",
+     "reason": "下腔靜脈撕裂傷的認定直接影響被告甲之過失範圍，section_defense明確辯稱此傷係第三次手術所致"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及被告丙探查時發現「小腸零點五公分撕裂傷」之具體細節，屬於手術過程中的細節性事實",
+     "reason": "section_02_defense.txt 未提及被告丙探查時發現「小腸零點五公分撕裂傷」之具體細節，屬於手術過程中的細節性事實"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全篇摘要未提及被告丙於「病患血壓穩定後」離開手術室之具體時機，屬於程序性時間點描述",
+     "reason": "全篇摘要未提及被告丙於「病患血壓穩定後」離開手術室之具體時機，屬於程序性時間點描述"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全篇摘要未明確陳述「小腸破裂部分由被告甲自己修補」之責任分工細節",
+     "reason": "全篇摘要未明確陳述「小腸破裂部分由被告甲自己修補」之責任分工細節"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及「菌血症」但未說明「菌血症繁殖於血管壁」之具體機制，與 GT 的 detailed mechanism 描述有差異",
+     "reason": "section_02_defense.txt 僅提及「菌血症」但未說明「菌血症繁殖於血管壁」之具體機制，與 GT 的 detailed mechanism 描述有差異"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術過程事實（腹腔鏡手術中出血）見於section_facts，section_opinions聚焦鑑定意見結論，此細節不影響鑑定意見理解",
+     "reason": "手術過程事實（腹腔鏡手術中出血）見於section_facts，section_opinions聚焦鑑定意見結論，此細節不影響鑑定意見理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術處置事實（緊急照會血管外科）見於section_facts，section_opinions未包含手術過程細節",
+     "reason": "手術處置事實（緊急照會血管外科）見於section_facts，section_opinions未包含手術過程細節"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術發現事實（下腹主動脈破裂、後腹腔血腫等）見於section_facts，section_opinions為鑑定結論摘要",
+     "reason": "手術發現事實（下腹主動脈破裂、後腹腔血腫等）見於section_facts，section_opinions為鑑定結論摘要"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術處置細節（修補處理）見於section_facts，section_opinions未描述具體手術步驟",
+     "reason": "手術處置細節（修補處理）見於section_facts，section_opinions未描述具體手術步驟"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病程進展描述（病情持續惡化）見於section_facts時序，section_opinions僅有死因結論",
+     "reason": "病程進展描述（病情持續惡化）見於section_facts時序，section_opinions僅有死因結論"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學風險說明（腹腔鏡手術可能同時傷及多處）未見於section_opinions鑑定摘要",
+     "reason": "醫學風險說明（腹腔鏡手術可能同時傷及多處）未見於section_opinions鑑定摘要"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術機制說明（Trocar尖頭穿刺機制）未見於section_opinions鑑定摘要",
+     "reason": "手術機制說明（Trocar尖頭穿刺機制）未見於section_opinions鑑定摘要"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "文獻參考說明（穿刺傷案例文獻報告）未見於section_opinions鑑定摘要",
+     "reason": "文獻參考說明（穿刺傷案例文獻報告）未見於section_opinions鑑定摘要"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，涉判決確定後之上訴期間記載，不影響本案判決主文內容與論罪理解",
+     "reason": "程序性事實，涉判決確定後之上訴期間記載，不影響本案判決主文內容與論罪理解"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，涉判決確定狀態之宣告，非判決主文實體內容，不影響案情理解",
+     "reason": "程序性事實，涉判決確定狀態之宣告，非判決主文實體內容，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 僅提及『經被告甲與心臟血管外科醫師丙緊急開腹修補』，未明確提及『緊急照會血管外科醫師丙作緊急剖腹探查』之流程描述",
+     "reason": "reasoning section 僅提及『經被告甲與心臟血管外科醫師丙緊急開腹修補』，未明確提及『緊急照會血管外科醫師丙作緊急剖腹探查』之流程描述"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 僅概括提及『刺及病患X之下腹主動脈及小腸，造成大量出血』，未詳述『下腹主動脈破裂、後腹腔血腫及合併小腸零點五公分撕裂傷』之具體發現",
+     "reason": "reasoning section 僅概括提及『刺及病患X之下腹主動脈及小腸，造成大量出血』，未詳述『下腹主動脈破裂、後腹腔血腫及合併小腸零點五公分撕裂傷』之具體發現"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『極為罕見』之醫學評價及『五公分』等具體傷害數值，僅概括描述『操作腹腔鏡不當』",
+     "reason": "reasoning section 未提及『極為罕見』之醫學評價及『五公分』等具體傷害數值，僅概括描述『操作腹腔鏡不當』"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 完全未提及『腹腔鏡手術有可能同時傷及下腹主動脈、小腸及下腹腔靜脈』之醫學可能性判斷",
+     "reason": "reasoning section 完全未提及『腹腔鏡手術有可能同時傷及下腹主動脈、小腸及下腹腔靜脈』之醫學可能性判斷"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未解釋『TROCAR尖頭穿刺』之傷害機制原因，僅概括描述『操作不當』",
+     "reason": "reasoning section 未解釋『TROCAR尖頭穿刺』之傷害機制原因，僅概括描述『操作不當』"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及『文獻報告曾有小腸及下腹主動脈之穿（刺）傷』之醫學文獻支持",
+     "reason": "reasoning section 未提及『文獻報告曾有小腸及下腹主動脈之穿（刺）傷』之醫學文獻支持"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 僅概括提及『鑑定人即心臟血管外科醫師乙到庭證稱，病患主動脈再次裂開係因初期休克導致多重器官衰竭與凝血異常之惡性循環』，未詳述『身體狀況不佳、凝血功能異常、傷口癒合狀況不佳、免疫系統不好、腎臟功能也不好』等具體分析",
+     "reason": "reasoning section 僅概括提及『鑑定人即心臟血管外科醫師乙到庭證稱，病患主動脈再次裂開係因初期休克導致多重器官衰竭與凝血異常之惡性循環』，未詳述『身體狀況不佳、凝血功能異常、傷口癒合狀況不佳、免疫系統不好、腎臟功能也不好』等具體分析"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『病人後來有洗腎』之具體事實，僅於 section_03_opinions 提及『進行血液透析治療』",
+     "reason": "reasoning section 未提及『病人後來有洗腎』之具體事實，僅於 section_03_opinions 提及『進行血液透析治療』"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『第一次手術前病患血壓降到三、四十』之具體數值及時間點",
+     "reason": "reasoning section 未提及『第一次手術前病患血壓降到三、四十』之具體數值及時間點"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『第三次手術紀錄記載凝血病變、整個腹腔都有出血點』之詳細發現",
+     "reason": "reasoning section 未提及『第三次手術紀錄記載凝血病變、整個腹腔都有出血點』之詳細發現"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未提及『凝血病變情形下病患應該極高比例會死亡』之死亡風險評估，影響因果關係理解",
+     "reason": "reasoning section 未提及『凝血病變情形下病患應該極高比例會死亡』之死亡風險評估，影響因果關係理解"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未分析『下腹腔靜脈撕裂傷之出血應與其死亡結果不生關聯』之因果關係判定，影響過失認定",
+     "reason": "reasoning section 未分析『下腹腔靜脈撕裂傷之出血應與其死亡結果不生關聯』之因果關係判定，影響過失認定"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及法院函請鑑定之『兩項具體問題』，僅概括提及『醫事審議委員會鑑定書共4份』",
+     "reason": "reasoning section 未提及法院函請鑑定之『兩項具體問題』，僅概括提及『醫事審議委員會鑑定書共4份』"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『第四次鑑定意見認定』之具體內容，僅概括提及鑑定意見",
+     "reason": "reasoning section 未提及『第四次鑑定意見認定』之具體內容，僅概括提及鑑定意見"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未提及『係何次手術所造成之傷害無法由病歷得知』之關鍵事實認定，影響被告甲過失判定",
+     "reason": "reasoning section 未提及『係何次手術所造成之傷害無法由病歷得知』之關鍵事實認定，影響被告甲過失判定"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未提及『後腹腔有血腫不一定是下腹腔靜脈撕裂傷所引起』之醫學判斷，影響被告丙過失認定",
+     "reason": "reasoning section 未提及『後腹腔有血腫不一定是下腹腔靜脈撕裂傷所引起』之醫學判斷，影響被告丙過失認定"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 僅概括提及『下腹主動脈及小腸』，未詳述『零點五公分』之具體傷口尺寸",
+     "reason": "reasoning section 僅概括提及『下腹主動脈及小腸』，未詳述『零點五公分』之具體傷口尺寸"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未提及『只縫一針』推論腹腔鏡非造成原因之關鍵邏輯，影響事實認定",
+     "reason": "reasoning section 未提及『只縫一針』推論腹腔鏡非造成原因之關鍵邏輯，影響事實認定"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『下腹腔靜脈組織很薄，受損後不太可能拖到七、八天後』之組織特性與時間判斷",
+     "reason": "reasoning section 未提及『下腹腔靜脈組織很薄，受損後不太可能拖到七、八天後』之組織特性與時間判斷"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 概括提及『經輸血及血壓穩定』，未明確說明係『被告丙修補處理後血壓回升』",
+     "reason": "reasoning section 概括提及『經輸血及血壓穩定』，未明確說明係『被告丙修補處理後血壓回升』"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未明確說明『第一次手術時無下腹腔靜脈傷害』之法院認定，只說靜脈裂傷係第三次手術造成",
+     "reason": "reasoning section 未明確說明『第一次手術時無下腹腔靜脈傷害』之法院認定，只說靜脈裂傷係第三次手術造成"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 概括提及『引發凝血功能及多重器官衰竭』，未詳述『免疫系統不佳、影響腎臟功能及傷口癒合狀況』等連鎖反應",
+     "reason": "reasoning section 概括提及『引發凝血功能及多重器官衰竭』，未詳述『免疫系統不佳、影響腎臟功能及傷口癒合狀況』等連鎖反應"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 僅提及『11月5日病患出現腹部腫脹』，未明確提及『十一月五日再因下腹主動脈破裂而大量出血』之時間點與原因",
+     "reason": "reasoning section 僅提及『11月5日病患出現腹部腫脹』，未明確提及『十一月五日再因下腹主動脈破裂而大量出血』之時間點與原因"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 僅提及『醫師丙遂實施第三次剖腹探查』，未明確說明『下腹主動脈破裂經被告丙予以縫合修補』",
+     "reason": "reasoning section 僅提及『醫師丙遂實施第三次剖腹探查』，未明確說明『下腹主動脈破裂經被告丙予以縫合修補』"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未提及『雖經被告丙縫合修補，仍因急性腎衰竭及凝血功能異常持續惡化』之關鍵事實，影響醫療處置適當性評價",
+     "reason": "reasoning section 未提及『雖經被告丙縫合修補，仍因急性腎衰竭及凝血功能異常持續惡化』之關鍵事實，影響醫療處置適當性評價"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 僅概括提及『被告丙對於其參與之救治過程坦承不諱』，未詳述被告丙之具體辯稱內容",
+     "reason": "reasoning section 僅概括提及『被告丙對於其參與之救治過程坦承不諱』，未詳述被告丙之具體辯稱內容"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 僅概括提及『當時後腹腔血腫並無擴大或搏動』，未詳述『第一、二次手術發現後腹腔血腫及決定觀察之經過』，影響醫療常規判斷",
+     "reason": "reasoning section 僅概括提及『當時後腹腔血腫並無擴大或搏動』，未詳述『第一、二次手術發現後腹腔血腫及決定觀察之經過』，影響醫療常規判斷"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 僅概括提及『主動脈再次破裂可能與發炎、菌血症有關』，未明確提及『主動脈發炎感染經由感染物栓塞所致、或因菌血症繁殖於血管壁』之具體機制",
+     "reason": "reasoning section 僅概括提及『主動脈再次破裂可能與發炎、菌血症有關』，未明確提及『主動脈發炎感染經由感染物栓塞所致、或因菌血症繁殖於血管壁』之具體機制"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未提及『後腹腔有血腫不一定是下腹腔靜脈撕裂傷所引起』之鑑定意見歧異，影響法院心證形成過程之理解",
+     "reason": "reasoning section 未提及『後腹腔有血腫不一定是下腹腔靜脈撕裂傷所引起』之鑑定意見歧異，影響法院心證形成過程之理解"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 僅提及『至11月5日前血壓維持正常』，未提供『收縮壓約為100至130mmHg、舒張壓約為60至80mmHg』之具體數值",
+     "reason": "reasoning section 僅提及『至11月5日前血壓維持正常』，未提供『收縮壓約為100至130mmHg、舒張壓約為60至80mmHg』之具體數值"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 僅提及『出現血壓明顯驟然下降』，未提供『收縮壓約為60至90mmHg、舒張壓約為40至60mmHg』之具體數值",
+     "reason": "reasoning section 僅提及『出現血壓明顯驟然下降』，未提供『收縮壓約為60至90mmHg、舒張壓約為40至60mmHg』之具體數值"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未提及『相隔八日遲至十一月五日始有明顯血壓下降』之時間邏輯質疑，此為法院認定『下腹腔靜脈非腹腔鏡造成』之關鍵論證",
+     "reason": "reasoning section 未提及『相隔八日遲至十一月五日始有明顯血壓下降』之時間邏輯質疑，此為法院認定『下腹腔靜脈非腹腔鏡造成』之關鍵論證"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section 未提及『第四次鑑定意見改認後腹腔血腫並非必然係下腹腔靜脈撕裂傷出血所造成』之鑑定意見變更，影響被告丙責任認定之理解",
+     "reason": "reasoning section 未提及『第四次鑑定意見改認後腹腔血腫並非必然係下腹腔靜脈撕裂傷出血所造成』之鑑定意見變更，影響被告丙責任認定之理解"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 概括提及『因血壓下降實施第二次手術』，未明確說明『係因病患血壓下降而須實施第二次手術』之因果關係",
+     "reason": "reasoning section 概括提及『因血壓下降實施第二次手術』，未明確說明『係因病患血壓下降而須實施第二次手術』之因果關係"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未分析『血壓下降的因素』如『不可逆休克、敗血性休克、原來修補的大動脈傷口又裂開』等可能原因",
+     "reason": "reasoning section 未分析『血壓下降的因素』如『不可逆休克、敗血性休克、原來修補的大動脈傷口又裂開』等可能原因"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及『後腹腔可能容納一萬CC之出血量、二千CC屬常見』之醫學數據",
+     "reason": "reasoning section 未提及『後腹腔可能容納一萬CC之出血量、二千CC屬常見』之醫學數據"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『第二次手術探查發現第一次手術縫合處良好、後腹腔血腫與第一次手術所見相同』之具體發現",
+     "reason": "reasoning section 未提及『第二次手術探查發現第一次手術縫合處良好、後腹腔血腫與第一次手術所見相同』之具體發現"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『後腹腔血腫並非有出血點才會造成，凝血功能異常或主動脈破損均可能造成』之醫學判斷",
+     "reason": "reasoning section 未提及『後腹腔血腫並非有出血點才會造成，凝血功能異常或主動脈破損均可能造成』之醫學判斷"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及『倘手術過程中未發現明顯出血點，除非血腫很明顯在一天內變得很大，原則上可以不予處理』之醫療原則",
+     "reason": "reasoning section 未提及『倘手術過程中未發現明顯出血點，除非血腫很明顯在一天內變得很大，原則上可以不予處理』之醫療原則"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 僅泛稱『法務部法醫研究所鑑定』，未提及『法務部法醫研究所醫鑑字第一二七六號鑑定書』之具體案號",
+     "reason": "reasoning section 僅泛稱『法務部法醫研究所鑑定』，未提及『法務部法醫研究所醫鑑字第一二七六號鑑定書』之具體案號"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "鑑定意見局限性說明屬於程序性事實，不影響判決結論理解",
+     "reason": "鑑定意見局限性說明屬於程序性事實，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "第三次手術具體操作細節（胸腔主動脈分離、血管夾夾住）為重要醫療事實，影響對救治過程的完整理解",
+     "reason": "第三次手術具體操作細節（胸腔主動脈分離、血管夾夾住）為重要醫療事實，影響對救治過程的完整理解"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "14000CC 出血量為具體數據細節，雖可佐證凝血功能差，但不影響判決結論理解",
+     "reason": "14000CC 出血量為具體數據細節，雖可佐證凝血功能差，但不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "內科性出血與藥物治療說明屬於背景性醫療知識，不影響判決結論",
+     "reason": "內科性出血與藥物治療說明屬於背景性醫療知識，不影響判決結論"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法務部法醫研究所函覆意見及檢查結果為程序性證據細節，不影響判決結論理解",
+     "reason": "法務部法醫研究所函覆意見及檢查結果為程序性證據細節，不影響判決結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 155,
+   "pred_total": 49,
+   "matched": 72,
+   "partial": 17,
+   "missing": 66,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8537,
+  "compression_afg_chars": 1473,
+  "compression_source_chars": 10071,
+  "gt_length_ratio": 0.2055,
+  "gt_length_afg_chars": 1473,
+  "gt_length_gt_chars": 7167,
+  "section_balance": 0.3947
+ }
 }

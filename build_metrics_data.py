@@ -176,11 +176,11 @@ CONDITION_ORDER = [
     "baseline_gpt-5.3",
     "baseline_gemini-3.1-pro",
     "baseline_gemini-3.0-flash",
-    # LENS-DeepSeek (open-source)
+    # LENS open-source
+    "LENS-Full-DeepSeek_v31_writer_gemma4",
     "LENS-Full-DeepSeek_v31",
     "LENS-NoAFG-DeepSeek_v31",
     "LENS-NoReact-DeepSeek_v31",
-    "LENS-Full-DeepSeek_v31_writer_gemma4",
     # Open-source baselines (alphabetical)
 ]
 

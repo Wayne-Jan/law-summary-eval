@@ -12,10 +12,10 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
-  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -133,6 +133,262 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7932
+  "rule_based_avg": 0.7932,
+  "fact_recall": 0.6429,
+  "fact_precision": 0.98,
+  "fact_f1": 0.7764,
+  "quality_overall": 4.7857,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9769,
+  "uncited_rate": 0.12,
+  "faithfulness_combined": {
+   "score": 0.92,
+   "citation_fidelity": 0.88,
+   "fact_precision": 0.98,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.8129,
+  "missing_severity": {
+   "critical": 4,
+   "important": 17,
+   "minor": 9,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「術後血壓、心跳及呼吸與術前無明顯差異」未在facts section出現，defense section雖有「生命徵象穩定」但缺乏與術前比較的語義，確認遺漏",
+     "reason": "「術後血壓、心跳及呼吸與術前無明顯差異」未在facts section出現，defense section雖有「生命徵象穩定」但缺乏與術前比較的語義，確認遺漏"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「身體並無顯然不適」未在facts section出現，defense section有「無異狀」但語境不同，確認遺漏",
+     "reason": "「身體並無顯然不適」未在facts section出現，defense section有「無異狀」但語境不同，確認遺漏"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「在該日下午辦理出院返家」具體時間未在任何section提及，確認遺漏",
+     "reason": "「在該日下午辦理出院返家」具體時間未在任何section提及，確認遺漏"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「病患Y因身體不適入院，曾有嘔吐」之入院原因及症狀未在摘要任何section出現，屬重要病程資訊",
+     "reason": "「病患Y因身體不適入院，曾有嘔吐」之入院原因及症狀未在摘要任何section出現，屬重要病程資訊"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「同年三月二十三日中午，因嘔吐症狀持續及嘔吐物含咖啡狀物有上消化道出血情狀」之關鍵症狀、時間點及診斷未出現，影響病情變化理解",
+     "reason": "「同年三月二十三日中午，因嘔吐症狀持續及嘔吐物含咖啡狀物有上消化道出血情狀」之關鍵症狀、時間點及診斷未出現，影響病情變化理解"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「被告甲建議家屬轉診至臺北M醫院」之具體轉診建議未出現，僅有籠統「建議轉診」",
+     "reason": "「被告甲建議家屬轉診至臺北M醫院」之具體轉診建議未出現，僅有籠統「建議轉診」"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「病患Y之心臟主治醫師駐診於C診所，故要求轉至C診所」之轉診路徑原因未出現",
+     "reason": "「病患Y之心臟主治醫師駐診於C診所，故要求轉至C診所」之轉診路徑原因未出現"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「C診所以未設專任整型外科醫生為由而婉拒」之轉診過程資訊未出現",
+     "reason": "「C診所以未設專任整型外科醫生為由而婉拒」之轉診過程資訊未出現"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「病患Y則接受C診所建議改轉至S醫院」之轉診過程資訊未出現",
+     "reason": "「病患Y則接受C診所建議改轉至S醫院」之轉診過程資訊未出現"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「三月二十三日下午約三時許即轉至S醫院」之具體轉院時間未出現",
+     "reason": "「三月二十三日下午約三時許即轉至S醫院」之具體轉院時間未出現"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「依當時情形，並無不能注意之情事」之注意能力判斷標準未明確出現，影響過失認定理解",
+     "reason": "「依當時情形，並無不能注意之情事」之注意能力判斷標準未明確出現，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均無腹部抽脂手術止血機制之技術性說明",
+     "reason": "五個 section 原文均無腹部抽脂手術止血機制之技術性說明"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及嘔吐與全身麻醉之因果關聯說明",
+     "reason": "五個 section 原文均未提及嘔吐與全身麻醉之因果關聯說明"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 僅提及『懷疑腸阻塞而建議轉診』，未提被告對腹膜炎之擔憂及『仔細檢查其之腹部不敢有所怠忽』等詳細抗辯",
+     "reason": "section_defense.txt 僅提及『懷疑腸阻塞而建議轉診』，未提被告對腹膜炎之擔憂及『仔細檢查其之腹部不敢有所怠忽』等詳細抗辯"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 原文均未提及無腹膜炎癥兆（腹部變硬與回縮痛）之具體判斷",
+     "reason": "五個 section 原文均未提及無腹膜炎癥兆（腹部變硬與回縮痛）之具體判斷"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 原文均未提及『三月二十三日中午』無腹膜炎癥兆之時間點記錄",
+     "reason": "五個 section 原文均未提及『三月二十三日中午』無腹膜炎癥兆之時間點記錄"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_reasoning.txt 提及胸部氣體影響X光判讀，但未提及『發現胸部有氣體應即懷疑腸胃穿孔之虞』之醫療判斷準則",
+     "reason": "section_reasoning.txt 提及胸部氣體影響X光判讀，但未提及『發現胸部有氣體應即懷疑腸胃穿孔之虞』之醫療判斷準則"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "鑑定意見中的專業判斷遺漏，影響對醫療過失認定的完整理解",
+     "reason": "鑑定意見中的專業判斷遺漏，影響對醫療過失認定的完整理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "主治醫師科別屬背景資訊，不影響案情核心理解",
+     "reason": "主治醫師科別屬背景資訊，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "轉院時診斷結果遺漏，影響病程評估完整性",
+     "reason": "轉院時診斷結果遺漏，影響病程評估完整性"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "胃鏡檢查及結果為鑑定意見重要依據，遺漏影響診斷合理性判斷",
+     "reason": "胃鏡檢查及結果為鑑定意見重要依據，遺漏影響診斷合理性判斷"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫師個人經驗陳述，屬背景說明性質",
+     "reason": "醫師個人經驗陳述，屬背景說明性質"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "穿孔至轉院時間間隔影響病情發展評估",
+     "reason": "穿孔至轉院時間間隔影響病情發展評估"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，未提及當事人未上訴之狀態，屬程序性資訊遺漏",
+     "reason": "程序性事實，未提及當事人未上訴之狀態，屬程序性資訊遺漏"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，未提及判決確定之狀態，屬程序性資訊遺漏",
+     "reason": "程序性事實，未提及判決確定之狀態，屬程序性資訊遺漏"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "搜尋全部5個section，均未明確提及『手術前兩週內禁服用含有抗凝血劑之藥物』的時間規範，僅提及『停藥兩週後再行手術』但未說明是術前兩週禁食",
+     "reason": "搜尋全部5個section，均未明確提及『手術前兩週內禁服用含有抗凝血劑之藥物』的時間規範，僅提及『停藥兩週後再行手術』但未說明是術前兩週禁食"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "搜尋全部5個section，section_01_facts.txt 僅提及『凝血功能指標（PT、PTT）均已超過正常值』，未提及PT27、PTT37等具體數值",
+     "reason": "搜尋全部5個section，section_01_facts.txt 僅提及『凝血功能指標（PT、PTT）均已超過正常值』，未提及PT27、PTT37等具體數值"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "搜尋全部5個section，均未明確提及『有危險性之情形下...可等候狀況了解』的選項描述",
+     "reason": "搜尋全部5個section，均未明確提及『有危險性之情形下...可等候狀況了解』的選項描述"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "GT指『S醫院』，但摘要全文提及『D醫院』，醫院名稱不一致；雖有提及未及時開刀概念，但醫院標識錯誤影響因果關係認定，屬關鍵事實遺漏",
+     "reason": "GT指『S醫院』，但摘要全文提及『D醫院』，醫院名稱不一致；雖有提及未及時開刀概念，但醫院標識錯誤影響因果關係認定，屬關鍵事實遺漏"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "搜尋全部5個section，section_05_reasoning.txt 未明確列出病患死亡的具體原因『腹壁壞死性筋膜炎併敗血性休克、小腸穿孔併腹膜炎』，僅 section_03_opinions.txt 提及死因",
+     "reason": "搜尋全部5個section，section_05_reasoning.txt 未明確列出病患死亡的具體原因『腹壁壞死性筋膜炎併敗血性休克、小腸穿孔併腹膜炎』，僅 section_03_opinions.txt 提及死因"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 98,
+   "pred_total": 50,
+   "matched": 58,
+   "partial": 10,
+   "missing": 30,
+   "hallucinated": 1
+  },
+  "compression_ratio": 0.7466,
+  "compression_afg_chars": 1291,
+  "compression_source_chars": 5095,
+  "gt_length_ratio": 0.3987,
+  "gt_length_afg_chars": 1291,
+  "gt_length_gt_chars": 3238,
+  "section_balance": 0.7287
  }
 }

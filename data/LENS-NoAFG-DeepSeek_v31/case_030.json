@@ -12,6 +12,7 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
@@ -123,5 +124,130 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8333,
+  "fact_recall": 0.8226,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9027,
+  "quality_overall": 4.6143,
+  "checklist_pass_rate": 0.9538,
+  "citation_accuracy": 0.9714,
+  "citation_support_score": 0.9421,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9828,
+   "citation_fidelity": 0.9714,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.9355,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢查全部 5 個 section 皆未提及 I醫院或C醫院，僅提及 A 醫院。此為背景性就診歷程，非判決核心要件",
+     "reason": "檢查全部 5 個 section 皆未提及 I醫院或C醫院，僅提及 A 醫院。此為背景性就診歷程，非判決核心要件"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT claim 15 指被告為『丁、甲、乙』，但摘要 section_defense 明確記載被告為『甲、乙、丙』，且原文亦為『被告甲、被告乙、被告丙』；被告範圍不一致（GT 多了被告丁、少了被告丙），屬重要事實差異",
+     "reason": "GT claim 15 指被告為『丁、甲、乙』，但摘要 section_defense 明確記載被告為『甲、乙、丙』，且原文亦為『被告甲、被告乙、被告丙』；被告範圍不一致（GT 多了被告丁、少了被告丙），屬重要事實差異"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "法院送請鑑定之程序屬程序性事實，五個 section 均未提及法院如何送請鑑定，僅陳述有鑑定意見存在，不改變案情理解",
+     "reason": "法院送請鑑定之程序屬程序性事實，五個 section 均未提及法院如何送請鑑定，僅陳述有鑑定意見存在，不改變案情理解"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定事項範圍之詳細列舉屬程序性細節，五個 section 均未逐項列出鑑定事項，不影響判決結論理解",
+     "reason": "鑑定事項範圍之詳細列舉屬程序性細節，五個 section 均未逐項列出鑑定事項，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "觸診診斷腹膜炎之具體症狀描述屬醫學專業細節，五個 section 均未提及，不改變「可由X光片診斷」之核心意涵",
+     "reason": "觸診診斷腹膜炎之具體症狀描述屬醫學專業細節，五個 section 均未提及，不改變「可由X光片診斷」之核心意涵"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "無法站立或側臥時之例外診斷條件屬補充性醫學細節，五個 section 均未提及，不影響「最好是站立或側臥照」之核心論述",
+     "reason": "無法站立或側臥時之例外診斷條件屬補充性醫學細節，五個 section 均未提及，不影響「最好是站立或側臥照」之核心論述"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖 section_reasoning.txt 提及胃破裂之併發症，但 GT claim 是醫審會鑑定意見中之陳述，而生成的 opinions section 未提及此細節。因屬病理机制背景資訊而非判決核心，標記為 minor",
+     "reason": "雖 section_reasoning.txt 提及胃破裂之併發症，但 GT claim 是醫審會鑑定意見中之陳述，而生成的 opinions section 未提及此細節。因屬病理机制背景資訊而非判決核心，標記為 minor"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「兒童發生胃破裂文獻並不多見」與 section_opinions 中「該情形在醫學文獻上及臨床上極為罕見，全世界更難得一見」語義相近但 GT claim 特別強調「兒童」與「文獻」之關聯，屬補充性資訊",
+     "reason": "「兒童發生胃破裂文獻並不多見」與 section_opinions 中「該情形在醫學文獻上及臨床上極為罕見，全世界更難得一見」語義相近但 GT claim 特別強調「兒童」與「文獻」之關聯，屬補充性資訊"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "照會社會服務部查詢兒童受虐屬背景性處置細節，五個 section 均未提及，不影響醫療過失認定之主體論述",
+     "reason": "照會社會服務部查詢兒童受虐屬背景性處置細節，五個 section 均未提及，不影響醫療過失認定之主體論述"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢察官是否上訴屬程序性後續事項，遍查全部五個 section 均無提及上訴期間或判決確定之相關資訊，確認為缺失",
+     "reason": "檢察官是否上訴屬程序性後續事項，遍查全部五個 section 均無提及上訴期間或判決確定之相關資訊，確認為缺失"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態屬程序性資訊，遍查全部五個 section 均未提及判決確定與否，僅有判決日期及無罪結果，確認為缺失",
+     "reason": "判決確定狀態屬程序性資訊，遍查全部五個 section 均未提及判決確定與否，僅有判決日期及無罪結果，確認為缺失"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 57,
+   "matched": 51,
+   "partial": 0,
+   "missing": 11,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.2615,
+  "compression_afg_chars": 2183,
+  "compression_source_chars": 2956,
+  "gt_length_ratio": 1.0023,
+  "gt_length_afg_chars": 2183,
+  "gt_length_gt_chars": 2178,
+  "section_balance": 0.5
+ }
 }

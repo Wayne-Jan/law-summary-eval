@@ -65,10 +65,10 @@ CANONICAL_PRIORITY = {
     "baseline_gpt-5.3": 13,
     "baseline_gemini-3.1-pro": 14,
     "baseline_gemini-3.0-flash": 15,
-    "LENS-Full-DeepSeek_v31": 20,
-    "LENS-NoAFG-DeepSeek_v31": 21,
-    "LENS-NoReact-DeepSeek_v31": 22,
-    "LENS-Full-DeepSeek_v31_writer_gemma4": 23,
+    "LENS-Full-DeepSeek_v31_writer_gemma4": 20,
+    "LENS-Full-DeepSeek_v31": 21,
+    "LENS-NoAFG-DeepSeek_v31": 22,
+    "LENS-NoReact-DeepSeek_v31": 23,
 }
 
 EXCLUDED_CONDITIONS = {

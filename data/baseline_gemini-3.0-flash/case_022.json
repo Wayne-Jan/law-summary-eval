@@ -12,6 +12,7 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
@@ -139,5 +140,179 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8421,
+  "fact_recall": 0.621,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7662,
+  "quality_overall": 4.4286,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9714,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.8602,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "術前超音波檢查診斷及病人同意手術過程屬背景性事實，section_facts 僅簡述就診及手術時間，未提及翌日下午超音波檢查及詳細同意過程，不影響主要案情理解",
+     "reason": "術前超音波檢查診斷及病人同意手術過程屬背景性事實，section_facts 僅簡述就診及手術時間，未提及翌日下午超音波檢查及詳細同意過程，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬委由告訴代理人提告屬程序性事實，section_facts 僅記載「檢察官相驗後自動檢舉偵查起訴」，未提及家屬提告細節，不影響判決結論理解",
+     "reason": "家屬委由告訴代理人提告屬程序性事實，section_facts 僅記載「檢察官相驗後自動檢舉偵查起訴」，未提及家屬提告細節，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告關於CPR造成腹腔出血之關鍵辯護主張，於全部5個section均無提及，確屬遺漏。此為被告實質辯護內容，影響對被告辯護策略之完整理解，但被告最終認罪，故非影響判決結論之致命遺漏",
+     "reason": "被告關於CPR造成腹腔出血之關鍵辯護主張，於全部5個section均無提及，確屬遺漏。此為被告實質辯護內容，影響對被告辯護策略之完整理解，但被告最終認罪，故非影響判決結論之致命遺漏"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，皆無「被告甲認罪」之直接陳述，僅有「坦承不諱」而無「認罪」一詞",
+     "reason": "遍查全部 5 個 section 原文，皆無「被告甲認罪」之直接陳述，僅有「坦承不諱」而無「認罪」一詞"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，無「本院查上開協商合意並無刑事訴訟法第455條之4第1項所列情形之一」之詳細程序性描述",
+     "reason": "遍查全部 5 個 section 原文，無「本院查上開協商合意並無刑事訴訟法第455條之4第1項所列情形之一」之詳細程序性描述"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，無「被告、檢察官於法定上訴期間未上訴」之程序性事實記載",
+     "reason": "遍查全部 5 個 section 原文，無「被告、檢察官於法定上訴期間未上訴」之程序性事實記載"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，verdict section 僅提及「不得上訴」但未明確陳述「本案判決即確定」",
+     "reason": "遍查全部 5 個 section 原文，verdict section 僅提及「不得上訴」但未明確陳述「本案判決即確定」"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense僅記載被告坦承不諱，未見被告辯稱CPR造成出血之內容；其他section亦無此項辯稱記載",
+     "reason": "section_defense僅記載被告坦承不諱，未見被告辯稱CPR造成出血之內容；其他section亦無此項辯稱記載"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_facts提及CPR但未記載麻醉師詢問被告內出血之關聯；section_reasoning記載麻醉師詢問但未明確關聯CPR後之詢問",
+     "reason": "section_facts提及CPR但未記載麻醉師詢問被告內出血之關聯；section_reasoning記載麻醉師詢問但未明確關聯CPR後之詢問"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense僅記載被告坦承事實並願受刑之宣告，未見被告『手術還沒開始，不可能是內出血』之具體回應",
+     "reason": "section_defense僅記載被告坦承事實並願受刑之宣告，未見被告『手術還沒開始，不可能是內出血』之具體回應"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_opinions提及血液檢驗結果但未明確連結『轉到加護病房後』之時間點；關鍵在於轉入ICU後之抽血，原文未明確對應",
+     "reason": "section_opinions提及血液檢驗結果但未明確連結『轉到加護病房後』之時間點；關鍵在於轉入ICU後之抽血，原文未明確對應"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_opinions提及腹部變大趨勢，但未記載為麻醉師L做CPR時覺得肚子漲之觀察",
+     "reason": "section_opinions提及腹部變大趨勢，但未記載為麻醉師L做CPR時覺得肚子漲之觀察"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning提及『多次詢問』及『率爾否定』，但未明確記載『持續懷疑』及『再次詢問』之完整過程",
+     "reason": "section_reasoning提及『多次詢問』及『率爾否定』，但未明確記載『持續懷疑』及『再次詢問』之完整過程"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts僅簡要提及『轉入加護病房急救』，未詳細記載加護病房持續急救過程及血壓變化",
+     "reason": "section_facts僅簡要提及『轉入加護病房急救』，未詳細記載加護病房持續急救過程及血壓變化"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各section均未提及被告甲在急救最後表示『如救回來要回開刀房開腹探查』之考量",
+     "reason": "各section均未提及被告甲在急救最後表示『如救回來要回開刀房開腹探查』之考量"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_opinions提及血液檢驗顯示HGB及PLT顯著降低，但未記載具體數值8.9g/dl及53×1000/uL",
+     "reason": "section_opinions提及血液檢驗顯示HGB及PLT顯著降低，但未記載具體數值8.9g/dl及53×1000/uL"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各section均未提及11月13日之基準檢驗數值HGB 13.8g/dl、PDW 309×1000/μL",
+     "reason": "各section均未提及11月13日之基準檢驗數值HGB 13.8g/dl、PDW 309×1000/μL"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_opinions提及『無發生氣體栓塞之解剖證據』間接反駁，但未明確記載法院認定被告『CPR造成出血』之辯稱與解剖結果不符",
+     "reason": "section_opinions提及『無發生氣體栓塞之解剖證據』間接反駁，但未明確記載法院認定被告『CPR造成出血』之辯稱與解剖結果不符"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 37,
+   "matched": 33,
+   "partial": 11,
+   "missing": 18,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7092,
+  "compression_afg_chars": 972,
+  "compression_source_chars": 3342,
+  "gt_length_ratio": 0.4609,
+  "gt_length_afg_chars": 972,
+  "gt_length_gt_chars": 2109,
+  "section_balance": 0.0
+ }
 }

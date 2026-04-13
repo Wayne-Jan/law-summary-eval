@@ -12,6 +12,7 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
@@ -121,5 +122,375 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6302,
+  "fact_recall": 0.5192,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6835,
+  "quality_overall": 4.7857,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.8529,
+  "citation_support_score": 0.8176,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9117,
+   "citation_fidelity": 0.8529,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.8077,
+  "missing_severity": {
+   "critical": 2,
+   "important": 10,
+   "minor": 34,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 及所有 section 均未提及『病患就診時身心精神狀況及言語正常』，此係背景性事實描述，不影響判決結論理解",
+     "reason": "section_facts 及所有 section 均未提及『病患就診時身心精神狀況及言語正常』，此係背景性事實描述，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 記載『並簽立腦部手術同意書』，但未明確陳述『被告甲已取得』，語義上係被動描述而非主體行為，維持 missing",
+     "reason": "section_facts 記載『並簽立腦部手術同意書』，但未明確陳述『被告甲已取得』，語義上係被動描述而非主體行為，維持 missing"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "所有 section 均未提及『違反醫療法第43條第1項』之具體法條指控，此係法條引用，屬次要資訊",
+     "reason": "所有 section 均未提及『違反醫療法第43條第1項』之具體法條指控，此係法條引用，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "所有 section 均未提及『違反醫療法第16條第1項但書』之具體法條指控，此係法條引用，屬次要資訊",
+     "reason": "所有 section 均未提及『違反醫療法第16條第1項但書』之具體法條指控，此係法條引用，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "所有 section 均未提及『法律上有防止義務』之法律原則性陳述，此係抽象法律論述，屬次要資訊",
+     "reason": "所有 section 均未提及『法律上有防止義務』之法律原則性陳述，此係抽象法律論述，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 僅提及「開刀危險性太高」及「決定採用藥物治療」，未明確提及「雖可開刀加以治療」之正面表述，確認摘要未涵蓋此抗辯細節",
+     "reason": "section_02_defense.txt 僅提及「開刀危險性太高」及「決定採用藥物治療」，未明確提及「雖可開刀加以治療」之正面表述，確認摘要未涵蓋此抗辯細節"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及「緊急照會神經內科」及「會診腦部神經外科」，未明確提及「內科、感染科」會診團隊細節，確認摘要未涵蓋",
+     "reason": "section_02_defense.txt 僅提及「緊急照會神經內科」及「會診腦部神經外科」，未明確提及「內科、感染科」會診團隊細節，確認摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "查閱五個 section 原文，均未提及「會診團隊皆認為病患無法救治」之內容。section_02_defense.txt 僅說「開刀危險性太高」及「決定採用藥物治療」，無「無法救治」之表述，確認摘要未涵蓋",
+     "reason": "查閱五個 section 原文，均未提及「會診團隊皆認為病患無法救治」之內容。section_02_defense.txt 僅說「開刀危險性太高」及「決定採用藥物治療」，無「無法救治」之表述，確認摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "法院送病歷資料鑑定的程序細節在全部五個section中均未提及，屬鑑定流程的重要背景事實",
+     "reason": "法院送病歷資料鑑定的程序細節在全部五個section中均未提及，屬鑑定流程的重要背景事實"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患首次住院（87年1月15日）的具體日期、症狀及H醫院資訊在五個section中均未出現",
+     "reason": "病患首次住院（87年1月15日）的具體日期、症狀及H醫院資訊在五個section中均未出現"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "貧血、肺部敗血性栓塞、疑急性膽囊炎等初診斷細節在五個section中均未提及",
+     "reason": "貧血、肺部敗血性栓塞、疑急性膽囊炎等初診斷細節在五個section中均未提及"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血液培養具體細菌種類屬醫療技術細節，各section均未提及",
+     "reason": "血液培養具體細菌種類屬醫療技術細節，各section均未提及"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "首次住院治療措施（抗生素及輸血）與病情變化資訊未在各section出現",
+     "reason": "首次住院治療措施（抗生素及輸血）與病情變化資訊未在各section出現"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病患首次自動出院的具體日期（87年1月21日）未在各section提及",
+     "reason": "病患首次自動出院的具體日期（87年1月21日）未在各section提及"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "病患入住G醫院的具體日期、症狀及被告甲為主治醫師等關鍵事實，跨section合併後仍不完整",
+     "reason": "病患入住G醫院的具體日期、症狀及被告甲為主治醫師等關鍵事實，跨section合併後仍不完整"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "詳細實驗室數據（白血球、貧血、血小板、肝腎功能等數值）未在各section記載",
+     "reason": "詳細實驗室數據（白血球、貧血、血小板、肝腎功能等數值）未在各section記載"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心臟超音波具體發現（二尖瓣贅疣物、三尖瓣閉鎖不全）未在各section提及",
+     "reason": "心臟超音波具體發現（二尖瓣贅疣物、三尖瓣閉鎖不全）未在各section提及"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "胸部X光檢查結果未在各section提及",
+     "reason": "胸部X光檢查結果未在各section提及"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病患入住心臟科病房的具體時間（2月2日晚上）未在各section明確記載",
+     "reason": "病患入住心臟科病房的具體時間（2月2日晚上）未在各section明確記載"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "值班醫師開立抗生素治療的事實未在各section提及",
+     "reason": "值班醫師開立抗生素治療的事實未在各section提及"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病危通知單獨作為事實陳述未被明確提及，pred claim 2僅評價病危通知的恰當性而非記載事實本身",
+     "reason": "病危通知單獨作為事實陳述未被明確提及，pred claim 2僅評價病危通知的恰當性而非記載事實本身"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告甲安排腦部斷層檢查的具體事實未單獨明確記載",
+     "reason": "被告甲安排腦部斷層檢查的具體事實未單獨明確記載"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「會診神經內科」的事實雖可從section_02_defense.txt推知，但未明確記載於opinions section",
+     "reason": "「會診神經內科」的事實雖可從section_02_defense.txt推知，但未明確記載於opinions section"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦部電腦斷層具體病灶位置（左側頂枕葉）未在各section提及",
+     "reason": "腦部電腦斷層具體病灶位置（左側頂枕葉）未在各section提及"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "神經內科醫師的診斷和腰椎穿刺建議的細節未在各section明確記載",
+     "reason": "神經內科醫師的診斷和腰椎穿刺建議的細節未在各section明確記載"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "細菌感染性心內膜炎一般療程時長（六星期以上）未在各section提及",
+     "reason": "細菌感染性心內膜炎一般療程時長（六星期以上）未在各section提及"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "患者可能因長期使用海洛因注射而感染的推測未在各section提及",
+     "reason": "患者可能因長期使用海洛因注射而感染的推測未在各section提及"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "首次住院具體診斷（葡萄球菌性菌血症及肺部敗血性栓塞）雖在reasoning section間接提及，於opinions section未明確記載",
+     "reason": "首次住院具體診斷（葡萄球菌性菌血症及肺部敗血性栓塞）雖在reasoning section間接提及，於opinions section未明確記載"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "患者接受不到一星期抗生素治療的具體情況未在各section明確記載",
+     "reason": "患者接受不到一星期抗生素治療的具體情況未在各section明確記載"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病況嚴重程度的評估雖由pred claim 2涵蓋（「警覺病情嚴重性」），但未明確記載病況本身的事實描述",
+     "reason": "病況嚴重程度的評估雖由pred claim 2涵蓋（「警覺病情嚴重性」），但未明確記載病況本身的事實描述"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血紅素具體數值及正常範圍對照未在各section提及",
+     "reason": "血紅素具體數值及正常範圍對照未在各section提及"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "備血通知單目的之說明未在各section提及",
+     "reason": "備血通知單目的之說明未在各section提及"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「病患及家屬拒絕檢查」的事實雖可從section_02_defense.txt推知，於opinions section未明確記載",
+     "reason": "「病患及家屬拒絕檢查」的事實雖可從section_02_defense.txt推知，於opinions section未明確記載"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「2月10日意識改變」的具體日期雖facts section有提及2月10日進行斷層掃描，但意識改變的明確時間點未於opinions section記載",
+     "reason": "「2月10日意識改變」的具體日期雖facts section有提及2月10日進行斷層掃描，但意識改變的明確時間點未於opinions section記載"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "2月10日緊急會診及安排檢查的處置細節未於opinions section明確記載",
+     "reason": "2月10日緊急會診及安排檢查的處置細節未於opinions section明確記載"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "會診神經外科醫師評估手術可能性的細節未於opinions section明確記載",
+     "reason": "會診神經外科醫師評估手術可能性的細節未於opinions section明確記載"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "2月13日嚴重休克狀態的病情變化未於opinions section提及",
+     "reason": "2月13日嚴重休克狀態的病情變化未於opinions section提及"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "升壓劑治療及低血壓情況的醫療細節未於opinions section提及",
+     "reason": "升壓劑治療及低血壓情況的醫療細節未於opinions section提及"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "家屬要求回家細節的描述未於opinions section記載",
+     "reason": "家屬要求回家細節的描述未於opinions section記載"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "2月14日病危自動出院的具體日期未於opinions section明確記載",
+     "reason": "2月14日病危自動出院的具體日期未於opinions section明確記載"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "家屬要求與自訴人所述出入的判斷未於opinions section記載",
+     "reason": "家屬要求與自訴人所述出入的判斷未於opinions section記載"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "法院名稱與具體判決日期屬程序性資訊，section_04_verdict.txt 僅簡短記載判決結果，未提及法院全稱及判決日期，確認維持 missing",
+     "reason": "法院名稱與具體判決日期屬程序性資訊，section_04_verdict.txt 僅簡短記載判決結果，未提及法院全稱及判決日期，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "自訴人是否於法定上訴期間上訴屬程序性事實，遍查全部五個 section 均未提及，確認維持 missing",
+     "reason": "自訴人是否於法定上訴期間上訴屬程序性事實，遍查全部五個 section 均未提及，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態屬程序性資訊，section_04_verdict.txt 僅記載無罪判決，未提及判決是否確定，確認維持 missing",
+     "reason": "判決確定狀態屬程序性資訊，section_04_verdict.txt 僅記載無罪判決，未提及判決是否確定，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "法院採信鑑定報告並認定其與被告辯稱大致相符，係判決無罪之重要理由基礎，reasoning段未明確提及此點",
+     "reason": "法院採信鑑定報告並認定其與被告辯稱大致相符，係判決無罪之重要理由基礎，reasoning段未明確提及此點"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "關於患者不願配戴呼吸器是否構成被告失當之認定，reasoning段未明確提及，僅稱安排呼吸器係基於專業考量",
+     "reason": "關於患者不願配戴呼吸器是否構成被告失當之認定，reasoning段未明確提及，僅稱安排呼吸器係基於專業考量"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 104,
+   "pred_total": 54,
+   "matched": 50,
+   "partial": 8,
+   "missing": 46,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7794,
+  "compression_afg_chars": 1313,
+  "compression_source_chars": 5953,
+  "gt_length_ratio": 0.4631,
+  "gt_length_afg_chars": 1313,
+  "gt_length_gt_chars": 2835,
+  "section_balance": 0.2259
+ }
 }

@@ -12,6 +12,7 @@
   "baseline_gemini-3.1-pro",
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
+  "LENS-Full-DeepSeek_v31_writer_gemma4",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
@@ -117,5 +118,158 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6956,
+  "fact_recall": 0.6098,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7576,
+  "quality_overall": 4.3357,
+  "checklist_pass_rate": 0.9891,
+  "citation_accuracy": 0.5625,
+  "citation_support_score": 0.6,
+  "uncited_rate": 0.083,
+  "faithfulness_combined": {
+   "score": 0.7095,
+   "citation_fidelity": 0.5158,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 11,
+   "correct": 11
+  },
+  "weighted_recall": 0.813,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "全部5個section均未提及『11月30日因胸痛住院』之病史，section_facts僅提及『90年12月4日』進行手術",
+     "reason": "全部5個section均未提及『11月30日因胸痛住院』之病史，section_facts僅提及『90年12月4日』進行手術"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts描述為『醫師甲服務於A醫院，擔任心臟專科醫師』，未明確寫出『心臟外科手術之醫生』此身份描述，屬細微差異",
+     "reason": "section_facts描述為『醫師甲服務於A醫院，擔任心臟專科醫師』，未明確寫出『心臟外科手術之醫生』此身份描述，屬細微差異"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts僅提及『重新打開傷口清除血塊或採急救措施』，未具體描述『拆開部分傷口縫線，以手指直探心包內』之急救方法",
+     "reason": "section_facts僅提及『重新打開傷口清除血塊或採急救措施』，未具體描述『拆開部分傷口縫線，以手指直探心包內』之急救方法"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "全部5個section均未出現『無不能注意之情事』或類似注意能力相關描述",
+     "reason": "全部5個section均未出現『無不能注意之情事』或類似注意能力相關描述"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性說明事實，摘要雖未說明「因簡易判決處刑而無敘明鑑定摘要」，但section_03_opinions已完整呈現鑑定結果內容，不影響案情理解",
+     "reason": "程序性說明事實，摘要雖未說明「因簡易判決處刑而無敘明鑑定摘要」，但section_03_opinions已完整呈現鑑定結果內容，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決日期與法院名稱為重要資訊，summary 中僅提及「A地方法院」，未明確「臺南地方法院」及「93年10月28日」",
+     "reason": "判決日期與法院名稱為重要資訊，summary 中僅提及「A地方法院」，未明確「臺南地方法院」及「93年10月28日」"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "「依其他現存證據，已足認定其犯罪」之證據認定說明未出現於任何 section",
+     "reason": "「依其他現存證據，已足認定其犯罪」之證據認定說明未出現於任何 section"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "合議庭裁定及簡易判決處刑程序為程序性事實，未出現於任何 section",
+     "reason": "合議庭裁定及簡易判決處刑程序為程序性事實，未出現於任何 section"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "上訴狀況為程序性事實，未出現於任何 section",
+     "reason": "上訴狀況為程序性事實，未出現於任何 section"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定情節為程序性事實，未出現於任何 section",
+     "reason": "判決確定情節為程序性事實，未出現於任何 section"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "GT claim 強調『理應注意心臟手術後出血或引起心包填塞係常見之併發症』的醫師注意義務，各 section 雖提及相關概念但未有此完整語義表述，無法判定為完整覆蓋",
+     "reason": "GT claim 強調『理應注意心臟手術後出血或引起心包填塞係常見之併發症』的醫師注意義務，各 section 雖提及相關概念但未有此完整語義表述，無法判定為完整覆蓋"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "GT claim 詳列術後出血時應注意之具體事項（出血是否減少、輸血、引流管血塊堆積等），遍查全部 5 個 section 均未見此等詳細醫療注意義務內容",
+     "reason": "GT claim 詳列術後出血時應注意之具體事項（出血是否減少、輸血、引流管血塊堆積等），遍查全部 5 個 section 均未見此等詳細醫療注意義務內容"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "GT claim 指定『重新打開傷口，清除血塊以解除心包填塞並止血』的急救方法，遍查全部 5 個 section 均未見此具體急救程序描述",
+     "reason": "GT claim 指定『重新打開傷口，清除血塊以解除心包填塞並止血』的急救方法，遍查全部 5 個 section 均未見此具體急救程序描述"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "GT claim 描述危急時拆開傷口縫線、手指探心包等詳細急救程序，遍查全部 5 個 section 均未見此等危急處置細節",
+     "reason": "GT claim 描述危急時拆開傷口縫線、手指探心包等詳細急救程序，遍查全部 5 個 section 均未見此等危急處置細節"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "GT claim 提及『被告無不能注意之情事』，遍查全部 5 個 section 均未提及被告是否有不能注意之情事，屬判決理由中的過失認定要件，但非核心事實",
+     "reason": "GT claim 提及『被告無不能注意之情事』，遍查全部 5 個 section 均未提及被告是否有不能注意之情事，屬判決理由中的過失認定要件，但非核心事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 41,
+   "pred_total": 24,
+   "matched": 24,
+   "partial": 2,
+   "missing": 15,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5487,
+  "compression_afg_chars": 820,
+  "compression_source_chars": 1817,
+  "gt_length_ratio": 0.6472,
+  "gt_length_afg_chars": 820,
+  "gt_length_gt_chars": 1267,
+  "section_balance": 0.4444
+ }
 }
