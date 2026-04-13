@@ -141,6 +141,303 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6002,
-  "fact_recall_avg": null
+  "fact_recall": 0.6667,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8,
+  "quality_overall": 4.7571,
+  "checklist_pass_rate": 1.0,
+  "citation_accuracy": 0.7222,
+  "citation_support_score": 0.824,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.8333,
+   "citation_fidelity": 0.7222,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 17
+  },
+  "weighted_recall": 0.8753,
+  "missing_severity": {
+   "critical": 2,
+   "important": 6,
+   "minor": 28,
+   "details": [
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts.txt 提到「檢察官起訴指出」檢察官指控內容，但未明確陳述「案經檢察官提起公訴」此程序性事實。經確認其他 sections 亦無此程序事實之獨立陳述，確認維持 missing。屬程序性背景事實，不影響案情理解。",
+     "reason": "section_facts.txt 提到「檢察官起訴指出」檢察官指控內容，但未明確陳述「案經檢察官提起公訴」此程序性事實。經確認其他 sections 亦無此程序事實之獨立陳述，確認維持 missing。屬程序性背景事實，不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 中之 pred claim 13 難在檢察官指控語境中提及「應注意該藥物可能引發視力模糊之副作用」，但並非獨立陳述醫學事實，而是作為過失指控之前提。經確認全段無獨立陳述「立剋咳可能引發視力模糊」之醫學事實，確認維持 missing。屬重要醫學事實，影響案情完整理解。",
+     "reason": "section_facts.txt 中之 pred claim 13 難在檢察官指控語境中提及「應注意該藥物可能引發視力模糊之副作用」，但並非獨立陳述醫學事實，而是作為過失指控之前提。經確認全段無獨立陳述「立剋咳可能引發視力模糊」之醫學事實，確認維持 missing。屬重要醫學事實，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 中之 pred claim 14 提及「依結核病診治指引應停止相關藥物」，但此係在檢察官指控語境中作為法律主張出現，非獨立陳述一般性醫療規範。經確認全段無獨立陳述「應立即停止服用該藥物」之醫療指引，確認維持 missing。屬重要醫療規範事實。",
+     "reason": "section_facts.txt 中之 pred claim 14 提及「依結核病診治指引應停止相關藥物」，但此係在檢察官指控語境中作為法律主張出現，非獨立陳述一般性醫療規範。經確認全段無獨立陳述「應立即停止服用該藥物」之醫療指引，確認維持 missing。屬重要醫療規範事實。"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts.txt 僅提及「依結核病診治指引」，未完整引用指引名稱、出版機關（衛生福利部疾病管制署）、版本（第五版）等完整資訊。經確認其他 sections 亦無此完整引用資訊，確認維持 missing。屬引用細節，不影響核心案情理解。",
+     "reason": "section_facts.txt 僅提及「依結核病診治指引」，未完整引用指引名稱、出版機關（衛生福利部疾病管制署）、版本（第五版）等完整資訊。經確認其他 sections 亦無此完整引用資訊，確認維持 missing。屬引用細節，不影響核心案情理解。"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 中之 pred claim 8 提及「病患X於104年1月9日自行至B醫院眼科就診」，但未明確提及「轉由高雄V醫院醫師L診治」之轉診過程與醫師身分。經確認 section_defense/opinions/verdict/reasoning 各段亦無此資訊，確認維持 missing。屬重要轉診事實，影響案情完整理解。",
+     "reason": "section_facts.txt 中之 pred claim 8 提及「病患X於104年1月9日自行至B醫院眼科就診」，但未明確提及「轉由高雄V醫院醫師L診治」之轉診過程與醫師身分。經確認 section_defense/opinions/verdict/reasoning 各段亦無此資訊，確認維持 missing。屬重要轉診事實，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "停用EMB後改採PZA或其他二線藥物之替代療法選項，屬鑑定意見中建議之醫療處置內容，跨 section 搜尋後確認 opinions/facts/defense/reasoning 各段均未提及",
+     "reason": "停用EMB後改採PZA或其他二線藥物之替代療法選項，屬鑑定意見中建議之醫療處置內容，跨 section 搜尋後確認 opinions/facts/defense/reasoning 各段均未提及"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "104年1月7日主訴視力持續惡化之具體日期，facts 段僅提及該日回診並持續開藥，未明確記載『視力持續惡化』之主訴，屬次要細節",
+     "reason": "104年1月7日主訴視力持續惡化之具體日期，facts 段僅提及該日回診並持續開藥，未明確記載『視力持續惡化』之主訴，屬次要細節"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "104年1月28日向高雄V醫院醫師告知診斷之具體溝通事件，跨 section 搜尋僅見停用藥物日期，未見告知行為之描述",
+     "reason": "104年1月28日向高雄V醫院醫師告知診斷之具體溝通事件，跨 section 搜尋僅見停用藥物日期，未見告知行為之描述"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "鑑定機構對被告是否符合醫療常規之具體認定結論，屬 opinions 段核心內容。opinions 段僅記載『如未告知即與醫療常規不符』之條件式陳述，未對被告作出具體認定，遺漏影響過失判斷之鑑定結論",
+     "reason": "鑑定機構對被告是否符合醫療常規之具體認定結論，屬 opinions 段核心內容。opinions 段僅記載『如未告知即與醫療常規不符』之條件式陳述，未對被告作出具體認定，遺漏影響過失判斷之鑑定結論"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "critical",
+     "text": "經逐段查核，section_facts 僅提及檢察官起訴事實，section_defense 僅為被告辯護，section_opinions 僅為鑑定意見，section_verdict 僅述明判決日期與無罪結果，section_reasoning 結尾僅寫「依法諭知被告無罪」，均無提及「檢察官於法定上訴期間未上訴」或「判決確定」之相關內容。此為訴訟程序關鍵節點，影響判決法律效力之完整理解，屬程序性核心事實遺漏。",
+     "reason": "經逐段查核，section_facts 僅提及檢察官起訴事實，section_defense 僅為被告辯護，section_opinions 僅為鑑定意見，section_verdict 僅述明判決日期與無罪結果，section_reasoning 結尾僅寫「依法諭知被告無罪」，均無提及「檢察官於法定上訴期間未上訴」或「判決確定」之相關內容。此為訴訟程序關鍵節點，影響判決法律效力之完整理解，屬程序性核心事實遺漏。"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未明確提及「告訴代理人」此特定主體，僅概括性說明卷內證據",
+     "reason": "section_reasoning未明確提及「告訴代理人」此特定主體，僅概括性說明卷內證據"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning雖提及「信賴專科醫師診斷」，但未完整闡述「容許信賴原則」之法律定義",
+     "reason": "section_reasoning雖提及「信賴專科醫師診斷」，但未完整闡述「容許信賴原則」之法律定義"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未完整闡述信賴原則「行為人之行為並非不法」之法理內涵",
+     "reason": "section_reasoning未完整闡述信賴原則「行為人之行為並非不法」之法理內涵"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「證人G」此特定主體之偵訊證述",
+     "reason": "section_reasoning未提及「證人G」此特定主體之偵訊證述"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「AKuriT-3」藥物名稱及具體停藥前提條件",
+     "reason": "section_reasoning未提及「AKuriT-3」藥物名稱及具體停藥前提條件"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未明確評論鑑定意見「未考慮被告認為病患患有糖尿病或白內障」之缺失",
+     "reason": "section_reasoning未明確評論鑑定意見「未考慮被告認為病患患有糖尿病或白內障」之缺失"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未完整闡述診治指引「僅係供原則性建議參考」之性質",
+     "reason": "section_reasoning未完整闡述診治指引「僅係供原則性建議參考」之性質"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning雖表達允許醫師依個案判斷，但未明確陳述「應容許醫師作出有別於診治指引之診療行為」",
+     "reason": "section_reasoning雖表達允許醫師依個案判斷，但未明確陳述「應容許醫師作出有別於診治指引之診療行為」"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning雖表達難認過失，但未明確闡述「非一概未依指引即認定過失」之原則",
+     "reason": "section_reasoning雖表達難認過失，但未明確闡述「非一概未依指引即認定過失」之原則"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning雖提及病患患有糖尿病及白內障，但未明確總結「病患確實具有特殊情形」",
+     "reason": "section_reasoning雖提及病患患有糖尿病及白內障，但未明確總結「病患確實具有特殊情形」"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning雖記載病患出現視力模糊並診斷為視神經萎縮，但未明確陳述法院認定「傷害與藥物間具有因果關係」此重要事實認定",
+     "reason": "section_reasoning雖記載病患出現視力模糊並診斷為視神經萎縮，但未明確陳述法院認定「傷害與藥物間具有因果關係」此重要事實認定"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning未說明法院認定因果關係之證據基礎係「綜觀全案卷證資料」",
+     "reason": "section_reasoning未說明法院認定因果關係之證據基礎係「綜觀全案卷證資料」"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning雖提及依當時客觀病情、檢查結果為準，但未明確陳述「客觀環境導致誤認」之論點",
+     "reason": "section_reasoning雖提及依當時客觀病情、檢查結果為準，但未明確陳述「客觀環境導致誤認」之論點"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning提及結核性心包膜炎，但未明確提及「心衰竭致命風險」之考量",
+     "reason": "section_reasoning提及結核性心包膜炎，但未明確提及「心衰竭致命風險」之考量"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未說明「事後因果證實與當時判斷不矛盾」之法律推理",
+     "reason": "section_reasoning未說明「事後因果證實與當時判斷不矛盾」之法律推理"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及被告辯稱「結核性心包膜炎已被治癒」",
+     "reason": "section_reasoning未提及被告辯稱「結核性心包膜炎已被治癒」"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「107年2月14日心包膜結核菌病理報告陰性」之檢驗報告",
+     "reason": "section_reasoning未提及「107年2月14日心包膜結核菌病理報告陰性」之檢驗報告"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「刑罰權成立基礎需具備不法及罪責」之法理論述",
+     "reason": "section_reasoning未提及「刑罰權成立基礎需具備不法及罪責」之法理論述"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「不法即指法律所要禁止會造成法益侵害」之定義",
+     "reason": "section_reasoning未提及「不法即指法律所要禁止會造成法益侵害」之定義"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及社會生活互動與法益影響之法理論述",
+     "reason": "section_reasoning未提及社會生活互動與法益影響之法理論述"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「並非舉凡有法益侵害行為均一律為法律所禁止」之原則",
+     "reason": "section_reasoning未提及「並非舉凡有法益侵害行為均一律為法律所禁止」之原則"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「阻卻違法事由」之法理概念",
+     "reason": "section_reasoning未提及「阻卻違法事由」之法理概念"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「具備阻卻違法事由即不具違法性」之論述",
+     "reason": "section_reasoning未提及「具備阻卻違法事由即不具違法性」之論述"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「阻卻違法事由之法益權衡原則」",
+     "reason": "section_reasoning未提及「阻卻違法事由之法益權衡原則」"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning已提及基本事實，但未完整描述「告訴人罹患結核性心包膜炎之背景與求診關係」",
+     "reason": "section_reasoning已提及基本事實，但未完整描述「告訴人罹患結核性心包膜炎之背景與求診關係」"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning及section_defense雖提及治癒結核性心包膜炎，但未明確提及「延長生命」之主張",
+     "reason": "section_reasoning及section_defense雖提及治癒結核性心包膜炎，但未明確提及「延長生命」之主張"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 47,
+   "matched": 77,
+   "partial": 10,
+   "missing": 36,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8179,
+  "compression_afg_chars": 1466,
+  "compression_source_chars": 8051,
+  "gt_length_ratio": 0.3216,
+  "gt_length_afg_chars": 1466,
+  "gt_length_gt_chars": 4559,
+  "section_balance": 0.6232
  }
 }
