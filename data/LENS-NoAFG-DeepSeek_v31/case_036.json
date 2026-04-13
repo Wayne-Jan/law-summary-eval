@@ -42,7 +42,8 @@
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
-  "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C"
+  "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -64,7 +65,8 @@
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
-  "LENS-NoReact-DeepSeek_v31": "開源模型"
+  "LENS-NoReact-DeepSeek_v31": "開源模型",
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
  },
  "sections": [
   {
@@ -127,5 +129,312 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8075,
+  "fact_recall": 0.5722,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7279,
+  "quality_overall": 4.3571,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 0.9524,
+  "citation_support_score": 0.9095,
+  "uncited_rate": 0.022,
+  "faithfulness_combined": {
+   "score": 0.9589,
+   "citation_fidelity": 0.9314,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 17
+  },
+  "weighted_recall": 0.7741,
+  "missing_severity": {
+   "critical": 2,
+   "important": 20,
+   "minor": 15,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT主張被告甲坦承開立Ketoprofen，但section_defense.txt僅記載其辯稱內容，未明確使用『坦承』字樣，且未就醫師開藥行為本身為明確之承認陳述",
+     "reason": "GT主張被告甲坦承開立Ketoprofen，但section_defense.txt僅記載其辯稱內容，未明確使用『坦承』字樣，且未就醫師開藥行為本身為明確之承認陳述"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT主張被告甲『明知』被告乙未具護理人員資格，但section_defense.txt全文未提及被告甲對被告乙資格的主觀認知或『明知』相關內容",
+     "reason": "GT主張被告甲『明知』被告乙未具護理人員資格，但section_defense.txt全文未提及被告甲對被告乙資格的主觀認知或『明知』相關內容"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT主張被告甲『囑由』被告乙施打藥物之主動指示行為，但section_defense.txt僅記載被告甲關於過失與否的辯稱，未提及開立處方後的具體囑託行為",
+     "reason": "GT主張被告甲『囑由』被告乙施打藥物之主動指示行為，但section_defense.txt僅記載被告甲關於過失與否的辯稱，未提及開立處方後的具體囑託行為"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT主張被告乙坦承無護理人員資格，但section_defense.txt僅記載其『表示不爭執』對證據能力之意見，未見其就自身資格為『坦承』之陈述",
+     "reason": "GT主張被告乙坦承無護理人員資格，但section_defense.txt僅記載其『表示不爭執』對證據能力之意見，未見其就自身資格為『坦承』之陈述"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT主張被告乙坦承/陳述其施打Ketoprofen之事實，但section_defense.txt未見被告乙就施打行為本身為任何事實陳述",
+     "reason": "GT主張被告乙坦承/陳述其施打Ketoprofen之事實，但section_defense.txt未見被告乙就施打行為本身為任何事實陳述"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "GT主張被告乙否認業務過失傷害犯行，屬核心辯護立場，但section_defense.txt完全未記載被告乙關於實體犯罪構成要件之主張或否認，僅見證據能力意見",
+     "reason": "GT主張被告乙否認業務過失傷害犯行，屬核心辯護立場，但section_defense.txt完全未記載被告乙關於實體犯罪構成要件之主張或否認，僅見證據能力意見"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT主張被告乙主張『依照處方箋正確施打』之實質抗辯，但section_defense.txt未記載被告乙就施打行為的合法性或正確性為任何辯解",
+     "reason": "GT主張被告乙主張『依照處方箋正確施打』之實質抗辯，但section_defense.txt未記載被告乙就施打行為的合法性或正確性為任何辯解"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "屏東縣醫師公會關於『正當使用』之意見屬協會專業見解，摘要未提及不影響核心案情理解",
+     "reason": "屏東縣醫師公會關於『正當使用』之意見屬協會專業見解，摘要未提及不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "檢察官未上訴之事實屬判決程序性事實，但在全部5個section原文中均未出現",
+     "reason": "檢察官未上訴之事實屬判決程序性事實，但在全部5個section原文中均未出現"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決確定狀態屬判決程序性事實，但在全部5個section原文中均未出現",
+     "reason": "判決確定狀態屬判決程序性事實，但在全部5個section原文中均未出現"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要提及「開立Ketoprofen注射、Dyphyllin」但未明確說明 Dyphylline 適應症為支氣管炎，屬藥物細節遺漏",
+     "reason": "摘要提及「開立Ketoprofen注射、Dyphyllin」但未明確說明 Dyphylline 適應症為支氣管炎，屬藥物細節遺漏"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要說明診斷為「急性支氣管炎」，但未提及 Ketoprofen 原處分目的為治療「頭痛、腰痠背痛」，影響藥物適應症邏輯理解",
+     "reason": "摘要說明診斷為「急性支氣管炎」，但未提及 Ketoprofen 原處分目的為治療「頭痛、腰痠背痛」，影響藥物適應症邏輯理解"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及藥品製造商「安星製藥股份有限公司」，屬細節資訊",
+     "reason": "摘要未提及藥品製造商「安星製藥股份有限公司」，屬細節資訊"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及藥品許可證字號，屬細節資訊",
+     "reason": "摘要未提及藥品許可證字號，屬細節資訊"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及藥品中文品名「克得注射液25公絲／公撮（可多普洛菲）」，屬細節資訊",
+     "reason": "摘要未提及藥品中文品名「克得注射液25公絲／公撮（可多普洛菲）」，屬細節資訊"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及藥品英文品名，屬細節資訊",
+     "reason": "摘要未提及藥品英文品名，屬細節資訊"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要提及被告「開立Ketoprofen」但未明確說明「經行政院衛生署核准」，屬合法性細節",
+     "reason": "摘要提及被告「開立Ketoprofen」但未明確說明「經行政院衛生署核准」，屬合法性細節"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及85年函示發布對象及轉知方式，屬程序細節",
+     "reason": "摘要未提及85年函示發布對象及轉知方式，屬程序細節"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及藥事法第48之1條規定，屬法律依據細節",
+     "reason": "摘要未提及藥事法第48之1條規定，屬法律依據細節"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及藥事法第75條規定，屬法律依據細節",
+     "reason": "摘要未提及藥事法第75條規定，屬法律依據細節"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要雖提「依藥品記載」但未明確表述「標籤仿單經核准故屬可信」，影響法院對仿單效力的認定邏輯",
+     "reason": "摘要雖提「依藥品記載」但未明確表述「標籤仿單經核准故屬可信」，影響法院對仿單效力的認定邏輯"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「標籤仿單依法須附隨於藥品」之法律細節",
+     "reason": "摘要未提及「標籤仿單依法須附隨於藥品」之法律細節"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要雖提「依藥品記載」但未明確表述「遵循仿單記載即無疏失」之判斷標準，影響過失認定的核心法律邏輯",
+     "reason": "摘要雖提「依藥品記載」但未明確表述「遵循仿單記載即無疏失」之判斷標準，影響過失認定的核心法律邏輯"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未明確提及「依藥品記載開立藥物難認不當」之結論性判斷，影響法院對醫療處置適當性的論證呈現",
+     "reason": "摘要未明確提及「依藥品記載開立藥物難認不當」之結論性判斷，影響法院對醫療處置適當性的論證呈現"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未明確提及使用非類固醇消炎止痛劑「須注意過敏症狀」之醫療注意義務，屬用藥後處置關鍵內容",
+     "reason": "摘要未明確提及使用非類固醇消炎止痛劑「須注意過敏症狀」之醫療注意義務，屬用藥後處置關鍵內容"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及臨床得知過敏之方法及「無常規檢查可預測」，影響對過失可預測性的理解",
+     "reason": "摘要未提及臨床得知過敏之方法及「無常規檢查可預測」，影響對過失可預測性的理解"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未明確提及注射後「應注意過敏並即時處理」之醫療注意義務",
+     "reason": "摘要未明確提及注射後「應注意過敏並即時處理」之醫療注意義務"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及被告注射後「細察身體變化」之事實，影響對是否盡注意義務的判斷",
+     "reason": "摘要未提及被告注射後「細察身體變化」之事實，影響對是否盡注意義務的判斷"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及檢察官關於「明知未具護理資格仍指示施打」之主張，遺漏控方論點",
+     "reason": "摘要未提及檢察官關於「明知未具護理資格仍指示施打」之主張，遺漏控方論點"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及護理人員法第37條，屬法律條文細節",
+     "reason": "摘要未提及護理人員法第37條，屬法律條文細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及「護理人員法第37條僅係行政上之管理」之性質認定，影響對違法行為與過失責任區分的理解",
+     "reason": "摘要未提及「護理人員法第37條僅係行政上之管理」之性質認定，影響對違法行為與過失責任區分的理解"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及被告甲「僱用未取得護理人員資格之被告乙」之事實認定",
+     "reason": "摘要未提及被告甲「僱用未取得護理人員資格之被告乙」之事實認定"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及被告違反護理人員法第37條前段之具體法條",
+     "reason": "摘要未提及被告違反護理人員法第37條前段之具體法條"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及「違反護理人員法僅涉行政罰、未涉刑事責任」之性質區分，影響法院對罪貴認定的邏輯",
+     "reason": "摘要未提及「違反護理人員法僅涉行政罰、未涉刑事責任」之性質區分，影響法院對罪貴認定的邏輯"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「移送衛生主管機關裁處」之處理方式",
+     "reason": "摘要未提及「移送衛生主管機關裁處」之處理方式"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "摘要未提及「檢察官證據未達使一般人確信之程度」之證據法則判斷，此乃無罪判決核心論理，遺漏影響判決結論理解",
+     "reason": "摘要未提及「檢察官證據未達使一般人確信之程度」之證據法則判斷，此乃無罪判決核心論理，遺漏影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要雖提「與醫療常規不盡相符」但未明確援引護理人員法第29條，屬法條引用細節",
+     "reason": "摘要雖提「與醫療常規不盡相符」但未明確援引護理人員法第29條，屬法條引用細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 90,
+   "pred_total": 46,
+   "matched": 50,
+   "partial": 3,
+   "missing": 37,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8115,
+  "compression_afg_chars": 1671,
+  "compression_source_chars": 8867,
+  "gt_length_ratio": 0.4404,
+  "gt_length_afg_chars": 1671,
+  "gt_length_gt_chars": 3794,
+  "section_balance": 0.4615
+ }
 }

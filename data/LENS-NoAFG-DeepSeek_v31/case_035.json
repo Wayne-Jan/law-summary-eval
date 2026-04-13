@@ -42,7 +42,8 @@
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
-  "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C"
+  "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -64,7 +65,8 @@
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
-  "LENS-NoReact-DeepSeek_v31": "開源模型"
+  "LENS-NoReact-DeepSeek_v31": "開源模型",
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
  },
  "sections": [
   {
@@ -120,6 +122,150 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.9035
+  "rule_based_avg": 0.9035,
+  "fact_recall": 0.8384,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9121,
+  "quality_overall": 4.6286,
+  "checklist_pass_rate": 0.9568,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.971,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 25
+  },
+  "weighted_recall": 0.9394,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "GT claim 描述「產後突然呼吸困難」，但 facts section 明確記載症狀始於「隔日晚上9時許」（產後約1.5天），並非產後立即發生。pred claims 正確記載時間線（claim 3-4 描述12月19日晚間症狀），此為 GT 描述不精確，非關鍵事實遺漏",
+     "reason": "GT claim 描述「產後突然呼吸困難」，但 facts section 明確記載症狀始於「隔日晚上9時許」（產後約1.5天），並非產後立即發生。pred claims 正確記載時間線（claim 3-4 描述12月19日晚間症狀），此為 GT 描述不精確，非關鍵事實遺漏"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「無不能注意之情事」為過失責任判斷之法律要件用語，經查全部5個 section 原文均未出現此精確表述，facts section 僅記載檢察官主張疏未注意之情事（未出現「均無不能注意」之表述），summary 未提及此抗辯要件",
+     "reason": "「無不能注意之情事」為過失責任判斷之法律要件用語，經查全部5個 section 原文均未出現此精確表述，facts section 僅記載檢察官主張疏未注意之情事（未出現「均無不能注意」之表述），summary 未提及此抗辯要件"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告開業18年及首次處理羊水栓塞之經驗背景，於全部5個 section 原文中均未提及，屬背景性事實不影響案情法律判斷",
+     "reason": "被告開業18年及首次處理羊水栓塞之經驗背景，於全部5個 section 原文中均未提及，屬背景性事實不影響案情法律判斷"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢察官上訴情況為程序性背景事實，非判決主文核心內容，且全部5個section均未提及此資訊",
+     "reason": "檢察官上訴情況為程序性背景事實，非判決主文核心內容，且全部5個section均未提及此資訊"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "產婦T產後初期症狀為鑑定羊水栓塞之關鍵時間點，屬影響案情完整理解之重要事實",
+     "reason": "產婦T產後初期症狀為鑑定羊水栓塞之關鍵時間點，屬影響案情完整理解之重要事實"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "供氧設備放置位置涉及注意義務判斷，屬影響案情完整理解之重要事實",
+     "reason": "供氧設備放置位置涉及注意義務判斷，屬影響案情完整理解之重要事實"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告身份描述（負責人兼院長）為背景性事實",
+     "reason": "被告身份描述（負責人兼院長）為背景性事實"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "D醫院與A醫院距離比較為法院論證細節",
+     "reason": "D醫院與A醫院距離比較為法院論證細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "轉診時間已於 section_reasoning 記載，交通狀況論證屬法院細節推論",
+     "reason": "轉診時間已於 section_reasoning 記載，交通狀況論證屬法院細節推論"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "D醫院醫療技術聲譽為法院論證細節",
+     "reason": "D醫院醫療技術聲譽為法院論證細節"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院函請鑑定之程序性事實",
+     "reason": "法院函請鑑定之程序性事實"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "臺北榮總及臺大醫院函文引用為論證細節，摘要已引用醫事審議委員會及法醫研究所鑑定意見",
+     "reason": "臺北榮總及臺大醫院函文引用為論證細節，摘要已引用醫事審議委員會及法醫研究所鑑定意見"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「延誤輸血」為引用之判決例內容，非本案事實",
+     "reason": "「延誤輸血」為引用之判決例內容，非本案事實"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「檢察官未提出其他積極證據」為無罪判決之重要理由，影響判決結論理解",
+     "reason": "「檢察官未提出其他積極證據」為無罪判決之重要理由，影響判決結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 99,
+   "pred_total": 54,
+   "matched": 81,
+   "partial": 4,
+   "missing": 14,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.547,
+  "compression_afg_chars": 2309,
+  "compression_source_chars": 5097,
+  "gt_length_ratio": 0.5943,
+  "gt_length_afg_chars": 2309,
+  "gt_length_gt_chars": 3885,
+  "section_balance": 0.7143
  }
 }
