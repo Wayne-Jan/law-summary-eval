@@ -92,7 +92,6 @@ EXCLUDED_CONDITIONS = {
     "opensource_afg_v11_5_writer_nemotron_super",
     "opensource_afg_v11_5_no_react_writer_nemotron_super",
     "opensource_afg_v11_5_no_afg_writer_nemotron_super",
-    "LENS-Full-DeepSeek_v31_writer_gemma4",
     "baseline_ollama_cogito-2.1-671b-cloud",
     "baseline_ollama_qwen3-next-80b-cloud",
     "baseline_ollama_nemotron-3-super-cloud",
@@ -120,6 +119,7 @@ CONDITION_LABELS = {
     "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
     "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
     "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
+    "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
 }
 
 # Display order: LENS-Haiku → 商用 baseline → LENS-DeepSeek → 開源 baseline
@@ -136,6 +136,7 @@ CONDITION_ORDER = [
     "LENS-Full-DeepSeek_v31",
     "LENS-NoAFG-DeepSeek_v31",
     "LENS-NoReact-DeepSeek_v31",
+    "LENS-Full-DeepSeek_v31_writer_gemma4",
     "baseline_ollama_deepseek-v3.1-671b-cloud",
     "baseline_ollama_glm-5-cloud",
     "baseline_ollama_gpt-oss-120b-cloud",
@@ -167,6 +168,7 @@ CONDITION_GROUPS = {
     "LENS-Full-DeepSeek_v31": "開源模型",
     "LENS-NoAFG-DeepSeek_v31": "開源模型",
     "LENS-NoReact-DeepSeek_v31": "開源模型",
+    "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
 }
 
 SECTION_FILES = [

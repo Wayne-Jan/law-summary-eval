@@ -109,6 +109,7 @@ CANONICAL_PRIORITY = {
     "LENS-Full-DeepSeek_v31": 20,
     "LENS-NoAFG-DeepSeek_v31": 21,
     "LENS-NoReact-DeepSeek_v31": 22,
+    "LENS-Full-DeepSeek_v31_writer_gemma4": 23,
 }
 
 
