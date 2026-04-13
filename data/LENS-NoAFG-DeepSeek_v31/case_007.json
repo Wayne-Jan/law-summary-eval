@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -131,5 +132,200 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8586,
+  "fact_recall": 0.775,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8732,
+  "quality_overall": 4.9143,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9833,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 27,
+   "correct": 27
+  },
+  "weighted_recall": 0.9267,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 20,
+   "details": [
+    {
+     "gt_claim_id": 19,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "生成摘要僅提及「並無任何疏於注意之處」(事實性辯稱無疏失)，未明確對應「矢口否認其有業務上之過失」(概括性否認罪名)的表述，屬重要辯護立場差異",
+     "reason": "生成摘要僅提及「並無任何疏於注意之處」(事實性辯稱無疏失)，未明確對應「矢口否認其有業務上之過失」(概括性否認罪名)的表述，屬重要辯護立場差異"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred claim 1 僅提及「即使馬上送到醫學中心也很難救治，死亡率很高」，缺少「用外科、內科治療也不容易治療」之具體治療方式描述，屬細節性遺漏",
+     "reason": "pred claim 1 僅提及「即使馬上送到醫學中心也很難救治，死亡率很高」，缺少「用外科、內科治療也不容易治療」之具體治療方式描述，屬細節性遺漏"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 提及「兩次鑑定」，雖未明確「二份書函」文件形式，但核心資訊已傳達，屬表達方式差異",
+     "reason": "opinions section 提及「兩次鑑定」，雖未明確「二份書函」文件形式，但核心資訊已傳達，屬表達方式差異"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "L醫院電腦斷層檢查詳情屬鑑定意見背後之醫學依據，opinions section 專注呈現鑑定結論而非完整病歷細節",
+     "reason": "L醫院電腦斷層檢查詳情屬鑑定意見背後之醫學依據，opinions section 專注呈現鑑定結論而非完整病歷細節"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦室變小腦溝消失為影像學細節，屬鑑定背後之醫學發現，opinions section 簡化呈現為合理摘要取捨",
+     "reason": "腦室變小腦溝消失為影像學細節，屬鑑定背後之醫學發現，opinions section 簡化呈現為合理摘要取捨"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "廣泛性蜘蛛網膜下腔出血為影像學細節，opinions section 以「兩次鑑定」概括呈現",
+     "reason": "廣泛性蜘蛛網膜下腔出血為影像學細節，opinions section 以「兩次鑑定」概括呈現"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦室內出血為影像學細節，opinions section 未提及屬合理摘要範圍",
+     "reason": "腦室內出血為影像學細節，opinions section 未提及屬合理摘要範圍"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "大腦鐮部位蜘蛛網膜下腔出血為影像學細節，opinions section 未提及",
+     "reason": "大腦鐮部位蜘蛛網膜下腔出血為影像學細節，opinions section 未提及"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "嚴重腦病變之綜合判斷雖未在 opinions section 明述，但 section_reasoning 有完整內容",
+     "reason": "嚴重腦病變之綜合判斷雖未在 opinions section 明述，但 section_reasoning 有完整內容"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病患初到院昏迷指數14分屬事實背景，section_reasoning 已完整記載，opinions section 專注鑑定意見無需重複",
+     "reason": "病患初到院昏迷指數14分屬事實背景，section_reasoning 已完整記載，opinions section 專注鑑定意見無需重複"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "初步處置及留院觀察為事實背景，section_facts 已有記載",
+     "reason": "初步處置及留院觀察為事實背景，section_facts 已有記載"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "護士檢測及E1M1V1詳情屬觀察細節，section_reasoning 有記載「昏迷指數降為3分」核心資訊已涵蓋",
+     "reason": "護士檢測及E1M1V1詳情屬觀察細節，section_reasoning 有記載「昏迷指數降為3分」核心資訊已涵蓋"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "對疼痛刺激無反應為病情觀察細節，section_facts 有記載此項",
+     "reason": "對疼痛刺激無反應為病情觀察細節，section_facts 有記載此項"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "瞳孔大小由2.5毫米變為3.5毫米，pred claim 5 已提及，此 GT claim 為單獨事實陳述，opinions section 概括呈現",
+     "reason": "瞳孔大小由2.5毫米變為3.5毫米，pred claim 5 已提及，此 GT claim 為單獨事實陳述，opinions section 概括呈現"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓心跳數據屬生命徵象細節，section_reasoning 已完整記載",
+     "reason": "血壓心跳數據屬生命徵象細節，section_reasoning 已完整記載"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "死因細節屬驗斷結果，section_reasoning 有提及「廣泛性腦病變」為死因",
+     "reason": "死因細節屬驗斷結果，section_reasoning 有提及「廣泛性腦病變」為死因"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "L醫院診斷證明屬程序性文件",
+     "reason": "L醫院診斷證明屬程序性文件"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢察官相驗程序屬程序性事實",
+     "reason": "檢察官相驗程序屬程序性事實"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "勘驗筆錄等程序文件屬程序性事實",
+     "reason": "勘驗筆錄等程序文件屬程序性事實"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "經掃描 section_01_facts.txt、section_02_defense.txt、section_03_opinions.txt、section_04_verdict.txt、section_05_reasoning.txt，均未提及『被告、檢察官於法定上訴期間未上訴』之程序事實，摘要確實未涵蓋此資訊",
+     "reason": "經掃描 section_01_facts.txt、section_02_defense.txt、section_03_opinions.txt、section_04_verdict.txt、section_05_reasoning.txt，均未提及『被告、檢察官於法定上訴期間未上訴』之程序事實，摘要確實未涵蓋此資訊"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未提及『本案判決即確定』之程序狀態，摘要確實未涵蓋此資訊",
+     "reason": "經掃描全部 5 個 section 原文，均未提及『本案判決即確定』之程序狀態，摘要確實未涵蓋此資訊"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 100,
+   "pred_total": 76,
+   "matched": 76,
+   "partial": 3,
+   "missing": 21,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5534,
+  "compression_afg_chars": 2871,
+  "compression_source_chars": 6429,
+  "gt_length_ratio": 0.6482,
+  "gt_length_afg_chars": 2871,
+  "gt_length_gt_chars": 4429,
+  "section_balance": 0.2917
+ }
 }

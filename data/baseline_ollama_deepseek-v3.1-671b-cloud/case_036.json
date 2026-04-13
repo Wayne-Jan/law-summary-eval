@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -127,5 +128,340 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.797,
+  "fact_recall": 0.5333,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6957,
+  "quality_overall": 4.1,
+  "checklist_pass_rate": 0.8967,
+  "citation_accuracy": 0.8571,
+  "citation_support_score": 0.8786,
+  "uncited_rate": 0.077,
+  "faithfulness_combined": {
+   "score": 0.8747,
+   "citation_fidelity": 0.7911,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 21,
+   "correct": 21
+  },
+  "weighted_recall": 0.7407,
+  "missing_severity": {
+   "critical": 6,
+   "important": 17,
+   "minor": 18,
+   "details": [
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全數五個章節均僅提及被告甲明知被告乙無護理人員資格，未明確表述被告乙自己坦承無護理人員資格",
+     "reason": "全數五個章節均僅提及被告甲明知被告乙無護理人員資格，未明確表述被告乙自己坦承無護理人員資格"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt僅提及被告甲矢口否認過失犯行，未提及被告乙否認業務過失傷害犯行之立場",
+     "reason": "section_02_defense.txt僅提及被告甲矢口否認過失犯行，未提及被告乙否認業務過失傷害犯行之立場"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查五個章節，摘要僅陳述被告甲之辯護理由，未提及被告乙主張依照處方箋正確施打藥劑之具體辯詞",
+     "reason": "遍查五個章節，摘要僅陳述被告甲之辯護理由，未提及被告乙主張依照處方箋正確施打藥劑之具體辯詞"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查全部5個section原文，均未發現屏東縣醫師公會關於『醫師依合法藥物使用方法開立處方即符合正當使用該藥物』之法律原則主張。僅section_03_opinions記載行政院衛生署醫事審議委員會鑑定意見，係鑑定意見中另一機構之意見遺漏。",
+     "reason": "遍查全部5個section原文，均未發現屏東縣醫師公會關於『醫師依合法藥物使用方法開立處方即符合正當使用該藥物』之法律原則主張。僅section_03_opinions記載行政院衛生署醫事審議委員會鑑定意見，係鑑定意見中另一機構之意見遺漏。"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查 sections/facts/defense/opinions/verdict/reasoning 全部5個 section 原文，均未提及「檢察官於法定上訴期間未上訴」此程序性事實，屬判決後行政程序資訊，不影響案情理解",
+     "reason": "遍查 sections/facts/defense/opinions/verdict/reasoning 全部5個 section 原文，均未提及「檢察官於法定上訴期間未上訴」此程序性事實，屬判決後行政程序資訊，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查全部5個 section 原文，均未提及「本案判決即確定」之判決確定狀態，屬程序性結尾資訊，非判決主文核心內容",
+     "reason": "遍查全部5個 section 原文，均未提及「本案判決即確定」之判決確定狀態，屬程序性結尾資訊，非判決主文核心內容"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現「告訴人以證人身分於本院審理中證述屬實」之相關記載，屬程序性事實",
+     "reason": "經掃描全部 5 個 section 原文，均未發現「告訴人以證人身分於本院審理中證述屬實」之相關記載，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現 Ketoprofen 係為治療頭痛、腰痠背痛等疼痛症狀而處分之記載；摘要僅提及急性支氣管炎之診斷",
+     "reason": "經掃描全部 5 個 section 原文，均未發現 Ketoprofen 係為治療頭痛、腰痠背痛等疼痛症狀而處分之記載；摘要僅提及急性支氣管炎之診斷"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現藥品製造商（安星製藥股份有限公司）之記載，屬背景性資訊",
+     "reason": "經掃描全部 5 個 section 原文，均未發現藥品製造商（安星製藥股份有限公司）之記載，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現藥品許可證字號之記載，屬背景性資訊",
+     "reason": "經掃描全部 5 個 section 原文，均未發現藥品許可證字號之記載，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現克得注射液完整中文品名之記載，屬背景性資訊",
+     "reason": "經掃描全部 5 個 section 原文，均未發現克得注射液完整中文品名之記載，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現克得注射液英文品名之記載，屬背景性資訊",
+     "reason": "經掃描全部 5 個 section 原文，均未發現克得注射液英文品名之記載，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現克得注射液完整許可證適應症列表之記載，屬背景性資訊",
+     "reason": "經掃描全部 5 個 section 原文，均未發現克得注射液完整許可證適應症列表之記載，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未明確提及含 Ketoprofen 之克得注射液係經核准之合法藥物之記載",
+     "reason": "經掃描全部 5 個 section 原文，均未明確提及含 Ketoprofen 之克得注射液係經核准之合法藥物之記載"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現告訴人病狀符合藥品適應症之記載；法院僅論述醫師診療行為無不當，未肯定病狀符合適應症",
+     "reason": "經掃描全部 5 個 section 原文，均未發現告訴人病狀符合藥品適應症之記載；法院僅論述醫師診療行為無不當，未肯定病狀符合適應症"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現 85 年函示發布對象及轉知方式之記載，屬程序性背景",
+     "reason": "經掃描全部 5 個 section 原文，均未發現 85 年函示發布對象及轉知方式之記載，屬程序性背景"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現 85 年函示通知方式細節之記載，屬程序性背景",
+     "reason": "經掃描全部 5 個 section 原文，均未發現 85 年函示通知方式細節之記載，屬程序性背景"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現藥事法第 48 之 1 條標示規定之記載，影響法律論證完整性",
+     "reason": "經掃描全部 5 個 section 原文，均未發現藥事法第 48 之 1 條標示規定之記載，影響法律論證完整性"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現藥事法第 75 條核准刊載規定之記載，影響法律論證完整性",
+     "reason": "經掃描全部 5 個 section 原文，均未發現藥事法第 75 條核准刊載規定之記載，影響法律論證完整性"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現藥品記載經核准故屬可信之法律推論記載",
+     "reason": "經掃描全部 5 個 section 原文，均未發現藥品記載經核准故屬可信之法律推論記載"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現標籤仿單應附隨藥品且醫療人員應周知之記載",
+     "reason": "經掃描全部 5 個 section 原文，均未發現標籤仿單應附隨藥品且醫療人員應周知之記載"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現遵循藥品記載用藥即可認定無疏失之法律標準記載",
+     "reason": "經掃描全部 5 個 section 原文，均未發現遵循藥品記載用藥即可認定無疏失之法律標準記載"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，section_05_reasoning.txt 雖記載「治療均應無不當」但係基於「當時之客觀病徵」而非「依藥品記載」，GT claim 所述依據基礎不同",
+     "reason": "經掃描全部 5 個 section 原文，section_05_reasoning.txt 雖記載「治療均應無不當」但係基於「當時之客觀病徵」而非「依藥品記載」，GT claim 所述依據基礎不同"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現藥物過敏為後天發展病態之說明，影響過敏可預測性之理解",
+     "reason": "經掃描全部 5 個 section 原文，均未發現藥物過敏為後天發展病態之說明，影響過敏可預測性之理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，section_05_reasoning.txt 雖提及「既已於95年9月18日...注射Ketoprofen且無不良反應」之用藥史，但未完整說明藥物過敏之三種可能發生模式",
+     "reason": "經掃描全部 5 個 section 原文，section_05_reasoning.txt 雖提及「既已於95年9月18日...注射Ketoprofen且無不良反應」之用藥史，但未完整說明藥物過敏之三種可能發生模式"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現使用非類固醇消炎止痛劑須注意過敏症狀之一般性醫療注意事項記載",
+     "reason": "經掃描全部 5 個 section 原文，均未發現使用非類固醇消炎止痛劑須注意過敏症狀之一般性醫療注意事項記載"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現臨床上無常規檢查可預測過敏之記載，影響對醫師注意義務界限之理解",
+     "reason": "經掃描全部 5 個 section 原文，均未發現臨床上無常規檢查可預測過敏之記載，影響對醫師注意義務界限之理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section 原文，均未發現即使過去不過敏仍可能發生休克之記載；此為影響過失可預見性之關鍵醫學事實",
+     "reason": "經掃描全部 5 個 section 原文，均未發現即使過去不過敏仍可能發生休克之記載；此為影響過失可預見性之關鍵醫學事實"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現注射後應注意過敏並即時處理之一般性醫療規範記載",
+     "reason": "經掃描全部 5 個 section 原文，均未發現注射後應注意過敏並即時處理之一般性醫療規範記載"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，均未發現被告注射後細察身體變化之事實記載",
+     "reason": "經掃描全部 5 個 section 原文，均未發現被告注射後細察身體變化之事實記載"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現護理人員法第 37 條行政罰鍰規定之記載",
+     "reason": "經掃描全部 5 個 section 原文，均未發現護理人員法第 37 條行政罰鍰規定之記載"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section 原文，均未發現護理人員法第 37 條僅為行政管理非謂醫療行為均有過失之關鍵法律論理；此為無罪判決核心論據之一",
+     "reason": "經掃描全部 5 個 section 原文，均未發現護理人員法第 37 條僅為行政管理非謂醫療行為均有過失之關鍵法律論理；此為無罪判決核心論據之一"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section 原文，均未發現傷害肇因於體質上無法預測之過敏之因果關係論述；此為過失是否成立之關鍵",
+     "reason": "經掃描全部 5 個 section 原文，均未發現傷害肇因於體質上無法預測之過敏之因果關係論述；此為過失是否成立之關鍵"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section 原文，均未發現由具護理資格者注射亦無法避免過敏之因果關係論述；此為否定因果關係之關鍵論據",
+     "reason": "經掃描全部 5 個 section 原文，均未發現由具護理資格者注射亦無法避免過敏之因果關係論述；此為否定因果關係之關鍵論據"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section 原文，均未發現難認傷害與指示無資格者注射間有因果關係之結論性論述；此為無罪判決之核心法律推理",
+     "reason": "經掃描全部 5 個 section 原文，均未發現難認傷害與指示無資格者注射間有因果關係之結論性論述；此為無罪判決之核心法律推理"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "雖 section_01_facts.txt 記載被告僱用無資格者之事實，但 section_05_reasoning.txt 未明確記載「違反護理人員法第 37 條前段規定」之法律定性",
+     "reason": "雖 section_01_facts.txt 記載被告僱用無資格者之事實，但 section_05_reasoning.txt 未明確記載「違反護理人員法第 37 條前段規定」之法律定性"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "經掃描全部 5 個 section 原文，均未發現「違反護理人員法僅違反行政罰，未涉刑事責任」之關鍵法律結論；此為無罪判決之核心論據",
+     "reason": "經掃描全部 5 個 section 原文，均未發現「違反護理人員法僅違反行政罰，未涉刑事責任」之關鍵法律結論；此為無罪判決之核心論據"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section 原文，均未發現應移送衛生主管機關裁處之記載，影響法律責任後果之完整性",
+     "reason": "經掃描全部 5 個 section 原文，均未發現應移送衛生主管機關裁處之記載，影響法律責任後果之完整性"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "跨 section 檢查後，五個 section 均未明確提及「明知無護理資格與傷害間因果關係」之論述，屬辯護要點遺漏",
+     "reason": "跨 section 檢查後，五個 section 均未明確提及「明知無護理資格與傷害間因果關係」之論述，屬辯護要點遺漏"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 僅提及「查無其他積極證據」，未使用「使通常一般人不致有所懷疑而得確信其為真實之程度」之刑事訴訟法確信標準術語",
+     "reason": "section_05_reasoning.txt 僅提及「查無其他積極證據」，未使用「使通常一般人不致有所懷疑而得確信其為真實之程度」之刑事訴訟法確信標準術語"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及護理人員法第29條或容留無資格者執行護理業務之行政違規論述，屬背景性法條引用",
+     "reason": "section_05_reasoning.txt 未提及護理人員法第29條或容留無資格者執行護理業務之行政違規論述，屬背景性法條引用"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 90,
+   "pred_total": 39,
+   "matched": 47,
+   "partial": 2,
+   "missing": 41,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8623,
+  "compression_afg_chars": 1221,
+  "compression_source_chars": 8867,
+  "gt_length_ratio": 0.3218,
+  "gt_length_afg_chars": 1221,
+  "gt_length_gt_chars": 3794,
+  "section_balance": 0.3269
+ }
 }

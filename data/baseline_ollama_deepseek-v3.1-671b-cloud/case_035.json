@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -119,5 +120,249 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.72,
+  "fact_recall": 0.6667,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8,
+  "quality_overall": 4.8857,
+  "checklist_pass_rate": 0.9784,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9217,
+  "uncited_rate": 0.25,
+  "faithfulness_combined": {
+   "score": 0.85,
+   "citation_fidelity": 0.75,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.8586,
+  "missing_severity": {
+   "critical": 1,
+   "important": 12,
+   "minor": 15,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「產後突然呼吸困難、嚴重缺氧」為案件關鍵時間點（產後立即發生 vs. 12/19晚間發生），直接影響羊水栓塞發病時間的認定。遍查 5 個 section 均未見「產後突然」之時間描述，僅見 12/19 及 12/20 之症狀記載，與 GT 所述產後立即發病的時間軸不符，屬重要事實遺漏。",
+     "reason": "「產後突然呼吸困難、嚴重缺氧」為案件關鍵時間點（產後立即發生 vs. 12/19晚間發生），直接影響羊水栓塞發病時間的認定。遍查 5 個 section 均未見「產後突然」之時間描述，僅見 12/19 及 12/20 之症狀記載，與 GT 所述產後立即發病的時間軸不符，屬重要事實遺漏。"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "羊水栓塞之詳細醫學知識（心跳變慢、心肺功能衰竭、中樞神經缺氧、神智不清、昏迷等）屬背景性醫學說明，非案件特定事實。section_reasoning 僅簡述「羊水栓塞係無法預防之產科急症」，已足夠理解判決理由，詳細症狀描述之缺失不影響案情理解。",
+     "reason": "羊水栓塞之詳細醫學知識（心跳變慢、心肺功能衰竭、中樞神經缺氧、神智不清、昏迷等）屬背景性醫學說明，非案件特定事實。section_reasoning 僅簡述「羊水栓塞係無法預防之產科急症」，已足夠理解判決理由，詳細症狀描述之缺失不影響案情理解。"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「腦部電腦斷層檢查顯示HIE」為醫療診斷證據，雖 summary 已提及「缺氧性腦病變」為死因，但缺少「腦部電腦斷層檢查」此診斷依據，影響對醫療處置及死因認定之完整理解。遍查 5 個 section 均未見此檢查項目。",
+     "reason": "「腦部電腦斷層檢查顯示HIE」為醫療診斷證據，雖 summary 已提及「缺氧性腦病變」為死因，但缺少「腦部電腦斷層檢查」此診斷依據，影響對醫療處置及死因認定之完整理解。遍查 5 個 section 均未見此檢查項目。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全5個 section 均未明確提及「產後突然呼吸困難、嚴重缺氧」之具體症狀描述，僅有「產後出現之症狀」之概括性表述",
+     "reason": "全5個 section 均未明確提及「產後突然呼吸困難、嚴重缺氧」之具體症狀描述，僅有「產後出現之症狀」之概括性表述"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全5個 section 均未提及病患位於一樓病床之位置資訊",
+     "reason": "全5個 section 均未提及病患位於一樓病床之位置資訊"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及被告認為羊水栓塞需「大的醫療團隊支援」之見解，僅提及爭取轉診時間",
+     "reason": "全文未提及被告認為羊水栓塞需「大的醫療團隊支援」之見解，僅提及爭取轉診時間"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及「已聯絡119」之事實，僅提及「救護車即將抵達」",
+     "reason": "全文未提及「已聯絡119」之事實，僅提及「救護車即將抵達」"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及119位置「民生橋下」或與診所相距「100公尺」之具體資訊",
+     "reason": "全文未提及119位置「民生橋下」或與診所相距「100公尺」之具體資訊"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及被告「開業18年」或「首次處理羊水栓塞案例」之背景資訊",
+     "reason": "全文未提及被告「開業18年」或「首次處理羊水栓塞案例」之背景資訊"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及轉診D醫院之決策者資訊",
+     "reason": "全文未提及轉診D醫院之決策者資訊"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及被告對D醫院醫療品質「比較頂尖」之評價",
+     "reason": "全文未提及被告對D醫院醫療品質「比較頂尖」之評價"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及醫審會鑑定意見，但未提及被告對鑑定結果之異議內容",
+     "reason": "section_03_opinions.txt 雖提及醫審會鑑定意見，但未提及被告對鑑定結果之異議內容"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「意識不清」部分確實未在 opinions 或其他 section 原文中出現，僅提及「焦躁不安」",
+     "reason": "「意識不清」部分確實未在 opinions 或其他 section 原文中出現，僅提及「焦躁不安」"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖有「其他疾病亦可能有類似症狀」，但未具體提及「妊娠毒血症、急性肺水腫」等鑑別診斷例子",
+     "reason": "雖有「其他疾病亦可能有類似症狀」，但未具體提及「妊娠毒血症、急性肺水腫」等鑑別診斷例子"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「血液內疑有瀰漫性血管內溶血症的表現」此關鍵病理表現未在 opinions section 明確提及，僅提到「呼吸急促」",
+     "reason": "「血液內疑有瀰漫性血管內溶血症的表現」此關鍵病理表現未在 opinions section 明確提及，僅提到「呼吸急促」"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "交叉檢視全部5個section原文（facts、defense、opinions、verdict、reasoning），均未提及檢察官是否於法定上訴期間提起上訴，確認摘要確實未涵蓋此程序性事實",
+     "reason": "交叉檢視全部5個section原文（facts、defense、opinions、verdict、reasoning），均未提及檢察官是否於法定上訴期間提起上訴，確認摘要確實未涵蓋此程序性事實"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "交叉檢視全部5個section原文，僅verdict段簡短提及「諭知被告甲無罪」，未提及「本案判決確定」之判決效力狀態，確認摘要遺漏此項判決最終狀態",
+     "reason": "交叉檢視全部5個section原文，僅verdict段簡短提及「諭知被告甲無罪」，未提及「本案判決確定」之判決效力狀態，確認摘要遺漏此項判決最終狀態"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 確實未提及被告關於供氧設備置於地下室的辯護理由",
+     "reason": "section_05_reasoning.txt 確實未提及被告關於供氧設備置於地下室的辯護理由"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及Q診所供氧設備放置位置不當的問題",
+     "reason": "section_05_reasoning.txt 未提及Q診所供氧設備放置位置不當的問題"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及被告作為Q診所負責人兼院長的身份",
+     "reason": "section_05_reasoning.txt 未提及被告作為Q診所負責人兼院長的身份"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及檢察官關於轉診至A醫院或D醫院、以計程車轉診等疏失主張",
+     "reason": "section_05_reasoning.txt 未提及檢察官關於轉診至A醫院或D醫院、以計程車轉診等疏失主張"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及D醫院與Q診所的距離比較",
+     "reason": "section_05_reasoning.txt 未提及D醫院與Q診所的距離比較"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及凌晨4時許轉診的交通時間條件",
+     "reason": "section_05_reasoning.txt 未提及凌晨4時許轉診的交通時間條件"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及被告選擇D醫院的判斷理由（醫療技術較受推崇）",
+     "reason": "section_05_reasoning.txt 未提及被告選擇D醫院的判斷理由（醫療技術較受推崇）"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及以計程車而非救護車轉診的細節",
+     "reason": "section_05_reasoning.txt 未提及以計程車而非救護車轉診的細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及被告曾聯絡救護車但遲遲不至的辯護",
+     "reason": "section_05_reasoning.txt 未提及被告曾聯絡救護車但遲遲不至的辯護"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未詳細說明症狀可能為妊娠毒血症、急性肺水腫等其他疾病",
+     "reason": "section_05_reasoning.txt 未詳細說明症狀可能為妊娠毒血症、急性肺水腫等其他疾病"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及「瀰漫性血管內溶血症」及未經解剖無法判定羊水栓塞等細節",
+     "reason": "section_05_reasoning.txt 未提及「瀰漫性血管內溶血症」及未經解剖無法判定羊水栓塞等細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 99,
+   "pred_total": 48,
+   "matched": 61,
+   "partial": 10,
+   "missing": 28,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7636,
+  "compression_afg_chars": 1205,
+  "compression_source_chars": 5097,
+  "gt_length_ratio": 0.3102,
+  "gt_length_afg_chars": 1205,
+  "gt_length_gt_chars": 3885,
+  "section_balance": 0.5652
+ }
 }

@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -127,5 +128,74 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.9076,
+  "fact_recall": 0.8125,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8966,
+  "quality_overall": 4.8571,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.6364,
+  "citation_support_score": 0.6417,
+  "uncited_rate": 0.043,
+  "faithfulness_combined": {
+   "score": 0.7654,
+   "citation_fidelity": 0.609,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 6,
+   "correct": 6
+  },
+  "weighted_recall": 0.9306,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 1,
+   "details": [
+    {
+     "gt_claim_id": 17,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（被告、檢察官未於法定上訴期間上訴），確實未在 verdict section 及其他 section 提及，不影響案情主體理解",
+     "reason": "程序性事實（被告、檢察官未於法定上訴期間上訴），確實未在 verdict section 及其他 section 提及，不影響案情主體理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決確定狀態影響判決法律效力理解，經檢視全部 5 個 section 均未明確提及判決已確定，維持 missing",
+     "reason": "判決確定狀態影響判決法律效力理解，經檢視全部 5 個 section 均未明確提及判決已確定，維持 missing"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院認定被告存有過失，但未明確提及「查無不能注意之具體情事」此否定性法律認定，屬過失認定的重要論證基礎",
+     "reason": "法院認定被告存有過失，但未明確提及「查無不能注意之具體情事」此否定性法律認定，屬過失認定的重要論證基礎"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 24,
+   "pred_total": 23,
+   "matched": 18,
+   "partial": 3,
+   "missing": 3,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6372,
+  "compression_afg_chars": 559,
+  "compression_source_chars": 1541,
+  "gt_length_ratio": 0.8613,
+  "gt_length_afg_chars": 559,
+  "gt_length_gt_chars": 649,
+  "section_balance": 0.6667
+ }
 }

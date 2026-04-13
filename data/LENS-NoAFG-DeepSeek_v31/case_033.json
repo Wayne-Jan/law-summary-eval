@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -117,5 +118,116 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.69,
+  "fact_recall": 0.8529,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9206,
+  "quality_overall": 4.8143,
+  "checklist_pass_rate": 0.9511,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9368,
+  "uncited_rate": 0.0417,
+  "faithfulness_combined": {
+   "score": 0.975,
+   "citation_fidelity": 0.9583,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 19
+  },
+  "weighted_recall": 0.9314,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「因腦傷導致腎功能及呼吸功能衰竭」未在section_facts出現，雖opinions段提及「併發腎功能及呼吸衰竭」，但GT標記為facts section claim，facts段確實遺漏此併發症描述，屬重要醫療事實",
+     "reason": "「因腦傷導致腎功能及呼吸功能衰竭」未在section_facts出現，雖opinions段提及「併發腎功能及呼吸衰竭」，但GT標記為facts section claim，facts段確實遺漏此併發症描述，屬重要醫療事實"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查五段原文均未提及檢察官上訴期間及上訴狀態，確認摘要確實遺漏此程序性事實",
+     "reason": "遍查五段原文均未提及檢察官上訴期間及上訴狀態，確認摘要確實遺漏此程序性事實"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查五段原文均未提及判決是否確定，確認摘要確實遺漏此程序性事實",
+     "reason": "遍查五段原文均未提及判決是否確定，確認摘要確實遺漏此程序性事實"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt僅提及「被害人家屬之指述及證人證詞均不能為被告甲不利之認定」，未明確說明公訴人係以家屬偵查中指述為起訴依據",
+     "reason": "section_05_reasoning.txt僅提及「被害人家屬之指述及證人證詞均不能為被告甲不利之認定」，未明確說明公訴人係以家屬偵查中指述為起訴依據"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_03_opinions.txt雖有鑑定意見，但section_05_reasoning.txt僅概括提及「上開鑑定意見」，未細述衛生署醫審會具體鑑定內容(6/19拔管後症狀)",
+     "reason": "section_03_opinions.txt雖有鑑定意見，但section_05_reasoning.txt僅概括提及「上開鑑定意見」，未細述衛生署醫審會具體鑑定內容(6/19拔管後症狀)"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未提及「6月21日」具體日期及「呼吸停止後才執行」等關鍵時間節點",
+     "reason": "section_05_reasoning.txt未提及「6月21日」具體日期及「呼吸停止後才執行」等關鍵時間節點"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未明確引用衛生署醫審會「術後照顧不周」之鑑定結論",
+     "reason": "section_05_reasoning.txt未明確引用衛生署醫審會「術後照顧不周」之鑑定結論"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖section_01_facts.txt提及手術時間，但section_05_reasoning.txt未詳述8:15送醫、15:45手術、等待7小時等醫審會認定之具體細節，屬程序性事實",
+     "reason": "雖section_01_facts.txt提及手術時間，但section_05_reasoning.txt未詳述8:15送醫、15:45手術、等待7小時等醫審會認定之具體細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt未引用家屬偵查中具體證詞內容(C醫師未解說病情)，屬證詞細節",
+     "reason": "section_05_reasoning.txt未引用家屬偵查中具體證詞內容(C醫師未解說病情)，屬證詞細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 68,
+   "pred_total": 48,
+   "matched": 57,
+   "partial": 2,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5454,
+  "compression_afg_chars": 1407,
+  "compression_source_chars": 3095,
+  "gt_length_ratio": 0.8548,
+  "gt_length_afg_chars": 1407,
+  "gt_length_gt_chars": 1646,
+  "section_balance": 0.5
+ }
 }

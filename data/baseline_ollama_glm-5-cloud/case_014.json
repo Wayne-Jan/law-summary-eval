@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -121,5 +122,123 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7443,
+  "fact_recall": 0.7703,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8702,
+  "quality_overall": 4.4143,
+  "checklist_pass_rate": 0.9293,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9889,
+  "uncited_rate": 0.075,
+  "faithfulness_combined": {
+   "score": 0.955,
+   "citation_fidelity": 0.925,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.9505,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 9,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經查全部 5 個 section 原文，未發現「按時洗腎」相關記述，屬病情背景事實",
+     "reason": "經查全部 5 個 section 原文，未發現「按時洗腎」相關記述，屬病情背景事實"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提及「瘀血現象」但未提及「逐漸消退好轉」，其餘 section 亦無此記載",
+     "reason": "section_02_defense.txt 提及「瘀血現象」但未提及「逐漸消退好轉」，其餘 section 亦無此記載"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "頸靜脈鼓脹病歷記載之缺失為細節性醫學資訊，不影響案情核心理解",
+     "reason": "頸靜脈鼓脹病歷記載之缺失為細節性醫學資訊，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Braunwald教科書文獻來源為補充性醫學參考，pred已提及心包膜填塞臨床表徵，未引用特定書目不影響主張理解",
+     "reason": "Braunwald教科書文獻來源為補充性醫學參考，pred已提及心包膜填塞臨床表徵，未引用特定書目不影響主張理解"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢察官督同法醫師相驗程序為鑑定流程背景，pred已提及法醫研究所大體解剖，程序細節不影響死因認定理解",
+     "reason": "檢察官督同法醫師相驗程序為鑑定流程背景，pred已提及法醫研究所大體解剖，程序細節不影響死因認定理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及上訴情況，屬程序性事實",
+     "reason": "五個 section 原文均未提及上訴情況，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及判決確定狀態，屬程序性事實",
+     "reason": "五個 section 原文均未提及判決確定狀態，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖 facts section 已有「洗腎所需血流量不夠」之背景描述，但 reasoning section 本身確實未重述該背景資訊，屬背景性事實遺漏，不影響判決理由理解",
+     "reason": "雖 facts section 已有「洗腎所需血流量不夠」之背景描述，但 reasoning section 本身確實未重述該背景資訊，屬背景性事實遺漏，不影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 確實引用鑑定意見內容（如「法醫研究所大體解剖確認」），但未明確使用「法院依鑑定意見判斷」之程序性元敘述，屬程序性事實",
+     "reason": "reasoning section 確實引用鑑定意見內容（如「法醫研究所大體解剖確認」），但未明確使用「法院依鑑定意見判斷」之程序性元敘述，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 僅提及「捨棄可自行施作或請一般外科醫師協助之心包膜放液術」，未明確描述「通知心臟科醫師施作心臟超音波檢查」及「延誤醫療時機」之具體過程，影響對延誤救治情節之完整理解",
+     "reason": "reasoning section 僅提及「捨棄可自行施作或請一般外科醫師協助之心包膜放液術」，未明確描述「通知心臟科醫師施作心臟超音波檢查」及「延誤醫療時機」之具體過程，影響對延誤救治情節之完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 74,
+   "pred_total": 40,
+   "matched": 50,
+   "partial": 14,
+   "missing": 10,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5802,
+  "compression_afg_chars": 1377,
+  "compression_source_chars": 3280,
+  "gt_length_ratio": 0.5591,
+  "gt_length_afg_chars": 1377,
+  "gt_length_gt_chars": 2463,
+  "section_balance": 0.7143
+ }
 }

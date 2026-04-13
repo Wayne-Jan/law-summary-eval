@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -117,5 +118,165 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8428,
+  "fact_recall": 0.7353,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8475,
+  "quality_overall": 4.4143,
+  "checklist_pass_rate": 0.9297,
+  "citation_accuracy": 0.7368,
+  "citation_support_score": 0.8,
+  "uncited_rate": 0.179,
+  "faithfulness_combined": {
+   "score": 0.7629,
+   "citation_fidelity": 0.6049,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.8627,
+  "missing_severity": {
+   "critical": 1,
+   "important": 10,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 26,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "掃描全部5個section，未發現Dopamine使用之相關記載，維持missing",
+     "reason": "掃描全部5個section，未發現Dopamine使用之相關記載，維持missing"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts雖提及「手術成功清除血塊」，但未明確陳述「術後無殘留血塊」之檢查結果，語義有別，維持missing",
+     "reason": "section_facts雖提及「手術成功清除血塊」，但未明確陳述「術後無殘留血塊」之檢查結果，語義有別，維持missing"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_facts提及死亡時間及事實，但未以「最後導致」之因果表述說明死亡與前述症狀之關係，此因果鏈為判決結論理解之重要關鍵",
+     "reason": "section_facts提及死亡時間及事實，但未以「最後導致」之因果表述說明死亡與前述症狀之關係，此因果鏈為判決結論理解之重要關鍵"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts提及「抽痙及呼吸急促現象」，但未提及「昏迷指數下降至9分」之具體數值，屬醫療細節遺漏，影響病情嚴重程度理解",
+     "reason": "section_facts提及「抽痙及呼吸急促現象」，但未提及「昏迷指數下降至9分」之具體數值，屬醫療細節遺漏，影響病情嚴重程度理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "全部5個section均未提及「手術後電腦斷層」檢查之相關記載，維持missing",
+     "reason": "全部5個section均未提及「手術後電腦斷層」檢查之相關記載，維持missing"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts提及腎功能及呼吸功能衰竭，但未提及「產生病情變化」此過程性描述，維持missing",
+     "reason": "section_facts提及腎功能及呼吸功能衰竭，但未提及「產生病情變化」此過程性描述，維持missing"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_reasoning提及併發症為死因，但未提及此為「頭部外傷患者病程上常見」之醫學通則描述，屬鑑定意見重要細節遺漏",
+     "reason": "section_reasoning提及併發症為死因，但未提及此為「頭部外傷患者病程上常見」之醫學通則描述，屬鑑定意見重要細節遺漏"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決日期為重要程序資訊，但所有 sections 均未提及「民國94年02月21日」",
+     "reason": "判決日期為重要程序資訊，但所有 sections 均未提及「民國94年02月21日」"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢察官是否上訴為程序性後續事實，所有 sections 均未提及，不影響判決內容理解",
+     "reason": "檢察官是否上訴為程序性後續事實，所有 sections 均未提及，不影響判決內容理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決確定狀態為重要程序資訊，但所有 sections 均未提及",
+     "reason": "判決確定狀態為重要程序資訊，但所有 sections 均未提及"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "5個 section 摘要中均未明確提及「公訴人認被告涉有罪嫌係以家屬指述為依據」的具體陳述，維持 missing",
+     "reason": "5個 section 摘要中均未明確提及「公訴人認被告涉有罪嫌係以家屬指述為依據」的具體陳述，維持 missing"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_04_verdict.txt 僅簡短記載「判決被告丙○○無罪」，未引用「尚難認被告有何過失」的法律判斷用語",
+     "reason": "section_04_verdict.txt 僅簡短記載「判決被告丙○○無罪」，未引用「尚難認被告有何過失」的法律判斷用語"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 雖提及手術時間，但 section_05_reasoning.txt 未提及「89年6月18日」及「神經外科C醫師」之主刀資訊，無法於 reason ing section 找到完整對應",
+     "reason": "section_01_facts.txt 雖提及手術時間，但 section_05_reasoning.txt 未提及「89年6月18日」及「神經外科C醫師」之主刀資訊，無法於 reason ing section 找到完整對應"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "5個 section 摘要均未提及被告「至89年6月19日始銷假上班」的時間點",
+     "reason": "5個 section 摘要均未提及被告「至89年6月19日始銷假上班」的時間點"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確記載「上述情狀與被告無關」的判斷文字",
+     "reason": "section_05_reasoning.txt 未明確記載「上述情狀與被告無關」的判斷文字"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "5個 section 摘要均未提及家屬於偵查中的具體陳述「沒有要告任何人」",
+     "reason": "5個 section 摘要均未提及家屬於偵查中的具體陳述「沒有要告任何人」"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 68,
+   "pred_total": 39,
+   "matched": 48,
+   "partial": 4,
+   "missing": 16,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6397,
+  "compression_afg_chars": 1115,
+  "compression_source_chars": 3095,
+  "gt_length_ratio": 0.6774,
+  "gt_length_afg_chars": 1115,
+  "gt_length_gt_chars": 1646,
+  "section_balance": 0.25
+ }
 }

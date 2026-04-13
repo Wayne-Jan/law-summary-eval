@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -125,5 +126,123 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8764,
+  "fact_recall": 0.7027,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8254,
+  "quality_overall": 4.4429,
+  "checklist_pass_rate": 0.9676,
+  "citation_accuracy": 0.5882,
+  "citation_support_score": 0.5632,
+  "uncited_rate": 0.029,
+  "faithfulness_combined": {
+   "score": 0.7427,
+   "citation_fidelity": 0.5711,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.941,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 16
+  },
+  "weighted_recall": 0.8739,
+  "missing_severity": {
+   "critical": 1,
+   "important": 2,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 提及「家屬丙、家屬戊」但未明確表述「丙、戊之女即病患K」的親屬關係，其他 section 亦無此明確親屬關係描述",
+     "reason": "section_facts.txt 提及「家屬丙、家屬戊」但未明確表述「丙、戊之女即病患K」的親屬關係，其他 section 亦無此明確親屬關係描述"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 僅提及「檢察官提起公訴」，未提及具體罪名（刑法第276條第2項業務過失致死罪），其他 section 亦無罪名描述",
+     "reason": "section_facts.txt 僅提及「檢察官提起公訴」，未提及具體罪名（刑法第276條第2項業務過失致死罪），其他 section 亦無罪名描述"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts.txt 提及「檢察官提起公訴」但未提及「病患K之父丙提起告訴」，此為程序性事實",
+     "reason": "section_facts.txt 提及「檢察官提起公訴」但未提及「病患K之父丙提起告訴」，此為程序性事實"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_opinions 僅記載「因為協商判決，鑑定內容未明載」，未提及心肌炎鑑定結論；跨 section 遍歷亦未發現對應內容，屬關鍵死因鑑定遺漏",
+     "reason": "section_opinions 僅記載「因為協商判決，鑑定內容未明載」，未提及心肌炎鑑定結論；跨 section 遍歷亦未發現對應內容，屬關鍵死因鑑定遺漏"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "被告與檢察官是否上訴屬程序性事實，未在任何 section 原文中出現",
+     "reason": "被告與檢察官是否上訴屬程序性事實，未在任何 section 原文中出現"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態屬程序性結果陳述，未在任何 section 原文中出現",
+     "reason": "判決確定狀態屬程序性結果陳述，未在任何 section 原文中出現"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "搜尋全部5個section原文，均未發現『被告甲與病患K父母丙、戊已達成和解』之相關內容。摘要中只有病患X，無病患K之相關記載。此為程序性事實（和解），不影響過失致死案情理解",
+     "reason": "搜尋全部5個section原文，均未發現『被告甲與病患K父母丙、戊已達成和解』之相關內容。摘要中只有病患X，無病患K之相關記載。此為程序性事實（和解），不影響過失致死案情理解"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "搜尋全部5個section原文，均未發現『撤回對被告之告訴』或『96年10月31日』之相關內容。此為程序性事實，不影響案情理解",
+     "reason": "搜尋全部5個section原文，均未發現『撤回對被告之告訴』或『96年10月31日』之相關內容。此為程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "搜尋全部5個section原文，均未發現『表明不再追究被告刑事責任』之相關內容。此為程序性事實，不影響案情理解",
+     "reason": "搜尋全部5個section原文，均未發現『表明不再追究被告刑事責任』之相關內容。此為程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "搜尋全部5個section原文，均未發現『判決書內文無判決理由』之相關內容。實際上section_05_reasoning.txt有完整理由記載，此GT claim可能為meta資訊錯誤",
+     "reason": "搜尋全部5個section原文，均未發現『判決書內文無判決理由』之相關內容。實際上section_05_reasoning.txt有完整理由記載，此GT claim可能為meta資訊錯誤"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 37,
+   "pred_total": 34,
+   "matched": 25,
+   "partial": 2,
+   "missing": 10,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.4605,
+  "compression_afg_chars": 956,
+  "compression_source_chars": 1772,
+  "gt_length_ratio": 0.9846,
+  "gt_length_afg_chars": 956,
+  "gt_length_gt_chars": 971,
+  "section_balance": 0.3333
+ }
 }

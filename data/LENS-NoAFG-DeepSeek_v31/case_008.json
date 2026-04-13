@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -133,5 +134,116 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7342,
+  "fact_recall": 0.8276,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9057,
+  "quality_overall": 4.8429,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.7647,
+  "citation_support_score": 0.7256,
+  "uncited_rate": 0.282,
+  "faithfulness_combined": {
+   "score": 0.7294,
+   "citation_fidelity": 0.5491,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 23,
+   "correct": 23
+  },
+  "weighted_recall": 0.9368,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "全部5個section均未提及X護士、R護士經檢察官為不起訴處分之資訊，屬程序性事實",
+     "reason": "全部5個section均未提及X護士、R護士經檢察官為不起訴處分之資訊，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「偵查起訴」，未說明檢方起訴成立業務過失致死罪之具體理由，影響案情完整理解",
+     "reason": "section_01_facts.txt 僅提及「偵查起訴」，未說明檢方起訴成立業務過失致死罪之具體理由，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts 提到「檢察官相驗後偵查起訴」，但未明確提及「督同法醫相驗」之完整表述，屬程序性事實，不影響案情理解",
+     "reason": "section_facts 提到「檢察官相驗後偵查起訴」，但未明確提及「督同法醫相驗」之完整表述，屬程序性事實，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查五個 section 原文均未提及「簡式審判程序」，屬程序性事實",
+     "reason": "遍查五個 section 原文均未提及「簡式審判程序」，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 實際記載了各鑑定意見內容，此 GT claim 指「未載於判決書」為判決書結構描述，非核心事實",
+     "reason": "section_opinions 實際記載了各鑑定意見內容，此 GT claim 指「未載於判決書」為判決書結構描述，非核心事實"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（簡式審判程序、受命法官獨任），不影響案情理解與判決結論",
+     "reason": "程序性事實（簡式審判程序、受命法官獨任），不影響案情理解與判決結論"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實（未上訴、判決確定），不影響案情理解與判決結論",
+     "reason": "程序性事實（未上訴、判決確定），不影響案情理解與判決結論"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "事實段雖有被告「坦承犯行」，但reasoning段確實未明確提及「到庭坦承不諱」。此為認罪態度事實，影響案情理解，屬重要遺漏。",
+     "reason": "事實段雖有被告「坦承犯行」，但reasoning段確實未明確提及「到庭坦承不諱」。此為認罪態度事實，影響案情理解，屬重要遺漏。"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經查全文五段section均未提及「證人等於偵查中結證各語大致吻合」。此為程序性證據力說明，不影響主要事實認定，屬次要遺漏。",
+     "reason": "經查全文五段section均未提及「證人等於偵查中結證各語大致吻合」。此為程序性證據力說明，不影響主要事實認定，屬次要遺漏。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 58,
+   "pred_total": 78,
+   "matched": 47,
+   "partial": 2,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.0177,
+  "compression_afg_chars": 2335,
+  "compression_source_chars": 2377,
+  "gt_length_ratio": 1.5232,
+  "gt_length_afg_chars": 2335,
+  "gt_length_gt_chars": 1533,
+  "section_balance": 0.6
+ }
 }

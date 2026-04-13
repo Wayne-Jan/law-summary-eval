@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -121,5 +122,165 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7554,
+  "fact_recall": 0.6613,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7961,
+  "quality_overall": 4.3429,
+  "checklist_pass_rate": 0.9405,
+  "citation_accuracy": 0.7,
+  "citation_support_score": 0.6857,
+  "uncited_rate": 0.027,
+  "faithfulness_combined": {
+   "score": 0.8087,
+   "citation_fidelity": 0.6811,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 8,
+   "correct": 8
+  },
+  "weighted_recall": 0.871,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 8,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 均未提及「I醫院」或就醫順序，確實遺漏",
+     "reason": "遍查全部 5 個 section 均未提及「I醫院」或就醫順序，確實遺漏"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "雖有「公訴人指稱」間接暗示，但「臺灣臺中地方法院檢察署檢察官提起公訴」之完整程序敘述未出現",
+     "reason": "雖有「公訴人指稱」間接暗示，但「臺灣臺中地方法院檢察署檢察官提起公訴」之完整程序敘述未出現"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions段落僅提及『進行鑑定』與『重新鑑定』，未詳列鑑定事項之完整範疇（包括臨床診斷方法、X光片環境條件、治癒率存活率等），跨section檢視亦無此完整描述",
+     "reason": "opinions段落僅提及『進行鑑定』與『重新鑑定』，未詳列鑑定事項之完整範疇（包括臨床診斷方法、X光片環境條件、治癒率存活率等），跨section檢視亦無此完整描述"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要提及『疑似腹腔游離氣體』但未明確說明一般醫學上『腹腔積氣』現象之常規發現，此為背景性醫學知識描述，非本案特定事實",
+     "reason": "摘要提及『疑似腹腔游離氣體』但未明確說明一般醫學上『腹腔積氣』現象之常規發現，此為背景性醫學知識描述，非本案特定事實"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及觸診之臨床發現（腹肌繃緊、壓痛等），此為一般醫學描述，非本案鑑定核心內容",
+     "reason": "摘要未提及觸診之臨床發現（腹肌繃緊、壓痛等），此為一般醫學描述，非本案鑑定核心內容"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要僅提及『部分X光片為躺姿』但未明確說明I醫院X光片為站立照及其左上方有氣體之特徵，此屬鑑定中之關鍵對比資訊",
+     "reason": "摘要僅提及『部分X光片為躺姿』但未明確說明I醫院X光片為站立照及其左上方有氣體之特徵，此屬鑑定中之關鍵對比資訊"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及I醫院X光片診斷之專業難度（須經驗極為豐富之醫師始能發現），影響對被告注意義務之理解",
+     "reason": "摘要未提及I醫院X光片診斷之專業難度（須經驗極為豐富之醫師始能發現），影響對被告注意義務之理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要僅泛稱『未包含橫膈膜』而未明確區分I醫院X光片『包括有橫膈膜』與C醫院部分X光片未含橫膈膜之對比，影響對影像條件之完整理解",
+     "reason": "摘要僅泛稱『未包含橫膈膜』而未明確區分I醫院X光片『包括有橫膈膜』與C醫院部分X光片未含橫膈膜之對比，影響對影像條件之完整理解"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要僅提及『腸道脹氣』但未說明『三張X光片均可見腸道漲氣現象（阻塞或不動）』之完整描述，此為影像特徵細節",
+     "reason": "摘要僅提及『腸道脹氣』但未說明『三張X光片均可見腸道漲氣現象（阻塞或不動）』之完整描述，此為影像特徵細節"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要提及『胃破裂極為罕見』但未說明『兒童發生胃破裂，文獻並不多見』之文獻背景，屬補充性資訊",
+     "reason": "摘要提及『胃破裂極為罕見』但未說明『兒童發生胃破裂，文獻並不多見』之文獻背景，屬補充性資訊"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及受傷原因（滑倒、腹部猛撞浴缸）及其在醫學文獻與臨床上之罕見性，影響對案情特殊性之完整理解",
+     "reason": "摘要未提及受傷原因（滑倒、腹部猛撞浴缸）及其在醫學文獻與臨床上之罕見性，影響對案情特殊性之完整理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及照會社會服務部排查兒童受虐情況之程序性事實，此為醫療處置之附帶程序",
+     "reason": "摘要未提及照會社會服務部排查兒童受虐情況之程序性事實，此為醫療處置之附帶程序"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及兒童身高（三歲半平均一○五至一一○公分）與浴缸尺寸之機械力學分析，此為鑑定中對受傷機轉之專業評估，影響對罕見性之理解",
+     "reason": "摘要未提及兒童身高（三歲半平均一○五至一一○公分）與浴缸尺寸之機械力學分析，此為鑑定中對受傷機轉之專業評估，影響對罕見性之理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及『造成該病童胃破裂致死，是否尚由其他原因所造成，實值得質疑』之鑑定保留意見，此為鑑定意見中對死因之不確定性陳述，屬重要鑑定觀點",
+     "reason": "摘要未提及『造成該病童胃破裂致死，是否尚由其他原因所造成，實值得質疑』之鑑定保留意見，此為鑑定意見中對死因之不確定性陳述，屬重要鑑定觀點"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，全部 5 個 section 均未提及檢察官上訴與否，不影響案情主體理解",
+     "reason": "程序性事實，全部 5 個 section 均未提及檢察官上訴與否，不影響案情主體理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，全部 5 個 section 均未提及判決確定狀態，屬程序性結尾資訊",
+     "reason": "程序性事實，全部 5 個 section 均未提及判決確定狀態，屬程序性結尾資訊"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 62,
+   "pred_total": 37,
+   "matched": 36,
+   "partial": 10,
+   "missing": 16,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5548,
+  "compression_afg_chars": 1316,
+  "compression_source_chars": 2956,
+  "gt_length_ratio": 0.6042,
+  "gt_length_afg_chars": 1316,
+  "gt_length_gt_chars": 2178,
+  "section_balance": 0.4783
+ }
 }

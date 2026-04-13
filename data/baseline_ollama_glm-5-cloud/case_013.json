@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -143,6 +144,331 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8611,
-  "fact_recall_avg": null
+  "fact_recall": 0.544,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7047,
+  "quality_overall": 4.3786,
+  "checklist_pass_rate": 0.9457,
+  "citation_accuracy": 0.9412,
+  "citation_support_score": 0.8842,
+  "uncited_rate": 0.051,
+  "faithfulness_combined": {
+   "score": 0.9359,
+   "citation_fidelity": 0.8932,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 5,
+   "correct": 5
+  },
+  "weighted_recall": 0.824,
+  "missing_severity": {
+   "critical": 4,
+   "important": 18,
+   "minor": 18,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經檢查全部5個section原文，均僅提及「A醫院婦產科主治醫師」，未提及「X治療中心」之任職機構資訊，屬背景性事實",
+     "reason": "經檢查全部5個section原文，均僅提及「A醫院婦產科主治醫師」，未提及「X治療中心」之任職機構資訊，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經檢查全部5個section原文，均僅提及「轉送C醫院」，未提及「轉入加護病房」之救治地點細節，屬背景性事實",
+     "reason": "經檢查全部5個section原文，均僅提及「轉送C醫院」，未提及「轉入加護病房」之救治地點細節，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經檢查全部5個section原文，檢察官起訴主張部分僅概括提及「全身麻醉之副作用及監測設備」，未具體呈現「事先給予病患充分預供氧氣」之醫療義務要求，影響醫療標準義務的完整理解",
+     "reason": "經檢查全部5個section原文，檢察官起訴主張部分僅概括提及「全身麻醉之副作用及監測設備」，未具體呈現「事先給予病患充分預供氧氣」之醫療義務要求，影響醫療標準義務的完整理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經檢查全部5個section原文，均未提及「事先給予藥物防止垂涎」之醫療準備要求，屬程序性醫療細節",
+     "reason": "經檢查全部5個section原文，均未提及「事先給予藥物防止垂涎」之醫療準備要求，屬程序性醫療細節"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經檢查全部5個section原文，檢察官起訴主張僅概括提及「監測設備之設置」，未具體呈現「持續主動積極監測呼吸通氣狀態」之持續監測行為要求，影響監測義務的完整理解",
+     "reason": "經檢查全部5個section原文，檢察官起訴主張僅概括提及「監測設備之設置」，未具體呈現「持續主動積極監測呼吸通氣狀態」之持續監測行為要求，影響監測義務的完整理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 雖提及「法務部法醫研究所鑑定報告稱此係麻醉藥過敏意外」，但係作為被告辯稱內容的一部分，未明確表達「依據該報告提出抗辯」之主動性行為；遍查其他四個section亦無此明確表述，維持missing",
+     "reason": "section_defense.txt 雖提及「法務部法醫研究所鑑定報告稱此係麻醉藥過敏意外」，但係作為被告辯稱內容的一部分，未明確表達「依據該報告提出抗辯」之主動性行為；遍查其他四個section亦無此明確表述，維持missing"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 及其他四個section均無「主張法醫研究所之鑑定報告應較可採」之可信度比較論點，維持missing",
+     "reason": "section_defense.txt 及其他四個section均無「主張法醫研究所之鑑定報告應較可採」之可信度比較論點，維持missing"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "藥理用途背景性事實，不影響過失認定結論",
+     "reason": "藥理用途背景性事實，不影響過失認定結論"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "藥理用途背景性事實，section_opinions 未提及 Diprivan 為麻醉誘導劑",
+     "reason": "藥理用途背景性事實，section_opinions 未提及 Diprivan 為麻醉誘導劑"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "Diprivan過敏反應具體機制（喉頭水腫抑制呼吸）影響對過敏病理的理解",
+     "reason": "Diprivan過敏反應具體機制（喉頭水腫抑制呼吸）影響對過敏病理的理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術類型已於 facts section 交代，opinions 專注鑑定意見而未重複手術類型",
+     "reason": "手術類型已於 facts section 交代，opinions 專注鑑定意見而未重複手術類型"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "關鍵事件時間點與過程（全身麻醉進行中突然發生心肺功能衰竭）影響案情完整理解",
+     "reason": "關鍵事件時間點與過程（全身麻醉進行中突然發生心肺功能衰竭）影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急救轉送細節（急送Z醫院急救顯已來不及）影響對急救時效的評估",
+     "reason": "急救轉送細節（急送Z醫院急救顯已來不及）影響對急救時效的評估"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心肺衰竭嚴重程度與死亡時間的關係影響對病程進展的理解",
+     "reason": "心肺衰竭嚴重程度與死亡時間的關係影響對病程進展的理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血液顏色作為診斷方法的局限性（reasoning section提及「遲至劃刀發現血液發黑始察覺缺氧」但未明確說方法局限性）",
+     "reason": "血液顏色作為診斷方法的局限性（reasoning section提及「遲至劃刀發現血液發黑始察覺缺氧」但未明確說方法局限性）"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術類型細節已於 facts section 涵蓋",
+     "reason": "手術類型細節已於 facts section 涵蓋"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體麻醉藥物名稱已於 facts section 涵蓋，opinions 未重複",
+     "reason": "具體麻醉藥物名稱已於 facts section 涵蓋，opinions 未重複"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "藥物劑量與給藥方式適當性評估影響過失認定分析，五個 section 皆未明確提及",
+     "reason": "藥物劑量與給藥方式適當性評估影響過失認定分析，五個 section 皆未明確提及"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「死因機制（「單純麻醉用藥造成之呼吸抑制」vs「過敏」）直接影響判決結論",
+     "reason": "「死因機制（「單純麻醉用藥造成之呼吸抑制」vs「過敏」）直接影響判決結論"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「人工換氣輔助缺失屬關鍵過失行為，直接影響過失認定結論",
+     "reason": "「人工換氣輔助缺失屬關鍵過失行為，直接影響過失認定結論"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「窒息作為死因機制與過失要件，直接影響判決結論",
+     "reason": "「窒息作為死因機制與過失要件，直接影響判決結論"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「過敏與直接作用的臨床表現差異評估影響醫療標準理解",
+     "reason": "「過敏與直接作用的臨床表現差異評估影響醫療標準理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「麻醉類型已於 facts section 涵蓋",
+     "reason": "「麻醉類型已於 facts section 涵蓋"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決主文中雖載明緩刑，但未說明緩刑原因之一為「前未曾受有期徒刑以上刑之宣告」，此屬量刑重要背景事實",
+     "reason": "判決主文中雖載明緩刑，但未說明緩刑原因之一為「前未曾受有期徒刑以上刑之宣告」，此屬量刑重要背景事實"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決主文未提及民事和解事實，此係法院宣告緩刑的重要酌定因素，影響對刑罰裁量的完整理解",
+     "reason": "判決主文未提及民事和解事實，此係法院宣告緩刑的重要酌定因素，影響對刑罰裁量的完整理解"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決主文未記載上訴情況，屬程序性事實，不影響判決核心內容理解",
+     "reason": "判決主文未記載上訴情況，屬程序性事實，不影響判決核心內容理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決主文未說明判決確定狀態，屬程序性結論，與案件實體內容無關",
+     "reason": "判決主文未說明判決確定狀態，屬程序性結論，與案件實體內容無關"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 未明確提及「全身麻醉進行中突然發生心肺功能衰竭」之關鍵時間點描述",
+     "reason": "section_reasoning 未明確提及「全身麻醉進行中突然發生心肺功能衰竭」之關鍵時間點描述"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 未具體提及「單純麻醉用藥造成之呼吸抑制，未獲有效人工換氣輔助」等榮民總醫院鑑定核心內容",
+     "reason": "section_reasoning 未具體提及「單純麻醉用藥造成之呼吸抑制，未獲有效人工換氣輔助」等榮民總醫院鑑定核心內容"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 未明確提及被告「主張法醫研究所鑑定報告應較可採」之抗辯要點",
+     "reason": "section_reasoning 未明確提及被告「主張法醫研究所鑑定報告應較可採」之抗辯要點"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及法院向法醫研究所函詢之具體問題內容，屬程序性事實",
+     "reason": "section_reasoning 未提及法院向法醫研究所函詢之具體問題內容，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及法醫研究所回覆「是」之內容，屬程序性事實",
+     "reason": "section_reasoning 未提及法醫研究所回覆「是」之內容，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及法院送請台大醫學院再次鑑定之程序，屬程序性事實",
+     "reason": "section_reasoning 未提及法院送請台大醫學院再次鑑定之程序，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及證人A之具體身份及到庭結證事實，屬程序性事實",
+     "reason": "section_reasoning 未提及證人A之具體身份及到庭結證事實，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_reasoning 雖有提及因果關係，但未明確概括性陳述「被告之過失與病患之死亡結果間具有相當因果關係」，影響判決結論理解",
+     "reason": "section_reasoning 雖有提及因果關係，但未明確概括性陳述「被告之過失與病患之死亡結果間具有相當因果關係」，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及證人B及C之具體身份及到庭結證事實，屬程序性事實",
+     "reason": "section_reasoning 未提及證人B及C之具體身份及到庭結證事實，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未引用醫療法第四十條之法源依據",
+     "reason": "section_reasoning 未引用醫療法第四十條之法源依據"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及證人D及E之具體身份及到庭結證事實，屬程序性事實",
+     "reason": "section_reasoning 未提及證人D及E之具體身份及到庭結證事實，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 未明確提及被告「身為婦產科專科醫師多年」之資歷及「Demerol及Diprivan」之具體藥名",
+     "reason": "section_reasoning 未明確提及被告「身為婦產科專科醫師多年」之資歷及「Demerol及Diprivan」之具體藥名"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 未明確提及「依當時情形，被告並無不能注意之情事」之法院認定",
+     "reason": "section_reasoning 未明確提及「依當時情形，被告並無不能注意之情事」之法院認定"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 125,
+   "pred_total": 39,
+   "matched": 51,
+   "partial": 34,
+   "missing": 40,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9028,
+  "compression_afg_chars": 998,
+  "compression_source_chars": 10269,
+  "gt_length_ratio": 0.1981,
+  "gt_length_afg_chars": 998,
+  "gt_length_gt_chars": 5037,
+  "section_balance": 0.4267
  }
 }

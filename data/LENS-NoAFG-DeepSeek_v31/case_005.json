@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -120,6 +121,262 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7283
+  "rule_based_avg": 0.7283,
+  "fact_recall": 0.6947,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8198,
+  "quality_overall": 4.6571,
+  "checklist_pass_rate": 0.9402,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9912,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.974,
+  "numerical_detail": {
+   "total_numerical": 38,
+   "correct": 37
+  },
+  "weighted_recall": 0.8761,
+  "missing_severity": {
+   "critical": 2,
+   "important": 8,
+   "minor": 20,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及八十六年十月之住院紀錄，屬歷史背景資訊",
+     "reason": "五個 section 原文均未提及八十六年十月之住院紀錄，屬歷史背景資訊"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及八十七年七月十五日之就診紀錄",
+     "reason": "五個 section 原文均未提及八十七年七月十五日之就診紀錄"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及八十七年十一月二十三日之就診紀錄",
+     "reason": "五個 section 原文均未提及八十七年十一月二十三日之就診紀錄"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及糖尿病及胰島素治療，但未提及「二年多」之患病時長",
+     "reason": "section_01_facts.txt 提及糖尿病及胰島素治療，但未提及「二年多」之患病時長"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個 section 均未提及入院時白血球指數5700/uL之檢驗數值，屬重要檢驗數據",
+     "reason": "五個 section 均未提及入院時白血球指數5700/uL之檢驗數值，屬重要檢驗數據"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 均未提及TG三酸甘油酯1592 mg/dl之檢驗數值",
+     "reason": "五個 section 均未提及TG三酸甘油酯1592 mg/dl之檢驗數值"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 均未提及GOT/GPT 214/76 u/l之檢驗數值",
+     "reason": "五個 section 均未提及GOT/GPT 214/76 u/l之檢驗數值"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 均未提及入院時血色素12.9 g/dl之檢驗數值",
+     "reason": "五個 section 均未提及入院時血色素12.9 g/dl之檢驗數值"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提及被告乙辯稱「通知被告甲前來處理」，但係辯稱而非事實認定，且未明確提及「檢驗結果」",
+     "reason": "section_02_defense.txt 提及被告乙辯稱「通知被告甲前來處理」，但係辯稱而非事實認定，且未明確提及「檢驗結果」"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個 section 均未提及施打百分之五十葡萄糖之處置，屬重要醫療處置細節",
+     "reason": "五個 section 均未提及施打百分之五十葡萄糖之處置，屬重要醫療處置細節"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_02_defense.txt 提及被告甲辯稱HHNK與敗血症，但係辯稱而非法院認定之事實；且與 GT claim「醫師甲認為」之客觀事實表述性質不同",
+     "reason": "section_02_defense.txt 提及被告甲辯稱HHNK與敗血症，但係辯稱而非法院認定之事實；且與 GT claim「醫師甲認為」之客觀事實表述性質不同"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 均未提及要求家屬取血漿輸血之相關內容",
+     "reason": "五個 section 均未提及要求家屬取血漿輸血之相關內容"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個 section 均未明確提及「病情已無法挽回」之描述，雖有死亡結果但缺乏病情不可逆轉之過程描述",
+     "reason": "五個 section 均未明確提及「病情已無法挽回」之描述，雖有死亡結果但缺乏病情不可逆轉之過程描述"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "此為法律判斷而非事實陳述，section_05_reasoning.txt 雖有過失認定但未明確表述「並無不能注意之情事」",
+     "reason": "此為法律判斷而非事實陳述，section_05_reasoning.txt 雖有過失認定但未明確表述「並無不能注意之情事」"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "此為法律判斷而非事實陳述，雖有相關注意義務論述但表述方式不同",
+     "reason": "此為法律判斷而非事實陳述，雖有相關注意義務論述但表述方式不同"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions段僅記載醫委會鑑定意見，未提及被告不能以不知為藉口推卸責任之論點",
+     "reason": "opinions段僅記載醫委會鑑定意見，未提及被告不能以不知為藉口推卸責任之論點"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions段確無敗血症治療程序及抗生素給予時機之記載，屬醫療程序細節",
+     "reason": "opinions段確無敗血症治療程序及抗生素給予時機之記載，屬醫療程序細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "死亡率小於百分之十之記載見於 reasoning 段，opinions 段未提及",
+     "reason": "死亡率小於百分之十之記載見於 reasoning 段，opinions 段未提及"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_04_verdict.txt 未提及本案判決確定之狀態，屬程序性事實遺漏",
+     "reason": "section_04_verdict.txt 未提及本案判決確定之狀態，屬程序性事實遺漏"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "果糖液施打屬細節醫療處置事實，不影響判決主文理解",
+     "reason": "果糖液施打屬細節醫療處置事實，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "果糖液與胰島素無衝突之論點，屬輔助性醫療說明",
+     "reason": "果糖液與胰島素無衝突之論點，屬輔助性醫療說明"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告抗辯細節與鑑定意見比對，屬辯論細節",
+     "reason": "被告抗辯細節與鑑定意見比對，屬辯論細節"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "單次檢驗數據推論限制涉及死因認定方法論，影響因果關係判斷",
+     "reason": "單次檢驗數據推論限制涉及死因認定方法論，影響因果關係判斷"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「推卸責任」為法院評價性論述，影響責任歸屬理解",
+     "reason": "「推卸責任」為法院評價性論述，影響責任歸屬理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "免疫力下降與感染機率為敗血症因果論述之關鍵，影響死因機轉理解",
+     "reason": "免疫力下降與感染機率為敗血症因果論述之關鍵，影響死因機轉理解"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "敗血症與免疫力因果關係論述，影響判決結論理解",
+     "reason": "敗血症與免疫力因果關係論述，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "插胃管感染風險為細節性論述",
+     "reason": "插胃管感染風險為細節性論述"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "未處置敗血症為過失行為描述，影響責任認定",
+     "reason": "未處置敗血症為過失行為描述，影響責任認定"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "與claim 16重複之因果論述，pred claim 16已涵蓋主要內容",
+     "reason": "與claim 16重複之因果論述，pred claim 16已涵蓋主要內容"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「無從卸免其責」與GT 105/110內容重疊，評價性表述",
+     "reason": "「無從卸免其責」與GT 105/110內容重疊，評價性表述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 113,
+   "pred_total": 73,
+   "matched": 74,
+   "partial": 9,
+   "missing": 30,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6633,
+  "compression_afg_chars": 2797,
+  "compression_source_chars": 8306,
+  "gt_length_ratio": 0.7908,
+  "gt_length_afg_chars": 2797,
+  "gt_length_gt_chars": 3537,
+  "section_balance": 0.6207
  }
 }

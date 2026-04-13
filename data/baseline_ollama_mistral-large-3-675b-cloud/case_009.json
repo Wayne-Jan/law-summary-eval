@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -125,5 +126,130 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7299,
+  "fact_recall": 0.6757,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8065,
+  "quality_overall": 4.5,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 0.6,
+  "citation_support_score": 0.6429,
+  "uncited_rate": 0.16,
+  "faithfulness_combined": {
+   "score": 0.7024,
+   "citation_fidelity": 0.504,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.8468,
+  "missing_severity": {
+   "critical": 1,
+   "important": 4,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅泛稱「家屬」，未明確提及「丙、戊與病患K之父母關係」，屬程序性背景資訊",
+     "reason": "摘要僅泛稱「家屬」，未明確提及「丙、戊與病患K之父母關係」，屬程序性背景資訊"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "摘要未提及「刑法第276條第2項業務過失致死罪」之具體法條，影響判決結論理解",
+     "reason": "摘要未提及「刑法第276條第2項業務過失致死罪」之具體法條，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅泛稱「家屬」，未提及「丙提起告訴」之具體程序事實",
+     "reason": "摘要僅泛稱「家屬」，未提及「丙提起告訴」之具體程序事實"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "原文 section_opinions.txt 及 section_reasoning.txt 均未提及『因為協商判決，鑑定內容未明載』之因果關係，確認維持 missing",
+     "reason": "原文 section_opinions.txt 及 section_reasoning.txt 均未提及『因為協商判決，鑑定內容未明載』之因果關係，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文 section_opinions.txt 僅提及『行政院衛生署醫事審議委員會鑑定書共2份』，未見『相驗證明書、法務部法醫研究所鑑定書』，確認維持 missing",
+     "reason": "原文 section_opinions.txt 僅提及『行政院衛生署醫事審議委員會鑑定書共2份』，未見『相驗證明書、法務部法醫研究所鑑定書』，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "『法院訊問被告後自白』之程序性描述未在摘要中明確提及，屬程序性事實",
+     "reason": "『法院訊問被告後自白』之程序性描述未在摘要中明確提及，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "『檢察官聲請協商判決』之程序發動細節未在摘要中明確提及，屬程序性事實",
+     "reason": "『檢察官聲請協商判決』之程序發動細節未在摘要中明確提及，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段全文均未提及被告與病患家屬達成和解之具體事實，確認為遺漏。和解事實影響量刑結果（緩刑宣告），屬重要事實。",
+     "reason": "section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段全文均未提及被告與病患家屬達成和解之具體事實，確認為遺漏。和解事實影響量刑結果（緩刑宣告），屬重要事實。"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五段全文均未提及病患父親於96年10月31日撤回告訴之具體時間與行動，確認為遺漏。撤回告訴是程序終結之關鍵事實，屬重要資訊。",
+     "reason": "五段全文均未提及病患父親於96年10月31日撤回告訴之具體時間與行動，確認為遺漏。撤回告訴是程序終結之關鍵事實，屬重要資訊。"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五段全文均未提及病患家屬表明不再追究刑事責任之陳述，確認為遺漏。此陳述與量刑（緩刑）直接相關，屬重要事實。",
+     "reason": "五段全文均未提及病患家屬表明不再追究刑事責任之陳述，確認為遺漏。此陳述與量刑（緩刑）直接相關，屬重要事實。"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五段全文均未提及「判決書內文無判決理由」之特點，確認為遺漏。此為原始判決書之形式特徵說明，不影響案情實質理解，屬次要資訊。",
+     "reason": "五段全文均未提及「判決書內文無判決理由」之特點，確認為遺漏。此為原始判決書之形式特徵說明，不影響案情實質理解，屬次要資訊。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 37,
+   "pred_total": 31,
+   "matched": 24,
+   "partial": 2,
+   "missing": 11,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5807,
+  "compression_afg_chars": 743,
+  "compression_source_chars": 1772,
+  "gt_length_ratio": 0.7652,
+  "gt_length_afg_chars": 743,
+  "gt_length_gt_chars": 971,
+  "section_balance": 0.3333
+ }
 }

@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -129,5 +130,382 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6323,
+  "fact_recall": 0.5809,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7349,
+  "quality_overall": 4.6286,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9368,
+  "uncited_rate": 0.0192,
+  "faithfulness_combined": {
+   "score": 0.9885,
+   "citation_fidelity": 0.9808,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.8505,
+  "missing_severity": {
+   "critical": 0,
+   "important": 14,
+   "minor": 33,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 已提及血壓極低，缺血性休克作為死因在最終結果提及，檢驗時症狀描述遺漏為次要事實",
+     "reason": "section_01_facts.txt 已提及血壓極低，缺血性休克作為死因在最終結果提及，檢驗時症狀描述遺漏為次要事實"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「變化逐漸迅速」的具體病程進展速度描述，pred claim僅提到「突然出現」，未涵蓋GT中的漸進快速變化概念",
+     "reason": "所有section均未提及「變化逐漸迅速」的具體病程進展速度描述，pred claim僅提到「突然出現」，未涵蓋GT中的漸進快速變化概念"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「如果生理狀況不正常，是不可能吃得下奶的」這一假設性論述，pred claim僅提及「吃奶與生理狀況無異常」，未包含此邏輯推論",
+     "reason": "所有section均未提及「如果生理狀況不正常，是不可能吃得下奶的」這一假設性論述，pred claim僅提及「吃奶與生理狀況無異常」，未包含此邏輯推論"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及G醫院第二天8、9點發現脾臟陰影的具體時間節點，pred僅提及轉送B醫院，未涵蓋後續檢查時間與發現過程，此為診斷關鍵時間資訊",
+     "reason": "所有section均未提及G醫院第二天8、9點發現脾臟陰影的具體時間節點，pred僅提及轉送B醫院，未涵蓋後續檢查時間與發現過程，此為診斷關鍵時間資訊"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及「診所設備限制導致無法發現病情」的抗辯理由，此為被告核心辯護要點，涉及過失認定的關鍵爭點",
+     "reason": "所有section均未提及「診所設備限制導致無法發現病情」的抗辯理由，此為被告核心辯護要點，涉及過失認定的關鍵爭點"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「被告有仔細檢查」的具體抗辯，pred僅提及「各項紀錄均正常」等間接資訊，未明確涵蓋被告主觀檢查行為",
+     "reason": "所有section均未提及「被告有仔細檢查」的具體抗辯，pred僅提及「各項紀錄均正常」等間接資訊，未明確涵蓋被告主觀檢查行為"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「媽媽和護士也沒發現異狀」的證人佐證抗辯，pred僅涵蓋新生兒客觀表現，未提及多方觀察者視角",
+     "reason": "所有section均未提及「媽媽和護士也沒發現異狀」的證人佐證抗辯，pred僅涵蓋新生兒客觀表現，未提及多方觀察者視角"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「聽診未發現異狀」的具體檢查行為抗辯，pred無相關內容",
+     "reason": "所有section均未提及「聽診未發現異狀」的具體檢查行為抗辯，pred無相關內容"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「被告都有注意嬰兒健康狀況」的主觀注意義務抗辯，pred僅客觀描述紀錄正常，未涵蓋被告注意行為",
+     "reason": "所有section均未提及「被告都有注意嬰兒健康狀況」的主觀注意義務抗辯，pred僅客觀描述紀錄正常，未涵蓋被告注意行為"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「媽媽住院期間下樓看小孩都正常」的證人佐證，此為GT抗辯內容，pred未涵蓋",
+     "reason": "所有section均未提及「媽媽住院期間下樓看小孩都正常」的證人佐證，此為GT抗辯內容，pred未涵蓋"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred claim 10已涵蓋「脾臟出血可能與嬰兒體型較大、凝血問題或生產過程有關」，與GT claim 43內容基本一致，但經比對pred未完整列出「小孩比較大、凝血有問題或是脾臟有問題」三項並列原因，維持missing",
+     "reason": "pred claim 10已涵蓋「脾臟出血可能與嬰兒體型較大、凝血問題或生產過程有關」，與GT claim 43內容基本一致，但經比對pred未完整列出「小孩比較大、凝血有問題或是脾臟有問題」三項並列原因，維持missing"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及「脾臟破裂可能在24小時後才發現」的延遲診斷特性抗辯，此為醫療專業認知要點，section_reasoning雖提及難以及時察知，但未明確24小時時間框架",
+     "reason": "所有section均未提及「脾臟破裂可能在24小時後才發現」的延遲診斷特性抗辯，此為醫療專業認知要點，section_reasoning雖提及難以及時察知，但未明確24小時時間框架"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未明確提及「一發現後速度就非常快」的病程急遽性描述，pred僅提及「突然出現」，涵蓋範圍不足",
+     "reason": "所有section均未明確提及「一發現後速度就非常快」的病程急遽性描述，pred僅提及「突然出現」，涵蓋範圍不足"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "雖section_opinions提及「醫事審議委員會鑑定指出...誤判與未檢查之疏失」，但GT claim 46明確引用「行政院衛生署醫事審議委員會指稱伊沒有注意到脾臟破裂」為被告視角的被指稱內容，此為抗辯背景脈絡的重要論點",
+     "reason": "雖section_opinions提及「醫事審議委員會鑑定指出...誤判與未檢查之疏失」，但GT claim 46明確引用「行政院衛生署醫事審議委員會指稱伊沒有注意到脾臟破裂」為被告視角的被指稱內容，此為抗辯背景脈絡的重要論點"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "雖section_reasoning提及「難以及時察知脾臟破裂」，但GT claim 47「在那種情況下，伊是檢查不出來的」為被告直接抗辯陳述，兩者語義有別，維持missing",
+     "reason": "雖section_reasoning提及「難以及時察知脾臟破裂」，但GT claim 47「在那種情況下，伊是檢查不出來的」為被告直接抗辯陳述，兩者語義有別，維持missing"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及「醫院裡也沒有儀器可檢查」的設備限制抗辯，此為GT中被告重要辯護理由，涉及過失認定的關鍵爭點",
+     "reason": "所有section均未提及「醫院裡也沒有儀器可檢查」的設備限制抗辯，此為GT中被告重要辯護理由，涉及過失認定的關鍵爭點"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「伊不知錯在那裡」的被告主觀陳述，pred無相關內容",
+     "reason": "所有section均未提及「伊不知錯在那裡」的被告主觀陳述，pred無相關內容"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及「鼠蹊部出血有很多種原因」的擴大解釋抗辯，pred僅提及「鼠蹊部瘀青」的發現，未涵蓋成因多樣性論述",
+     "reason": "所有section均未提及「鼠蹊部出血有很多種原因」的擴大解釋抗辯，pred僅提及「鼠蹊部瘀青」的發現，未涵蓋成因多樣性論述"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及「G醫院也懷疑是嵌入性脫腸」的誤診合理性抗辯，此為被告主張誤判有因的重要論點，section_reasoning雖提及病歷未顯示判定為皮下出血，但未提及G醫院亦有類似懷疑",
+     "reason": "所有section均未提及「G醫院也懷疑是嵌入性脫腸」的誤診合理性抗辯，此為被告主張誤判有因的重要論點，section_reasoning雖提及病歷未顯示判定為皮下出血，但未提及G醫院亦有類似懷疑"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "雖section_reasoning提及「須透過超音波檢查始能發現脾臟破裂」，但GT claim 52強調「第二天照超音波後才發現是脾臟出血而不是嵌入性脫腸」的診斷時序與排除過程，此為診斷延遲合理性的關鍵論點",
+     "reason": "雖section_reasoning提及「須透過超音波檢查始能發現脾臟破裂」，但GT claim 52強調「第二天照超音波後才發現是脾臟出血而不是嵌入性脫腸」的診斷時序與排除過程，此為診斷延遲合理性的關鍵論點"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實。判決結果段僅記載判決無罪之主文，未提及檢察官上訴情況或判決確定狀態，屬於判決書標準結語性質，不影響案情理解",
+     "reason": "程序性事實。判決結果段僅記載判決無罪之主文，未提及檢察官上訴情況或判決確定狀態，屬於判決書標準結語性質，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實。判決結果段僅記載判決無罪之主文，未說明判決確定與否，屬於後續程序性資訊，不影響判決結論理解",
+     "reason": "程序性事實。判決結果段僅記載判決無罪之主文，未說明判決確定與否，屬於後續程序性資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning中未提及「與公訴人所指病菌感染不相干」的因果關係論證",
+     "reason": "section_reasoning中未提及「與公訴人所指病菌感染不相干」的因果關係論證"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning提及「約2小時40分鐘內轉送」，未提「15分鐘」的時間推論",
+     "reason": "section_reasoning提及「約2小時40分鐘內轉送」，未提「15分鐘」的時間推論"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及「15分鐘內轉診無延誤」的具體推論",
+     "reason": "section_reasoning未提及「15分鐘內轉診無延誤」的具體推論"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及G醫院小兒科醫師關於肉眼無法判斷外力撞擊的證詞",
+     "reason": "section_reasoning未提及G醫院小兒科醫師關於肉眼無法判斷外力撞擊的證詞"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning僅提及「無外傷紀錄」，未提及G醫院病歷細節",
+     "reason": "section_reasoning僅提及「無外傷紀錄」，未提及G醫院病歷細節"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning提及死因為脾臟破裂導致缺血性休克，但未提及G醫院完整診斷（多重器官衰竭、內出血）",
+     "reason": "section_reasoning提及死因為脾臟破裂導致缺血性休克，但未提及G醫院完整診斷（多重器官衰竭、內出血）"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及G醫院急診醫師對瘀青長度的具體描述",
+     "reason": "section_reasoning未提及G醫院急診醫師對瘀青長度的具體描述"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及瘀青的外觀特徵（紅腫、非整片深瘀青）",
+     "reason": "section_reasoning未提及瘀青的外觀特徵（紅腫、非整片深瘀青）"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及急診室醫師研判可能為腹腔出血或嵌入性疝氣",
+     "reason": "section_reasoning未提及急診室醫師研判可能為腹腔出血或嵌入性疝氣"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及G醫院小兒科醫師值班及接獲通知的時間",
+     "reason": "section_reasoning未提及G醫院小兒科醫師值班及接獲通知的時間"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及嬰兒的詳細症狀（肚子腫脹、睪丸瘀血等）",
+     "reason": "section_reasoning未提及嬰兒的詳細症狀（肚子腫脹、睪丸瘀血等）"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning提及血壓極低，未提血紅素2.6gm/dL的具體數值",
+     "reason": "section_reasoning提及血壓極低，未提血紅素2.6gm/dL的具體數值"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及G醫院醫師認定缺血性休克的診斷過程",
+     "reason": "section_reasoning未提及G醫院醫師認定缺血性休克的診斷過程"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及G醫院的治療措施（生理食鹽水點滴、輸血）",
+     "reason": "section_reasoning未提及G醫院的治療措施（生理食鹽水點滴、輸血）"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及驗血後血紅素2.4gm/dL及持續輸血",
+     "reason": "section_reasoning未提及驗血後血紅素2.4gm/dL及持續輸血"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及八點請外科醫師會診及認定內出血",
+     "reason": "section_reasoning未提及八點請外科醫師會診及認定內出血"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及因患者不穩定不敢開刀",
+     "reason": "section_reasoning未提及因患者不穩定不敢開刀"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及超音波檢查結果（脾臟三公分傷口）",
+     "reason": "section_reasoning未提及超音波檢查結果（脾臟三公分傷口）"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning未提及「被告判斷受限於診所設備人力」的法院認定",
+     "reason": "section_reasoning未提及「被告判斷受限於診所設備人力」的法院認定"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning中「證人醫師證述」間接支持此論點，但未明確提及「設備人力不足不等同過失」",
+     "reason": "section_reasoning中「證人醫師證述」間接支持此論點，但未明確提及「設備人力不足不等同過失」"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning未完整呈現「本案關鍵在於誤判與因果關係」的法院定義",
+     "reason": "section_reasoning未完整呈現「本案關鍵在於誤判與因果關係」的法院定義"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及被告之夫「懷疑嵌入性脫腸」的證詞",
+     "reason": "section_reasoning未提及被告之夫「懷疑嵌入性脫腸」的證詞"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning僅提及「病歷並未顯示判定為單純皮下出血」，未明確提及「鑑定報告稱誤判之言無憑」",
+     "reason": "section_reasoning僅提及「病歷並未顯示判定為單純皮下出血」，未明確提及「鑑定報告稱誤判之言無憑」"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及嬰兒吸奶量及情況正常的細節",
+     "reason": "section_reasoning未提及嬰兒吸奶量及情況正常的細節"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning未提及急診室醫師的具體診斷方向",
+     "reason": "section_reasoning未提及急診室醫師的具體診斷方向"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 136,
+   "pred_total": 52,
+   "matched": 69,
+   "partial": 20,
+   "missing": 47,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7829,
+  "compression_afg_chars": 1280,
+  "compression_source_chars": 5897,
+  "gt_length_ratio": 0.2843,
+  "gt_length_afg_chars": 1280,
+  "gt_length_gt_chars": 4502,
+  "section_balance": 0.4242
+ }
 }

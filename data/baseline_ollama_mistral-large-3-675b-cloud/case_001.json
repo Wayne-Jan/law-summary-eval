@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -123,5 +124,256 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7255,
+  "fact_recall": 0.6613,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7961,
+  "quality_overall": 4.4429,
+  "checklist_pass_rate": 0.9348,
+  "citation_accuracy": 0.2857,
+  "citation_support_score": 0.3563,
+  "uncited_rate": 0.1,
+  "faithfulness_combined": {
+   "score": 0.5543,
+   "citation_fidelity": 0.2571,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.8315,
+  "missing_severity": {
+   "critical": 3,
+   "important": 12,
+   "minor": 14,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要僅提及「9月29日轉院」，未涵蓋「病情未見好轉」「上午9時許」「辦理出院手續」等關鍵時間與決策細節，跨section掃描後仍缺失",
+     "reason": "摘要僅提及「9月29日轉院」，未涵蓋「病情未見好轉」「上午9時許」「辦理出院手續」等關鍵時間與決策細節，跨section掃描後仍缺失"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "該癲癇發作為轉院後病情惡化之關鍵時間節點，影響因果關係與死亡結果理解，但全文皆未提及「突發癲癇症及喪失意識」",
+     "reason": "該癲癇發作為轉院後病情惡化之關鍵時間節點，影響因果關係與死亡結果理解，但全文皆未提及「突發癲癇症及喪失意識」"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense 段僅見被告乙辯稱「伊非徐瑞堂之主治醫師，僅於巡房時觀察病患」，未見「坦承不諱」診治之事實，係被告態度之重要爭點",
+     "reason": "defense 段僅見被告乙辯稱「伊非徐瑞堂之主治醫師，僅於巡房時觀察病患」，未見「坦承不諱」診治之事實，係被告態度之重要爭點"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense 段未明確陳述「病患X住院期間之主治醫師係被告甲」此一客觀事實，雖有「供主治醫師戊○○參考」之暗示，但非直接陳述主治醫師身份",
+     "reason": "defense 段未明確陳述「病患X住院期間之主治醫師係被告甲」此一客觀事實，雖有「供主治醫師戊○○參考」之暗示，但非直接陳述主治醫師身份"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "defense 段未提及被告乙「疑有腦部出血現象」之觀察結果，此為重要醫療判斷事實，影響是否應進一步檢查之理解",
+     "reason": "defense 段未提及被告乙「疑有腦部出血現象」之觀察結果，此為重要醫療判斷事實，影響是否應進一步檢查之理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense 段僅提及「供主治醫師戊○○參考」，與 GT「係給...看」之表述有差異，雖語意相近但措辞不同，維持 missing",
+     "reason": "defense 段僅提及「供主治醫師戊○○參考」，與 GT「係給...看」之表述有差異，雖語意相近但措辞不同，維持 missing"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性事實，屬起訴背景說明，facts段雖提及檢察官相驗，但未提「督同法醫師」，其餘四個section亦無相關記載；遺漏不影響案情核心理解",
+     "reason": "程序性事實，屬起訴背景說明，facts段雖提及檢察官相驗，但未提「督同法醫師」，其餘四個section亦無相關記載；遺漏不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "經搜尋全部 5 個 section 原文（facts、defense、opinions、verdict、reasoning），均未發現「事證明確」或語義對應之結論性陳述。verdict section 僅記載判決主文（罪名、刑度、緩刑），未提及「本件事證明確」此一判決書常用結論語。確認摘要確實未涵蓋此程序性事實。",
+     "reason": "經搜尋全部 5 個 section 原文（facts、defense、opinions、verdict、reasoning），均未發現「事證明確」或語義對應之結論性陳述。verdict section 僅記載判決主文（罪名、刑度、緩刑），未提及「本件事證明確」此一判決書常用結論語。確認摘要確實未涵蓋此程序性事實。"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖然 section_01_facts.txt 提到兩位醫師均參與診治，但「分別診治」的分工安排未明確出現，維持missing",
+     "reason": "雖然 section_01_facts.txt 提到兩位醫師均參與診治，但「分別診治」的分工安排未明確出現，維持missing"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "診斷證明書開具細節未在任一section出現",
+     "reason": "診斷證明書開具細節未在任一section出現"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提到「暈眩、噁心等症狀」，未完整列出「嘔吐及冒冷汗」",
+     "reason": "section_01_facts.txt 僅提到「暈眩、噁心等症狀」，未完整列出「嘔吐及冒冷汗」"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "所有section均從「未注意」角度敘述，未提及被告甲「已察覺」腦部異狀，此為關鍵過失認定",
+     "reason": "所有section均從「未注意」角度敘述，未提及被告甲「已察覺」腦部異狀，此為關鍵過失認定"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "診治義務之法律基礎為一般性法律原則，摘要未特別載明",
+     "reason": "診治義務之法律基礎為一般性法律原則，摘要未特別載明"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "二十九日出院時仍維持心肌梗塞診斷的具體時點描述未出現",
+     "reason": "二十九日出院時仍維持心肌梗塞診斷的具體時點描述未出現"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要以「未注意」等事實描述呈現過失，未直接使用「疏失」一詞評價",
+     "reason": "摘要以「未注意」等事實描述呈現過失，未直接使用「疏失」一詞評價"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "主治醫師職責定義為一般性背景說明，摘要未載入",
+     "reason": "主治醫師職責定義為一般性背景說明，摘要未載入"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提到兼任院長，未明確「病患X住院期間」此一身分",
+     "reason": "section_01_facts.txt 僅提到兼任院長，未明確「病患X住院期間」此一身分"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫院醫師人數為影響醫療責任判定的關鍵事實，所有section均未提及",
+     "reason": "醫院醫師人數為影響醫療責任判定的關鍵事實，所有section均未提及"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告二人均為主治醫師的認定為重要事實基礎，摘要未明確載明",
+     "reason": "被告二人均為主治醫師的認定為重要事實基礎，摘要未明確載明"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "九月二十八日診治的具體日期未出現",
+     "reason": "九月二十八日診治的具體日期未出現"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提到X光檢查及開藥但未明確「促進末梢血管循環」之藥劑類型",
+     "reason": "section_02_defense.txt 提到X光檢查及開藥但未明確「促進末梢血管循環」之藥劑類型"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療行為vs會診行為的法律認定為法院推理細節，摘要未具體載明",
+     "reason": "醫療行為vs會診行為的法律認定為法院推理細節，摘要未具體載明"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要僅提到「記載考慮施以腦部斷層掃描」，未明確「發現有需要」之主觀認知，影響過失判斷",
+     "reason": "摘要僅提到「記載考慮施以腦部斷層掃描」，未明確「發現有需要」之主觀認知，影響過失判斷"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "CPK值198U/L及300U/L標準之具體數據為重要診斷證據，所有section均未提及",
+     "reason": "CPK值198U/L及300U/L標準之具體數據為重要診斷證據，所有section均未提及"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 已提及「臨床表現並無明顯心肌梗塞證據」，維持missing（但應於opinions section處理）",
+     "reason": "section_03_opinions.txt 已提及「臨床表現並無明顯心肌梗塞證據」，維持missing（但應於opinions section處理）"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 已提及相同內容，維持missing（但應於opinions section處理）",
+     "reason": "section_03_opinions.txt 已提及相同內容，維持missing（但應於opinions section處理）"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患診治期間生命徵象（意識清醒、生命徵候穩定）為病情評估重要背景，所有section均未提及",
+     "reason": "病患診治期間生命徵象（意識清醒、生命徵候穩定）為病情評估重要背景，所有section均未提及"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「於10月2日死亡」，未完整載明「87年9月27日病發」之時間跨度（且年份標示為民國86年）",
+     "reason": "section_01_facts.txt 僅提及「於10月2日死亡」，未完整載明「87年9月27日病發」之時間跨度（且年份標示為民國86年）"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「非突發急性出血」之病情判斷為重要醫療事實，所有section均未提及",
+     "reason": "「非突發急性出血」之病情判斷為重要醫療事實，所有section均未提及"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 40,
+   "matched": 59,
+   "partial": 5,
+   "missing": 29,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7572,
+  "compression_afg_chars": 1209,
+  "compression_source_chars": 4979,
+  "gt_length_ratio": 0.396,
+  "gt_length_afg_chars": 1209,
+  "gt_length_gt_chars": 3053,
+  "section_balance": 0.5055
+ }
 }

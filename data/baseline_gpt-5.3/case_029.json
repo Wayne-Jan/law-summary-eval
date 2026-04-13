@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -125,5 +126,256 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7611,
+  "fact_recall": 0.6452,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7843,
+  "quality_overall": 4.9286,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.078,
+  "faithfulness_combined": {
+   "score": 0.9532,
+   "citation_fidelity": 0.922,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 7,
+   "correct": 7
+  },
+  "weighted_recall": 0.8495,
+  "missing_severity": {
+   "critical": 0,
+   "important": 13,
+   "minor": 16,
+   "details": [
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "should pay attention, can pay attention but failed to do so is a legal term for negligence elements, section_facts only mentions improper feeding method without explicitly recording this negligence requirement",
+     "reason": "should pay attention, can pay attention but failed to do so is a legal term for negligence elements, section_facts only mentions improper feeding method without explicitly recording this negligence requirement"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "knowingly recording false information is a subjective intent element, section_facts only mentions the defendant made untrue records without using the subjective intent terminology",
+     "reason": "knowingly recording false information is a subjective intent element, section_facts only mentions the defendant made untrue records without using the subjective intent terminology"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "鑑定意見中提到解剖記錄，但未說明「無法用大體解剖診斷先天性代謝異常」的診斷限制",
+     "reason": "鑑定意見中提到解剖記錄，但未說明「無法用大體解剖診斷先天性代謝異常」的診斷限制"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未提及G醫院出院病歷摘要內容，屬背景資訊",
+     "reason": "未提及G醫院出院病歷摘要內容，屬背景資訊"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未提及「嬰兒躺著餵食比較會引起溢奶」的鑑定觀點",
+     "reason": "未提及「嬰兒躺著餵食比較會引起溢奶」的鑑定觀點"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未提及「食後拍背排氣減少溢奶」的鑑定意見",
+     "reason": "未提及「食後拍背排氣減少溢奶」的鑑定意見"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未提及「非餵食期間亦有溢奶」的一般性醫療常識",
+     "reason": "未提及「非餵食期間亦有溢奶」的一般性醫療常識"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未提及「若非生病或體弱，顯少會引起吸入性肺炎」的風險評估",
+     "reason": "未提及「若非生病或體弱，顯少會引起吸入性肺炎」的風險評估"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "發現發紺及活動力差的過程已於facts段落記載，opinions段落未重複",
+     "reason": "發現發紺及活動力差的過程已於facts段落記載，opinions段落未重複"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急救及轉送過程已於facts段落記載，opinions段落未重複",
+     "reason": "急救及轉送過程已於facts段落記載，opinions段落未重複"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未提及「插管、呼吸器及加護病房」等關鍵醫療處置，影響病情嚴重程度理解",
+     "reason": "未提及「插管、呼吸器及加護病房」等關鍵醫療處置，影響病情嚴重程度理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未記載住院時理學檢查「對外界刺激沒有反應」的細節",
+     "reason": "未記載住院時理學檢查「對外界刺激沒有反應」的細節"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未記載住院時理學檢查「依賴呼吸器」的細節",
+     "reason": "未記載住院時理學檢查「依賴呼吸器」的細節"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未記載住院時理學檢查「呼吸聲粗糙、無囉音」的細節",
+     "reason": "未記載住院時理學檢查「呼吸聲粗糙、無囉音」的細節"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未記載住院時理學檢查「肝臟二指大」的細節",
+     "reason": "未記載住院時理學檢查「肝臟二指大」的細節"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未提及「法院再次囑託委員會說明」的程序性事實，影響鑑定程序完整理解",
+     "reason": "未提及「法院再次囑託委員會說明」的程序性事實，影響鑑定程序完整理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未提及鑑定參考的餵奶時間及量之病歷紀載細節",
+     "reason": "未提及鑑定參考的餵奶時間及量之病歷紀載細節"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未提及鑑定參考的巡視時間點紀錄細節",
+     "reason": "未提及鑑定參考的巡視時間點紀錄細節"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未提及「並非餵食後不久即發生異狀」的時間判斷結論",
+     "reason": "未提及「並非餵食後不久即發生異狀」的時間判斷結論"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未詳述代謝異常導致胃排空延長、意識不清等病理機制",
+     "reason": "未詳述代謝異常導致胃排空延長、意識不清等病理機制"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未明確提及「本身代謝性異常就可引起猝死」的直接因果關係",
+     "reason": "未明確提及「本身代謝性異常就可引起猝死」的直接因果關係"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未提及急救過程中腹壓增加、胃排空延長導致餘奶移位的機制說明",
+     "reason": "未提及急救過程中腹壓增加、胃排空延長導致餘奶移位的機制說明"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未提及鑑定對J醫院護理紀錄過簡的評論",
+     "reason": "未提及鑑定對J醫院護理紀錄過簡的評論"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未明確提及「嚴重酸中毒及高氨血症導致病患突然死亡」的直接因果關係",
+     "reason": "未明確提及「嚴重酸中毒及高氨血症導致病患突然死亡」的直接因果關係"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未提及嬰兒猝死症相關文獻內容",
+     "reason": "未提及嬰兒猝死症相關文獻內容"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未提及「嗆奶吸入亦可導致突然死亡」的其他猝死原因說明",
+     "reason": "未提及「嗆奶吸入亦可導致突然死亡」的其他猝死原因說明"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，摘要未提及自訴人是否上訴，不影響判決結論理解",
+     "reason": "程序性事實，摘要未提及自訴人是否上訴，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "判決確定狀態未提及，影響案件程序狀態的完整理解",
+     "reason": "判決確定狀態未提及，影響案件程序狀態的完整理解"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「護理紀錄採流水帳方式記載」屬記載形式描述，遍查全部5個section均未提及，維持missing。此為程序性細節，不影響判決結論理解。",
+     "reason": "「護理紀錄採流水帳方式記載」屬記載形式描述，遍查全部5個section均未提及，維持missing。此為程序性細節，不影響判決結論理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 51,
+   "matched": 56,
+   "partial": 8,
+   "missing": 29,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7531,
+  "compression_afg_chars": 1533,
+  "compression_source_chars": 6208,
+  "gt_length_ratio": 0.4841,
+  "gt_length_afg_chars": 1533,
+  "gt_length_gt_chars": 3167,
+  "section_balance": 0.1724
+ }
 }

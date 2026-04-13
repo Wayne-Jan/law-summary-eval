@@ -19,8 +19,9 @@
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_gemma4-31b-cloud",
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_mistral-large-3-675b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -36,7 +37,7 @@
   "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
   "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
   "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-  "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+  "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
   "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
   "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
   "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
@@ -58,7 +59,7 @@
   "baseline_ollama_glm-5-cloud": "開源模型",
   "baseline_ollama_gpt-oss-120b-cloud": "開源模型",
   "baseline_ollama_kimi-k2.5-cloud": "開源模型",
-  "baseline_ollama_mistral-large-3-675b-cloud": "開源模型",
+  "baseline_ollama_gemma4-31b-cloud": "開源模型",
   "baseline_ollama_nemotron-3-super-cloud": "開源模型",
   "baseline_ollama_qwen3-next-80b-cloud": "開源模型",
   "baseline_ollama_qwen3.5-397b-cloud": "開源模型",
@@ -123,5 +124,95 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8877,
+  "fact_recall": 0.9086,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9521,
+  "quality_overall": 4.7714,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 0.7,
+  "citation_support_score": 0.68,
+  "uncited_rate": 0.053,
+  "faithfulness_combined": {
+   "score": 0.7977,
+   "citation_fidelity": 0.6629,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 18,
+   "correct": 18
+  },
+  "weighted_recall": 0.9749,
+  "missing_severity": {
+   "critical": 0,
+   "important": 1,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "遍查全部5個section原文，section_04_verdict.txt僅陳述判決結果與刑度，section_05_reasoning.txt雖詳述認定被告成立犯罪之理由，但並無「事證明確」或類似語義表述，確認摘要確實遺漏此項事實認定",
+     "reason": "遍查全部5個section原文，section_04_verdict.txt僅陳述判決結果與刑度，section_05_reasoning.txt雖詳述認定被告成立犯罪之理由，但並無「事證明確」或類似語義表述，確認摘要確實遺漏此項事實認定"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查全部5個section原文，無任何段落提及上訴期間或當事人未上訴之程序事實，確認為程序性背景遺漏",
+     "reason": "遍查全部5個section原文，無任何段落提及上訴期間或當事人未上訴之程序事實，確認為程序性背景遺漏"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查全部5個section原文，無任何段落提及判決確定之程序事實，確認為程序性背景遺漏",
+     "reason": "遍查全部5個section原文，無任何段落提及判決確定之程序事實，確認為程序性背景遺漏"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部五個 section 原文，均未提及被告乙開具診斷證明書之事實，屬程序性事實遺漏",
+     "reason": "遍查全部五個 section 原文，均未提及被告乙開具診斷證明書之事實，屬程序性事實遺漏"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 section 原文，僅提及被告甲「應注意」腦部出血可能，未確認其「已察覺」腦部異狀",
+     "reason": "遍查全部 section 原文，僅提及被告甲「應注意」腦部出血可能，未確認其「已察覺」腦部異狀"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未包含主治醫師職責之一般性定義說明，屬背景性事實遺漏",
+     "reason": "五個 section 原文均未包含主治醫師職責之一般性定義說明，屬背景性事實遺漏"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 76,
+   "matched": 82,
+   "partial": 5,
+   "missing": 6,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.4734,
+  "compression_afg_chars": 2622,
+  "compression_source_chars": 4979,
+  "gt_length_ratio": 0.8588,
+  "gt_length_afg_chars": 2622,
+  "gt_length_gt_chars": 3053,
+  "section_balance": 0.5714
+ }
 }
