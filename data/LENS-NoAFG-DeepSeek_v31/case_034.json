@@ -20,8 +20,7 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "baseline_ollama_mistral-large-3-675b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -180,6 +179,576 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7212,
-  "fact_recall_avg": null
+  "fact_recall": 0.5269,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6902,
+  "quality_overall": 4.9286,
+  "checklist_pass_rate": 0.9892,
+  "citation_accuracy": 0.5625,
+  "citation_support_score": 0.5971,
+  "uncited_rate": 0.014,
+  "faithfulness_combined": {
+   "score": 0.7328,
+   "citation_fidelity": 0.5546,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 19
+  },
+  "weighted_recall": 0.7445,
+  "missing_severity": {
+   "critical": 8,
+   "important": 37,
+   "minor": 30,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "病患國籍資訊（越南籍）在全部 5 個 section 中均無提及，屬背景性事實不影響案情理解",
+     "reason": "病患國籍資訊（越南籍）在全部 5 個 section 中均無提及，屬背景性事實不影響案情理解"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense section 摘要雖未明確提及被告醫師資格與服務機構，但此為背景性事實，於 facts section 中已有「醫師甲係設於基隆市婦產科診所之醫師兼負責人」之描述，不影響判決結論理解",
+     "reason": "defense section 摘要雖未明確提及被告醫師資格與服務機構，但此為背景性事實，於 facts section 中已有「醫師甲係設於基隆市婦產科診所之醫師兼負責人」之描述，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及04:40子宮頸擴張寬度、羊水胎便染色、胎心音不規則減慢等詳細時程",
+     "reason": "section_03_opinions.txt 未提及04:40子宮頸擴張寬度、羊水胎便染色、胎心音不規則減慢等詳細時程"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及研判胎兒窘迫之鑑定意見",
+     "reason": "section_03_opinions.txt 未提及研判胎兒窘迫之鑑定意見"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及胎兒窘迫標準處置流程之鑑定意見",
+     "reason": "section_03_opinions.txt 未提及胎兒窘迫標準處置流程之鑑定意見"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及05:00處置及胎心音變異性減速之鑑定詳情",
+     "reason": "section_03_opinions.txt 未提及05:00處置及胎心音變異性減速之鑑定詳情"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未引用Williams Obstetrics教科書內容",
+     "reason": "section_03_opinions.txt 未引用Williams Obstetrics教科書內容"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及06:35發現胎兒膚色微紫及能否早期發現血腫之鑑定意見",
+     "reason": "section_03_opinions.txt 未提及06:35發現胎兒膚色微紫及能否早期發現血腫之鑑定意見"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及產婦為第一胎及詳細時間線",
+     "reason": "section_03_opinions.txt 未提及產婦為第一胎及詳細時間線"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 僅簡述「胎頭很低有可能因骨盆腔壓迫造成」，未詳細說明胎頭位置",
+     "reason": "section_03_opinions.txt 僅簡述「胎頭很低有可能因骨盆腔壓迫造成」，未詳細說明胎頭位置"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及血腫塊10x5公分之具體大小",
+     "reason": "section_03_opinions.txt 未提及血腫塊10x5公分之具體大小"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及出生時病歷記載有無血腫",
+     "reason": "section_03_opinions.txt 未提及出生時病歷記載有無血腫"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及G醫院08:05至09:05血腫浮現之時間差",
+     "reason": "section_03_opinions.txt 未提及G醫院08:05至09:05血腫浮現之時間差"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 雖提及剖腹產使用真空吸引器符合醫療常規，但未詳述緊急情況醫師裁量權",
+     "reason": "section_03_opinions.txt 雖提及剖腹產使用真空吸引器符合醫療常規，但未詳述緊急情況醫師裁量權"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未引用Pediatric Clinics of North America期刊",
+     "reason": "section_03_opinions.txt 未引用Pediatric Clinics of North America期刊"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未引用Progress in Cardiovascular Disease期刊",
+     "reason": "section_03_opinions.txt 未引用Progress in Cardiovascular Disease期刊"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未詳述中樞型發紺原因",
+     "reason": "section_03_opinions.txt 未詳述中樞型發紺原因"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未詳述周邊型發紺原因",
+     "reason": "section_03_opinions.txt 未詳述周邊型發紺原因"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及膚色發紺多種原因及處置原則之鑑定結論",
+     "reason": "section_03_opinions.txt 未提及膚色發紺多種原因及處置原則之鑑定結論"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及胎兒體重3500公克、Apgar分數7分/8分之鑑定資料",
+     "reason": "section_03_opinions.txt 未提及胎兒體重3500公克、Apgar分數7分/8分之鑑定資料"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及06:15入保溫箱至07:20病情惡化之完整產後時間線",
+     "reason": "section_03_opinions.txt 未提及06:15入保溫箱至07:20病情惡化之完整產後時間線"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及法醫研究所解剖肉眼觀察結果（十指嘴唇發紺、頭頂水袋感、瀰漫性血腫）",
+     "reason": "section_03_opinions.txt 未提及法醫研究所解剖肉眼觀察結果（十指嘴唇發紺、頭頂水袋感、瀰漫性血腫）"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及頭皮出血切開後才發現、外觀不易察覺之鑑定意見",
+     "reason": "section_03_opinions.txt 未提及頭皮出血切開後才發現、外觀不易察覺之鑑定意見"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及瀰漫出血在送至G醫院期間仍會持續發生",
+     "reason": "section_03_opinions.txt 未提及瀰漫出血在送至G醫院期間仍會持續發生"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 僅簡述「生產傷害」，未詳述腱膜下出血、線狀骨折、硬膜下出血之解剖發現",
+     "reason": "section_03_opinions.txt 僅簡述「生產傷害」，未詳述腱膜下出血、線狀骨折、硬膜下出血之解剖發現"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及排除掉到地上受傷及剖腹一般不傷及頭部之鑑定判斷",
+     "reason": "section_03_opinions.txt 未提及排除掉到地上受傷及剖腹一般不傷及頭部之鑑定判斷"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及發紺係心肺循環衰竭表現而非呼吸道受阻之鑑定結論",
+     "reason": "section_03_opinions.txt 未提及發紺係心肺循環衰竭表現而非呼吸道受阻之鑑定結論"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及醫療單位不鼓勵剖腹除非必要之鑑定說明",
+     "reason": "section_03_opinions.txt 未提及醫療單位不鼓勵剖腹除非必要之鑑定說明"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及05:00至05:30觀察過程及剖腹決策詳情",
+     "reason": "section_03_opinions.txt 未提及05:00至05:30觀察過程及剖腹決策詳情"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及羊水胎糞污染12%-22%之統計數據",
+     "reason": "section_03_opinions.txt 未提及羊水胎糞污染12%-22%之統計數據"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及重度胎便染色判斷標準（需併胎心減速及變頻缺乏）",
+     "reason": "section_03_opinions.txt 未提及重度胎便染色判斷標準（需併胎心減速及變頻缺乏）"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未詳述05:00至05:45手術開始之時間線",
+     "reason": "section_03_opinions.txt 未詳述05:00至05:45手術開始之時間線"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及頭部嚴重傷害應出現於04:40後之鑑定判斷",
+     "reason": "section_03_opinions.txt 未提及頭部嚴重傷害應出現於04:40後之鑑定判斷"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及剖腹產發生硬腦膜下腔出血7.4%(N=84,417)之統計數據",
+     "reason": "section_03_opinions.txt 未提及剖腹產發生硬腦膜下腔出血7.4%(N=84,417)之統計數據"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及死因traumatic craniocerebral injury及排除陰道擠壓之鑑定結論",
+     "reason": "section_03_opinions.txt 未提及死因traumatic craniocerebral injury及排除陰道擠壓之鑑定結論"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未詳述傷害時間範圍（05:48至08:05）之鑑定判斷",
+     "reason": "section_03_opinions.txt 未詳述傷害時間範圍（05:48至08:05）之鑑定判斷"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未做出綜合病歷及文獻之鑑定結論",
+     "reason": "section_03_opinions.txt 未做出綜合病歷及文獻之鑑定結論"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 雖提及剖腹產可能發生頭部骨折，但未述「機率極低」",
+     "reason": "section_03_opinions.txt 雖提及剖腹產可能發生頭部骨折，但未述「機率極低」"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及第一/第二產程定義",
+     "reason": "section_03_opinions.txt 未提及第一/第二產程定義"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖簡述骨盆腔壓迫可能，但未詳述第一/第二產程發生時機",
+     "reason": "section_03_opinions.txt 雖簡述骨盆腔壓迫可能，但未詳述第一/第二產程發生時機"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及「子宮頸全開後胎頭進入陰道，未進入陰道故非陰道造成之傷」之鑑定邏輯",
+     "reason": "section_03_opinions.txt 未提及「子宮頸全開後胎頭進入陰道，未進入陰道故非陰道造成之傷」之鑑定邏輯"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及「子宮頸擴張6公分時母親扭動擠壓極少造成胎兒頭部傷害」之鑑定意見",
+     "reason": "section_03_opinions.txt 未提及「子宮頸擴張6公分時母親扭動擠壓極少造成胎兒頭部傷害」之鑑定意見"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為鑑定機關對真空吸引器風險之專業評估，雖屬醫學專業細節，但涉及頭部損傷成因判斷，有助理解鑑定意見之完整脈絡，屬重要事實",
+     "reason": "本項為鑑定機關對真空吸引器風險之專業評估，雖屬醫學專業細節，但涉及頭部損傷成因判斷，有助理解鑑定意見之完整脈絡，屬重要事實"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為鑑定機關對真空吸引器使用是否符合醫療常規之判斷，涉及關鍵因果關係，屬重要事實",
+     "reason": "本項為鑑定機關對真空吸引器使用是否符合醫療常規之判斷，涉及關鍵因果關係，屬重要事實"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為胎兒頭部骨折原因之綜合判斷，涉及死因認定，屬重要事實",
+     "reason": "本項為胎兒頭部骨折原因之綜合判斷，涉及死因認定，屬重要事實"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項涉及病歷記載完整性之爭議，為關鍵證據問題，屬重要事實",
+     "reason": "本項涉及病歷記載完整性之爭議，為關鍵證據問題，屬重要事實"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為真空吸引器醫療常規之專業評估，涉及操作標準與風險因素，屬重要事實",
+     "reason": "本項為真空吸引器醫療常規之專業評估，涉及操作標準與風險因素，屬重要事實"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為剖腹產手術時間之基準評估，屬醫學細節輔助說明，為次要事實",
+     "reason": "本項為剖腹產手術時間之基準評估，屬醫學細節輔助說明，為次要事實"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為新生兒頭部血腫之醫學發現，涉及頭部外傷初期徵候之理解，屬重要事實",
+     "reason": "本項為新生兒頭部血腫之醫學發現，涉及頭部外傷初期徵候之理解，屬重要事實"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為瀰漫性出血之察覺與處置判斷，涉及醫療注意義務之評估，屬重要事實",
+     "reason": "本項為瀰漫性出血之察覺與處置判斷，涉及醫療注意義務之評估，屬重要事實"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為出血速度與觀察時間之技術評估，屬醫學細節，為次要事實",
+     "reason": "本項為出血速度與觀察時間之技術評估，屬醫學細節，為次要事實"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為胎兒窘迫及醫師及時處置之研判，涉及醫療過失判斷關鍵，屬重要事實",
+     "reason": "本項為胎兒窘迫及醫師及時處置之研判，涉及醫療過失判斷關鍵，屬重要事實"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為胎兒窘迫之具體證據（胎心音不規則減慢、羊水胎便+++），屬關鍵鑑定依據",
+     "reason": "本項為胎兒窘迫之具體證據（胎心音不規則減慢、羊水胎便+++），屬關鍵鑑定依據"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為緊急剖腹必要性之專業判斷，涉及醫療決策正當性，屬重要事實",
+     "reason": "本項為緊急剖腹必要性之專業判斷，涉及醫療決策正當性，屬重要事實"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為手術時間（53分鐘）之具體評估，屬時間細節輔助說明，為次要事實",
+     "reason": "本項為手術時間（53分鐘）之具體評估，屬時間細節輔助說明，為次要事實"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為Thacker文獻之專業引用，屬醫學文獻支撐，為次要事實",
+     "reason": "本項為Thacker文獻之專業引用，屬醫學文獻支撐，為次要事實"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為Skajaa文獻之專業引用，屬醫學文獻支撐，為次要事實",
+     "reason": "本項為Skajaa文獻之專業引用，屬醫學文獻支撐，為次要事實"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項詳述產程狀態（無難產、子宮頸口未全開、無第二產程、無產鉗），為排除分娩過程傷害之關鍵論證，屬重要事實",
+     "reason": "本項詳述產程狀態（無難產、子宮頸口未全開、無第二產程、無產鉗），為排除分娩過程傷害之關鍵論證，屬重要事實"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為孕婦姿勢對胎兒影響之醫學機制說明，屬背景性醫學理論，為次要事實",
+     "reason": "本項為孕婦姿勢對胎兒影響之醫學機制說明，屬背景性醫學理論，為次要事實"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為剖腹產併用真空吸引之優點說明，屬輔助性醫學論證，為次要事實",
+     "reason": "本項為剖腹產併用真空吸引之優點說明，屬輔助性醫學論證，為次要事實"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為「可能進入第二產程」之替代性成因判斷，涉及骨折原因之多元可能性，屬重要事實",
+     "reason": "本項為「可能進入第二產程」之替代性成因判斷，涉及骨折原因之多元可能性，屬重要事實"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為腦出血發生率（7.4%）之統計數據，屬輔助說明性數據，為次要事實",
+     "reason": "本項為腦出血發生率（7.4%）之統計數據，屬輔助說明性數據，為次要事實"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為產程劇烈導致靜脈竇破裂機制之文獻引用，與gt_claim_id 117內容重複，屬次要事實",
+     "reason": "本項為產程劇烈導致靜脈竇破裂機制之文獻引用，與gt_claim_id 117內容重複，屬次要事實"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為各種生產方式發生率之文獻引用，與gt_claim_id 118內容重複，屬次要事實",
+     "reason": "本項為各種生產方式發生率之文獻引用，與gt_claim_id 118內容重複，屬次要事實"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為真空吸引器使用時間（3~5秒）之具體細節，屬操作細節輔助說明，為次要事實",
+     "reason": "本項為真空吸引器使用時間（3~5秒）之具體細節，屬操作細節輔助說明，為次要事實"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為「使用真空吸引器程序符合醫療常規」之鑑定結論，與section_opinions中「未就時間間隔是否違反醫療常規提出具體評價」之表述有所差異，屬重要因果關係判斷",
+     "reason": "本項為「使用真空吸引器程序符合醫療常規」之鑑定結論，與section_opinions中「未就時間間隔是否違反醫療常規提出具體評價」之表述有所差異，屬重要因果關係判斷"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為新生兒膚色紫色之判斷及潛在病因分析（出血、DIC），涉及診斷標準與鉴别诊断，屬重要事實",
+     "reason": "本項為新生兒膚色紫色之判斷及潛在病因分析（出血、DIC），涉及診斷標準與鉴别诊断，屬重要事實"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為血腫形成時間與病況惡化速度之醫學判斷，涉及病情發展之醫學理解，屬重要事實",
+     "reason": "本項為血腫形成時間與病況惡化速度之醫學判斷，涉及病情發展之醫學理解，屬重要事實"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本項為血腫塊具體大小（10×5公分）及外觀辨別困難之描述，屬細節性醫學觀察，為次要事實",
+     "reason": "本項為血腫塊具體大小（10×5公分）及外觀辨別困難之描述，屬細節性醫學觀察，為次要事實"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為血腫塊浮現時間線（8:05無記載、9:05有記載）之關鍵證據，涉及出血發生時点之判斷，屬重要事實",
+     "reason": "本項為血腫塊浮現時間線（8:05無記載、9:05有記載）之關鍵證據，涉及出血發生時点之判斷，屬重要事實"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為法醫鑑定肉眼觀察結果（摸起來似水袋、切開後發現血腫），屬關鍵法醫證據，有助理解「外觀不易察覺」之判斷依據",
+     "reason": "本項為法醫鑑定肉眼觀察結果（摸起來似水袋、切開後發現血腫），屬關鍵法醫證據，有助理解「外觀不易察覺」之判斷依據"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "本項為出血在G醫院期間持續發生之判斷，涉及傷害發生時間点與醫師注意義務之評估，屬重要事實",
+     "reason": "本項為出血在G醫院期間持續發生之判斷，涉及傷害發生時間点與醫師注意義務之評估，屬重要事實"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要reasoning段雖提及「病患產後由外觀上不易察覺有上述兩側頭皮下嚴重瀰漫性血腫之情形」，但未明確提及08:05送至G醫院時未顯示血腫塊的具體時間點與病歷佐證細節，屬於佐證性事實遺漏",
+     "reason": "摘要reasoning段雖提及「病患產後由外觀上不易察覺有上述兩側頭皮下嚴重瀰漫性血腫之情形」，但未明確提及08:05送至G醫院時未顯示血腫塊的具體時間點與病歷佐證細節，屬於佐證性事實遺漏"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及09:05病歷始記載10×5公分血腫塊的具體時間點與尺寸數值，此為支持「外觀不易察覺」論點的時間證據細節",
+     "reason": "摘要未提及09:05病歷始記載10×5公分血腫塊的具體時間點與尺寸數值，此為支持「外觀不易察覺」論點的時間證據細節"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要討論死因時提及骨盆腔壓迫、剖腹手術等可能造成傷害的原因，但未明確表述「可以排除病患產後有碰撞地面或其他物品之傷害」此一消極排除論證，影響死因推論的邏輯完整性",
+     "reason": "摘要討論死因時提及骨盆腔壓迫、剖腹手術等可能造成傷害的原因，但未明確表述「可以排除病患產後有碰撞地面或其他物品之傷害」此一消極排除論證，影響死因推論的邏輯完整性"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 167,
+   "pred_total": 74,
+   "matched": 84,
+   "partial": 8,
+   "missing": 75,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8318,
+  "compression_afg_chars": 2607,
+  "compression_source_chars": 15502,
+  "gt_length_ratio": 0.2724,
+  "gt_length_afg_chars": 2607,
+  "gt_length_gt_chars": 9571,
+  "section_balance": 0.186
  }
 }

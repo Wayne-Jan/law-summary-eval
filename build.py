@@ -96,6 +96,7 @@ EXCLUDED_CONDITIONS = {
     "baseline_ollama_cogito-2.1-671b-cloud",
     "baseline_ollama_qwen3-next-80b-cloud",
     "baseline_ollama_nemotron-3-super-cloud",
+    "baseline_ollama_mistral-large-3-675b-cloud",
 }
 
 CONDITION_LABELS = {

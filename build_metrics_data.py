@@ -42,6 +42,7 @@ EXTRA_CONDITIONS = OrderedDict(
         ("LENS-NoAFG-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-B", "group": "開源模型"}),
         ("LENS-NoReact-DeepSeek_v31", {"label": "LENS-DeepSeek v3.1-C", "group": "開源模型"}),
         ("baseline_ollama_nemotron-3-super-cloud", {"label": "Nemotron 3 Super (120B / 12A)", "group": "開源模型"}),
+        ("baseline_ollama_gemma4-31b-cloud", {"label": "Gemma 4 (30.7B)", "group": "開源模型"}),
     ]
 )
 
@@ -161,25 +162,50 @@ def load_local_case_eval_index():
     return index
 
 
+CONDITION_ORDER = [
+    # LENS-Haiku (commercial)
+    "claude_afg_v5.1",
+    "ablation_no_afg",
+    "ablation_no_react",
+    # Commercial baselines
+    "baseline_claude-sonnet",
+    "baseline_claude-haiku",
+    "baseline_gpt-5.4-thinking",
+    "baseline_gpt-5.3",
+    "baseline_gemini-3.1-pro",
+    "baseline_gemini-3.0-flash",
+    # LENS-DeepSeek (open-source)
+    "LENS-Full-DeepSeek_v31",
+    "LENS-NoAFG-DeepSeek_v31",
+    "LENS-NoReact-DeepSeek_v31",
+    # Open-source baselines (alphabetical)
+]
+
+
 def load_existing_template():
     data = read_json(CURRENT_METRICS)
     if not data:
         raise FileNotFoundError(f"Missing template metrics file: {CURRENT_METRICS}")
-    conditions = OrderedDict(
-        (
-            key,
-            {
-                "label": DISPLAY_LABELS.get(key, value["label"]),
-                "group": value["group"],
-            },
-        )
-        for key, value in data["conditions"].items()
-        if key not in EXCLUDED_CONDITIONS
-    )
+    # Collect all known conditions from template + EXTRA
+    all_conds = OrderedDict()
+    for key, value in data["conditions"].items():
+        if key in EXCLUDED_CONDITIONS:
+            continue
+        all_conds[key] = {
+            "label": DISPLAY_LABELS.get(key, value["label"]),
+            "group": value["group"],
+        }
     for key, value in EXTRA_CONDITIONS.items():
         if key in EXCLUDED_CONDITIONS:
             continue
-        conditions.setdefault(key, value)
+        all_conds.setdefault(key, value)
+
+    # Sort: explicit order first, then remaining open-source alphabetically
+    ordered_keys = [k for k in CONDITION_ORDER if k in all_conds]
+    remaining = sorted(k for k in all_conds if k not in CONDITION_ORDER)
+    conditions = OrderedDict(
+        (k, all_conds[k]) for k in ordered_keys + remaining
+    )
     return data, list(conditions.items())
 
 
