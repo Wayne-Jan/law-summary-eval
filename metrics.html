@@ -381,7 +381,10 @@
     }
     .overview-card-title { font-size: 17px; font-weight: 700; color: var(--slate-900); }
     .lens-mark { color: #0000FF; }
-    .cond-icon { height: 20px; width: auto; vertical-align: -3px; margin-right: 5px; flex-shrink: 0; }
+    .cond-icon { height: 20px; width: 20px; vertical-align: -3px; margin-right: 5px; flex-shrink: 0; }
+    .cond-icon-wrap { display: inline-block; position: relative; width: 24px; height: 20px; vertical-align: -3px; margin-right: 5px; }
+    .cond-icon-wrap .cond-icon-main { width: 20px; height: 20px; position: absolute; top: 0; left: 0; }
+    .cond-icon-wrap .cond-icon-badge { width: 12px; height: 12px; position: absolute; bottom: -2px; right: -2px; background: white; border-radius: 50%; padding: 1px; }
     .overview-card-scores {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
     }
@@ -1915,12 +1918,12 @@
     'baseline_ollama_nemotron-3-super-cloud'
   ]);
   const CONDITION_ICONS = {
-    'claude_afg_v5.1': 'figures/icons/lens-claude.svg',
-    'ablation_no_afg': 'figures/icons/lens-claude.svg',
-    'ablation_no_react': 'figures/icons/lens-claude.svg',
-    'LENS-Full-DeepSeek_v31': 'figures/icons/lens-deepseek.svg',
-    'LENS-NoAFG-DeepSeek_v31': 'figures/icons/lens-deepseek.svg',
-    'LENS-NoReact-DeepSeek_v31': 'figures/icons/lens-deepseek.svg',
+    'claude_afg_v5.1': { main: 'figures/icons/claude-color.svg', badge: 'figures/icons/lens.svg' },
+    'ablation_no_afg': { main: 'figures/icons/claude-color.svg', badge: 'figures/icons/lens.svg' },
+    'ablation_no_react': { main: 'figures/icons/claude-color.svg', badge: 'figures/icons/lens.svg' },
+    'LENS-Full-DeepSeek_v31': { main: 'figures/icons/deepseek-color.svg', badge: 'figures/icons/lens.svg' },
+    'LENS-NoAFG-DeepSeek_v31': { main: 'figures/icons/deepseek-color.svg', badge: 'figures/icons/lens.svg' },
+    'LENS-NoReact-DeepSeek_v31': { main: 'figures/icons/deepseek-color.svg', badge: 'figures/icons/lens.svg' },
     'baseline_claude-haiku': 'figures/icons/claude-color.svg',
     'baseline_claude-sonnet': 'figures/icons/claude-color.svg',
     'baseline_gpt-5.3': 'figures/icons/openai.svg',
@@ -1977,8 +1980,15 @@
   }
 
   function formatModelLabel(label, condKey) {
-    const iconSrc = condKey ? CONDITION_ICONS[condKey] : null;
-    const iconHtml = iconSrc ? `<img class="cond-icon" src="${iconSrc}" alt="">` : '';
+    const iconCfg = condKey ? CONDITION_ICONS[condKey] : null;
+    let iconHtml = '';
+    if (iconCfg) {
+      if (typeof iconCfg === 'object') {
+        iconHtml = `<span class="cond-icon-wrap"><img class="cond-icon-main" src="${iconCfg.main}" alt=""><img class="cond-icon-badge" src="${iconCfg.badge}" alt=""></span>`;
+      } else {
+        iconHtml = `<img class="cond-icon" src="${iconCfg}" alt="">`;
+      }
+    }
     if (!label || !label.startsWith('LENS-')) return iconHtml + label;
     return iconHtml + `<span class="lens-mark">${label}</span>`;
   }
