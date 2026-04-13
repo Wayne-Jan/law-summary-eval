@@ -381,6 +381,7 @@
     }
     .overview-card-title { font-size: 17px; font-weight: 700; color: var(--slate-900); }
     .lens-mark { color: #0000FF; }
+    .cond-icon { width: 20px; height: 20px; vertical-align: -3px; margin-right: 5px; flex-shrink: 0; }
     .overview-card-scores {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
     }
@@ -1913,6 +1914,28 @@
     'baseline_ollama_qwen3-next-80b-cloud',
     'baseline_ollama_nemotron-3-super-cloud'
   ]);
+  const CONDITION_ICONS = {
+    'claude_afg_v5.1': 'figures/icons/lens.svg',
+    'ablation_no_afg': 'figures/icons/lens.svg',
+    'ablation_no_react': 'figures/icons/lens.svg',
+    'LENS-Full-DeepSeek_v31': 'figures/icons/lens.svg',
+    'LENS-NoAFG-DeepSeek_v31': 'figures/icons/lens.svg',
+    'LENS-NoReact-DeepSeek_v31': 'figures/icons/lens.svg',
+    'baseline_claude-haiku': 'figures/icons/claude-color.svg',
+    'baseline_claude-sonnet': 'figures/icons/claude-color.svg',
+    'baseline_gpt-5.3': 'figures/icons/openai.svg',
+    'baseline_gpt-5.4-thinking': 'figures/icons/openai.svg',
+    'baseline_gemini-3.0-flash': 'figures/icons/gemini-color.svg',
+    'baseline_gemini-3.1-pro': 'figures/icons/gemini-color.svg',
+    'baseline_ollama_deepseek-v3.1-671b-cloud': 'figures/icons/deepseek-color.svg',
+    'baseline_ollama_glm-5-cloud': 'figures/icons/chatglm-color.svg',
+    'baseline_ollama_gpt-oss-120b-cloud': 'figures/icons/openai.svg',
+    'baseline_ollama_kimi-k2.5-cloud': 'figures/icons/kimi (1).svg',
+    'baseline_ollama_gemma4-31b-cloud': 'figures/icons/gemma-color.svg',
+    'baseline_ollama_qwen3.5-397b-cloud': 'figures/icons/qwen-color.svg',
+    'baseline_ollama_qwen3-next-80b-cloud': 'figures/icons/qwen-color.svg',
+  };
+
   const METRICS_DISPLAY_LABELS = {
     'claude_afg_v5.1': 'LENS-Haiku 4.5-A',
     'ablation_no_afg': 'LENS-Haiku 4.5-B',
@@ -1953,9 +1976,11 @@
     return data;
   }
 
-  function formatModelLabel(label) {
-    if (!label || !label.startsWith('LENS-')) return label;
-    return `<span class="lens-mark">${label}</span>`;
+  function formatModelLabel(label, condKey) {
+    const iconSrc = condKey ? CONDITION_ICONS[condKey] : null;
+    const iconHtml = iconSrc ? `<img class="cond-icon" src="${iconSrc}" alt="">` : '';
+    if (!label || !label.startsWith('LENS-')) return iconHtml + label;
+    return iconHtml + `<span class="lens-mark">${label}</span>`;
   }
 
   function plainModelLabel(label) {
@@ -1967,9 +1992,9 @@
 
   function formatOverviewModelLabel(condKey, label) {
     if (condKey === 'claude_afg_v5.1' && label === 'LENS-Haiku 4.5-A') {
-      return formatModelLabel('LENS-Haiku 4.5-A*');
+      return formatModelLabel('LENS-Haiku 4.5-A*', condKey);
     }
-    return formatModelLabel(label);
+    return formatModelLabel(label, condKey);
   }
 
   // ─── Filter ───
@@ -2297,7 +2322,7 @@
       <div class="mobile-metrics-summary">
         <div class="mobile-metrics-stat">
           <div class="mobile-metrics-stat-label">最佳模型</div>
-          <div class="mobile-metrics-stat-value">${best ? formatModelLabel(best.cond.label) : '--'}</div>
+          <div class="mobile-metrics-stat-value">${best ? formatModelLabel(best.cond.label, best.key) : '--'}</div>
           <div class="mobile-metrics-stat-sub">${best ? `整體綜合分數 ${fmt(best.overall)}` : '目前無資料'}</div>
         </div>
         <div class="mobile-metrics-stat">
@@ -2336,7 +2361,7 @@
               <div class="mobile-metrics-card-head">
                 <div class="mobile-metrics-rank">#${idx + 1}</div>
                 <div class="mobile-metrics-model">
-                  <div class="mobile-metrics-model-title">${formatModelLabel(item.cond.label)}</div>
+                  <div class="mobile-metrics-model-title">${formatModelLabel(item.cond.label, item.key)}</div>
                   <div class="mobile-metrics-model-sub">${item.cond.group} · ${item.cond.eval_count ?? '--'} 案</div>
                 </div>
                 <div class="mobile-metrics-primary">
@@ -2592,7 +2617,7 @@
       card.innerHTML = `
         <div class="model-card-head">
           <div>
-            <div class="model-card-title">${formatModelLabel(cond.label)}</div>
+            <div class="model-card-title">${formatModelLabel(cond.label, condKey)}</div>
             <div class="model-card-sub">${cond.eval_count ?? '--'} 案</div>
           </div>
           <span class="badge ${cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource'}">${cond.group}</span>
@@ -2646,7 +2671,7 @@
       card.innerHTML = `
         <div class="model-card-head">
           <div>
-            <div class="model-card-title">${formatModelLabel(cond.label)}</div>
+            <div class="model-card-title">${formatModelLabel(cond.label, condKey)}</div>
             <div class="model-card-sub"></div>
           </div>
           <span class="badge ${cond.group === '商用模型' ? 'badge-commercial' : 'badge-opensource'}">${cond.group}</span>
@@ -2826,7 +2851,7 @@
     panel.innerHTML = `
       <div class="model-detail-head">
         <div>
-          <div class="model-detail-title">${formatModelLabel(cond.label)} 能力檔案</div>
+          <div class="model-detail-title">${formatModelLabel(cond.label, condKey)} 能力檔案</div>
           <div class="model-detail-desc">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 先看能力輪廓，再展開細項</div>
         </div>
         <button class="detail-close-btn" type="button" onclick="closeModelDetail()">收起</button>
@@ -3115,7 +3140,7 @@
 
       html += `<div class="overview-card">
         <div class="overview-card-header">
-          <span class="overview-card-title">${formatModelLabel(cond.label)}</span>
+          <span class="overview-card-title">${formatModelLabel(cond.label, condKey)}</span>
           <span class="badge ${badgeClass}">${cond.group}</span>
         </div>
         <div class="overview-card-scores" style="grid-template-columns: repeat(${scores.length <= 4 ? 2 : 3}, 1fr);">`;
@@ -3167,7 +3192,7 @@
       html += `<div class="dim-block">
         <div class="dim-title"${tip}>${labels[k] || k}</div>`;
 
-      for (const { cond, caseData } of matches) {
+      for (const { condKey, cond, caseData } of matches) {
         const data = caseData[dataKey] || {};
         const v = data[k];
         if (v == null) continue;
@@ -3187,7 +3212,7 @@
           fmtVal = fmt(v);
         }
         html += `<div class="dim-bar-row">
-          <span class="dim-bar-cond">${formatModelLabel(cond.label)}</span>
+          <span class="dim-bar-cond">${formatModelLabel(cond.label, condKey)}</span>
           <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
           <span class="dim-bar-value">${fmtVal}</span>
         </div>`;
@@ -3210,14 +3235,14 @@
       html += `<div class="dim-block">
         <div class="dim-title"${tip}>${ROUGE_BERT_LABELS[k] || k}</div>`;
 
-      for (const { cond, caseData } of matches) {
+      for (const { condKey, cond, caseData } of matches) {
         const rb = caseData.rouge_bertscore;
         if (!rb || rb[k] == null) continue;
         const v = rb[k];
         const pct = v * 100;
         const cls = barClassForScale(v, k.startsWith('bert') ? 'bert' : 'rouge');
         html += `<div class="dim-bar-row">
-          <span class="dim-bar-cond">${formatModelLabel(cond.label)}</span>
+          <span class="dim-bar-cond">${formatModelLabel(cond.label, condKey)}</span>
           <div class="dim-bar-track"><div class="dim-bar-fill ${cls}" style="width:${pct}%"></div></div>
           <span class="dim-bar-value">${fmt(v)}</span>
         </div>`;
