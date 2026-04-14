@@ -130,6 +130,289 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7878,
-  "fact_recall_avg": null
+  "fact_recall": 0.6447,
+  "fact_precision": 1.0,
+  "fact_f1": 0.784,
+  "quality_overall": 4.5571,
+  "checklist_pass_rate": 0.9459,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.976,
+  "uncited_rate": 0.07,
+  "faithfulness_combined": {
+   "score": 0.958,
+   "citation_fidelity": 0.93,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 11,
+   "correct": 11
+  },
+  "weighted_recall": 0.8216,
+  "missing_severity": {
+   "critical": 6,
+   "important": 15,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及『娩出胎兒』，五個 section 均未提及嬰兒出生後不會哭或轉送林口G醫院，屬程序性背景事實",
+     "reason": "section_01_facts.txt 僅提及『娩出胎兒』，五個 section 均未提及嬰兒出生後不會哭或轉送林口G醫院，屬程序性背景事實"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "全部五個 section 均未提及產婦轉入產房觀察，屬程序性事實",
+     "reason": "全部五個 section 均未提及產婦轉入產房觀察，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "全部五個 section 均未提及具體血壓數值（50/34 mmHg、50/37 mmHg），雖 reasoning 提及『血壓數值係因急救及升壓素維持』但無具體數值，影響病情嚴重程度評估",
+     "reason": "全部五個 section 均未提及具體血壓數值（50/34 mmHg、50/37 mmHg），雖 reasoning 提及『血壓數值係因急救及升壓素維持』但無具體數值，影響病情嚴重程度評估"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "全部五個 section 均未提及『剖腹探查術』及『血液不凝、血小板低下、凝血時間延長』等具體凝血異常現象，影響手術風險評估理解",
+     "reason": "全部五個 section 均未提及『剖腹探查術』及『血液不凝、血小板低下、凝血時間延長』等具體凝血異常現象，影響手術風險評估理解"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "reasoning 僅提及『急救及升壓素』，未提及『人工呼吸器、輸血、凝血因子』等關鍵治療措施，影響 T 醫院救治過程理解",
+     "reason": "reasoning 僅提及『急救及升壓素』，未提及『人工呼吸器、輸血、凝血因子』等關鍵治療措施，影響 T 醫院救治過程理解"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「發現惡露量不對，血壓下降」是被告辯護的關鍵時間節點描述，影響對被告發現異常時間點的理解，但生成摘要中確實未提及此細節",
+     "reason": "「發現惡露量不對，血壓下降」是被告辯護的關鍵時間節點描述，影響對被告發現異常時間點的理解，但生成摘要中確實未提及此細節"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「就該等難以診治出原因之出血，先後判斷為子宮收縮不良及羊水栓塞而無法判定為子宮頸右側裂傷」是被告核心辯護論點，涉及被告的診斷判斷過程，雖section_02_defense.txt有「非伊疏失」，但缺乏具體的診斷判斷細節說明，確認為missing，屬critical漏述",
+     "reason": "「就該等難以診治出原因之出血，先後判斷為子宮收縮不良及羊水栓塞而無法判定為子宮頸右側裂傷」是被告核心辯護論點，涉及被告的診斷判斷過程，雖section_02_defense.txt有「非伊疏失」，但缺乏具體的診斷判斷細節說明，確認為missing，屬critical漏述"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "T醫院超音波檢查結果（除子宮內有些許血塊外並無其他發現）是被告用以證明當時難以診斷的重要證據，生成摘要中完全未提及",
+     "reason": "T醫院超音波檢查結果（除子宮內有些許血塊外並無其他發現）是被告用以證明當時難以診斷的重要證據，生成摘要中完全未提及"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「T醫院病例無子宮頸、子宮體裂傷記載」是被告的重要辯護論點，用於證明當時專業醫師亦難以發現，生成摘要中完全未提及",
+     "reason": "「T醫院病例無子宮頸、子宮體裂傷記載」是被告的重要辯護論點，用於證明當時專業醫師亦難以發現，生成摘要中完全未提及"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「唯有施以緊急剖腹手術切除子宮或結紮動脈血管，始可挽救其生命」涉及本案死亡的關鍵醫療處置，與因果關係及被告責任範圍密切相關，生成摘要完全未提及",
+     "reason": "「唯有施以緊急剖腹手術切除子宮或結紮動脈血管，始可挽救其生命」涉及本案死亡的關鍵醫療處置，與因果關係及被告責任範圍密切相關，生成摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「該等手術需大型醫院始可進行，難以期待診所施行」是被告關於能力範圍的重要抗辯，與「應否立即轉診」的過失判斷相關，生成摘要完全未提及",
+     "reason": "「該等手術需大型醫院始可進行，難以期待診所施行」是被告關於能力範圍的重要抗辯，與「應否立即轉診」的過失判斷相關，生成摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「至當日下午一時五十五分左右陰道大量出血，在此之前則無陰道大量出血現象」這個時間描述與判決書記載事實不符（應為上午），屬於被告陳述而非客觀事實，確認為missing",
+     "reason": "「至當日下午一時五十五分左右陰道大量出血，在此之前則無陰道大量出血現象」這個時間描述與判決書記載事實不符（應為上午），屬於被告陳述而非客觀事實，確認為missing"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「T醫院之診斷證明書與實際病歷資料所載不盡相符」是被告對證據可靠性提出的質疑，影響對證據可信度的判斷，生成摘要完全未提及",
+     "reason": "「T醫院之診斷證明書與實際病歷資料所載不盡相符」是被告對證據可靠性提出的質疑，影響對證據可信度的判斷，生成摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「當時若施以緊急剖腹手術，非毫無挽救生命之機會」是被告關於因果關係的重大辯護論點，直接影響被告過失與死亡結果間的因果關係判斷，生成摘要完全未提及",
+     "reason": "「當時若施以緊急剖腹手術，非毫無挽救生命之機會」是被告關於因果關係的重大辯護論點，直接影響被告過失與死亡結果間的因果關係判斷，生成摘要完全未提及"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血液不凝集現象屬 DIC 的醫學細節，摘要僅提及 DIC 結果，未提及其診斷依據",
+     "reason": "血液不凝集現象屬 DIC 的醫學細節，摘要僅提及 DIC 結果，未提及其診斷依據"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "子宮變軟且不收縮的症狀未在摘要任何 section 出現",
+     "reason": "子宮變軟且不收縮的症狀未在摘要任何 section 出現"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師懷疑子宮收縮不良的診斷思考過程未提及，影響對出血原因的理解",
+     "reason": "醫師懷疑子宮收縮不良的診斷思考過程未提及，影響對出血原因的理解"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "剖腹探查術屬較大之手術的醫療評價未在摘要中出現",
+     "reason": "剖腹探查術屬較大之手術的醫療評價未在摘要中出現"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "超音波判斷腹腔出血量的資訊未在摘要任何 section 出現",
+     "reason": "超音波判斷腹腔出血量的資訊未在摘要任何 section 出現"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "後腹腔血液積聚判斷限制的資訊未在摘要任何 section 出現",
+     "reason": "後腹腔血液積聚判斷限制的資訊未在摘要任何 section 出現"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢視全部5個section原文（section_01_facts.txt、section_02_defense.txt、section_03_opinions.txt、section_04_verdict.txt、section_05_reasoning.txt）均未提及上訴期間或上訴狀態，確認維持missing",
+     "reason": "檢視全部5個section原文（section_01_facts.txt、section_02_defense.txt、section_03_opinions.txt、section_04_verdict.txt、section_05_reasoning.txt）均未提及上訴期間或上訴狀態，確認維持missing"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "檢視全部5個section原文均未提及判決確定狀態，確認維持missing",
+     "reason": "檢視全部5個section原文均未提及判決確定狀態，確認維持missing"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts 提及10時20分出現嗜睡及惡露增加，但血液不凝集現象及子宮變軟不收縮等症狀描述於五個section原文中均未完整出現，維持missing",
+     "reason": "section_01_facts 提及10時20分出現嗜睡及惡露增加，但血液不凝集現象及子宮變軟不收縮等症狀描述於五個section原文中均未完整出現，維持missing"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖有A診所護理紀錄及醫事審議委員會鑑定書等證據，但此係引述文件來源的程序性陳述，非案件核心事實，section_05_reasoning未具體引用此句，維持missing",
+     "reason": "雖有A診所護理紀錄及醫事審議委員會鑑定書等證據，但此係引述文件來源的程序性陳述，非案件核心事實，section_05_reasoning未具體引用此句，維持missing"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "剖腹探查術及轉送大型醫院之標準雖為醫審會鑑定意見內容，但section_05_reasoning未明確引述此醫療判斷標準，維持missing",
+     "reason": "剖腹探查術及轉送大型醫院之標準雖為醫審會鑑定意見內容，但section_05_reasoning未明確引述此醫療判斷標準，維持missing"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫事鑑定委員會鑑定意見已在section_03_opinions詳述，section_05_reasoning未獨立重複引用此句，屬引述方式差異，非關鍵遺漏，維持missing",
+     "reason": "醫事鑑定委員會鑑定意見已在section_03_opinions詳述，section_05_reasoning未獨立重複引用此句，屬引述方式差異，非關鍵遺漏，維持missing"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "轉診符合一般開業醫師醫療水準之陳述，係法院對醫療水準之評價，section_05_reasoning雖有轉診延誤之認定，但未明確提及此醫療水準判斷，維持missing",
+     "reason": "轉診符合一般開業醫師醫療水準之陳述，係法院對醫療水準之評價，section_05_reasoning雖有轉診延誤之認定，但未明確提及此醫療水準判斷，維持missing"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "羊水栓塞之臨床表徵為疾病診斷關鍵因素，section_05_reasoning未提及此症狀與羊水栓塞之關聯，影響病因判斷理解，維持missing",
+     "reason": "羊水栓塞之臨床表徵為疾病診斷關鍵因素，section_05_reasoning未提及此症狀與羊水栓塞之關聯，影響病因判斷理解，維持missing"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病徵重疊或可能誤診之抗辯內容係法院駁斥之理論依據，section_05_reasoning未明確提及，屬論證細節遺漏，維持missing",
+     "reason": "病徵重疊或可能誤診之抗辯內容係法院駁斥之理論依據，section_05_reasoning未明確提及，屬論證細節遺漏，維持missing"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "羊水栓塞處置需立即快速反應係醫審會專業判斷，section_05_reasoning未提及此處置時效要求，影響過失認定，維持missing",
+     "reason": "羊水栓塞處置需立即快速反應係醫審會專業判斷，section_05_reasoning未提及此處置時效要求，影響過失認定，維持missing"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "急性大量出血未即時止血及輸血導致死亡率極高係因果關係關鍵論證，section_05_reasoning雖提及延誤轉診，但未明確引述此死亡率評估，影響判決結論，維持missing",
+     "reason": "急性大量出血未即時止血及輸血導致死亡率極高係因果關係關鍵論證，section_05_reasoning雖提及延誤轉診，但未明確引述此死亡率評估，影響判決結論，維持missing"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "鑑定意見已在section_03_opinions詳述，section_05_reasoning未獨立重複引用此句，屬引述方式差異，維持missing",
+     "reason": "鑑定意見已在section_03_opinions詳述，section_05_reasoning未獨立重複引用此句，屬引述方式差異，維持missing"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "剖腹探查術伴隨相當程度危險之說明，係醫療風險評估內容，section_05_reasoning未提及此手術風險，維持missing",
+     "reason": "剖腹探查術伴隨相當程度危險之說明，係醫療風險評估內容，section_05_reasoning未提及此手術風險，維持missing"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "子宮頸右側裂傷延至子宮體導致多處出血致死係死因確定關鍵事實，section_03_opinions雖有提及，但section_05_reasoning判決理由部分未完整描述此致死機制，影響判決結論理解，維持missing",
+     "reason": "子宮頸右側裂傷延至子宮體導致多處出血致死係死因確定關鍵事實，section_03_opinions雖有提及，但section_05_reasoning判決理由部分未完整描述此致死機制，影響判決結論理解，維持missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 114,
+   "pred_total": 43,
+   "matched": 66,
+   "partial": 15,
+   "missing": 33,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8116,
+  "compression_afg_chars": 1196,
+  "compression_source_chars": 6349,
+  "gt_length_ratio": 0.3685,
+  "gt_length_afg_chars": 1196,
+  "gt_length_gt_chars": 3246,
+  "section_balance": 0.4421
  }
 }

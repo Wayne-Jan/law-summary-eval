@@ -655,7 +655,7 @@
 
     /* ─── MODEL CARDS ─── */
     .model-card-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 18px; margin-bottom: 28px;
     }
     .model-card {
@@ -675,7 +675,7 @@
       margin-bottom: 12px;
     }
     .model-card-title {
-      font-size: 17px; font-weight: 700; color: var(--slate-900); line-height: 1.25;
+      font-size: 15px; font-weight: 700; color: var(--slate-900); line-height: 1.25; white-space: nowrap;
     }
     .model-card-sub {
       margin-top: 4px; font-size: 12px; color: var(--slate-500);
@@ -2540,7 +2540,8 @@
     return avgRank / (valid.length - 1);
   }
 
-  function buildRelativeCardRadar(condKey, entries, color) {
+  function buildRelativeCardRadar(condKey, _entries, color) {
+    const entries = Object.entries(DATA.conditions);
     const size = 240;
     const cx = size / 2;
     const cy = size / 2;
