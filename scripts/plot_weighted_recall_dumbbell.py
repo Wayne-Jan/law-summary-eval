@@ -48,6 +48,7 @@ MARKER_SIZE = 80
 EXCLUDED_CONDITIONS = {
     "baseline_ollama_qwen3-next-80b-cloud",
     "baseline_ollama_nemotron-3-super-cloud",
+    "baseline_ollama_mistral-large-3-675b-cloud",
 }
 
 CANONICAL_PRIORITY = {
@@ -60,9 +61,10 @@ CANONICAL_PRIORITY = {
     "baseline_gpt-5.3": 13,
     "baseline_gemini-3.1-pro": 14,
     "baseline_gemini-3.0-flash": 15,
-    "LENS-Full-DeepSeek_v31": 20,
-    "LENS-NoReact-DeepSeek_v31": 21,
-    "LENS-NoAFG-DeepSeek_v31": 22,
+    "LENS-Full-DeepSeek_v31_writer_gemma4": 20,
+    "LENS-Full-DeepSeek_v31": 21,
+    "LENS-NoReact-DeepSeek_v31": 22,
+    "LENS-NoAFG-DeepSeek_v31": 23,
 }
 
 DISPLAY_LABELS = {
@@ -82,7 +84,8 @@ DISPLAY_LABELS = {
     "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
     "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
     "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-    "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+    "baseline_ollama_gemma4-31b-cloud": "Gemma 4",
+    "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
     "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
     "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",

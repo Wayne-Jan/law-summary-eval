@@ -41,6 +41,7 @@ DISPLAY_LABELS = {
     "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
     "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
     "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+    "baseline_ollama_gemma4-31b-cloud": "Gemma 4",
     "baseline_claude-haiku": "Claude Haiku 4.5",
     "baseline_claude-sonnet": "Claude Sonnet 4.6",
     "baseline_gpt-5.3": "GPT-5.3 Instant",
@@ -51,7 +52,7 @@ DISPLAY_LABELS = {
     "baseline_ollama_glm-5-cloud": "GLM 5 (744B / 40A)",
     "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS (117B / 5.1A)",
     "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
-    "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3 (675B / 41A)",
+    "baseline_ollama_gemma4-31b-cloud": "Gemma 4",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
 }
 
@@ -74,6 +75,7 @@ CANONICAL_PRIORITY = {
 EXCLUDED_CONDITIONS = {
     "baseline_ollama_qwen3-next-80b-cloud",
     "baseline_ollama_nemotron-3-super-cloud",
+    "baseline_ollama_mistral-large-3-675b-cloud",
 }
 
 C_MATCHED = "#86efac"

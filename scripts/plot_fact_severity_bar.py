@@ -40,6 +40,7 @@ VOLUMES_MAP = {"upper": "上冊", "middle": "中冊", "lower": "下冊"}
 EXCLUDED_CONDITIONS = {
     "baseline_ollama_qwen3-next-80b-cloud",
     "baseline_ollama_nemotron-3-super-cloud",
+    "baseline_ollama_mistral-large-3-675b-cloud",
 }
 
 LABELS = {
@@ -59,7 +60,8 @@ LABELS = {
     "baseline_ollama_glm-5-cloud": "GLM 5",
     "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS",
     "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5",
-    "baseline_ollama_mistral-large-3-675b-cloud": "Mistral Large 3",
+    "baseline_ollama_gemma4-31b-cloud": "Gemma 4",
+    "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS Gemma 4",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5",
 }
 

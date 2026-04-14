@@ -94,6 +94,7 @@ def mean_or_none(values: list[float | None]) -> float | None:
 EXCLUDED_CONDITIONS = {
     "baseline_ollama_qwen3-next-80b-cloud",   # 80B / 3A
     "baseline_ollama_nemotron-3-super-cloud",  # 120B / 12A
+    "baseline_ollama_mistral-large-3-675b-cloud",
 }
 
 CANONICAL_PRIORITY = {
