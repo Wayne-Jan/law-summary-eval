@@ -51,35 +51,30 @@ METRICS = [
         "key": "fact_recall",
         "label": "Fact Recall",
         "color": "#E74C3C",
-        "xlim": (0.15, 1.0),
         "get_case": lambda c: (c.get("fact_recall") or {}).get("avg"),
     },
     {
         "key": "quality",
         "label": "Quality",
         "color": "#2563eb",
-        "xlim": (3.5, 5.0),
         "get_case": lambda c: (c.get("quality") or {}).get("avg"),
     },
     {
         "key": "faithfulness",
         "label": "Faithfulness",
         "color": "#27AE60",
-        "xlim": (0.5, 1.02),
         "get_case": lambda c: c.get("faithfulness"),
     },
     {
-        "key": "rule_based",
-        "label": "Rule-Based",
+        "key": "rougeL",
+        "label": "ROUGE-L",
         "color": "#F39C12",
-        "xlim": (0.4, 1.0),
-        "get_case": lambda c: (c.get("rule_based") or {}).get("avg"),
+        "get_case": lambda c: (c.get("rouge_bertscore") or {}).get("rougeL"),
     },
     {
         "key": "bertscore",
         "label": "BERTScore F1",
         "color": "#8E44AD",
-        "xlim": (0.2, 1.0),
         "get_case": lambda c: (c.get("rouge_bertscore") or {}).get("bertscore_f1"),
     },
 ]
@@ -229,12 +224,40 @@ def compute_cld(
 
 # ─── Plotting ────────────────────────────────────────────────────────
 
+def compute_shared_xlims(
+    all_cond_data: dict[str, dict],
+) -> list[tuple[float, float]]:
+    """Compute xlim for each metric across ALL conditions (both groups)."""
+    xlims: list[tuple[float, float]] = []
+    for m in METRICS:
+        getter = m["get_case"]
+        mk = m["key"]
+        all_vals: list[float] = []
+        for cases in all_cond_data.values():
+            all_vals.extend(v for c in cases.values() if (v := getter(c)) is not None)
+        if all_vals:
+            data_min, data_max = min(all_vals), max(all_vals)
+            span = data_max - data_min if data_max > data_min else 0.1
+            pad = span * 0.08
+            xlim_lo = data_min - pad
+            xlim_hi = min(5.0 if mk == "quality" else 1.0, data_max + pad * 2.5)
+            # Round to nice 0.05 grid
+            xlim_lo = float(np.floor(xlim_lo * 20) / 20)
+            xlim_hi = float(np.ceil(xlim_hi * 20) / 20)
+        else:
+            xlim_lo, xlim_hi = 0.0, 1.0
+        xlims.append((xlim_lo, xlim_hi))
+    return xlims
+
+
 def plot_group(
     sorted_conds: list[str],
     cond_data: dict[str, dict],
     title: str,
     output_path: Path,
     dpi: int,
+    shared_xlims: list[tuple[float, float]] | None = None,
+    shared_clds: list[dict[str, str]] | None = None,
 ) -> None:
     if not sorted_conds:
         print(f"  (skipped — no data for {title})")
@@ -249,10 +272,11 @@ def plot_group(
     for col, m in enumerate(METRICS):
         ax = axes[col]
         getter = m["get_case"]
-        xlim = m["xlim"]
         mcolor = m["color"]
         mk = m["key"]
-        cld_map = compute_cld(sorted_conds, cond_data, getter)
+        cld_map = shared_clds[col] if shared_clds else compute_cld(sorted_conds, cond_data, getter)
+
+        xlim_lo, xlim_hi = shared_xlims[col] if shared_xlims else (0.0, 1.0)
 
         for i, ck in enumerate(sorted_conds):
             vals = [getter(c) for c in cond_data[ck].values() if getter(c) is not None]
@@ -263,7 +287,7 @@ def plot_group(
             # Range bar
             ax.plot(
                 [vmin, vmax], [i, i],
-                color=mcolor, linewidth=2.5, alpha=0.35, zorder=1, solid_capstyle="round",
+                color=mcolor, linewidth=2.5, alpha=0.55, zorder=1, solid_capstyle="round",
             )
             # Min/max caps
             for ep in [vmin, vmax]:
@@ -289,8 +313,8 @@ def plot_group(
             ax.set_yticklabels([DISPLAY_LABELS.get(ck, ck) for ck in sorted_conds], fontsize=9)
         ax.invert_yaxis()
         ax.set_title(m["label"], fontsize=10, fontweight="600", color=mcolor, pad=8)
-        ax.set_xlim(*xlim)
-        ax.xaxis.grid(True, linestyle="-", alpha=0.12, linewidth=0.5)
+        ax.set_xlim(xlim_lo, xlim_hi)
+        ax.xaxis.grid(True, linestyle="-", alpha=0.3, linewidth=0.6)
         ax.set_axisbelow(True)
 
     fig.suptitle(title, fontsize=12, fontweight="bold", color="#1e293b", y=1.02)
@@ -307,19 +331,30 @@ def main() -> int:
     out_dir = args.output_dir or DEFAULT_OUTPUT_DIR
     conditions = snapshot.get("conditions", {})
 
+    # Collect case data for ALL non-excluded conditions to compute shared xlims + CLD
+    all_canonical = CANONICAL_ORDER_COMMERCIAL + CANONICAL_ORDER_OPENSOURCE
+    all_conds = [ck for ck in all_canonical if ck in conditions and ck not in EXCLUDED_CONDITIONS]
+    all_cond_data = {ck: conditions[ck].get("cases") or {} for ck in all_conds}
+    all_cond_data = {ck: v for ck, v in all_cond_data.items() if v}
+    all_conds_with_data = [ck for ck in all_conds if ck in all_cond_data]
+
+    shared_xlims = compute_shared_xlims(all_cond_data)
+    shared_clds = [
+        compute_cld(all_conds_with_data, all_cond_data, m["get_case"])
+        for m in METRICS
+    ]
+
     for group_name, canonical_order, group_label in [
         ("commercial", CANONICAL_ORDER_COMMERCIAL, "Commercial"),
         ("opensource", CANONICAL_ORDER_OPENSOURCE, "Open-Source"),
     ]:
-        # Filter to conditions that exist in this volume's data
         sorted_conds = [ck for ck in canonical_order if ck in conditions and ck not in EXCLUDED_CONDITIONS]
         cond_data = {ck: conditions[ck].get("cases") or {} for ck in sorted_conds}
-        # Skip conditions with no eval cases
         sorted_conds = [ck for ck in sorted_conds if cond_data[ck]]
 
         title = f"Per-Case Metric Distribution — {group_label}  ({args.volume.title()})"
         out_path = out_dir / f"{args.volume}_multi_metric_{group_name}_cld.png"
-        plot_group(sorted_conds, cond_data, title, out_path, args.dpi)
+        plot_group(sorted_conds, cond_data, title, out_path, args.dpi, shared_xlims, shared_clds)
 
     return 0
 
