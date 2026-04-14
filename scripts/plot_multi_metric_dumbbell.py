@@ -1,0 +1,328 @@
+#!/usr/bin/env python3
+"""Multi-metric distribution chart with Compact Letter Display (CLD).
+
+Each metric gets its own subplot. Within each subplot, every model shows
+a horizontal range bar (min→max) with a dot at the median and CLD letters.
+Split into commercial / opensource.
+
+CLD uses Wilcoxon signed-rank test + Holm correction (α=0.05).
+
+Usage:
+    python3 scripts/plot_multi_metric_dumbbell.py --volume upper
+    python3 scripts/plot_multi_metric_dumbbell.py --volume middle
+    python3 scripts/plot_multi_metric_dumbbell.py --volume lower
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+from itertools import combinations
+from pathlib import Path
+from statistics import median as stat_median
+
+import matplotlib.pyplot as plt
+import numpy as np
+from scipy.stats import wilcoxon
+
+plt.rcParams.update({
+    "font.family": "sans-serif",
+    "font.sans-serif": ["Helvetica", "Arial", "DejaVu Sans"],
+    "font.size": 8,
+    "axes.linewidth": 0.6,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "savefig.bbox": "tight",
+    "savefig.pad_inches": 0.05,
+})
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+DATA_DIR = REPO_ROOT / "data"
+DEFAULT_OUTPUT_DIR = REPO_ROOT / "figures" / "multi_metric_profile"
+
+VOLUME_FILES = {
+    "upper": DATA_DIR / "eval_metrics_upper.json",
+    "middle": DATA_DIR / "eval_metrics_middle.json",
+    "lower": DATA_DIR / "eval_metrics_lower.json",
+}
+
+METRICS = [
+    {
+        "key": "fact_recall",
+        "label": "Fact Recall",
+        "color": "#E74C3C",
+        "xlim": (0.15, 1.0),
+        "get_case": lambda c: (c.get("fact_recall") or {}).get("avg"),
+    },
+    {
+        "key": "quality",
+        "label": "Quality",
+        "color": "#2563eb",
+        "xlim": (3.5, 5.0),
+        "get_case": lambda c: (c.get("quality") or {}).get("avg"),
+    },
+    {
+        "key": "faithfulness",
+        "label": "Faithfulness",
+        "color": "#27AE60",
+        "xlim": (0.5, 1.02),
+        "get_case": lambda c: c.get("faithfulness"),
+    },
+    {
+        "key": "rule_based",
+        "label": "Rule-Based",
+        "color": "#F39C12",
+        "xlim": (0.4, 1.0),
+        "get_case": lambda c: (c.get("rule_based") or {}).get("avg"),
+    },
+    {
+        "key": "bertscore",
+        "label": "BERTScore F1",
+        "color": "#8E44AD",
+        "xlim": (0.2, 1.0),
+        "get_case": lambda c: (c.get("rouge_bertscore") or {}).get("bertscore_f1"),
+    },
+]
+
+EXCLUDED_CONDITIONS = {
+    "baseline_ollama_qwen3-next-80b-cloud",
+    "baseline_ollama_nemotron-3-super-cloud",
+    "baseline_ollama_mistral-large-3-675b-cloud",
+}
+
+# Canonical order matching metrics.html
+CANONICAL_ORDER_COMMERCIAL = [
+    "claude_afg_v5.1",
+    "ablation_no_afg",
+    "ablation_no_react",
+    "baseline_claude-sonnet",
+    "baseline_claude-haiku",
+    "baseline_gpt-5.4-thinking",
+    "baseline_gpt-5.3",
+    "baseline_gemini-3.1-pro",
+    "baseline_gemini-3.0-flash",
+]
+
+CANONICAL_ORDER_OPENSOURCE = [
+    "LENS-Full-DeepSeek_v31_writer_gemma4",
+    "LENS-Full-DeepSeek_v31",
+    "LENS-NoAFG-DeepSeek_v31",
+    "LENS-NoReact-DeepSeek_v31",
+    "baseline_ollama_deepseek-v3.1-671b-cloud",
+    "baseline_ollama_gemma4-31b-cloud",
+    "baseline_ollama_glm-5-cloud",
+    "baseline_ollama_gpt-oss-120b-cloud",
+    "baseline_ollama_kimi-k2.5-cloud",
+    "baseline_ollama_qwen3.5-397b-cloud",
+]
+
+DISPLAY_LABELS = {
+    "claude_afg_v5.1": "LENS-Haiku-A",
+    "ablation_no_afg": "LENS-Haiku-B",
+    "ablation_no_react": "LENS-Haiku-C",
+    "baseline_claude-sonnet": "Sonnet",
+    "baseline_claude-haiku": "Haiku BL",
+    "baseline_gpt-5.4-thinking": "GPT-5.4t",
+    "baseline_gpt-5.3": "GPT-5.3",
+    "baseline_gemini-3.1-pro": "Gemini-3.1",
+    "baseline_gemini-3.0-flash": "Gemini-3.0",
+    "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+    "LENS-Full-DeepSeek_v31": "LENS-DS-A",
+    "LENS-NoAFG-DeepSeek_v31": "LENS-DS-B",
+    "LENS-NoReact-DeepSeek_v31": "LENS-DS-C",
+    "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek V3.1",
+    "baseline_ollama_gemma4-31b-cloud": "Gemma 4",
+    "baseline_ollama_glm-5-cloud": "GLM 5",
+    "baseline_ollama_gpt-oss-120b-cloud": "GPT-OSS",
+    "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5",
+    "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5",
+}
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Plot multi-metric distribution with CLD.")
+    parser.add_argument("--volume", choices=sorted(VOLUME_FILES), default="upper")
+    parser.add_argument("--dpi", type=int, default=600)
+    parser.add_argument("--output-dir", type=Path, default=None)
+    return parser.parse_args()
+
+
+# ─── Statistics ──────────────────────────────────────────────────────
+
+def holm_correction(pvalues: list[float]) -> list[float]:
+    n = len(pvalues)
+    indexed = sorted(enumerate(pvalues), key=lambda x: x[1])
+    adjusted = [0.0] * n
+    for rank, (orig_idx, p) in enumerate(indexed):
+        adjusted[orig_idx] = min(1.0, p * (n - rank))
+    for rank in range(1, n):
+        orig_idx = indexed[rank][0]
+        prev_idx = indexed[rank - 1][0]
+        adjusted[orig_idx] = max(adjusted[orig_idx], adjusted[prev_idx])
+    return adjusted
+
+
+def cld_absorption(groups: list[str], sig: list[list[bool]]) -> dict[str, str]:
+    n = len(groups)
+    columns: list[set[int]] = [set(range(n))]
+    for i in range(n):
+        for j in range(i + 1, n):
+            if not sig[i][j]:
+                continue
+            shared = [k for k, col in enumerate(columns) if i in col and j in col]
+            for k in shared:
+                col = columns[k]
+                if i in col and j in col:
+                    columns[k] = col - {j}
+                    columns.append(col - {i})
+    unique: list[set[int]] = []
+    for col in columns:
+        if not col:
+            continue
+        if not any(other is not col and col < other for other in columns):
+            if col not in unique:
+                unique.append(col)
+    unique.sort(key=lambda col: min(col))
+    result = {g: "" for g in groups}
+    for li, col in enumerate(unique):
+        for idx in col:
+            result[groups[idx]] += chr(ord("a") + li)
+    return result
+
+
+def compute_cld(
+    sorted_conds: list[str],
+    cond_data: dict[str, dict],
+    getter,
+    alpha: float = 0.05,
+) -> dict[str, str]:
+    # Sort by median descending for CLD computation
+    med_sorted = sorted(
+        sorted_conds,
+        key=lambda ck: stat_median(
+            [getter(c) for c in cond_data[ck].values() if getter(c) is not None] or [0]
+        ),
+        reverse=True,
+    )
+    n = len(med_sorted)
+    raw_p: dict[tuple[int, int], float] = {}
+    for a, b in combinations(range(n), 2):
+        ck_a, ck_b = med_sorted[a], med_sorted[b]
+        common = set(cond_data[ck_a].keys()) & set(cond_data[ck_b].keys())
+        pairs = [(getter(cond_data[ck_a][s]), getter(cond_data[ck_b][s])) for s in common]
+        pairs = [(va, vb) for va, vb in pairs if va is not None and vb is not None]
+        if len(pairs) < 10 or all(va == vb for va, vb in pairs):
+            raw_p[(a, b)] = 1.0
+        else:
+            _, p = wilcoxon([p[0] for p in pairs], [p[1] for p in pairs])
+            raw_p[(a, b)] = p
+    keys = list(raw_p.keys())
+    adj = holm_correction([raw_p[k] for k in keys])
+    sig = [[False] * n for _ in range(n)]
+    for i, (a, b) in enumerate(keys):
+        if adj[i] < alpha:
+            sig[a][b] = True
+            sig[b][a] = True
+    cld = cld_absorption(med_sorted, sig)
+    return {ck: cld[ck] for ck in sorted_conds}
+
+
+# ─── Plotting ────────────────────────────────────────────────────────
+
+def plot_group(
+    sorted_conds: list[str],
+    cond_data: dict[str, dict],
+    title: str,
+    output_path: Path,
+    dpi: int,
+) -> None:
+    if not sorted_conds:
+        print(f"  (skipped — no data for {title})")
+        return
+
+    n_models = len(sorted_conds)
+    n_metrics = len(METRICS)
+    fig_w = 3.2 * n_metrics
+    fig_h = max(4.0, 0.55 * n_models + 1.5)
+    fig, axes = plt.subplots(1, n_metrics, figsize=(fig_w, fig_h), sharey=True)
+
+    for col, m in enumerate(METRICS):
+        ax = axes[col]
+        getter = m["get_case"]
+        xlim = m["xlim"]
+        mcolor = m["color"]
+        mk = m["key"]
+        cld_map = compute_cld(sorted_conds, cond_data, getter)
+
+        for i, ck in enumerate(sorted_conds):
+            vals = [getter(c) for c in cond_data[ck].values() if getter(c) is not None]
+            if not vals:
+                continue
+            vmin, vmax, vmed = min(vals), max(vals), stat_median(vals)
+
+            # Range bar
+            ax.plot(
+                [vmin, vmax], [i, i],
+                color=mcolor, linewidth=2.5, alpha=0.35, zorder=1, solid_capstyle="round",
+            )
+            # Min/max caps
+            for ep in [vmin, vmax]:
+                ax.plot([ep, ep], [i - 0.15, i + 0.15], color=mcolor, linewidth=1.2, alpha=0.5, zorder=2)
+            # Median dot
+            ax.scatter(vmed, i, s=50, c=mcolor, marker="o", edgecolors="white", linewidths=0.8, zorder=4)
+            # Median label
+            fmt = f"{vmed:.2f}" if mk == "quality" else f"{vmed:.3f}"
+            ax.annotate(
+                fmt, xy=(vmed, i), xytext=(0, -11), textcoords="offset points",
+                ha="center", va="top", fontsize=6.5, color=mcolor, fontweight="bold",
+            )
+            # CLD letter at max cap
+            letter = cld_map.get(ck, "")
+            ax.annotate(
+                letter, xy=(vmax, i), xytext=(5, 0), textcoords="offset points",
+                ha="left", va="center", fontsize=8, color="#374151", fontweight="bold",
+                fontstyle="italic",
+            )
+
+        ax.set_yticks(list(range(n_models)))
+        if col == 0:
+            ax.set_yticklabels([DISPLAY_LABELS.get(ck, ck) for ck in sorted_conds], fontsize=9)
+        ax.invert_yaxis()
+        ax.set_title(m["label"], fontsize=10, fontweight="600", color=mcolor, pad=8)
+        ax.set_xlim(*xlim)
+        ax.xaxis.grid(True, linestyle="-", alpha=0.12, linewidth=0.5)
+        ax.set_axisbelow(True)
+
+    fig.suptitle(title, fontsize=12, fontweight="bold", color="#1e293b", y=1.02)
+    plt.tight_layout()
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(output_path, dpi=dpi, facecolor="white")
+    plt.close(fig)
+    print(output_path)
+
+
+def main() -> int:
+    args = parse_args()
+    snapshot = json.loads(VOLUME_FILES[args.volume].read_text(encoding="utf-8"))
+    out_dir = args.output_dir or DEFAULT_OUTPUT_DIR
+    conditions = snapshot.get("conditions", {})
+
+    for group_name, canonical_order, group_label in [
+        ("commercial", CANONICAL_ORDER_COMMERCIAL, "Commercial"),
+        ("opensource", CANONICAL_ORDER_OPENSOURCE, "Open-Source"),
+    ]:
+        # Filter to conditions that exist in this volume's data
+        sorted_conds = [ck for ck in canonical_order if ck in conditions and ck not in EXCLUDED_CONDITIONS]
+        cond_data = {ck: conditions[ck].get("cases") or {} for ck in sorted_conds}
+        # Skip conditions with no eval cases
+        sorted_conds = [ck for ck in sorted_conds if cond_data[ck]]
+
+        title = f"Per-Case Metric Distribution — {group_label}  ({args.volume.title()})"
+        out_path = out_dir / f"{args.volume}_multi_metric_{group_name}_cld.png"
+        plot_group(sorted_conds, cond_data, title, out_path, args.dpi)
+
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
