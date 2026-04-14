@@ -132,6 +132,828 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6978,
-  "fact_recall_avg": null
+  "fact_recall": 0.3287,
+  "fact_precision": 1.0,
+  "fact_f1": 0.4947,
+  "quality_overall": 4.3214,
+  "checklist_pass_rate": 0.9402,
+  "citation_accuracy": 0.9524,
+  "citation_support_score": 0.8522,
+  "uncited_rate": 0.173,
+  "faithfulness_combined": {
+   "score": 0.8726,
+   "citation_fidelity": 0.7876,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 6,
+   "correct": 6
+  },
+  "weighted_recall": 0.6966,
+  "missing_severity": {
+   "critical": 6,
+   "important": 39,
+   "minor": 66,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及『病患X於84年6月2日上午5時39分許因昏倒送至A醫院』，未提及『凌晨3時許』及『在家中』等關鍵時間、地點資訊，五個 section 原文均無此初始事件細節",
+     "reason": "section_01_facts.txt 僅提及『病患X於84年6月2日上午5時39分許因昏倒送至A醫院』，未提及『凌晨3時許』及『在家中』等關鍵時間、地點資訊，五個 section 原文均無此初始事件細節"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及『臆診為腦中風』，未包含昏迷指數6分、肢體冷、發紺、右側手腳無力、病理反射等急診室醫師記載的臨床發現細節；section_reasoning.txt 雖有提及部分內容，但此為 facts section 的 missing 複審",
+     "reason": "section_01_facts.txt 僅提及『臆診為腦中風』，未包含昏迷指數6分、肢體冷、發紺、右側手腳無力、病理反射等急診室醫師記載的臨床發現細節；section_reasoning.txt 雖有提及部分內容，但此為 facts section 的 missing 複審"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及『安排電腦斷層等檢查』，未明確提及『緊急輸液』及『使用升壓劑』等急救措施；section_reasoning.txt 雖有記載輸液升壓，但此為 facts section 的 missing 複審",
+     "reason": "section_01_facts.txt 僅提及『安排電腦斷層等檢查』，未明確提及『緊急輸液』及『使用升壓劑』等急救措施；section_reasoning.txt 雖有記載輸液升壓，但此為 facts section 的 missing 複審"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及『安排電腦斷層等檢查並照會神經科醫師』，未明確提及『6時32分進行胸部X光攝影』的具體時間點與檢查項目；section_opinions.txt 雖有記載，但此為 facts section 的 missing 複審",
+     "reason": "section_01_facts.txt 僅提及『安排電腦斷層等檢查並照會神經科醫師』，未明確提及『6時32分進行胸部X光攝影』的具體時間點與檢查項目；section_opinions.txt 雖有記載，但此為 facts section 的 missing 複審"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt 雖提及『延誤至翌日』，但未出現『有疏失之虞』之法律評價用語；section_opinions.txt 有『有所延誤』、『是有疏失之處』之類似表述，但 facts section 作為起訴事實陳述，確實缺少此關鍵法律評價，影響案件過失認定之理解",
+     "reason": "section_01_facts.txt 雖提及『延誤至翌日』，但未出現『有疏失之虞』之法律評價用語；section_opinions.txt 有『有所延誤』、『是有疏失之處』之類似表述，但 facts section 作為起訴事實陳述，確實缺少此關鍵法律評價，影響案件過失認定之理解"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫學專業背景說明，屬次要資訊",
+     "reason": "醫學專業背景說明，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫學專業背景說明，屬次要資訊",
+     "reason": "醫學專業背景說明，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫學專業背景說明，屬次要資訊",
+     "reason": "醫學專業背景說明，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫學專業背景說明，屬次要資訊",
+     "reason": "醫學專業背景說明，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "Defense段落已提及死亡結果，雖未使用「不治死亡」一詞，但不影響案情理解",
+     "reason": "Defense段落已提及死亡結果，雖未使用「不治死亡」一詞，但不影響案情理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "背景性醫學資訊，不影響辯護主要論點",
+     "reason": "背景性醫學資訊，不影響辯護主要論點"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "涉及急診醫師診斷疏失之辯護要點，影響被告辯護主張完整性",
+     "reason": "涉及急診醫師診斷疏失之辯護要點，影響被告辯護主張完整性"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "涉及主動脈剝離診斷方法之辯護論點，為被告重要辯護理由",
+     "reason": "涉及主動脈剝離診斷方法之辯護論點，為被告重要辯護理由"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "涉及心臟超音波診斷限制之辯護論點，為被告重要辯護理由",
+     "reason": "涉及心臟超音波診斷限制之辯護論點，為被告重要辯護理由"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "涉及死亡率辯駁之辯護論點，為被告重要辯護理由",
+     "reason": "涉及死亡率辯駁之辯護論點，為被告重要辯護理由"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "涉及死亡率計算方式之辯護論點，為被告重要辯護理由",
+     "reason": "涉及死亡率計算方式之辯護論點，為被告重要辯護理由"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "涉及治療後死亡率之辯護論點，為被告重要辯護理由",
+     "reason": "涉及治療後死亡率之辯護論點，為被告重要辯護理由"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "涉及手術時機與死亡率之辯護論點，為被告重要辯護理由",
+     "reason": "涉及手術時機與死亡率之辯護論點，為被告重要辯護理由"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未記載到院具體時間，僅陳述求診事實",
+     "reason": "摘要未記載到院具體時間，僅陳述求診事實"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及 Dopamine 升壓劑等具體用藥細節",
+     "reason": "摘要未提及 Dopamine 升壓劑等具體用藥細節"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及病歷記載充分性問題",
+     "reason": "摘要未提及病歷記載充分性問題"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未收錄心電圖具體發現細節",
+     "reason": "摘要未收錄心電圖具體發現細節"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未收錄 X光具體發現細節",
+     "reason": "摘要未收錄 X光具體發現細節"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及確定診斷後轉院手術的具體處置",
+     "reason": "摘要未提及確定診斷後轉院手術的具體處置"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "每小時1%死亡率為重要醫學數據，影響對病情嚴重性的理解",
+     "reason": "每小時1%死亡率為重要醫學數據，影響對病情嚴重性的理解"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "症狀多樣性屬醫學背景知識，非核心爭點",
+     "reason": "症狀多樣性屬醫學背景知識，非核心爭點"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "典型症狀描述為醫學背景資訊",
+     "reason": "典型症狀描述為醫學背景資訊"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "疼痛傳導特徵為醫學細節",
+     "reason": "疼痛傳導特徵為醫學細節"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "40%神經症狀比例為重要醫學數據，與病患症狀相關",
+     "reason": "40%神經症狀比例為重要醫學數據，與病患症狀相關"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "治療方式屬醫學知識背景",
+     "reason": "治療方式屬醫學知識背景"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "內科治療藥物細節未在摘要中呈現",
+     "reason": "內科治療藥物細節未在摘要中呈現"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急診醫師未及時照會的關鍵疏失認定，屬鑑定核心意見",
+     "reason": "急診醫師未及時照會的關鍵疏失認定，屬鑑定核心意見"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "照會時間及科別細節未在摘要中呈現",
+     "reason": "照會時間及科別細節未在摘要中呈現"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "照會意見判斷未在摘要中詳述",
+     "reason": "照會意見判斷未在摘要中詳述"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "第二次鑑定意見的修正內容為鑑定重點",
+     "reason": "第二次鑑定意見的修正內容為鑑定重點"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "缺血性中風症狀為醫學背景資訊",
+     "reason": "缺血性中風症狀為醫學背景資訊"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦部 CT 初期表現為醫學細節",
+     "reason": "腦部 CT 初期表現為醫學細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "40%主動脈剝離伴隨缺血性中風為重要醫學數據",
+     "reason": "40%主動脈剝離伴隨缺血性中風為重要醫學數據"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "初期診斷是否可接受的判斷，屬鑑定核心意見",
+     "reason": "初期診斷是否可接受的判斷，屬鑑定核心意見"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "診斷困難程度評估為鑑定關鍵意見",
+     "reason": "診斷困難程度評估為鑑定關鍵意見"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "確診工具說明為鑑定重要資訊",
+     "reason": "確診工具說明為鑑定重要資訊"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "到院時間細節未在摘要中呈現",
+     "reason": "到院時間細節未在摘要中呈現"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "照會時間細節未在摘要中呈現",
+     "reason": "照會時間細節未在摘要中呈現"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心臟科醫師評估「不需緊急檢查」為關鍵疏失認定依據",
+     "reason": "心臟科醫師評估「不需緊急檢查」為關鍵疏失認定依據"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢查執行時間細節未在摘要中呈現",
+     "reason": "檢查執行時間細節未在摘要中呈現"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "每小時1%死亡率遞增為重要醫學數據",
+     "reason": "每小時1%死亡率遞增為重要醫學數據"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "延誤22小時的疏失判斷為鑑定核心結論，直接影響過失認定",
+     "reason": "延誤22小時的疏失判斷為鑑定核心結論，直接影響過失認定"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "診斷工具選項為醫學背景資訊",
+     "reason": "診斷工具選項為醫學背景資訊"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心臟超音波診斷率資訊未在摘要中呈現",
+     "reason": "心臟超音波診斷率資訊未在摘要中呈現"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "懷疑主動脈剝離時應安排檢查的建議為鑑定標準處置意見",
+     "reason": "懷疑主動脈剝離時應安排檢查的建議為鑑定標準處置意見"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "生命徵象穩定時進一步檢查建議為鑑定標準處置意見",
+     "reason": "生命徵象穩定時進一步檢查建議為鑑定標準處置意見"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腦中風血壓特徵為醫學背景資訊",
+     "reason": "腦中風血壓特徵為醫學背景資訊"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "高血壓病史未在摘要中呈現",
+     "reason": "高血壓病史未在摘要中呈現"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血壓偏低及使用升壓劑為重要鑑別診斷依據",
+     "reason": "血壓偏低及使用升壓劑為重要鑑別診斷依據"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "症狀與缺血性腦中風不一致的判斷為鑑定關鍵分析",
+     "reason": "症狀與缺血性腦中風不一致的判斷為鑑定關鍵分析"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "應考慮主動脈剝離的鑑別診斷邏輯為鑑定核心意見",
+     "reason": "應考慮主動脈剝離的鑑別診斷邏輯為鑑定核心意見"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "A型主動脈剝離死亡率數據為重要醫學資訊",
+     "reason": "A型主動脈剝離死亡率數據為重要醫學資訊"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "即時治療死亡率15%為重要醫學數據，影響因果關係判斷",
+     "reason": "即時治療死亡率15%為重要醫學數據，影響因果關係判斷"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及病患就醫時具體症狀以腦中風為主，屬鑑定意見背景資訊",
+     "reason": "摘要未提及病患就醫時具體症狀以腦中風為主，屬鑑定意見背景資訊"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及慢性心房纖維顫動引發腦中風風險比正常人高五至十倍，屬醫學背景資訊",
+     "reason": "摘要未提及慢性心房纖維顫動引發腦中風風險比正常人高五至十倍，屬醫學背景資訊"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未評價急診及神經科醫師診斷適當性，影響對診療過程正當性的理解",
+     "reason": "摘要未評價急診及神經科醫師診斷適當性，影響對診療過程正當性的理解"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及慢性心房纖維顫動病患合併腦中風必須安排心臟超音波檢查，遺漏檢查必要性資訊",
+     "reason": "摘要未提及慢性心房纖維顫動病患合併腦中風必須安排心臟超音波檢查，遺漏檢查必要性資訊"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及主動脈剝離手術死亡率極高，屬背景醫學資訊",
+     "reason": "摘要未提及主動脈剝離手術死亡率極高，屬背景醫學資訊"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及急性升主動脈剝離死亡率達23.6%，遺漏量化數據影響風險評估理解",
+     "reason": "摘要未提及急性升主動脈剝離死亡率達23.6%，遺漏量化數據影響風險評估理解"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未單獨提及心包膜填充對死亡率的影響，屬細節性醫學資訊",
+     "reason": "摘要未單獨提及心包膜填充對死亡率的影響，屬細節性醫學資訊"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及病患在急診室時已有週邊組織灌注不足及休克現象，影響對病情嚴重程度的理解",
+     "reason": "摘要未提及病患在急診室時已有週邊組織灌注不足及休克現象，影響對病情嚴重程度的理解"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及病患端賴升血壓藥物維持生命現象且預後本來即極差，影響對因果關係判斷的理解",
+     "reason": "摘要未提及病患端賴升血壓藥物維持生命現象且預後本來即極差，影響對因果關係判斷的理解"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決作成日期（民國89年10月12日）屬程序性資訊，section_verdict 僅記載「法院判決認定被告甲無罪」，未提及判決日期",
+     "reason": "判決作成日期（民國89年10月12日）屬程序性資訊，section_verdict 僅記載「法院判決認定被告甲無罪」，未提及判決日期"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "自訴人未上訴之事實為程序性資訊，所有 section 原文均未提及",
+     "reason": "自訴人未上訴之事實為程序性資訊，所有 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定狀態屬程序性資訊，section_verdict 及各 section 原文均未提及",
+     "reason": "判決確定狀態屬程序性資訊，section_verdict 及各 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 僅提及『病患X急診時意識不清』，未提及具體生命徵象數值（血壓82/45 mmHg、心跳69次/分、體溫34℃、昏迷指數8分）",
+     "reason": "section_reasoning 僅提及『病患X急診時意識不清』，未提及具體生命徵象數值（血壓82/45 mmHg、心跳69次/分、體溫34℃、昏迷指數8分）"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及瞳孔大小3.5mm、呻咽、痛覺、嘴唇發紫及心音不清等具體症狀描述",
+     "reason": "section_reasoning 未提及瞳孔大小3.5mm、呻咽、痛覺、嘴唇發紫及心音不清等具體症狀描述"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及C醫師診治紀錄中的昏迷指數6分、肢體冷、發紺、右側手腳無力及病理反射等細節",
+     "reason": "section_reasoning 未提及C醫師診治紀錄中的昏迷指數6分、肢體冷、發紺、右側手腳無力及病理反射等細節"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及Dopamine升壓等具體處置細節",
+     "reason": "section_reasoning 未提及Dopamine升壓等具體處置細節"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及神經科H醫師、內科代總醫師乙及具體會診流程；section_facts提及類似內容但名稱不同（醫師B、醫師C）",
+     "reason": "section_reasoning 未提及神經科H醫師、內科代總醫師乙及具體會診流程；section_facts提及類似內容但名稱不同（醫師B、醫師C）"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及心臟超音波檢查時間及發現主動脈剝離之具體時序",
+     "reason": "section_reasoning 未提及心臟超音波檢查時間及發現主動脈剝離之具體時序"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及胸部電腦斷層檢查結果及主動脈剝離範圍（上升主動脈、弓部及下降主動脈）",
+     "reason": "section_reasoning 未提及胸部電腦斷層檢查結果及主動脈剝離範圍（上升主動脈、弓部及下降主動脈）"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_reasoning 未提及具體死因分析（直接死因心肌衰竭／間接死因急性主動脈剝離），影響判決結論理解",
+     "reason": "section_reasoning 未提及具體死因分析（直接死因心肌衰竭／間接死因急性主動脈剝離），影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 雖提及『無典型主動脈剝離症狀』，但未詳細說明症狀模式之醫學知識（初期症狀以脈動性胸疼或腹疼為主）",
+     "reason": "section_reasoning 雖提及『無典型主動脈剝離症狀』，但未詳細說明症狀模式之醫學知識（初期症狀以脈動性胸疼或腹疼為主）"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及A型主動脈剝離症狀進展模式（前胸疼痛→上胸及頸部→後背）",
+     "reason": "section_reasoning 未提及A型主動脈剝離症狀進展模式（前胸疼痛→上胸及頸部→後背）"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 提及『無法告知有無胸痛症狀』，但未提及『胸口悶熱』症狀描述及其來源（係自訴人描述而非病患自述）",
+     "reason": "section_reasoning 提及『無法告知有無胸痛症狀』，但未提及『胸口悶熱』症狀描述及其來源（係自訴人描述而非病患自述）"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未明確區分『胸口悶熱』與『心痛症狀』之不同",
+     "reason": "section_reasoning 未明確區分『胸口悶熱』與『心痛症狀』之不同"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及急診病歷及護理記錄中無心痛記載之證據細節",
+     "reason": "section_reasoning 未提及急診病歷及護理記錄中無心痛記載之證據細節"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及80年X光片比較結果及心臟與主動脈無異樣之證詞",
+     "reason": "section_reasoning 未提及80年X光片比較結果及心臟與主動脈無異樣之證詞"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 提及『心房纖維性顫動』但未提及80年心電圖比較及診斷排除過程",
+     "reason": "section_reasoning 提及『心房纖維性顫動』但未提及80年心電圖比較及診斷排除過程"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 雖整體涵蓋腦中風判斷，但未明確提及『醫師乙與被告甲討論』之協作過程",
+     "reason": "section_reasoning 雖整體涵蓋腦中風判斷，但未明確提及『醫師乙與被告甲討論』之協作過程"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 提及『心臟超音波檢查』但表述為『遲至翌日始做』，未提及『待病患狀況較穩定再做』之考量",
+     "reason": "section_reasoning 提及『心臟超音波檢查』但表述為『遲至翌日始做』，未提及『待病患狀況較穩定再做』之考量"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 雖提及『腦中風之表現』，但未詳細說明缺血性中風初期症狀之醫學知識",
+     "reason": "section_reasoning 雖提及『腦中風之表現』，但未詳細說明缺血性中風初期症狀之醫學知識"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及腦部電腦斷層初期可無異常表現之醫學知識",
+     "reason": "section_reasoning 未提及腦部電腦斷層初期可無異常表現之醫學知識"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 雖提及合併大片腦中風，但未提及『40%有缺血性中風之變化』之統計數據",
+     "reason": "section_reasoning 雖提及合併大片腦中風，但未提及『40%有缺血性中風之變化』之統計數據"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 雖提及『可等病情穩定後再行檢查』，但未明確提及『本案醫師初期依據病歷、X光及CT片臆診為缺血性中風，尚可接受』之評價",
+     "reason": "section_reasoning 雖提及『可等病情穩定後再行檢查』，但未明確提及『本案醫師初期依據病歷、X光及CT片臆診為缺血性中風，尚可接受』之評價"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts 提及『臆診為腦中風』，section_reasoning 雖提及腦中風判斷，但未明確標示『初步判斷』之時間點",
+     "reason": "section_facts 提及『臆診為腦中風』，section_reasoning 雖提及腦中風判斷，但未明確標示『初步判斷』之時間點"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts 提及『同日9時透過醫師C照會被告甲會診』，但 summary 未明確提及『84年6月2日上午11時許』及『內科代總醫師乙』",
+     "reason": "section_facts 提及『同日9時透過醫師C照會被告甲會診』，但 summary 未明確提及『84年6月2日上午11時許』及『內科代總醫師乙』"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 雖提及『可等病情穩定後再行檢查』，但未明確提及『住院繼續做治療觀察及安排心臟超音波檢查』之建議內容",
+     "reason": "section_reasoning 雖提及『可等病情穩定後再行檢查』，但未明確提及『住院繼續做治療觀察及安排心臟超音波檢查』之建議內容"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts 提及『遲至翌日始做心臟超音波檢查』，但未明確提及『84年6月3日上午9時許』之具體時間",
+     "reason": "section_facts 提及『遲至翌日始做心臟超音波檢查』，但未明確提及『84年6月3日上午9時許』之具體時間"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及被告甲職務範圍（心臟內科門診）及參與限制",
+     "reason": "section_reasoning 未提及被告甲職務範圍（心臟內科門診）及參與限制"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 雖提及『被告甲並不知悉病患X後續有血壓突降之情形』，但未明確說明『並未負責病患之整體診治過程』",
+     "reason": "section_reasoning 雖提及『被告甲並不知悉病患X後續有血壓突降之情形』，但未明確說明『並未負責病患之整體診治過程』"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 提及『無典型主動脈剝離症狀』及『可等病情穩定後再行檢查』，但未明確說明『無必需立即作心臟超音波檢查之急迫性』之判斷",
+     "reason": "section_reasoning 提及『無典型主動脈剝離症狀』及『可等病情穩定後再行檢查』，但未明確說明『無必需立即作心臟超音波檢查之急迫性』之判斷"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未明確提及『84年6月2日』日期及『G醫院』名稱，僅以『送醫時』概括",
+     "reason": "section_reasoning 未明確提及『84年6月2日』日期及『G醫院』名稱，僅以『送醫時』概括"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 提及『慢性心房顫動病人合併腦中風』，但未提及『比正常人高五至十倍』之風險數據",
+     "reason": "section_reasoning 提及『慢性心房顫動病人合併腦中風』，但未提及『比正常人高五至十倍』之風險數據"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 雖整體涵蓋C醫院意見，但未明確提及『似乎還未到必須立即做心臟超音波的地步』之原文表述",
+     "reason": "section_reasoning 雖整體涵蓋C醫院意見，但未明確提及『似乎還未到必須立即做心臟超音波的地步』之原文表述"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 未明確提及第四次鑑定書之上述建議內容",
+     "reason": "section_reasoning 未明確提及第四次鑑定書之上述建議內容"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 雖提及『被告甲並不知悉病患X後續有血壓突降之情形』，但未說明係『護理人員告知L醫師』之過程",
+     "reason": "section_reasoning 雖提及『被告甲並不知悉病患X後續有血壓突降之情形』，但未說明係『護理人員告知L醫師』之過程"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及『84年6月3日上午8時30分許』家屬旁訴病患可說話之護理紀錄細節",
+     "reason": "section_reasoning 未提及『84年6月3日上午8時30分許』家屬旁訴病患可說話之護理紀錄細節"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 提及『死亡率極高之疾病』，但未提及『每小時有1%死亡率之遞增』之具體數據",
+     "reason": "section_reasoning 提及『死亡率極高之疾病』，但未提及『每小時有1%死亡率之遞增』之具體數據"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_reasoning 雖提及『即使第一時間正確診斷亦可能難挽回生命』，但未提及『其死亡率也在15%左右』之具體數據，影響判決結論理解",
+     "reason": "section_reasoning 雖提及『即使第一時間正確診斷亦可能難挽回生命』，但未提及『其死亡率也在15%左右』之具體數據，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_reasoning 提及『合併大片腦中風』『死亡率極高』，但未提及『心包膜填塞及休克』，影響判決結論理解",
+     "reason": "section_reasoning 提及『合併大片腦中風』『死亡率極高』，但未提及『心包膜填塞及休克』，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 雖提及『不必然會發生病患死亡之結果』，但未明確說明『能否有較好結果也在未定之天』之預後不確定性",
+     "reason": "section_reasoning 雖提及『不必然會發生病患死亡之結果』，但未明確說明『能否有較好結果也在未定之天』之預後不確定性"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 未提及『死亡率為23.6%』之具體數據",
+     "reason": "section_reasoning 未提及『死亡率為23.6%』之具體數據"
+    },
+    {
+     "gt_claim_id": 165,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_reasoning 未提及『血壓偏低（80/40 mmHg）、體溫偏低（34℃）』『已有週邊組織灌注不足及休克現象』之具體休克徵象，影響判決結論理解",
+     "reason": "section_reasoning 未提及『血壓偏低（80/40 mmHg）、體溫偏低（34℃）』『已有週邊組織灌注不足及休克現象』之具體休克徵象，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 173,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "掃描全部 5 個 section 原文，未發現「病患住院期間狀況改善」相關敘述，屬事實細節遺漏",
+     "reason": "掃描全部 5 個 section 原文，未發現「病患住院期間狀況改善」相關敘述，屬事實細節遺漏"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 178,
+   "pred_total": 52,
+   "matched": 50,
+   "partial": 17,
+   "missing": 111,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8453,
+  "compression_afg_chars": 1353,
+  "compression_source_chars": 8748,
+  "gt_length_ratio": 0.2067,
+  "gt_length_afg_chars": 1353,
+  "gt_length_gt_chars": 6546,
+  "section_balance": 0.3462
  }
 }
