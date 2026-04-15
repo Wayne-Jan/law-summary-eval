@@ -544,15 +544,48 @@ def _parse_minimal_into_sections(minimal_text):
         ("verdict", "（四）"),
         ("reasoning", "（五）"),
     ]
+    # Normalize citations before splitting
+    # [CH_5_part1] → [CH_05]
+    minimal_text = _re.sub(r'\[CH_(\d+)_part\d+\]', lambda m: f'[CH_{int(m.group(1)):02d}]', minimal_text)
+    # [CH_02, CH_03, CH_04] or [CH_1、CH_9] → [CH_02][CH_03][CH_04]
+    def _expand_multi_ref(m):
+        inner = m.group(1)
+        refs = _re.findall(r'CH_(\d+)', inner)
+        return ''.join(f'[CH_{int(r):02d}]' for r in refs)
+    minimal_text = _re.sub(r'\[CH_\d+(?:[,、]\s*CH_\d+)+\]', _expand_multi_ref, minimal_text)
+    # [CH_XX] placeholder → remove
+    minimal_text = _re.sub(r'\[CH_XX\]', '', minimal_text)
+    # [CH_5] → [CH_05] (zero-pad single digits)
+    minimal_text = _re.sub(r'\[CH_(\d+)\]', lambda m: f'[CH_{int(m.group(1)):02d}]', minimal_text)
+    # Remove [summary_grounded] / [summary_clean] tags
+    minimal_text = _re.sub(r'\[summary_(?:grounded|clean)\]\s*', '', minimal_text, flags=_re.IGNORECASE)
+    # Remove markdown: **bold**, ## headers, # headers
+    minimal_text = _re.sub(r'\*\*(.+?)\*\*', r'\1', minimal_text)
+    minimal_text = _re.sub(r'^#{1,3}\s+', '', minimal_text, flags=_re.MULTILINE)
+    # Remove standalone "法律判決摘要" line
+    minimal_text = _re.sub(r'^法律判決摘要\s*\n', '', minimal_text, flags=_re.MULTILINE)
+
     pattern = r"(（[一二三四五]）)"
     parts = _re.split(pattern, minimal_text)
     # parts = [preamble, header1, body1, header2, body2, ...]
+    TITLE_KEYWORDS = [
+        "起訴", "自訴", "事實", "意旨",
+        "被告回應", "被告答辯",
+        "鑑定意見", "鑑定",
+        "判決結果",
+        "判決理由",
+    ]
     result = {}
     i = 1
     sec_idx = 0
     while i < len(parts) - 1 and sec_idx < 5:
         header = parts[i]
         body = parts[i + 1].strip()
+        # Remove leading title line (e.g. "起訴／自訴事實與意旨")
+        first_line, _, remainder = body.partition("\n")
+        first_stripped = first_line.strip()
+        if first_stripped and any(kw in first_stripped for kw in TITLE_KEYWORDS) and len(first_stripped) < 30:
+            body = remainder.strip()
         for sid, prefix in SECTION_HEADERS:
             if header.startswith(prefix):
                 result[sid] = body
@@ -569,8 +602,8 @@ def load_sections(case_dir):
     if not os.path.isdir(section_dir):
         section_dir = case_dir
 
-    # Load minimal summary if available
-    minimal_path = os.path.join(case_dir, "summary_clean_minimal.txt")
+    # Load minimal summary if available (use grounded version to keep citations)
+    minimal_path = os.path.join(case_dir, "summary_grounded_minimal.txt")
     minimal_sections = {}
     if os.path.exists(minimal_path):
         minimal_text = read_text(minimal_path).strip()
