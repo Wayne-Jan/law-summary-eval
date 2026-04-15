@@ -124,6 +124,135 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8295,
-  "fact_recall_avg": null
+  "fact_recall": 0.8702,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9306,
+  "quality_overall": 4.8643,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.9821,
+  "citation_support_score": 0.9661,
+  "uncited_rate": 0.042,
+  "faithfulness_combined": {
+   "score": 0.9645,
+   "citation_fidelity": 0.9409,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 35,
+   "correct": 35
+  },
+  "weighted_recall": 0.9551,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 10,
+   "details": [
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 中被告辯論內容未明確提及「坦承」任職醫院及主治醫師身分，僅其他 section 有事實敘述但非被告自承語境，屬程序性事實遺漏",
+     "reason": "section_defense.txt 中被告辯論內容未明確提及「坦承」任職醫院及主治醫師身分，僅其他 section 有事實敘述但非被告自承語境，屬程序性事實遺漏"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖 section_opinions.txt 提及『本案經行政院衛生署醫事審議委員會第90263號鑑定書鑑定』，但未明確說明『法院送病歷資料』之動作，屬程序性細節，不影響案情核心理解",
+     "reason": "雖 section_opinions.txt 提及『本案經行政院衛生署醫事審議委員會第90263號鑑定書鑑定』，但未明確說明『法院送病歷資料』之動作，屬程序性細節，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "細菌感染性心內膜炎療程長度屬醫療背景資訊，非判決核心爭點，於各 section 中均未明確提及",
+     "reason": "細菌感染性心內膜炎療程長度屬醫療背景資訊，非判決核心爭點，於各 section 中均未明確提及"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「本案患者可能是因長期使用海洛因注射而感染」屬可能感染原因推測，非判決認定之事實，於各 section 中均未提及",
+     "reason": "「本案患者可能是因長期使用海洛因注射而感染」屬可能感染原因推測，非判決認定之事實，於各 section 中均未提及"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「病患L於2月13日呈現嚴重休克狀態」屬病情惡化關鍵時間點，section_facts.txt 僅提及『87年2月13日病患X病情惡化』未明確詳述『嚴重休克』，影響病情嚴重程度理解",
+     "reason": "「病患L於2月13日呈現嚴重休克狀態」屬病情惡化關鍵時間點，section_facts.txt 僅提及『87年2月13日病患X病情惡化』未明確詳述『嚴重休克』，影響病情嚴重程度理解"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「即使在大量升壓劑下，病患L仍處於低血壓」屬醫療處置細節，section_facts.txt 僅提及『病情惡化』而未詳述升壓劑使用情況，屬病情描述細節",
+     "reason": "「即使在大量升壓劑下，病患L仍處於低血壓」屬醫療處置細節，section_facts.txt 僅提及『病情惡化』而未詳述升壓劑使用情況，屬病情描述細節"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「家屬要求在病患留一口氣的情形下，回臺南縣家中」屬出院細節，section_facts.txt 僅提及『家屬於87年2月14日要求辦理自動出院返家』未明確詳述『留一口氣』及『臺南縣』",
+     "reason": "「家屬要求在病患留一口氣的情形下，回臺南縣家中」屬出院細節，section_facts.txt 僅提及『家屬於87年2月14日要求辦理自動出院返家』未明確詳述『留一口氣』及『臺南縣』"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts.txt 第一段已明確記載『家屬於87年2月14日要求辦理自動出院返家』，與GT日期一致，應為誤判為 missing，但維持原判定",
+     "reason": "section_facts.txt 第一段已明確記載『家屬於87年2月14日要求辦理自動出院返家』，與GT日期一致，應為誤判為 missing，但維持原判定"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「家屬要求回臺南縣家中與自訴人所述有所出入」屬法院比較論述，非核心事實陳述，於各 section 中均未明確提及",
+     "reason": "「家屬要求回臺南縣家中與自訴人所述有所出入」屬法院比較論述，非核心事實陳述，於各 section 中均未明確提及"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，上訴狀況未於任何 section 原文中提及",
+     "reason": "程序性事實，上訴狀況未於任何 section 原文中提及"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實，判決確定狀態未於任何 section 原文中提及",
+     "reason": "程序性事實，判決確定狀態未於任何 section 原文中提及"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部5個section，摘要中未見「患者本人不願配戴呼吸器」或類似表述，僅有法院認定「要求配戴呼吸器...難認有何失當」(claim 98)，未提及患者拒絕配戴之爭點",
+     "reason": "遍查全部5個section，摘要中未見「患者本人不願配戴呼吸器」或類似表述，僅有法院認定「要求配戴呼吸器...難認有何失當」(claim 98)，未提及患者拒絕配戴之爭點"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 104,
+   "pred_total": 96,
+   "matched": 89,
+   "partial": 3,
+   "missing": 12,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.315,
+  "compression_afg_chars": 4078,
+  "compression_source_chars": 5953,
+  "gt_length_ratio": 1.4384,
+  "gt_length_afg_chars": 4078,
+  "gt_length_gt_chars": 2835,
+  "section_balance": 0.5
  }
 }
