@@ -135,6 +135,472 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.6801
+  "rule_based_avg": 0.6801,
+  "fact_recall": 0.5538,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7128,
+  "quality_overall": 4.8286,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9875,
+  "uncited_rate": 0.059,
+  "faithfulness_combined": {
+   "score": 0.9646,
+   "citation_fidelity": 0.941,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.8397,
+  "missing_severity": {
+   "critical": 0,
+   "important": 16,
+   "minor": 44,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "術前探訪屬程序性背景事實，非本案核心爭點",
+     "reason": "術前探訪屬程序性背景事實，非本案核心爭點"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "具體出院日期（8月11日）及轉院機構名稱屬細節性資訊，摘要已提及轉往B醫院，不影響案情理解",
+     "reason": "具體出院日期（8月11日）及轉院機構名稱屬細節性資訊，摘要已提及轉往B醫院，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "施打前測試義務屬技術性細節，reasoning 段已涵蓋「無須進行測試」的鑑定結論",
+     "reason": "施打前測試義務屬技術性細節，reasoning 段已涵蓋「無須進行測試」的鑑定結論"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「無不能注意之情事」涉及被告注意能力前提，影響過失認定，但五個 section 原文均未明確陳述此項",
+     "reason": "「無不能注意之情事」涉及被告注意能力前提，影響過失認定，但五個 section 原文均未明確陳述此項"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「首次就醫醫師應先詢問過敏種類」是一般的臨床原則性陳述，5個section原文均未明確提及。屬背景性事實，不影響本案鑑定意見的論證核心",
+     "reason": "「首次就醫醫師應先詢問過敏種類」是一般的臨床原則性陳述，5個section原文均未明確提及。屬背景性事實，不影響本案鑑定意見的論證核心"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「5位醫療人員」的具體數字在5個section原文中均未出現。此細節雖在判決書的完整事實部分可能有記載，但不在摘要的opinions section中，不影響鑑定意見的整體理解",
+     "reason": "「5位醫療人員」的具體數字在5個section原文中均未出現。此細節雖在判決書的完整事實部分可能有記載，但不在摘要的opinions section中，不影響鑑定意見的整體理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「病患無法明確指出過敏史」此事實確實未出現在opinions section的鑑定意見中，雖然reasoning section有提及，但opinions section只引用鑑定單位的醫療意見，未直接陳述此patient-level事實。影響對案件事實基礎的完整理解",
+     "reason": "「病患無法明確指出過敏史」此事實確實未出現在opinions section的鑑定意見中，雖然reasoning section有提及，但opinions section只引用鑑定單位的醫療意見，未直接陳述此patient-level事實。影響對案件事實基礎的完整理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「醫師有詢問病史之責任」作為一般性宣示在opinions section未明確出現。摘要的opinions節段僅陳述兩份鑑定書的具體結論，未展開論述醫師詢問義務的一般原則",
+     "reason": "「醫師有詢問病史之責任」作為一般性宣示在opinions section未明確出現。摘要的opinions節段僅陳述兩份鑑定書的具體結論，未展開論述醫師詢問義務的一般原則"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「病患提供資訊之義務」作為一般性宣示在opinions section未明確出現。鑑定意見中雖隱含病患資訊不足，但未明確表述病患有此義務",
+     "reason": "「病患提供資訊之義務」作為一般性宣示在opinions section未明確出現。鑑定意見中雖隱含病患資訊不足，但未明確表述病患有此義務"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「若病患提供有效線索而醫師不追查則有疏失」的條件式結論在opinions section中未完整出現。原文僅說明本案病患資訊不足的情況，未明確論述反方向條件的完整邏輯。這與gt_claim_id 44構成雙向條件，一同遺漏會影響對鑑定邏輯完整性的理解",
+     "reason": "「若病患提供有效線索而醫師不追查則有疏失」的條件式結論在opinions section中未完整出現。原文僅說明本案病患資訊不足的情況，未明確論述反方向條件的完整邏輯。這與gt_claim_id 44構成雙向條件，一同遺漏會影響對鑑定邏輯完整性的理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "全部 5 個 section 原文均未提及檢察官上訴或上訴期間相關資訊，屬程序性事實缺失",
+     "reason": "全部 5 個 section 原文均未提及檢察官上訴或上訴期間相關資訊，屬程序性事實缺失"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "全部 5 個 section 原文均未提及判決確定狀態，屬程序性事實缺失",
+     "reason": "全部 5 個 section 原文均未提及判決確定狀態，屬程序性事實缺失"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及『阿斯匹靈過敏(Stin)』、『哥哥過敏Stin, U-saveA』等健保卡具體書寫內容",
+     "reason": "五個section原文均未提及『阿斯匹靈過敏(Stin)』、『哥哥過敏Stin, U-saveA』等健保卡具體書寫內容"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『健保卡影本二紙』之證據提出",
+     "reason": "五個section原文均未提及『健保卡影本二紙』之證據提出"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及告訴人之子至C醫院就醫發生過敏症狀之細節",
+     "reason": "五個section原文均未提及告訴人之子至C醫院就醫發生過敏症狀之細節"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『病患W送告訴人之子去中興醫院』之事實",
+     "reason": "五個section原文均未提及『病患W送告訴人之子去中興醫院』之事實"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未具體描述『健保卡背面註明過敏資訊』之動作細節",
+     "reason": "五個section原文均未具體描述『健保卡背面註明過敏資訊』之動作細節"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及『告訴人之子接受治療時發生過敏症狀，並非病患W本人經就診用藥得知』之論述",
+     "reason": "五個section原文均未提及『告訴人之子接受治療時發生過敏症狀，並非病患W本人經就診用藥得知』之論述"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及健保卡書寫內容差異（Stin vs U-saveA）之細節",
+     "reason": "五個section原文均未提及健保卡書寫內容差異（Stin vs U-saveA）之細節"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及C醫院用藥細節（僅給予Stin注射及口服藥，並無U-save A）",
+     "reason": "五個section原文均未提及C醫院用藥細節（僅給予Stin注射及口服藥，並無U-save A）"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『告訴人之子於同日因氣喘前往W醫院就診』",
+     "reason": "五個section原文均未提及『告訴人之子於同日因氣喘前往W醫院就診』"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『W醫院醫師亦無告知係因何原因導致氣喘』",
+     "reason": "五個section原文均未提及『W醫院醫師亦無告知係因何原因導致氣喘』"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及『告訴人之子不知當次氣喘是否係因Stin注射所導致』",
+     "reason": "五個section原文均未提及『告訴人之子不知當次氣喘是否係因Stin注射所導致』"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及『當日就診過程中完全未使用U-save A』",
+     "reason": "五個section原文均未提及『當日就診過程中完全未使用U-save A』"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及『陪病者先後證詞相互矛盾』",
+     "reason": "五個section原文均未提及『陪病者先後證詞相互矛盾』"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文雖提及『護理師庚之證詞』，但未具體說明護理師職責細節",
+     "reason": "五個section原文雖提及『護理師庚之證詞』，但未具體說明護理師職責細節"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『97年7月17日上午9時』之具體探視時間",
+     "reason": "五個section原文均未提及『97年7月17日上午9時』之具體探視時間"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『將過敏資料寫在病患名單上，回護理站就將資料輸入文書檔案』之記錄程序",
+     "reason": "五個section原文均未提及『將過敏資料寫在病患名單上，回護理站就將資料輸入文書檔案』之記錄程序"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『A醫院住院病歷紀錄是護理師Z打的』之具體打字人員",
+     "reason": "五個section原文均未提及『A醫院住院病歷紀錄是護理師Z打的』之具體打字人員"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『護理師Z第一次看到告訴人是在加護病房時』",
+     "reason": "五個section原文均未提及『護理師Z第一次看到告訴人是在加護病房時』"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『先前護理師Z跟被告去訪視病患W時，確定沒看到告訴人』",
+     "reason": "五個section原文均未提及『先前護理師Z跟被告去訪視病患W時，確定沒看到告訴人』"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『被告甲不會在急診處理事情』",
+     "reason": "五個section原文均未提及『被告甲不會在急診處理事情』"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『如果有緊急狀況的話，是由值班住院醫師處理』之值班機制",
+     "reason": "五個section原文均未提及『如果有緊急狀況的話，是由值班住院醫師處理』之值班機制"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『病房護理人員L』及其職責",
+     "reason": "五個section原文均未提及『病房護理人員L』及其職責"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『病房護理人員L於97年7月16日值大夜班』",
+     "reason": "五個section原文均未提及『病房護理人員L於97年7月16日值大夜班』"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及『病房護理人員L於97年7月16日大夜班期間沒有看到被告甲到病房對病患W做訪視或處理病情』之關鍵時間證據",
+     "reason": "五個section原文均未提及『病房護理人員L於97年7月16日大夜班期間沒有看到被告甲到病房對病患W做訪視或處理病情』之關鍵時間證據"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『病房護理人員L有通知值班醫師前往探視病患W』",
+     "reason": "五個section原文均未提及『病房護理人員L有通知值班醫師前往探視病患W』"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文雖提及7月17日巡房，但未提及『上午9時』之具體迴診時間",
+     "reason": "五個section原文雖提及7月17日巡房，但未提及『上午9時』之具體迴診時間"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及『病患W車禍當晚被告甲自無可能出現在病房進行詢問』之時間不可能論述",
+     "reason": "五個section原文均未提及『病患W車禍當晚被告甲自無可能出現在病房進行詢問』之時間不可能論述"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文雖提及『與其他就醫紀錄不符』，但未具體指出『被告甲與告訴人就此所證亦與事實不符』之表述",
+     "reason": "五個section原文雖提及『與其他就醫紀錄不符』，但未具體指出『被告甲與告訴人就此所證亦與事實不符』之表述"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『前揭藥品除Voren外，其餘種類尚非完全相同』之藥品比較論述",
+     "reason": "五個section原文均未提及『前揭藥品除Voren外，其餘種類尚非完全相同』之藥品比較論述"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及救護人員出勤時間之相關內容",
+     "reason": "五個section均未提及救護人員出勤時間之相關內容"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及救護人員詢問過敏史之相關內容",
+     "reason": "五個section均未提及救護人員詢問過敏史之相關內容"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及臺北縣政府消防局救護紀錄表及函文",
+     "reason": "五個section均未提及臺北縣政府消防局救護紀錄表及函文"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未以「在卷可憑」形式提及急診病歷作為證據",
+     "reason": "五個section均未以「在卷可憑」形式提及急診病歷作為證據"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及醫師T之證詞或急診負責醫師之相關資訊",
+     "reason": "五個section均未提及醫師T之證詞或急診負責醫師之相關資訊"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及醫師R之身份或麻醉術前評估之職責",
+     "reason": "五個section均未提及醫師R之身份或麻醉術前評估之職責"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及病患住院之具體時間（7月17日凌晨）",
+     "reason": "五個section均未提及病患住院之具體時間（7月17日凌晨）"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及醫師R進行術前評估之具體時間",
+     "reason": "五個section均未提及醫師R進行術前評估之具體時間"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及醫師R對家屬接觸之記憶",
+     "reason": "五個section均未提及醫師R對家屬接觸之記憶"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及醫師C之身份或證詞",
+     "reason": "五個section均未提及醫師C之身份或證詞"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及醫師C查看術前評估單之細節",
+     "reason": "五個section均未提及醫師C查看術前評估單之細節"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section均未提及病患曾向其他醫師、護士表示藥物過敏之事實，此為事實爭點之相關證據",
+     "reason": "五個section均未提及病患曾向其他醫師、護士表示藥物過敏之事實，此為事實爭點之相關證據"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及醫師C於審理時之證詞",
+     "reason": "五個section均未提及醫師C於審理時之證詞"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及術後醫囑由何人開立",
+     "reason": "五個section均未提及術後醫囑由何人開立"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未明確提及住院病歷紀錄及主治醫師住院計畫未記載不明藥物過敏之事實",
+     "reason": "五個section均未明確提及住院病歷紀錄及主治醫師住院計畫未記載不明藥物過敏之事實"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及醫師C記憶錯誤之認定",
+     "reason": "五個section均未提及醫師C記憶錯誤之認定"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及病患初診日期",
+     "reason": "五個section均未提及病患初診日期"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及A醫院函文及病歷冊封面作為證據",
+     "reason": "五個section均未提及A醫院函文及病歷冊封面作為證據"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section均未提及病患至A醫院急診非首次就醫之事實",
+     "reason": "五個section均未提及病患至A醫院急診非首次就醫之事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 158,
+   "pred_total": 34,
+   "matched": 77,
+   "partial": 21,
+   "missing": 60,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8485,
+  "compression_afg_chars": 1299,
+  "compression_source_chars": 8573,
+  "gt_length_ratio": 0.2447,
+  "gt_length_afg_chars": 1299,
+  "gt_length_gt_chars": 5309,
+  "section_balance": 0.5
  }
 }

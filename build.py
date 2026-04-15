@@ -549,7 +549,7 @@ def _parse_minimal_into_sections(minimal_text):
     minimal_text = _re.sub(r'\[CH_(\d+)_part\d+\]', lambda m: f'[CH_{int(m.group(1)):02d}]', minimal_text)
     # [CH_02, CH_03, CH_04] or [CH_1、CH_9] → [CH_02][CH_03][CH_04]
     def _expand_multi_ref(m):
-        inner = m.group(1)
+        inner = m.group(0)
         refs = _re.findall(r'CH_(\d+)', inner)
         return ''.join(f'[CH_{int(r):02d}]' for r in refs)
     minimal_text = _re.sub(r'\[CH_\d+(?:[,、]\s*CH_\d+)+\]', _expand_multi_ref, minimal_text)
