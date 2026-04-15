@@ -1324,8 +1324,15 @@
     };
   }
 
+  function _median(vals) {
+    const sorted = vals.filter(v => v != null).sort((a, b) => a - b);
+    if (!sorted.length) return null;
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  }
+
   function _computePercentileThresholds(entries) {
-    // Condition-level percentiles (for overview row averages)
+    // Condition-level percentiles (for overview row medians)
     const condMetrics = {
       rule_based_avg: e => e.averages?.rule_based_avg,
       fact_recall_avg: e => e.averages?.fact_recall_avg,
@@ -1514,15 +1521,16 @@
       };
     }).filter(row => row.score != null);
     rows.sort((a, b) => b.score - a.score || a.caseName.localeCompare(b.caseName, 'zh-Hant'));
-    if (!rows.length) return { rows: [], avg: null, best: null, worst: null, dev: null };
-    const avg = rows.reduce((sum, row) => sum + row.score, 0) / rows.length;
+    if (!rows.length) return { rows: [], median: null, avg: null, best: null, worst: null, dev: null };
+    const median = _median(rows.map(row => row.score));
     let dev = rows[0];
     for (const row of rows) {
-      if (Math.abs(row.score - avg) > Math.abs(dev.score - avg)) dev = row;
+      if (Math.abs(row.score - median) > Math.abs(dev.score - median)) dev = row;
     }
     return {
       rows,
-      avg,
+      median,
+      avg: median,
       best: rows[0],
       worst: rows[rows.length - 1],
       dev,
@@ -1618,15 +1626,15 @@
     const orderedRows = getOrderedCaseRows(cond).map(row => ({ ...row, score: caseCompositeScore(row.caseData) }));
     if (!orderedRows.length) return [];
     const scorable = orderedRows.filter(row => row.score != null);
-    if (!scorable.length) return orderedRows.slice(0, 3).map((row, idx) => ({ row, label: ['最高', '平均', '最低'][idx] || '' }));
+    if (!scorable.length) return orderedRows.slice(0, 3).map((row, idx) => ({ row, label: ['最高', '中位數', '最低'][idx] || '' }));
     const sorted = [...scorable].sort((a, b) => b.score - a.score || String(a.caseName).localeCompare(String(b.caseName), 'zh-Hant'));
-    const avg = scorable.reduce((sum, row) => sum + row.score, 0) / scorable.length;
-    const avgRow = scorable.reduce((best, row) => (
-      best == null || Math.abs(row.score - avg) < Math.abs(best.score - avg) ? row : best
+    const medianScore = _median(scorable.map(row => row.score));
+    const medianRow = scorable.reduce((best, row) => (
+      best == null || Math.abs(row.score - medianScore) < Math.abs(best.score - medianScore) ? row : best
     ), null);
     const candidates = [
       { label: '最高', row: sorted[0] },
-      { label: '平均', row: avgRow },
+      { label: '中位數', row: medianRow },
       { label: '最低', row: sorted[sorted.length - 1] }
     ];
     const unique = [];
@@ -1982,6 +1990,33 @@
     return data;
   }
 
+  function normalizeMetricsSchema(data) {
+    if (!data || !data.conditions) return data;
+    for (const cond of Object.values(data.conditions)) {
+      const med = cond.medians || cond.averages || {};
+      const rouge = med.rouge_bertscore || {};
+      cond.medians = {
+        rule_based_median: med.rule_based_median ?? med.rule_based_avg ?? null,
+        fact_recall_median: med.fact_recall_median ?? med.fact_recall_avg ?? null,
+        fact_weighted_recall_median: med.fact_weighted_recall_median ?? med.fact_weighted_recall_avg ?? null,
+        quality_median: med.quality_median ?? med.quality_avg ?? null,
+        faithfulness_median: med.faithfulness_median ?? med.faithfulness_avg ?? null,
+        rouge_bertscore: rouge,
+        rouge_bertscore_n: med.rouge_bertscore_n ?? null,
+      };
+      cond.averages = {
+        rule_based_avg: cond.medians.rule_based_median,
+        fact_recall_avg: cond.medians.fact_recall_median,
+        fact_weighted_recall_avg: cond.medians.fact_weighted_recall_median,
+        quality_avg: cond.medians.quality_median,
+        faithfulness_avg: cond.medians.faithfulness_median,
+        rouge_bertscore: cond.medians.rouge_bertscore,
+        rouge_bertscore_n: cond.medians.rouge_bertscore_n,
+      };
+    }
+    return data;
+  }
+
   function formatModelLabel(label, condKey) {
     const iconCfg = condKey ? CONDITION_ICONS[condKey] : null;
     let iconHtml = '';
@@ -2147,7 +2182,7 @@
     const cols = entries.map(([, cond]) => ({
       label: heatmapModelLabel(cond.label),
       tip: plainModelLabel(cond.label),
-      values: rows.map(row => avgFromCases(cond, cfg.dataKey, row.key))
+      values: rows.map(row => medianFromCases(cond, cfg.dataKey, row.key))
     }));
     return { rows, cols };
   }
@@ -2228,7 +2263,7 @@
       metricType,
       getOverviewHeatmapData(metricType, entries),
       'Overview Heatmap',
-      'Average dimension scores for the current volume.'
+      'Median dimension scores for the current volume.'
     );
   }
 
@@ -2241,7 +2276,7 @@
       metricType,
       getOverviewHeatmapData(metricType, entries),
       'Profile Heatmap',
-      'Dimension-level averages beside the model profiles.'
+      'Dimension-level medians beside the model profiles.'
     );
   }
 
@@ -2320,10 +2355,10 @@
     const best = [...ranked]
       .filter(item => item.overall != null)
       .sort((a, b) => b.overall - a.overall)[0] || null;
-    const avgOverall = ranked
+    const overallScores = ranked
       .map(item => item.overall)
       .filter(v => v != null);
-    const avgOverallText = avgOverall.length ? fmt(avgOverall.reduce((s, v) => s + v, 0) / avgOverall.length) : '--';
+    const medianOverallText = overallScores.length ? fmt(_median(overallScores)) : '--';
     const widestGapMetric = [...MOBILE_METRIC_OPTIONS]
       .map(option => {
         const vals = entries.map(([, cond]) => normalizeByScale(option.value(cond), option.scale)).filter(v => v != null);
@@ -2340,8 +2375,8 @@
           <div class="mobile-metrics-stat-sub">${best ? `整體綜合分數 ${fmt(best.overall)}` : '目前無資料'}</div>
         </div>
         <div class="mobile-metrics-stat">
-          <div class="mobile-metrics-stat-label">平均表現</div>
-          <div class="mobile-metrics-stat-value">${avgOverallText}</div>
+          <div class="mobile-metrics-stat-label">中位表現</div>
+          <div class="mobile-metrics-stat-value">${medianOverallText}</div>
           <div class="mobile-metrics-stat-sub">${entries.length} 個模型</div>
         </div>
         <div class="mobile-metrics-stat">
@@ -2709,19 +2744,18 @@
     });
   }
 
-  function avgFromCases(cond, dataKey, fieldKey) {
+  function medianFromCases(cond, dataKey, fieldKey) {
     const vals = Object.values(cond.cases || {})
       .map(caseData => ((caseData[dataKey] || {})[fieldKey]))
       .filter(v => v != null);
-    if (!vals.length) return null;
-    return vals.reduce((a, b) => a + b, 0) / vals.length;
+    return _median(vals);
   }
 
   function detailRows(cond, items, dataKey, scale) {
     return items.map(item => {
       const value = dataKey === 'rouge_bertscore'
-        ? avgFromCases(cond, 'rouge_bertscore', item.key)
-        : avgFromCases(cond, dataKey, item.key);
+        ? medianFromCases(cond, 'rouge_bertscore', item.key)
+        : medianFromCases(cond, dataKey, item.key);
       if (value == null) return '';
       const s = item.scale || scale;
       const pct = s === '5' ? (value / 5) * 100 : value * 100;
@@ -3309,7 +3343,7 @@
     ])
       .then(([data, manifest]) => {
         syncVersionedLinks(document);
-        DATA = applyMetricsDisplayLabels(data);
+        DATA = normalizeMetricsSchema(applyMetricsDisplayLabels(data));
         CASE_INFO = (manifest && manifest.case_info) || {};
         DATA.case_display_by_slug = {};
         for (const [caseName, slug] of Object.entries(DATA.case_slugs || {})) {

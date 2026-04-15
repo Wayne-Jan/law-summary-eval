@@ -238,9 +238,10 @@ def compute_shared_xlims(
         if all_vals:
             data_min, data_max = min(all_vals), max(all_vals)
             span = data_max - data_min if data_max > data_min else 0.1
-            pad = span * 0.08
+            pad = span * (0.04 if mk == "rougeL" else 0.08)
             xlim_lo = data_min - pad
-            xlim_hi = min(5.0 if mk == "quality" else 1.0, data_max + pad * 1.5)
+            right_pad = pad * (1.0 if mk == "rougeL" else 1.5)
+            xlim_hi = min(5.0 if mk == "quality" else 1.0, data_max + right_pad)
             # Round to nice 0.05 grid
             xlim_lo = float(np.floor(xlim_lo * 20) / 20)
             xlim_hi = float(np.ceil(xlim_hi * 20) / 20)
@@ -265,9 +266,15 @@ def plot_group(
 
     n_models = len(sorted_conds)
     n_metrics = len(METRICS)
-    fig_w = 3.2 * n_metrics
+    fig_w = 2.95 * n_metrics
     fig_h = max(4.0, 0.55 * n_models + 1.5)
-    fig, axes = plt.subplots(1, n_metrics, figsize=(fig_w, fig_h), sharey=True)
+    fig, axes = plt.subplots(
+        1,
+        n_metrics,
+        figsize=(fig_w, fig_h),
+        sharey=True,
+        gridspec_kw={"wspace": 0.0},
+    )
 
     for col, m in enumerate(METRICS):
         ax = axes[col]
@@ -303,8 +310,8 @@ def plot_group(
             # CLD letter at max cap
             letter = cld_map.get(ck, "")
             ax.annotate(
-                letter, xy=(vmax, i), xytext=(5, 0), textcoords="offset points",
-                ha="left", va="center", fontsize=8, color="#374151", fontweight="bold",
+                letter, xy=(vmax, i), xytext=(-4, 0), textcoords="offset points",
+                ha="right", va="center", fontsize=8, color="#374151", fontweight="bold",
                 fontstyle="italic",
             )
 
@@ -318,7 +325,7 @@ def plot_group(
         ax.set_axisbelow(True)
 
     fig.suptitle(title, fontsize=12, fontweight="bold", color="#1e293b", y=1.02)
-    plt.tight_layout()
+    fig.subplots_adjust(left=0.085, right=0.995, top=0.90, bottom=0.08, wspace=0.0)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output_path, dpi=dpi, facecolor="white")
     plt.close(fig)
@@ -354,7 +361,15 @@ def main() -> int:
 
         title = f"Per-Case Metric Distribution — {group_label}  ({args.volume.title()})"
         out_path = out_dir / f"{args.volume}_multi_metric_{group_name}_cld.png"
-        plot_group(sorted_conds, cond_data, title, out_path, args.dpi, shared_xlims, shared_clds)
+        plot_group(
+            sorted_conds,
+            cond_data,
+            title,
+            out_path,
+            args.dpi,
+            shared_xlims,
+            shared_clds,
+        )
 
     return 0
 

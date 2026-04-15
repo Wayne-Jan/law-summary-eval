@@ -17,7 +17,7 @@ import json
 import sys
 from collections import OrderedDict
 from pathlib import Path
-from statistics import mean
+from statistics import median
 from functools import lru_cache
 
 
@@ -139,9 +139,9 @@ def safe_float(value):
     return float(value)
 
 
-def mean_or_none(values):
+def median_or_none(values):
     vals = [v for v in values if v is not None]
-    return mean(vals) if vals else None
+    return median(vals) if vals else None
 
 
 @lru_cache(maxsize=None)
@@ -345,27 +345,16 @@ def load_rouge_by_case(cond: str, volume: str):
             "bertscore_r": safe_float(row.get("bertscore_r")),
             "bertscore_f1": safe_float(row.get("bertscore_f1")),
         }
-    averages = None
-    # When using all_volumes fallback, don't use the global summary averages
-    # (they cover all volumes); recompute from filtered cases instead.
-    if summary and (METRIC_EVAL_ROOT / cond / volume).exists():
-        averages = {
-            "rouge1": safe_float(summary.get("rouge1_f_mean")),
-            "rouge2": safe_float(summary.get("rouge2_f_mean")),
-            "rougeL": safe_float(summary.get("rougeL_f_mean")),
-            "bertscore_p": safe_float(summary.get("bertscore_p_mean")),
-            "bertscore_r": safe_float(summary.get("bertscore_r_mean")),
-            "bertscore_f1": safe_float(summary.get("bertscore_f1_mean")),
-        }
-    elif per_case:
+    medians = None
+    if per_case:
         keys = ("rouge1", "rouge2", "rougeL", "bertscore_p", "bertscore_r", "bertscore_f1")
-        averages = {k: mean_or_none(v.get(k) for v in per_case.values()) for k in keys}
+        medians = {k: median_or_none(v.get(k) for v in per_case.values()) for k in keys}
     n = None
     if summary and (METRIC_EVAL_ROOT / cond / volume).exists():
         n = summary.get("n_cases_ok")
     elif per_case:
         n = len(per_case)
-    return per_case, averages, n
+    return per_case, medians, n
 
 
 def build_condition_volume(cond: str, label: str, group: str, volume: str):
@@ -373,7 +362,7 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
     if not pred_dir.exists():
         return None
 
-    rouge_cases, rouge_avg, rouge_n = load_rouge_by_case(cond, volume)
+    rouge_cases, rouge_medians, rouge_n = load_rouge_by_case(cond, volume)
 
     raw_cases = []
     for case_dir in sorted(p for p in pred_dir.iterdir() if p.is_dir()):
@@ -400,16 +389,16 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
             case_payload["rouge_bertscore"] = rouge
         raw_cases.append((case_name, case_payload))
 
-    if not raw_cases and not rouge_avg:
+    if not raw_cases and not rouge_medians:
         return None
 
-    avg_rule = mean_or_none(case["rule_based"].get("avg") for _, case in raw_cases if case["rule_based"])
-    avg_fact = mean_or_none(case["fact_recall"].get("avg") for _, case in raw_cases if case["fact_recall"])
-    avg_weighted_fact = mean_or_none(
+    avg_rule = median_or_none(case["rule_based"].get("avg") for _, case in raw_cases if case["rule_based"])
+    avg_fact = median_or_none(case["fact_recall"].get("avg") for _, case in raw_cases if case["fact_recall"])
+    avg_weighted_fact = median_or_none(
         case["fact_recall"].get("weighted_recall") for _, case in raw_cases if case["fact_recall"]
     )
-    avg_quality = mean_or_none(case["quality"].get("avg") for _, case in raw_cases if case["quality"])
-    avg_faithfulness = mean_or_none(
+    avg_quality = median_or_none(case["quality"].get("avg") for _, case in raw_cases if case["quality"])
+    avg_faithfulness = median_or_none(
         case.get("faithfulness") for _, case in raw_cases if case.get("faithfulness") is not None
     )
 
@@ -417,16 +406,16 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
     payload["label"] = label
     payload["group"] = group
     payload["cases"] = raw_cases
-    payload["averages"] = {
-        "rule_based_avg": avg_rule,
-        "fact_recall_avg": avg_fact,
-        "fact_weighted_recall_avg": avg_weighted_fact,
-        "quality_avg": avg_quality,
-        "faithfulness_avg": avg_faithfulness,
+    payload["medians"] = {
+        "rule_based_median": avg_rule,
+        "fact_recall_median": avg_fact,
+        "fact_weighted_recall_median": avg_weighted_fact,
+        "quality_median": avg_quality,
+        "faithfulness_median": avg_faithfulness,
     }
-    if rouge_avg:
-        payload["averages"]["rouge_bertscore"] = rouge_avg
-        payload["averages"]["rouge_bertscore_n"] = rouge_n
+    if rouge_medians:
+        payload["medians"]["rouge_bertscore"] = rouge_medians
+        payload["medians"]["rouge_bertscore_n"] = rouge_n
     llm_count = sum(1 for _, c in raw_cases if c["quality"].get("avg") is not None)
     payload["eval_count"] = llm_count
     payload["total_cases"] = len(raw_cases)
