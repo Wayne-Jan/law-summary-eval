@@ -1401,7 +1401,7 @@
       }
     }
 
-    function showSource(idx, scrollEvent = true) {
+    function showSource(idx, scrollEvent = true, requestedSpanId = null) {
       if (!timelineData) return;
       const events = timelineData.events || [];
       const evt = events[idx];
@@ -1409,9 +1409,17 @@
       const prevIdx = activeEventIdx;
       activeEventIdx = idx;
       const evtSpans = getEventSpans(evt);
-      if (!evtSpans.length) activeSpanId = null;
-      else if (idx !== prevIdx || !activeSpanId || !evtSpans.some(sp => sp.span_id === String(activeSpanId))) activeSpanId = (evtSpans.find(sp => sp.role === 'primary') || evtSpans[0]).span_id;
-      else activeSpanId = String(activeSpanId);
+      if (!evtSpans.length) {
+        activeSpanId = null;
+      } else if (requestedSpanId != null) {
+        const requested = String(requestedSpanId);
+        const requestedSpan = evtSpans.find(sp => sp.span_id === requested);
+        activeSpanId = requestedSpan ? requestedSpan.span_id : (evtSpans.find(sp => sp.role === 'primary') || evtSpans[0]).span_id;
+      } else if (!activeSpanId || !evtSpans.some(sp => sp.span_id === String(activeSpanId))) {
+        activeSpanId = (evtSpans.find(sp => sp.role === 'primary') || evtSpans[0]).span_id;
+      } else {
+        activeSpanId = String(activeSpanId);
+      }
 
       // Highlight active event card (no scroll — only visual)
       document.querySelectorAll('.tl-event').forEach(el => {
@@ -1474,7 +1482,7 @@
     function selectSpan(evtIdx, spanId) {
       if (!timelineData || evtIdx < 0) return;
       activeSpanId = spanId == null ? null : String(spanId);
-      showSource(evtIdx, true);
+      showSource(evtIdx, true, activeSpanId);
     }
 
     function isoToMinguo(iso, refIso) {
