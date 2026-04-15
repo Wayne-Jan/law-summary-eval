@@ -612,7 +612,11 @@
                             </svg>
                         </span>
                         <div class="panel-title">AI摘要</div>
-                        <button id="minimalToggle" style="display:none;margin-left:8px;padding:2px 10px;font-size:11px;border:1px solid #d1d5db;border-radius:4px;background:#f9fafb;color:#374151;cursor:pointer;white-space:nowrap;" title="切換 Informed / Minimal baseline 版本">Informed</button>
+                        <div id="minimalToggle" style="display:none;margin-left:10px;position:relative;width:140px;height:26px;background:#e5e7eb;border-radius:13px;cursor:pointer;user-select:none;flex-shrink:0;" title="切換 Informed / Minimal baseline 版本">
+                            <div id="minimalToggleSlider" style="position:absolute;top:2px;left:2px;width:68px;height:22px;background:#fff;border-radius:11px;box-shadow:0 1px 3px rgba(0,0,0,.15);transition:transform .25s ease;"></div>
+                            <span id="minimalLabelLeft" style="position:absolute;left:0;width:70px;text-align:center;line-height:26px;font-size:11px;font-weight:600;color:#1e293b;z-index:1;transition:color .2s;">Informed</span>
+                            <span id="minimalLabelRight" style="position:absolute;right:0;width:70px;text-align:center;line-height:26px;font-size:11px;font-weight:500;color:#9ca3af;z-index:1;transition:color .2s;">Minimal</span>
+                        </div>
                         <span class="summary-meta" id="summaryMeta" style="font-size:12px;color:#6b7280;margin-left:auto;"></span>
                     </div>
                 </div>
@@ -909,9 +913,9 @@
 
         // ─── MINIMAL TOGGLE ───
         (function() {
-            const btn = document.getElementById('minimalToggle');
-            if (btn) {
-                btn.addEventListener('click', () => {
+            const wrap = document.getElementById('minimalToggle');
+            if (wrap) {
+                wrap.addEventListener('click', () => {
                     showMinimal = !showMinimal;
                     renderFullSummaryContent();
                 });
@@ -972,15 +976,30 @@
         }
 
         function updateMinimalToggle() {
-            const btn = document.getElementById('minimalToggle');
-            if (!btn) return;
+            const wrap = document.getElementById('minimalToggle');
+            if (!wrap) return;
             if (hasMinimalContent()) {
-                btn.style.display = '';
-                btn.textContent = showMinimal ? 'Minimal' : 'Informed';
-                btn.style.background = showMinimal ? '#fef3c7' : '#f9fafb';
-                btn.style.borderColor = showMinimal ? '#f59e0b' : '#d1d5db';
+                wrap.style.display = '';
+                const slider = document.getElementById('minimalToggleSlider');
+                const labelL = document.getElementById('minimalLabelLeft');
+                const labelR = document.getElementById('minimalLabelRight');
+                if (showMinimal) {
+                    slider.style.transform = 'translateX(68px)';
+                    slider.style.background = '#fef3c7';
+                    labelL.style.color = '#9ca3af';
+                    labelL.style.fontWeight = '500';
+                    labelR.style.color = '#92400e';
+                    labelR.style.fontWeight = '600';
+                } else {
+                    slider.style.transform = 'translateX(0)';
+                    slider.style.background = '#fff';
+                    labelL.style.color = '#1e293b';
+                    labelL.style.fontWeight = '600';
+                    labelR.style.color = '#9ca3af';
+                    labelR.style.fontWeight = '500';
+                }
             } else {
-                btn.style.display = 'none';
+                wrap.style.display = 'none';
                 showMinimal = false;
             }
         }

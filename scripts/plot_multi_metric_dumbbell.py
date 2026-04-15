@@ -137,7 +137,7 @@ DISPLAY_LABELS = {
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Plot multi-metric distribution with CLD.")
     parser.add_argument("--volume", choices=sorted(VOLUME_FILES), default="upper")
-    parser.add_argument("--dpi", type=int, default=600)
+    parser.add_argument("--dpi", type=int, default=200)
     parser.add_argument("--output-dir", type=Path, default=None)
     return parser.parse_args()
 
@@ -240,7 +240,7 @@ def compute_shared_xlims(
             span = data_max - data_min if data_max > data_min else 0.1
             pad = span * 0.08
             xlim_lo = data_min - pad
-            xlim_hi = min(5.0 if mk == "quality" else 1.0, data_max + pad * 2.5)
+            xlim_hi = min(5.0 if mk == "quality" else 1.0, data_max + pad * 1.5)
             # Round to nice 0.05 grid
             xlim_lo = float(np.floor(xlim_lo * 20) / 20)
             xlim_hi = float(np.ceil(xlim_hi * 20) / 20)
