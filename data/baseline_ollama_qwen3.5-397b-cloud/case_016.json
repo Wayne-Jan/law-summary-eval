@@ -133,6 +133,374 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.814
+  "rule_based_avg": 0.814,
+  "fact_recall": 0.4439,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6148,
+  "quality_overall": 4.3,
+  "checklist_pass_rate": 0.913,
+  "citation_accuracy": 0.7949,
+  "citation_support_score": 0.7872,
+  "uncited_rate": 0.021,
+  "faithfulness_combined": {
+   "score": 0.8669,
+   "citation_fidelity": 0.7782,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.833,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 10
+  },
+  "weighted_recall": 0.7721,
+  "missing_severity": {
+   "critical": 1,
+   "important": 19,
+   "minor": 26,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「次日中午進食後亦未有異狀」為術後追蹤細節，五個 section 原文均未提及，屬手術後續照護之背景性事實",
+     "reason": "「次日中午進食後亦未有異狀」為術後追蹤細節，五個 section 原文均未提及，屬手術後續照護之背景性事實"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「在該日下午辦理出院返家」為出院程序細節，五個 section 原文均未提及，對案情理解影響有限",
+     "reason": "「在該日下午辦理出院返家」為出院程序細節，五個 section 原文均未提及，對案情理解影響有限"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "病患因不適再入院及嘔吐症狀為病情惡化之重要時間點，五個 section 原文均未描述，影響病程時間軸之完整理解",
+     "reason": "病患因不適再入院及嘔吐症狀為病情惡化之重要時間點，五個 section 原文均未描述，影響病程時間軸之完整理解"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「嘔吐症狀持續及嘔吐物含咖啡狀物有上消化道出血情狀」為關鍵臨床症狀，五個 section 原文均未提及，影響病情嚴重程度之理解",
+     "reason": "「嘔吐症狀持續及嘔吐物含咖啡狀物有上消化道出血情狀」為關鍵臨床症狀，五個 section 原文均未提及，影響病情嚴重程度之理解"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告建議轉診至M醫院為轉診過程細節，五個 section 原文均未提及，屬轉診背景資訊",
+     "reason": "被告建議轉診至M醫院為轉診過程細節，五個 section 原文均未提及，屬轉診背景資訊"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬要求轉至C診所之原因為轉診過程細節，五個 section 原文均未提及，對病情理解影響較小",
+     "reason": "家屬要求轉至C診所之原因為轉診過程細節，五個 section 原文均未提及，對病情理解影響較小"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "C診所婉拒收治為轉診過程細節，五個 section 原文均未提及，屬程序性事實",
+     "reason": "C診所婉拒收治為轉診過程細節，五個 section 原文均未提及，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「接受建議改轉至S醫院」為轉診過程細節，五個 section 原文均未提及，屬轉診流程背景",
+     "reason": "「接受建議改轉至S醫院」為轉診過程細節，五個 section 原文均未提及，屬轉診流程背景"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「三月二十三日下午約三時許即轉至S醫院」為轉診時間細節，五個 section 原文均未提及，對判決結論理解影響有限",
+     "reason": "「三月二十三日下午約三時許即轉至S醫院」為轉診時間細節，五個 section 原文均未提及，對判決結論理解影響有限"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section 未提及抽脂手術技術特性（小傷口、止血機制差異）",
+     "reason": "defense section 未提及抽脂手術技術特性（小傷口、止血機制差異）"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense section 未提及病患術後次日無不適、進食後無異狀的具體描述",
+     "reason": "defense section 未提及病患術後次日無不適、進食後無異狀的具體描述"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense section 未提及辦理出院返家的具體時間",
+     "reason": "defense section 未提及辦理出院返家的具體時間"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense section 未提及入院時嘔吐及全身麻醉會引起嘔吐的臨床解釋",
+     "reason": "defense section 未提及入院時嘔吐及全身麻醉會引起嘔吐的臨床解釋"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense section 未提及密切觀察生命徵象、給予藥劑治療、不適改善等內容",
+     "reason": "defense section 未提及密切觀察生命徵象、給予藥劑治療、不適改善等內容"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section 未提及全身麻醉及手術刺激導致腸胃蠕動受抑制、腸阻塞的病理機制",
+     "reason": "defense section 未提及全身麻醉及手術刺激導致腸胃蠕動受抑制、腸阻塞的病理機制"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section 未提及被告擔心腹膜炎而仔細檢查腹部的過程",
+     "reason": "defense section 未提及被告擔心腹膜炎而仔細檢查腹部的過程"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section 未提及無腹膜炎癥兆（腹部變硬與回縮痛）的具體描述",
+     "reason": "defense section 未提及無腹膜炎癥兆（腹部變硬與回縮痛）的具體描述"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense section 未提及三月二十三日中午仍無腹膜炎癥兆的時間點描述",
+     "reason": "defense section 未提及三月二十三日中午仍無腹膜炎癥兆的時間點描述"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section 未提及S醫院發現胸部有氣體（氣胸或氣腹）的具體臨床發現",
+     "reason": "defense section 未提及S醫院發現胸部有氣體（氣胸或氣腹）的具體臨床發現"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "defense section 未提及胸部氣體與腸胃穿孔的臨床關聯及應有處置，此為關鍵醫療過失認定依據",
+     "reason": "defense section 未提及胸部氣體與腸胃穿孔的臨床關聯及應有處置，此為關鍵醫療過失認定依據"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions 中僅簡述鑑定結果，未提及三月二十四日X光片具體發現。經查五個section原文均未出現此詳細X光檢查結果",
+     "reason": "section_opinions 中僅簡述鑑定結果，未提及三月二十四日X光片具體發現。經查五個section原文均未出現此詳細X光檢查結果"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions 未提及三月二十六日電腦斷層具體發現。經查五個section原文均未出現此電腦斷層檢查結果",
+     "reason": "section_opinions 未提及三月二十六日電腦斷層具體發現。經查五個section原文均未出現此電腦斷層檢查結果"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions 未提及應懷疑腸胃系統破孔之診斷推論。經查五個section原文均未出現此診斷判定",
+     "reason": "section_opinions 未提及應懷疑腸胃系統破孔之診斷推論。經查五個section原文均未出現此診斷判定"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "與gt_claim_id 47內容重疊，section_opinions 未提及X光片具體發現細節。經查五個section原文均未出現",
+     "reason": "與gt_claim_id 47內容重疊，section_opinions 未提及X光片具體發現細節。經查五個section原文均未出現"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及病歷回朔追蹤之發現方式。經查五個section原文均未出現此描述",
+     "reason": "section_opinions 未提及病歷回朔追蹤之發現方式。經查五個section原文均未出現此描述"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及抽脂手術導致氣體進入皮下組織影響X光判讀之醫學說明。經查五個section原文均未出現",
+     "reason": "section_opinions 未提及抽脂手術導致氣體進入皮下組織影響X光判讀之醫學說明。經查五個section原文均未出現"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 雖提及併發症極為罕見，但未提及教科書及文獻記載。經查五個section原文均未出現此說明",
+     "reason": "section_opinions 雖提及併發症極為罕見，但未提及教科書及文獻記載。經查五個section原文均未出現此說明"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及腸胃科醫師主治之科別資訊。經查五個section原文均未出現",
+     "reason": "section_opinions 未提及腸胃科醫師主治之科別資訊。經查五個section原文均未出現"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及當時診斷為上腸胃道出血。經查五個section原文均未出現此診斷內容",
+     "reason": "section_opinions 未提及當時診斷為上腸胃道出血。經查五個section原文均未出現此診斷內容"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及三月二十五日胃鏡檢查及結果。經查五個section原文均未出現",
+     "reason": "section_opinions 未提及三月二十五日胃鏡檢查及結果。經查五個section原文均未出現"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及電腦斷層發現腹腔內血塊及氣體。經查五個section原文均未出現此檢查發現",
+     "reason": "section_opinions 未提及電腦斷層發現腹腔內血塊及氣體。經查五個section原文均未出現此檢查發現"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及會診一般外科及整型外科之過程。經查五個section原文均未出現",
+     "reason": "section_opinions 未提及會診一般外科及整型外科之過程。經查五個section原文均未出現"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及三月二十七日緊急剖腹探查手術。經查五個section原文均未出現此手術細節",
+     "reason": "section_opinions 未提及三月二十七日緊急剖腹探查手術。經查五個section原文均未出現此手術細節"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 中僅於CH_09提及「處置積極且適當」之結論，未詳述這些過程的評價。經查五個section原文均未完整呈現此處置評價脈絡",
+     "reason": "section_opinions 中僅於CH_09提及「處置積極且適當」之結論，未詳述這些過程的評價。經查五個section原文均未完整呈現此處置評價脈絡"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 未提及從未見過小腸穿孔導致皮下發炎及敗血症之說明。經查五個section原文均未出現",
+     "reason": "section_opinions 未提及從未見過小腸穿孔導致皮下發炎及敗血症之說明。經查五個section原文均未出現"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions 雖提及抽脂手術造成小腸穿孔為致命傷害，但未明確提及「三月二十日手術所造的穿孔」之時間明確陳述。經查五個section原文均未明確以「三月二十日手術所造」之方式表述此穿孔",
+     "reason": "section_opinions 雖提及抽脂手術造成小腸穿孔為致命傷害，但未明確提及「三月二十日手術所造的穿孔」之時間明確陳述。經查五個section原文均未明確以「三月二十日手術所造」之方式表述此穿孔"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查5個section原文皆無提及『上訴期間』相關程序事實，屬程序性項目，不影響案情核心理解",
+     "reason": "遍查5個section原文皆無提及『上訴期間』相關程序事實，屬程序性項目，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查5個section原文皆無提及『判決確定』之事實，屬程序性項目，不影響案情核心理解",
+     "reason": "遍查5個section原文皆無提及『判決確定』之事實，屬程序性項目，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，未發現「手術前兩週內禁服用含有抗凝血劑之藥物」的明確對應",
+     "reason": "經掃描全部 5 個 section，未發現「手術前兩週內禁服用含有抗凝血劑之藥物」的明確對應"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，未發現抗凝血藥物名稱「Coumadin」及劑量「每日半粒」的具體記載",
+     "reason": "經掃描全部 5 個 section，未發現抗凝血藥物名稱「Coumadin」及劑量「每日半粒」的具體記載"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，未發現 PT/PTT 具體數值（27/37 及正常值 18/29）的記載",
+     "reason": "經掃描全部 5 個 section，未發現 PT/PTT 具體數值（27/37 及正常值 18/29）的記載"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，未發現「與心臟科醫師討論」及「停藥後二週再行手術」的具體建議",
+     "reason": "經掃描全部 5 個 section，未發現「與心臟科醫師討論」及「停藥後二週再行手術」的具體建議"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，未發現「S醫院未懷疑腸穿孔是合理的」之相關陳述",
+     "reason": "經掃描全部 5 個 section，未發現「S醫院未懷疑腸穿孔是合理的」之相關陳述"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，未發現「抽脂後氣進入皮下組織影響X光判讀」之醫學知識說明",
+     "reason": "經掃描全部 5 個 section，未發現「抽脂後氣進入皮下組織影響X光判讀」之醫學知識說明"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "opinions section 雖有「該併發症在臨床上極為罕見」，但缺少「教科書及文獻上似未見有」部分，跨 section 合併後仍不完整",
+     "reason": "opinions section 雖有「該併發症在臨床上極為罕見」，但缺少「教科書及文獻上似未見有」部分，跨 section 合併後仍不完整"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "經掃描全部 5 個 section，未發現「停止服用抗凝血藥後二週再行施行腹部抽脂手術」的具體建議",
+     "reason": "經掃描全部 5 個 section，未發現「停止服用抗凝血藥後二週再行施行腹部抽脂手術」的具體建議"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 98,
+   "pred_total": 48,
+   "matched": 35,
+   "partial": 17,
+   "missing": 46,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7352,
+  "compression_afg_chars": 1349,
+  "compression_source_chars": 5095,
+  "gt_length_ratio": 0.4166,
+  "gt_length_afg_chars": 1349,
+  "gt_length_gt_chars": 3238,
+  "section_balance": 0.4091
  }
 }

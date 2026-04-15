@@ -160,6 +160,12 @@
       outline: 1px dashed rgba(37, 99, 235, 0.24);
     }
     .evt-highlight[data-status="UNRESOLVED"] { text-decoration: underline dotted #ef4444; }
+    .evt-span-anchor {
+      display: inline-block;
+      width: 0;
+      height: 0;
+      vertical-align: baseline;
+    }
     .chunk-region.focus-pulse {
       animation: sourcePulse 1.25s ease;
     }
@@ -917,21 +923,9 @@
       });
     }
 
-    function scoreSelectedMark(mark) {
-      if (!mark) return -1;
-      const text = String(mark.textContent || '');
-      const trimmed = text.replace(/\s+/g, '').replace(/[。、「」『』（）()，,；;：:\-—…．!?！？]/g, '');
-      if (!trimmed) return 0;
-      return trimmed.length;
-    }
-
-    function findBestSelectedMark(evtIdx, spanId) {
+    function findSpanAnchor(evtIdx, spanId) {
       if (evtIdx == null || !spanId) return null;
-      const marks = Array.from(document.querySelectorAll(`.evt-highlight[data-evt="${evtIdx}"][data-span-id="${CSS.escape(String(spanId))}"]`));
-      if (!marks.length) return null;
-      return marks.reduce((best, mark) => (
-        scoreSelectedMark(mark) > scoreSelectedMark(best) ? mark : best
-      ), marks[0]);
+      return document.getElementById(getSpanAnchorId(evtIdx, spanId));
     }
 
     function normalizeLooseText(text) {
@@ -1253,6 +1247,7 @@
 
       if (chunks.length > 0) {
         const sorted = [...chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
+        const emittedAnchors = new Set();
         sorted.forEach(chunk => {
           const cid = chunk.chunk_id || '';
           const evtSpans = [];
@@ -1316,7 +1311,11 @@
             }
             segments.forEach(seg => {
               const sp = seg.sp;
-              chunkHtml += `<mark id="${esc(sp.anchorId)}" class="evt-highlight" data-evt="${sp.evtIdx}" data-role="${esc(sp.role)}" data-status="${esc(sp.status)}" data-span-id="${esc(sp.spanId)}">${esc(content.substring(seg.start, seg.end))}</mark>`;
+              if (!emittedAnchors.has(sp.anchorId)) {
+                chunkHtml += `<span id="${esc(sp.anchorId)}" class="evt-span-anchor" data-evt="${sp.evtIdx}" data-span-id="${esc(sp.spanId)}" aria-hidden="true"></span>`;
+                emittedAnchors.add(sp.anchorId);
+              }
+              chunkHtml += `<mark class="evt-highlight" data-evt="${sp.evtIdx}" data-role="${esc(sp.role)}" data-status="${esc(sp.status)}" data-span-id="${esc(sp.spanId)}">${esc(content.substring(seg.start, seg.end))}</mark>`;
             });
             cursor = m.relEnd;
           });
@@ -1468,8 +1467,11 @@
 
       if (isMobileTimelineLayout()) openMobileSourceSheet();
 
-      const selectedMark = activeSpanId ? findBestSelectedMark(idx, activeSpanId) : null;
-      const scrollTarget = selectedMark || evtMarks[0] || [...activeRegions][0];
+      const selectedAnchor = activeSpanId ? findSpanAnchor(idx, activeSpanId) : null;
+      const selectedMark = activeSpanId
+        ? document.querySelector(`.evt-highlight[data-evt="${idx}"][data-span-id="${CSS.escape(String(activeSpanId))}"]`)
+        : null;
+      const scrollTarget = selectedAnchor || selectedMark || evtMarks[0] || [...activeRegions][0];
 
       if (isMobileTimelineLayout()) {
         if (scrollTarget) setTimeout(() => scrollTimelineSourceBodyToTarget(scrollTarget), 140);

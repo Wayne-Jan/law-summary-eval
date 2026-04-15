@@ -128,5 +128,410 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7205,
+  "fact_recall": 0.4301,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6015,
+  "quality_overall": 4.5714,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 0.8929,
+  "citation_support_score": 0.8622,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9357,
+   "citation_fidelity": 0.8929,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.681,
+  "missing_severity": {
+   "critical": 3,
+   "important": 32,
+   "minor": 16,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT claim指「被告甲係J醫院醫師」，但section_01_facts.txt 首句稱「醫護人員被告甲」，身分描述存在實質差異（醫師vs醫護人員）。遍查5個section均無「甲係醫師」之表述，僅pred claim自身有誤。此為重要背景資訊，影響對被告專業身分及業務範圍之理解",
+     "reason": "GT claim指「被告甲係J醫院醫師」，但section_01_facts.txt 首句稱「醫護人員被告甲」，身分描述存在實質差異（醫師vs醫護人員）。遍查5個section均無「甲係醫師」之表述，僅pred claim自身有誤。此為重要背景資訊，影響對被告專業身分及業務範圍之理解"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "GT claim指「病患U身體狀況正常」，遍查section_01_facts.txt至section_05_reasoning.txt均無提及病患出生時身體狀況之描述。此為背景性事實，不影響案情核心理解",
+     "reason": "GT claim指「病患U身體狀況正常」，遍查section_01_facts.txt至section_05_reasoning.txt均無提及病患出生時身體狀況之描述。此為背景性事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要的defense段提到「被告丁堅決否認」，但GT指的是「被告甲」（醫師）否認過失致死犯行。雖然有醫師否認的情節，但被告身份與GT不符（摘要用丁、甲，GT用甲、乙）",
+     "reason": "摘要的defense段提到「被告丁堅決否認」，但GT指的是「被告甲」（醫師）否認過失致死犯行。雖然有醫師否認的情節，但被告身份與GT不符（摘要用丁、甲，GT用甲、乙）"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要未提及護理人員（GT被告乙）否認業務過失致死及業務登載不實犯行的內容。摘要的defense段僅提到「被告甲堅詞否認」，但此處被告甲在摘要中實際對應的是護理人員角色，卻未涵蓋GT被告乙的完整辯護範圍",
+     "reason": "摘要未提及護理人員（GT被告乙）否認業務過失致死及業務登載不實犯行的內容。摘要的defense段僅提到「被告甲堅詞否認」，但此處被告甲在摘要中實際對應的是護理人員角色，卻未涵蓋GT被告乙的完整辯護範圍"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要中「X並非被告丁負責照顧之病患」對應的是醫師的辯護，但GT此處指的是「病患U並非被告甲（醫師）照顧之病患」。內容類似但角色標識不同，且GT的claim未被完整對應",
+     "reason": "摘要中「X並非被告丁負責照顧之病患」對應的是醫師的辯護，但GT此處指的是「病患U並非被告甲（醫師）照顧之病患」。內容類似但角色標識不同，且GT的claim未被完整對應"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要提到「被告丁於事發當天擔任值班醫師」，但GT指的是「被告甲（醫師）」擔任值班。角色標識不同（丁 vs 甲），實體對應關係不一致",
+     "reason": "摘要提到「被告丁於事發當天擔任值班醫師」，但GT指的是「被告甲（醫師）」擔任值班。角色標識不同（丁 vs 甲），實體對應關係不一致"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要中「被告丁接獲被告甲通知後隨即對X施行心肺復甦術」事件順序與GT相反：GT為被告甲（醫師）接獲被告乙（護士）通知後施救。摘要將施救者與通知對象的角色對調，事實關係不一致",
+     "reason": "摘要中「被告丁接獲被告甲通知後隨即對X施行心肺復甦術」事件順序與GT相反：GT為被告甲（醫師）接獲被告乙（護士）通知後施救。摘要將施救者與通知對象的角色對調，事實關係不一致"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要提到「被告丁無過失」以及「被告甲已盡注意義務」，但GT此處明確指的是「被告甲（醫師）並無過失」。雖然有類似辯護內容，但主體標識與GT不一致",
+     "reason": "摘要提到「被告丁無過失」以及「被告甲已盡注意義務」，但GT此處明確指的是「被告甲（醫師）並無過失」。雖然有類似辯護內容，但主體標識與GT不一致"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要中「被告甲發現X發紺」對應的是護理人員發現發紺，但GT此處指的是「被告乙（護士）」發現發紺。角色標識不同（甲 vs 乙）",
+     "reason": "摘要中「被告甲發現X發紺」對應的是護理人員發現發紺，但GT此處指的是「被告乙（護士）」發現發紺。角色標識不同（甲 vs 乙）"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要中護理人員「隨即通知醫師急救」的內容存在，但GT明確指出通知者是「被告乙」。摘要使用「被告甲」指稱護理人員，雖然動作描述類似，但實體標識與GT不一致",
+     "reason": "摘要中護理人員「隨即通知醫師急救」的內容存在，但GT明確指出通知者是「被告乙」。摘要使用「被告甲」指稱護理人員，雖然動作描述類似，但實體標識與GT不一致"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要提到「告知自訴人」，但未明確標示是「被告乙」告知。GT強調護士（被告乙）主動告知，摘要中此細節的主體標識缺失",
+     "reason": "摘要提到「告知自訴人」，但未明確標示是「被告乙」告知。GT強調護士（被告乙）主動告知，摘要中此細節的主體標識缺失"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要提到「轉院」，但未明確是「被告乙」轉送病患U。GT強調護士（被告乙）執行轉送動作，摘要中此動作的主體標識與GT不符",
+     "reason": "摘要提到「轉院」，但未明確是「被告乙」轉送病患U。GT強調護士（被告乙）執行轉送動作，摘要中此動作的主體標識與GT不符"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要提到「被告甲已盡注意義務」，但GT此處指的是「被告乙（護士）已盡一切注意義務」。雖然有盡注意義務的辯護內容，但主體標識與GT不一致（甲 vs 乙）",
+     "reason": "摘要提到「被告甲已盡注意義務」，但GT此處指的是「被告乙（護士）已盡一切注意義務」。雖然有盡注意義務的辯護內容，但主體標識與GT不一致（甲 vs 乙）"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要中 defendant 甲的辯護包含「無過失」相關內容，但GT此處明確強調「被告乙並無疏失」。摘要未獨立呈現護士（被告乙）的無疏失主張，內容雖有類似但主體不完整",
+     "reason": "摘要中 defendant 甲的辯護包含「無過失」相關內容，但GT此處明確強調「被告乙並無疏失」。摘要未獨立呈現護士（被告乙）的無疏失主張，內容雖有類似但主體不完整"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "摘要提到「X之死亡與被告甲之餵奶方式無相當因果關係」，但GT此處指的是「病患U之死亡與被告乙（護士）之餵奶方式」無因果關係。這是核心辯護爭點，摘要將因果關係主體錯置，嚴重影響對被告辯護內容的理解",
+     "reason": "摘要提到「X之死亡與被告甲之餵奶方式無相當因果關係」，但GT此處指的是「病患U之死亡與被告乙（護士）之餵奶方式」無因果關係。這是核心辯護爭點，摘要將因果關係主體錯置，嚴重影響對被告辯護內容的理解"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要提到「被告丁無過失」以及「被告甲已盡注意義務」，但GT此處特指「被告乙亦無過失可言」。摘要的defense段雖有類似無過失的意思，但未完整涵蓋GT被告乙的獨立辯護主張",
+     "reason": "摘要提到「被告丁無過失」以及「被告甲已盡注意義務」，但GT此處特指「被告乙亦無過失可言」。摘要的defense段雖有類似無過失的意思，但未完整涵蓋GT被告乙的獨立辯護主張"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要提到「被告甲無偽造護理記錄之動機」，但GT此處明確指的是「被告乙（護士）亦無偽造護理紀錄之動機」。主體標識不一致（甲 vs 乙），雖然有無偽造動機的辯護，但對應的被告角色與GT不同",
+     "reason": "摘要提到「被告甲無偽造護理記錄之動機」，但GT此處明確指的是「被告乙（護士）亦無偽造護理紀錄之動機」。主體標識不一致（甲 vs 乙），雖然有無偽造動機的辯護，但對應的被告角色與GT不同"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "先天性代謝異常無法用大體解剖診斷之限制未在 opinions section 提及，屬鑑定意見重要背景",
+     "reason": "先天性代謝異常無法用大體解剖診斷之限制未在 opinions section 提及，屬鑑定意見重要背景"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "G醫院出院病歷摘要已記載此病之資訊未在 opinions section 提及",
+     "reason": "G醫院出院病歷摘要已記載此病之資訊未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "嬰兒躺著餵食之溢奶風險為醫學背景知識，摘要未詳述",
+     "reason": "嬰兒躺著餵食之溢奶風險為醫學背景知識，摘要未詳述"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "拍背排氣預防效果為醫學背景知識，摘要未詳述",
+     "reason": "拍背排氣預防效果為醫學背景知識，摘要未詳述"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "非餵食期間溢奶現象為醫學背景知識，摘要未詳述",
+     "reason": "非餵食期間溢奶現象為醫學背景知識，摘要未詳述"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "吸入性肺炎風險評估為醫學背景知識，摘要未詳述",
+     "reason": "吸入性肺炎風險評估為醫學背景知識，摘要未詳述"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "坐月子中心發現發紺之時間點雖見於 facts section，但 opinions section 未提及",
+     "reason": "坐月子中心發現發紺之時間點雖見於 facts section，但 opinions section 未提及"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急救及轉送G醫院過程雖見於 facts section，但 opinions section 未提及",
+     "reason": "急救及轉送G醫院過程雖見於 facts section，但 opinions section 未提及"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "插管、呼吸器及加護病房照護細節未在 opinions section 提及",
+     "reason": "插管、呼吸器及加護病房照護細節未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "住院理學檢查「對外界刺激沒有反應」未在 opinions section 提及",
+     "reason": "住院理學檢查「對外界刺激沒有反應」未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "住院理學檢查「依賴呼吸器」未在 opinions section 提及",
+     "reason": "住院理學檢查「依賴呼吸器」未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "住院理學檢查「呼吸聲粗糙，沒有囉音」未在 opinions section 提及",
+     "reason": "住院理學檢查「呼吸聲粗糙，沒有囉音」未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "住院理學檢查「肝臟二指大」未在 opinions section 提及",
+     "reason": "住院理學檢查「肝臟二指大」未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "具體檢驗數值（白血球3900、PT/PTT延長、肝指數、血氨等）未在 opinions section 提及",
+     "reason": "具體檢驗數值（白血球3900、PT/PTT延長、肝指數、血氨等）未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "法院再次囑託鑑定委員會之程序性說明未在 opinions section 提及",
+     "reason": "法院再次囑託鑑定委員會之程序性說明未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "代謝異常導致胃排空延長、意識不清等症狀機制未在 opinions section 詳述",
+     "reason": "代謝異常導致胃排空延長、意識不清等症狀機制未在 opinions section 詳述"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「代謝性異常可引起猝死」之機制說明未在 opinions section 詳述",
+     "reason": "「代謝性異常可引起猝死」之機制說明未在 opinions section 詳述"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「即使及時處理仍無法避免死亡」之結論未在 opinions section 提及",
+     "reason": "「即使及時處理仍無法避免死亡」之結論未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急救過程中腹壓增加導致餘奶溢流之機制細節未在 opinions section 提及",
+     "reason": "急救過程中腹壓增加導致餘奶溢流之機制細節未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "護理紀錄過簡是否不實之疑慮未在 opinions section 提及（reasoning section 僅提及「無參差或塗改」）",
+     "reason": "護理紀錄過簡是否不實之疑慮未在 opinions section 提及（reasoning section 僅提及「無參差或塗改」）"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「嚴重酸中毒及高氨血症會導致突然死亡」之明確機制說明未在 opinions section 詳述",
+     "reason": "「嚴重酸中毒及高氨血症會導致突然死亡」之明確機制說明未在 opinions section 詳述"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "嬰兒猝死症文獻記載（腦瘤、腦畸型、心跳血管異常、先天性代謝疾病）未在 opinions section 提及",
+     "reason": "嬰兒猝死症文獻記載（腦瘤、腦畸型、心跳血管異常、先天性代謝疾病）未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「重症、體弱或意識不清、嗆奶吸入可導致突然死亡」之其他猝死原因未在 opinions section 提及",
+     "reason": "「重症、體弱或意識不清、嗆奶吸入可導致突然死亡」之其他猝死原因未在 opinions section 提及"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實。經查全部5個section原文（facts、defense、opinions、verdict、reasoning），均未提及自訴人是否上訴之相關資訊。判決結果段僅記載無罪判決，無法得出上訴狀態。",
+     "reason": "程序性事實。經查全部5個section原文（facts、defense、opinions、verdict、reasoning），均未提及自訴人是否上訴之相關資訊。判決結果段僅記載無罪判決，無法得出上訴狀態。"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "程序性事實。經查全部5個section原文（facts、defense、opinions、verdict、reasoning），均未提及判決是否確定之相關資訊。判決結果段僅記載無罪判決，未包含判決確定狀態。",
+     "reason": "程序性事實。經查全部5個section原文（facts、defense、opinions、verdict、reasoning），均未提及判決是否確定之相關資訊。判決結果段僅記載無罪判決，未包含判決確定狀態。"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "判決理由僅簡述『能力受限於極限』，未完整陳述『任何醫師受限於學識、經驗，其診治病患之能力，均有一定之極限』這一重要醫學法理原則",
+     "reason": "判決理由僅簡述『能力受限於極限』，未完整陳述『任何醫師受限於學識、經驗，其診治病患之能力，均有一定之極限』這一重要醫學法理原則"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "判決理由未提及『冀求醫師萬能，對任何病患均能為正確無誤之診斷，藥到病除，顯然期望過高』這一合理期待原則",
+     "reason": "判決理由未提及『冀求醫師萬能，對任何病患均能為正確無誤之診斷，藥到病除，顯然期望過高』這一合理期待原則"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "理由中雖有提到『綜合症狀做合理判斷』，但缺失GT詳述的注意義務標準（病史、主訴、症狀、病理檢查、教科書及醫學文獻等具體構成要件），影響過失認定邏輯理解",
+     "reason": "理由中雖有提到『綜合症狀做合理判斷』，但缺失GT詳述的注意義務標準（病史、主訴、症狀、病理檢查、教科書及醫學文獻等具體構成要件），影響過失認定邏輯理解"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "判決理由雖陳述『誤判或懈怠』，但未提及『病患有任何醫師無法預見之突發狀況導致死亡，亦難謂醫師有誤判病情，或懈怠、疏忽可言，自不得課以過失罪責』這一不可預見性抗辯原則，影響因果關係判定論述",
+     "reason": "判決理由雖陳述『誤判或懈怠』，但未提及『病患有任何醫師無法預見之突發狀況導致死亡，亦難謂醫師有誤判病情，或懈怠、疏忽可言，自不得課以過失罪責』這一不可預見性抗辯原則，影響因果關係判定論述"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "判決理由未提及『醫師動輒得咎，視疑難之病例為畏途，終非病患之福』這一防止防禦性醫療的政策考量",
+     "reason": "判決理由未提及『醫師動輒得咎，視疑難之病例為畏途，終非病患之福』這一防止防禦性醫療的政策考量"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "理由中提到『勘驗護理記錄』但未明確提及『有該護理紀錄附卷可稽』的證據引用措詞",
+     "reason": "理由中提到『勘驗護理記錄』但未明確提及『有該護理紀錄附卷可稽』的證據引用措詞"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及『被告乙亦堅決否認病歷有何記載不實情形』，此係被告辯稱內容，非判決核心理由",
+     "reason": "判決理由未提及『被告乙亦堅決否認病歷有何記載不實情形』，此係被告辯稱內容，非判決核心理由"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "判決理由只說『自訴人亦未能提出積極證據』，未單獨陳述作為舉證責任通用原則的『自訴人復未提出若何證據以供調查資為證明』",
+     "reason": "判決理由只說『自訴人亦未能提出積極證據』，未單獨陳述作為舉證責任通用原則的『自訴人復未提出若何證據以供調查資為證明』"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "理由中提到『護理記錄前後連貫一致、無參差或塗改』及『未能提出積極證據證明』，但未明確表述『自訴人所主張「病患U之護理紀錄記載不實」乙情，尚不足採信』的直接結論",
+     "reason": "理由中提到『護理記錄前後連貫一致、無參差或塗改』及『未能提出積極證據證明』，但未明確表述『自訴人所主張「病患U之護理紀錄記載不實」乙情，尚不足採信』的直接結論"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 38,
+   "matched": 38,
+   "partial": 4,
+   "missing": 51,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7983,
+  "compression_afg_chars": 1252,
+  "compression_source_chars": 6208,
+  "gt_length_ratio": 0.3953,
+  "gt_length_afg_chars": 1252,
+  "gt_length_gt_chars": 3167,
+  "section_balance": 0.0
+ }
 }

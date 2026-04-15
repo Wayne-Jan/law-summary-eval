@@ -137,6 +137,108 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7303
+  "rule_based_avg": 0.7303,
+  "fact_recall": 0.875,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9333,
+  "quality_overall": 4.7143,
+  "checklist_pass_rate": 0.9351,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9963,
+  "uncited_rate": 0.051,
+  "faithfulness_combined": {
+   "score": 0.9694,
+   "citation_fidelity": 0.949,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 32
+  },
+  "weighted_recall": 0.9506,
+  "missing_severity": {
+   "critical": 1,
+   "important": 6,
+   "minor": 1,
+   "details": [
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 未提及 Deca 皮脂類固醇相關資訊。section_reasoning 雖有「Deca皮脂類固醇可能與胃潰瘍發生、復發、穿孔、出血及延遲癒合有關，有消化性潰瘍者應謹慎使用[CH_13]」，但 facts section 確實遺漏此藥物風險資訊，屬醫療背景知識的重要事實。",
+     "reason": "section_facts 未提及 Deca 皮脂類固醇相關資訊。section_reasoning 雖有「Deca皮脂類固醇可能與胃潰瘍發生、復發、穿孔、出血及延遲癒合有關，有消化性潰瘍者應謹慎使用[CH_13]」，但 facts section 確實遺漏此藥物風險資訊，屬醫療背景知識的重要事實。"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 未明確提及被告具備專業能力可注意之情事。section_reasoning 有「依被告甲專業智識能力且無不能注意之情形[CH_13]」，但 facts section 僅轉述檢察官起訴內容，未包含此項。屬起訴論述中的細節，非核心事實。",
+     "reason": "section_facts 未明確提及被告具備專業能力可注意之情事。section_reasoning 有「依被告甲專業智識能力且無不能注意之情形[CH_13]」，但 facts section 僅轉述檢察官起訴內容，未包含此項。屬起訴論述中的細節，非核心事實。"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 確認過失與重傷害有因果關係，但未提及此鑑定意見段落中「不一定有因果關係」的限定表述",
+     "reason": "section_05_reasoning.txt 確認過失與重傷害有因果關係，但未提及此鑑定意見段落中「不一定有因果關係」的限定表述"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患X死亡時間（90年11月10日）僅出現在理由段（section_05_reasoning.txt），section_03_opinions.txt 確實未提及此時間點，五段 section 均無此情節陳述",
+     "reason": "病患X死亡時間（90年11月10日）僅出現在理由段（section_05_reasoning.txt），section_03_opinions.txt 確實未提及此時間點，五段 section 均無此情節陳述"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「時隔1年10個月」作為計算死亡與事件時間間隔的關鍵事實，僅見於 section_05_reasoning.txt，section_03_opinions.txt 未載明，其他 section 亦無此時間跨距說明",
+     "reason": "「時隔1年10個月」作為計算死亡與事件時間間隔的關鍵事實，僅見於 section_05_reasoning.txt，section_03_opinions.txt 未載明，其他 section 亦無此時間跨距說明"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "J醫院（C醫院）說明之死亡原因僅出現於 section_05_reasoning.txt（「C醫院醫師證稱病患X死亡主因為痰多、呼吸急促造成呼吸衰竭」），section_03_opinions.txt 完全未提及",
+     "reason": "J醫院（C醫院）說明之死亡原因僅出現於 section_05_reasoning.txt（「C醫院醫師證稱病患X死亡主因為痰多、呼吸急促造成呼吸衰竭」），section_03_opinions.txt 完全未提及"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "法院關於「時隔約二年無法判斷疏失與死亡因果關係」之結論，僅載於 section_05_reasoning.txt（「尚難認本件醫療過失行為與病患X死亡間具有相當因果關係」），section_03_opinions.txt 完全未觸及此判斷，影響判決核心結論理解",
+     "reason": "法院關於「時隔約二年無法判斷疏失與死亡因果關係」之結論，僅載於 section_05_reasoning.txt（「尚難認本件醫療過失行為與病患X死亡間具有相當因果關係」），section_03_opinions.txt 完全未觸及此判斷，影響判決核心結論理解"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「本案無法醫意見」作為鑑定結論，僅出現於 section_05_reasoning.txt（「行政院衛生署醫事審議委員會亦認時隔約二年，無法判斷被告甲之疏失與病患X死亡是否有關係」），section_03_opinions.txt 未收錄此項鑑定結論",
+     "reason": "「本案無法醫意見」作為鑑定結論，僅出現於 section_05_reasoning.txt（「行政院衛生署醫事審議委員會亦認時隔約二年，無法判斷被告甲之疏失與病患X死亡是否有關係」），section_03_opinions.txt 未收錄此項鑑定結論"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 138,
+   "matched": 89,
+   "partial": 11,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5525,
+  "compression_afg_chars": 5253,
+  "compression_source_chars": 11739,
+  "gt_length_ratio": 1.2872,
+  "gt_length_afg_chars": 5253,
+  "gt_length_gt_chars": 4081,
+  "section_balance": 0.7273
  }
 }
