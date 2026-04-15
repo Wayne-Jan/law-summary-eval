@@ -4045,7 +4045,7 @@ function renderTLSourcePanel() {
   body.innerHTML = html;
 }
 
-function showTLEventSource(idx) {
+function showTLEventSource(idx, requestedSpanId = null) {
   if (!tlDataCache) return;
   const events = tlDataCache.events || [];
   const evt = events[idx];
@@ -4053,10 +4053,14 @@ function showTLEventSource(idx) {
   const prevIdx = activeTLEventIdx;
   activeTLEventIdx = idx;
   const evtSpans = getTLEventSpans(evt);
-  if (!evtSpans.length) activeTLSpanId = null;
-  else if (idx !== prevIdx || !activeTLSpanId || !evtSpans.some(sp => sp.span_id === String(activeTLSpanId))) {
-    const primary = evtSpans.find(sp => sp.role === 'primary') || evtSpans[0];
-    activeTLSpanId = primary.span_id;
+  if (!evtSpans.length) {
+    activeTLSpanId = null;
+  } else if (requestedSpanId != null) {
+    const requested = String(requestedSpanId);
+    const requestedSpan = evtSpans.find(sp => sp.span_id === requested);
+    activeTLSpanId = requestedSpan ? requestedSpan.span_id : (evtSpans.find(sp => sp.role === 'primary') || evtSpans[0]).span_id;
+  } else if (!activeTLSpanId || !evtSpans.some(sp => sp.span_id === String(activeTLSpanId))) {
+    activeTLSpanId = (evtSpans.find(sp => sp.role === 'primary') || evtSpans[0]).span_id;
   } else {
     activeTLSpanId = String(activeTLSpanId);
   }
@@ -4148,7 +4152,7 @@ function findTLChunkForEvent(evt) {
 function selectTLSpan(evtIdx, spanId) {
   if (!tlDataCache || evtIdx < 0) return;
   activeTLSpanId = spanId == null ? null : String(spanId);
-  showTLEventSource(evtIdx);
+  showTLEventSource(evtIdx, activeTLSpanId);
 }
 
 function collectPhaseTLData() {
