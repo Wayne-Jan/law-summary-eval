@@ -534,12 +534,48 @@ def extract_case_info(case_name):
     }
 
 
+def _parse_minimal_into_sections(minimal_text):
+    """Split summary_clean_minimal.txt into 5 sections by header pattern."""
+    import re as _re
+    SECTION_HEADERS = [
+        ("facts", "（一）"),
+        ("defense", "（二）"),
+        ("opinions", "（三）"),
+        ("verdict", "（四）"),
+        ("reasoning", "（五）"),
+    ]
+    pattern = r"(（[一二三四五]）)"
+    parts = _re.split(pattern, minimal_text)
+    # parts = [preamble, header1, body1, header2, body2, ...]
+    result = {}
+    i = 1
+    sec_idx = 0
+    while i < len(parts) - 1 and sec_idx < 5:
+        header = parts[i]
+        body = parts[i + 1].strip()
+        for sid, prefix in SECTION_HEADERS:
+            if header.startswith(prefix):
+                result[sid] = body
+                break
+        i += 2
+        sec_idx += 1
+    return result
+
+
 def load_sections(case_dir):
     """Load sections in the same format as /api/view/{case} returns."""
     sections = []
     section_dir = os.path.join(case_dir, "workspace", "sections")
     if not os.path.isdir(section_dir):
         section_dir = case_dir
+
+    # Load minimal summary if available
+    minimal_path = os.path.join(case_dir, "summary_clean_minimal.txt")
+    minimal_sections = {}
+    if os.path.exists(minimal_path):
+        minimal_text = read_text(minimal_path).strip()
+        if minimal_text:
+            minimal_sections = _parse_minimal_into_sections(minimal_text)
 
     for section_id, filename, default_title in SECTION_FILES:
         file_path = os.path.join(section_dir, filename)
@@ -549,9 +585,12 @@ def load_sections(case_dir):
             first_line, _, remainder = raw.partition("\n")
             if first_line.strip().startswith("（") and "）" in first_line:
                 body = remainder.strip()
-            sections.append({"id": section_id, "title": default_title, "content": body})
+            entry = {"id": section_id, "title": default_title, "content": body}
         else:
-            sections.append({"id": section_id, "title": default_title, "content": ""})
+            entry = {"id": section_id, "title": default_title, "content": ""}
+        if section_id in minimal_sections:
+            entry["content_minimal"] = minimal_sections[section_id]
+        sections.append(entry)
 
     return sections
 

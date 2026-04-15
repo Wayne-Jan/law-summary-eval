@@ -612,6 +612,7 @@
                             </svg>
                         </span>
                         <div class="panel-title">AI摘要</div>
+                        <button id="minimalToggle" style="display:none;margin-left:8px;padding:2px 10px;font-size:11px;border:1px solid #d1d5db;border-radius:4px;background:#f9fafb;color:#374151;cursor:pointer;white-space:nowrap;" title="切換 Informed / Minimal baseline 版本">Informed</button>
                         <span class="summary-meta" id="summaryMeta" style="font-size:12px;color:#6b7280;margin-left:auto;"></span>
                     </div>
                 </div>
@@ -786,6 +787,7 @@
 
         async function loadData() {
             if (!currentCaseName) { alert('未指定案件名稱'); return; }
+            showMinimal = false;
             renderCaseSelector();
             try {
                 const response = await fetch(`./data/${encodeURIComponent(currentCondition)}/${getSlug(currentCaseName)}.json`);
@@ -905,6 +907,17 @@
             }
         }
 
+        // ─── MINIMAL TOGGLE ───
+        (function() {
+            const btn = document.getElementById('minimalToggle');
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    showMinimal = !showMinimal;
+                    renderFullSummaryContent();
+                });
+            }
+        })();
+
         // ─── SOURCE PANEL: Full text with chunk regions ───
 
         function renderSourcePanel() {
@@ -952,16 +965,40 @@
             singlePanel.innerHTML = `<div class="summary-shell"><div class="section-title section-title-ai">${section.title}</div><div class="section-content">${withCitationMarkup(section.content)}</div></div>`;
         }
 
+        let showMinimal = false;
+
+        function hasMinimalContent() {
+            return (viewData.sections || []).some(s => s.content_minimal);
+        }
+
+        function updateMinimalToggle() {
+            const btn = document.getElementById('minimalToggle');
+            if (!btn) return;
+            if (hasMinimalContent()) {
+                btn.style.display = '';
+                btn.textContent = showMinimal ? 'Minimal' : 'Informed';
+                btn.style.background = showMinimal ? '#fef3c7' : '#f9fafb';
+                btn.style.borderColor = showMinimal ? '#f59e0b' : '#d1d5db';
+            } else {
+                btn.style.display = 'none';
+                showMinimal = false;
+            }
+        }
+
         function renderFullSummaryContent() {
             const singlePanel = document.getElementById('contentPanelBody');
+            const contentKey = showMinimal ? 'content_minimal' : 'content';
             const parts = (viewData.sections || [])
-                .filter((section) => section.content)
-                .map((section) => (
-                    `<section class="summary-section-block">` +
-                    `<div class="section-title section-title-ai">${escapeHtml(section.title)}</div>` +
-                    `<div class="section-content">${withCitationMarkup(sanitizeSummaryText(section.content))}</div>` +
-                    `</section>`
-                ));
+                .filter((section) => section[contentKey] || section.content)
+                .map((section) => {
+                    const text = (showMinimal && section.content_minimal) ? section.content_minimal : section.content;
+                    return (
+                        `<section class="summary-section-block">` +
+                        `<div class="section-title section-title-ai">${escapeHtml(section.title)}</div>` +
+                        `<div class="section-content">${withCitationMarkup(sanitizeSummaryText(text))}</div>` +
+                        `</section>`
+                    );
+                });
             if (!parts.length) {
                 singlePanel.innerHTML = '<div class="summary-shell"><div class="empty-content">目前無可顯示摘要</div></div>';
                 return;
@@ -970,13 +1007,16 @@
             // Update word count + compression ratio
             const metaEl = document.getElementById('summaryMeta');
             if (metaEl) {
-                const summaryChars = (viewData.sections || []).reduce((sum, s) =>
-                    sum + (s.content || '').replace(/\[CH_\d+(?:,\s*CH_\d+)*\]/g, '').length, 0);
+                const summaryChars = (viewData.sections || []).reduce((sum, s) => {
+                    const text = (showMinimal && s.content_minimal) ? s.content_minimal : (s.content || '');
+                    return sum + text.replace(/\[CH_\d+(?:,\s*CH_\d+)*\]/g, '').length;
+                }, 0);
                 const chunks = viewData.chunks || {};
                 const sourceChars = Object.values(chunks).reduce((sum, c) => sum + (c || '').length, 0);
                 const ratio = sourceChars > 0 ? ((1 - summaryChars / sourceChars) * 100).toFixed(0) : 0;
                 metaEl.textContent = summaryChars > 0 ? `${summaryChars.toLocaleString()} 字（▼${ratio}%）` : '';
             }
+            updateMinimalToggle();
         }
 
         // Normalize CH_1 → CH_01 (pad to 2 digits to match chunk keys)
