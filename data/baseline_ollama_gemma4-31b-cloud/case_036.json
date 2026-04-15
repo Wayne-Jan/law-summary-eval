@@ -131,6 +131,402 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.8112
+  "rule_based_avg": 0.8112,
+  "fact_recall": 0.4278,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5992,
+  "quality_overall": 4.5286,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 0.9444,
+  "citation_support_score": 0.935,
+  "uncited_rate": 0.095,
+  "faithfulness_combined": {
+   "score": 0.9128,
+   "citation_fidelity": 0.8547,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.7407,
+  "missing_severity": {
+   "critical": 2,
+   "important": 16,
+   "minor": 32,
+   "details": [
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 雖於起訴事實中提到『不宜使用他種非類固醇消炎止痛劑以避免藥物過敏』，但此乃檢察官起訴之主張，摘要僅概括提及『檢察官起訴指出』，未明確陳述此醫學禁忌判斷；該禁忌屬鑑定意見核心結論（醫審會認為對Voren過敏者不應使用Ketoprofen），影響案情關鍵爭點理解，故維持 missing 並標記為 important",
+     "reason": "section_01_facts.txt 雖於起訴事實中提到『不宜使用他種非類固醇消炎止痛劑以避免藥物過敏』，但此乃檢察官起訴之主張，摘要僅概括提及『檢察官起訴指出』，未明確陳述此醫學禁忌判斷；該禁忌屬鑑定意見核心結論（醫審會認為對Voren過敏者不應使用Ketoprofen），影響案情關鍵爭點理解，故維持 missing 並標記為 important"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要 defense 段落僅提及「被告甲...明知被告乙未具護理人員資格...坦承不諱」，未提及「被告乙坦承其無護理人員資格」，兩者主體不同",
+     "reason": "摘要 defense 段落僅提及「被告甲...明知被告乙未具護理人員資格...坦承不諱」，未提及「被告乙坦承其無護理人員資格」，兩者主體不同"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要 defense 段落提及「囑由其施打」但未明確表述「被告乙於前開時、地為病患G注射Ketoprofen」之完整事實",
+     "reason": "摘要 defense 段落提及「囑由其施打」但未明確表述「被告乙於前開時、地為病患G注射Ketoprofen」之完整事實"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要 defense 段落僅記載「被告甲...矢口否認有何過失犯行」，未提及被告乙是否否認犯行",
+     "reason": "摘要 defense 段落僅記載「被告甲...矢口否認有何過失犯行」，未提及被告乙是否否認犯行"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "摘要 defense 段落皆為被告甲之陳述與辯稱，未包含被告乙主張依照處方箋正確施打之辯護內容",
+     "reason": "摘要 defense 段落皆為被告甲之陳述與辯稱，未包含被告乙主張依照處方箋正確施打之辯護內容"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 雖提及『該藥品有引起氣喘或循環性崩潰之虞』[CH_14]，但未提及此為Ketoprofen仿單中須加刊之警語內容，GT claim 強調的是仿單警示而非單純醫審會陳述",
+     "reason": "opinions section 雖提及『該藥品有引起氣喘或循環性崩潰之虞』[CH_14]，但未提及此為Ketoprofen仿單中須加刊之警語內容，GT claim 強調的是仿單警示而非單純醫審會陳述"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "所有5個section原文均未提及『屏東縣醫師公會』關於『正當使用』藥物的意見，確認遺漏",
+     "reason": "所有5個section原文均未提及『屏東縣醫師公會』關於『正當使用』藥物的意見，確認遺漏"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "檢察官上訴與否影響判決最終狀態及程序完整性，屬重要程序性事實",
+     "reason": "檢察官上訴與否影響判決最終狀態及程序完整性，屬重要程序性事實"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定與否雖影響案件最終性，但屬程序性補充資訊，不影響主要案情理解",
+     "reason": "判決確定與否雖影響案件最終性，但屬程序性補充資訊，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人證述屬實屬程序性事實，summary未提及但不影響主要判決理由理解",
+     "reason": "證人證述屬實屬程序性事實，summary未提及但不影響主要判決理由理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Dyphylline治療細節在section_facts已有記載，reasoning段省略屬合理摘要取捨",
+     "reason": "Dyphylline治療細節在section_facts已有記載，reasoning段省略屬合理摘要取捨"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Ketoprofen處方目的細節未在summary出現，但不影響主要藥物適應症爭議之論述",
+     "reason": "Ketoprofen處方目的細節未在summary出現，但不影響主要藥物適應症爭議之論述"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥品製造商資訊屬背景細節，判決理由無須詳述",
+     "reason": "藥品製造商資訊屬背景細節，判決理由無須詳述"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥品許可證字號屬背景細節，判決理由無須詳述",
+     "reason": "藥品許可證字號屬背景細節，判決理由無須詳述"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥品中文品名屬背景細節，判決理由無須詳述",
+     "reason": "藥品中文品名屬背景細節，判決理由無須詳述"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥品英文品名屬背景細節，判決理由無須詳述",
+     "reason": "藥品英文品名屬背景細節，判決理由無須詳述"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt第2段已提及「癌症或手術後疼痛」適應症，完整適應症範圍屬細節省略",
+     "reason": "section_05_reasoning.txt第2段已提及「癌症或手術後疼痛」適應症，完整適應症範圍屬細節省略"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥品合法性屬背景資訊，判決理由聚焦於醫療處置是否妥當",
+     "reason": "藥品合法性屬背景資訊，判決理由聚焦於醫療處置是否妥當"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病狀符合適應症之判斷屬細節論述，summary已涵蓋核心爭點",
+     "reason": "病狀符合適應症之判斷屬細節論述，summary已涵蓋核心爭點"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "85年函示發布對象屬行政細節，非判決核心理由",
+     "reason": "85年函示發布對象屬行政細節，非判決核心理由"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "85年函示通知方式屬行政細節，非判決核心理由",
+     "reason": "85年函示通知方式屬行政細節，非判決核心理由"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥事法第48之1條具體條文號屬引用細節，summary已提及標籤仿單要求",
+     "reason": "藥事法第48之1條具體條文號屬引用細節，summary已提及標籤仿單要求"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥事法第75條具體條文號屬引用細節，summary已涵蓋核准記載之論點",
+     "reason": "藥事法第75條具體條文號屬引用細節，summary已涵蓋核准記載之論點"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥品標籤可信度之論述屬背景法理，判決理由可省略",
+     "reason": "藥品標籤可信度之論述屬背景法理，判決理由可省略"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "標籤附隨藥品之規定屬背景法理，判決理由可省略",
+     "reason": "標籤附隨藥品之規定屬背景法理，判決理由可省略"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遵循藥品記載即無疏失之法律判斷屬重要論點，但summary已涵蓋法院無罪認定之結論",
+     "reason": "遵循藥品記載即無疏失之法律判斷屬重要論點，但summary已涵蓋法院無罪認定之結論"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "依藥品記載開立處方之論述屬重要論點，summary已透過「難認有業務過失」涵蓋此意旨",
+     "reason": "依藥品記載開立處方之論述屬重要論點，summary已透過「難認有業務過失」涵蓋此意旨"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt已記載過敏性休克傷害，reasoning段可省略重複事實",
+     "reason": "section_01_facts.txt已記載過敏性休克傷害，reasoning段可省略重複事實"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥物過敏後天性質屬醫學背景知識，判決理由可簡略",
+     "reason": "藥物過敏後天性質屬醫學背景知識，判決理由可簡略"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥物過敏多種發生模式屬醫學背景知識，判決理由可簡略",
+     "reason": "藥物過敏多種發生模式屬醫學背景知識，判決理由可簡略"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "注意過敏症狀之義務屬醫療常規背景，判決理由已透過「尚難認有業務過失」間接涵蓋",
+     "reason": "注意過敏症狀之義務屬醫療常規背景，判決理由已透過「尚難認有業務過失」間接涵蓋"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "過敏診斷方法及檢查限制屬醫學背景知識，判決理由可簡略",
+     "reason": "過敏診斷方法及檢查限制屬醫學背景知識，判決理由可簡略"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "過去不過敏仍可能休克之風險屬醫學背景，判決理由已涵蓋無法預測過敏之論點",
+     "reason": "過去不過敏仍可能休克之風險屬醫學背景，判決理由已涵蓋無法預測過敏之論點"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "注射後注意義務屬醫療常規，判決理由已透過「尚難認有業務過失」間接涵蓋",
+     "reason": "注射後注意義務屬醫療常規，判決理由已透過「尚難認有業務過失」間接涵蓋"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "注射後細察身體變化屬事實細節，判決理由聚焦於過失認定而非具體處置步驟",
+     "reason": "注射後細察身體變化屬事實細節，判決理由聚焦於過失認定而非具體處置步驟"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt已記載即時急救轉診，reasoning段可省略重複事實",
+     "reason": "section_01_facts.txt已記載即時急救轉診，reasoning段可省略重複事實"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "檢察官對護理資格之主張屬攻防重要論點，但summary已涵蓋法院最終無因果關係之認定",
+     "reason": "檢察官對護理資格之主張屬攻防重要論點，但summary已涵蓋法院最終無因果關係之認定"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "護理人員法第37條具體條文號屬引用細節，summary已提及其屬行政罰之性質",
+     "reason": "護理人員法第37條具體條文號屬引用細節，summary已提及其屬行政罰之性質"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "護理人員法僅屬行政管理之論述為重要法律判斷，summary僅略提及未詳述",
+     "reason": "護理人員法僅屬行政管理之論述為重要法律判斷，summary僅略提及未詳述"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "傷害肇因於體質過敏之因果認定屬重要論點，summary已涵蓋「尚難認有業務過失」之結論",
+     "reason": "傷害肇因於體質過敏之因果認定屬重要論點，summary已涵蓋「尚難認有業務過失」之結論"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "具護理資格亦無法避免過敏之假設屬重要論證，summary未詳述此反事實推論",
+     "reason": "具護理資格亦無法避免過敏之假設屬重要論證，summary未詳述此反事實推論"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "護理資格與傷害無因果關係之判斷屬判決核心理由，summary未明確提及",
+     "reason": "護理資格與傷害無因果關係之判斷屬判決核心理由，summary未明確提及"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_02_defense.txt已記載僱用事實，reasoning段可省略",
+     "reason": "section_02_defense.txt已記載僱用事實，reasoning段可省略"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "具體條文違反之認定屬細節，summary已提及違反護理人員法",
+     "reason": "具體條文違反之認定屬細節，summary已提及違反護理人員法"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "僅涉行政罰之性質認定屬重要區分，summary已提及未涉刑事責任",
+     "reason": "僅涉行政罰之性質認定屬重要區分，summary已提及未涉刑事責任"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "移送衛生主管機關屬程序性處置建議，判決理由可省略",
+     "reason": "移送衛生主管機關屬程序性處置建議，判決理由可省略"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "判決核心理由之無因果關係判斷，與gt_claim_id 79內容高度重疊",
+     "reason": "判決核心理由之無因果關係判斷，與gt_claim_id 79內容高度重疊"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "檢察官證據未達證明程度之論述為重要法律判斷，summary已透過「無其他積極證據」間接涵蓋",
+     "reason": "檢察官證據未達證明程度之論述為重要法律判斷，summary已透過「無其他積極證據」間接涵蓋"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "罪證有疑利於被告原則之引用屬重要法律論述，summary未明確提及",
+     "reason": "罪證有疑利於被告原則之引用屬重要法律論述，summary未明確提及"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及被告乙未具護理人員資格，但未明確提及「A診所（安康診所）容留未具資格者執行護理業務違反護理人員法第29條」之違法論述，確認維持missing",
+     "reason": "section_05_reasoning.txt 雖提及被告乙未具護理人員資格，但未明確提及「A診所（安康診所）容留未具資格者執行護理業務違反護理人員法第29條」之違法論述，確認維持missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 90,
+   "pred_total": 42,
+   "matched": 37,
+   "partial": 3,
+   "missing": 50,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8505,
+  "compression_afg_chars": 1326,
+  "compression_source_chars": 8867,
+  "gt_length_ratio": 0.3495,
+  "gt_length_afg_chars": 1326,
+  "gt_length_gt_chars": 3794,
+  "section_balance": 0.2278
  }
 }
