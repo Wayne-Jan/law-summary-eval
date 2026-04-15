@@ -1,17 +1,17 @@
 {
-  "description": "Arena 設定：4 conditions × 20 cases × 5 evaluators × 5 effective pairs per case (aligned to human_eval_30 pool)",
+  "description": "Arena 設定：4 conditions × 20 cases × 5 evaluators × 6 pairs per case (full round-robin)",
   "evaluators": ["A", "B", "C", "D", "E"],
   "conditions": [
     "claude_afg_v5.1",
-    "baseline_claude-haiku",
     "LENS-Full-DeepSeek_v31",
-    "baseline_ollama_deepseek-v3.1-671b-cloud"
+    "LENS-Full-DeepSeek_v31_writer_gemma4",
+    "baseline_gpt-5.4-thinking"
   ],
   "condition_labels": {
     "claude_afg_v5.1": "LENS-Haiku-Full",
-    "baseline_claude-haiku": "Haiku Baseline",
-    "LENS-Full-DeepSeek_v31": "LENS-DeepSeek-Full",
-    "baseline_ollama_deepseek-v3.1-671b-cloud": "DeepSeek Baseline"
+    "LENS-Full-DeepSeek_v31": "LENS-DS-Full",
+    "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma4",
+    "baseline_gpt-5.4-thinking": "GPT-5.4t BL"
   },
   "cases": [
     {"case_id": "case_012", "short_name": "車禍腹痛延誤治療案", "volume": "上冊", "verdict": "有罪", "big_specialty": "外科系", "specialty": "一般外科"},
@@ -36,21 +36,21 @@
     {"case_id": "case_094", "short_name": "活體腎臟移植手術案", "volume": "下冊", "verdict": "無罪", "big_specialty": "外科系", "specialty": "移植外科"}
   ],
   "pair_weights": {
-    "cross_backbone_full_vs_full": 5,
-    "same_backbone_full_vs_baseline": 3,
-    "cross_backbone_other": 2,
-    "cross_backbone_baseline_vs_baseline": 0
+    "cross_backbone_full_vs_full": 1,
+    "same_backbone_full_vs_baseline": 1,
+    "cross_backbone_other": 1,
+    "cross_backbone_baseline_vs_baseline": 1
   },
   "backbone_map": {
     "claude_afg_v5.1": "haiku",
-    "baseline_claude-haiku": "haiku",
     "LENS-Full-DeepSeek_v31": "deepseek",
-    "baseline_ollama_deepseek-v3.1-671b-cloud": "deepseek"
+    "LENS-Full-DeepSeek_v31_writer_gemma4": "gemma4",
+    "baseline_gpt-5.4-thinking": "gpt54t"
   },
   "role_map": {
     "claude_afg_v5.1": "full",
-    "baseline_claude-haiku": "baseline",
     "LENS-Full-DeepSeek_v31": "full",
-    "baseline_ollama_deepseek-v3.1-671b-cloud": "baseline"
+    "LENS-Full-DeepSeek_v31_writer_gemma4": "full",
+    "baseline_gpt-5.4-thinking": "baseline"
   }
 }
