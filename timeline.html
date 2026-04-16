@@ -665,6 +665,7 @@
     let timelineViewMode = 'timeline';
     let lastScrolledEventIdx = -1;
     let sourceScrollTimer = null;
+    let eventSourceGroupsCache = null;
 
     function isMobileTimelineLayout() {
       return window.innerWidth <= 768;
@@ -781,6 +782,7 @@
       timelineData = null;
       activeEventIdx = -1;
       activeSpanId = null;
+      eventSourceGroupsCache = null;
       timelineViewMode = 'timeline';
       const select = document.getElementById('caseSelect');
       if (select) select.value = caseName;
@@ -835,6 +837,128 @@
       return [];
     }
 
+    function getSpanKey(evtIdx, spanId) {
+      return `${evtIdx}::${String(spanId)}`;
+    }
+
+    function buildVisibleSpanKeySet(events, chunks) {
+      const visible = new Set();
+      if (!Array.isArray(events) || !Array.isArray(chunks) || !events.length || !chunks.length) return visible;
+      const sorted = [...chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
+      sorted.forEach(chunk => {
+        const evtSpans = [];
+        events.forEach((evt, evtIdx) => {
+          getEventSpans(evt).forEach(sp => {
+            const overlapStart = Math.max(sp.char_start, chunk.start_char);
+            const overlapEnd = Math.min(sp.char_end, chunk.end_char);
+            if (overlapEnd <= overlapStart) return;
+            let relStart = overlapStart - chunk.start_char;
+            let relEnd = overlapEnd - chunk.start_char;
+            const status = sp.alignment_status || evt.alignment_status || 'UNRESOLVED';
+            if (status === 'MATCH_FUZZY' || status === 'PARTIAL_UNRESOLVED') {
+              const refined = refineSpanRangeInChunk(
+                chunk.content || '',
+                relStart,
+                relEnd,
+                sp.quote || ''
+              );
+              if (refined && refined.relEnd > refined.relStart) {
+                relStart = refined.relStart;
+                relEnd = refined.relEnd;
+              }
+            }
+            evtSpans.push({
+              relStart,
+              relEnd,
+              evtIdx,
+              role: sp.role || 'supporting',
+              spanId: sp.span_id || ''
+            });
+          });
+        });
+        evtSpans.sort((a, b) => a.relStart - b.relStart || a.relEnd - b.relEnd);
+        const merged = [];
+        evtSpans.forEach(sp => {
+          if (!merged.length || sp.relStart >= merged[merged.length - 1].relEnd) {
+            merged.push({ relStart: sp.relStart, relEnd: sp.relEnd, sources: [sp] });
+          } else {
+            const last = merged[merged.length - 1];
+            last.relEnd = Math.max(last.relEnd, sp.relEnd);
+            last.sources.push(sp);
+          }
+        });
+        merged.forEach(m => {
+          const cuts = new Set([m.relStart, m.relEnd]);
+          m.sources.forEach(sp => {
+            cuts.add(Math.max(sp.relStart, m.relStart));
+            cuts.add(Math.min(sp.relEnd, m.relEnd));
+          });
+          const sortedCuts = [...cuts].sort((a, b) => a - b);
+          for (let i = 0; i < sortedCuts.length - 1; i += 1) {
+            const segStart = sortedCuts[i];
+            const segEnd = sortedCuts[i + 1];
+            const covering = m.sources.filter(sp => sp.relStart <= segStart && sp.relEnd >= segEnd);
+            const best = covering.find(sp => sp.role === 'primary') || covering[0] || m.sources[0];
+            if (best) visible.add(getSpanKey(best.evtIdx, best.spanId));
+          }
+        });
+      });
+      return visible;
+    }
+
+    function getEventSourceGroups(evt, evtIdx) {
+      if (!evt) return [];
+      if (!eventSourceGroupsCache) {
+        const events = (timelineData && timelineData.events) || [];
+        const chunks = (timelineData && timelineData.chunks) || [];
+        const visibleKeys = buildVisibleSpanKeySet(events, chunks);
+        eventSourceGroupsCache = new Map();
+        events.forEach((eventItem, index) => {
+          const spans = getEventSpans(eventItem);
+          const visibleSpans = spans.filter(sp => visibleKeys.has(getSpanKey(index, sp.span_id)));
+          const fallbackVisible = visibleSpans.length ? visibleSpans : spans;
+          const primaryVisible = fallbackVisible.find(sp => sp.role === 'primary') || fallbackVisible[0] || null;
+          const groups = fallbackVisible.map((sp, groupIndex) => ({
+            group_id: `group_${index}_${groupIndex + 1}`,
+            target_span_id: sp.span_id,
+            role: sp.role,
+            span_ids: [sp.span_id]
+          }));
+          const groupByTarget = new Map(groups.map(group => [group.target_span_id, group]));
+          spans.forEach(sp => {
+            if (visibleKeys.has(getSpanKey(index, sp.span_id))) return;
+            const fallbackTarget = primaryVisible ? primaryVisible.span_id : (groups[0] ? groups[0].target_span_id : sp.span_id);
+            if (!groupByTarget.has(fallbackTarget)) {
+              const newGroup = {
+                group_id: `group_${index}_fallback`,
+                target_span_id: fallbackTarget,
+                role: primaryVisible ? primaryVisible.role : sp.role,
+                span_ids: []
+              };
+              groups.unshift(newGroup);
+              groupByTarget.set(fallbackTarget, newGroup);
+            }
+            groupByTarget.get(fallbackTarget).span_ids.push(sp.span_id);
+          });
+          groups.forEach(group => {
+            group.span_ids = [...new Set(group.span_ids)];
+          });
+          eventSourceGroupsCache.set(index, groups);
+        });
+      }
+      return eventSourceGroupsCache.get(evtIdx) || [];
+    }
+
+    function getActiveSourceGroup(evt, evtIdx) {
+      const groups = getEventSourceGroups(evt, evtIdx);
+      if (!groups.length) return null;
+      if (activeSpanId) {
+        const found = groups.find(group => group.span_ids.includes(String(activeSpanId)));
+        if (found) return found;
+      }
+      return groups[0];
+    }
+
     function getEventAlignmentSummary(evt) {
       const spans = getEventSpans(evt);
       if (!spans.length) return { total: 0, primary: 0, supporting: 0, status: 'unresolved' };
@@ -848,9 +972,18 @@
       return { total: spans.length, primary, supporting, status };
     }
 
-    function getActiveSpan(evt) {
+    function getActiveSpan(evt, evtIdx = activeEventIdx) {
       const spans = getEventSpans(evt);
       if (!spans.length) return null;
+      const groups = getEventSourceGroups(evt, evtIdx);
+      if (groups.length) {
+        const activeGroup = getActiveSourceGroup(evt, evtIdx);
+        const targetSpanId = activeGroup && activeGroup.target_span_id;
+        if (targetSpanId) {
+          const grouped = spans.find(sp => sp.span_id === targetSpanId);
+          if (grouped) return grouped;
+        }
+      }
       const primary = spans.find(sp => sp.role === 'primary');
       if (activeSpanId) {
         const found = spans.find(sp => sp.span_id === String(activeSpanId));
@@ -860,21 +993,21 @@
     }
 
     function shouldRenderEventSpanSwitcher(evt) {
-      const spans = getEventSpans(evt);
-      if (!spans.length) return false;
-      return spans.length > 1;
+      const evtIdx = (timelineData && timelineData.events || []).indexOf(evt);
+      const groups = getEventSourceGroups(evt, evtIdx);
+      return groups.length > 1;
     }
 
     function renderEventSpanSwitcher(evt, evtIdx) {
-      const spans = getEventSpans(evt);
-      if (!shouldRenderEventSpanSwitcher(evt)) return '';
-      const activeForEvent = activeEventIdx === evtIdx ? getActiveSpan(evt) : null;
+      const groups = getEventSourceGroups(evt, evtIdx);
+      if (groups.length <= 1) return '';
+      const activeGroup = activeEventIdx === evtIdx ? getActiveSourceGroup(evt, evtIdx) : null;
       let html = '<div class="tl-evidence-row">';
-      spans.forEach((sp, i) => {
-        const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
-        const title = spans.length <= 1 ? '來源' : `來源 ${i + 1}`;
-        const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
-        html += `<button class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
+      groups.forEach((group, i) => {
+        const activeCls = activeGroup && activeGroup.target_span_id === group.target_span_id ? ' active' : '';
+        const title = groups.length <= 1 ? '來源' : `來源 ${i + 1}`;
+        const swatchClass = group.role === 'primary' ? 'primary' : 'supporting';
+        html += `<button class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(group.target_span_id)}"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
       });
       html += '</div>';
       return html;
@@ -884,7 +1017,9 @@
       document.querySelectorAll('.tl-span-pill').forEach(el => {
         const evtIdx = Number(el.dataset.evt);
         const spanId = String(el.dataset.spanId || '');
-        const isActive = evtIdx === activeEventIdx && spanId === String(activeSpanId || '');
+        const evt = timelineData && timelineData.events ? timelineData.events[evtIdx] : null;
+        const activeGroup = evt && evtIdx === activeEventIdx ? getActiveSourceGroup(evt, evtIdx) : null;
+        const isActive = !!(activeGroup && spanId === String(activeGroup.target_span_id || ''));
         el.classList.toggle('active', isActive);
       });
     }
@@ -1356,6 +1491,7 @@
 
     function renderEvents() {
       timelineViewMode = 'timeline';
+      eventSourceGroupsCache = null;
       const d = timelineData;
       const events = d.events || [];
       const leftPanelHtml = buildTimelineLeftPanelHtml(events);
@@ -1418,6 +1554,10 @@
         activeSpanId = (evtSpans.find(sp => sp.role === 'primary') || evtSpans[0]).span_id;
       } else {
         activeSpanId = String(activeSpanId);
+      }
+      const activeGroup = getActiveSourceGroup(evt, idx);
+      if (activeGroup && activeGroup.target_span_id) {
+        activeSpanId = String(activeGroup.target_span_id);
       }
 
       // Highlight active event card (no scroll — only visual)
