@@ -132,5 +132,242 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8556,
+  "fact_recall": 0.625,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7692,
+  "quality_overall": 4.7571,
+  "checklist_pass_rate": 0.9628,
+  "citation_accuracy": 0.7273,
+  "citation_support_score": 0.7545,
+  "uncited_rate": 0.048,
+  "faithfulness_combined": {
+   "score": 0.8154,
+   "citation_fidelity": 0.6924,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 7,
+   "correct": 7
+  },
+  "weighted_recall": 0.8373,
+  "missing_severity": {
+   "critical": 0,
+   "important": 14,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 僅提及「任職於 A 診所」，未提及「電波拉皮執照(Certificate of Training Thermage)」及「臺北市區H診所」具體名稱，屬資格細節與地理位置資訊",
+     "reason": "section_facts 僅提及「任職於 A 診所」，未提及「電波拉皮執照(Certificate of Training Thermage)」及「臺北市區H診所」具體名稱，屬資格細節與地理位置資訊"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 提及「護理師乙」領有護理師證書及麻醉訓練合格，但未明確指明「護士L」，屬匿名化對應資訊",
+     "reason": "section_facts 提及「護理師乙」領有護理師證書及麻醉訓練合格，但未明確指明「護士L」，屬匿名化對應資訊"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 提及「呼吸心跳異常」但未提及「心跳與呼吸仍持續下降」之惡化過程描述，屬症狀演變的重要細節",
+     "reason": "section_facts 提及「呼吸心跳異常」但未提及「心跳與呼吸仍持續下降」之惡化過程描述，屬症狀演變的重要細節"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 提及「需於醫院或足夠設備之治療單位，由受過麻醉訓練之醫師給藥」，但未提及「不應由執行手術或診斷之人給予」之關鍵禁止規範",
+     "reason": "section_facts 提及「需於醫院或足夠設備之治療單位，由受過麻醉訓練之醫師給藥」，但未提及「不應由執行手術或診斷之人給予」之關鍵禁止規範"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 提及「應予以麻醉術前評估及診所並無足夠設備應付麻醉後緊急狀態處置」，但未明確強調「明知」之主觀故意要素，與 GT claim 語義有差異",
+     "reason": "section_facts 提及「應予以麻醉術前評估及診所並無足夠設備應付麻醉後緊急狀態處置」，但未明確強調「明知」之主觀故意要素，與 GT claim 語義有差異"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 提及「一次給予病患 X 施打」，但未明確對比「而非漸進式施打」，缺少關鍵過失對比描述",
+     "reason": "section_facts 提及「一次給予病患 X 施打」，但未明確對比「而非漸進式施打」，缺少關鍵過失對比描述"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "被告於準備程序為有罪陳述屬程序性事實，verdict段落聚焦判決主文（罪名、刑度），該程序細節不影響判決結論理解",
+     "reason": "被告於準備程序為有罪陳述屬程序性事實，verdict段落聚焦判決主文（罪名、刑度），該程序細節不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "簡式審判程序裁定過程屬程序性事實，雖在GT verdict段有此claim，但生成摘要verdict段落僅陳述判決結果，未提程序細節，不影響判決主文理解",
+     "reason": "簡式審判程序裁定過程屬程序性事實，雖在GT verdict段有此claim，但生成摘要verdict段落僅陳述判決結果，未提程序細節，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "和解及賠償事實為影響缓刑參年裁量的重要因素，生成摘要verdict段落僅提及「緩刑參年」但未說明原因（和解、撤回告訴），影響對量刑理由的完整理解",
+     "reason": "和解及賠償事實為影響缓刑參年裁量的重要因素，生成摘要verdict段落僅提及「緩刑參年」但未說明原因（和解、撤回告訴），影響對量刑理由的完整理解"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "撤回告訴與和解密切相關，為量刑輕重之重要考量因素，生成摘要未提及，影響對判決輕重合理性的理解",
+     "reason": "撤回告訴與和解密切相關，為量刑輕重之重要考量因素，生成摘要未提及，影響對判決輕重合理性的理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定（未上訴）屬程序性事實，雖GT有此claim，但生成摘要verdict段落聚焦判決本身，未提後續程序，不影響判決內容理解",
+     "reason": "判決確定（未上訴）屬程序性事實，雖GT有此claim，但生成摘要verdict段落聚焦判決本身，未提後續程序，不影響判決內容理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確提及 Propofol 用藥規範及 ASA guideline 相關指引，僅有鑑定意見提及",
+     "reason": "section_05_reasoning.txt 未明確提及 Propofol 用藥規範及 ASA guideline 相關指引，僅有鑑定意見提及"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未明確提及「不應由執行手術或診斷之人給予」之規範",
+     "reason": "section_05_reasoning.txt 未明確提及「不應由執行手術或診斷之人給予」之規範"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確提及診所設備不足之認定",
+     "reason": "section_05_reasoning.txt 未明確提及診所設備不足之認定"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及被告貪圖報酬之動機",
+     "reason": "section_05_reasoning.txt 未提及被告貪圖報酬之動機"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確統攝為「未注意相關醫學麻醉規範」之法律認定",
+     "reason": "section_05_reasoning.txt 未明確統攝為「未注意相關醫學麻醉規範」之法律認定"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及開立藥劑名稱及劑量之具體細節",
+     "reason": "section_05_reasoning.txt 未提及開立藥劑名稱及劑量之具體細節"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及護士施打藥劑及非漸進式施打情節",
+     "reason": "section_05_reasoning.txt 未提及護士施打藥劑及非漸進式施打情節"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及施打藥劑後病患症狀細節",
+     "reason": "section_05_reasoning.txt 未提及施打藥劑後病患症狀細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及心跳呼吸持續下降之具體過程",
+     "reason": "section_05_reasoning.txt 未提及心跳呼吸持續下降之具體過程"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及聯繫消防救護及送醫情節",
+     "reason": "section_05_reasoning.txt 未提及聯繫消防救護及送醫情節"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確統攝為「違反麻醉藥品使用注意義務」之法律認定",
+     "reason": "section_05_reasoning.txt 未明確統攝為「違反麻醉藥品使用注意義務」之法律認定"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確提及診所設備不足之法院認定",
+     "reason": "section_05_reasoning.txt 未明確提及診所設備不足之法院認定"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確統攝為「未注意相關醫學麻醉規範」之法院認定",
+     "reason": "section_05_reasoning.txt 未明確統攝為「未注意相關醫學麻醉規範」之法院認定"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 提及疏於急救措施但未明確統攝為「違反急救義務」之法律認定",
+     "reason": "section_05_reasoning.txt 提及疏於急救措施但未明確統攝為「違反急救義務」之法律認定"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「應依法論罰」為法律結論，已涵蓋於罪名陳述中",
+     "reason": "「應依法論罰」為法律結論，已涵蓋於罪名陳述中"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及判決確定之程序情節",
+     "reason": "section_05_reasoning.txt 未提及判決確定之程序情節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 84,
+   "pred_total": 42,
+   "matched": 48,
+   "partial": 9,
+   "missing": 27,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6674,
+  "compression_afg_chars": 1449,
+  "compression_source_chars": 4357,
+  "gt_length_ratio": 0.4806,
+  "gt_length_afg_chars": 1449,
+  "gt_length_gt_chars": 3015,
+  "section_balance": 0.36
+ }
 }

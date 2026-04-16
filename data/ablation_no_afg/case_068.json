@@ -137,6 +137,283 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7555
+  "rule_based_avg": 0.7555,
+  "fact_recall": 0.772,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8713,
+  "quality_overall": 4.8286,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9681,
+  "uncited_rate": 0.0795,
+  "faithfulness_combined": {
+   "score": 0.9523,
+   "citation_fidelity": 0.9205,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 28,
+   "correct": 28
+  },
+  "weighted_recall": 0.9249,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 25,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "查閱全部五個section原文，均未提及「自行驗孕檢查呈現陽性反應」此一背景性事實，僅提及前往醫院確認。此為事發前程序性事實，不影響案情核心理解。",
+     "reason": "查閱全部五個section原文，均未提及「自行驗孕檢查呈現陽性反應」此一背景性事實，僅提及前往醫院確認。此為事發前程序性事實，不影響案情核心理解。"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "查閱全部五個section原文，均未提及「抱著肚子方式進入診間」這個具體動作細節。section_01_facts.txt僅於第三段提及「家屬甲告知被告甲患者病痛加重，請至車上診療」，為次要事實描述差異。",
+     "reason": "查閱全部五個section原文，均未提及「抱著肚子方式進入診間」這個具體動作細節。section_01_facts.txt僅於第三段提及「家屬甲告知被告甲患者病痛加重，請至車上診療」，為次要事實描述差異。"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "查閱全部五個section原文，均未提及家屬詢問是否需要到大醫院吊點滴補充輸液。section_01_facts.txt第三段僅提及「家屬甲告知被告甲患者病痛加重」，屬程序性對話細節遺漏。",
+     "reason": "查閱全部五個section原文，均未提及家屬詢問是否需要到大醫院吊點滴補充輸液。section_01_facts.txt第三段僅提及「家屬甲告知被告甲患者病痛加重」，屬程序性對話細節遺漏。"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "『握孕婦C的手要其注意，不可不當一回事』此細節在全部5個section原文中均未提及，確實遺漏",
+     "reason": "『握孕婦C的手要其注意，不可不當一回事』此細節在全部5個section原文中均未提及，確實遺漏"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "『孕婦C回答「嗯」』為過於細節的對話內容，在全部5個section原文中均未提及，確實遺漏",
+     "reason": "『孕婦C回答「嗯」』為過於細節的對話內容，在全部5個section原文中均未提及，確實遺漏"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個section原文中均未找到醫師乙對陰道超音波檢查之醫審會認定內容，屬鑑定意見關鍵部分但未出現於摘要",
+     "reason": "五個section原文中均未找到醫師乙對陰道超音波檢查之醫審會認定內容，屬鑑定意見關鍵部分但未出現於摘要"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個section原文均未提及「手術前無咳嗽或發燒等肺炎症狀」之評估，屬輔助性細節",
+     "reason": "五個section原文均未提及「手術前無咳嗽或發燒等肺炎症狀」之評估，屬輔助性細節"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決日期及法院名稱為程序性資訊，5個section均未提及，不影響案情理解",
+     "reason": "判決日期及法院名稱為程序性資訊，5個section均未提及，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning.txt 提及「識別子宮外孕之可能性」，但未明確「被告與孕婦討論」之互動過程；其他 section 亦無此互動敘述",
+     "reason": "section_reasoning.txt 提及「識別子宮外孕之可能性」，但未明確「被告與孕婦討論」之互動過程；其他 section 亦無此互動敘述"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 均僅提及「腹部超音波檢查」，未明確記載「施以內診」之具體行為",
+     "reason": "五個 section 均僅提及「腹部超音波檢查」，未明確記載「施以內診」之具體行為"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 均未提及「50%」之統計數據",
+     "reason": "五個 section 均未提及「50%」之統計數據"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及子宮外孕破裂症狀，但未明確區分「已破裂」與「未破裂」情形下症狀發生之主從關係",
+     "reason": "五個 section 雖提及子宮外孕破裂症狀，但未明確區分「已破裂」與「未破裂」情形下症狀發生之主從關係"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning.txt 僅以「應注意」「應能透過」等過失論述呈現，未明確論述「防止並避免重大危害之法律義務」",
+     "reason": "section_reasoning.txt 僅以「應注意」「應能透過」等過失論述呈現，未明確論述「防止並避免重大危害之法律義務」"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 均未明確論述子宮外孕標準處理方式為「看患者要去哪家醫院，就趕快送過去」之轉診原則",
+     "reason": "五個 section 均未明確論述子宮外孕標準處理方式為「看患者要去哪家醫院，就趕快送過去」之轉診原則"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense.txt 雖有被告抗辯「卵巢破裂...15天後瀰漫性血管內凝血」，但 section_reasoning.txt 確實未記載此抗辯內容",
+     "reason": "section_defense.txt 雖有被告抗辯「卵巢破裂...15天後瀰漫性血管內凝血」，但 section_reasoning.txt 確實未記載此抗辯內容"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning.txt 提及「易誤為正常懷孕」，但未明確論述「兩者於臨床上區分不容易」之困難程度",
+     "reason": "section_reasoning.txt 提及「易誤為正常懷孕」，但未明確論述「兩者於臨床上區分不容易」之困難程度"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 雖有 B 醫院手術之客觀描述，但未明確論斷「T醫院之醫療行為符合醫療常規」",
+     "reason": "五個 section 雖有 B 醫院手術之客觀描述，但未明確論斷「T醫院之醫療行為符合醫療常規」"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 均未提及「醫審會鑑定書認同 T 醫院醫療行為符合醫療常規」之意見",
+     "reason": "五個 section 均未提及「醫審會鑑定書認同 T 醫院醫療行為符合醫療常規」之意見"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及「右卵巢出血性囊腫」，但未解釋其醫學定義為「卵巢內因出血形成囊腫」",
+     "reason": "五個 section 雖提及「右卵巢出血性囊腫」，但未解釋其醫學定義為「卵巢內因出血形成囊腫」"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖於 section_opinions.txt 提及「巧克力囊腫」，但未明確與「右卵巢出血性囊腫」之關聯",
+     "reason": "五個 section 雖於 section_opinions.txt 提及「巧克力囊腫」，但未明確與「右卵巢出血性囊腫」之關聯"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及「與腹腔出血無關」，但未明確論述「卵巢破裂不會造成腹腔出血或子宮內出血」之因果關係",
+     "reason": "五個 section 雖提及「與腹腔出血無關」，但未明確論述「卵巢破裂不會造成腹腔出血或子宮內出血」之因果關係"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 雖提及子宮內出血係因「血清中黃體素不足」，但未完整呈現「輸卵管懷孕導致子宮內膜增厚-黃體素不足-內膜壞死剝落」之完整病理機轉",
+     "reason": "五個 section 雖提及子宮內出血係因「血清中黃體素不足」，但未完整呈現「輸卵管懷孕導致子宮內膜增厚-黃體素不足-內膜壞死剝落」之完整病理機轉"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 未明確論述「子宮內膜出血與右卵巢出血性囊腫無關」之關聯性判斷",
+     "reason": "五個 section 未明確論述「子宮內膜出血與右卵巢出血性囊腫無關」之關聯性判斷"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及子宮內出血與輸卵管懷孕有關，但未明確論斷「子宮內膜出血與輸卵管懷孕有關」",
+     "reason": "五個 section 雖提及子宮內出血與輸卵管懷孕有關，但未明確論斷「子宮內膜出血與輸卵管懷孕有關」"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及「肺臟微血栓應與肺炎有關」，但未詳細說明係「顯微鏡觀察」所得",
+     "reason": "五個 section 雖提及「肺臟微血栓應與肺炎有關」，但未詳細說明係「顯微鏡觀察」所得"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及「因昏迷期間需依賴呼吸器維生導致肺炎」，但未明確「長期臥床及使用呼吸器之病人較容易發生」之風險因素論述",
+     "reason": "五個 section 雖提及「因昏迷期間需依賴呼吸器維生導致肺炎」，但未明確「長期臥床及使用呼吸器之病人較容易發生」之風險因素論述"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及「手術前無證據顯示已有肺炎」，但未明確「咳嗽或發燒等肺炎之症狀」之具體表徵",
+     "reason": "五個 section 雖提及「手術前無證據顯示已有肺炎」，但未明確「咳嗽或發燒等肺炎之症狀」之具體表徵"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 僅提及「與使用呼吸器有關」，未明確論述「因昏迷期間需依賴呼吸維生導致肺炎」之因果關係",
+     "reason": "五個 section 僅提及「與使用呼吸器有關」，未明確論述「因昏迷期間需依賴呼吸維生導致肺炎」之因果關係"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 未明確論述「住院期間發生肺炎應與使用呼吸器有關」之原因分析",
+     "reason": "五個 section 未明確論述「住院期間發生肺炎應與使用呼吸器有關」之原因分析"
+    },
+    {
+     "gt_claim_id": 165,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 均未提及「手術後醫師即給予抗生素治療」之術後處置細節",
+     "reason": "五個 section 均未提及「手術後醫師即給予抗生素治療」之術後處置細節"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 均未提及「11月12日因發燒有懷疑病患有肺炎情形」之具體時間點",
+     "reason": "五個 section 均未提及「11月12日因發燒有懷疑病患有肺炎情形」之具體時間點"
+    },
+    {
+     "gt_claim_id": 170,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及手術發現「腹腔內有血塊跟血液」，但未明確論述「手術就已經清除了腹腔血塊跟血液」",
+     "reason": "五個 section 雖提及手術發現「腹腔內有血塊跟血液」，但未明確論述「手術就已經清除了腹腔血塊跟血液」"
+    },
+    {
+     "gt_claim_id": 172,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 雖提及「右卵巢出血性囊腫並無活動出血」，但未明確論述「術後死亡之後解剖，腹部就沒有發現有出血」之解剖發現",
+     "reason": "五個 section 雖提及「右卵巢出血性囊腫並無活動出血」，但未明確論述「術後死亡之後解剖，腹部就沒有發現有出血」之解剖發現"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 182,
+   "pred_total": 88,
+   "matched": 132,
+   "partial": 17,
+   "missing": 33,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7805,
+  "compression_afg_chars": 3902,
+  "compression_source_chars": 17773,
+  "gt_length_ratio": 0.606,
+  "gt_length_afg_chars": 3902,
+  "gt_length_gt_chars": 6439,
+  "section_balance": 0.7044
  }
 }
