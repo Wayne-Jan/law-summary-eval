@@ -133,6 +133,276 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7309
+  "rule_based_avg": 0.7309,
+  "fact_recall": 0.5714,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7273,
+  "quality_overall": 4.2143,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 5,
+   "correct": 5
+  },
+  "weighted_recall": 0.7817,
+  "missing_severity": {
+   "critical": 4,
+   "important": 15,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「被告甲領有醫師證書，任職於A診所」，缺少 GT1 所述的「電波拉皮執照（Certificate of Training Thermage）」細節。此為資格證明細節，不影響案情主軸理解",
+     "reason": "section_01_facts.txt 僅提及「被告甲領有醫師證書，任職於A診所」，缺少 GT1 所述的「電波拉皮執照（Certificate of Training Thermage）」細節。此為資格證明細節，不影響案情主軸理解"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT4 明確列舉藥物名稱及劑量（Fentanyl 25ug、Midazolam 2.5mg、Propofol 50mg），但 section_01_facts.txt 僅泛稱「貿然開立藥劑」，未列具體藥物，影響對醫療處置細節的理解",
+     "reason": "GT4 明確列舉藥物名稱及劑量（Fentanyl 25ug、Midazolam 2.5mg、Propofol 50mg），但 section_01_facts.txt 僅泛稱「貿然開立藥劑」，未列具體藥物，影響對醫療處置細節的理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT6 關鍵在於護士L「領有護理師證書及麻醉訓練合格」，但 section_01_facts.txt 僅稱「護理師乙」，未確認其資格，影響對醫療團隊專業能力的事實認定",
+     "reason": "GT6 關鍵在於護士L「領有護理師證書及麻醉訓練合格」，但 section_01_facts.txt 僅稱「護理師乙」，未確認其資格，影響對醫療團隊專業能力的事實認定"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT 重複項目（與 GT21 相同），section_01_facts.txt 未描述 Atropine 給藥後「心跳與呼吸仍持續下降」的惡化過程，影響對急救時序及病情演變的理解",
+     "reason": "GT 重複項目（與 GT21 相同），section_01_facts.txt 未描述 Atropine 給藥後「心跳與呼吸仍持續下降」的惡化過程，影響對急救時序及病情演變的理解"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT15 詳述 Propofol 施打需於「醫院或其他有足夠設備（如插管工具、急救藥物及人工換氣設備等）之治療單位」，section_01_facts.txt 僅簡述「需於有足夠設備之治療單位」，缺少具體設備清單，影響對醫療規範要求的完整理解",
+     "reason": "GT15 詳述 Propofol 施打需於「醫院或其他有足夠設備（如插管工具、急救藥物及人工換氣設備等）之治療單位」，section_01_facts.txt 僅簡述「需於有足夠設備之治療單位」，缺少具體設備清單，影響對醫療規範要求的完整理解"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT16 提及「診所並無足夠設備應付麻醉後緊急狀態處置」，section_01_facts.txt 僅說「應予以麻醉術前評估」，未明確提及診所設備不足的部分，影響對診所資格問題的理解",
+     "reason": "GT16 提及「診所並無足夠設備應付麻醉後緊急狀態處置」，section_01_facts.txt 僅說「應予以麻醉術前評估」，未明確提及診所設備不足的部分，影響對診所資格問題的理解"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT17 明確列舉三種藥物名稱及劑量（Fentanyl、Midazolam、Propofol），section_01_facts.txt 僅泛稱「貿然開立藥劑」，未列具體藥物，影響對醫療過失具體內容的理解",
+     "reason": "GT17 明確列舉三種藥物名稱及劑量（Fentanyl、Midazolam、Propofol），section_01_facts.txt 僅泛稱「貿然開立藥劑」，未列具體藥物，影響對醫療過失具體內容的理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT18 關鍵在於「一次給予施打，而非漸進式施打」的給藥方式，section_01_facts.txt 及其他 section 均未提及此關鍵差異，影響對醫療處置不當之處的判斷",
+     "reason": "GT18 關鍵在於「一次給予施打，而非漸進式施打」的給藥方式，section_01_facts.txt 及其他 section 均未提及此關鍵差異，影響對醫療處置不當之處的判斷"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "GT20 明確「Atropine：0.5mg及調高氧氣濃度」，section_01_facts.txt 僅稱「有限急救」未詳述具體藥物和措施，雖為急救細節但核心事實（有給予急救）已涵蓋",
+     "reason": "GT20 明確「Atropine：0.5mg及調高氧氣濃度」，section_01_facts.txt 僅稱「有限急救」未詳述具體藥物和措施，雖為急救細節但核心事實（有給予急救）已涵蓋"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT 重複項目（與 GT9 相同），section_01_facts.txt 及所有其他 section 均未描述 Atropine 給藥後「心跳與呼吸仍持續下降」的病程進展，影響對病情惡化時間點的理解",
+     "reason": "GT 重複項目（與 GT9 相同），section_01_facts.txt 及所有其他 section 均未描述 Atropine 給藥後「心跳與呼吸仍持續下降」的病程進展，影響對病情惡化時間點的理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "全部5個section原文均未提及「病死/自然死」之死亡方式分類",
+     "reason": "全部5個section原文均未提及「病死/自然死」之死亡方式分類"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文未提及「法律雖未禁止非麻醉專科醫師執行麻醉」之背景論述",
+     "reason": "原文未提及「法律雖未禁止非麻醉專科醫師執行麻醉」之背景論述"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文僅提及「有足夠設備」但未詳列「插管工具、急救藥物及人工換氣設備等」具體項目",
+     "reason": "原文僅提及「有足夠設備」但未詳列「插管工具、急救藥物及人工換氣設備等」具體項目"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "原文有「若由受過訓練之醫師在場，應可避免死亡」但未提及「麻醉藥物過量引發呼吸抑制」之具體因果診斷",
+     "reason": "原文有「若由受過訓練之醫師在場，應可避免死亡」但未提及「麻醉藥物過量引發呼吸抑制」之具體因果診斷"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts提及「長期服用類固醇」但未提及「麻醉紀錄上有所記載」之記錄來源",
+     "reason": "section_facts提及「長期服用類固醇」但未提及「麻醉紀錄上有所記載」之記錄來源"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "原文有「給予有限急救」但未具體提及「atropine 0.5毫克」之劑量",
+     "reason": "原文有「給予有限急救」但未具體提及「atropine 0.5毫克」之劑量"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "原文未提及「其他救護人員抵達現場前」之具體時段及該時段內處理不符合規範之論述",
+     "reason": "原文未提及「其他救護人員抵達現場前」之具體時段及該時段內處理不符合規範之論述"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原文未提及「導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷」之鑑定限制",
+     "reason": "原文未提及「導致病患血壓血氧下降之可能診斷因資料不足無法做更好的判斷」之鑑定限制"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "原文未提及「麻醉藥物劑量對於正常病患而言在安全範圍」之劑量對比論述",
+     "reason": "原文未提及「麻醉藥物劑量對於正常病患而言在安全範圍」之劑量對比論述"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "原文未明確提及「此病患並非普通病患」之特殊性論斷",
+     "reason": "原文未明確提及「此病患並非普通病患」之特殊性論斷"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查五個 section 均無簡式審判程序相關內容，屬程序性事實",
+     "reason": "遍查五個 section 均無簡式審判程序相關內容，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查五個 section 均無和解或賠償金內容",
+     "reason": "遍查五個 section 均無和解或賠償金內容"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "遍查五個 section 均無撤回告訴相關內容，屬程序性事實",
+     "reason": "遍查五個 section 均無撤回告訴相關內容，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "遍查五個 section 均無上訴期間或判決確定相關內容，影響案件狀態理解",
+     "reason": "遍查五個 section 均無上訴期間或判決確定相關內容，影響案件狀態理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要僅提及「需於有足夠設備之治療單位，由受過麻醉訓練之醫師給藥」，但未明確提及「藥廠仿單說明及美國麻醉醫學會臨床指引ASA guideline」之法源依據，屬重要醫療規範來源遺漏",
+     "reason": "摘要僅提及「需於有足夠設備之治療單位，由受過麻醉訓練之醫師給藥」，但未明確提及「藥廠仿單說明及美國麻醉醫學會臨床指引ASA guideline」之法源依據，屬重要醫療規範來源遺漏"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "摘要提及「需於有足夠設備之治療單位」但未明確表述「被告明知診所並無足夠設備應付麻醉後緊急狀態處置」之主觀認定，影響過失要件理解，屬關鍵事實遺漏",
+     "reason": "摘要提及「需於有足夠設備之治療單位」但未明確表述「被告明知診所並無足夠設備應付麻醉後緊急狀態處置」之主觀認定，影響過失要件理解，屬關鍵事實遺漏"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「15萬元醫美報酬」之動機事實，雖屬量刑參考但非核心事實認定",
+     "reason": "摘要未提及「15萬元醫美報酬」之動機事實，雖屬量刑參考但非核心事實認定"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要僅提及「交由護理師乙施打」，未明確提及護理師資格證書、「一次給予而非漸進式施打」之違規細節，影響疏失程度判斷",
+     "reason": "摘要僅提及「交由護理師乙施打」，未明確提及護理師資格證書、「一次給予而非漸進式施打」之違規細節，影響疏失程度判斷"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要提及「僅給予有限急救」但未具體說明Atropine 0.5mg及調高氧氣濃度等措施，屬急救細節遺漏",
+     "reason": "摘要提及「僅給予有限急救」但未具體說明Atropine 0.5mg及調高氧氣濃度等措施，屬急救細節遺漏"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "摘要未明確提及「法院認定被告違反急救義務」之法律定性，影響判決理由完整性，屬關鍵法律認定遺漏",
+     "reason": "摘要未明確提及「法院認定被告違反急救義務」之法律定性，影響判決理由完整性，屬關鍵法律認定遺漏"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "雖section_04_verdict.txt提及刑度，但section_05_reasoning.txt作為理由段落未完整覆蓋「業務過失致人於死」之罪名與「有期徒刑拾月、緩刑參年」之刑度說明，影響判決結果理解",
+     "reason": "雖section_04_verdict.txt提及刑度，但section_05_reasoning.txt作為理由段落未完整覆蓋「業務過失致人於死」之罪名與「有期徒刑拾月、緩刑參年」之刑度說明，影響判決結果理解"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要未提及「判決確定」之程序性事實，屬判決狀態資訊遺漏，不影響實體理由理解",
+     "reason": "摘要未提及「判決確定」之程序性事實，屬判決狀態資訊遺漏，不影響實體理由理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 84,
+   "pred_total": 33,
+   "matched": 44,
+   "partial": 8,
+   "missing": 32,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8313,
+  "compression_afg_chars": 735,
+  "compression_source_chars": 4357,
+  "gt_length_ratio": 0.2438,
+  "gt_length_afg_chars": 735,
+  "gt_length_gt_chars": 3015,
+  "section_balance": 0.5
  }
 }
