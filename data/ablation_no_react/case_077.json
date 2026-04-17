@@ -144,5 +144,354 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6901,
+  "fact_recall": 0.6144,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7612,
+  "quality_overall": 4.9429,
+  "checklist_pass_rate": 0.9891,
+  "citation_accuracy": 0.9487,
+  "citation_support_score": 0.9564,
+  "uncited_rate": 0.139,
+  "faithfulness_combined": {
+   "score": 0.8901,
+   "citation_fidelity": 0.8168,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.962,
+  "numerical_detail": {
+   "total_numerical": 26,
+   "correct": 25
+  },
+  "weighted_recall": 0.8079,
+  "missing_severity": {
+   "critical": 3,
+   "important": 19,
+   "minor": 21,
+   "details": [
+    {
+     "gt_claim_id": 15,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 原文確實有『其他如腦中風、心臟衰竭、心律不整、心肌梗塞及四肢缺血』，生成摘要未提及詳細合併症清單，屬背景性資訊",
+     "reason": "section_defense.txt 原文確實有『其他如腦中風、心臟衰竭、心律不整、心肌梗塞及四肢缺血』，生成摘要未提及詳細合併症清單，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 原文有『伊同時也再次強調心臟手術自有其風險，嚴重即可能死亡』，但生成摘要未包含此重要風險告知內容，屬辯護重點",
+     "reason": "section_defense.txt 原文有『伊同時也再次強調心臟手術自有其風險，嚴重即可能死亡』，但生成摘要未包含此重要風險告知內容，屬辯護重點"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 原文有『告知醫護同仁同意手術風險，願意接受手術』，但 pred_claim_id 7 僅提及『同意簽署手術同意書』，未涵蓋『告知醫護同仁』此一程序性細節",
+     "reason": "section_defense.txt 原文有『告知醫護同仁同意手術風險，願意接受手術』，但 pred_claim_id 7 僅提及『同意簽署手術同意書』，未涵蓋『告知醫護同仁』此一程序性細節"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 原文未明確使用『在卷可稽』此一法律文书用語，pred_claim_id 7 提及『同意簽署手術同意書』但未提『在卷可稽』，屬程序性記載",
+     "reason": "section_defense.txt 原文未明確使用『在卷可稽』此一法律文书用語，pred_claim_id 7 提及『同意簽署手術同意書』但未提『在卷可稽』，屬程序性記載"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 原文完整列出『凝血功能異常、用於繞道血管分支出血、冠狀動脈吻合處出血、縱膈腔內血管出血、動靜脈導管插管處出血、心律節律器導線縫合處出血等』，但生成摘要未包含此詳細出血原因說明，屬辯論點",
+     "reason": "section_defense.txt 原文完整列出『凝血功能異常、用於繞道血管分支出血、冠狀動脈吻合處出血、縱膈腔內血管出血、動靜脈導管插管處出血、心律節律器導線縫合處出血等』，但生成摘要未包含此詳細出血原因說明，屬辯論點"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 原文有『其結果皆可能造成術前說明書中所登載的大出血』，此為被告將出血結果與術前告知連結的重要辯護論述，生成摘要遺漏",
+     "reason": "section_defense.txt 原文有『其結果皆可能造成術前說明書中所登載的大出血』，此為被告將出血結果與術前告知連結的重要辯護論述，生成摘要遺漏"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 未明確見到『血管夾脫落之原因實無法確切得知』之直接陳述，只提到血管夾脫落的文獻依據，GT claim 可能為推論性內容，維持 missing",
+     "reason": "section_defense.txt 未明確見到『血管夾脫落之原因實無法確切得知』之直接陳述，只提到血管夾脫落的文獻依據，GT claim 可能為推論性內容，維持 missing"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 原文有『也不符合再入手術室進行止血的標準』，但未提及『Ann Thorac Surg 1995』文獻；pred_claim_id 16 提及引流量正常但不符標準，未引用該文獻，屬辯護要點",
+     "reason": "section_defense.txt 原文有『也不符合再入手術室進行止血的標準』，但未提及『Ann Thorac Surg 1995』文獻；pred_claim_id 16 提及引流量正常但不符標準，未引用該文獻，屬辯護要點"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確提及血管夾脫落具體部位為「隱靜脈導管的分枝」",
+     "reason": "section_03_opinions.txt 未明確提及血管夾脫落具體部位為「隱靜脈導管的分枝」"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及「無法判斷血管夾脫落與血壓升高有關」及「尚難以認定係被告甲裝置血管夾不當」，但未明確陳述「脫落原因不明」之結論",
+     "reason": "section_03_opinions.txt 雖提及「無法判斷血管夾脫落與血壓升高有關」及「尚難以認定係被告甲裝置血管夾不當」，但未明確陳述「脫落原因不明」之結論"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未說明血管夾之醫療用途，屬背景性醫療知識",
+     "reason": "section_03_opinions.txt 未說明血管夾之醫療用途，屬背景性醫療知識"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及使用說明之適用範圍",
+     "reason": "section_03_opinions.txt 未提及使用說明之適用範圍"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及血管夾應裝置於隱靜脈分枝上",
+     "reason": "section_03_opinions.txt 未提及血管夾應裝置於隱靜脈分枝上"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及使用說明對裝置位置之限制",
+     "reason": "section_03_opinions.txt 未提及使用說明對裝置位置之限制"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及手術同意書之具體告知內容（此內容見於 section_02_defense.txt）",
+     "reason": "section_03_opinions.txt 未提及手術同意書之具體告知內容（此內容見於 section_02_defense.txt）"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及手術同意書簽字事實（此內容見於 section_02_defense.txt）",
+     "reason": "section_03_opinions.txt 未提及手術同意書簽字事實（此內容見於 section_02_defense.txt）"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及「未能認定被告於手術前未盡說明義務」之判斷（此為 reasoning 段內容）",
+     "reason": "section_03_opinions.txt 未提及「未能認定被告於手術前未盡說明義務」之判斷（此為 reasoning 段內容）"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及術後生命徵象穩定之細節（此內容見於 section_02_defense.txt）",
+     "reason": "section_03_opinions.txt 未提及術後生命徵象穩定之細節（此內容見於 section_02_defense.txt）"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 鑑定書雖提及處置合乎醫療常規，但未明確陳述「處置適當，並無延誤」",
+     "reason": "section_03_opinions.txt 鑑定書雖提及處置合乎醫療常規，但未明確陳述「處置適當，並無延誤」"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 鑑定書提及「無違反醫療常規」，但未以單獨 claim 形式陳述「尚無違背醫療常規之處」",
+     "reason": "section_03_opinions.txt 鑑定書提及「無違反醫療常規」，但未以單獨 claim 形式陳述「尚無違背醫療常規之處」"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及手術過程難謂有疏失之結論",
+     "reason": "section_03_opinions.txt 未提及手術過程難謂有疏失之結論"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確說明血管夾脫落為「術後併發症」或「不可預期或避免之風險」",
+     "reason": "section_03_opinions.txt 未明確說明血管夾脫落為「術後併發症」或「不可預期或避免之風險」"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未單獨陳述「尚難認為醫師之責任」之結論，此為影響判決結果之關鍵認定",
+     "reason": "section_03_opinions.txt 未單獨陳述「尚難認為醫師之責任」之結論，此為影響判決結果之關鍵認定"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及其他靜脈分枝處理方式（此內容見於 section_02_defense.txt）",
+     "reason": "section_03_opinions.txt 未提及其他靜脈分枝處理方式（此內容見於 section_02_defense.txt）"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及手術紀錄相關內容",
+     "reason": "section_03_opinions.txt 未提及手術紀錄相關內容"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及血管夾經行政院衛生署核准符合安全性標準",
+     "reason": "section_03_opinions.txt 未提及血管夾經行政院衛生署核准符合安全性標準"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及使用前不需再行測試（此內容見於 section_02_defense.txt）",
+     "reason": "section_03_opinions.txt 未提及使用前不需再行測試（此內容見於 section_02_defense.txt）"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及「由病歷中無法得知」之判斷（此內容見於 section_05_reasoning.txt）",
+     "reason": "section_03_opinions.txt 未提及「由病歷中無法得知」之判斷（此內容見於 section_05_reasoning.txt）"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及「無違反醫療常規」，但未單獨陳述「本案採用血管夾阻斷血管之方式，無違反醫療常規」之完整語句",
+     "reason": "section_03_opinions.txt 雖提及「無違反醫療常規」，但未單獨陳述「本案採用血管夾阻斷血管之方式，無違反醫療常規」之完整語句"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及使用說明書上無規範何處屬於「不得」採用血管夾",
+     "reason": "section_03_opinions.txt 未提及使用說明書上無規範何處屬於「不得」採用血管夾"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖 section_03_opinions.txt 原文有「處理方式端視當時情況而定」，但 verify_input 註記生成摘要未提及此處理原則，維持 missing",
+     "reason": "雖 section_03_opinions.txt 原文有「處理方式端視當時情況而定」，但 verify_input 註記生成摘要未提及此處理原則，維持 missing"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「三種開刀方法（血管夾、縫線結紮、縫線縫合）」僅出現在section_01_facts.txt第一段，section_05_reasoning.txt僅提及「設置血管夾之方式」而未列舉三種方法，summary確實遺漏此細節選項說明",
+     "reason": "「三種開刀方法（血管夾、縫線結紮、縫線縫合）」僅出現在section_01_facts.txt第一段，section_05_reasoning.txt僅提及「設置血管夾之方式」而未列舉三種方法，summary確實遺漏此細節選項說明"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「護理紀錄單在卷可參」為證據引用格式語，未出現於reasoning section，屬程序性記載不影響案情實質理解",
+     "reason": "「護理紀錄單在卷可參」為證據引用格式語，未出現於reasoning section，屬程序性記載不影響案情實質理解"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「血管夾脫落部位為隱靜脈導管的分枝」僅見於section_02_defense.txt，section_05_reasoning.txt僅泛稱「血管夾脫落導致大出血」而未指明具體部位，影響出血機轉理解",
+     "reason": "「血管夾脫落部位為隱靜脈導管的分枝」僅見於section_02_defense.txt，section_05_reasoning.txt僅泛稱「血管夾脫落導致大出血」而未指明具體部位，影響出血機轉理解"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「脫落原因不明」未出現於section_05_reasoning.txt，summary僅提及「無法判斷與血壓升高有關」但未完整表達原因不明之意，影響因果關係認定",
+     "reason": "「脫落原因不明」未出現於section_05_reasoning.txt，summary僅提及「無法判斷與血壓升高有關」但未完整表達原因不明之意，影響因果關係認定"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血管夾具體用途說明為醫療技術細節，未出現於reasoning section，屬次要醫療知識背景",
+     "reason": "血管夾具體用途說明為醫療技術細節，未出現於reasoning section，屬次要醫療知識背景"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「使用說明」內容未出現於任何section，屬產品說明書細節",
+     "reason": "「使用說明」內容未出現於任何section，屬產品說明書細節"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未明確陳述「使用血管夾符合醫療常規」，僅於section_03_opinions.txt提及「無違反醫療常規」，因source_section為reasoning，维持missing",
+     "reason": "section_05_reasoning.txt未明確陳述「使用血管夾符合醫療常規」，僅於section_03_opinions.txt提及「無違反醫療常規」，因source_section為reasoning，维持missing"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "裝置位置與使用說明限制未見於reasoning section，屬技術細節",
+     "reason": "裝置位置與使用說明限制未見於reasoning section，屬技術細節"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「手術過程難謂有何疏失之處」為法院對手術過程的正面評價，未出現於reasoning section，影響過失認定理解",
+     "reason": "「手術過程難謂有何疏失之處」為法院對手術過程的正面評價，未出現於reasoning section，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血管夾核准與測試要求未見於任何section，summary未提及",
+     "reason": "血管夾核准與測試要求未見於任何section，summary未提及"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「自訴人未提出積極證據」為舉證責任論述核心，未見於reasoning section，影響判決理由理解",
+     "reason": "「自訴人未提出積極證據」為舉證責任論述核心，未見於reasoning section，影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「證據方法無從說服形成有罪心證」為證據評價關鍵，未見於reasoning section，影響無罪判決理由理解",
+     "reason": "「證據方法無從說服形成有罪心證」為證據評價關鍵，未見於reasoning section，影響無罪判決理由理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 118,
+   "pred_total": 79,
+   "matched": 70,
+   "partial": 5,
+   "missing": 43,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.626,
+  "compression_afg_chars": 3928,
+  "compression_source_chars": 10502,
+  "gt_length_ratio": 1.0171,
+  "gt_length_afg_chars": 3928,
+  "gt_length_gt_chars": 3862,
+  "section_balance": 0.4103
+ }
 }

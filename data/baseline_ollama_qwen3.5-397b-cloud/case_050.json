@@ -152,5 +152,571 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7304,
+  "fact_recall": 0.4371,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6083,
+  "quality_overall": 4.5857,
+  "checklist_pass_rate": 0.9785,
+  "citation_accuracy": 0.9355,
+  "citation_support_score": 0.9094,
+  "uncited_rate": 0.132,
+  "faithfulness_combined": {
+   "score": 0.8872,
+   "citation_fidelity": 0.812,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 18,
+   "correct": 18
+  },
+  "weighted_recall": 0.697,
+  "missing_severity": {
+   "critical": 8,
+   "important": 40,
+   "minor": 26,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「8月22日住院」，未提及8月16日初次就診之重要時間點，影響案情時間軸理解",
+     "reason": "section_01_facts.txt 僅提及「8月22日住院」，未提及8月16日初次就診之重要時間點，影響案情時間軸理解"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅泛稱「腹腔腫瘤」，未提及診斷方式（腹部超音波、電腦斷層）與腫瘤位置（左下腹），影響醫療過程完整性理解",
+     "reason": "section_01_facts.txt 僅泛稱「腹腔腫瘤」，未提及診斷方式（腹部超音波、電腦斷層）與腫瘤位置（左下腹），影響醫療過程完整性理解"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 已提及「8月22日住院治療」，雖未明確標註「住院治療」四字，但語義已涵蓋，然因 pred_claim 對應關係不明確，維持 missing",
+     "reason": "section_01_facts.txt 已提及「8月22日住院治療」，雖未明確標註「住院治療」四字，但語義已涵蓋，然因 pred_claim 對應關係不明確，維持 missing"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「8月26日由被告甲進行手術切除腫瘤」，但未提及具體開始時間（10時30分），屬次要細節",
+     "reason": "section_01_facts.txt 提及「8月26日由被告甲進行手術切除腫瘤」，但未提及具體開始時間（10時30分），屬次要細節"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及腫瘤包住大血管之重要解剖發現，影響對手術複雜度與風險預見之理解",
+     "reason": "section_01_facts.txt 未提及腫瘤包住大血管之重要解剖發現，影響對手術複雜度與風險預見之理解"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅泛稱「醫師乙負責動脈重建手術」，未提及人工血管、骼與股動脈繞道移植等具體手術方式，影響醫療處置完整性理解",
+     "reason": "section_01_facts.txt 僅泛稱「醫師乙負責動脈重建手術」，未提及人工血管、骼與股動脈繞道移植等具體手術方式，影響醫療處置完整性理解"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「旋即轉至恢復室觀察」，但未提及18時45分許之確切時間點，屬次要時序細節",
+     "reason": "section_01_facts.txt 提及「旋即轉至恢復室觀察」，但未提及18時45分許之確切時間點，屬次要時序細節"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「延誤判斷及處理之不作為」，未明確敘述20時2分許心肺復甦急救之時間細節，屬次要時序",
+     "reason": "section_01_facts.txt 僅提及「延誤判斷及處理之不作為」，未明確敘述20時2分許心肺復甦急救之時間細節，屬次要時序"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "註記已與 GT claim 30 重複並計入 matches，無需另計",
+     "reason": "註記已與 GT claim 30 重複並計入 matches，無需另計"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt 未提及術前預見內出血併發症之義務，僅於 section_05_reasoning.txt 提及「被告甲對此當有預見之可能性」，屬於事後認定而非術前預見，影響過失責任認定之完整性，屬關鍵事實",
+     "reason": "section_01_facts.txt 未提及術前預見內出血併發症之義務，僅於 section_05_reasoning.txt 提及「被告甲對此當有預見之可能性」，屬於事後認定而非術前預見，影響過失責任認定之完整性，屬關鍵事實"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt 提及「19時35分許病患發生血壓遽降」，但未提及19時20分血壓降低之具體原因（血管斷端及小血管彌漫性滲血），影響對出血原因與病情發展之關鍵理解",
+     "reason": "section_01_facts.txt 提及「19時35分許病患發生血壓遽降」，但未提及19時20分血壓降低之具體原因（血管斷端及小血管彌漫性滲血），影響對出血原因與病情發展之關鍵理解"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「護理師Z透過醫師丙急電召」，未明確提及麻醉科醫師A與護士D之姓名角色細節，屬次要資訊",
+     "reason": "section_01_facts.txt 提及「護理師Z透過醫師丙急電召」，未明確提及麻醉科醫師A與護士D之姓名角色細節，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「護理師Z透過醫師丙急電召」，但未說明呼叫器系統配置細節，屬程序性背景資訊",
+     "reason": "section_01_facts.txt 提及「護理師Z透過醫師丙急電召」，但未說明呼叫器系統配置細節，屬程序性背景資訊"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "註記已與 GT claim 11 部分重疊，由 GT claim 11 統一處理",
+     "reason": "註記已與 GT claim 11 部分重疊，由 GT claim 11 統一處理"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「雖經護理師Z透過醫師丙急電召被告甲...直至20時10分許被告甲始至恢復室」，但未明確區分第一次與第二次急電",
+     "reason": "section_01_facts.txt 提及「雖經護理師Z透過醫師丙急電召被告甲...直至20時10分許被告甲始至恢復室」，但未明確區分第一次與第二次急電"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「19時35分許病患發生血壓遽降」，但未提及20時許量不到血壓之危急狀態，影響病情嚴重度之完整理解",
+     "reason": "section_01_facts.txt 提及「19時35分許病患發生血壓遽降」，但未提及20時許量不到血壓之危急狀態，影響病情嚴重度之完整理解"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「延誤判斷及處理之不作為」，未明確敘述20時2分許心肺復甦急救與急召被告甲之時間細節，屬次要時序",
+     "reason": "section_01_facts.txt 提及「延誤判斷及處理之不作為」，未明確敘述20時2分許心肺復甦急救與急召被告甲之時間細節，屬次要時序"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「20時30分許由被告甲及醫師乙對病患X進行第二次手術」，未提及8月27日0時30分許手術結束與內出血控制之時間點，屬次要時序",
+     "reason": "section_01_facts.txt 提及「20時30分許由被告甲及醫師乙對病患X進行第二次手術」，未提及8月27日0時30分許手術結束與內出血控制之時間點，屬次要時序"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 未明確提及「術後即離開手術室進行門診」此一事實背景",
+     "reason": "section_defense.txt 未明確提及「術後即離開手術室進行門診」此一事實背景"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無此假設性論述（19:35立即前往恢復室病患狀況仍屬正常範圍）",
+     "reason": "section_defense.txt 無此假設性論述（19:35立即前往恢復室病患狀況仍屬正常範圍）"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 未提及「無內出血症狀故不可能判斷再行開刀」之醫學推論",
+     "reason": "section_defense.txt 未提及「無內出血症狀故不可能判斷再行開刀」之醫學推論"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「被告所能做的與恢復室醫師處置相同」之主張",
+     "reason": "section_defense.txt 無「被告所能做的與恢復室醫師處置相同」之主張"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「19時55分情況突然轉壞」之具體時間點",
+     "reason": "section_defense.txt 無「19時55分情況突然轉壞」之具體時間點"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「20時10分恢復室醫療人員直接打電話」之精確細節",
+     "reason": "section_defense.txt 無「20時10分恢復室醫療人員直接打電話」之精確細節"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「趕到時病患已昏迷」之狀態描述",
+     "reason": "section_defense.txt 無「趕到時病患已昏迷」之狀態描述"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「會同其他醫療人員急救、心跳血壓回穩」之處置細節",
+     "reason": "section_defense.txt 無「會同其他醫療人員急救、心跳血壓回穩」之處置細節"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 僅提及「進行第二次手術」，無「20時30分」精確時點",
+     "reason": "section_defense.txt 僅提及「進行第二次手術」，無「20時30分」精確時點"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「發現結紮血管斷端出血、極力搶救挽回生命」",
+     "reason": "section_defense.txt 無「發現結紮血管斷端出血、極力搶救挽回生命」"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「內出血時點不明顯、距第二次開刀時間不久」之判斷",
+     "reason": "section_defense.txt 無「內出血時點不明顯、距第二次開刀時間不久」之判斷"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「19:35是否到達恢復室不影響診療方式」之假設論述",
+     "reason": "section_defense.txt 無「19:35是否到達恢復室不影響診療方式」之假設論述"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "section_defense.txt 無「病患急遽惡化與是否到達恢復室無因果關係」之核心因果論述（影響判決結論理解）",
+     "reason": "section_defense.txt 無「病患急遽惡化與是否到達恢復室無因果關係」之核心因果論述（影響判決結論理解）"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "section_defense.txt 無「不可預期出血與醫療行為無因果關係」之主張（影響判決結論理解）",
+     "reason": "section_defense.txt 無「不可預期出血與醫療行為無因果關係」之主張（影響判決結論理解）"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 無「第一次鑑定書未盡詳備」之批評",
+     "reason": "section_defense.txt 無「第一次鑑定書未盡詳備」之批評"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及病人入院背景及診斷（後腹腔腫瘤），屬背景性事實",
+     "reason": "opinions section 未提及病人入院背景及診斷（後腹腔腫瘤），屬背景性事實"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未描述手術發現（外動脈傷及、心臟專科醫師重建），屬手術細節",
+     "reason": "opinions section 未描述手術發現（外動脈傷及、心臟專科醫師重建），屬手術細節"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未描述第一次手術過程狀況，屬背景性事實",
+     "reason": "opinions section 未描述第一次手術過程狀況，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 雖提及「自發現心跳血壓的變化」，但未單獨描述「病人在恢復室發生心跳血壓變化」此事件本身",
+     "reason": "opinions section 雖提及「自發現心跳血壓的變化」，但未單獨描述「病人在恢復室發生心跳血壓變化」此事件本身"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未描述麻醉科醫師19:35通知醫師甲的具體時間點，此為關鍵時間資訊",
+     "reason": "opinions section 未描述麻醉科醫師19:35通知醫師甲的具體時間點，此為關鍵時間資訊"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未描述「經麻醉科醫師處置後仍有變化」此具體事實",
+     "reason": "opinions section 未描述「經麻醉科醫師處置後仍有變化」此具體事實"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及19:55病人失去意識及血壓80/40mmHg的具體時間數據",
+     "reason": "opinions section 未提及19:55病人失去意識及血壓80/40mmHg的具體時間數據"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及20:00心跳血壓量不到及實施急救的關鍵時間點",
+     "reason": "opinions section 未提及20:00心跳血壓量不到及實施急救的關鍵時間點"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未描述「醫師A再度通知醫師甲」此事件",
+     "reason": "opinions section 未描述「醫師A再度通知醫師甲」此事件"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 從鑑定角度評論延遲，未描述「處理完門診後趕赴POR」的具體行動",
+     "reason": "opinions section 從鑑定角度評論延遲，未描述「處理完門診後趕赴POR」的具體行動"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未描述「如正在手術中則取代方式可接受」此條件判斷",
+     "reason": "opinions section 未描述「如正在手術中則取代方式可接受」此條件判斷"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "具體時間點為事實細節，經查全篇 reasoning 未提及 18時45分進入恢復室",
+     "reason": "具體時間點為事實細節，經查全篇 reasoning 未提及 18時45分進入恢復室"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "19時20分護士發現異常之具體時間未在 reasoning 提及",
+     "reason": "19時20分護士發現異常之具體時間未在 reasoning 提及"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫師A觀察血壓低、心跳快之具體描述未在 reasoning 出現，僅提及『異常狀況』概括說明",
+     "reason": "醫師A觀察血壓低、心跳快之具體描述未在 reasoning 出現，僅提及『異常狀況』概括說明"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "三次急電召之具體時間（19時35分、19時55分、20時2分）未在 reasoning 提及",
+     "reason": "三次急電召之具體時間（19時35分、19時55分、20時2分）未在 reasoning 提及"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告辯稱只有二次通知之內容未在 reasoning 呈現",
+     "reason": "被告辯稱只有二次通知之內容未在 reasoning 呈現"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "19時20分起病情變化及麻醉科醫師無法單獨處理之判斷未在 reasoning 明確提及",
+     "reason": "19時20分起病情變化及麻醉科醫師無法單獨處理之判斷未在 reasoning 明確提及"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告辯護意旨稱醫師A一人即可之內容未在 reasoning 出現",
+     "reason": "被告辯護意旨稱醫師A一人即可之內容未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "觀察病患復原指標（血壓、心跳、血紅素）之醫學常識論述未在 reasoning 出現",
+     "reason": "觀察病患復原指標（血壓、心跳、血紅素）之醫學常識論述未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告自承觀察指標之內容未在 reasoning 提及",
+     "reason": "被告自承觀察指標之內容未在 reasoning 提及"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "呼叫主治醫師符合醫療常規之具體論述未在 reasoning 出現",
+     "reason": "呼叫主治醫師符合醫療常規之具體論述未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人證詞一致性（D與A證詞同源）之論述未在 reasoning 提及",
+     "reason": "證人證詞一致性（D與A證詞同源）之論述未在 reasoning 提及"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人D遵照指示輸血維持生命徵兆之細節，屬事實經過描述",
+     "reason": "證人D遵照指示輸血維持生命徵兆之細節，屬事實經過描述"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血紅素10點5數值爭議未在 reasoning 提及",
+     "reason": "血紅素10點5數值爭議未在 reasoning 提及"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "輸血與血紅素維持關係之論述未在 reasoning 出現",
+     "reason": "輸血與血紅素維持關係之論述未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "血紅素維持但心跳加快血壓降低呈現內出血狀況之關鍵事實認定，影響因果關係理解",
+     "reason": "血紅素維持但心跳加快血壓降低呈現內出血狀況之關鍵事實認定，影響因果關係理解"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告囑護士另尋醫師及未注意該醫師是否前往之內容未在 reasoning 提及",
+     "reason": "被告囑護士另尋醫師及未注意該醫師是否前往之內容未在 reasoning 提及"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "94年12月8日審理自認之具體日期未在 reasoning 出現",
+     "reason": "94年12月8日審理自認之具體日期未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術後護理係專門醫療學科之論述未在 reasoning 出現",
+     "reason": "術後護理係專門醫療學科之論述未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "忽視術後護理使手術前功盡棄之論述未在 reasoning 出現",
+     "reason": "忽視術後護理使手術前功盡棄之論述未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "請主治醫生回來原因（手術主刀者做最正確判斷）之論述未在 reasoning 出現",
+     "reason": "請主治醫生回來原因（手術主刀者做最正確判斷）之論述未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "被告應隨時注意術後情況、接獲通知應迅速處理之注意義務論述，為過失認定核心",
+     "reason": "被告應隨時注意術後情況、接獲通知應迅速處理之注意義務論述，為過失認定核心"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "手術期日為被告安排、應排除義務衝突之論述未在 reasoning 出現",
+     "reason": "手術期日為被告安排、應排除義務衝突之論述未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "16人次掛號門診之事實細節未在 reasoning 提及",
+     "reason": "16人次掛號門診之事實細節未在 reasoning 提及"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "義務衝突時衡量保護法益輕重、選擇較重要法益之法律原則論述，為判決核心理論",
+     "reason": "義務衝突時衡量保護法益輕重、選擇較重要法益之法律原則論述，為判決核心理論"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "嚴重病患應送急診而非在門診外等候之論述未在 reasoning 出現",
+     "reason": "嚴重病患應送急診而非在門診外等候之論述未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "被告應選擇迅速至恢復室照料以保護生命身體法益之價值選擇論述，為判決核心論理",
+     "reason": "被告應選擇迅速至恢復室照料以保護生命身體法益之價值選擇論述，為判決核心論理"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "辯護意旨援引第一次與第二次鑑定書差異之詳細內容未在 reasoning 完整呈現",
+     "reason": "辯護意旨援引第一次與第二次鑑定書差異之詳細內容未在 reasoning 完整呈現"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "辯護意旨認為不該當業務過失傷害罪之主張未在 reasoning 明確提及",
+     "reason": "辯護意旨認為不該當業務過失傷害罪之主張未在 reasoning 明確提及"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "最高法院86年度台非字第388號判決之證據法則引用未在 reasoning 出現",
+     "reason": "最高法院86年度台非字第388號判決之證據法則引用未在 reasoning 出現"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「第二次鑑定意見並未判斷無因果關係」之具體論述未在 reasoning 出現",
+     "reason": "「第二次鑑定意見並未判斷無因果關係」之具體論述未在 reasoning 出現"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 143,
+   "pred_total": 53,
+   "matched": 56,
+   "partial": 13,
+   "missing": 74,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8106,
+  "compression_afg_chars": 2122,
+  "compression_source_chars": 11201,
+  "gt_length_ratio": 0.3394,
+  "gt_length_afg_chars": 2122,
+  "gt_length_gt_chars": 6252,
+  "section_balance": 0.3529
+ }
 }

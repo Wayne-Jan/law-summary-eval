@@ -133,6 +133,486 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.6429
+  "rule_based_avg": 0.6429,
+  "fact_recall": 0.6709,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8031,
+  "quality_overall": 4.8714,
+  "checklist_pass_rate": 0.973,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9895,
+  "uncited_rate": 0.012,
+  "faithfulness_combined": {
+   "score": 0.9928,
+   "citation_fidelity": 0.988,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 32
+  },
+  "weighted_recall": 0.818,
+  "missing_severity": {
+   "critical": 7,
+   "important": 31,
+   "minor": 24,
+   "details": [
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「刑法第二百七十六條第二項」此具體法條編號未出現於 summary 任何 section，僅提及「業務過失致死罪名」，屬程序性法條引用細節",
+     "reason": "「刑法第二百七十六條第二項」此具體法條編號未出現於 summary 任何 section，僅提及「業務過失致死罪名」，屬程序性法條引用細節"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未明確提及85年8月起定期使用降尿酸藥物、秋水仙素及止痛藥物之詳細時間點與組合",
+     "reason": "摘要未明確提及85年8月起定期使用降尿酸藥物、秋水仙素及止痛藥物之詳細時間點與組合"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及89年7月至90年12月間『幾乎不曾使用任何止痛藥物』之具體描述",
+     "reason": "摘要未提及89年7月至90年12月間『幾乎不曾使用任何止痛藥物』之具體描述"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經掃描全部5個section原文，section_facts.txt雖提及「肝功能指數ALT及AST分別升高為112U／L及82U／L」，但section_opinions.txt（鑑定意見段）確實未提及此檢驗數據。維持missing，屬病程檢驗細節資料。",
+     "reason": "經掃描全部5個section原文，section_facts.txt雖提及「肝功能指數ALT及AST分別升高為112U／L及82U／L」，但section_opinions.txt（鑑定意見段）確實未提及此檢驗數據。維持missing，屬病程檢驗細節資料。"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "掃描5個section後，section_facts.txt確有記載「腹部超音波發現有肝硬化（住院後B型及C型肝炎檢查為陰性）及輕微脾臟腫大、膽結石及左腎囊腫」，但section_opinions.txt（鑑定意見段）未提及。opinions section 僅聚焦鑑定結論與理由，不含詳細病程檢查數據。",
+     "reason": "掃描5個section後，section_facts.txt確有記載「腹部超音波發現有肝硬化（住院後B型及C型肝炎檢查為陰性）及輕微脾臟腫大、膽結石及左腎囊腫」，但section_opinions.txt（鑑定意見段）未提及。opinions section 僅聚焦鑑定結論與理由，不含詳細病程檢查數據。"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt有「胸部X光發現心臟擴大及主動脈硬化」，section_opinions.txt未提及此檢查結果。維持missing，屬病程檢查細節。",
+     "reason": "section_facts.txt有「胸部X光發現心臟擴大及主動脈硬化」，section_opinions.txt未提及此檢查結果。維持missing，屬病程檢查細節。"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts.txt已提及「經醫師診視後建議住院，病患X因此於當日住進A醫院肝膽腸胃科」，section_opinions.txt作為鑑定意見段落，未須重述此細節。維持missing，屬程序性事實。",
+     "reason": "section_facts.txt已提及「經醫師診視後建議住院，病患X因此於當日住進A醫院肝膽腸胃科」，section_opinions.txt作為鑑定意見段落，未須重述此細節。維持missing，屬程序性事實。"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts.txt已記載「病患X因此於當日住進A醫院肝膽腸胃科」，包含住院日期與科別資訊。section_opinions.txt為鑑定意見段落，確未重複此病程敘述。屬程序性時序資訊，維持missing。",
+     "reason": "section_facts.txt已記載「病患X因此於當日住進A醫院肝膽腸胃科」，包含住院日期與科別資訊。section_opinions.txt為鑑定意見段落，確未重複此病程敘述。屬程序性時序資訊，維持missing。"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts.txt有「隨後會診皮膚科醫師，並開始接受藥物治療」，section_opinions.txt確未提及。惟此係病程進行之程序性細節，維持missing。",
+     "reason": "section_facts.txt有「隨後會診皮膚科醫師，並開始接受藥物治療」，section_opinions.txt確未提及。惟此係病程進行之程序性細節，維持missing。"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts.txt有「病患X於2月11日至2月16日在A醫院住院期間，雖經治療，但全身皮膚紅疹、口腔潰瘍及眼睛紅腫等症狀並無明顯改善」，section_opinions.txt未記載。此為病程描述，非鑑定意見核心。維持missing。",
+     "reason": "section_facts.txt有「病患X於2月11日至2月16日在A醫院住院期間，雖經治療，但全身皮膚紅疹、口腔潰瘍及眼睛紅腫等症狀並無明顯改善」，section_opinions.txt未記載。此為病程描述，非鑑定意見核心。維持missing。"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt確有記載「並合併有發燒、畏寒、腹瀉及少量流鼻血症狀」，但section_opinions.txt（鑑定意見段）僅提及「主訴發燒及畏寒三至四天、眼睛紅腫、乾咳及流鼻水」，未提及「腹瀉及少量流鼻血」。維持missing，症狀描述遺漏影響病情評估理解。",
+     "reason": "section_facts.txt確有記載「並合併有發燒、畏寒、腹瀉及少量流鼻血症狀」，但section_opinions.txt（鑑定意見段）僅提及「主訴發燒及畏寒三至四天、眼睛紅腫、乾咳及流鼻水」，未提及「腹瀉及少量流鼻血」。維持missing，症狀描述遺漏影響病情評估理解。"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt有「因治療後病情未改善，於2月16日接獲病危通知，病患X經家屬要求而轉診至B醫院」，section_opinions.txt僅提到「轉診後」但未提「病危通知」。病危通知為關鍵病程節點，維持missing。",
+     "reason": "section_facts.txt有「因治療後病情未改善，於2月16日接獲病危通知，病患X經家屬要求而轉診至B醫院」，section_opinions.txt僅提到「轉診後」但未提「病危通知」。病危通知為關鍵病程節點，維持missing。"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt有「全身皮膚紅疹破損嚴重併有痂皮、脫屑及水皰（特別是軀幹背部）」，section_opinions.txt未記載此等理學檢查細節。維持missing，屬臨床病況描述遺漏。",
+     "reason": "section_facts.txt有「全身皮膚紅疹破損嚴重併有痂皮、脫屑及水皰（特別是軀幹背部）」，section_opinions.txt未記載此等理學檢查細節。維持missing，屬臨床病況描述遺漏。"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt有「黏膜破皮、輕度呼吸困難、黃疸及腹脹」，section_opinions.txt（第二段尾句）僅提及「眼睛紅腫、乾咳及流鼻水，經抽血檢查...」，未提此等症狀。維持missing，屬臨床病況描述遺漏。",
+     "reason": "section_facts.txt有「黏膜破皮、輕度呼吸困難、黃疸及腹脹」，section_opinions.txt（第二段尾句）僅提及「眼睛紅腫、乾咳及流鼻水，經抽血檢查...」，未提此等症狀。維持missing，屬臨床病況描述遺漏。"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt有「經會診毒物科及接受清創術，隨即住進燒燙傷病房接受抗生素及傷口加護照顧為主之治療」，section_opinions.txt確未提及。此為關鍵醫療處置決策，維持missing。",
+     "reason": "section_facts.txt有「經會診毒物科及接受清創術，隨即住進燒燙傷病房接受抗生素及傷口加護照顧為主之治療」，section_opinions.txt確未提及。此為關鍵醫療處置決策，維持missing。"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts.txt有「2月18日再次接受清創手術」，section_opinions.txt未提及。屬治療程序細節，維持missing。",
+     "reason": "section_facts.txt有「2月18日再次接受清創手術」，section_opinions.txt未提及。屬治療程序細節，維持missing。"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts.txt有「傷口細菌培養亦為陽性」，section_opinions.txt未提及。屬檢驗數據，維持missing。",
+     "reason": "section_facts.txt有「傷口細菌培養亦為陽性」，section_opinions.txt未提及。屬檢驗數據，維持missing。"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt有「2月19日腹部電腦斷層檢查發現脾腫大」，section_opinions.txt未提及。屬重要檢查結果，維持missing。",
+     "reason": "section_facts.txt有「2月19日腹部電腦斷層檢查發現脾腫大」，section_opinions.txt未提及。屬重要檢查結果，維持missing。"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt有「但黃疸指數及發炎指數卻持續升高」，section_opinions.txt未提及。屬病情追蹤指標變化，維持missing。",
+     "reason": "section_facts.txt有「但黃疸指數及發炎指數卻持續升高」，section_opinions.txt未提及。屬病情追蹤指標變化，維持missing。"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_facts.txt有「2月20日後陸續產生敗血性休克、急性腎衰竭及全血球減少症等表徵」，section_opinions.txt未提及此等致命併發症。此為死因相關關鍵事實，標記critical。",
+     "reason": "section_facts.txt有「2月20日後陸續產生敗血性休克、急性腎衰竭及全血球減少症等表徵」，section_opinions.txt未提及此等致命併發症。此為死因相關關鍵事實，標記critical。"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt有「雖積極使用抗生素、輸血、利尿劑、升壓劑及呼吸加護治療，但病患X之病況仍逐漸惡化並持續產生休克」，section_opinions.txt未提及。維持missing，屬治療過程描述遺漏。",
+     "reason": "section_facts.txt有「雖積極使用抗生素、輸血、利尿劑、升壓劑及呼吸加護治療，但病患X之病況仍逐漸惡化並持續產生休克」，section_opinions.txt未提及。維持missing，屬治療過程描述遺漏。"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_facts.txt有「家屬於2月25日因而辦理病危自動出院，而於自宅死亡」，section_opinions.txt未提及死亡日期與地點。此為案件最終結局，屬critical事實。",
+     "reason": "section_facts.txt有「家屬於2月25日因而辦理病危自動出院，而於自宅死亡」，section_opinions.txt未提及死亡日期與地點。此為案件最終結局，屬critical事實。"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_facts.txt最後有「出院時之主要診斷為史蒂文強森症候群」，section_opinions.txt雖多次提及此症候群但未明確記載「出院時主要診斷」之表述。此為關鍵醫學診斷，標記critical。",
+     "reason": "section_facts.txt最後有「出院時之主要診斷為史蒂文強森症候群」，section_opinions.txt雖多次提及此症候群但未明確記載「出院時主要診斷」之表述。此為關鍵醫學診斷，標記critical。"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_facts.txt最後有「其他診斷為敗血症、肝硬化、肝腎、骨髓及呼吸衰竭、左腎囊腫、痛風及高血脂症」，掃描全部5個section均未見此等完整診斷列表於opinions段中。維持missing，屬完整病情資訊遺漏。",
+     "reason": "section_facts.txt最後有「其他診斷為敗血症、肝硬化、肝腎、骨髓及呼吸衰竭、左腎囊腫、痛風及高血脂症」，掃描全部5個section均未見此等完整診斷列表於opinions段中。維持missing，屬完整病情資訊遺漏。"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 雖提及醫師法第12條之1，但未明確記載九十一年一月十六日公布施行之日期，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖提及醫師法第12條之1，但未明確記載九十一年一月十六日公布施行之日期，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及七十五年十一月二十四日訂定之醫療法第五十八條之具體規定內容及訂定日期，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及七十五年十一月二十四日訂定之醫療法第五十八條之具體規定內容及訂定日期，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖論述法律演變，但未明確提及九十一年一月九日第一次開藥時法律尚未規定病歷應記載用藥情形之具體判斷，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖論述法律演變，但未明確提及九十一年一月九日第一次開藥時法律尚未規定病歷應記載用藥情形之具體判斷，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未明確論述九十一年二月六日第二次開藥時依醫師法第12條應記載用藥情形之法律義務，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未明確論述九十一年二月六日第二次開藥時依醫師法第12條應記載用藥情形之法律義務，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未明確提及兩次門診病歷均未記載服用Tegretol藥物情形之事實認定，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未明確提及兩次門診病歷均未記載服用Tegretol藥物情形之事實認定，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及被告自承說明需時五至十幾分鐘之細節，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及被告自承說明需時五至十幾分鐘之細節，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及Tegretol藥害救濟案例，section_01_facts.txt 雖有提及但reasoning未引用，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及Tegretol藥害救濟案例，section_01_facts.txt 雖有提及但reasoning未引用，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及行政院衛生署九十年三月六日發函提醒Tegretol不良反應，section_01_facts.txt 雖有提及但reasoning未引用，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及行政院衛生署九十年三月六日發函提醒Tegretol不良反應，section_01_facts.txt 雖有提及但reasoning未引用，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未引用第一次鑑定書關於「藥物使用必要性及充分說明義務」之原文認定，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未引用第一次鑑定書關於「藥物使用必要性及充分說明義務」之原文認定，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖使用鑑定意見，但未引用第二次鑑定書關於「藥物過敏無法預防、告知同意為關鍵」之原文認定，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖使用鑑定意見，但未引用第二次鑑定書關於「藥物過敏無法預防、告知同意為關鍵」之原文認定，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未引用第二次鑑定書關於「告知內容仍嫌不足、並無提到嚴重副作用」之記載，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未引用第二次鑑定書關於「告知內容仍嫌不足、並無提到嚴重副作用」之記載，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_01_facts.txt 有記載急診症狀但 section_05_reasoning.txt 未完整引用，cross-section 合併後仍缺少reasoning section之詳細論述，確認維持 missing",
+     "reason": " section_01_facts.txt 有記載急診症狀但 section_05_reasoning.txt 未完整引用，cross-section 合併後仍缺少reasoning section之詳細論述，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 雖提及SJS診斷，但未明確使用「臨床上極為罕見」之描述，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖提及SJS診斷，但未明確使用「臨床上極為罕見」之描述，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及根據病歷資料及相關照片確認SJS診斷之證據依據，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及根據病歷資料及相關照片確認SJS診斷之證據依據，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": " section_05_reasoning.txt 未明確結論「Tegretol確實是最可能導致其嚴重病症之原因」，反而表示無法認定因果關係，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未明確結論「Tegretol確實是最可能導致其嚴重病症之原因」，反而表示無法認定因果關係，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未明確排除降尿酸藥物及Voren與SJS之相關性，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未明確排除降尿酸藥物及Voren與SJS之相關性，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及鄭地明皮膚診所及蕭英宗耳鼻喉科診所之診治用藥，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及鄭地明皮膚診所及蕭英宗耳鼻喉科診所之診治用藥，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未明確提及「無法證明allopurinol及diclofenac加重危害」之排除論述，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未明確提及「無法證明allopurinol及diclofenac加重危害」之排除論述，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": " section_05_reasoning.txt 明確表達「無法認定被告使用Tegretol藥物與病患X最終死亡結果間存有相當因果關係」，與GT claim結論相反，確認維持 missing",
+     "reason": " section_05_reasoning.txt 明確表達「無法認定被告使用Tegretol藥物與病患X最終死亡結果間存有相當因果關係」，與GT claim結論相反，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 165,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖提及B醫院治療介入，但未明確記載臺中榮民總醫院清創術處置並無不當之認定，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖提及B醫院治療介入，但未明確記載臺中榮民總醫院清創術處置並無不當之認定，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_01_facts.txt 有記載症狀但 section_05_reasoning.txt 未完整引用住院期間症狀未改善之詳細過程，確認維持 missing",
+     "reason": " section_01_facts.txt 有記載症狀但 section_05_reasoning.txt 未完整引用住院期間症狀未改善之詳細過程，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_01_facts.txt 有記載轉診事實但 section_05_reasoning.txt 未明確提及「接獲病危通知後經家屬要求轉診」之細節，確認維持 missing",
+     "reason": " section_01_facts.txt 有記載轉診事實但 section_05_reasoning.txt 未明確提及「接獲病危通知後經家屬要求轉診」之細節，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 170,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未明確提及鑑定意見認定臺中榮總清創術處置並無不當之排除論述，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未明確提及鑑定意見認定臺中榮總清創術處置並無不當之排除論述，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 179,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖論述非侵入性行為無須書面同意，但未明確提及「無醫師應徵求病患同意規定之適用」之法律判斷，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖論述非侵入性行為無須書面同意，但未明確提及「無醫師應徵求病患同意規定之適用」之法律判斷，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 180,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖論述告知義務，但未明確區分「告知義務」與「徵求同意」之法律區別，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖論述告知義務，但未明確區分「告知義務」與「徵求同意」之法律區別，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 181,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖提及非侵入性無須書面同意，但未明確對應「開立藥物毋需徵得同意」之法律結論表述，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖提及非侵入性無須書面同意，但未明確對應「開立藥物毋需徵得同意」之法律結論表述，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 182,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖提及未告知SJS風險之違反告知義務，但未完整涵蓋「應告知嚴重風險、死亡率等義務」之具體範疇界定，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖提及未告知SJS風險之違反告知義務，但未完整涵蓋「應告知嚴重風險、死亡率等義務」之具體範疇界定，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 184,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": " section_05_reasoning.txt 末段雖有類似論述「不能以推測或擬制之方法為裁判之基礎」，但未明確對應「遽令被告負業務過失致死之罪責」之表述，確認維持 missing",
+     "reason": " section_05_reasoning.txt 末段雖有類似論述「不能以推測或擬制之方法為裁判之基礎」，但未明確對應「遽令被告負業務過失致死之罪責」之表述，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 185,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": " section_05_reasoning.txt 雖提及無罪諭知，但GT claim為法院判決之正式結論表述，pred未完整對應，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖提及無罪諭知，但GT claim為法院判決之正式結論表述，pred未完整對應，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 186,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及「告知後同意法則」之概念定義，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及「告知後同意法則」之概念定義，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 187,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及告知後同意法則之例外情形（緊急救助、病患權利放棄、法律特別規定等），確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及告知後同意法則之例外情形（緊急救助、病患權利放棄、法律特別規定等），確認維持 missing"
+    },
+    {
+     "gt_claim_id": 188,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 未提及告知後同意法則之學理基礎（病患自主權、醫學倫理、契約自由等），確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及告知後同意法則之學理基礎（病患自主權、醫學倫理、契約自由等），確認維持 missing"
+    },
+    {
+     "gt_claim_id": 189,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未提及實務見解有關告知義務範圍應採「一般理性病患」標準之判斷，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及實務見解有關告知義務範圍應採「一般理性病患」標準之判斷，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 190,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖論述告知義務範圍，但未明確提及「治療風險、併發症及嚴重後果風險、死亡率應包括在告知義務範疇」之具體界定，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖論述告知義務範圍，但未明確提及「治療風險、併發症及嚴重後果風險、死亡率應包括在告知義務範疇」之具體界定，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 191,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": " section_05_reasoning.txt 雖暗示考量病患個人情況，但未明確提及病患之年齡、智識背景及就診歷史，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖暗示考量病患個人情況，但未明確提及病患之年齡、智識背景及就診歷史，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 192,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 開頭雖論述過失犯構成要件，但未明確對應「須慮及預見可能性、相當因果關係等主客觀構成要件」之完整表述，確認維持 missing",
+     "reason": " section_05_reasoning.txt 開頭雖論述過失犯構成要件，但未明確對應「須慮及預見可能性、相當因果關係等主客觀構成要件」之完整表述，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 195,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 雖提及醫師法第12條之1，但未完整涵蓋醫療法第58條及醫師法第12條之1作為當時有效法律基礎之論述，確認維持 missing",
+     "reason": " section_05_reasoning.txt 雖提及醫師法第12條之1，但未完整涵蓋醫療法第58條及醫師法第12條之1作為當時有效法律基礎之論述，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 196,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": " section_05_reasoning.txt 未提及現行醫療法第63、64、81條不適用於本案之法律判斷，確認維持 missing",
+     "reason": " section_05_reasoning.txt 未提及現行醫療法第63、64、81條不適用於本案之法律判斷，確認維持 missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 196,
+   "pred_total": 161,
+   "matched": 129,
+   "partial": 5,
+   "missing": 62,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6613,
+  "compression_afg_chars": 8481,
+  "compression_source_chars": 25039,
+  "gt_length_ratio": 0.3836,
+  "gt_length_afg_chars": 8481,
+  "gt_length_gt_chars": 22111,
+  "section_balance": 0.519
  }
 }

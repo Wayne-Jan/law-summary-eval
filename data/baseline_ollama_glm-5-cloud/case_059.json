@@ -136,5 +136,578 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8085,
+  "fact_recall": 0.4234,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5949,
+  "quality_overall": 4.5714,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.8846,
+  "citation_support_score": 0.92,
+  "uncited_rate": 0.051,
+  "faithfulness_combined": {
+   "score": 0.9037,
+   "citation_fidelity": 0.8395,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 3,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 22
+  },
+  "weighted_recall": 0.6934,
+  "missing_severity": {
+   "critical": 8,
+   "important": 35,
+   "minor": 32,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "僅 section_05_reasoning.txt 提及『腦部電腦斷層掃描結果』但未提及『上午5時25分』之具體時間，屬時間細節遺漏，不影響案情理解",
+     "reason": "僅 section_05_reasoning.txt 提及『腦部電腦斷層掃描結果』但未提及『上午5時25分』之具體時間，屬時間細節遺漏，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "任何 section 均未提及『上午5時50分檢查後返回急診室』，屬時間細節遺漏",
+     "reason": "任何 section 均未提及『上午5時50分檢查後返回急診室』，屬時間細節遺漏"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及『血氧飽和度在70%至99%間移動』，未明確提及『6時15分血氧飽和度87%』之具體時間點，影響病程惡化時間軸理解",
+     "reason": "section_01_facts.txt 僅提及『血氧飽和度在70%至99%間移動』，未明確提及『6時15分血氧飽和度87%』之具體時間點，影響病程惡化時間軸理解"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及血氧範圍，未明確提及『上午7時15分血氧飽和度降至75%』之關鍵時間點，影響判斷病情急轉時機",
+     "reason": "section_01_facts.txt 僅提及血氧範圍，未明確提及『上午7時15分血氧飽和度降至75%』之關鍵時間點，影響判斷病情急轉時機"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "摘要未提及『7時31分血氧飽和度更降至30%、心跳停止』，此為導致腦缺氧病變之關鍵時間點，嚴重影響過失認定與因果關係判斷",
+     "reason": "摘要未提及『7時31分血氧飽和度更降至30%、心跳停止』，此為導致腦缺氧病變之關鍵時間點，嚴重影響過失認定與因果關係判斷"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "任何 section 均未明確提及『醫師甲緊急為病患實施心肺復甦術（CPR）』，影響完整理解緊急處置過程",
+     "reason": "任何 section 均未明確提及『醫師甲緊急為病患實施心肺復甦術（CPR）』，影響完整理解緊急處置過程"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "任何 section 均未提及『8時15分送入加護病房』，屬治療結果細節遺漏",
+     "reason": "任何 section 均未提及『8時15分送入加護病房』，屬治療結果細節遺漏"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 提及『病患因呼吸衰竭引起低血氧，已接近造成腦部組織缺氧之臨界值』但未明確提及『被告明知』之主觀認知要素，影響過失認定之法律判斷",
+     "reason": "section_05_reasoning.txt 提及『病患因呼吸衰竭引起低血氧，已接近造成腦部組織缺氧之臨界值』但未明確提及『被告明知』之主觀認知要素，影響過失認定之法律判斷"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 提及『建立穩定之呼吸氣道刻不容緩』但未明確使用『應盡速為病患建立穩定之呼吸氣道』之注意義務規範表述，影響法律要件完整呈現",
+     "reason": "section_05_reasoning.txt 提及『建立穩定之呼吸氣道刻不容緩』但未明確使用『應盡速為病患建立穩定之呼吸氣道』之注意義務規範表述，影響法律要件完整呈現"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要未明確提及『如有拖延將造成腦缺氧病變之嚴重後果』之預見性說明，影響因果關係與過失可預見性之理解",
+     "reason": "摘要未明確提及『如有拖延將造成腦缺氧病變之嚴重後果』之預見性說明，影響因果關係與過失可預見性之理解"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "任何 section 均未提及『上午6時35分給予鎮定劑（Dormicrum）、神經肌肉阻斷劑（Esmeron）』之具體用藥資訊，影響醫療處置完整性理解",
+     "reason": "任何 section 均未提及『上午6時35分給予鎮定劑（Dormicrum）、神經肌肉阻斷劑（Esmeron）』之具體用藥資訊，影響醫療處置完整性理解"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "任何 section 均未提及『上午6時45分進行支氣管鏡指引插管』之特殊技術細節，影響對插管困難程度的完整理解",
+     "reason": "任何 section 均未提及『上午6時45分進行支氣管鏡指引插管』之特殊技術細節，影響對插管困難程度的完整理解"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_02_defense.txt 被告辯稱『使用袋瓣罩甦醒球可維持血氧』，section_05_reasoning.txt 反駁『該器具僅具暫時性質』，但 section_01_facts.txt 事實段本身未提及『其間醫護人員使用袋瓣罩甦醒球提供病患氧氣及換氣』，影響事實完整性",
+     "reason": "section_02_defense.txt 被告辯稱『使用袋瓣罩甦醒球可維持血氧』，section_05_reasoning.txt 反駁『該器具僅具暫時性質』，但 section_01_facts.txt 事實段本身未提及『其間醫護人員使用袋瓣罩甦醒球提供病患氧氣及換氣』，影響事實完整性"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "與 gt_claim_id 12 為重複項目，摘要未明確提及『上午7時15分血氧飽和度降至75%』之關鍵時間點",
+     "reason": "與 gt_claim_id 12 為重複項目，摘要未明確提及『上午7時15分血氧飽和度降至75%』之關鍵時間點"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "與 gt_claim_id 13 為重複項目，摘要未提及『7時31分血氧飽和度更降至30%、心跳停止』之關鍵時間點，影響判決結論理解",
+     "reason": "與 gt_claim_id 13 為重複項目，摘要未提及『7時31分血氧飽和度更降至30%、心跳停止』之關鍵時間點，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "與 gt_claim_id 14 為重複項目，任何 section 均未明確提及『被告甲始緊急為病患實施心肺復甦術（CPR）』",
+     "reason": "與 gt_claim_id 14 為重複項目，任何 section 均未明確提及『被告甲始緊急為病患實施心肺復甦術（CPR）』"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "與 gt_claim_id 18 為重複項目，任何 section 均未提及『8時15分送入加護病房』",
+     "reason": "與 gt_claim_id 18 為重複項目，任何 section 均未提及『8時15分送入加護病房』"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 確實未提及「插管過程並無疏失」之辯護主張",
+     "reason": "section_02_defense.txt 確實未提及「插管過程並無疏失」之辯護主張"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及「19年執業經驗」之具體年資",
+     "reason": "section_02_defense.txt 未提及「19年執業經驗」之具體年資"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 僅提及「建立人工氣道之處理流程僅為指導方針」，未明確主張「無需耳鼻喉科或麻醉科醫師在場」之醫療常規",
+     "reason": "section_02_defense.txt 僅提及「建立人工氣道之處理流程僅為指導方針」，未明確主張「無需耳鼻喉科或麻醉科醫師在場」之醫療常規"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及病人需要插管的具體原因（無法維持血氧90%以上）",
+     "reason": "section_02_defense.txt 未提及病人需要插管的具體原因（無法維持血氧90%以上）"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及「袋瓣罩甦醒球可維持血氧」，未完整列出外力輔助的兩種方式（氣管內管插管與袋瓣罩甦醒球）",
+     "reason": "section_02_defense.txt 僅提及「袋瓣罩甦醒球可維持血氧」，未完整列出外力輔助的兩種方式（氣管內管插管與袋瓣罩甦醒球）"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 雖提及「血氧飽和度有數度掉到90%以下」，但未完整描述「立刻停止插管並旋即恢復袋瓣罩甦醒球加強給氧」的完整程序",
+     "reason": "section_02_defense.txt 雖提及「血氧飽和度有數度掉到90%以下」，但未完整描述「立刻停止插管並旋即恢復袋瓣罩甦醒球加強給氧」的完整程序"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及血氧恢復至「90%以上」之具體數值確認",
+     "reason": "section_02_defense.txt 未提及血氧恢復至「90%以上」之具體數值確認"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 提及「是否照會應由醫師依專業裁量」，但未完整表述「究應立即照會或由其繼續嘗試」之裁量標準",
+     "reason": "section_02_defense.txt 提及「是否照會應由醫師依專業裁量」，但未完整表述「究應立即照會或由其繼續嘗試」之裁量標準"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及「臨床上插管可能超過3次」之臨床經驗",
+     "reason": "section_02_defense.txt 未提及「臨床上插管可能超過3次」之臨床經驗"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及「實務上有插管10次才成功」之案例",
+     "reason": "section_02_defense.txt 未提及「實務上有插管10次才成功」之案例"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及急診科醫師插管成功率與麻醉科醫師之比較",
+     "reason": "section_02_defense.txt 未提及急診科醫師插管成功率與麻醉科醫師之比較"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及「凌晨時分」與「未必能派出資深主治醫師」之論點",
+     "reason": "section_02_defense.txt 未提及「凌晨時分」與「未必能派出資深主治醫師」之論點"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 雖提及「麻醉科醫師插管成功係因病人病情急轉」，但未说明是「年輕住院醫師」插管",
+     "reason": "section_02_defense.txt 雖提及「麻醉科醫師插管成功係因病人病情急轉」，但未说明是「年輕住院醫師」插管"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未明確提及「並無所謂遲延之說」之辯護主張",
+     "reason": "section_02_defense.txt 未明確提及「並無所謂遲延之說」之辯護主張"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提及麻醉科插管成功時間，但未明確主張被告插管時間為「上午7時37分」（註：此時間實為麻醉科醫師插管成功時間）",
+     "reason": "section_02_defense.txt 提及麻醉科插管成功時間，但未明確主張被告插管時間為「上午7時37分」（註：此時間實為麻醉科醫師插管成功時間）"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 雖提及「病人病情急轉」，但未完整描述「7時31分血氧飽和度下降至30%、呼吸終止需心肺復甦術」之具體時間與數值",
+     "reason": "section_02_defense.txt 雖提及「病人病情急轉」，但未完整描述「7時31分血氧飽和度下降至30%、呼吸終止需心肺復甦術」之具體時間與數值"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未提及照會耳鼻喉科醫師之原因（氣管切開術可行性）",
+     "reason": "section_02_defense.txt 未提及照會耳鼻喉科醫師之原因（氣管切開術可行性）"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 雖提及袋瓣罩甦醒球，但未明確主張「多能維持血氧飽和度在90%以上」",
+     "reason": "section_02_defense.txt 雖提及袋瓣罩甦醒球，但未明確主張「多能維持血氧飽和度在90%以上」"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未提及對氣管切開術必要性的判斷",
+     "reason": "section_02_defense.txt 未提及對氣管切開術必要性的判斷"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及「7次插管」及「RSI快速插管」之技術細節",
+     "reason": "section_02_defense.txt 未提及「7次插管」及「RSI快速插管」之技術細節"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及「支氣管鏡指引插管」之使用",
+     "reason": "section_02_defense.txt 未提及「支氣管鏡指引插管」之使用"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及曾嘗試使用其他器具",
+     "reason": "section_02_defense.txt 未提及曾嘗試使用其他器具"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 雖提及多次嘗試，但未明確主張「病人為困難插管之個案，多方嘗試仍未成功」",
+     "reason": "section_02_defense.txt 雖提及多次嘗試，但未明確主張「病人為困難插管之個案，多方嘗試仍未成功」"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "section_02_defense.txt 未提及「已盡注意之能事，實不應遽論有過失」之核心辯護結論",
+     "reason": "section_02_defense.txt 未提及「已盡注意之能事，實不應遽論有過失」之核心辯護結論"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 已提及送達時間（6時17分至7時0分），section_02_defense.txt 未重複此辯護主張",
+     "reason": "section_01_facts.txt 已提及送達時間（6時17分至7時0分），section_02_defense.txt 未重複此辯護主張"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未提及昏迷指數12分之救護車紀錄",
+     "reason": "section_02_defense.txt 未提及昏迷指數12分之救護車紀錄"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未提及家屬所述「發紺」症狀",
+     "reason": "section_02_defense.txt 未提及家屬所述「發紺」症狀"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及病歷記載「Conscious Change」",
+     "reason": "section_02_defense.txt 未提及病歷記載「Conscious Change」"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未提及醫審會鑑定之昏迷指數8分",
+     "reason": "section_02_defense.txt 未提及醫審會鑑定之昏迷指數8分"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未明確提及「送院時確有意識改變」",
+     "reason": "section_02_defense.txt 未明確提及「送院時確有意識改變」"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未提及「插管耗時過久僅是不能排除且非主因」之因果關係抗辯",
+     "reason": "section_02_defense.txt 未提及「插管耗時過久僅是不能排除且非主因」之因果關係抗辯"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "section_02_defense.txt 雖提及「自身疾病病程發展」，但未明確表述「吸入性肺炎合併呼吸衰竭具有顯然原因力」",
+     "reason": "section_02_defense.txt 雖提及「自身疾病病程發展」，但未明確表述「吸入性肺炎合併呼吸衰竭具有顯然原因力」"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "section_02_defense.txt 未提及「即便無插管較費時間仍會成為植物人」之假設性主張",
+     "reason": "section_02_defense.txt 未提及「即便無插管較費時間仍會成為植物人」之假設性主張"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未提及「上午4時45分右眼瞳孔對光反射無反應」之檢查結果",
+     "reason": "section_02_defense.txt 未提及「上午4時45分右眼瞳孔對光反射無反應」之檢查結果"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "section_02_defense.txt 未提及「插管前已有腦損傷」之辯護主張",
+     "reason": "section_02_defense.txt 未提及「插管前已有腦損傷」之辯護主張"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "鑑定意見重要醫療指導原則，影響過失認定理解，但 opinions section 未提及使用特別器具之建議",
+     "reason": "鑑定意見重要醫療指導原則，影響過失認定理解，但 opinions section 未提及使用特別器具之建議"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學判斷細節，屬背景性資訊，opinions section 省略不影響主要爭點理解",
+     "reason": "醫學判斷細節，屬背景性資訊，opinions section 省略不影響主要爭點理解"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "鑑定意見關於重複插管之生理機制解釋，影響過失評價，opinions section 未提及手肌肉疲憊",
+     "reason": "鑑定意見關於重複插管之生理機制解釋，影響過失評價，opinions section 未提及手肌肉疲憊"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "插管手法適合性之假設性分析，非鑑定核心結論，opinions section 未提及",
+     "reason": "插管手法適合性之假設性分析，非鑑定核心結論，opinions section 未提及"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "照會麻醉科醫師之原因說明，屬鑑定意見重要內容，雖提及應照會但未說明麻醉時需插管、經驗豐富之原因",
+     "reason": "照會麻醉科醫師之原因說明，屬鑑定意見重要內容，雖提及應照會但未說明麻醉時需插管、經驗豐富之原因"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "耳鼻喉科醫師照會原因說明，屬專科分工重要資訊，opinions section 未提及氣管切開術",
+     "reason": "耳鼻喉科醫師照會原因說明，屬專科分工重要資訊，opinions section 未提及氣管切開術"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "專科醫師功能性說明，與照會必要性相關，opinions section 未提及借重專長幫助建立呼吸道",
+     "reason": "專科醫師功能性說明，與照會必要性相關，opinions section 未提及借重專長幫助建立呼吸道"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖 section_reasoning 提及即時建立氣道可阻止腦缺氧，但 opinions section 本身未提及維持血氧90%以上之具體數值標準",
+     "reason": "雖 section_reasoning 提及即時建立氣道可阻止腦缺氧，但 opinions section 本身未提及維持血氧90%以上之具體數值標準"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "時間先後對預後影響之分析，section_reasoning 有相關論述但 opinions section 未提及此見解",
+     "reason": "時間先後對預後影響之分析，section_reasoning 有相關論述但 opinions section 未提及此見解"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "到院前缺氧狀況之鑑定意見，與因果關係判斷相關，opinions section 未提及家中及到院時已有缺氧",
+     "reason": "到院前缺氧狀況之鑑定意見，與因果關係判斷相關，opinions section 未提及家中及到院時已有缺氧"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "植物人狀態與重傷害之法律認定區別，屬鑑定意見重要法律見解，opinions section 未提及",
+     "reason": "植物人狀態與重傷害之法律認定區別，屬鑑定意見重要法律見解，opinions section 未提及"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "護理記錄及家中發紺之鑑定依據，影響事實認定，opinions section 未提及此證據分析",
+     "reason": "護理記錄及家中發紺之鑑定依據，影響事實認定，opinions section 未提及此證據分析"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "缺氧病變多因性之鑑定分析，與因果關係判斷密切相關，opinions section 未提及多次缺氧事件合併引起",
+     "reason": "缺氧病變多因性之鑑定分析，與因果關係判斷密切相關，opinions section 未提及多次缺氧事件合併引起"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "插管過久非唯一原因之法律判斷，屬因果關係重要限縮見解，opinions section 未提及",
+     "reason": "插管過久非唯一原因之法律判斷，屬因果關係重要限縮見解，opinions section 未提及"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "就診前一日及檢查時低血氧狀態之細節，屬病程背景資訊，opinions section 未提及",
+     "reason": "就診前一日及檢查時低血氧狀態之細節，屬病程背景資訊，opinions section 未提及"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "植物人狀態與病程發展之關聯性雖為鑑定意見內容，opinions section 未提及此病程因素",
+     "reason": "植物人狀態與病程發展之關聯性雖為鑑定意見內容，opinions section 未提及此病程因素"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "不能排除與插管時間關聯之保留見解，但 section_reasoning 已明確認定有因果關係，opinions section 未提及此保留說法",
+     "reason": "不能排除與插管時間關聯之保留見解，但 section_reasoning 已明確認定有因果關係，opinions section 未提及此保留說法"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "就診診斷之基本事實，雖見於 section_facts，但 opinions section 摘要未提及此診斷，維持 opinions section 內之 missing",
+     "reason": "就診診斷之基本事實，雖見於 section_facts，但 opinions section 摘要未提及此診斷，維持 opinions section 內之 missing"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "呼吸衰竭惡化才須插管之原因說明，雖見於 section_facts，但 opinions section 未提及插管醫療原因",
+     "reason": "呼吸衰竭惡化才須插管之原因說明，雖見於 section_facts，但 opinions section 未提及插管醫療原因"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "對值班醫師法律評價之限定見解，opinions section 未提及只能算是未成功救治之限縮表述",
+     "reason": "對值班醫師法律評價之限定見解，opinions section 未提及只能算是未成功救治之限縮表述"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "實難謂為主因之一之重要限縮見解，與 section_reasoning 認定有因果關係不同，opinions section 未提及此鑑定意見",
+     "reason": "實難謂為主因之一之重要限縮見解，與 section_reasoning 認定有因果關係不同，opinions section 未提及此鑑定意見"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "反事實條件假設分析，屬推演性內容，opinions section 未提及若不進行插管之假設情境",
+     "reason": "反事實條件假設分析，屬推演性內容，opinions section 未提及若不進行插管之假設情境"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "預後不確定性之假設分析，opinions section 未提及即使短時間內插管成功之假設情境",
+     "reason": "預後不確定性之假設分析，opinions section 未提及即使短時間內插管成功之假設情境"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 137,
+   "pred_total": 39,
+   "matched": 54,
+   "partial": 8,
+   "missing": 75,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9106,
+  "compression_afg_chars": 1403,
+  "compression_source_chars": 15689,
+  "gt_length_ratio": 0.2797,
+  "gt_length_afg_chars": 1403,
+  "gt_length_gt_chars": 5016,
+  "section_balance": 0.2333
+ }
 }
