@@ -167,6 +167,759 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.6459
+  "rule_based_avg": 0.6459,
+  "fact_recall": 0.3764,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5469,
+  "quality_overall": 4.6929,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.5,
+  "citation_support_score": 0.5871,
+  "uncited_rate": 0.05,
+  "faithfulness_combined": {
+   "score": 0.685,
+   "citation_fidelity": 0.475,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 7,
+   "correct": 7
+  },
+  "weighted_recall": 0.7116,
+  "missing_severity": {
+   "critical": 5,
+   "important": 43,
+   "minor": 53,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「病患X因氣喘發作」，未交代「長年」病史，其他 section 亦未見",
+     "reason": "section_01_facts.txt 僅提及「病患X因氣喘發作」，未交代「長年」病史，其他 section 亦未見"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及配偶P與醫師甲認識關係，此為事實背景資訊",
+     "reason": "section_01_facts.txt 未提及配偶P與醫師甲認識關係，此為事實背景資訊"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及98年11月3日初診之主訴症狀（咳嗽、痰、喘鳴音）",
+     "reason": "section_01_facts.txt 未提及98年11月3日初診之主訴症狀（咳嗽、痰、喘鳴音）"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及第一次就診理學檢查發現呼吸急促",
+     "reason": "section_01_facts.txt 未提及第一次就診理學檢查發現呼吸急促"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未詳細記載病患過去病史（氣喘、高血壓）",
+     "reason": "section_01_facts.txt 未詳細記載病患過去病史（氣喘、高血壓）"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未明確記載第一次就診的診斷結果（氣喘）",
+     "reason": "section_01_facts.txt 未明確記載第一次就診的診斷結果（氣喘）"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及11月5日下午3時22分之具體時間及P載送情節",
+     "reason": "section_01_facts.txt 未提及11月5日下午3時22分之具體時間及P載送情節"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「主訴心跳過快」，未完整涵蓋喘鳴、咳嗽症狀",
+     "reason": "section_01_facts.txt 僅提及「主訴心跳過快」，未完整涵蓋喘鳴、咳嗽症狀"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及第二次就診理學檢查發現（意識清楚、呼吸急促、冒冷汗）",
+     "reason": "section_01_facts.txt 未提及第二次就診理學檢查發現（意識清楚、呼吸急促、冒冷汗）"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未明確記載「多年氣喘病史」",
+     "reason": "section_01_facts.txt 未明確記載「多年氣喘病史」"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「Inderal藥物」，未詳述Bcomplex及劑量細節",
+     "reason": "section_01_facts.txt 僅提及「Inderal藥物」，未詳述Bcomplex及劑量細節"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及領藥時間（下午3時44分）、D藥局地點",
+     "reason": "section_01_facts.txt 未提及領藥時間（下午3時44分）、D藥局地點"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未交代藥師C核對處方箋過程",
+     "reason": "section_01_facts.txt 未交代藥師C核對處方箋過程"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及藥師父親警告與建議返回診所之重要情節",
+     "reason": "section_01_facts.txt 未提及藥師父親警告與建議返回診所之重要情節"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及返回診所與醫師確認後才攜藥離去",
+     "reason": "section_01_facts.txt 未提及返回診所與醫師確認後才攜藥離去"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及在派出所借水服藥之具體情節",
+     "reason": "section_01_facts.txt 未提及在派出所借水服藥之具體情節"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及下午4時40分返回娘家之具體時間",
+     "reason": "section_01_facts.txt 未提及下午4時40分返回娘家之具體時間"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及病患向父親表示不適需休息之細節",
+     "reason": "section_01_facts.txt 未提及病患向父親表示不適需休息之細節"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及昏迷但未交代具體時間（下午5時46分前）",
+     "reason": "section_01_facts.txt 提及昏迷但未交代具體時間（下午5時46分前）"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及父親電聯119之具體時間（下午5時46分）",
+     "reason": "section_01_facts.txt 未提及父親電聯119之具體時間（下午5時46分）"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及救護人員抵達之具體時間（下午5時51分）",
+     "reason": "section_01_facts.txt 未提及救護人員抵達之具體時間（下午5時51分）"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及送達W醫院之具體時間（下午6時1分）",
+     "reason": "section_01_facts.txt 未提及送達W醫院之具體時間（下午6時1分）"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未描述抵達W醫院時已無生命徵象之情形",
+     "reason": "section_01_facts.txt 未描述抵達W醫院時已無生命徵象之情形"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未詳述急救後恢復生命徵象但昏迷指數2E分之醫療狀況",
+     "reason": "section_01_facts.txt 未詳述急救後恢復生命徵象但昏迷指數2E分之醫療狀況"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及死亡日期但未交代具體時間及G醫院地點",
+     "reason": "section_01_facts.txt 提及死亡日期但未交代具體時間及G醫院地點"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提「檢察官提起公訴」，未交代配偶P訴請偵查之程序",
+     "reason": "section_01_facts.txt 僅提「檢察官提起公訴」，未交代配偶P訴請偵查之程序"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未陳述醫師注意義務之法律基本框架內容",
+     "reason": "section_01_facts.txt 未陳述醫師注意義務之法律基本框架內容"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及氣喘診斷需鑑定嚴重性之醫療準則",
+     "reason": "section_01_facts.txt 未提及氣喘診斷需鑑定嚴重性之醫療準則"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及評估氣喘控制情況之醫療原則",
+     "reason": "section_01_facts.txt 未提及評估氣喘控制情況之醫療原則"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及升階治療原則",
+     "reason": "section_01_facts.txt 未提及升階治療原則"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及氣喘急性惡化之治療方法",
+     "reason": "section_01_facts.txt 未提及氣喘急性惡化之治療方法"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及重症化前應及早評鑑治療之注意義務",
+     "reason": "section_01_facts.txt 未提及重症化前應及早評鑑治療之注意義務"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及尖峰呼氣流速（PEF）測量評鑑方法",
+     "reason": "section_01_facts.txt 未提及尖峰呼氣流速（PEF）測量評鑑方法"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及氣喘急性惡化應使用之藥物種類",
+     "reason": "section_01_facts.txt 未提及氣喘急性惡化應使用之藥物種類"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未交代Inderal之臨床適應症說明",
+     "reason": "section_01_facts.txt 未交代Inderal之臨床適應症說明"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未具體說明醫師甲無不能注意之事由",
+     "reason": "section_01_facts.txt 未具體說明醫師甲無不能注意之事由"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "送往醫院時生命現象喪失為關鍵時間節點事實，跨 section 檢查後所有 5 個 section 均未提及",
+     "reason": "送往醫院時生命現象喪失為關鍵時間節點事實，跨 section 檢查後所有 5 個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "心肺復甦術急救、昏迷指數 2E 分、呼吸器使用等為重要醫療過程細節，section_03_opinions.txt 雖提及「缺氧性腦病變」，但未提急救過程",
+     "reason": "心肺復甦術急救、昏迷指數 2E 分、呼吸器使用等為重要醫療過程細節，section_03_opinions.txt 雖提及「缺氧性腦病變」，但未提急救過程"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫師法第12條第1項之法條引用屬程序性背景資訊，section_01_facts.txt 僅泛稱「登載不實」，未提及具體法條",
+     "reason": "醫師法第12條第1項之法條引用屬程序性背景資訊，section_01_facts.txt 僅泛稱「登載不實」，未提及具體法條"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "病歷紀錄功能與目的為法理說明背景，非案件核心事實",
+     "reason": "病歷紀錄功能與目的為法理說明背景，非案件核心事實"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "具體看診時間（98年11月5日下午3時22分許）及完整藥物清單（Prednisolone、Aminophylline等4種藥物）為事實認定關鍵",
+     "reason": "具體看診時間（98年11月5日下午3時22分許）及完整藥物清單（Prednisolone、Aminophylline等4種藥物）為事實認定關鍵"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "電腦登載時間、不實藥物清單（Bcomplex、Inderal等6種）、犯意等細節涉及罪責構成要件，直接影響行使業務登載不實罪認定",
+     "reason": "電腦登載時間、不實藥物清單（Bcomplex、Inderal等6種）、犯意等細節涉及罪責構成要件，直接影響行使業務登載不實罪認定"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "處方箋總計3聯之製作流程細節，屬程序性背景事實",
+     "reason": "處方箋總計3聯之製作流程細節，屬程序性背景事實"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "護士L參與黏貼過程為事實執行細節，不影響被告行為定性",
+     "reason": "護士L參與黏貼過程為事實執行細節，不影響被告行為定性"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "雖 section_01_facts.txt 提及「登載未實際開立之藥物」及「診療記錄單」，但未明確連結兩者關係",
+     "reason": "雖 section_01_facts.txt 提及「登載未實際開立之藥物」及「診療記錄單」，但未明確連結兩者關係"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "具體領藥時間（下午6、7時許）、藥局名稱（D藥局）、藥師（C）為關鍵事實細節",
+     "reason": "具體領藥時間（下午6、7時許）、藥局名稱（D藥局）、藥師（C）為關鍵事實細節"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "行為造成損害範圍（主管機關、病患、藥局、藥師）為結果要件，影響罪責範圍認定",
+     "reason": "行為造成損害範圍（主管機關、病患、藥局、藥師）為結果要件，影響罪責範圍認定"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "程序性事實，各 section 均未提及被告於本院審理時坦承身分",
+     "reason": "程序性事實，各 section 均未提及被告於本院審理時坦承身分"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_facts 僅提及『販賣無氣喘療效之膠囊及藥錠』，無膠囊顏色細節",
+     "reason": "section_facts 僅提及『販賣無氣喘療效之膠囊及藥錠』，無膠囊顏色細節"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_reasoning 提及『未開立部分藥物』但未列明具體四種藥物名稱",
+     "reason": "section_reasoning 提及『未開立部分藥物』但未列明具體四種藥物名稱"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無電腦輸入時間『下午3時22分』之細節",
+     "reason": "無電腦輸入時間『下午3時22分』之細節"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無處方箋『總計3聯』之資訊",
+     "reason": "無處方箋『總計3聯』之資訊"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無『護士將原處方箋撕掉』之細節",
+     "reason": "無『護士將原處方箋撕掉』之細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無『處方箋黏貼於診療紀錄單』之細節",
+     "reason": "無『處方箋黏貼於診療紀錄單』之細節"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無『下午6時許前往天士藥局』之時間與藥局名稱",
+     "reason": "無『下午6時許前往天士藥局』之時間與藥局名稱"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無『藥師張博彥』姓名之資訊",
+     "reason": "無『藥師張博彥』姓名之資訊"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無『因跟告訴人很熟，開藥供備用』之辯解內容",
+     "reason": "無『因跟告訴人很熟，開藥供備用』之辯解內容"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無『未聯繫而丟棄藥物』之情節",
+     "reason": "無『未聯繫而丟棄藥物』之情節"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "各 section 均未提及 T 罹患氣喘痼疾之病史",
+     "reason": "各 section 均未提及 T 罹患氣喘痼疾之病史"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 僅提及被告辯稱『並非氣喘發作』，未確認案發時實際狀況",
+     "reason": "section_defense 僅提及被告辯稱『並非氣喘發作』，未確認案發時實際狀況"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 有『開立Inderal係因病患X有心悸症狀』但無明確日期",
+     "reason": "section_defense 有『開立Inderal係因病患X有心悸症狀』但無明確日期"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "影響案情理解之辯護要點，section_defense 未明確主張符合診療常規",
+     "reason": "影響案情理解之辯護要點，section_defense 未明確主張符合診療常規"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 未主張渠等『應知悉』Inderal 禁忌",
+     "reason": "section_defense 未主張渠等『應知悉』Inderal 禁忌"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "替代用藥建議屬專業意見細節，不影響核心因果關係判定",
+     "reason": "替代用藥建議屬專業意見細節，不影響核心因果關係判定"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "治療建議屬專業意見細節，非核心鑑定結論",
+     "reason": "治療建議屬專業意見細節，非核心鑑定結論"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體藥物品項為背景資訊，非核心鑑定結論",
+     "reason": "具體藥物品項為背景資訊，非核心鑑定結論"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "用藥調整原則屬專業意見細節",
+     "reason": "用藥調整原則屬專業意見細節"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "替代藥物建議屬專業意見細節",
+     "reason": "替代藥物建議屬專業意見細節"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "Inderal 藥理分類為理解禁忌用藥原因之重要背景",
+     "reason": "Inderal 藥理分類為理解禁忌用藥原因之重要背景"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "氣喘病人禁忌用藥之定性為鑑定核心發現",
+     "reason": "氣喘病人禁忌用藥之定性為鑑定核心發現"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "氣道狹窄作用機制為過失認定之重要依據",
+     "reason": "氣道狹窄作用機制為過失認定之重要依據"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "病歷記載氣喘病史為醫師知情基礎，影響過失認定",
+     "reason": "病歷記載氣喘病史為醫師知情基礎，影響過失認定"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "無論劑量均為禁忌之強調，屬用藥風險評估範疇",
+     "reason": "無論劑量均為禁忌之強調，屬用藥風險評估範疇"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "違反用藥規範為鑑定意見之法律認定結論",
+     "reason": "違反用藥規範為鑑定意見之法律認定結論"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病程惡化風險評估為因果關係分析之重要內容",
+     "reason": "病程惡化風險評估為因果關係分析之重要內容"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "Inderal 具體影響機制為過失醫療行為描述",
+     "reason": "Inderal 具體影響機制為過失醫療行為描述"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體劑量對生理作用屬技術細節",
+     "reason": "具體劑量對生理作用屬技術細節"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "非選擇性阻斷劑分類為藥理作用之關鍵說明",
+     "reason": "非選擇性阻斷劑分類為藥理作用之關鍵說明"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "支氣管擴張劑療效影響為病理機制重要環節",
+     "reason": "支氣管擴張劑療效影響為病理機制重要環節"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「可能導致昏迷」為推論性陳述，核心事實（昏迷與Inderal關聯）已涵蓋",
+     "reason": "「可能導致昏迷」為推論性陳述，核心事實（昏迷與Inderal關聯）已涵蓋"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "藥物動力學時間屬專業技術細節",
+     "reason": "藥物動力學時間屬專業技術細節"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心跳停止嚴重後果為用藥風險說明",
+     "reason": "心跳停止嚴重後果為用藥風險說明"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "支氣管擴張劑療效影響與缺氧性腦病變機制說明",
+     "reason": "支氣管擴張劑療效影響與缺氧性腦病變機制說明"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "具體日期之病歷記載為時序認定重要依據",
+     "reason": "具體日期之病歷記載為時序認定重要依據"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "具體開藥日期及劑量為醫療行為認定要項",
+     "reason": "具體開藥日期及劑量為醫療行為認定要項"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體服藥時間為時序細節，核心因果關係已涵蓋",
+     "reason": "具體服藥時間為時序細節，核心因果關係已涵蓋"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "藥物作用時間屬專業技術細節",
+     "reason": "藥物作用時間屬專業技術細節"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "救護人員到場時程為時序細節",
+     "reason": "救護人員到場時程為時序細節"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病程時間相符屬鑑定分析過程，核心結論已涵蓋",
+     "reason": "病程時間相符屬鑑定分析過程，核心結論已涵蓋"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學檢測方法為技術性說明",
+     "reason": "醫學檢測方法為技術性說明"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病人到院時具體狀況為病情評估重要內容",
+     "reason": "病人到院時具體狀況為病情評估重要內容"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病歷資料無法證實服用之判斷為鑑定重要限制",
+     "reason": "病歷資料無法證實服用之判斷為鑑定重要限制"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "氣管切開術為重要醫療處置事實",
+     "reason": "氣管切開術為重要醫療處置事實"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "氣管切開術風險為背景性醫療知識",
+     "reason": "氣管切開術風險為背景性醫療知識"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "昏迷原因無法確定為鑑定意見核心限制，直接影響因果關係判定",
+     "reason": "昏迷原因無法確定為鑑定意見核心限制，直接影響因果關係判定"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "死亡日期為時序資訊，核心結論（死亡與Inderal無直接因果）已涵蓋",
+     "reason": "死亡日期為時序資訊，核心結論（死亡與Inderal無直接因果）已涵蓋"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_facts.txt 僅記載「同年月5日回診，主訴心跳過快」，缺少「哮鳴、咳嗽」等具體症狀描述，影響病情完整理解",
+     "reason": "section_facts.txt 僅記載「同年月5日回診，主訴心跳過快」，缺少「哮鳴、咳嗽」等具體症狀描述，影響病情完整理解"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_opinions.txt 雖有醫事審議委員會鑑定意見，但 reasoning section 原文未明確記載該鑑定結果，影響鑑定依據之理解",
+     "reason": "section_opinions.txt 雖有醫事審議委員會鑑定意見，但 reasoning section 原文未明確記載該鑑定結果，影響鑑定依據之理解"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 原文均未提及「每分鐘約120次」之具體心跳數值，僅有「心跳過快」之概括描述",
+     "reason": "所有 section 原文均未提及「每分鐘約120次」之具體心跳數值，僅有「心跳過快」之概括描述"
+    },
+    {
+     "gt_claim_id": 173,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "本案死因認定涉及判決結論，GT 主張「無法確認因果關係」與 pred claim「有相當因果關係」之法律認定相反，屬關鍵爭點",
+     "reason": "本案死因認定涉及判決結論，GT 主張「無法確認因果關係」與 pred claim「有相當因果關係」之法律認定相反，屬關鍵爭點"
+    },
+    {
+     "gt_claim_id": 176,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning.txt 提及過失行為但未明確記載「錯失治療機會」之具體損害後果，影響損害範圍之完整理解",
+     "reason": "section_reasoning.txt 提及過失行為但未明確記載「錯失治療機會」之具體損害後果，影響損害範圍之完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 178,
+   "pred_total": 40,
+   "matched": 57,
+   "partial": 20,
+   "missing": 101,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9565,
+  "compression_afg_chars": 1127,
+  "compression_source_chars": 25925,
+  "gt_length_ratio": 0.1521,
+  "gt_length_afg_chars": 1127,
+  "gt_length_gt_chars": 7408,
+  "section_balance": 0.1316
  }
 }
