@@ -2714,6 +2714,7 @@ let tlDataCache = null; // timeline data for current case
 let activeChunk = null;
 let activeTLEventIdx = -1;
 let activeTLSpanId = null;
+let tlEventSourceGroupsCache = null;
 let tlLeftMode = 'events';
 let autoSaveTimer = null;
 let keyboardFocusIndex = 0;
@@ -2947,6 +2948,7 @@ async function onCaseChange() {
   aiDataCache = {};
   gtDataCache = null;
   tlDataCache = null;
+  tlEventSourceGroupsCache = null;
   activeChunk = null;
 
   // Determine initial condition index and phase
@@ -3358,6 +3360,7 @@ async function loadPhaseTL() {
     } catch {}
   }
 
+  tlEventSourceGroupsCache = null;
   activeTLEventIdx = -1;
   activeTLSpanId = null;
   tlLeftMode = 'events';
@@ -3412,6 +3415,128 @@ function getTLEventSpans(evt) {
   return [];
 }
 
+function getTLSpanKey(evtIdx, spanId) {
+  return `${evtIdx}::${String(spanId)}`;
+}
+
+function buildTLVisibleSpanKeySet(events, chunks) {
+  const visible = new Set();
+  if (!Array.isArray(events) || !Array.isArray(chunks) || !events.length || !chunks.length) return visible;
+  const sorted = [...chunks].sort((a, b) => (a.start_char || 0) - (b.start_char || 0));
+  sorted.forEach(chunk => {
+    const evtSpans = [];
+    events.forEach((evt, evtIdx) => {
+      getTLEventSpans(evt).forEach(sp => {
+        const overlapStart = Math.max(sp.char_start, chunk.start_char);
+        const overlapEnd = Math.min(sp.char_end, chunk.end_char);
+        if (overlapEnd <= overlapStart) return;
+        let relStart = overlapStart - chunk.start_char;
+        let relEnd = overlapEnd - chunk.start_char;
+        const status = sp.alignment_status || evt.alignment_status || 'UNRESOLVED';
+        if (status === 'MATCH_FUZZY' || status === 'PARTIAL_UNRESOLVED') {
+          const refined = refineTLSpanRangeInChunk(
+            chunk.content || '',
+            relStart,
+            relEnd,
+            sp.quote || ''
+          );
+          if (refined && refined.relEnd > refined.relStart) {
+            relStart = refined.relStart;
+            relEnd = refined.relEnd;
+          }
+        }
+        evtSpans.push({
+          relStart,
+          relEnd,
+          evtIdx,
+          role: sp.role || 'supporting',
+          spanId: sp.span_id || '',
+        });
+      });
+    });
+    evtSpans.sort((a, b) => a.relStart - b.relStart || a.relEnd - b.relEnd);
+    const merged = [];
+    evtSpans.forEach(sp => {
+      if (!merged.length || sp.relStart >= merged[merged.length - 1].relEnd) {
+        merged.push({ relStart: sp.relStart, relEnd: sp.relEnd, sources: [sp] });
+      } else {
+        const last = merged[merged.length - 1];
+        last.relEnd = Math.max(last.relEnd, sp.relEnd);
+        last.sources.push(sp);
+      }
+    });
+    merged.forEach(m => {
+      const cuts = new Set([m.relStart, m.relEnd]);
+      m.sources.forEach(sp => {
+        cuts.add(Math.max(sp.relStart, m.relStart));
+        cuts.add(Math.min(sp.relEnd, m.relEnd));
+      });
+      const sortedCuts = [...cuts].sort((a, b) => a - b);
+      for (let i = 0; i < sortedCuts.length - 1; i += 1) {
+        const segStart = sortedCuts[i];
+        const segEnd = sortedCuts[i + 1];
+        const covering = m.sources.filter(sp => sp.relStart <= segStart && sp.relEnd >= segEnd);
+        const best = covering.find(sp => sp.role === 'primary') || covering[0] || m.sources[0];
+        if (best) visible.add(getTLSpanKey(best.evtIdx, best.spanId));
+      }
+    });
+  });
+  return visible;
+}
+
+function getTLEventSourceGroups(evt, evtIdx) {
+  if (!evt) return [];
+  if (!tlEventSourceGroupsCache) {
+    const events = (tlDataCache && tlDataCache.events) || [];
+    const chunks = (tlDataCache && tlDataCache.chunks) || [];
+    const visibleKeys = buildTLVisibleSpanKeySet(events, chunks);
+    tlEventSourceGroupsCache = new Map();
+    events.forEach((eventItem, index) => {
+      const spans = getTLEventSpans(eventItem);
+      const visibleSpans = spans.filter(sp => visibleKeys.has(getTLSpanKey(index, sp.span_id)));
+      const fallbackVisible = visibleSpans.length ? visibleSpans : spans;
+      const primaryVisible = fallbackVisible.find(sp => sp.role === 'primary') || fallbackVisible[0] || null;
+      const groups = fallbackVisible.map((sp, groupIndex) => ({
+        group_id: `tl_group_${index}_${groupIndex + 1}`,
+        target_span_id: sp.span_id,
+        role: sp.role,
+        span_ids: [sp.span_id],
+      }));
+      const groupByTarget = new Map(groups.map(group => [group.target_span_id, group]));
+      spans.forEach(sp => {
+        if (visibleKeys.has(getTLSpanKey(index, sp.span_id))) return;
+        const fallbackTarget = primaryVisible ? primaryVisible.span_id : (groups[0] ? groups[0].target_span_id : sp.span_id);
+        if (!groupByTarget.has(fallbackTarget)) {
+          const newGroup = {
+            group_id: `tl_group_${index}_fallback`,
+            target_span_id: fallbackTarget,
+            role: primaryVisible ? primaryVisible.role : sp.role,
+            span_ids: [],
+          };
+          groups.unshift(newGroup);
+          groupByTarget.set(fallbackTarget, newGroup);
+        }
+        groupByTarget.get(fallbackTarget).span_ids.push(sp.span_id);
+      });
+      groups.forEach(group => {
+        group.span_ids = [...new Set(group.span_ids)];
+      });
+      tlEventSourceGroupsCache.set(index, groups);
+    });
+  }
+  return tlEventSourceGroupsCache.get(evtIdx) || [];
+}
+
+function getTLActiveSourceGroup(evt, evtIdx) {
+  const groups = getTLEventSourceGroups(evt, evtIdx);
+  if (!groups.length) return null;
+  if (activeTLSpanId) {
+    const found = groups.find(group => group.span_ids.includes(String(activeTLSpanId)));
+    if (found) return found;
+  }
+  return groups[0];
+}
+
 function getTLAlignmentSummary(evt) {
   const spans = getTLEventSpans(evt);
   if (!spans.length) return { total: 0, status: 'unresolved' };
@@ -3423,9 +3548,18 @@ function getTLAlignmentSummary(evt) {
   return { total: spans.length, status };
 }
 
-function getTLActiveSpan(evt) {
+function getTLActiveSpan(evt, evtIdx = activeTLEventIdx) {
   const spans = getTLEventSpans(evt);
   if (!spans.length) return null;
+  const groups = getTLEventSourceGroups(evt, evtIdx);
+  if (groups.length) {
+    const activeGroup = getTLActiveSourceGroup(evt, evtIdx);
+    const targetSpanId = activeGroup && activeGroup.target_span_id;
+    if (targetSpanId) {
+      const grouped = spans.find(sp => sp.span_id === targetSpanId);
+      if (grouped) return grouped;
+    }
+  }
   if (activeTLSpanId) {
     const found = spans.find(sp => sp.span_id === String(activeTLSpanId));
     if (found) return found;
@@ -3475,26 +3609,24 @@ function setTLMobileTab(tab) {
 }
 
 function renderTLEventSpanSwitcher(evt, evtIdx) {
-  const spans = getTLEventSpans(evt);
-  if (spans.length <= 1 && !evt.critical_decision) return '';
-  const activeForEvent = activeTLEventIdx === evtIdx ? getTLActiveSpan(evt) : null;
-  const renderSpans = spans.length > 0
-    ? spans
+  const groups = getTLEventSourceGroups(evt, evtIdx);
+  if (groups.length <= 1 && !evt.critical_decision) return '';
+  const activeGroup = activeTLEventIdx === evtIdx ? getTLActiveSourceGroup(evt, evtIdx) : null;
+  const renderGroups = groups.length > 0
+    ? groups
     : (evt.critical_decision ? [{
-        span_id: 'event_range',
+        group_id: `tl_group_${evtIdx}_fallback`,
+        target_span_id: 'event_range',
         role: 'primary',
-        quote: '',
-        char_start: -1,
-        char_end: -1,
-        alignment_status: evt.alignment_status || 'UNRESOLVED',
+        span_ids: ['event_range'],
       }] : []);
-  if (!renderSpans.length) return '';
+  if (!renderGroups.length) return '';
   let html = '<div class="tl-event-evidence"><div class="tl-evidence-row">';
-  renderSpans.forEach((sp, i) => {
-    const activeCls = activeForEvent && activeForEvent.span_id === sp.span_id ? ' active' : '';
-    const title = renderSpans.length <= 1 ? '來源' : `來源 ${i + 1}`;
-    const swatchClass = sp.role === 'primary' ? 'primary' : 'supporting';
-    html += `<button type="button" class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(sp.span_id)}" onclick="event.stopPropagation(); selectTLSpan(${evtIdx}, ${JSON.stringify(String(sp.span_id))})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
+  renderGroups.forEach((group, i) => {
+    const activeCls = activeGroup && activeGroup.target_span_id === group.target_span_id ? ' active' : '';
+    const title = renderGroups.length <= 1 ? '來源' : `來源 ${i + 1}`;
+    const swatchClass = group.role === 'primary' ? 'primary' : 'supporting';
+    html += `<button type="button" class="tl-span-pill${activeCls}" data-evt="${evtIdx}" data-span-id="${esc(group.target_span_id)}" onclick="event.stopPropagation(); selectTLSpan(${evtIdx}, ${JSON.stringify(String(group.target_span_id))})"><span class="legend-swatch ${swatchClass}"></span>${esc(title)}</button>`;
   });
   html += '</div></div>';
   return html;
@@ -3504,7 +3636,9 @@ function updateTLEventSpanPills() {
   document.querySelectorAll('.tl-span-pill[data-evt][data-span-id]').forEach(el => {
     const evtIdx = Number(el.dataset.evt);
     const spanId = String(el.dataset.spanId || '');
-    const isActive = evtIdx === activeTLEventIdx && spanId === String(activeTLSpanId || '');
+    const evt = tlDataCache && tlDataCache.events ? tlDataCache.events[evtIdx] : null;
+    const activeGroup = evt && evtIdx === activeTLEventIdx ? getTLActiveSourceGroup(evt, evtIdx) : null;
+    const isActive = !!(activeGroup && spanId === String(activeGroup.target_span_id || ''));
     el.classList.toggle('active', isActive);
   });
 }
@@ -3814,6 +3948,7 @@ function buildTLInterventionsHtml() {
 }
 
 function renderTimelinePanel() {
+  tlEventSourceGroupsCache = null;
   const titleEl = document.getElementById('tlTimelineTitle');
   const countEl = document.getElementById('tlEventCount');
   const barEl = document.getElementById('tlSummaryBar');
@@ -4063,6 +4198,10 @@ function showTLEventSource(idx, requestedSpanId = null) {
     activeTLSpanId = (evtSpans.find(sp => sp.role === 'primary') || evtSpans[0]).span_id;
   } else {
     activeTLSpanId = String(activeTLSpanId);
+  }
+  const activeGroup = getTLActiveSourceGroup(evt, idx);
+  if (activeGroup && activeGroup.target_span_id) {
+    activeTLSpanId = String(activeGroup.target_span_id);
   }
 
   // Highlight active event card + focus pulse
