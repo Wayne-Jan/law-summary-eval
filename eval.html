@@ -2878,6 +2878,13 @@ function getRealCondition(caseName, anonIdx) {
   return getConditionOrder(caseName)[anonIdx];
 }
 
+function getAdminInspectConditionLabel(caseName, anonIdx) {
+  const anon = getAnonLabel(anonIdx);
+  if (!isAdminInspectMode()) return anon;
+  const cond = getRealCondition(caseName, anonIdx);
+  return cond ? `${anon} · ${cond}` : anon;
+}
+
 // ═══════════════════════════════════════════════════════════════
 // STATE MACHINE: Per-condition phase status
 // ═══════════════════════════════════════════════════════════════
@@ -2994,7 +3001,7 @@ function renderCondPills() {
   const locked = isCaseLocked(currentCase);
   const timelineLocked = currentPhase === 'tl';
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
-    const label = getAnonLabel(i);
+    const label = getAdminInspectConditionLabel(currentCase, i);
     const done = isCondComplete(currentCase, i);
     const isCurrent = (i === currentCondIdx);
     let cls = 'cond-pill';
@@ -3186,9 +3193,10 @@ async function loadPhase1() {
     ? Object.values(aiData.chunks).reduce((sum, c) => sum + (c || '').length, 0)
     : 0;
   const ratio = sourceChars > 0 ? ((1 - summaryChars / sourceChars) * 100).toFixed(0) : 0;
-  document.getElementById('p1CondLabel').textContent = summaryChars > 0
-    ? `${summaryChars.toLocaleString()} 字（▼${ratio}%）`
-    : '';
+  const metaParts = [];
+  if (isAdminInspectMode()) metaParts.push(cond);
+  if (summaryChars > 0) metaParts.push(`${summaryChars.toLocaleString()} 字（▼${ratio}%）`);
+  document.getElementById('p1CondLabel').textContent = metaParts.join(' · ');
 
   // Frozen state (temporarily disabled for preview)
   const frozen = false; // isPhase1Frozen(currentCase, currentCondIdx);
@@ -3959,7 +3967,9 @@ function renderTimelinePanel() {
   if (!titleEl || !countEl || !barEl || !listEl) return;
 
   if (tlLeftMode === 'entities') {
-    titleEl.textContent = '實體檢視';
+    titleEl.textContent = isAdminInspectMode()
+      ? `實體檢視 · ${getRealCondition(currentCase, currentCondIdx) || ''}`.replace(/ · $/, '')
+      : '實體檢視';
     const { listHtml } = buildTLEntityGroupsHtml();
     countEl.textContent = '';
     barEl.innerHTML = '';
@@ -3969,7 +3979,9 @@ function renderTimelinePanel() {
   }
 
   if (tlLeftMode === 'interventions') {
-    titleEl.textContent = '醫療處置';
+    titleEl.textContent = isAdminInspectMode()
+      ? `醫療處置 · ${getRealCondition(currentCase, currentCondIdx) || ''}`.replace(/ · $/, '')
+      : '醫療處置';
     countEl.textContent = '';
     barEl.innerHTML = '';
     listEl.innerHTML = buildTLInterventionsHtml();
@@ -3980,7 +3992,9 @@ function renderTimelinePanel() {
   const events = (tlDataCache && tlDataCache.events) || [];
   const summary = (tlDataCache && tlDataCache.timeline_summary) || {};
 
-  titleEl.textContent = '事件時間軸';
+  titleEl.textContent = isAdminInspectMode()
+    ? `事件時間軸 · ${getRealCondition(currentCase, currentCondIdx) || ''}`.replace(/ · $/, '')
+    : '事件時間軸';
   countEl.textContent = events.length ? `${events.length} 個事件，點擊事件可同步查看原文` : '';
 
   // Summary bar
@@ -5629,7 +5643,8 @@ function setAdminInspectBanner() {
     return;
   }
   const versionLabel = ANON_LABELS[currentCondIdx] || `版本 ${String.fromCharCode(65 + currentCondIdx)}`;
-  el.innerHTML = `管理檢視 <span class="muted">${esc(adminInspect.evaluator)}</span><span class="muted">${esc(versionLabel)}</span><span class="muted">唯讀</span>`;
+  const cond = getRealCondition(currentCase, currentCondIdx) || '';
+  el.innerHTML = `管理檢視 <span class="muted">${esc(adminInspect.evaluator)}</span><span class="muted">${esc(versionLabel)}</span>${cond ? `<span class="muted">${esc(cond)}</span>` : ''}<span class="muted">唯讀</span>`;
   el.classList.add('show');
 }
 
