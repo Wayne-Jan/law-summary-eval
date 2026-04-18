@@ -153,5 +153,165 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8038,
+  "fact_recall": 0.8168,
+  "fact_precision": 0.9886,
+  "fact_f1": 0.8945,
+  "quality_overall": 4.5571,
+  "checklist_pass_rate": 0.9243,
+  "citation_accuracy": 0.94,
+  "citation_support_score": 0.922,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9594,
+   "citation_fidelity": 0.94,
+   "fact_precision": 0.9886,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 25
+  },
+  "weighted_recall": 0.9364,
+  "missing_severity": {
+   "critical": 1,
+   "important": 7,
+   "minor": 8,
+   "details": [
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "『再將C移至留觀室』之事實經查全文僅有一次移至留觀室之描述，此為重複或不存在的事實，確認未提及",
+     "reason": "『再將C移至留觀室』之事實經查全文僅有一次移至留觀室之描述，此為重複或不存在的事實，確認未提及"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 僅提及「且於當晚8時許，林斯晨醫師已到場並向家屬解釋病情，建議作心導管手術」，未提及「已將病患緊急推至心導管室準備進行手術」之行動細節。與GT claim 68相比，此為重要辯護事實，確實遺漏。",
+     "reason": "section_02_defense.txt 僅提及「且於當晚8時許，林斯晨醫師已到場並向家屬解釋病情，建議作心導管手術」，未提及「已將病患緊急推至心導管室準備進行手術」之行動細節。與GT claim 68相比，此為重要辯護事實，確實遺漏。"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提及「但家屬表示要等兒子到場，而未簽署手術同意書」，但未提及「直至當日8時45分許，其子到場始行簽署」之具體時間細節。與GT claim 70相比，時間資訊缺失，但核心事實（兒子到場才簽署）已有提及，屬次要細節遺漏，標記為minor。",
+     "reason": "section_02_defense.txt 提及「但家屬表示要等兒子到場，而未簽署手術同意書」，但未提及「直至當日8時45分許，其子到場始行簽署」之具體時間細節。與GT claim 70相比，時間資訊缺失，但核心事實（兒子到場才簽署）已有提及，屬次要細節遺漏，標記為minor。"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "section_04_verdict.txt 僅提及『認定被告林文允成立刑法第276條第2項業務過失致死罪』，未明確陳述被告具有『從事醫療業務之人』之身分認定；雖 facts 段與 reasoning 段有提及被告為急診科醫師，但 verdict 段本身確實遺漏此項明確陳述",
+     "reason": "section_04_verdict.txt 僅提及『認定被告林文允成立刑法第276條第2項業務過失致死罪』，未明確陳述被告具有『從事醫療業務之人』之身分認定；雖 facts 段與 reasoning 段有提及被告為急診科醫師，但 verdict 段本身確實遺漏此項明確陳述"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section雖提及「12導程心電圖檢查」及「血液檢查結果」，但未完整描述GT要求的「抽血及胸部X光檢查」組合，「抽血」和「胸部X光」在reasoning section中確實缺失",
+     "reason": "reasoning section雖提及「12導程心電圖檢查」及「血液檢查結果」，但未完整描述GT要求的「抽血及胸部X光檢查」組合，「抽血」和「胸部X光」在reasoning section中確實缺失"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section有「血液檢查結果心肌酶呈現正常值」，但「13時21分許」這個具體時間點在reasoning section中為13時52分，時間不一致，確實缺失",
+     "reason": "reasoning section有「血液檢查結果心肌酶呈現正常值」，但「13時21分許」這個具體時間點在reasoning section中為13時52分，時間不一致，確實缺失"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section中未提及「病患C之妻有去急診室找被告甲，但被告甲不在」的事實，確實缺失",
+     "reason": "reasoning section中未提及「病患C之妻有去急診室找被告甲，但被告甲不在」的事實，確實缺失"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section僅零星提到「護士莊慶齡於16時20分許接手照護」，未完整說明「先後由證人丁、乙、戊三名護士接手照顧」的時間順序和交接脈絡",
+     "reason": "reasoning section僅零星提到「護士莊慶齡於16時20分許接手照護」，未完整說明「先後由證人丁、乙、戊三名護士接手照顧」的時間順序和交接脈絡"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section提到部分時間點，但未明確歸屬於「證人丁」的檢查，也未詳述「每次均有詳細記載血壓、心跳、呼吸、體溫等數據」的具體內容",
+     "reason": "reasoning section提到部分時間點，但未明確歸屬於「證人丁」的檢查，也未詳述「每次均有詳細記載血壓、心跳、呼吸、體溫等數據」的具體內容"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "reasoning section雖提及胸痛復發應即時檢查，但未明確引用醫審會「4-6小時後重複追蹤」的具體時間建議，此為關鍵的醫療過失認定標準，屬於重要遺漏",
+     "reason": "reasoning section雖提及胸痛復發應即時檢查，但未明確引用醫審會「4-6小時後重複追蹤」的具體時間建議，此為關鍵的醫療過失認定標準，屬於重要遺漏"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section提到王郁菁的紀錄「與其他護士之記載方式不同」作對比，但未詳述「證人丁及乙」的具體記載方式（TPR、BP欄內詳細數據等）",
+     "reason": "reasoning section提到王郁菁的紀錄「與其他護士之記載方式不同」作對比，但未詳述「證人丁及乙」的具體記載方式（TPR、BP欄內詳細數據等）"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section雖有相關脈絡，但未明確寫出「護士戊在病患C移至留觀室至19時30分許進行第二次12導程心電圖前，均無任何生命徵象檢查或觀察紀錄」這樣的強斷言",
+     "reason": "reasoning section雖有相關脈絡，但未明確寫出「護士戊在病患C移至留觀室至19時30分許進行第二次12導程心電圖前，均無任何生命徵象檢查或觀察紀錄」這樣的強斷言"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section提到「病人未告知」而非「病人沒有表示其他不舒服」原話，GT要求的具體證詞內容確實未完整引用",
+     "reason": "reasoning section提到「病人未告知」而非「病人沒有表示其他不舒服」原話，GT要求的具體證詞內容確實未完整引用"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section有「19時40分許...發生抽搐...被告始於19時45分通知心臟內科」，但未明確說明「經由護士戊之通知」，具體通知人未明確",
+     "reason": "reasoning section有「19時40分許...發生抽搐...被告始於19時45分通知心臟內科」，但未明確說明「經由護士戊之通知」，具體通知人未明確"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section提到「家屬遲未簽署手術同意書」，但這是法院駁斥的內容，未明確記載被告「關於簽署同意書遲延之辯解」原文",
+     "reason": "reasoning section提到「家屬遲未簽署手術同意書」，但這是法院駁斥的內容，未明確記載被告「關於簽署同意書遲延之辯解」原文"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section末段有語義接近的總結「綜上各項事證...其本件醫療作為確有過失」，但沒有「本件事證明確，被告犯行堪以認定」這句總結性事實認定原文",
+     "reason": "reasoning section末段有語義接近的總結「綜上各項事證...其本件醫療作為確有過失」，但沒有「本件事證明確，被告犯行堪以認定」這句總結性事實認定原文"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 131,
+   "pred_total": 88,
+   "matched": 99,
+   "partial": 16,
+   "missing": 16,
+   "hallucinated": 1
+  },
+  "compression_ratio": 0.7046,
+  "compression_afg_chars": 3217,
+  "compression_source_chars": 10891,
+  "gt_length_ratio": 0.5439,
+  "gt_length_afg_chars": 3217,
+  "gt_length_gt_chars": 5915,
+  "section_balance": 0.7333
+ }
 }

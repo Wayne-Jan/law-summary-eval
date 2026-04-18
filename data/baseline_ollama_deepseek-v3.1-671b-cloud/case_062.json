@@ -181,5 +181,585 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8417,
+  "fact_recall": 0.4258,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5973,
+  "quality_overall": 4.7571,
+  "checklist_pass_rate": 0.9891,
+  "citation_accuracy": 0.7333,
+  "citation_support_score": 0.8053,
+  "uncited_rate": 0.053,
+  "faithfulness_combined": {
+   "score": 0.8167,
+   "citation_fidelity": 0.6944,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.944,
+  "numerical_detail": {
+   "total_numerical": 18,
+   "correct": 17
+  },
+  "weighted_recall": 0.7032,
+  "missing_severity": {
+   "critical": 10,
+   "important": 42,
+   "minor": 24,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "血壓數值 117/61 毫米汞柱在各 section 中均未提及，僅有「生命徵象穩定」之概括描述",
+     "reason": "血壓數值 117/61 毫米汞柱在各 section 中均未提及，僅有「生命徵象穩定」之概括描述"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "心跳數值 84 次/分在各 section 中均未提及，僅有「生命徵象穩定」之概括描述",
+     "reason": "心跳數值 84 次/分在各 section 中均未提及，僅有「生命徵象穩定」之概括描述"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "呼吸數值 20 次/分在各 section 中均未提及，僅有「生命徵象穩定」之概括描述",
+     "reason": "呼吸數值 20 次/分在各 section 中均未提及，僅有「生命徵象穩定」之概括描述"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 診斷記載為「肌肉筋膜發炎」，而非「自律神經失調」，後者未出現於任何 section",
+     "reason": "section_facts.txt 診斷記載為「肌肉筋膜發炎」，而非「自律神經失調」，後者未出現於任何 section"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "病患年齡 78 歲及「引發急性心肌梗塞風險相對增加」之論述在各 section 均未提及",
+     "reason": "病患年齡 78 歲及「引發急性心肌梗塞風險相對增加」之論述在各 section 均未提及"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「與心臟病專科醫生會診之必要」之明確論述在 section_facts 未提及，雖 section_opinions 有類似建議但非「必要」之義務性表述",
+     "reason": "「與心臟病專科醫生會診之必要」之明確論述在 section_facts 未提及，雖 section_opinions 有類似建議但非「必要」之義務性表述"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 僅稱「合格醫師」，未提及「急診及內科專科醫師」之專科資格",
+     "reason": "section_facts.txt 僅稱「合格醫師」，未提及「急診及內科專科醫師」之專科資格"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「區域型醫院」及醫院設備資訊在 section_facts 未提及，僅 section_opinions 提及「區域醫院」一詞",
+     "reason": "「區域型醫院」及醫院設備資訊在 section_facts 未提及，僅 section_opinions 提及「區域醫院」一詞"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「心臟科醫師隨傳隨到、30 分鐘內到達」之會診機制在各 section 均未提及",
+     "reason": "「心臟科醫師隨傳隨到、30 分鐘內到達」之會診機制在各 section 均未提及"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「無不能注意之情事」之注意義務論述在 section_facts 未提及",
+     "reason": "「無不能注意之情事」之注意義務論述在 section_facts 未提及"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「未再為病患 C 進一步安排抽血檢測心肌酵素等血清指標」之具體疏失內容在 section_facts 未提及，係關鍵過失事實",
+     "reason": "「未再為病患 C 進一步安排抽血檢測心肌酵素等血清指標」之具體疏失內容在 section_facts 未提及，係關鍵過失事實"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「逕自排除急性心肌梗塞可能性」之重要過失認定在 section_facts 未提及，影響案情理解",
+     "reason": "「逕自排除急性心肌梗塞可能性」之重要過失認定在 section_facts 未提及，影響案情理解"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「未能及時照會心臟內外科專科醫師會診或轉診」之疏失內容在 section_facts 未提及，影響判決結論理解",
+     "reason": "「未能及時照會心臟內外科專科醫師會診或轉診」之疏失內容在 section_facts 未提及，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「外出工作後未返家」之因果關係描述在 section_facts 未提及，僅有「返家後」及「猝死」",
+     "reason": "「外出工作後未返家」之因果關係描述在 section_facts 未提及，僅有「返家後」及「猝死」"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 僅提到「症狀不是臨床上心肌梗塞的症狀」，未具體提及「胸痛劇烈、呼吸困難」等否定性症狀描述，維持missing",
+     "reason": "section_defense.txt 僅提到「症狀不是臨床上心肌梗塞的症狀」，未具體提及「胸痛劇烈、呼吸困難」等否定性症狀描述，維持missing"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個section均未找到「心肌梗塞之診斷須配合病患臨床病史及症狀始可判斷」之診斷標準說明，維持missing",
+     "reason": "五個section均未找到「心肌梗塞之診斷須配合病患臨床病史及症狀始可判斷」之診斷標準說明，維持missing"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section均未提及「無高血壓、心臟病、高血脂等高危險因子」之否定性危險因子描述，維持missing",
+     "reason": "五個section均未提及「無高血壓、心臟病、高血脂等高危險因子」之否定性危險因子描述，維持missing"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 僅泛稱「症狀不是臨床上心肌梗塞的症狀」，未具體列舉「無胸悶、胸痛、呼吸困難、移轉痛、冒冷汗」等臨床症狀，維持missing",
+     "reason": "section_defense.txt 僅泛稱「症狀不是臨床上心肌梗塞的症狀」，未具體列舉「無胸悶、胸痛、呼吸困難、移轉痛、冒冷汗」等臨床症狀，維持missing"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個section均未明確提及「被告在醫療上並無誤診之情事」之辯護結論，維持missing",
+     "reason": "五個section均未明確提及「被告在醫療上並無誤診之情事」之辯護結論，維持missing"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_opinions.txt 雖提及「陳舊性心肌梗塞」，但無「心電圖電腦判讀認為心肌梗塞屬合理，最多僅係陳舊性而非急性」之完整論述，維持missing",
+     "reason": "section_opinions.txt 雖提及「陳舊性心肌梗塞」，但無「心電圖電腦判讀認為心肌梗塞屬合理，最多僅係陳舊性而非急性」之完整論述，維持missing"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section均未提及「陳舊性心肌梗塞並無急診必須立即處理之情形」之醫療標準說明，維持missing",
+     "reason": "五個section均未提及「陳舊性心肌梗塞並無急診必須立即處理之情形」之醫療標準說明，維持missing"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section均未提及「按照急診醫療程序為病患診治處理」之程序性陳述，維持missing",
+     "reason": "五個section均未提及「按照急診醫療程序為病患診治處理」之程序性陳述，維持missing"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section均未提及「病患接受治療後胸骨處疼痛確實有得到緩解」之治療效果描述，維持missing",
+     "reason": "五個section均未提及「病患接受治療後胸骨處疼痛確實有得到緩解」之治療效果描述，維持missing"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section均未提及「囑咐門診追蹤後始離院」之離院細節，維持missing",
+     "reason": "五個section均未提及「囑咐門診追蹤後始離院」之離院細節，維持missing"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個section均未明確提及「絕無任何消極不作為之情事」之辯護主張，維持missing",
+     "reason": "五個section均未明確提及「絕無任何消極不作為之情事」之辯護主張，維持missing"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 雖提及「2天後死亡」及「死亡前24小時內發生心肌梗塞」，但未明確計算「心肌梗塞發作時間已在離院24小時之後」之確切時間關係，維持missing",
+     "reason": "section_defense.txt 雖提及「2天後死亡」及「死亡前24小時內發生心肌梗塞」，但未明確計算「心肌梗塞發作時間已在離院24小時之後」之確切時間關係，維持missing"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 提及「心肌梗塞是死亡前24小時內發生」，但未明確推論「5月21日作心電圖時尚未發生急性心肌梗塞」之時間點分析，維持missing",
+     "reason": "section_defense.txt 提及「心肌梗塞是死亡前24小時內發生」，但未明確推論「5月21日作心電圖時尚未發生急性心肌梗塞」之時間點分析，維持missing"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個section均未提及「責令被告診斷無症狀之病患有急性心肌梗塞未免過苛」之法律論點，維持missing",
+     "reason": "五個section均未提及「責令被告診斷無症狀之病患有急性心肌梗塞未免過苛」之法律論點，維持missing"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個section均未提及「縱使留院觀察6小時亦無診斷急性心肌梗塞之可能」之論述，維持missing",
+     "reason": "五個section均未提及「縱使留院觀察6小時亦無診斷急性心肌梗塞之可能」之論述，維持missing"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "專業醫學鑑定細節（V2-V5導極具體變化），遍查五個 section 原文均未見如此詳細的心電圖導極描述，僅 section_opinions 提及『心電圖表現應懷疑有陳舊性心肌梗塞』，屬專業鑑意見結論，確實遺漏",
+     "reason": "專業醫學鑑定細節（V2-V5導極具體變化），遍查五個 section 原文均未見如此詳細的心電圖導極描述，僅 section_opinions 提及『心電圖表現應懷疑有陳舊性心肌梗塞』，屬專業鑑意見結論，確實遺漏"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "『心電圖電腦判讀合理性』之具體判斷，遍查各 section 無此內容，section_facts 僅提及『出現疑似心肌梗塞之警示文字』而非電腦判讀之合理性評估",
+     "reason": "『心電圖電腦判讀合理性』之具體判斷，遍查各 section 無此內容，section_facts 僅提及『出現疑似心肌梗塞之警示文字』而非電腦判讀之合理性評估"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "ST波段特徵及鑑別診斷之專業細節，section_opinions 僅有法醫研究所簡要結論，無此詳細醫學分析",
+     "reason": "ST波段特徵及鑑別診斷之專業細節，section_opinions 僅有法醫研究所簡要結論，無此詳細醫學分析"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "R波變化與陳舊性心肌梗塞關聯之專業細節，遍查五個 section 均未提及",
+     "reason": "R波變化與陳舊性心肌梗塞關聯之專業細節，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "高尖T波鑑別診斷（正常變異、高血鉀、心肌缺血）之專業細節，遍查五個 section 均未提及",
+     "reason": "高尖T波鑑別診斷（正常變異、高血鉀、心肌缺血）之專業細節，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心電圖判讀原則（報告僅供參考須加臨床資訊），遍查五個 section 均未提及",
+     "reason": "心電圖判讀原則（報告僅供參考須加臨床資訊），遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "心電圖變化與心臟破裂死亡無因果關係之關鍵鑑定結論！遍查 section_opinions 及其他 section，均未見此因果關係否定之陳述。section_reasoning 反而認定『有相當因果關係』，此為鑑定意見中可能存在的有利於被告之關鍵主張，嚴重遺漏影響案情理解",
+     "reason": "心電圖變化與心臟破裂死亡無因果關係之關鍵鑑定結論！遍查 section_opinions 及其他 section，均未見此因果關係否定之陳述。section_reasoning 反而認定『有相當因果關係』，此為鑑定意見中可能存在的有利於被告之關鍵主張，嚴重遺漏影響案情理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "即使正確診斷治療亦無法確保心臟不會破裂之鑑定意見，遍查五個 section 均未提及，此為因果關係抗辯之關鍵論點，嚴重影響判決結論理解",
+     "reason": "即使正確診斷治療亦無法確保心臟不會破裂之鑑定意見，遍查五個 section 均未提及，此為因果關係抗辯之關鍵論點，嚴重影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "四肢導極 II、III、aVF 之 ST 波段變化細節，遍查五個 section 均未提及",
+     "reason": "四肢導極 II、III、aVF 之 ST 波段變化細節，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "ST段變化多種可能原因（心包膜炎、心肌炎、早期去極化）之完整鑑別診斷，遍查五個 section 均未提及",
+     "reason": "ST段變化多種可能原因（心包膜炎、心肌炎、早期去極化）之完整鑑別診斷，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病人無呼吸困難主訴之記載，section_opinions 及其他 section 確實未提及此細節",
+     "reason": "病人無呼吸困難主訴之記載，section_opinions 及其他 section 確實未提及此細節"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「急診醫師訓練及是否需照會心臟科」之專業標準說明，遍查五個 section 均未提及",
+     "reason": "「急診醫師訓練及是否需照會心臟科」之專業標準說明，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心肌梗塞診斷標準（三者中兩者有變化）之醫學準則，遍查五個 section 均未完整提及",
+     "reason": "心肌梗塞診斷標準（三者中兩者有變化）之醫學準則，遍查五個 section 均未完整提及"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "病理解剖發現（冠狀動脈硬化、左心室1公分破裂痕）之關鍵鑑定細節，遍查五個 section 均未提及『1公分』等具體數據，嚴重影響死因機轉理解",
+     "reason": "病理解剖發現（冠狀動脈硬化、左心室1公分破裂痕）之關鍵鑑定細節，遍查五個 section 均未提及『1公分』等具體數據，嚴重影響死因機轉理解"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "病理切片顯微鏡檢查發現（心肌壞死、嗜中性白血球浸潤）之關鍵鑑定細節，遍查五個 section 均未提及，嚴重影響死因判斷理解",
+     "reason": "病理切片顯微鏡檢查發現（心肌壞死、嗜中性白血球浸潤）之關鍵鑑定細節，遍查五個 section 均未提及，嚴重影響死因判斷理解"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急性心肌梗塞致病機轉（粥狀動脈硬塊破裂剝落、血栓形成）之醫學說明，遍查五個 section 均未提及",
+     "reason": "急性心肌梗塞致病機轉（粥狀動脈硬塊破裂剝落、血栓形成）之醫學說明，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急性心肌梗塞治療方式（血栓溶解藥物、抗血小板、抗凝血、心導管介入）之完整說明，遍查五個 section 均未完整提及",
+     "reason": "急性心肌梗塞治療方式（血栓溶解藥物、抗血小板、抗凝血、心導管介入）之完整說明，遍查五個 section 均未完整提及"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "陳舊性心肌梗塞治療方式（處理後遺症如心衰竭、心律不整）之說明，遍查五個 section 均未提及",
+     "reason": "陳舊性心肌梗塞治療方式（處理後遺症如心衰竭、心律不整）之說明，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心臟破裂在心肌梗塞病人中佔一定比例之統計資訊，遍查五個 section 均未提及",
+     "reason": "心臟破裂在心肌梗塞病人中佔一定比例之統計資訊，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "早期介入治療無法絕對避免心臟破裂危險之關鍵鑑定意見，遍查五個 section 均未提及，此為因果關係抗辯核心論點，嚴重影響判決結論理解",
+     "reason": "早期介入治療無法絕對避免心臟破裂危險之關鍵鑑定意見，遍查五個 section 均未提及，此為因果關係抗辯核心論點，嚴重影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「即使診斷治療亦無法預測預防心臟破裂」之關鍵鑑定意見，遍查五個 section 均未提及，此為因果關係抗辯核心論點，嚴重影響判決結論理解",
+     "reason": "「即使診斷治療亦無法預測預防心臟破裂」之關鍵鑑定意見，遍查五個 section 均未提及，此為因果關係抗辯核心論點，嚴重影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "頭部傷勢分析（表面傷不足以致死），遍查五個 section 均未提及",
+     "reason": "頭部傷勢分析（表面傷不足以致死），遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "呼吸道無吸入水分、肺部無水腫（非落水窒息）之鑑定細節，遍查五個 section 均未提及",
+     "reason": "呼吸道無吸入水分、肺部無水腫（非落水窒息）之鑑定細節，遍查五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "外力造成心臟破裂與心肌梗塞破裂之病理區分（白血球浸潤），遍查五個 section 均未提及，此為死因判斷關鍵鑑定細節",
+     "reason": "外力造成心臟破裂與心肌梗塞破裂之病理區分（白血球浸潤），遍查五個 section 均未提及，此為死因判斷關鍵鑑定細節"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "查無『背負農藥桶造成胸骨處疼痛』之主訴內容，影響對被告診斷依據之完整理解",
+     "reason": "查無『背負農藥桶造成胸骨處疼痛』之主訴內容，影響對被告診斷依據之完整理解"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及檢查項目但無『下午5時20分許』之具體時間標記，屬細節遺漏",
+     "reason": "section_01_facts.txt 提及檢查項目但無『下午5時20分許』之具體時間標記，屬細節遺漏"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及『消炎止痛藥』但未標示『Keto』藥名，屬藥名細節遺漏",
+     "reason": "section_01_facts.txt 提及『消炎止痛藥』但未標示『Keto』藥名，屬藥名細節遺漏"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及電腦判讀，但未明確指出『與被告診斷結果不符』之對比關係，影響對心電圖爭議之完整理解",
+     "reason": "section_03_opinions.txt 雖提及電腦判讀，但未明確指出『與被告診斷結果不符』之對比關係，影響對心電圖爭議之完整理解"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "查無『電腦判定有疑似心肌梗塞之情況，並非有誤』之醫審會認定，影響對鑑定意見之理解",
+     "reason": "查無『電腦判定有疑似心肌梗塞之情況，並非有誤』之醫審會認定，影響對鑑定意見之理解"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_02_defense.txt 雖提及症狀非心肌梗塞，但未見『電腦判讀過度敏感』之具體辯解，影響對被告辯護要點之理解",
+     "reason": "section_02_defense.txt 雖提及症狀非心肌梗塞，但未見『電腦判讀過度敏感』之具體辯解，影響對被告辯護要點之理解"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "查無『心電圖報告文字僅供參考』之醫審會意見，影響對鑑定標準之理解",
+     "reason": "查無『心電圖報告文字僅供參考』之醫審會意見，影響對鑑定標準之理解"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "查無法院『部分採納』被告心電圖辯解之明確表述，影響對法院評價之理解",
+     "reason": "查無法院『部分採納』被告心電圖辯解之明確表述，影響對法院評價之理解"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "查無證人乙之偵查證詞（心電圖判讀、竇性心律不整），影響對證據內容之完整理解",
+     "reason": "查無證人乙之偵查證詞（心電圖判讀、竇性心律不整），影響對證據內容之完整理解"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "查無『PRWP』術語解釋，屬專業術語細節遺漏",
+     "reason": "查無『PRWP』術語解釋，屬專業術語細節遺漏"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "查無『NSSTTC』術語解釋，屬專業術語細節遺漏",
+     "reason": "查無『NSSTTC』術語解釋，屬專業術語細節遺漏"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "查無『被告是否已善盡醫療上之注意義務，即非無疑』之過渡性疑問表述，影響對法院心證形成過程之理解",
+     "reason": "查無『被告是否已善盡醫療上之注意義務，即非無疑』之過渡性疑問表述，影響對法院心證形成過程之理解"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及『能注意』但未完整表述『並無不能注意之情事』，屬程序性要件描述遺漏",
+     "reason": "section_05_reasoning.txt 提及『能注意』但未完整表述『並無不能注意之情事』，屬程序性要件描述遺漏"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "查無心臟科醫師『on call』制度之具體說明，屬醫院制度背景細節遺漏",
+     "reason": "查無心臟科醫師『on call』制度之具體說明，屬醫院制度背景細節遺漏"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "查無『30分鐘內到達』之會診流程細節，屬制度細節遺漏",
+     "reason": "查無『30分鐘內到達』之會診流程細節，屬制度細節遺漏"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及『區域醫院』但未結合『醫療資源設備及配置醫師等客觀情況』說明被告注意能力，影響對過失要件之理解",
+     "reason": "section_03_opinions.txt 雖提及『區域醫院』但未結合『醫療資源設備及配置醫師等客觀情況』說明被告注意能力，影響對過失要件之理解"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 使用『應將病人留院觀察…竟捨此不為』之表述，未使用傳統『應注意、能注意卻疏未注意』套語，屬表述方式差異",
+     "reason": "section_05_reasoning.txt 使用『應將病人留院觀察…竟捨此不為』之表述，未使用傳統『應注意、能注意卻疏未注意』套語，屬表述方式差異"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及『竟捨此不為』但未使用『率爾排除』之表述，屬用語差異",
+     "reason": "section_05_reasoning.txt 提及『竟捨此不為』但未使用『率爾排除』之表述，屬用語差異"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "查無『未安排心臟科專科醫師會診』之獨立明確表述，影響對被告處置缺失之完整理解",
+     "reason": "查無『未安排心臟科專科醫師會診』之獨立明確表述，影響對被告處置缺失之完整理解"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "查無『未囑咐心臟科門診追蹤檢查』之獨立表述，影響對被告處置缺失之完整理解",
+     "reason": "查無『未囑咐心臟科門診追蹤檢查』之獨立表述，影響對被告處置缺失之完整理解"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 使用『難謂與一般急診室醫師之醫療常規無違』之表述，未使用『難謂無過責』之過渡性用語，影響對法院過失認定邏輯之理解",
+     "reason": "section_05_reasoning.txt 使用『難謂與一般急診室醫師之醫療常規無違』之表述，未使用『難謂無過責』之過渡性用語，影響對法院過失認定邏輯之理解"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 提及『降低死亡結果發生之可能』但未完整闡述『疼痛緩解≠病況穩定』之論證邏輯，影響對因果關係論證之理解",
+     "reason": "section_05_reasoning.txt 提及『降低死亡結果發生之可能』但未完整闡述『疼痛緩解≠病況穩定』之論證邏輯，影響對因果關係論證之理解"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 以『洵堪認定』作結，未使用『依法論科』之傳統結論性套語，屬結論表述方式差異",
+     "reason": "section_05_reasoning.txt 以『洵堪認定』作結，未使用『依法論科』之傳統結論性套語，屬結論表述方式差異"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 155,
+   "pred_total": 38,
+   "matched": 53,
+   "partial": 26,
+   "missing": 76,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9286,
+  "compression_afg_chars": 1087,
+  "compression_source_chars": 15218,
+  "gt_length_ratio": 0.1544,
+  "gt_length_afg_chars": 1087,
+  "gt_length_gt_chars": 7040,
+  "section_balance": 0.4419
+ }
 }
