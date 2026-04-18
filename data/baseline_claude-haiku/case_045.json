@@ -139,5 +139,151 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7603,
+  "fact_recall": 0.8495,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9186,
+  "quality_overall": 4.6571,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 0.5349,
+  "citation_support_score": 0.5837,
+  "uncited_rate": 0.011,
+  "faithfulness_combined": {
+   "score": 0.7174,
+   "citation_fidelity": 0.529,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 25,
+   "correct": 25
+  },
+  "weighted_recall": 0.9256,
+  "missing_severity": {
+   "critical": 1,
+   "important": 7,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 主要聚焦於被告乙（醫師丁○○○）自89年1月起的診療情節，關於被告甲（醫師甲○○）在88年11月1日及11月29日的兩次門診記載僅出現在section_reasoning「醫師甲○○無罪部分」，section_facts未提及此特定時間點的追蹤診療紀錄。雖section_reasoning有相關事實，但facts段落本身確實缺失此時間節點描述。",
+     "reason": "section_facts 主要聚焦於被告乙（醫師丁○○○）自89年1月起的診療情節，關於被告甲（醫師甲○○）在88年11月1日及11月29日的兩次門診記載僅出現在section_reasoning「醫師甲○○無罪部分」，section_facts未提及此特定時間點的追蹤診療紀錄。雖section_reasoning有相關事實，但facts段落本身確實缺失此時間節點描述。"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「並無不能注意之情事」屬法院法律判斷用語，僅出現在section_reasoning中針對醫師丁○○○過失責任的分析段落（「顯無不能注意之情事」），section_facts作為起訴/自訴事實陳述，僅記載自訴人指控內容，未包含法院對注意能力的有罪/無罪法律認定。",
+     "reason": "「並無不能注意之情事」屬法院法律判斷用語，僅出現在section_reasoning中針對醫師丁○○○過失責任的分析段落（「顯無不能注意之情事」），section_facts作為起訴/自訴事實陳述，僅記載自訴人指控內容，未包含法院對注意能力的有罪/無罪法律認定。"
+    },
+    {
+     "gt_claim_id": 1,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部五個 section，甲醫師辯稱病患告知『抹片檢查正常』之內容確實未見於摘要。摘要 defense section 僅記載丁○○○有此辯稱，甲醫師辯詞中無此內容。",
+     "reason": "經查全部五個 section，甲醫師辯稱病患告知『抹片檢查正常』之內容確實未見於摘要。摘要 defense section 僅記載丁○○○有此辯稱，甲醫師辯詞中無此內容。"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部五個 section，甲醫師明確主張『藥物治療無不當』及『死亡與己無涉』之辯稱確實未見於摘要。甲醫師辯詞僅提及『施以藥物治療止血...並未違背一般診療之方式』，未見『死亡與己無涉』之明確主張。",
+     "reason": "經查全部五個 section，甲醫師明確主張『藥物治療無不當』及『死亡與己無涉』之辯稱確實未見於摘要。甲醫師辯詞僅提及『施以藥物治療止血...並未違背一般診療之方式』，未見『死亡與己無涉』之明確主張。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經檢視全部 5 個 section 原文，均未發現「本案無法醫鑑定」之相關陳述，確認為確實遺漏。此為程序性事實陳述，非影響案件實體理解之關鍵要素",
+     "reason": "經檢視全部 5 個 section 原文，均未發現「本案無法醫鑑定」之相關陳述，確認為確實遺漏。此為程序性事實陳述，非影響案件實體理解之關鍵要素"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "本項目為訴訟程序事實（自訴人提起自訴），經查 section_01_facts.txt 有提及，但判決結果 section 確實未提到係自訴程序，屬程序性背景資訊，不影響判決結論理解",
+     "reason": "本項目為訴訟程序事實（自訴人提起自訴），經查 section_01_facts.txt 有提及，但判決結果 section 確實未提到係自訴程序，屬程序性背景資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "本項目為訴訟程序事實（承受訴訟），經查 section_01_facts.txt 有提及『患者乙○○死亡後，由其夫丙○○承受訴訟』，但判決結果 section 確實未載明，屬程序性資訊，不影響判決內容理解",
+     "reason": "本項目為訴訟程序事實（承受訴訟），經查 section_01_facts.txt 有提及『患者乙○○死亡後，由其夫丙○○承受訴訟』，但判決結果 section 確實未載明，屬程序性資訊，不影響判決內容理解"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Pred摘要未詳細描述「拒絕內診」字樣在病歷上「戳章下方殘餘侷促之空白處」填寫的具體位置細節。跨section檢查（facts、defense、opinions、verdict、reasoning）均未見此細節描述。雖為法院不採信鑑定報告的理由之一，但屬病歷形式的程序性細節，不影響判決結論理解。",
+     "reason": "Pred摘要未詳細描述「拒絕內診」字樣在病歷上「戳章下方殘餘侷促之空白處」填寫的具體位置細節。跨section檢查（facts、defense、opinions、verdict、reasoning）均未見此細節描述。雖為法院不採信鑑定報告的理由之一，但屬病歷形式的程序性細節，不影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Pred摘要未提及「字跡蓋過電腦列印紙」的細節。跨section檢查未見此細節。此為法院判斷病歷記載真偽的輔助性證據細節，雖有助於理解法院心證形成過程，但不屬影響判決結論之關鍵事實。",
+     "reason": "Pred摘要未提及「字跡蓋過電腦列印紙」的細節。跨section檢查未見此細節。此為法院判斷病歷記載真偽的輔助性證據細節，雖有助於理解法院心證形成過程，但不屬影響判決結論之關鍵事實。"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Pred摘要未收錄被告甲關於「寫完病歷後，打完電腦才由電腦列印出來，最後由護士貼上去的」之具體陳述。跨section檢查未見此細節。此屬被告辯護細節之一，pred已涵蓋法院「實難採信」之結論，具體陳述內容缺失不影響判決結論理解。",
+     "reason": "Pred摘要未收錄被告甲關於「寫完病歷後，打完電腦才由電腦列印出來，最後由護士貼上去的」之具體陳述。跨section檢查未見此細節。此屬被告辯護細節之一，pred已涵蓋法院「實難採信」之結論，具體陳述內容缺失不影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Pred摘要雖有「實難採信」之陳述，但未明確指出「拒絕內診之字跡應係被告甲事後為卸責而加載」之具體結論。此為法院對病歷真實性的核心認定，涉及被告甲是否偽造病歷之關鍵事實，影響無罪判決基礎（若病歷記載真實，可能影響因果關係判斷）。屬影響判決結論理解之致命缺失。",
+     "reason": "Pred摘要雖有「實難採信」之陳述，但未明確指出「拒絕內診之字跡應係被告甲事後為卸責而加載」之具體結論。此為法院對病歷真實性的核心認定，涉及被告甲是否偽造病歷之關鍵事實，影響無罪判決基礎（若病歷記載真實，可能影響因果關係判斷）。屬影響判決結論理解之致命缺失。"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Pred摘要雖提及被告甲○○無罪，但未明確說明自訴人對被告乙之具體指控內容（「未診斷出病患子宮頸癌」）及該指控「尚不成立」之結論。此為法院對被告乙（醫師甲○○）無罪認定的重要理由說明，影響案情完整理解。",
+     "reason": "Pred摘要雖提及被告甲○○無罪，但未明確說明自訴人對被告乙之具體指控內容（「未診斷出病患子宮頸癌」）及該指控「尚不成立」之結論。此為法院對被告乙（醫師甲○○）無罪認定的重要理由說明，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Pred摘要未明確說明法院「被告乙前開所辯，應堪採信」之結論。雖無罪判決已隱含採信辯詞之意，但法院具體表述「應堪採信」是對被告乙辯護正面的明確肯定，影響對法院心證形成過程的完整理解。",
+     "reason": "Pred摘要未明確說明法院「被告乙前開所辯，應堪採信」之結論。雖無罪判決已隱含採信辯詞之意，但法院具體表述「應堪採信」是對被告乙辯護正面的明確肯定，影響對法院心證形成過程的完整理解。"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Pred摘要未明確說明「自訴人所指事證，尚難作為認定被告乙涉有業務過失致死罪之論據」之邏輯推論。雖pred有無罪結論，但缺少法院認定自訴人舉證不足、事證不足以論罪之具體理由說明，影響對判決理由完整性的理解。",
+     "reason": "Pred摘要未明確說明「自訴人所指事證，尚難作為認定被告乙涉有業務過失致死罪之論據」之邏輯推論。雖pred有無罪結論，但缺少法院認定自訴人舉證不足、事證不足以論罪之具體理由說明，影響對判決理由完整性的理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 103,
+   "pred_total": 95,
+   "matched": 86,
+   "partial": 3,
+   "missing": 14,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.3207,
+  "compression_afg_chars": 3732,
+  "compression_source_chars": 5494,
+  "gt_length_ratio": 1.1337,
+  "gt_length_afg_chars": 3732,
+  "gt_length_gt_chars": 3292,
+  "section_balance": 0.6214
+ }
 }

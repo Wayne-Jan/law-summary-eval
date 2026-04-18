@@ -134,5 +134,116 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8217,
+  "fact_recall": 0.8944,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9443,
+  "quality_overall": 4.5429,
+  "checklist_pass_rate": 0.9348,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9523,
+  "uncited_rate": 0.014,
+  "faithfulness_combined": {
+   "score": 0.9916,
+   "citation_fidelity": 0.986,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.947,
+  "numerical_detail": {
+   "total_numerical": 19,
+   "correct": 18
+  },
+  "weighted_recall": 0.9222,
+  "missing_severity": {
+   "critical": 3,
+   "important": 6,
+   "minor": 0,
+   "details": [
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_05_reasoning.txt提及丙為醫師，但未明確記載乙、丙「亦為該院醫師」之身分宣告。雖可由院長及參與醫療行為推知，但summary未明確陳述此一事實",
+     "reason": "section_05_reasoning.txt提及丙為醫師，但未明確記載乙、丙「亦為該院醫師」之身分宣告。雖可由院長及參與醫療行為推知，但summary未明確陳述此一事實"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_05_reasoning.txt提及「自訴人主張被告乙、被告丙、被告丁有拒絕轉診之舉」，但未明確記載自訴人見其母病情惡化時欲轉院之事實。此為轉診爭議的背景事實，影響案情理解",
+     "reason": "section_05_reasoning.txt提及「自訴人主張被告乙、被告丙、被告丁有拒絕轉診之舉」，但未明確記載自訴人見其母病情惡化時欲轉院之事實。此為轉診爭議的背景事實，影響案情理解"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_02_defense.txt中被告三人否認拒絕轉診，section_05_reasoning.txt亦僅以「縱然屬實」帶過，未明確記載被告三人曾出面表示「設備完善、技術優良、病情已獲控制」等語。此為原告主張但未經法院認定的事實",
+     "reason": "section_02_defense.txt中被告三人否認拒絕轉診，section_05_reasoning.txt亦僅以「縱然屬實」帶過，未明確記載被告三人曾出面表示「設備完善、技術優良、病情已獲控制」等語。此為原告主張但未經法院認定的事實"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt明確記載「縱然屬實，亦非導致病患X死亡之原因，應無相關因果關係」，法院認定無因果關係，summary正確反映此裁量而非原告主張的「延誤救治」。維持missing正確",
+     "reason": "section_05_reasoning.txt明確記載「縱然屬實，亦非導致病患X死亡之原因，應無相關因果關係」，法院認定無因果關係，summary正確反映此裁量而非原告主張的「延誤救治」。維持missing正確"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_04_verdict.txt明確判決「被告乙、被告丙、被告丁均無罪」，section_05_reasoning.txt亦說明「不能證明犯罪，應為無罪判決」。此GT claim與判決結論相反，summary正確呈現判決結果，故維持missing",
+     "reason": "section_04_verdict.txt明確判決「被告乙、被告丙、被告丁均無罪」，section_05_reasoning.txt亦說明「不能證明犯罪，應為無罪判決」。此GT claim與判決結論相反，summary正確呈現判決結果，故維持missing"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 確實未提及被告乙、丙、丁否認拒絕轉診之事。雖然 section_reasoning.txt 提到『自訴人主張被告乙、被告丙、被告丁有拒絕轉診之舉，業經被告三人所否認』，惟此屬於判決理由的綜合論述，非 defense section 的內容。defense section 僅呈現被告甲之辯護主張，確實未涵蓋被告乙、丙、丁的辯護內容。",
+     "reason": "section_defense.txt 確實未提及被告乙、丙、丁否認拒絕轉診之事。雖然 section_reasoning.txt 提到『自訴人主張被告乙、被告丙、被告丁有拒絕轉診之舉，業經被告三人所否認』，惟此屬於判決理由的綜合論述，非 defense section 的內容。defense section 僅呈現被告甲之辯護主張，確實未涵蓋被告乙、丙、丁的辯護內容。"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions段確實未提及被告丙、丁參與急救醫療之事實，該內容僅出現在reasoning段。此事實影響對其他被告責任的理解，屬重要遺漏",
+     "reason": "opinions段確實未提及被告丙、丁參與急救醫療之事實，該內容僅出現在reasoning段。此事實影響對其他被告責任的理解，屬重要遺漏"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "opinions段確實未提及被告乙、丙、丁會診急救措施是否適當之判斷，該內容僅出現在reasoning段。此為鑑定意見核心結論之一，影響判決結果理解",
+     "reason": "opinions段確實未提及被告乙、丙、丁會診急救措施是否適當之判斷，該內容僅出現在reasoning段。此為鑑定意見核心結論之一，影響判決結果理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "被告甲的醫療業務人身份是適用『業務過失致死罪』的關鍵構成要件，影響罪名理解的完整性",
+     "reason": "被告甲的醫療業務人身份是適用『業務過失致死罪』的關鍵構成要件，影響罪名理解的完整性"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 90,
+   "pred_total": 69,
+   "matched": 80,
+   "partial": 1,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.4162,
+  "compression_afg_chars": 3559,
+  "compression_source_chars": 6096,
+  "gt_length_ratio": 0.9994,
+  "gt_length_afg_chars": 3559,
+  "gt_length_gt_chars": 3561,
+  "section_balance": 0.7368
+ }
 }

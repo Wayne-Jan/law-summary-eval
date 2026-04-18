@@ -145,5 +145,389 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.725,
+  "fact_recall": 0.649,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7871,
+  "quality_overall": 4.5,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9812,
+  "uncited_rate": 0.047,
+  "faithfulness_combined": {
+   "score": 0.9718,
+   "citation_fidelity": 0.953,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.958,
+  "numerical_detail": {
+   "total_numerical": 24,
+   "correct": 23
+  },
+  "weighted_recall": 0.8742,
+  "missing_severity": {
+   "critical": 0,
+   "important": 9,
+   "minor": 39,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未找到『醫師指示護理人員要不定時自口腔將血液抽吸』的明確描述。facts section 僅提及『插管後護理人員抽吸仍有出血』，未提及醫師指示抽吸；reasoning section 提及『護理師多次抽吸』，亦未提及醫師指示抽吸",
+     "reason": "遍查五個 section 原文，均未找到『醫師指示護理人員要不定時自口腔將血液抽吸』的明確描述。facts section 僅提及『插管後護理人員抽吸仍有出血』，未提及醫師指示抽吸；reasoning section 提及『護理師多次抽吸』，亦未提及醫師指示抽吸"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未找到『被告甲依當時之情形，並無不能注意之情事』的明確表述。雖 reasoning section 提及注意義務與過失認定，但無此特定法律條件陳述",
+     "reason": "遍查五個 section 原文，均未找到『被告甲依當時之情形，並無不能注意之情事』的明確表述。雖 reasoning section 提及注意義務與過失認定，但無此特定法律條件陳述"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section原文僅提及「依據醫院處方集」使用Dormicum，遍查全部5個section（facts、defense、opinions、verdict、reasoning）均未見劑量範圍（0.15-0.35mg/kg、0.05-0.3mg/kg）的具體數值記載，此為劑量爭議的核心證據，確認遺漏，severity為important",
+     "reason": "defense section原文僅提及「依據醫院處方集」使用Dormicum，遍查全部5個section（facts、defense、opinions、verdict、reasoning）均未見劑量範圍（0.15-0.35mg/kg、0.05-0.3mg/kg）的具體數值記載，此為劑量爭議的核心證據，確認遺漏，severity為important"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查全部5個section原文，均未見病患體重60公斤及劑量計算（21mg、18mg）的具體記載，此為劑量計算的關鍵數據，影響劑量是否超標的判斷，確認遺漏，severity為important",
+     "reason": "遍查全部5個section原文，均未見病患體重60公斤及劑量計算（21mg、18mg）的具體記載，此為劑量計算的關鍵數據，影響劑量是否超標的判斷，確認遺漏，severity為important"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section原文僅提及「劑量在安全範圍內」，遍查全部5個section均未見總用量25mg（5小瓶）及「緩慢一步步給藥」的具體描述，此為用藥方式的重要證據，確認遺漏，severity為important",
+     "reason": "defense section原文僅提及「劑量在安全範圍內」，遍查全部5個section均未見總用量25mg（5小瓶）及「緩慢一步步給藥」的具體描述，此為用藥方式的重要證據，確認遺漏，severity為important"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「遍查全部5個section原文，均未見「基本動作不會逐一記載在病歷」的明確陳述，此為被告對病歷記載方式的抗辯說明，屬程序性事實確認遺漏，severity為minor",
+     "reason": "「遍查全部5個section原文，均未見「基本動作不會逐一記載在病歷」的明確陳述，此為被告對病歷記載方式的抗辯說明，屬程序性事實確認遺漏，severity為minor"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查全部5個section原文，均未見「若於此時逕認該儀器為最安全準確之測量方式，似有不公」的明確論述。雖claim 55提及儀器未普及，但此處「似有不公」是被告對鑑定標準的抗辯主張，屬爭議性要點，確認遺漏，severity為important",
+     "reason": "遍查全部5個section原文，均未見「若於此時逕認該儀器為最安全準確之測量方式，似有不公」的明確論述。雖claim 55提及儀器未普及，但此處「似有不公」是被告對鑑定標準的抗辯主張，屬爭議性要點，確認遺漏，severity為important"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "屬藥理作用技術細節，section_facts 僅間接提及「壓抑自主性呼吸」，未明確陳述「鎮靜麻醉效果」，不影響過失認定",
+     "reason": "屬藥理作用技術細節，section_facts 僅間接提及「壓抑自主性呼吸」，未明確陳述「鎮靜麻醉效果」，不影響過失認定"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "屬鑑定技術細節，摘要已提及病歷未登載相關檢測，具體數值記載省略不影響案情理解",
+     "reason": "屬鑑定技術細節，摘要已提及病歷未登載相關檢測，具體數值記載省略不影響案情理解"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "RSI技術細節，屬專業醫療論述，摘要已涵蓋核心爭點（監測方式不當），省略不影響判決理解",
+     "reason": "RSI技術細節，屬專業醫療論述，摘要已涵蓋核心爭點（監測方式不當），省略不影響判決理解"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "屬監測設備技術細節，摘要已提及使用「易因躁動而掉落或不準確之肢端末血氧飽和度儀器」，完整設備名稱省略為次要資訊",
+     "reason": "屬監測設備技術細節，摘要已提及使用「易因躁動而掉落或不準確之肢端末血氧飽和度儀器」，完整設備名稱省略為次要資訊"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "屬氣管內管技術細節，摘要已涵蓋插管位置爭議，囊球功能說明為次要背景資訊",
+     "reason": "屬氣管內管技術細節，摘要已涵蓋插管位置爭議，囊球功能說明為次要背景資訊"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "與 gt_claim_id 71 相關技術細節，摘要已涵蓋「難以認定插管位置正確」之結論，具體機制說明為次要",
+     "reason": "與 gt_claim_id 71 相關技術細節，摘要已涵蓋「難以認定插管位置正確」之結論，具體機制說明為次要"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "屬病歷具體數值記載，摘要已提及「病歷未登載」之結論，具體數值（99%、95%）為次要技術細節",
+     "reason": "屬病歷具體數值記載，摘要已提及「病歷未登載」之結論，具體數值（99%、95%）為次要技術細節"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "section_verdict.txt 僅記載「業務過失致死罪」之判決結果，未明確陳述「被告為從事業務之人」之身分要件，雖可由罪名邏輯推導，但摘要未直接提及",
+     "reason": "section_verdict.txt 僅記載「業務過失致死罪」之判決結果，未明確陳述「被告為從事業務之人」之身分要件，雖可由罪名邏輯推導，但摘要未直接提及"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（藥物半衰期），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（藥物半衰期），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（Dormicum 劑量），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（Dormicum 劑量），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（過量處置），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（過量處置），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（Haloperidol 副作用），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（Haloperidol 副作用），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（Haloperidol 副作用），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（Haloperidol 副作用），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（Haloperidol 適應症），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（Haloperidol 適應症），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（病人狀態評估），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（病人狀態評估），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫院處方集劑量細節，屬背景性資訊，不影響判決結論理解",
+     "reason": "醫院處方集劑量細節，屬背景性資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（Dormicum 不良作用），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（Dormicum 不良作用），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規知識（Haldol 劑量禁忌），屬背景性醫學資訊，不影響判決結論理解",
+     "reason": "醫療常規知識（Haldol 劑量禁忌），屬背景性醫學資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "劑量計算細節，摘要已提及劑量違規，計算過程屬次要資訊",
+     "reason": "劑量計算細節，摘要已提及劑量違規，計算過程屬次要資訊"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療常規適用條件說明，屬背景性資訊，不影響判決結論理解",
+     "reason": "醫療常規適用條件說明，屬背景性資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患到院傷勢細節，摘要已涵蓋頭面部骨折等核心傷勢",
+     "reason": "病患到院傷勢細節，摘要已涵蓋頭面部骨折等核心傷勢"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "具體監測數值，摘要已提及血氧量偏低、心跳較快",
+     "reason": "具體監測數值，摘要已提及血氧量偏低、心跳較快"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "用藥後症狀細節，摘要已涵蓋核心事實",
+     "reason": "用藥後症狀細節，摘要已涵蓋核心事實"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "插管前呼吸功能狀態，屬細節性事實",
+     "reason": "插管前呼吸功能狀態，屬細節性事實"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "問題定義性敘述，非具體事實 claim，屬法院論理框架",
+     "reason": "問題定義性敘述，非具體事實 claim，屬法院論理框架"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告處置行為描述，摘要已涵蓋放置氣管內管",
+     "reason": "被告處置行為描述，摘要已涵蓋放置氣管內管"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性敘述，無具體 claim 內容",
+     "reason": "程序性敘述，無具體 claim 內容"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告辯稱內容，屬抗辯細節",
+     "reason": "被告辯稱內容，屬抗辯細節"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告插管後動作詳細描述，摘要已涵蓋應聽兩側呼吸",
+     "reason": "被告插管後動作詳細描述，摘要已涵蓋應聽兩側呼吸"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告對病歷記載的說明，屬抗辯細節",
+     "reason": "被告對病歷記載的說明，屬抗辯細節"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人證述細節，摘要已涵蓋插管後呼吸不穩定",
+     "reason": "證人證述細節，摘要已涵蓋插管後呼吸不穩定"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "護理紀錄佐證，屬支援性證據",
+     "reason": "護理紀錄佐證，屬支援性證據"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "插管後狀態，摘要已涵蓋呼吸功能",
+     "reason": "插管後狀態，摘要已涵蓋呼吸功能"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病歷記載爭議，屬細節性事實",
+     "reason": "病歷記載爭議，屬細節性事實"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病歷記載爭議，屬細節性事實",
+     "reason": "病歷記載爭議，屬細節性事實"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院對病歷記載的判斷，屬細節性事實",
+     "reason": "法院對病歷記載的判斷，屬細節性事實"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告辯稱內容，屬抗辯細節",
+     "reason": "被告辯稱內容，屬抗辯細節"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院否定肺臟本身傷害致吸入血液的認定，雖為鑑定意見援引，但有助於理解因果關係排除",
+     "reason": "法院否定肺臟本身傷害致吸入血液的認定，雖為鑑定意見援引，但有助於理解因果關係排除"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院否定多處骨折併發肺栓塞的認定，雖為鑑定意見援引，但有助於理解死因排除",
+     "reason": "法院否定多處骨折併發肺栓塞的認定，雖為鑑定意見援引，但有助於理解死因排除"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫院具備設備能力，摘要已涵蓋捨棄動脈血氧分析之疏失認定",
+     "reason": "醫院具備設備能力，摘要已涵蓋捨棄動脈血氧分析之疏失認定"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告判斷說明，屬抗辯理由",
+     "reason": "被告判斷說明，屬抗辯理由"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 151,
+   "pred_total": 64,
+   "matched": 93,
+   "partial": 10,
+   "missing": 48,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8665,
+  "compression_afg_chars": 1834,
+  "compression_source_chars": 13741,
+  "gt_length_ratio": 0.2571,
+  "gt_length_afg_chars": 1834,
+  "gt_length_gt_chars": 7133,
+  "section_balance": 0.5485
+ }
 }

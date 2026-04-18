@@ -151,5 +151,515 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7111,
+  "fact_recall": 0.5753,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7304,
+  "quality_overall": 4.5714,
+  "checklist_pass_rate": 0.9645,
+  "citation_accuracy": 0.8723,
+  "citation_support_score": 0.875,
+  "uncited_rate": 0.012,
+  "faithfulness_combined": {
+   "score": 0.9171,
+   "citation_fidelity": 0.8618,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 33,
+   "correct": 33
+  },
+  "weighted_recall": 0.8032,
+  "missing_severity": {
+   "critical": 1,
+   "important": 30,
+   "minor": 35,
+   "details": [
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "核對section_defense、section_opinions、section_reasoning，均未明確提及「醫審會鑑定結果認為91年8月12日至15日間使用Gentamycin之行為並無不當」。opinions段雖有醫審會鑑定，但僅提及8月15日後應停藥，未明確肯定8/12-8/15使用之適當性。此為辯護關鍵論點，屬重要遺漏。",
+     "reason": "核對section_defense、section_opinions、section_reasoning，均未明確提及「醫審會鑑定結果認為91年8月12日至15日間使用Gentamycin之行為並無不當」。opinions段雖有醫審會鑑定，但僅提及8月15日後應停藥，未明確肯定8/12-8/15使用之適當性。此為辯護關鍵論點，屬重要遺漏。"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "各section雖提及91年8月15日血中肌酸酐值為10.1mg/dl，但未明確聲稱「本即需洗腎」。此為辯護方重要的臨床前提假設，用以主張洗腎結果不可避免。確認遺漏。",
+     "reason": "各section雖提及91年8月15日血中肌酸酐值為10.1mg/dl，但未明確聲稱「本即需洗腎」。此為辯護方重要的臨床前提假設，用以主張洗腎結果不可避免。確認遺漏。"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense雖提及「並無因果關係」，但未具體限縮「91年8月15日後繼續使用Gentamycin與洗腎結果無相當因果關係」此特定時段因果論證。GT_reasoning雖記載辯護人此主張（claim 139-140），但生成摘要未涵蓋。確認遺漏。",
+     "reason": "section_defense雖提及「並無因果關係」，但未具體限縮「91年8月15日後繼續使用Gentamycin與洗腎結果無相當因果關係」此特定時段因果論證。GT_reasoning雖記載辯護人此主張（claim 139-140），但生成摘要未涵蓋。確認遺漏。"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性事實（檢察官函請鑑定），不影響案情實質理解",
+     "reason": "程序性事實（檢察官函請鑑定），不影響案情實質理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識（慢性腎衰竭病理特徵），屬鑑定參考資料",
+     "reason": "醫學背景知識（慢性腎衰竭病理特徵），屬鑑定參考資料"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識（自然病程），屬鑑定參考資料",
+     "reason": "醫學背景知識（自然病程），屬鑑定參考資料"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "細節醫學描述（惡化速度測量方法），非核心事實",
+     "reason": "細節醫學描述（惡化速度測量方法），非核心事實"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "歷史數據（85年數據），reasoning section 雖有提及但 opinions section 確實未記載",
+     "reason": "歷史數據（85年數據），reasoning section 雖有提及但 opinions section 確實未記載"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢查細節（腎臟超音波結果），未見於 opinions section",
+     "reason": "檢查細節（腎臟超音波結果），未見於 opinions section"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學通用標準（洗腎適應症），屬背景知識",
+     "reason": "醫學通用標準（洗腎適應症），屬背景知識"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識（氨基糖甘類藥物風險），屬鑑定參考資料",
+     "reason": "醫學背景知識（氨基糖甘類藥物風險），屬鑑定參考資料"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "最終肌酸酐值雖見於 facts/verdict/reasoning，但 opinions section 鑑定意見確實未明確記載此關鍵數據",
+     "reason": "最終肌酸酐值雖見於 facts/verdict/reasoning，但 opinions section 鑑定意見確實未明確記載此關鍵數據"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性事實（第二次鑑定），不影響案情實質理解",
+     "reason": "程序性事實（第二次鑑定），不影響案情實質理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "提早75天洗腎之具體天數未見於任何 section，影響實質損害判斷",
+     "reason": "提早75天洗腎之具體天數未見於任何 section，影響實質損害判斷"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "過於細節之生命徵象數據",
+     "reason": "過於細節之生命徵象數據"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "追蹤數據細節（白血球變化）",
+     "reason": "追蹤數據細節（白血球變化）"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識（細菌類型）",
+     "reason": "醫學背景知識（細菌類型）"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "初始用藥適當性之評價未見於 opinions section，影響過失認定之完整性",
+     "reason": "初始用藥適當性之評價未見於 opinions section，影響過失認定之完整性"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "facts section 雖提及檢察官起訴，但未明確「依據醫審會鑑定」之因果關係",
+     "reason": "facts section 雖提及檢察官起訴，但未明確「依據醫審會鑑定」之因果關係"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性事實（第三次鑑定聲請背景）",
+     "reason": "程序性事實（第三次鑑定聲請背景）"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定事項清單細節（第三次鑑定具體事項）",
+     "reason": "鑑定事項清單細節（第三次鑑定具體事項）"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "劑量計算公式細節",
+     "reason": "劑量計算公式細節"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腎功能惡化三大主因之完整列舉（原來嚴重性腎衰竭、細菌感染、使用 Gentamycin），opinions 僅提及 Gentamycin，影響因果關係判定之完整性",
+     "reason": "腎功能惡化三大主因之完整列舉（原來嚴重性腎衰竭、細菌感染、使用 Gentamycin），opinions 僅提及 Gentamycin，影響因果關係判定之完整性"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及Gentamycin腎毒性可恢復之醫學見解，屬影響案情理解之醫學背景資訊",
+     "reason": "section_05_reasoning.txt 未提及Gentamycin腎毒性可恢復之醫學見解，屬影響案情理解之醫學背景資訊"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及被告偵查中自承之治療方式說明，屬被告辯護要點",
+     "reason": "section_05_reasoning.txt 未提及被告偵查中自承之治療方式說明，屬被告辯護要點"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及細菌培養前後抗生素使用策略之詳細說明，屬程序性醫療背景",
+     "reason": "section_05_reasoning.txt 未提及細菌培養前後抗生素使用策略之詳細說明，屬程序性醫療背景"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及皮膚膿瘍多為多重細菌混合感染之醫學見解，屬背景性事實",
+     "reason": "section_05_reasoning.txt 未提及皮膚膿瘍多為多重細菌混合感染之醫學見解，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及25%統計數據，屬細節性醫學資訊",
+     "reason": "section_05_reasoning.txt 未提及25%統計數據，屬細節性醫學資訊"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及約4成細菌培養無法養出細菌之統計，屬背景性醫學資訊",
+     "reason": "section_05_reasoning.txt 未提及約4成細菌培養無法養出細菌之統計，屬背景性醫學資訊"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及細菌培養失敗之影響因子，屬輔助性醫學說明",
+     "reason": "section_05_reasoning.txt 未提及細菌培養失敗之影響因子，屬輔助性醫學說明"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及Cefazolin作用機轉，屬背景性藥理資訊",
+     "reason": "section_05_reasoning.txt 未提及Cefazolin作用機轉，屬背景性藥理資訊"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及Gentamycin作用機轉，屬背景性藥理資訊",
+     "reason": "section_05_reasoning.txt 未提及Gentamycin作用機轉，屬背景性藥理資訊"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及兩類抗生素合併使用之療效比較研究，屬影響醫療決策合理性理解之醫學見解",
+     "reason": "section_05_reasoning.txt 未提及兩類抗生素合併使用之療效比較研究，屬影響醫療決策合理性理解之醫學見解"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及Gentamycin腎毒性消除時間，屬影響因果關係判斷之醫學背景",
+     "reason": "section_05_reasoning.txt 未提及Gentamycin腎毒性消除時間，屬影響因果關係判斷之醫學背景"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及慢性腎衰竭患者腎功能恢復機率降低之醫學見解，屬影響傷害結果理解之背景資訊",
+     "reason": "section_05_reasoning.txt 未提及慢性腎衰竭患者腎功能恢復機率降低之醫學見解，屬影響傷害結果理解之背景資訊"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及Ccr值9.64cc/分鐘及嚴重慢性腎衰竭患者之具體預後風險，屬影響案情嚴重性理解之關鍵醫學資訊",
+     "reason": "section_05_reasoning.txt 未提及Ccr值9.64cc/分鐘及嚴重慢性腎衰竭患者之具體預後風險，屬影響案情嚴重性理解之關鍵醫學資訊"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 雖有「被告所辯尚難憑採」等結論性文字，但未使用「被告上開所辯即無足採」精確法律用語",
+     "reason": "section_05_reasoning.txt 雖有「被告所辯尚難憑採」等結論性文字，但未使用「被告上開所辯即無足採」精確法律用語"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確記載被告此項具體抗辯原文",
+     "reason": "section_05_reasoning.txt 未明確記載被告此項具體抗辯原文"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及病患未向護士提到曾到其他醫院就診之細節，屬細節性事實",
+     "reason": "section_05_reasoning.txt 未提及病患未向護士提到曾到其他醫院就診之細節，屬細節性事實"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及具體請假單日期，屬細節性證據資訊",
+     "reason": "section_05_reasoning.txt 未提及具體請假單日期，屬細節性證據資訊"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及8月16日護理紀錄具體內容，屬細節性證據",
+     "reason": "section_05_reasoning.txt 未提及8月16日護理紀錄具體內容，屬細節性證據"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及8月18日護理紀錄內容，屬細節性證據",
+     "reason": "section_05_reasoning.txt 未提及8月18日護理紀錄內容，屬細節性證據"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及紅疹發燒但未引用護理紀錄原文，屬細節性證據",
+     "reason": "section_05_reasoning.txt 提及紅疹發燒但未引用護理紀錄原文，屬細節性證據"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及8月17日請假事由為「洗頭髮」，屬細節性資訊",
+     "reason": "section_05_reasoning.txt 未提及8月17日請假事由為「洗頭髮」，屬細節性資訊"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及8月18日請假事由為「回家」，屬細節性資訊",
+     "reason": "section_05_reasoning.txt 未提及8月18日請假事由為「回家」，屬細節性資訊"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖有「是否確曾至其他診所求診有疑」之意，但未完整使用GT claim之文言",
+     "reason": "section_05_reasoning.txt 雖有「是否確曾至其他診所求診有疑」之意，但未完整使用GT claim之文言"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未引用證人甲關於8月20日上午證詞之完整內容，屬影響證詞可信度判斷之關鍵證據細節",
+     "reason": "section_05_reasoning.txt 未引用證人甲關於8月20日上午證詞之完整內容，屬影響證詞可信度判斷之關鍵證據細節"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未引用證人甲關於病患回院後狀況之完整證詞，屬重要證人證詞細節",
+     "reason": "section_05_reasoning.txt 未引用證人甲關於病患回院後狀況之完整證詞，屬重要證人證詞細節"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及健保卡細節，屬細節性證據",
+     "reason": "section_05_reasoning.txt 未提及健保卡細節，屬細節性證據"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及被告關於健保卡保管之陳述，屬與證人甲證詞對照之重要被告陳述",
+     "reason": "section_05_reasoning.txt 未提及被告關於健保卡保管之陳述，屬與證人甲證詞對照之重要被告陳述"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未分析證人證詞與被告陳述之矛盾，屬影響證據評價之重要法律推理",
+     "reason": "section_05_reasoning.txt 未分析證人證詞與被告陳述之矛盾，屬影響證據評價之重要法律推理"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及證人甲審理中關於出院手續之證詞，屬重要證人證詞",
+     "reason": "section_05_reasoning.txt 未提及證人甲審理中關於出院手續之證詞，屬重要證人證詞"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未分析證人甲前後證詞之矛盾，屬影響證人可信度之關鍵法律推理",
+     "reason": "section_05_reasoning.txt 未分析證人甲前後證詞之矛盾，屬影響證人可信度之關鍵法律推理"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未對證人甲證詞可信度提出「是否可採，即非無疑」之質疑，屬證據評價結論",
+     "reason": "section_05_reasoning.txt 未對證人甲證詞可信度提出「是否可採，即非無疑」之質疑，屬證據評價結論"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及證人丙接手照顧之時間，屬細節性證詞背景",
+     "reason": "section_05_reasoning.txt 未提及證人丙接手照顧之時間，屬細節性證詞背景"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及證人丙證詞來源為傳聞，屬影響證據能力之關鍵事實",
+     "reason": "section_05_reasoning.txt 未提及證人丙證詞來源為傳聞，屬影響證據能力之關鍵事實"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確判斷「證人丙之證述難採為有利於被告之認定」，屬證據評價結論",
+     "reason": "section_05_reasoning.txt 未明確判斷「證人丙之證述難採為有利於被告之認定」，屬證據評價結論"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及被告關於自費打針、密醫等詳細抗辯，屬被告抗辯要點",
+     "reason": "section_05_reasoning.txt 未提及被告關於自費打針、密醫等詳細抗辯，屬被告抗辯要點"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖有「並無具體實據」之意，但未完整評論被告主張為「臆測之詞」，屬法院對抗辯之評價",
+     "reason": "section_05_reasoning.txt 雖有「並無具體實據」之意，但未完整評論被告主張為「臆測之詞」，屬法院對抗辯之評價"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 有「被告所辯尚難憑採」，與「被告所辯尚難憑採」意同",
+     "reason": "section_05_reasoning.txt 有「被告所辯尚難憑採」，與「被告所辯尚難憑採」意同"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及「洗腎結果無法避免」之抗辯，屬辯護人之重要因果關係抗辯",
+     "reason": "section_05_reasoning.txt 未提及「洗腎結果無法避免」之抗辯，屬辯護人之重要因果關係抗辯"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及辯護人關於8月15日後使用Gentamycin與洗腦結果無因果關係之主張，屬重要法律抗辯",
+     "reason": "section_05_reasoning.txt 未提及辯護人關於8月15日後使用Gentamycin與洗腦結果無因果關係之主張，屬重要法律抗辯"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 未明確區分「導致」與「加速」洗腎結果之法律區別，此為影響判決法律適用理解之關鍵區分",
+     "reason": "section_05_reasoning.txt 未明確區分「導致」與「加速」洗腎結果之法律區別，此為影響判決法律適用理解之關鍵區分"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "掃描全部5個section原文，未發現證人丙關於臨時醫囑單填寫人之具體證詞內容",
+     "reason": "掃描全部5個section原文，未發現證人丙關於臨時醫囑單填寫人之具體證詞內容"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "掃描全部5個section原文，未發現被告於偵查中自承「8月16日至20日是醫師L依據伊的處方未加修改繼續使用」之內容",
+     "reason": "掃描全部5個section原文，未發現被告於偵查中自承「8月16日至20日是醫師L依據伊的處方未加修改繼續使用」之內容"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "掃描全部5個section原文，未發現被告於本院95年2月17日審判庭自承8月16日出國之具體事實細節",
+     "reason": "掃描全部5個section原文，未發現被告於本院95年2月17日審判庭自承8月16日出國之具體事實細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 166,
+   "pred_total": 84,
+   "matched": 91,
+   "partial": 9,
+   "missing": 66,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7853,
+  "compression_afg_chars": 2968,
+  "compression_source_chars": 13825,
+  "gt_length_ratio": 0.3598,
+  "gt_length_afg_chars": 2968,
+  "gt_length_gt_chars": 8249,
+  "section_balance": 0.4342
+ }
 }
