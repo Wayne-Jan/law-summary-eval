@@ -2143,7 +2143,8 @@ function describePhaseStatus(versionData) {
   const parts = [];
   const scores = versionData.scores || {};
   const scoreCount = Object.keys(scores).length;
-  if (scoreCount >= 9) parts.push('量表完成');
+  if (versionData._viewOnly) parts.push('摘要檢視完成');
+  else if (scoreCount >= 9) parts.push('量表完成');
   else if (scoreCount > 0) parts.push(`量表 ${scoreCount}/9`);
   if (versionData.sections && Object.values(versionData.sections).some(s => (s || '').trim())) parts.push('有評語');
   if (versionData._complete) parts.push('已完成');
@@ -2929,6 +2930,7 @@ function areAllCondsComplete(caseName) {
 }
 
 function isPhase3Complete(caseName) {
+  if (!SHOW_PHASE3_UI) return areAllCondsComplete(caseName);
   const ev = getEvaluator();
   const key = getPhase3StorageKey(ev, caseName);
   const d = loadStoredJSON(key);
@@ -5911,13 +5913,17 @@ function getEvaluatorCondStatus(evaluator, caseName, condIdx) {
   let p1partial = false, tlpartial = false;
   try {
     const p1 = JSON.parse(localStorage.getItem(prefix + '1'));
-    p1done = !!(p1 && p1.scores && Object.keys(p1.scores).length >= 9);
-    p1partial = !!(p1 && p1.scores && Object.keys(p1.scores).length > 0);
+    p1done = !!(p1 && (p1._viewOnly || (p1.scores && Object.keys(p1.scores).length >= 9)));
+    p1partial = !!(p1 && !p1done && p1.scores && Object.keys(p1.scores).length > 0);
   } catch {}
   try {
     const tl = JSON.parse(localStorage.getItem(prefix + 'TL'));
     tldone = !!(tl && tl._complete);
-    tlpartial = !!(tl && ((tl.scores && Object.keys(tl.scores).length > 0) || (tl.comment || '').trim()));
+    tlpartial = !!(tl && !tldone && (
+      (tl.scores && Object.keys(tl.scores).length > 0)
+      || (tl.comment || '').trim()
+      || (tl.comments && Object.keys(tl.comments).length > 0)
+    ));
   } catch {}
   if (p1done && tldone) return 'done';
   if (p1partial || tlpartial || p1done || tldone) return 'partial';
@@ -5925,14 +5931,15 @@ function getEvaluatorCondStatus(evaluator, caseName, condIdx) {
 }
 
 function getEvaluatorCaseStatus(evaluator, caseName) {
-  const p3Key = getPhase3StorageKey(evaluator, caseName);
-  try {
-    const p3 = JSON.parse(localStorage.getItem(p3Key));
-    if (p3 && p3._complete) return 'complete';
-  } catch {}
+  let allDone = true;
+  let hasAny = false;
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
-    if (getEvaluatorCondStatus(evaluator, caseName, i) !== 'empty') return 'partial';
+    const status = getEvaluatorCondStatus(evaluator, caseName, i);
+    if (status !== 'done') allDone = false;
+    if (status !== 'empty') hasAny = true;
   }
+  if (allDone) return 'complete';
+  if (hasAny) return 'partial';
   return 'empty';
 }
 
@@ -5966,7 +5973,7 @@ function getDefaultPhaseForEvaluatorCondition(evaluator, caseName, condIdx) {
   const prefix = getPhaseStorageKey(evaluator, caseName, cond, '');
   const p1 = loadLocalJSON(prefix + '1');
   const tl = loadLocalJSON(prefix + 'TL');
-  if (!(p1 && p1.scores && Object.keys(p1.scores).length >= 9)) return 1;
+  if (!(p1 && (p1._viewOnly || (p1.scores && Object.keys(p1.scores).length >= 9)))) return 1;
   if (!(tl && tl._complete)) return 'tl';
   return 1;
 }
