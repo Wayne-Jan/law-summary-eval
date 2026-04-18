@@ -2003,6 +2003,7 @@ let cloudStatusTimer = null;
 let adminUserIndexCache = new Map();
 const adminBackupDetailsCache = new Map();
 const backupSnapshotPrevMap = {};
+let adminLatestRecordsCache = new Map();
 
 function setLocalSessionProfile(name, role) {
   localStorage.setItem('eval_v2_auth_user', name);
@@ -5483,6 +5484,56 @@ function loadStoredJSON(key) {
   return loadLocalJSON(key);
 }
 
+function isAdminPanelCloudMode() {
+  return getSessionRole() === 'admin' && !isAdminInspectMode();
+}
+
+function loadAdminEvaluatorJSON(evaluator, key) {
+  if (isAdminInspectMode()) {
+    const value = adminInspect.records.get(key);
+    return value == null ? null : JSON.parse(JSON.stringify(value));
+  }
+  if (isAdminPanelCloudMode()) {
+    const records = adminLatestRecordsCache.get(evaluator);
+    if (!records) return null;
+    const value = records.get(key);
+    return value == null ? null : JSON.parse(JSON.stringify(value));
+  }
+  return loadLocalJSON(key);
+}
+
+function getAdminEvaluatorKeys(evaluator) {
+  if (isAdminInspectMode()) {
+    return Array.from(adminInspect.records.keys());
+  }
+  if (isAdminPanelCloudMode()) {
+    const records = adminLatestRecordsCache.get(evaluator);
+    return records ? Array.from(records.keys()) : [];
+  }
+  const keys = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (isCurrentEvalStorageKeyForEvaluator(key, evaluator)) keys.push(key);
+  }
+  return keys;
+}
+
+async function refreshAdminLatestRecordsCache(evaluators) {
+  adminLatestRecordsCache = new Map();
+  const rows = await Promise.all(evaluators.map(async (evaluator) => {
+    const uid = await lookupEvaluatorCloudUidByName(evaluator);
+    const records = new Map();
+    if (!uid) return [evaluator, records];
+    const snapshot = await db.collection('evals').doc(uid).collection('records').get();
+    snapshot.forEach(doc => {
+      const row = doc.data() || {};
+      if (row.key) records.set(row.key, row.data);
+    });
+    return [evaluator, records];
+  }));
+  rows.forEach(([evaluator, records]) => adminLatestRecordsCache.set(evaluator, records));
+}
+
 async function initAdminInspectFromURL() {
   if (getSessionRole() !== 'admin') {
     adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
@@ -5867,6 +5918,7 @@ async function renderAdminContent() {
 
   let backups = [];
   try {
+    await refreshAdminLatestRecordsCache(evaluators);
     backups = await fetchBackupSnapshots(30);
     // Build prev-snapshot map for diff
     for (let i = 0; i < backups.length; i++) {
@@ -5898,7 +5950,7 @@ async function renderAdminContent() {
 function getEvCondOrderFor(evaluator, caseName) {
   const key = getCondOrderStorageKey(evaluator, caseName);
   try {
-    const order = getValidCondOrderFromRecord(JSON.parse(localStorage.getItem(key)));
+    const order = getValidCondOrderFromRecord(loadAdminEvaluatorJSON(evaluator, key));
     if (order) return order;
   } catch {}
   return EVAL_CONDITIONS.slice();
@@ -5912,12 +5964,12 @@ function getEvaluatorCondStatus(evaluator, caseName, condIdx) {
   let p1done = false, tldone = false;
   let p1partial = false, tlpartial = false;
   try {
-    const p1 = JSON.parse(localStorage.getItem(prefix + '1'));
+    const p1 = loadAdminEvaluatorJSON(evaluator, prefix + '1');
     p1done = !!(p1 && (p1._viewOnly || (p1.scores && Object.keys(p1.scores).length >= 9)));
     p1partial = !!(p1 && !p1done && p1.scores && Object.keys(p1.scores).length > 0);
   } catch {}
   try {
-    const tl = JSON.parse(localStorage.getItem(prefix + 'TL'));
+    const tl = loadAdminEvaluatorJSON(evaluator, prefix + 'TL');
     tldone = !!(tl && tl._complete);
     tlpartial = !!(tl && !tldone && (
       (tl.scores && Object.keys(tl.scores).length > 0)
@@ -5946,12 +5998,7 @@ function getEvaluatorCaseStatus(evaluator, caseName) {
 function getEvaluatorCaseKeys(evaluator, caseName) {
   const prefix = `${getEvalDataPrefix(evaluator)}${caseName}_`;
   const condOrderKey = getCondOrderStorageKey(evaluator, caseName);
-  const keys = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key === condOrderKey || key.startsWith(prefix)) keys.push(key);
-  }
-  return keys;
+  return getAdminEvaluatorKeys(evaluator).filter(key => key === condOrderKey || key.startsWith(prefix));
 }
 
 function getEvaluatorVersionKeys(evaluator, caseName, condIdx) {
@@ -5960,10 +6007,10 @@ function getEvaluatorVersionKeys(evaluator, caseName, condIdx) {
   const keys = [];
   ['1', 'FB', 'TL'].forEach(phase => {
     const key = getPhaseStorageKey(evaluator, caseName, cond, phase);
-    if (localStorage.getItem(key)) keys.push(key);
+    if (loadAdminEvaluatorJSON(evaluator, key)) keys.push(key);
   });
   const phase3Key = getPhase3StorageKey(evaluator, caseName);
-  if (localStorage.getItem(phase3Key)) keys.push(phase3Key);
+  if (loadAdminEvaluatorJSON(evaluator, phase3Key)) keys.push(phase3Key);
   return keys;
 }
 
@@ -5971,8 +6018,8 @@ function getDefaultPhaseForEvaluatorCondition(evaluator, caseName, condIdx) {
   const condOrder = getEvCondOrderFor(evaluator, caseName);
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
   const prefix = getPhaseStorageKey(evaluator, caseName, cond, '');
-  const p1 = loadLocalJSON(prefix + '1');
-  const tl = loadLocalJSON(prefix + 'TL');
+  const p1 = loadAdminEvaluatorJSON(evaluator, prefix + '1');
+  const tl = loadAdminEvaluatorJSON(evaluator, prefix + 'TL');
   if (!(p1 && (p1._viewOnly || (p1.scores && Object.keys(p1.scores).length >= 9)))) return 1;
   if (!(tl && tl._complete)) return 'tl';
   return 1;
