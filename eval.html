@@ -999,21 +999,34 @@
     /* ─── LOGIN OVERLAY ─── */
     .login-overlay {
       position: fixed; inset: 0; z-index: 9999;
-      background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(49,46,129,0.95));
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.90), rgba(247,244,240,0.86)),
+        linear-gradient(180deg, rgba(255,255,255,0.68), rgba(250,248,245,0.82)),
+        url('https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center center;
       display: flex; align-items: center; justify-content: center;
     }
     .login-overlay.hidden { display: none; }
     .login-card {
-      background: white; border-radius: 16px; padding: 40px;
-      width: 360px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      background: linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(249,247,244,0.96) 100%);
+      border-radius: 18px; padding: 36px; width: 392px;
+      box-shadow: 0 24px 70px rgba(15,23,42,0.10);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226,232,240,0.92);
+      text-align: center;
     }
     .login-card-head {
       display: block;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .login-card h2 {
-      font-size: 20px; font-weight: 700; margin: 0;
-      color: var(--slate-900); text-align: center; line-height: 1.4;
+      font-size: 24px; font-weight: 700; margin: 0 0 10px;
+      color: #374151; text-align: center; line-height: 1.4;
+    }
+    .login-fields {
+      display: grid;
+      gap: 12px;
     }
     .login-admin-link {
       display: inline-flex; align-items: center; gap: 6px;
@@ -1031,14 +1044,32 @@
       width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center;
       color: currentColor; flex-shrink: 0;
     }
-    .login-card select, .login-card input {
-      width: 100%; padding: 10px 14px; border: 1px solid var(--slate-300);
-      border-radius: 8px; font-size: 15px; margin-bottom: 14px; font-family: var(--sans);
+    .login-fields select, .login-fields input {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1px solid #d8dee6;
+      border-radius: 12px;
+      font-size: 14px;
+      font-family: var(--sans);
+      color: #475569;
+      background: rgba(255,255,255,0.84);
     }
-    .login-card .btn { width: 100%; padding: 12px; font-size: 15px; }
-    .login-error { color: var(--rose); font-size: 13px; text-align: center; margin-bottom: 10px; min-height: 20px; }
+    .login-fields select:focus, .login-fields input:focus {
+      outline: none;
+      border-color: #94a3b8;
+      box-shadow: 0 0 0 3px rgba(148,163,184,0.16);
+    }
+    .login-card .btn {
+      width: 100%;
+      padding: 10px 36px;
+      font-size: 15px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #7c8796 0%, #636d7b 100%);
+    }
+    .login-card .btn:hover { background: linear-gradient(180deg, #707b89 0%, #57616e 100%); }
+    .login-error { color: var(--rose); font-size: 13px; text-align: center; min-height: 18px; }
     .login-links {
-      margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--slate-200);
+      margin-top: 16px; padding-top: 14px; border-top: 1px solid #e5e7eb;
       display: flex; align-items: center; justify-content: space-between; gap: 16px;
     }
     .login-links a { font-size: 12px; color: var(--slate-500); text-decoration: none; }
@@ -1419,12 +1450,14 @@
     <div class="login-card-head">
       <h2>醫療糾紛判決書摘要評估</h2>
     </div>
-    <select id="loginUser">
-      <option value="">-- 選擇評估者 --</option>
-    </select>
-    <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()" />
-    <div class="login-error" id="loginError"></div>
-    <button class="btn btn-primary" onclick="doLogin()">登入</button>
+    <div class="login-fields">
+      <select id="loginUser">
+        <option value="">-- 選擇評估者 --</option>
+      </select>
+      <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()" />
+      <div class="login-error" id="loginError"></div>
+      <button class="btn btn-primary" onclick="doLogin()">登入</button>
+    </div>
     <div class="login-links">
       <a href="#" id="adminLoginLink" class="login-admin-link" onclick="event.preventDefault();toggleAdminLogin()">
         <span class="login-mini-icon" aria-hidden="true">
