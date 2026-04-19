@@ -5818,6 +5818,7 @@ function isMobileAdminView() {
 
 function buildAdminVersionGrid(ev, caseName, display, layout = 'desktop') {
   const condLetters = ANON_LABELS.map(l => l.replace('版本 ', ''));
+  const isMedical = USERS[ev] && USERS[ev].role === 'medical';
   const tlStatus = getEvaluatorCaseTLStatus(ev, caseName);
   let tlSymbol = '–';
   let tlCls = 'status-empty';
@@ -5825,6 +5826,9 @@ function buildAdminVersionGrid(ev, caseName, display, layout = 'desktop') {
   else if (tlStatus === 'partial') { tlSymbol = '·'; tlCls = 'status-partial'; }
   const tlHref = buildAdminInspectHref(ev, caseName, 'A', 'tl');
   if (layout === 'mobile') {
+    if (isMedical) {
+      return `<div class="admin-mobile-version-row"><div class="admin-mobile-version-label">TL</div><div class="admin-version-item"><a class="admin-version-chip ${tlCls}" href="${tlHref}" title="檢視 ${ev} / ${display} / 時間軸">TL${tlSymbol}</a></div></div>`;
+    }
     let rows = '';
     for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
       const cs = getEvaluatorCondStatus(ev, caseName, i);
@@ -5844,6 +5848,11 @@ function buildAdminVersionGrid(ev, caseName, display, layout = 'desktop') {
   }
 
   let pills = '<div class="admin-version-grid">';
+  if (isMedical) {
+    pills += `<div class="admin-version-item"><a class="admin-version-chip ${tlCls}" href="${tlHref}" title="檢視 ${ev} / ${display} / 時間軸">TL${tlSymbol}</a></div>`;
+    pills += '</div>';
+    return pills;
+  }
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const cs = getEvaluatorCondStatus(ev, caseName, i);
     const letter = condLetters[i] || String.fromCharCode(65 + i);
