@@ -1141,6 +1141,20 @@
       color: var(--indigo);
     }
     .admin-panel .admin-cell { display:flex; flex-direction:column; align-items:flex-start; gap:6px; }
+    .admin-panel .admin-cell.medical-compact {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      min-height: 44px;
+    }
+    .admin-panel .admin-cell.medical-compact .admin-version-grid {
+      flex: 0 0 auto;
+    }
+    .admin-panel .admin-cell.medical-compact .admin-cell-actions {
+      flex: 0 0 auto;
+    }
     .admin-panel .admin-cell-actions { display:flex; gap:6px; flex-wrap:wrap; }
     .admin-panel .admin-mini-btn {
       border: 1px solid var(--slate-300);
@@ -5894,12 +5908,14 @@ function buildAdminProgressDesktop(cases, evaluators) {
     const display = getCaseDisplayName(c);
     html += `<tr><td style="text-align:left;font-size:12px;white-space:nowrap;">${esc(display)}</td>`;
     evaluators.forEach(ev => {
+      const isMedical = USERS[ev] && USERS[ev].role === 'medical';
       const overall = getEvaluatorCaseStatus(ev, c);
       let cellStyle = '';
       if (overall === 'complete') cellStyle = 'background:var(--emerald-light);';
       else if (overall === 'partial') cellStyle = 'background:#fffbeb;';
       const statusHtml = buildAdminVersionGrid(ev, c, display, 'desktop') || `<span style="font-size:11px;color:var(--slate-400);">尚無資料</span>`;
-      html += `<td style="padding:6px 8px;${cellStyle}"><div class="admin-cell">${statusHtml}${buildAdminCaseActions(ev, c, overall, false)}</div></td>`;
+      const cellCls = isMedical ? 'admin-cell medical-compact' : 'admin-cell';
+      html += `<td style="padding:6px 8px;${cellStyle}"><div class="${cellCls}">${statusHtml}${buildAdminCaseActions(ev, c, overall, false)}</div></td>`;
     });
     html += '</tr>';
   });
