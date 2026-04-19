@@ -1766,7 +1766,7 @@
     <div class="resizer"></div>
     <!-- Right: Eval -->
     <div class="panel panel-tl-eval" id="tlEvalPanel">
-      <div class="tl-eval-group-title">時間軸品質評估（1-3 一般 / 4-7 醫學專業）</div>
+      <div class="tl-eval-group-title">時間軸品質評估（每案只評 1 次；1-3 一般 / 4-7 醫學專業）</div>
       <div class="tl-mobile-guide">手機上建議依序操作：先點左欄事件，再看中欄原文高亮，最後回到這裡評分。</div>
       <div id="tlEvalForm"></div>
       <div style="display:flex;align-items:center;gap:10px;padding:4px 0;">
@@ -1865,6 +1865,10 @@ function getCondOrderStorageKey(evaluator, caseName) {
 
 function getPhaseStorageKey(evaluator, caseName, cond, phase) {
   return `${getEvalDataPrefix(evaluator)}${caseName}_${cond}_phase${phase}`;
+}
+
+function getPhaseTLStorageKey(evaluator, caseName) {
+  return `${getEvalDataPrefix(evaluator)}${caseName}_phaseTL`;
 }
 
 function getPhase3StorageKey(evaluator, caseName) {
@@ -2891,11 +2895,38 @@ function getAdminInspectConditionLabel(caseName, anonIdx) {
 
 function stateKey(caseName, condIdx, phase) {
   const ev = getEvaluator();
+  if (phase === 'TL') return getPhaseTLStorageKey(ev, caseName);
   const cond = getRealCondition(caseName, condIdx);
   return getPhaseStorageKey(ev, caseName, cond, phase);
 }
 
+function hasTLContent(data) {
+  return !!(data && (
+    data._complete
+    || (data.scores && Object.keys(data.scores).length > 0)
+    || (data.comment || '').trim()
+    || (data.comments && Object.keys(data.comments).length > 0)
+  ));
+}
+
+function loadLegacyPhaseTLData(evaluator, caseName) {
+  const condOrder = getConditionOrder(caseName);
+  let fallback = null;
+  for (const cond of condOrder) {
+    const legacy = loadStoredJSON(getPhaseStorageKey(evaluator, caseName, cond, 'TL'));
+    if (!legacy) continue;
+    if (!fallback) fallback = legacy;
+    if (hasTLContent(legacy)) return legacy;
+  }
+  return fallback;
+}
+
 function getPhaseData(caseName, condIdx, phase) {
+  if (phase === 'TL') {
+    const ev = getEvaluator();
+    const current = loadStoredJSON(getPhaseTLStorageKey(ev, caseName));
+    return current || loadLegacyPhaseTLData(ev, caseName);
+  }
   return loadStoredJSON(stateKey(caseName, condIdx, phase));
 }
 
@@ -2922,19 +2953,23 @@ function isPhase1Frozen(caseName, condIdx) {
 }
 
 function isPhaseTLComplete(caseName, condIdx) {
-  const d = getPhaseData(caseName, condIdx, 'TL');
+  const d = getPhaseData(caseName, null, 'TL');
   return d && d._complete === true;
 }
 
 function isCondComplete(caseName, condIdx) {
-  return isPhase1Complete(caseName, condIdx) && isPhaseTLComplete(caseName, condIdx);
+  return isPhase1Complete(caseName, condIdx);
+}
+
+function areAllPhase1Complete(caseName) {
+  for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
+    if (!isPhase1Complete(caseName, i)) return false;
+  }
+  return true;
 }
 
 function areAllCondsComplete(caseName) {
-  for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
-    if (!isCondComplete(caseName, i)) return false;
-  }
-  return true;
+  return areAllPhase1Complete(caseName) && isPhaseTLComplete(caseName);
 }
 
 function isPhase3Complete(caseName) {
@@ -2968,17 +3003,13 @@ async function onCaseChange() {
   // Find first incomplete condition
   if (isCaseLocked(currentCase)) {
     currentPhase = 'tl';
-  } else if (areAllCondsComplete(currentCase)) {
+  } else if (areAllPhase1Complete(currentCase)) {
     currentPhase = 'tl';
   } else {
     for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
-      if (!isCondComplete(currentCase, i)) {
+      if (!isPhase1Complete(currentCase, i)) {
         currentCondIdx = i;
-        if (!isPhase1Complete(currentCase, i)) {
-          currentPhase = 1;
-        } else {
-          currentPhase = 'tl';
-        }
+        currentPhase = 1;
         break;
       }
     }
@@ -3038,14 +3069,14 @@ function renderPhaseIndicators() {
   const isMedical = getSessionRole() === 'medical';
   const phases = isMedical
     ? [{ num: 1, label: '摘要檢視' }, { num: 'tl', label: '時間軸評估' }]
-    : [{ num: 1, label: '品質評分' }, { num: 'tl', label: '時間軸評估' }];
+    : [{ num: 1, label: '各版本評分' }, { num: 'tl', label: '時間軸評估' }];
 
   let html = '';
   phases.forEach(p => {
     let cls = 'phase-dot';
     if (p.num === currentPhase) cls += ' active';
     else if (p.num === 1 && isPhase1Frozen(currentCase, currentCondIdx)) cls += ' done';
-    else if (p.num === 'tl' && isPhaseTLComplete(currentCase, currentCondIdx)) cls += ' done';
+    else if (p.num === 'tl' && isPhaseTLComplete(currentCase)) cls += ' done';
     const phaseArg = typeof p.num === 'string' ? `'${p.num}'` : p.num;
     html += `<span class="${cls}" onclick="switchPhase(${phaseArg})">${p.label}</span>`;
   });
@@ -3338,7 +3369,7 @@ function completePhase1() {
       return;
     }
     setPhaseData(currentCase, currentCondIdx, 1, data);
-    showToast('品質評分完成，進入時間軸評估', 'success');
+    showToast('各版本評分完成，進入時間軸評估', 'success');
   }
   currentPhase = 'tl';
   renderCondPills();
@@ -3389,10 +3420,14 @@ async function loadPhaseTL() {
   renderTimelinePanel();
   setTLMobileTab('events');
 
+  const tlCompleteBtn = document.getElementById('tlCompleteBtn');
+  tlCompleteBtn.disabled = false;
+  tlCompleteBtn.textContent = '完成時間軸評估 →';
+
   const locked = isCaseLocked(currentCase);
   if (locked) {
-    document.getElementById('tlCompleteBtn').disabled = true;
-    document.getElementById('tlCompleteBtn').textContent = '已完成';
+    tlCompleteBtn.disabled = true;
+    tlCompleteBtn.textContent = '已完成';
   }
 
   // Re-init resizers for this view
@@ -4069,7 +4104,7 @@ function renderTLEvalForm() {
   const container = document.getElementById('tlEvalForm');
   let html = '';
 
-  html += `<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:10px 14px;margin:10px 0 12px;font-size:13px;color:#1e40af;line-height:1.5;">⚠️ <strong>評分提示</strong>：第 1、2 題請對照原文；第 3 題請${renderInlineEmphasis('**只看時間軸**、以**初次閱讀角度**評估')}；第 4–7 題請以${renderInlineEmphasis('**醫學專業判斷**')}評估。</div>`;
+  html += `<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:6px;padding:10px 14px;margin:10px 0 12px;font-size:13px;color:#1e40af;line-height:1.5;">⚠️ <strong>評分提示</strong>：本案的 TL ${renderInlineEmphasis('**只需評 1 次**')}，不需逐版本重複評分；第 1、2 題請對照原文；第 3 題請${renderInlineEmphasis('**只看時間軸**、以**初次閱讀角度**評估')}；第 4–7 題請以${renderInlineEmphasis('**醫學專業判斷**')}評估。</div>`;
 
   getActiveTLDimensions().forEach(dim => {
     html += `<div class="eval-item" data-dim="${dim.id}">`;
@@ -4382,28 +4417,15 @@ function completePhaseTL() {
     return;
   }
   data._complete = true;
-  setPhaseData(currentCase, currentCondIdx, 'TL', data);
+  setPhaseData(currentCase, null, 'TL', data);
   // setPhaseData above already wrote to Firestore
 
-  // Check if all conditions done
   if (areAllCondsComplete(currentCase)) {
-    showToast('所有版本已完成時間軸評估', 'success');
-    currentPhase = 'tl';
+    showToast('此案時間軸評估已完成', 'success');
   } else {
-    // Move to next incomplete condition
-    for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
-      if (!isCondComplete(currentCase, i)) {
-        currentCondIdx = i;
-        if (!isPhase1Complete(currentCase, i)) {
-          currentPhase = 1;
-        } else {
-          currentPhase = 'tl';
-        }
-        showToast(`進入 ${getAnonLabel(i)}`, 'success');
-        break;
-      }
-    }
+    showToast('時間軸評估已儲存', 'success');
   }
+  currentPhase = 'tl';
   renderCondPills();
   renderPhaseIndicators();
   loadCurrentView();
@@ -4900,7 +4922,7 @@ function exportJSON() {
     },
     phase1: {},
     phaseFB: {},
-    phaseTL: {},
+    phaseTL: null,
     phase3: null
   };
 
@@ -4927,15 +4949,15 @@ function exportJSON() {
       _complete: pfb ? !!pfb._complete : false
     };
 
-    // Phase TL
-    const ptl = getPhaseData(currentCase, i, 'TL');
-    result.phaseTL[label] = {
-      real_condition: cond,
-      scores: ptl ? ptl.scores || {} : {},
-      comment: ptl ? ptl.comment || '' : '',
-      _complete: ptl ? !!ptl._complete : false
-    };
   }
+
+  const ptl = getPhaseData(currentCase, null, 'TL');
+  result.phaseTL = {
+    scores: ptl ? ptl.scores || {} : {},
+    comments: ptl ? ptl.comments || {} : {},
+    comment: ptl ? ptl.comment || '' : '',
+    _complete: ptl ? !!ptl._complete : false
+  };
 
   // Phase 3
   const ev = evaluator;
@@ -4976,7 +4998,7 @@ function buildCaseExportData(caseName) {
       storage_version: EVAL_STORAGE_VERSION,
       campaign_id: EVAL_CAMPAIGN_ID
     },
-    phase1: {}, phaseFB: {}, phaseTL: {}, phase3: null
+    phase1: {}, phaseFB: {}, phaseTL: null, phase3: null
   };
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAnonLabel(i);
@@ -4995,19 +5017,45 @@ function buildCaseExportData(caseName) {
       sections: pfb ? pfb.sections || {} : {},
       _complete: pfb ? !!pfb._complete : false
     };
-    const ptl = getPhaseData(caseName, i, 'TL');
-    result.phaseTL[label] = {
-      real_condition: cond,
-      scores: ptl ? ptl.scores || {} : {},
-      comment: ptl ? ptl.comment || '' : '',
-      _complete: ptl ? !!ptl._complete : false
-    };
   }
+  const ptl = getPhaseData(caseName, null, 'TL');
+  result.phaseTL = {
+    scores: ptl ? ptl.scores || {} : {},
+    comments: ptl ? ptl.comments || {} : {},
+    comment: ptl ? ptl.comment || '' : '',
+    _complete: ptl ? !!ptl._complete : false
+  };
   try {
     const p3 = JSON.parse(localStorage.getItem(getPhase3StorageKey(evaluator, caseName)));
     if (p3) result.phase3 = { ranking: p3.ranking || [], ranking_reason: p3.ranking_reason || '', revision_count: p3.revision_count || 0, _complete: !!p3._complete };
   } catch {}
   return result;
+}
+
+function normalizeImportedCaseTLData(phaseTL, role) {
+  if (!phaseTL) return null;
+  if (!Array.isArray(phaseTL) && typeof phaseTL === 'object' && !phaseTL[ANON_LABELS[0]]) {
+    const scores = phaseTL.scores || {};
+    const comments = phaseTL.comments || {};
+    const comment = phaseTL.comment || '';
+    const complete = !!phaseTL._complete || Object.keys(scores).length >= getTLExpectedCountForRole(role);
+    return { scores, comments, comment, _complete: complete };
+  }
+
+  let fallback = null;
+  for (const label of ANON_LABELS) {
+    const item = phaseTL[label];
+    if (!item) continue;
+    const normalized = {
+      scores: item.scores || {},
+      comments: item.comments || {},
+      comment: item.comment || '',
+      _complete: !!item._complete || Object.keys(item.scores || {}).length >= getTLExpectedCountForRole(role)
+    };
+    if (!fallback) fallback = normalized;
+    if (normalized._complete || hasTLContent(normalized)) return normalized;
+  }
+  return fallback;
 }
 
 function exportAllJSON() {
@@ -5088,19 +5136,12 @@ function importSingleCase(data) {
       localStorage.setItem(key, JSON.stringify(stampEvalData({ sections: pfb.sections || {}, _complete: !!pfb._complete })));
     }
   }
-  // Phase TL
-  if (data.phaseTL) {
-    for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
-      const label = getAnonLabel(i);
-      if (data.phaseTL[label]) {
-        const cond = (data.meta.condition_order && data.meta.condition_order[i]) || EVAL_CONDITIONS[i];
-        const key = getPhaseStorageKey(evaluator, caseName, cond, 'TL');
-        const ptl = data.phaseTL[label];
-        const stored = { scores: ptl.scores || {}, comment: ptl.comment || '' };
-        if (ptl._complete || Object.keys(stored.scores).length >= getTLExpectedCountForRole(role)) stored._complete = true;
-        localStorage.setItem(key, JSON.stringify(stampEvalData(stored)));
-      }
-    }
+  const normalizedTL = normalizeImportedCaseTLData(data.phaseTL, role);
+  if (normalizedTL) {
+    localStorage.setItem(
+      getPhaseTLStorageKey(evaluator, caseName),
+      JSON.stringify(stampEvalData(normalizedTL))
+    );
   }
   if (data.phase3) {
     localStorage.setItem(getPhase3StorageKey(evaluator, caseName), JSON.stringify(stampEvalData({
@@ -5281,7 +5322,8 @@ async function jumpToCaseFromVolModal(caseName) {
 
 function getDefaultPhaseForCondition(caseName, condIdx) {
   if (!isPhase1Complete(caseName, condIdx)) return 1;
-  if (!isPhaseTLComplete(caseName, condIdx)) return 'tl';
+  if (!areAllPhase1Complete(caseName)) return 1;
+  if (!isPhaseTLComplete(caseName)) return 'tl';
   return 1;
 }
 
@@ -5971,29 +6013,37 @@ function getEvCondOrderFor(evaluator, caseName) {
   return EVAL_CONDITIONS.slice();
 }
 
+function loadAdminEvaluatorLegacyPhaseTL(evaluator, caseName) {
+  const condOrder = getEvCondOrderFor(evaluator, caseName);
+  let fallback = null;
+  for (const cond of condOrder) {
+    const legacy = loadAdminEvaluatorJSON(evaluator, getPhaseStorageKey(evaluator, caseName, cond, 'TL'));
+    if (!legacy) continue;
+    if (!fallback) fallback = legacy;
+    if (hasTLContent(legacy)) return legacy;
+  }
+  return fallback;
+}
+
+function loadAdminEvaluatorCaseTL(evaluator, caseName) {
+  const direct = loadAdminEvaluatorJSON(evaluator, getPhaseTLStorageKey(evaluator, caseName));
+  return direct || loadAdminEvaluatorLegacyPhaseTL(evaluator, caseName);
+}
+
 // Returns 'done' | 'partial' | 'empty' for one condition slot of one evaluator
 function getEvaluatorCondStatus(evaluator, caseName, condIdx) {
   const condOrder = getEvCondOrderFor(evaluator, caseName);
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
   const prefix = getPhaseStorageKey(evaluator, caseName, cond, '');
-  let p1done = false, tldone = false;
-  let p1partial = false, tlpartial = false;
+  let p1done = false;
+  let p1partial = false;
   try {
     const p1 = loadAdminEvaluatorJSON(evaluator, prefix + '1');
     p1done = !!(p1 && (p1._viewOnly || (p1.scores && Object.keys(p1.scores).length >= 9)));
     p1partial = !!(p1 && !p1done && p1.scores && Object.keys(p1.scores).length > 0);
   } catch {}
-  try {
-    const tl = loadAdminEvaluatorJSON(evaluator, prefix + 'TL');
-    tldone = !!(tl && tl._complete);
-    tlpartial = !!(tl && !tldone && (
-      (tl.scores && Object.keys(tl.scores).length > 0)
-      || (tl.comment || '').trim()
-      || (tl.comments && Object.keys(tl.comments).length > 0)
-    ));
-  } catch {}
-  if (p1done && tldone) return 'done';
-  if (p1partial || tlpartial || p1done || tldone) return 'partial';
+  if (p1done) return 'done';
+  if (p1partial) return 'partial';
   return 'empty';
 }
 
@@ -6005,6 +6055,11 @@ function getEvaluatorCaseStatus(evaluator, caseName) {
     if (status !== 'done') allDone = false;
     if (status !== 'empty') hasAny = true;
   }
+  const tl = loadAdminEvaluatorCaseTL(evaluator, caseName);
+  const tlDone = !!(tl && tl._complete);
+  const tlPartial = !!(tl && !tlDone && hasTLContent(tl));
+  if (!tlDone) allDone = false;
+  if (tlDone || tlPartial) hasAny = true;
   if (allDone) return 'complete';
   if (hasAny) return 'partial';
   return 'empty';
@@ -6020,7 +6075,7 @@ function getEvaluatorVersionKeys(evaluator, caseName, condIdx) {
   const condOrder = getEvCondOrderFor(evaluator, caseName);
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
   const keys = [];
-  ['1', 'FB', 'TL'].forEach(phase => {
+  ['1', 'FB'].forEach(phase => {
     const key = getPhaseStorageKey(evaluator, caseName, cond, phase);
     if (loadAdminEvaluatorJSON(evaluator, key)) keys.push(key);
   });
@@ -6034,8 +6089,13 @@ function getDefaultPhaseForEvaluatorCondition(evaluator, caseName, condIdx) {
   const cond = condOrder[condIdx] || EVAL_CONDITIONS[condIdx];
   const prefix = getPhaseStorageKey(evaluator, caseName, cond, '');
   const p1 = loadAdminEvaluatorJSON(evaluator, prefix + '1');
-  const tl = loadAdminEvaluatorJSON(evaluator, prefix + 'TL');
   if (!(p1 && (p1._viewOnly || (p1.scores && Object.keys(p1.scores).length >= 9)))) return 1;
+  for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
+    const condKey = getPhaseStorageKey(evaluator, caseName, condOrder[i] || EVAL_CONDITIONS[i], '1');
+    const phase1 = loadAdminEvaluatorJSON(evaluator, condKey);
+    if (!(phase1 && (phase1._viewOnly || (phase1.scores && Object.keys(phase1.scores).length >= 9)))) return 1;
+  }
+  const tl = loadAdminEvaluatorCaseTL(evaluator, caseName);
   if (!(tl && tl._complete)) return 'tl';
   return 1;
 }
