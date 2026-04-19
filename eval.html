@@ -1152,10 +1152,23 @@
     .admin-panel .admin-cell.medical-compact .admin-version-grid {
       flex: 0 0 auto;
     }
-    .admin-panel .admin-cell.medical-compact .admin-cell-actions {
+    .admin-panel .admin-cell.medical-compact .admin-case-actions {
       flex: 0 0 auto;
+      align-items: flex-end;
     }
     .admin-panel .admin-cell-actions { display:flex; gap:6px; flex-wrap:wrap; }
+    .admin-panel .admin-case-actions {
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      gap:6px;
+    }
+    .admin-panel .admin-case-actions-main,
+    .admin-panel .admin-case-actions-delete {
+      display:flex;
+      gap:6px;
+      flex-wrap:wrap;
+    }
     .admin-panel .admin-mini-btn {
       border: 1px solid var(--slate-300);
       background: white;
@@ -1182,6 +1195,16 @@
       background: #fef2f2;
       border-color: #fca5a5;
       color: #991b1b;
+    }
+    .admin-panel .btn-danger-soft {
+      background: #fff1f2;
+      border: 1px solid #fecdd3;
+      color: #be123c;
+    }
+    .admin-panel .btn-danger-soft:hover {
+      background: #ffe4e6;
+      border-color: #fda4af;
+      color: #9f1239;
     }
     .admin-panel .admin-version-grid { display:flex; flex-wrap:nowrap; gap:4px; }
     .admin-panel .admin-version-item { display:inline-flex; align-items:center; gap:2px; }
@@ -1603,6 +1626,7 @@
         </div>
         <div class="admin-panel-actions">
           <button class="btn btn-ghost" onclick="renderAdminContent()">重新整理</button>
+          <button class="btn btn-ghost" id="adminDeleteModeBtn" onclick="toggleAdminDeleteMode()">開啟刪除模式</button>
           <button class="btn btn-primary" onclick="adminExportAll()">匯出全部評估者</button>
         </div>
       </div>
@@ -2055,6 +2079,7 @@ let adminUserIndexCache = new Map();
 const adminBackupDetailsCache = new Map();
 const backupSnapshotPrevMap = {};
 let adminLatestRecordsCache = new Map();
+let adminDeleteMode = false;
 
 function setLocalSessionProfile(name, role) {
   localStorage.setItem('eval_v2_auth_user', name);
@@ -5830,6 +5855,21 @@ function isMobileAdminView() {
   return window.innerWidth <= 900;
 }
 
+function updateAdminDeleteModeButton() {
+  const btn = document.getElementById('adminDeleteModeBtn');
+  if (!btn) return;
+  btn.textContent = adminDeleteMode ? '關閉刪除模式' : '開啟刪除模式';
+  btn.classList.toggle('btn-primary', adminDeleteMode);
+  btn.classList.toggle('btn-ghost', !adminDeleteMode);
+  btn.classList.toggle('btn-danger-soft', adminDeleteMode);
+}
+
+function toggleAdminDeleteMode() {
+  adminDeleteMode = !adminDeleteMode;
+  updateAdminDeleteModeButton();
+  renderAdminContent();
+}
+
 function buildAdminVersionGrid(ev, caseName, display, layout = 'desktop') {
   const condLetters = ANON_LABELS.map(l => l.replace('版本 ', ''));
   const isMedical = USERS[ev] && USERS[ev].role === 'medical';
@@ -5852,7 +5892,7 @@ function buildAdminVersionGrid(ev, caseName, display, layout = 'desktop') {
       if (cs === 'done') { symbol = '✓'; cls = 'status-done'; }
       else if (cs === 'partial') { symbol = '·'; cls = 'status-partial'; }
       const href = buildAdminInspectHref(ev, caseName, letter, getDefaultPhaseForEvaluatorCondition(ev, caseName, i));
-      const del = cs !== 'empty'
+      const del = (adminDeleteMode && cs !== 'empty')
         ? `<button class="admin-version-delete" type="button" onclick='adminDeleteVersionData(${JSON.stringify(ev)}, ${JSON.stringify(caseName)}, ${i})' title="刪除版本 ${letter}">×</button>`
         : '';
       rows += `<div class="admin-mobile-version-row"><div class="admin-mobile-version-label">${letter}</div><div class="admin-version-item"><a class="admin-version-chip ${cls}" href="${href}" title="檢視 ${ev} / ${display} / 版本 ${letter}">${letter}${symbol}</a>${del}</div></div>`;
@@ -5875,7 +5915,7 @@ function buildAdminVersionGrid(ev, caseName, display, layout = 'desktop') {
     if (cs === 'done') { symbol = '✓'; cls = 'status-done'; }
     else if (cs === 'partial') { symbol = '·'; cls = 'status-partial'; }
     const href = buildAdminInspectHref(ev, caseName, letter, getDefaultPhaseForEvaluatorCondition(ev, caseName, i));
-    const del = cs !== 'empty'
+    const del = (adminDeleteMode && cs !== 'empty')
       ? `<button class="admin-version-delete" type="button" onclick='adminDeleteVersionData(${JSON.stringify(ev)}, ${JSON.stringify(caseName)}, ${i})' title="刪除版本 ${letter}">×</button>`
       : '';
     pills += `<div class="admin-version-item"><a class="admin-version-chip ${cls}" href="${href}" title="檢視 ${ev} / ${display} / 版本 ${letter}">${letter}${symbol}</a>${del}</div>`;
@@ -5887,13 +5927,13 @@ function buildAdminVersionGrid(ev, caseName, display, layout = 'desktop') {
 
 function buildAdminCaseActions(ev, caseName, overall, mobile = false) {
   const inspectHref = buildAdminInspectHref(ev, caseName, null, null);
-  const deleteBtn = overall !== 'empty'
+  const deleteBtn = (adminDeleteMode && overall !== 'empty')
     ? `<button class="admin-mini-btn danger" onclick='adminDeleteCaseData(${JSON.stringify(ev)}, ${JSON.stringify(caseName)})'>刪整案</button>`
     : '';
   const p3 = loadLocalJSON(getPhase3StorageKey(ev, caseName));
   const p3badge = p3 && p3._complete ? `<span style="font-size:11px;font-weight:700;color:var(--indigo);">★ 已排序</span>` : '';
-  const cls = mobile ? 'admin-mobile-actions' : 'admin-cell-actions';
-  return `<div class="${cls}"><a class="admin-mini-btn jump-link" href="${inspectHref}">檢視整案</a>${deleteBtn}${p3badge}</div>`;
+  const extraCls = mobile ? ' admin-mobile-actions' : '';
+  return `<div class="admin-case-actions${extraCls}"><div class="admin-case-actions-main"><a class="admin-mini-btn jump-link" href="${inspectHref}">檢視整案</a>${p3badge}</div>${deleteBtn ? `<div class="admin-case-actions-delete">${deleteBtn}</div>` : ''}</div>`;
 }
 
 function buildAdminProgressDesktop(cases, evaluators) {
@@ -6033,6 +6073,7 @@ async function renderAdminContent() {
   const container = document.getElementById('adminContent');
   const evaluators = Object.keys(USERS).filter(u => u !== 'admin');
   const cases = caseList.length > 0 ? caseList : [];
+  updateAdminDeleteModeButton();
 
   if (cases.length === 0) {
     container.innerHTML = '<p>尚無案件資料</p>';
@@ -6055,7 +6096,7 @@ async function renderAdminContent() {
 
   const mobile = isMobileAdminView();
   const backupSummary = buildBackupHealthSummary(backups);
-  let html = '<div style="margin-bottom:14px;font-size:13px;color:var(--slate-500);line-height:1.6;">點版本可直接進入老師評估頁的唯讀管理檢視；可刪除單一版本，或刪除整案資料。</div>';
+  let html = `<div style="margin-bottom:14px;font-size:13px;color:var(--slate-500);line-height:1.6;">點版本可直接進入老師評估頁的唯讀管理檢視。${adminDeleteMode ? '目前為刪除模式：可刪除單一版本或整案資料。' : '如需刪除資料，請先開啟刪除模式。'}</div>`;
   html += mobile ? buildAdminProgressMobile(cases, evaluators) : buildAdminProgressDesktop(cases, evaluators);
   html += `<div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--slate-300);display:grid;gap:14px;">`;
   html += buildAdminBackupOverview(backups, backupSummary);
