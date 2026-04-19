@@ -146,5 +146,536 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7494,
+  "fact_recall": 0.5526,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7119,
+  "quality_overall": 4.8143,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.97,
+  "uncited_rate": 0.013,
+  "faithfulness_combined": {
+   "score": 0.9922,
+   "citation_fidelity": 0.987,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.933,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 14
+  },
+  "weighted_recall": 0.8343,
+  "missing_severity": {
+   "critical": 3,
+   "important": 10,
+   "minor": 56,
+   "details": [
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT 描述被告乙『應注意避免併發症之義務』屬起訴意旨的主張內容，但 pred 僅在 reasoning 段說明法院認定『尚符合醫療常規』而未具體提及此義務內容，跨 section 檢查後確認未完整涵蓋",
+     "reason": "GT 描述被告乙『應注意避免併發症之義務』屬起訴意旨的主張內容，但 pred 僅在 reasoning 段說明法院認定『尚符合醫療常規』而未具體提及此義務內容，跨 section 檢查後確認未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT 描述被告甲『更換導管時應注意穿刺中確認動靜脈位置及深度』之具體義務，pred 雖在 pred_claim 8 以起訴意旨形式提及『疏未注意穿刺應確認動、靜脈之位置及深度』，但係從起訴角度而非法院認定的被告義務角度，屬起訴意旨轉述而非義務認定",
+     "reason": "GT 描述被告甲『更換導管時應注意穿刺中確認動靜脈位置及深度』之具體義務，pred 雖在 pred_claim 8 以起訴意旨形式提及『疏未注意穿刺應確認動、靜脈之位置及深度』，但係從起訴角度而非法院認定的被告義務角度，屬起訴意旨轉述而非義務認定"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文，均未見「病歷並無記載為甲醫師單獨施行或曾由醫師甲醫師接手處理」之記載，僅於section_02_defense提及病歷文字解讀爭議，未見此項病歷記載狀態之認定",
+     "reason": "遍查5個section原文，均未見「病歷並無記載為甲醫師單獨施行或曾由醫師甲醫師接手處理」之記載，僅於section_02_defense提及病歷文字解讀爭議，未見此項病歷記載狀態之認定"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_01_facts.txt提及「病患甲表示有胸痛情形」，但未提及「被告乙知曉」此項認定；section_05_reasoning.txt說明被告甲囑咐被告乙觀察，但未明確認定被告乙當時已知胸痛",
+     "reason": "section_01_facts.txt提及「病患甲表示有胸痛情形」，但未提及「被告乙知曉」此項認定；section_05_reasoning.txt說明被告甲囑咐被告乙觀察，但未明確認定被告乙當時已知胸痛"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section，未見「被告乙未積極囑咐被告甲注意觀察」之直接記載。section_01_facts提及起訴意旨指稱被告甲未囑咐被告乙，與此項內容方向相反",
+     "reason": "遍查5個section，未見「被告乙未積極囑咐被告甲注意觀察」之直接記載。section_01_facts提及起訴意旨指稱被告甲未囑咐被告乙，與此項內容方向相反"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt提及「病患甲於第一次出現症狀後至發現血壓下降間約有2小時」，但摘要未收錄此時間點",
+     "reason": "section_05_reasoning.txt提及「病患甲於第一次出現症狀後至發現血壓下降間約有2小時」，但摘要未收錄此時間點"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查5個section，未見「若主治醫師有上開之囑咐，則符合醫療常規」之條件式結論記載",
+     "reason": "遍查5個section，未見「若主治醫師有上開之囑咐，則符合醫療常規」之條件式結論記載"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「第一次主訴胸痛時均有至現場」之整合性記載，僅於section_01_facts提及被告乙多次進出病房及被告甲18時30分前往察看",
+     "reason": "遍查各section，未見「第一次主訴胸痛時均有至現場」之整合性記載，僅於section_01_facts提及被告乙多次進出病房及被告甲18時30分前往察看"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「被告甲、被告乙已盡到診療上之注意事項」之正面認定記載",
+     "reason": "遍查各section，未見「被告甲、被告乙已盡到診療上之注意事項」之正面認定記載"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts提及「進行急救」及呼叫醫師，但未詳細記載「安排X光檢查、呼叫醫師丁及住院總醫師」等細節",
+     "reason": "section_01_facts提及「進行急救」及呼叫醫師，但未詳細記載「安排X光檢查、呼叫醫師丁及住院總醫師」等細節"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts僅提及「進行急救」，未詳列「CPR、胸管插入引流、生理食鹽水及輸血」等具體急救處置",
+     "reason": "section_01_facts僅提及「進行急救」，未詳列「CPR、胸管插入引流、生理食鹽水及輸血」等具體急救處置"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「休克後之急救治療過程，尚未發現有疏失之處」之專項認定",
+     "reason": "遍查各section，未見「休克後之急救治療過程，尚未發現有疏失之處」之專項認定"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts提及「同年月26日」進行手術，但摘要僅記載「同年月」而未明確10月26日",
+     "reason": "section_01_facts提及「同年月26日」進行手術，但摘要僅記載「同年月」而未明確10月26日"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見10月30日具體處置之詳細記載",
+     "reason": "遍查各section，未見10月30日具體處置之詳細記載"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見11月6日安排腹部電腦斷層之記載",
+     "reason": "遍查各section，未見11月6日安排腹部電腦斷層之記載"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts提及「11月7日施行右頸中央靜脈導管置放術，以便給予全靜脈營養治療」，但未記載肋膜穿刺、胸腔科會診、第三根引流管、Ucefaxin等細節",
+     "reason": "section_01_facts提及「11月7日施行右頸中央靜脈導管置放術，以便給予全靜脈營養治療」，但未記載肋膜穿刺、胸腔科會診、第三根引流管、Ucefaxin等細節"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見11月9日肋膜腔導管置入之記載",
+     "reason": "遍查各section，未見11月9日肋膜腔導管置入之記載"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見11月13日抗生素更換為Tazocin之記載",
+     "reason": "遍查各section，未見11月13日抗生素更換為Tazocin之記載"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts提及「95年11月19日17時許」施行左頸中央靜脈導管置放術，但未明確「11月19日」日期",
+     "reason": "section_01_facts提及「95年11月19日17時許」施行左頸中央靜脈導管置放術，但未明確「11月19日」日期"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts提及「17時許」施行手術，但未明確「17時50分X光檢查」之時間點",
+     "reason": "section_01_facts提及「17時許」施行手術，但未明確「17時50分X光檢查」之時間點"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts提及「嗣至同日20時40分許，護理人員始發現病患甲血壓下降...」，未提及「21時到場診視」及「安排X光檢查發現左側肋膜腔積液」之連貫記載",
+     "reason": "section_01_facts提及「嗣至同日20時40分許，護理人員始發現病患甲血壓下降...」，未提及「21時到場診視」及「安排X光檢查發現左側肋膜腔積液」之連貫記載"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts僅提及「進行急救」，未詳載「21時58分給予CPR，同時進行左側胸管置入」之確切時間與處置",
+     "reason": "section_01_facts僅提及「進行急救」，未詳載「21時58分給予CPR，同時進行左側胸管置入」之確切時間與處置"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「神經科醫師診斷為缺血性腦病變」之記載",
+     "reason": "遍查各section，未見「神經科醫師診斷為缺血性腦病變」之記載"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「血壓必需靠升壓劑維持」之記載",
+     "reason": "遍查各section，未見「血壓必需靠升壓劑維持」之記載"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「感染科醫師診斷為敗血性休克合併瀰漫性血管內凝血不全症」之記載",
+     "reason": "遍查各section，未見「感染科醫師診斷為敗血性休克合併瀰漫性血管內凝血不全症」之記載"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「發生率約為5%」之統計數字記載",
+     "reason": "遍查各section，未見「發生率約為5%」之統計數字記載"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt提及「術後感染與敗血症」，但未詳列「發燒畏寒、腹痛、心跳加快、血壓不穩定及呼吸急促」等症狀",
+     "reason": "section_03_opinions.txt提及「術後感染與敗血症」，但未詳列「發燒畏寒、腹痛、心跳加快、血壓不穩定及呼吸急促」等症狀"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt提及「病情於11月14日後已有改善」，但未提及「11月2日手術後第7天出現該併發症症狀」",
+     "reason": "section_05_reasoning.txt提及「病情於11月14日後已有改善」，但未提及「11月2日手術後第7天出現該併發症症狀」"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「病人及其配偶和醫師均在手術同意書上簽名」之記載",
+     "reason": "遍查各section，未見「病人及其配偶和醫師均在手術同意書上簽名」之記載"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「難謂有疏失之處」關於告知義務之結論性記載",
+     "reason": "遍查各section，未見「難謂有疏失之處」關於告知義務之結論性記載"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt提及「病情於11月14日後已有改善」，但未詳列「體溫逐漸恢復正常、呼吸舒緩、血壓趨於穩定」之具體改善徵象",
+     "reason": "section_05_reasoning.txt提及「病情於11月14日後已有改善」，但未詳列「體溫逐漸恢復正常、呼吸舒緩、血壓趨於穩定」之具體改善徵象"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查各section，未見「95年12月25日檢察官相驗」之記載",
+     "reason": "遍查各section，未見「95年12月25日檢察官相驗」之記載"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt第三段提及「法醫解剖鑑定」，但未說明「因無法確定死因，遂對病患加以解剖確定死因」之原因",
+     "reason": "section_03_opinions.txt第三段提及「法醫解剖鑑定」，但未說明「因無法確定死因，遂對病患加以解剖確定死因」之原因"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt第三段記載「法醫解剖鑑定認定，病患甲之死因為十二指腸壺腹腺癌手術後併發...」，但摘要僅引用醫審會鑑定結論（第一段），遺漏法醫解剖鑑定之獨立死因認定，影響鑑定意見完整性理解",
+     "reason": "section_03_opinions.txt第三段記載「法醫解剖鑑定認定，病患甲之死因為十二指腸壺腹腺癌手術後併發...」，但摘要僅引用醫審會鑑定結論（第一段），遺漏法醫解剖鑑定之獨立死因認定，影響鑑定意見完整性理解"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患住院日期與原因為背景性事實，reasoning section 未詳述具體日期",
+     "reason": "病患住院日期與原因為背景性事實，reasoning section 未詳述具體日期"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "癌症診斷細節為背景性事實，reasoning section 概括提及但未詳述",
+     "reason": "癌症診斷細節為背景性事實，reasoning section 概括提及但未詳述"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "手術日期細節為背景性事實，reasoning section 未詳述具體日期",
+     "reason": "手術日期細節為背景性事實，reasoning section 未詳述具體日期"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "引流管數量為醫療細節，reasoning section 未提及",
+     "reason": "引流管數量為醫療細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術後膽汁滲漏細節為醫療過程細節，reasoning section 概括提及術後感染",
+     "reason": "術後膽汁滲漏細節為醫療過程細節，reasoning section 概括提及術後感染"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "白血球數值為具體檢驗數據，reasoning section 未引用",
+     "reason": "白血球數值為具體檢驗數據，reasoning section 未引用"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "總膽紅素數值為具體檢驗數據，reasoning section 未引用",
+     "reason": "總膽紅素數值為具體檢驗數據，reasoning section 未引用"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術後觀察處置細節為醫療過程，reasoning section 未詳述",
+     "reason": "術後觀察處置細節為醫療過程，reasoning section 未詳述"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "11月2日症狀變化為具體時間點細節，reasoning section 未詳述",
+     "reason": "11月2日症狀變化為具體時間點細節，reasoning section 未詳述"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "細菌培養結果為醫療細節，reasoning section 未提及",
+     "reason": "細菌培養結果為醫療細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "氧氣及冰枕處置為醫療細節，reasoning section 未詳述",
+     "reason": "氧氣及冰枕處置為醫療細節，reasoning section 未詳述"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "膽汁滲漏量數據為具體數值，reasoning section 未引用",
+     "reason": "膽汁滲漏量數據為具體數值，reasoning section 未引用"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "11月6日電腦斷層檢查為具體時間點，reasoning section 未提及",
+     "reason": "11月6日電腦斷層檢查為具體時間點，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "電腦斷層積液發現為醫療細節，reasoning section 未詳述",
+     "reason": "電腦斷層積液發現為醫療細節，reasoning section 未詳述"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "肋膜腔積水為醫療細節，reasoning section 未詳述",
+     "reason": "肋膜腔積水為醫療細節，reasoning section 未詳述"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "11月7日肋膜穿刺為具體處置細節，reasoning section 未提及",
+     "reason": "11月7日肋膜穿刺為具體處置細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "肋膜穿刺培養結果為醫療細節，reasoning section 未提及",
+     "reason": "肋膜穿刺培養結果為醫療細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "11月7日右頸插管為具體時間點，reasoning section 概括提及但為簡述",
+     "reason": "11月7日右頸插管為具體時間點，reasoning section 概括提及但為簡述"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "腹部傷口滲漏為醫療細節，reasoning section 未詳述",
+     "reason": "腹部傷口滲漏為醫療細節，reasoning section 未詳述"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "第三根引流管為醫療細節，reasoning section 未提及",
+     "reason": "第三根引流管為醫療細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "抗生素更改為Ucefaxin為藥物細節，reasoning section 未提及",
+     "reason": "抗生素更改為Ucefaxin為藥物細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "持續發燒溫度範圍為具體數據，reasoning section 未引用",
+     "reason": "持續發燒溫度範圍為具體數據，reasoning section 未引用"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "11月9日肋膜腔導管置入為具體處置細節，reasoning section 未提及",
+     "reason": "11月9日肋膜腔導管置入為具體處置細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "使用Sandostatin為藥物細節，reasoning section 未提及",
+     "reason": "使用Sandostatin為藥物細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "更改抗生素為Tazocin為藥物細節，reasoning section 未提及",
+     "reason": "更改抗生素為Tazocin為藥物細節，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "右頸插管為院內醫師施行為醫療過程細節，reasoning section 未詳述執行者",
+     "reason": "右頸插管為院內醫師施行為醫療過程細節，reasoning section 未詳述執行者"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人利害關係人身分影響證詞可信度判斷，reasoning section 未提及",
+     "reason": "證人利害關係人身分影響證詞可信度判斷，reasoning section 未提及"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會認定被告有多次嘗試為關鍵鑑定意見，reasoning section 雖有提及但未明確「醫審會均認」之表述",
+     "reason": "醫審會認定被告有多次嘗試為關鍵鑑定意見，reasoning section 雖有提及但未明確「醫審會均認」之表述"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "家屬多次請託仍未積極處置為過失認定關鍵事實，影響判決結論，reasoning section 提及「曾多次進出病房」但缺少「家屬多次請託」之具體情節",
+     "reason": "家屬多次請託仍未積極處置為過失認定關鍵事實，影響判決結論，reasoning section 提及「曾多次進出病房」但缺少「家屬多次請託」之具體情節"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告乙關於避免併發症指示之供詞為辯護細節，reasoning section 未詳述此供詞",
+     "reason": "被告乙關於避免併發症指示之供詞為辯護細節，reasoning section 未詳述此供詞"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告乙關於聽診視訊觀察傷口之供詞為辯護細節，reasoning section 未詳述此供詞",
+     "reason": "被告乙關於聽診視訊觀察傷口之供詞為辯護細節，reasoning section 未詳述此供詞"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告乙關於止痛之供詞為辯護細節，reasoning section 未單獨記載",
+     "reason": "被告乙關於止痛之供詞為辯護細節，reasoning section 未單獨記載"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會鑑定摘要e-g點關於妥適處理之認定為重要鑑定意見，reasoning section 未明確引用e-g點",
+     "reason": "醫審會鑑定摘要e-g點關於妥適處理之認定為重要鑑定意見，reasoning section 未明確引用e-g點"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「被告乙疏失難認定」為法院重要認定，但reasoning section係認定被告乙有過失，未提及「難認定疏失」之表述",
+     "reason": "「被告乙疏失難認定」為法院重要認定，但reasoning section係認定被告乙有過失，未提及「難認定疏失」之表述"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「公訴意旨顯有誤認」之判斷為法院認定，reasoning section 雖提及「起訴意旨有誤認」但係針對被告甲部分，未明確針對被告乙部分",
+     "reason": "「公訴意旨顯有誤認」之判斷為法院認定，reasoning section 雖提及「起訴意旨有誤認」但係針對被告甲部分，未明確針對被告乙部分"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 171,
+   "pred_total": 77,
+   "matched": 87,
+   "partial": 15,
+   "missing": 69,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7735,
+  "compression_afg_chars": 2789,
+  "compression_source_chars": 12312,
+  "gt_length_ratio": 0.4117,
+  "gt_length_afg_chars": 2789,
+  "gt_length_gt_chars": 6774,
+  "section_balance": 0.2
+ }
 }

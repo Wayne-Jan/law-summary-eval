@@ -136,5 +136,123 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6118,
+  "fact_recall": 0.8009,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8895,
+  "quality_overall": 4.9429,
+  "checklist_pass_rate": 0.9891,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9643,
+  "uncited_rate": 0.012,
+  "faithfulness_combined": {
+   "score": 0.9928,
+   "citation_fidelity": 0.988,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 18,
+   "correct": 18
+  },
+  "weighted_recall": 0.9506,
+  "missing_severity": {
+   "critical": 0,
+   "important": 6,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt僅提及「其他醫師診治」並未明確指出醫師A、B為特定人員，亦未提及「不起訴處分」之程序性資訊，屬於程序性背景事實",
+     "reason": "section_01_facts.txt僅提及「其他醫師診治」並未明確指出醫師A、B為特定人員，亦未提及「不起訴處分」之程序性資訊，屬於程序性背景事實"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt中檢察官起訴意旨提到被告乙、丙「疏未為之」，但未明確提及「依當時之情形，並無不能注意之情事」這一注意義務前提表述，影響過失要件的理解",
+     "reason": "section_01_facts.txt中檢察官起訴意旨提到被告乙、丙「疏未為之」，但未明確提及「依當時之情形，並無不能注意之情事」這一注意義務前提表述，影響過失要件的理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "雖section_facts提到病患X於上午6時15分至B醫院急診，但pred claims未抽取此獨立事實，現有pred claim聚焦於診治行為本身，未涵蓋到院時間點",
+     "reason": "雖section_facts提到病患X於上午6時15分至B醫院急診，但pred claims未抽取此獨立事實，現有pred claim聚焦於診治行為本身，未涵蓋到院時間點"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「變大的主動脈瘤可能產生腹痛或胸痛」為背景醫學知識，摘要僅於 opinions 段引述鑑定意見中提到「劇烈胸痛」為典型症狀，但確實未提及「變大的主動脈瘤」可能引發疼痛之機制",
+     "reason": "「變大的主動脈瘤可能產生腹痛或胸痛」為背景醫學知識，摘要僅於 opinions 段引述鑑定意見中提到「劇烈胸痛」為典型症狀，但確實未提及「變大的主動脈瘤」可能引發疼痛之機制"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「胃鏡檢查為消化道最準確可靠診斷方式」為醫療常規細節，摘要 opinions 段未明確表述此觀點，僅提及「建議內視鏡檢查",
+     "reason": "「胃鏡檢查為消化道最準確可靠診斷方式」為醫療常規細節，摘要 opinions 段未明確表述此觀點，僅提及「建議內視鏡檢查"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「脈搏或血壓強度不同」作為緊急警示徵象為重要鑑定意見，reasoning 段雖有提及，但 opinions 段確實未涵蓋此具體徵象描述",
+     "reason": "「脈搏或血壓強度不同」作為緊急警示徵象為重要鑑定意見，reasoning 段雖有提及，但 opinions 段確實未涵蓋此具體徵象描述"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「主動脈瘤緊急狀況需電腦斷層或會診胸腔外科」為重要臨床處置指引，summary opinions 段雖有提及「安排電腦斷層掃描或會診相關專科醫師」，但未明確點出「緊急狀況」的關鍵分類",
+     "reason": "「主動脈瘤緊急狀況需電腦斷層或會診胸腔外科」為重要臨床處置指引，summary opinions 段雖有提及「安排電腦斷層掃描或會診相關專科醫師」，但未明確點出「緊急狀況」的關鍵分類"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「「若無發現仍應提高警覺、說明X光影像、安排追蹤」為重要醫療常規要求，reasoning 段有提及，但 opinions 段摘要未完整涵蓋此條件式指引",
+     "reason": "「「若無發現仍應提高警覺、說明X光影像、安排追蹤」為重要醫療常規要求，reasoning 段有提及，但 opinions 段摘要未完整涵蓋此條件式指引"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「觀察前次就診病歷資料」為具體醫療行為標準，reasoning 段有「併同審酌前次就診資料」，但 opinions 段未明確提及此要求",
+     "reason": "「觀察前次就診病歷資料」為具體醫療行為標準，reasoning 段有「併同審酌前次就診資料」，但 opinions 段未明確提及此要求"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts.txt 提及離院返家但未明確記載『臆斷為無力及疲勞』之診斷，屬程序性細節遺漏",
+     "reason": "section_facts.txt 提及離院返家但未明確記載『臆斷為無力及疲勞』之診斷，屬程序性細節遺漏"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 82,
+   "matched": 75,
+   "partial": 23,
+   "missing": 10,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6702,
+  "compression_afg_chars": 2919,
+  "compression_source_chars": 8850,
+  "gt_length_ratio": 0.6343,
+  "gt_length_afg_chars": 2919,
+  "gt_length_gt_chars": 4602,
+  "section_balance": 0.75
+ }
 }

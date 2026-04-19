@@ -137,6 +137,192 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7472
+  "rule_based_avg": 0.7472,
+  "fact_recall": 0.8056,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8923,
+  "quality_overall": 4.7286,
+  "checklist_pass_rate": 0.9511,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9667,
+  "uncited_rate": 0.035,
+  "faithfulness_combined": {
+   "score": 0.979,
+   "citation_fidelity": 0.965,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 3,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.9136,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 12,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "雖section_03_opinions.txt鑑定意見提及病史背景，但facts section摘要未提及病患1月22日前多次就診之病史，影響病情理解完整性",
+     "reason": "雖section_03_opinions.txt鑑定意見提及病史背景，但facts section摘要未提及病患1月22日前多次就診之病史，影響病情理解完整性"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_02_defense.txt提及「開立處方予以藥劑」，但facts section摘要僅提「施打」未提「開立處方」程序，屬診療過程關鍵步驟遺漏",
+     "reason": "section_02_defense.txt提及「開立處方予以藥劑」，但facts section摘要僅提「施打」未提「開立處方」程序，屬診療過程關鍵步驟遺漏"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查5個section原文，J醫院(B醫院)X光檢查及「心臟擴大合併肺血管鬱血」結果未在摘要中出現，屬重要醫療發現",
+     "reason": "遍查5個section原文，J醫院(B醫院)X光檢查及「心臟擴大合併肺血管鬱血」結果未在摘要中出現，屬重要醫療發現"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查5個section原文，未提及「對支氣管氣喘有良好之效果，氣喘發作而無法判定係支氣管性或心臟性時可使用」此具體論述",
+     "reason": "遍查5個section原文，未提及「對支氣管氣喘有良好之效果，氣喘發作而無法判定係支氣管性或心臟性時可使用」此具體論述"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查5個section原文，未提及「Deca皮脂類固醇」相關風險說明",
+     "reason": "遍查5個section原文，未提及「Deca皮脂類固醇」相關風險說明"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "雖reasoning section有提及注意義務，但「依其自身之專業智識、能力亦無不能注意之情事」此檢察官起訴具體表述未出現",
+     "reason": "雖reasoning section有提及注意義務，但「依其自身之專業智識、能力亦無不能注意之情事」此檢察官起訴具體表述未出現"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "與gt_claim_id 9內容相同，J醫院X光檢查結果未在摘要中提及",
+     "reason": "與gt_claim_id 9內容相同，J醫院X光檢查結果未在摘要中提及"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提到病患X於上午十一時三十分許（11:30）前往A醫院求診，但GT claim指出上午11時多許；跨section檢查後發現「上午11時多許」此精確時間點未在摘要任何段落出現，屬時間細節遺漏，不影響案情理解",
+     "reason": "section_01_facts.txt 提到病患X於上午十一時三十分許（11:30）前往A醫院求診，但GT claim指出上午11時多許；跨section檢查後發現「上午11時多許」此精確時間點未在摘要任何段落出現，屬時間細節遺漏，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "跨section檢查所有段落（facts、defense、opinions、verdict、reasoning）後，均無發現「上午11時50分許」就此具體時間點的記載，屬時間細節遺漏，不影響判決結論理解",
+     "reason": "跨section檢查所有段落（facts、defense、opinions、verdict、reasoning）後，均無發現「上午11時50分許」就此具體時間點的記載，屬時間細節遺漏，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定意見中提及的死亡時間距離（一年十個月）為背景性資訊，不影響醫療疏失與因果關係的核心判定理解",
+     "reason": "鑑定意見中提及的死亡時間距離（一年十個月）為背景性資訊，不影響醫療疏失與因果關係的核心判定理解"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫審會無法判斷因果關係的鑑定結論屬鑑定意見之重要內容，雖法院最終認定有因果關係，但鑑定機構的意見仍有其參考價值，影響鑑定意見的完整性理解",
+     "reason": "醫審會無法判斷因果關係的鑑定結論屬鑑定意見之重要內容，雖法院最終認定有因果關係，但鑑定機構的意見仍有其參考價值，影響鑑定意見的完整性理解"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患病識狀態為重要事實，影響轉診時機判斷，但summary未提及「J醫院醫師到場時」之意識狀態",
+     "reason": "病患病識狀態為重要事實，影響轉診時機判斷，但summary未提及「J醫院醫師到場時」之意識狀態"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "詳細病歷資料屬背景性事實，非判決核心，summary未提及合理",
+     "reason": "詳細病歷資料屬背景性事實，非判決核心，summary未提及合理"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "處方變更細節屬用藥歷史背景，非判決核心理論依據",
+     "reason": "處方變更細節屬用藥歷史背景，非判決核心理論依據"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告訴人證詞細節屬程序性事實，summary已涵蓋關鍵轉診事實",
+     "reason": "告訴人證詞細節屬程序性事實，summary已涵蓋關鍵轉診事實"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥品適應症說明書內容屬專業背景資訊，非法院認定核心事實",
+     "reason": "藥品適應症說明書內容屬專業背景資訊，非法院認定核心事實"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Deca藥品副作用說明屬專業背景資訊，非法院認定核心事實",
+     "reason": "Deca藥品副作用說明屬專業背景資訊，非法院認定核心事實"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "用藥禁忌說明屬專業背景資訊，非法院認定核心事實",
+     "reason": "用藥禁忌說明屬專業背景資訊，非法院認定核心事實"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "消化性潰瘍診斷與用藥關聯屬重要醫療判斷事實，影響過失認定，但summary確實未明確提及Tagament Inj.與消化性潰瘍之關聯",
+     "reason": "消化性潰瘍診斷與用藥關聯屬重要醫療判斷事實，影響過失認定，但summary確實未明確提及Tagament Inj.與消化性潰瘍之關聯"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "J醫院急診病例記錄屬關鍵客觀證據，影響胃出血事實認定，但summary未提及",
+     "reason": "J醫院急診病例記錄屬關鍵客觀證據，影響胃出血事實認定，但summary未提及"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 85,
+   "matched": 86,
+   "partial": 2,
+   "missing": 20,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7404,
+  "compression_afg_chars": 3047,
+  "compression_source_chars": 11739,
+  "gt_length_ratio": 0.7466,
+  "gt_length_afg_chars": 3047,
+  "gt_length_gt_chars": 4081,
+  "section_balance": 0.7
  }
 }
