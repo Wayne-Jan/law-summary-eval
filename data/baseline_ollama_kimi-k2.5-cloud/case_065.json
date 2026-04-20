@@ -136,5 +136,263 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.829,
+  "fact_recall": 0.6389,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7797,
+  "quality_overall": 4.8714,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.063,
+  "faithfulness_combined": {
+   "score": 0.9622,
+   "citation_fidelity": 0.937,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.8611,
+  "missing_severity": {
+   "critical": 1,
+   "important": 13,
+   "minor": 16,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「醫師A、B負責診治，均另為不起訴處分」為程序性事實，五個 section 均未提及，確屬遺漏但不影響案情核心理解",
+     "reason": "「醫師A、B負責診治，均另為不起訴處分」為程序性事實，五個 section 均未提及，確屬遺漏但不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「抽血檢查結果均於正常值內」在 all sections 中均未明確提及，雖 reasoning section 有血紅素等項目正常之描述，但「均於正常值內」的概括性陳述未出現",
+     "reason": "「抽血檢查結果均於正常值內」在 all sections 中均未明確提及，雖 reasoning section 有血紅素等項目正常之描述，但「均於正常值內」的概括性陳述未出現"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「心電圖檢查結果為竇式心搏過緩」此一具體醫學術語在五個 section 中均未出現，維持 missing",
+     "reason": "「心電圖檢查結果為竇式心搏過緩」此一具體醫學術語在五個 section 中均未出現，維持 missing"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「凌晨1時15分」這一關鍵時間點雖在 reasoning section 出現，但 facts section 確實遺漏，且屬重要時間節點",
+     "reason": "「凌晨1時15分」這一關鍵時間點雖在 reasoning section 出現，但 facts section 確實遺漏，且屬重要時間節點"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「Buscopan 20mg、消炎止痛藥 Voren 75mg」等具體藥物名稱在五個 section 中均未提及，僅有「止痛藥物」等泛稱",
+     "reason": "「Buscopan 20mg、消炎止痛藥 Voren 75mg」等具體藥物名稱在五個 section 中均未提及，僅有「止痛藥物」等泛稱"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「腹部X光檢查顯示輕度腸阻塞」這一重要檢查結果在 section_facts 中未提及，雖 defense section 有提及安排腹部X光，但結果未明確說明",
+     "reason": "「腹部X光檢查顯示輕度腸阻塞」這一重要檢查結果在 section_facts 中未提及，雖 defense section 有提及安排腹部X光，但結果未明確說明"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「建議安排內視鏡、開立口服藥物、建議腸胃科門診追蹤」被告丁的具體處置建議，雖 defense section 有提及類似內容，但 facts section 未完整記載",
+     "reason": "「建議安排內視鏡、開立口服藥物、建議腸胃科門診追蹤」被告丁的具體處置建議，雖 defense section 有提及類似內容，但 facts section 未完整記載"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「上午10時42分許陷入昏迷」此一關鍵時間點及狀態，facts section 僅提「病情急速惡化」而未提「陷入昏迷」，屬重要事實遺漏",
+     "reason": "「上午10時42分許陷入昏迷」此一關鍵時間點及狀態，facts section 僅提「病情急速惡化」而未提「陷入昏迷」，屬重要事實遺漏"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 中被告乙僅提及『當天病患剛來伊就下班了』，未明確提及病患到院時間為『早上6時15分』的具體時刻，亦未陳述『因腹痛輻射至背部』之主訴症狀細節，summary 確實遺漏此關鍵時間與症狀資訊",
+     "reason": "section_02_defense.txt 中被告乙僅提及『當天病患剛來伊就下班了』，未明確提及病患到院時間為『早上6時15分』的具體時刻，亦未陳述『因腹痛輻射至背部』之主訴症狀細節，summary 確實遺漏此關鍵時間與症狀資訊"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 中被告乙僅稱『常見原因排除後再看下一步』、『胰臟酵素的報告伊並未看到』，並未提及『診斷為腹痛』以及『給予止痛藥物並安排抽血檢驗』之具體處置內容；交叉檢視五個 section 均無此診療細節，summary 確實遺漏",
+     "reason": "section_02_defense.txt 中被告乙僅稱『常見原因排除後再看下一步』、『胰臟酵素的報告伊並未看到』，並未提及『診斷為腹痛』以及『給予止痛藥物並安排抽血檢驗』之具體處置內容；交叉檢視五個 section 均無此診療細節，summary 確實遺漏"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 中被告丙稱『下班前伊有跟被告丁交接』，但未明確陳述『早上7點』之交接時間；該精確時間點見於 gt_claim，然 summary 未涵蓋此細節，影響交班時間軸理解",
+     "reason": "section_02_defense.txt 中被告丙稱『下班前伊有跟被告丁交接』，但未明確陳述『早上7點』之交接時間；該精確時間點見於 gt_claim，然 summary 未涵蓋此細節，影響交班時間軸理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 中被告丁僅提及『給告訴人一張腹痛注意事項』『症狀緩解想回家』，並未提及『給予止痛針劑』以及『安排腹部X光』之具體醫療處置；交叉檢視五個 section 均無此項目，summary 確實遺漏被告丙、丁之診療細節",
+     "reason": "section_02_defense.txt 中被告丁僅提及『給告訴人一張腹痛注意事項』『症狀緩解想回家』，並未提及『給予止痛針劑』以及『安排腹部X光』之具體醫療處置；交叉檢視五個 section 均無此項目，summary 確實遺漏被告丙、丁之診療細節"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 中被告丁提及『病患表示症狀緩解想回家』『給告訴人一張腹痛注意事項』，但未陳述『早上8時40分』之離院時間、『開立口服藥物』以及『建議腸胃科門診追蹤』等細節；該精確時間與處置資訊見於 gt_claim，summary 確實遺漏",
+     "reason": "section_02_defense.txt 中被告丁提及『病患表示症狀緩解想回家』『給告訴人一張腹痛注意事項』，但未陳述『早上8時40分』之離院時間、『開立口服藥物』以及『建議腸胃科門診追蹤』等細節；該精確時間與處置資訊見於 gt_claim，summary 確實遺漏"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係鑑定委員會對被告甲排除診斷過程之專業細節描述，屬醫療鑑定背景資訊；summary已涵蓋主要疏失認定，此細節遺漏不影響案情核心理解",
+     "reason": "係鑑定委員會對被告甲排除診斷過程之專業細節描述，屬醫療鑑定背景資訊；summary已涵蓋主要疏失認定，此細節遺漏不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係主動脈瘤症狀學之一般醫學知識，屬背景性說明，非本案關鍵鑑定意見",
+     "reason": "係主動脈瘤症狀學之一般醫學知識，屬背景性說明，非本案關鍵鑑定意見"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係胃鏡檢查準確性之一般醫學常識，summary已提及建議胃鏡檢查之事實，此背景說明不影響理解",
+     "reason": "係胃鏡檢查準確性之一般醫學常識，summary已提及建議胃鏡檢查之事實，此背景說明不影響理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "涉及被告甲輕忽X光報告、不符醫療常規之具體疏失認定，為醫療過失核心爭點，遺漏影響判決結論理解",
+     "reason": "涉及被告甲輕忽X光報告、不符醫療常規之具體疏失認定，為醫療過失核心爭點，遺漏影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "涉及主動脈瘤檢查時機之醫療處置標準，雖非死因機轉，但影響過失認定之完整理解",
+     "reason": "涉及主動脈瘤檢查時機之醫療處置標準，雖非死因機轉，但影響過失認定之完整理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係急性主動脈剝離併發血管阻塞症狀表現之醫學說明，屬背景性專業知識，不影響案情理解",
+     "reason": "係急性主動脈剝離併發血管阻塞症狀表現之醫學說明，屬背景性專業知識，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係特定部位血管阻塞症狀之醫學說明，屬背景性專業知識",
+     "reason": "係特定部位血管阻塞症狀之醫學說明，屬背景性專業知識"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係腹部血管阻塞症狀之醫學說明，屬背景性專業知識",
+     "reason": "係腹部血管阻塞症狀之醫學說明，屬背景性專業知識"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係下肢血管阻塞症狀之醫學說明，屬背景性專業知識",
+     "reason": "係下肢血管阻塞症狀之醫學說明，屬背景性專業知識"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense 被告甲辯稱「已排除急性胰臟炎」，非診斷為急性胰臟炎；摘要各 section 未見「診斷為急性胰臟炎」之記載",
+     "reason": "section_defense 被告甲辯稱「已排除急性胰臟炎」，非診斷為急性胰臟炎；摘要各 section 未見「診斷為急性胰臟炎」之記載"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 僅提及「僅開立胃藥」，未記載具體時間「凌晨1時15分」",
+     "reason": "section_reasoning 僅提及「僅開立胃藥」，未記載具體時間「凌晨1時15分」"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要各 section（facts/defense/opinions/verdict/reasoning）均未提及「血紅素、肝功能轉氨酶及心肌指數均在正常值內」之檢驗結果",
+     "reason": "摘要各 section（facts/defense/opinions/verdict/reasoning）均未提及「血紅素、肝功能轉氨酶及心肌指數均在正常值內」之檢驗結果"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 均未明確記載「經醫生A及醫生B臆斷為無力及疲勞」之前次診斷內容，僅 section_defense 被告乙提及胰臟酵素報告",
+     "reason": "各 section 均未明確記載「經醫生A及醫生B臆斷為無力及疲勞」之前次診斷內容，僅 section_defense 被告乙提及胰臟酵素報告"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "摘要各 section 均未提及「護理紀錄為返診、腹痛」",
+     "reason": "摘要各 section 均未提及「護理紀錄為返診、腹痛」"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_opinions 僅提及「被告乙、丙、丁診治」，未特別提及「被告丙之印文」",
+     "reason": "section_opinions 僅提及「被告乙、丙、丁診治」，未特別提及「被告丙之印文」"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense 被告丙僅陳述「下班前伊有跟被告丁交接」，未見「不知病患係二度就診，實難採信」之法院評論",
+     "reason": "section_defense 被告丙僅陳述「下班前伊有跟被告丁交接」，未見「不知病患係二度就診，實難採信」之法院評論"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 提及「被告丁在病患拒絕內視鏡檢查後」，但未完整對應「僅以拒絕內視鏡檢查為由，即開立口服藥任其離院」",
+     "reason": "section_reasoning 提及「被告丁在病患拒絕內視鏡檢查後」，但未完整對應「僅以拒絕內視鏡檢查為由，即開立口服藥任其離院」"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 108,
+   "pred_total": 48,
+   "matched": 64,
+   "partial": 10,
+   "missing": 34,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7659,
+  "compression_afg_chars": 2072,
+  "compression_source_chars": 8850,
+  "gt_length_ratio": 0.4502,
+  "gt_length_afg_chars": 2072,
+  "gt_length_gt_chars": 4602,
+  "section_balance": 0.4583
+ }
 }
