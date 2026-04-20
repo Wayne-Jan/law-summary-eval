@@ -242,5 +242,886 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6756,
+  "fact_recall": 0.4941,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6614,
+  "quality_overall": 4.8071,
+  "checklist_pass_rate": 0.9838,
+  "citation_accuracy": 0.7714,
+  "citation_support_score": 0.8261,
+  "uncited_rate": 0.05,
+  "faithfulness_combined": {
+   "score": 0.8397,
+   "citation_fidelity": 0.7328,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 28,
+   "correct": 28
+  },
+  "weighted_recall": 0.7945,
+  "missing_severity": {
+   "critical": 2,
+   "important": 33,
+   "minor": 84,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT主張「本案風險一旦發生...病患極可能因失血過多死亡」為因果關係論述，遍查section_facts及跨section全文，均未見此特定風險後果描述，僅section_reasoning提及「大幅提升存活機率」為正面論述，與GT所述「失血過多死亡」之反面風險警示語義不同",
+     "reason": "GT主張「本案風險一旦發生...病患極可能因失血過多死亡」為因果關係論述，遍查section_facts及跨section全文，均未見此特定風險後果描述，僅section_reasoning提及「大幅提升存活機率」為正面論述，與GT所述「失血過多死亡」之反面風險警示語義不同"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "GT主張「臺灣醫療水準、Z醫院規模、器材設備、人力配置」等客觀條件，遍查全部5個section原文，均未見此類醫療機構資源能力之描述，屬背景性事實遺漏",
+     "reason": "GT主張「臺灣醫療水準、Z醫院規模、器材設備、人力配置」等客觀條件，遍查全部5個section原文，均未見此類醫療機構資源能力之描述，屬背景性事實遺漏"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "GT主張「血紅素...參考值12.3~18.3，病患G術前值為14.4」包含參考值範圍及術前值。section_facts pred_claim 11僅記載「血紅素持續下降（下午9時32分為8.1g/dL，下午11時1分為5.4g/dL）」，未提及參考值及術前值14.4。section_opinions pred_claim 7提及8.1g/dL但無術前值資訊。屬檢驗數據細節遺漏",
+     "reason": "GT主張「血紅素...參考值12.3~18.3，病患G術前值為14.4」包含參考值範圍及術前值。section_facts pred_claim 11僅記載「血紅素持續下降（下午9時32分為8.1g/dL，下午11時1分為5.4g/dL）」，未提及參考值及術前值14.4。section_opinions pred_claim 7提及8.1g/dL但無術前值資訊。屬檢驗數據細節遺漏"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "GT主張「血小板降至107000/μL，參考值120000~400000，術前值為176000」包含參考值及術前值。section_facts pred_claim 11僅模糊提及「血小板降低」，未給出具體數值、參考值及術前值。屬檢驗數據細節遺漏",
+     "reason": "GT主張「血小板降至107000/μL，參考值120000~400000，術前值為176000」包含參考值及術前值。section_facts pred_claim 11僅模糊提及「血小板降低」，未給出具體數值、參考值及術前值。屬檢驗數據細節遺漏"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense及所有5個section均無引用鑑定報告關於「病人術後之血紅素確實呈現持續偏低。造成血紅素偏低之原因為術後出血」之原文，摘要僅提及被告抗辯稱血紅素下降係因急救所致，未提及鑑定報告認定血紅素偏低原因為術後出血之內容",
+     "reason": "section_defense及所有5個section均無引用鑑定報告關於「病人術後之血紅素確實呈現持續偏低。造成血紅素偏低之原因為術後出血」之原文，摘要僅提及被告抗辯稱血紅素下降係因急救所致，未提及鑑定報告認定血紅素偏低原因為術後出血之內容"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無明確提及「術後第一次血紅素檢驗值係於醫護人員完成初步休克急救後所抽取檢測」之具體時序關係，僅有section_facts提及急救期間血紅素檢驗數值，未明確說明第一次檢驗與急救之時間關係",
+     "reason": "所有section原文均無明確提及「術後第一次血紅素檢驗值係於醫護人員完成初步休克急救後所抽取檢測」之具體時序關係，僅有section_facts提及急救期間血紅素檢驗數值，未明確說明第一次檢驗與急救之時間關係"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及醫審會引用「急救後」之檢測資料作為「手術後」血紅素數值持續偏低依據之問題，此乃被告抗辯之核心論點之一，摘要遺漏",
+     "reason": "所有section原文均無提及醫審會引用「急救後」之檢測資料作為「手術後」血紅素數值持續偏低依據之問題，此乃被告抗辯之核心論點之一，摘要遺漏"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無引用家屬A關於「床單上有滲血」之具體證詞內容，僅section_defense提及被告抗辯「術後傷口滲液多係因腹水量多，非出血」，未詳述家屬證詞",
+     "reason": "所有section原文均無引用家屬A關於「床單上有滲血」之具體證詞內容，僅section_defense提及被告抗辯「術後傷口滲液多係因腹水量多，非出血」，未詳述家屬證詞"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及家屬A證稱滲血為血而非組織液之內容",
+     "reason": "所有section原文均無提及家屬A證稱滲血為血而非組織液之內容"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及家屬A自承不具醫學常識之內容",
+     "reason": "所有section原文均無提及家屬A自承不具醫學常識之內容"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無引用護士於偵查中證稱病患G是滲組織液而非出血之證詞",
+     "reason": "所有section原文均無引用護士於偵查中證稱病患G是滲組織液而非出血之證詞"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及護士請清潔人員換床單、請家屬買紙尿褲、未通知被告甲大量出血等具體處理行為",
+     "reason": "所有section原文均無提及護士請清潔人員換床單、請家屬買紙尿褲、未通知被告甲大量出血等具體處理行為"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及家屬A認為護士處理合理之內容",
+     "reason": "所有section原文均無提及家屬A認為護士處理合理之內容"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及「如當時真有大量出血，護士豈會只作上開處理」之推論性論述",
+     "reason": "所有section原文均無提及「如當時真有大量出血，護士豈會只作上開處理」之推論性論述"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及被告主張「家屬A證述不實」之內容",
+     "reason": "所有section原文均無提及被告主張「家屬A證述不實」之內容"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無引用美國心臟協會「Circulation」期刊關於「How to interpret elevated cardiac troponin levels」之具體研究內容",
+     "reason": "所有section原文均無引用美國心臟協會「Circulation」期刊關於「How to interpret elevated cardiac troponin levels」之具體研究內容"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_reasoning提及「休克後當日下午11時10分驗得之心肌酵素酶」，但未明確計算「約經過2.5小時」之時間間隔",
+     "reason": "section_reasoning提及「休克後當日下午11時10分驗得之心肌酵素酶」，但未明確計算「約經過2.5小時」之時間間隔"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無明確論述「急性心肌梗塞患者於發病後2.5小時，其心肌酵素酶尚在參考值範圍內」之醫學判斷",
+     "reason": "所有section原文均無明確論述「急性心肌梗塞患者於發病後2.5小時，其心肌酵素酶尚在參考值範圍內」之醫學判斷"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無明確陳述「縱算心肌酵素酶數值在參考值範圍內，亦不足以排除心因性休克之可能性」之論點",
+     "reason": "所有section原文均無明確陳述「縱算心肌酵素酶數值在參考值範圍內，亦不足以排除心因性休克之可能性」之論點"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及被告質疑「第二次鑑定意見僅以單一時點之心肌酵素酶數值，遽而排除心因性休克之可能性，未免草率」之內容，此乃被告抗辭之重要論點",
+     "reason": "所有section原文均無提及被告質疑「第二次鑑定意見僅以單一時點之心肌酵素酶數值，遽而排除心因性休克之可能性，未免草率」之內容，此乃被告抗辭之重要論點"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_reasoning提及「心肌酵素酶數值為0.090ng/mL」，但未提及「由超過標準值0.01ng/mL的0.02ng/mL，快速上升至0.09ng/mL」之具體數值變化過程",
+     "reason": "section_reasoning提及「心肌酵素酶數值為0.090ng/mL」，但未提及「由超過標準值0.01ng/mL的0.02ng/mL，快速上升至0.09ng/mL」之具體數值變化過程"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense提及「CK、CK-MB數值升高」，但未明確陳述「CK-MB乃為急性心肌梗塞最重要之檢測項目」",
+     "reason": "section_defense提及「CK、CK-MB數值升高」，但未明確陳述「CK-MB乃為急性心肌梗塞最重要之檢測項目」"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_opinions提及「法醫意見（或解剖鑑定報告）」及 CK、CK-MB，但未提及「CK高達122IU/L、CK-MB已達5%」之具體數值",
+     "reason": "section_opinions提及「法醫意見（或解剖鑑定報告）」及 CK、CK-MB，但未提及「CK高達122IU/L、CK-MB已達5%」之具體數值"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及「AST為1461U/L、ALT為1795U/L」之具體數值",
+     "reason": "所有section原文均無提及「AST為1461U/L、ALT為1795U/L」之具體數值"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及被告質疑「醫審會究係依據何等事實及病歷資料而認定病患G有發生肝衰竭、出血之併發症之可能」之內容",
+     "reason": "所有section原文均無提及被告質疑「醫審會究係依據何等事實及病歷資料而認定病患G有發生肝衰竭、出血之併發症之可能」之內容"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及「遍查第二次鑑定意見所附參考資料2、3，並無相應之記載」之質疑",
+     "reason": "所有section原文均無提及「遍查第二次鑑定意見所附參考資料2、3，並無相應之記載」之質疑"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及醫審會第三次鑑定意見澄清「因無適當明確代表數值，故結以前次之鑑定意見文字」之內容",
+     "reason": "所有section原文均無提及醫審會第三次鑑定意見澄清「因無適當明確代表數值，故結以前次之鑑定意見文字」之內容"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及被告質疑「醫審會自承無適當明確代表數值，卻作出前揭結論，恐為恣意猜測」之內容",
+     "reason": "所有section原文均無提及被告質疑「醫審會自承無適當明確代表數值，卻作出前揭結論，恐為恣意猜測」之內容"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及醫審會於第三次鑑定書改稱「參考資料6...肝切除手術後出血發生率1∼8%與術後死亡率達17%∼83%」之說明",
+     "reason": "所有section原文均無提及醫審會於第三次鑑定書改稱「參考資料6...肝切除手術後出血發生率1∼8%與術後死亡率達17%∼83%」之說明"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及「以前次鑑定所附之參考資料6較為切合本案」之判斷",
+     "reason": "所有section原文均無提及「以前次鑑定所附之參考資料6較為切合本案」之判斷"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及被告指控「遍查第二次鑑定書所附參考資料6，均無肝切除手術後死亡率達17%∼83%之相關記載，醫審會引用上開文獻，顯屬有誤」之具體指控",
+     "reason": "所有section原文均無提及被告指控「遍查第二次鑑定書所附參考資料6，均無肝切除手術後死亡率達17%∼83%之相關記載，醫審會引用上開文獻，顯屬有誤」之具體指控"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section原文均無提及「The reported incidence of PHH varies considerably among published studies from 1∼8%」之英文文獻原文",
+     "reason": "所有section原文均無提及「The reported incidence of PHH varies considerably among published studies from 1∼8%」之英文文獻原文"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section原文均無提及被告質疑「所引述之文獻資料不足援引於本案情形，且根本無從得出上開文獻之結論」之內容",
+     "reason": "所有section原文均無提及被告質疑「所引述之文獻資料不足援引於本案情形，且根本無從得出上開文獻之結論」之內容"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense提及「加護病房感染風險較高（約5至10倍）」，但未明確陳述「已業證實」之結論性主張",
+     "reason": "section_defense提及「加護病房感染風險較高（約5至10倍）」，但未明確陳述「已業證實」之結論性主張"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense提及被告考量感染風險，但未明確陳述「醫師於施行醫療處置時應考量加護病房感染風險較高之問題」之注意義務",
+     "reason": "section_defense提及被告考量感染風險，但未明確陳述「醫師於施行醫療處置時應考量加護病房感染風險較高之問題」之注意義務"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 僅提及「預防性抗生素」為概括性描述，未記載 Metacin、Exacin 之具體藥名及「8小時給藥一次」之頻率",
+     "reason": "section_defense.txt 僅提及「預防性抗生素」為概括性描述，未記載 Metacin、Exacin 之具體藥名及「8小時給藥一次」之頻率"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 僅提及「維他命K1」為概括性描述，未記載「8小時給藥一次」之具體頻率",
+     "reason": "section_defense.txt 僅提及「維他命K1」為概括性描述，未記載「8小時給藥一次」之具體頻率"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 未提及止痛藥 Demerol 及「6小時給藥一次」之給藥頻率",
+     "reason": "section_defense.txt 未提及止痛藥 Demerol 及「6小時給藥一次」之給藥頻率"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 僅提及「止血劑」為概括性描述，未記載 Transamine 之具體藥名及「8小時給藥一次」之頻率",
+     "reason": "section_defense.txt 僅提及「止血劑」為概括性描述，未記載 Transamine 之具體藥名及「8小時給藥一次」之頻率"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 僅提及「新鮮血漿」為概括性描述，未記載 FFP 及「一天6U」之具體劑量",
+     "reason": "section_defense.txt 僅提及「新鮮血漿」為概括性描述，未記載 FFP 及「一天6U」之具體劑量"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 僅提及「護理人員亦遵循術後病房常規」，未記載「下午3時40分至6時前有3次護理紀錄」之具體時間與次數",
+     "reason": "section_defense.txt 僅提及「護理人員亦遵循術後病房常規」，未記載「下午3時40分至6時前有3次護理紀錄」之具體時間與次數"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 未記載「下午6時至7時有3次護理紀錄」之具體時間與次數",
+     "reason": "section_defense.txt 未記載「下午6時至7時有3次護理紀錄」之具體時間與次數"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 未記載「被告甲約於下午6時30分至病房訪視」之具體時間",
+     "reason": "section_defense.txt 未記載「被告甲約於下午6時30分至病房訪視」之具體時間"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 未記載「下午7時至8時有3次護理紀錄」之具體時間與次數",
+     "reason": "section_defense.txt 未記載「下午7時至8時有3次護理紀錄」之具體時間與次數"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 提及「經家屬同意後送一般病房」，但未明確記載「家屬充分瞭解之同意」的完整說明過程",
+     "reason": "section_defense.txt 提及「經家屬同意後送一般病房」，但未明確記載「家屬充分瞭解之同意」的完整說明過程"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 涵蓋被告抗辯但未明確提及急救流程標準作業程序之全院一致性描述，遍查五個 section 原文均未見此敘述",
+     "reason": "section_defense.txt 涵蓋被告抗辯但未明確提及急救流程標準作業程序之全院一致性描述，遍查五個 section 原文均未見此敘述"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未提及「心肺復甦術護理技術之作業標準書」之具體規範名稱",
+     "reason": "遍查五個 section 原文，均未提及「心肺復甦術護理技術之作業標準書」之具體規範名稱"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未明確提及「急救流程不因加護病房或一般病房而有差異」之系統性描述",
+     "reason": "遍查五個 section 原文，均未明確提及「急救流程不因加護病房或一般病房而有差異」之系統性描述"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，均未提及「每層病房之護理單位均備有急救車」之設備細節",
+     "reason": "遍查五個 section 原文，均未提及「每層病房之護理單位均備有急救車」之設備細節"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，均未提及「急救器材準備情況」或「向其他單位商借急救器材」之相關描述",
+     "reason": "遍查五個 section 原文，均未提及「急救器材準備情況」或「向其他單位商借急救器材」之相關描述"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未明確記載「一位值班醫師正位在該樓層護理單位」之位址描述",
+     "reason": "遍查五個 section 原文，均未明確記載「一位值班醫師正位在該樓層護理單位」之位址描述"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未明確記載「護理人員一發現異狀，該名值班醫師隨即進入病房進行急救，並同時啟動急救通知流程」之詳細急救啟動流程",
+     "reason": "遍查五個 section 原文，均未明確記載「護理人員一發現異狀，該名值班醫師隨即進入病房進行急救，並同時啟動急救通知流程」之詳細急救啟動流程"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，均未明確記載「另一位值班醫師亦於2、3分鐘內加入急救」之時間細節",
+     "reason": "遍查五個 section 原文，均未明確記載「另一位值班醫師亦於2、3分鐘內加入急救」之時間細節"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，均未明確記載「被告、麻醉科醫師、護理人員也在最短時間趕到病房」之醫療團隊到場細節",
+     "reason": "遍查五個 section 原文，均未明確記載「被告、麻醉科醫師、護理人員也在最短時間趕到病房」之醫療團隊到場細節"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 及 section_reasoning.txt 均未明確記載「術後生命徵象穩定」之描述",
+     "reason": "section_defense.txt 及 section_reasoning.txt 均未明確記載「術後生命徵象穩定」之描述"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未明確記載「下午10時轉入加護病房前即已失血500C.C.」之具體失血數據",
+     "reason": "遍查五個 section 原文，均未明確記載「下午10時轉入加護病房前即已失血500C.C.」之具體失血數據"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "section_defense.txt 有「縱使提高監護密度或送入加護病房，亦無法提早知悉或防免休克發生」之意，但缺少「本案縱然...無法防免病患G休克之情形」中「本案」與「病患G」之特定指向",
+     "reason": "section_defense.txt 有「縱使提高監護密度或送入加護病房，亦無法提早知悉或防免休克發生」之意，但缺少「本案縱然...無法防免病患G休克之情形」中「本案」與「病患G」之特定指向"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未詳細記載「6小時以血管攝影確診及栓塞止血或再度剖腹探查」與「死亡率8.6%、25%」之完整援引內容",
+     "reason": "遍查五個 section 原文，均未詳細記載「6小時以血管攝影確診及栓塞止血或再度剖腹探查」與「死亡率8.6%、25%」之完整援引內容"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未記載被告主張「法院提問有失中立、客觀，並有誤導、暗示醫審會之嫌」之程序性異議",
+     "reason": "遍查五個 section 原文，均未記載被告主張「法院提問有失中立、客觀，並有誤導、暗示醫審會之嫌」之程序性異議"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "遍查五個 section 原文，section_reasoning.txt 雖記載法院認定死因為出血性休克，但未見被告主張「法院已認定病患G係因出血性休克所導致之併發症而死亡」之抗辯視角",
+     "reason": "遍查五個 section 原文，section_reasoning.txt 雖記載法院認定死因為出血性休克，但未見被告主張「法院已認定病患G係因出血性休克所導致之併發症而死亡」之抗辯視角"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未記載「法院提問有失中立、客觀，並有誤導、暗示醫審會之嫌」之評價",
+     "reason": "遍查五個 section 原文，均未記載「法院提問有失中立、客觀，並有誤導、暗示醫審會之嫌」之評價"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未記載被告對「第二次鑑定報告證明力誠屬疑義」之質疑",
+     "reason": "遍查五個 section 原文，均未記載被告對「第二次鑑定報告證明力誠屬疑義」之質疑"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未記載被告主張「第一次鑑定意見欠缺依據、內容有誤、無證據能力」之相關內容",
+     "reason": "遍查五個 section 原文，均未記載被告主張「第一次鑑定意見欠缺依據、內容有誤、無證據能力」之相關內容"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未記載被告主張「第二次鑑定意見欠缺依據、內容有誤、無證據能力」之相關內容",
+     "reason": "遍查五個 section 原文，均未記載被告主張「第二次鑑定意見欠缺依據、內容有誤、無證據能力」之相關內容"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未記載被告主張「第三次鑑定意見欠缺依據、內容有誤、無證據能力」之相關內容",
+     "reason": "遍查五個 section 原文，均未記載被告主張「第三次鑑定意見欠缺依據、內容有誤、無證據能力」之相關內容"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有 sections 原文均未提及 ASA 第二級風險評估之具體內容，屬於背景性參考資訊",
+     "reason": "所有 sections 原文均未提及 ASA 第二級風險評估之具體內容，屬於背景性參考資訊"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有 sections 原文均未提及 ASA 指標作為加護病房入住標準之論述，屬於評估標準細節",
+     "reason": "所有 sections 原文均未提及 ASA 指標作為加護病房入住標準之論述，屬於評估標準細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 僅提及「依全民健康保險醫療費用支付標準」，但未載明具體條文內容（需輔助性治療、生命徵象不穩定等），屬於法規具體條文",
+     "reason": "section_defense 僅提及「依全民健康保險醫療費用支付標準」，但未載明具體條文內容（需輔助性治療、生命徵象不穩定等），屬於法規具體條文"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有 sections 原文均未提及對醫審會併發症認定之質疑，屬於防御方法細節",
+     "reason": "所有 sections 原文均未提及對醫審會併發症認定之質疑，屬於防御方法細節"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有 sections 原文均未提及低血糖、低蛋白血症、肝切除後出血之發生率及死亡率具體數據，屬於參考數據細節",
+     "reason": "所有 sections 原文均未提及低血糖、低蛋白血症、肝切除後出血之發生率及死亡率具體數據，屬於參考數據細節"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及術前血紅素14.4g/dl及正常範圍判斷，屬背景檢驗數據細節",
+     "reason": "section_03_opinions.txt 未提及術前血紅素14.4g/dl及正常範圍判斷，屬背景檢驗數據細節"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及出血性休克但未明確結合「普通病房」地點，屬關鍵事件地點描述缺失",
+     "reason": "section_03_opinions.txt 雖提及出血性休克但未明確結合「普通病房」地點，屬關鍵事件地點描述缺失"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及7月13日下午9時32分具體檢驗數值，屬具體數值細節",
+     "reason": "section_03_opinions.txt 未提及7月13日下午9時32分具體檢驗數值，屬具體數值細節"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及下午11時1分具體檢驗數值，屬具體數值細節",
+     "reason": "section_03_opinions.txt 未提及下午11時1分具體檢驗數值，屬具體數值細節"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及7月14日上午0時5分血小板數值，屬具體數值細節",
+     "reason": "section_03_opinions.txt 未提及7月14日上午0時5分血小板數值，屬具體數值細節"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 雖提及肝硬化但未完整表述「肝硬化病人接受肝臟部分切除術後可能發生出血併發症」之風險敘述",
+     "reason": "section_03_opinions.txt 雖提及肝硬化但未完整表述「肝硬化病人接受肝臟部分切除術後可能發生出血併發症」之風險敘述"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未詳述術後出血併發症的可能原因（凝血功能不良、手術中止血不完全）",
+     "reason": "section_03_opinions.txt 未詳述術後出血併發症的可能原因（凝血功能不良、手術中止血不完全）"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未分類列舉休克的主要原因類型（出血性、心因性、神經性、敗血性、過敏性）",
+     "reason": "section_03_opinions.txt 未分類列舉休克的主要原因類型（出血性、心因性、神經性、敗血性、過敏性）"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及troponin-I檢驗值及其正常範圍判斷",
+     "reason": "section_03_opinions.txt 未提及troponin-I檢驗值及其正常範圍判斷"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 雖提及輸血但未具體說明PRBC 6U及FFP 6U之數量",
+     "reason": "section_03_opinions.txt 雖提及輸血但未具體說明PRBC 6U及FFP 6U之數量"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及下午9時32分急救後血紅素仍偏低之觀察",
+     "reason": "section_03_opinions.txt 未提及下午9時32分急救後血紅素仍偏低之觀察"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未具體描述輸血後血紅素、血小板數值持續下降之趨勢，屬關鍵病情變化描述",
+     "reason": "section_03_opinions.txt 未具體描述輸血後血紅素、血小板數值持續下降之趨勢，屬關鍵病情變化描述"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及數值持續下降之可能原因分析，屬專業判斷依據",
+     "reason": "section_03_opinions.txt 未提及數值持續下降之可能原因分析，屬專業判斷依據"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及胸外按摩可能影響或促進傷口出血之論述",
+     "reason": "section_03_opinions.txt 未提及胸外按摩可能影響或促進傷口出血之論述"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未涵蓋護理紀錄、輸出入紀錄及具體時間範圍之詳細描述",
+     "reason": "section_03_opinions.txt 未涵蓋護理紀錄、輸出入紀錄及具體時間範圍之詳細描述"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及引流管出血量多之護理紀錄記載，屬關鍵臨床觀察證據",
+     "reason": "section_03_opinions.txt 未提及引流管出血量多之護理紀錄記載，屬關鍵臨床觀察證據"
+    },
+    {
+     "gt_claim_id": 170,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及休克後凝血功能不良及肝硬化為死亡之加重因子，屬死因分析要素",
+     "reason": "section_03_opinions.txt 未提及休克後凝血功能不良及肝硬化為死亡之加重因子，屬死因分析要素"
+    },
+    {
+     "gt_claim_id": 171,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及心臟內科醫師於加護病房施行心臟超音波檢查之時間與人員",
+     "reason": "section_03_opinions.txt 未提及心臟內科醫師於加護病房施行心臟超音波檢查之時間與人員"
+    },
+    {
+     "gt_claim_id": 175,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未引用World J Gastroenterol文獻及其併發症分類",
+     "reason": "section_03_opinions.txt 未引用World J Gastroenterol文獻及其併發症分類"
+    },
+    {
+     "gt_claim_id": 176,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及「依文獻認定併發症有發生之可能」之結論",
+     "reason": "section_03_opinions.txt 未提及「依文獻認定併發症有發生之可能」之結論"
+    },
+    {
+     "gt_claim_id": 178,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及術後肝衰竭之發生率及死亡率數據",
+     "reason": "section_03_opinions.txt 未提及術後肝衰竭之發生率及死亡率數據"
+    },
+    {
+     "gt_claim_id": 179,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及術後出血之發生率及死亡率數據",
+     "reason": "section_03_opinions.txt 未提及術後出血之發生率及死亡率數據"
+    },
+    {
+     "gt_claim_id": 181,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及ASA Physical Status Classification System之評估標準",
+     "reason": "section_03_opinions.txt 未提及ASA Physical Status Classification System之評估標準"
+    },
+    {
+     "gt_claim_id": 182,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未詳述入加護病房考量因素之手術反應及器官影響",
+     "reason": "section_03_opinions.txt 未詳述入加護病房考量因素之手術反應及器官影響"
+    },
+    {
+     "gt_claim_id": 183,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及第三次鑑定報告參考資料之來源與發表時間",
+     "reason": "section_03_opinions.txt 未提及第三次鑑定報告參考資料之來源與發表時間"
+    },
+    {
+     "gt_claim_id": 184,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及研究背景與本案時間相近、無落伍過時之論述",
+     "reason": "section_03_opinions.txt 未提及研究背景與本案時間相近、無落伍過時之論述"
+    },
+    {
+     "gt_claim_id": 197,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 僅提及「本案手術具高度風險」，確未明確說明「高致命危險性」或「相當程度發生風險」之具體措詞",
+     "reason": "reasoning section 僅提及「本案手術具高度風險」，確未明確說明「高致命危險性」或「相當程度發生風險」之具體措詞"
+    },
+    {
+     "gt_claim_id": 205,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及術中輸血具體數量（4U），僅 facts section 有記載",
+     "reason": "reasoning section 未提及術中輸血具體數量（4U），僅 facts section 有記載"
+    },
+    {
+     "gt_claim_id": 206,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未完整列出術後併發症清單（肝衰竭、出血、低血糖、低蛋白血症、敗血症等）",
+     "reason": "reasoning section 未完整列出術後併發症清單（肝衰竭、出血、低血糖、低蛋白血症、敗血症等）"
+    },
+    {
+     "gt_claim_id": 209,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未明確提及「肝硬化病人...即有可能發生出血併發症」之風險論述",
+     "reason": "reasoning section 未明確提及「肝硬化病人...即有可能發生出血併發症」之風險論述"
+    },
+    {
+     "gt_claim_id": 210,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未明確說明「致死率甚高」，影響對手術風險嚴重性之完整理解",
+     "reason": "reasoning section 未明確說明「致死率甚高」，影響對手術風險嚴重性之完整理解"
+    },
+    {
+     "gt_claim_id": 211,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及「1%發生率、17%死亡率」之具體統計數據",
+     "reason": "reasoning section 未提及「1%發生率、17%死亡率」之具體統計數據"
+    },
+    {
+     "gt_claim_id": 212,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及「肝功能衰竭機率10%、死亡率30%」之統計數據",
+     "reason": "reasoning section 未提及「肝功能衰竭機率10%、死亡率30%」之統計數據"
+    },
+    {
+     "gt_claim_id": 213,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及ASA分級及手術期死亡率統計",
+     "reason": "所有 sections 均未提及ASA分級及手術期死亡率統計"
+    },
+    {
+     "gt_claim_id": 215,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及ASA Physical Status Classification System之詳細說明",
+     "reason": "所有 sections 均未提及ASA Physical Status Classification System之詳細說明"
+    },
+    {
+     "gt_claim_id": 216,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未詳細說明術後監護決策之多重考量因素（手術壓力反應、麻醉影響等）",
+     "reason": "reasoning section 未詳細說明術後監護決策之多重考量因素（手術壓力反應、麻醉影響等）"
+    },
+    {
+     "gt_claim_id": 217,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及「不可單以ASA分級作為判斷依據」之論述",
+     "reason": "所有 sections 均未提及「不可單以ASA分級作為判斷依據」之論述"
+    },
+    {
+     "gt_claim_id": 220,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未詳細比較加護病房與一般病房在人力配置、監測設備等方面之具體差異",
+     "reason": "reasoning section 未詳細比較加護病房與一般病房在人力配置、監測設備等方面之具體差異"
+    },
+    {
+     "gt_claim_id": 221,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及「Z院區屬區域級醫院」之醫院層級描述",
+     "reason": "所有 sections 均未提及「Z院區屬區域級醫院」之醫院層級描述"
+    },
+    {
+     "gt_claim_id": 222,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及加護病房是否滿床之證據分析",
+     "reason": "所有 sections 均未提及加護病房是否滿床之證據分析"
+    },
+    {
+     "gt_claim_id": 225,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及「家屬A之伯父提議送加護病房」之具體事件",
+     "reason": "所有 sections 均未提及「家屬A之伯父提議送加護病房」之具體事件"
+    },
+    {
+     "gt_claim_id": 227,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及「ON Special Care routine」等提高監護密度之具體方法",
+     "reason": "所有 sections 均未提及「ON Special Care routine」等提高監護密度之具體方法"
+    },
+    {
+     "gt_claim_id": 231,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未詳細列出術後醫囑之具體內容（輸液2200mL、各類藥物及劑量）",
+     "reason": "reasoning section 未詳細列出術後醫囑之具體內容（輸液2200mL、各類藥物及劑量）"
+    },
+    {
+     "gt_claim_id": 233,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及轉入加護病房之具體時間（下午10時20分）",
+     "reason": "reasoning section 未提及轉入加護病房之具體時間（下午10時20分）"
+    },
+    {
+     "gt_claim_id": 234,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及醫囑從「ON Ward routine」變更為「ON ICU routine」之記載",
+     "reason": "所有 sections 均未提及醫囑從「ON Ward routine」變更為「ON ICU routine」之記載"
+    },
+    {
+     "gt_claim_id": 238,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 記載「健保標準非用以拘束醫師臨床判斷」，但未明確表述「醫師不可以持該標準充作醫療上作為與不作為之依據」",
+     "reason": "reasoning section 記載「健保標準非用以拘束醫師臨床判斷」，但未明確表述「醫師不可以持該標準充作醫療上作為與不作為之依據」"
+    },
+    {
+     "gt_claim_id": 248,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 記載「未盡完整告知說明義務」，但未明確論述「資訊不完全情況下之同意不符合告知同意法則」",
+     "reason": "reasoning section 記載「未盡完整告知說明義務」，但未明確論述「資訊不完全情況下之同意不符合告知同意法則」"
+    },
+    {
+     "gt_claim_id": 250,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 sections 均未提及「此與醫療不確定性、個體差異無涉」之免責排除論述",
+     "reason": "所有 sections 均未提及「此與醫療不確定性、個體差異無涉」之免責排除論述"
+    },
+    {
+     "gt_claim_id": 251,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "所有 sections 均未提及「耗費成本少、幾無侵害、極度有利」之成本效益分析論述",
+     "reason": "所有 sections 均未提及「耗費成本少、幾無侵害、極度有利」之成本效益分析論述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 253,
+   "pred_total": 91,
+   "matched": 111,
+   "partial": 28,
+   "missing": 114,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9296,
+  "compression_afg_chars": 2805,
+  "compression_source_chars": 39848,
+  "gt_length_ratio": 0.166,
+  "gt_length_afg_chars": 2805,
+  "gt_length_gt_chars": 16899,
+  "section_balance": 0.4222
+ }
 }
