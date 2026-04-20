@@ -141,5 +141,263 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7294,
+  "fact_recall": 0.6468,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7855,
+  "quality_overall": 4.3,
+  "checklist_pass_rate": 0.9457,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.8836,
+  "missing_severity": {
+   "critical": 1,
+   "important": 12,
+   "minor": 17,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及腹部超音波檢查及血液、尿液細菌培養之具體檢查項目，僅屬檢查細節不影響案情理解",
+     "reason": "五個 section 原文均未提及腹部超音波檢查及血液、尿液細菌培養之具體檢查項目，僅屬檢查細節不影響案情理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及白血球指數31550之具體數值，pred只說『白血球指數急速升高』而未提具體數字，屬數值細節遺漏",
+     "reason": "五個 section 原文均未提及白血球指數31550之具體數值，pred只說『白血球指數急速升高』而未提具體數字，屬數值細節遺漏"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及10月9日體溫38.2度之具體數值，雖有『持續疼痛及發燒』但無具體溫度記錄，屬具體數值遺漏",
+     "reason": "五個 section 原文均未提及10月9日體溫38.2度之具體數值，雖有『持續疼痛及發燒』但無具體溫度記錄，屬具體數值遺漏"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "pred雖用『始』字暗示10月9日未手術，但未明確陳述『10月9日未採行手術』之具體事實，時間點明確性不足影響手術延誤時序理解",
+     "reason": "pred雖用『始』字暗示10月9日未手術，但未明確陳述『10月9日未採行手術』之具體事實，時間點明確性不足影響手術延誤時序理解"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及10月10日白血球指數5220之數值，pred僅說『急速升高』未提具體數字，屬數值細節遺漏",
+     "reason": "五個 section 原文均未提及10月10日白血球指數5220之數值，pred僅說『急速升高』未提具體數字，屬數值細節遺漏"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個 section 原文均未提及『病患及家屬要求手術』，此為病患主動求醫行為，與法院認定被告『未告知手術必要』有別，影響醫病互動完整理解",
+     "reason": "五個 section 原文均未提及『病患及家屬要求手術』，此為病患主動求醫行為，與法院認定被告『未告知手術必要』有別，影響醫病互動完整理解"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個 section 原文均未明確提及『依當時客觀上情形，亦無不能注意之情事』，此為過失成立要件之一，影響過失責任判斷的完整性",
+     "reason": "五個 section 原文均未明確提及『依當時客觀上情形，亦無不能注意之情事』，此為過失成立要件之一，影響過失責任判斷的完整性"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "gt_claim_id 18與19之合併項，pred未將兩事實明確整合陳述為『10月9日發燒仍未手術』之單一時間點事實，影響時序因果關係理解",
+     "reason": "gt_claim_id 18與19之合併項，pred未將兩事實明確整合陳述為『10月9日發燒仍未手術』之單一時間點事實，影響時序因果關係理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "pred雖提及『升結腸已壞死及穿孔』但明確手術內容『切除右半結腸並作迴腸造廔』未在 facts section 出現，跨 section 搜尋後仍無完整對應，影響手術處置理解",
+     "reason": "pred雖提及『升結腸已壞死及穿孔』但明確手術內容『切除右半結腸並作迴腸造廔』未在 facts section 出現，跨 section 搜尋後仍無完整對應，影響手術處置理解"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_defense提到「曾於85年10月1日會診」，但未提及「多次前往訪視」及「引流管沖洗、重新更換引流管」等具體處置細節，確認摘要未涵蓋",
+     "reason": "section_defense提到「曾於85年10月1日會診」，但未提及「多次前往訪視」及「引流管沖洗、重新更換引流管」等具體處置細節，確認摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個section皆未提及「病人原本並無腹內疾病，嗣後出現腹內膿瘍，必定有其原因」之病歷演變論述，確認摘要未涵蓋此鑑定意見",
+     "reason": "五個section皆未提及「病人原本並無腹內疾病，嗣後出現腹內膿瘍，必定有其原因」之病歷演變論述，確認摘要未涵蓋此鑑定意見"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個section皆未提及「腹腔內膿瘍或後腹腔膿瘍之治療，傳統上均採手術引流」之治療方式歷史背景，確認為背景性醫學知識，摘要未涵蓋",
+     "reason": "五個section皆未提及「腹腔內膿瘍或後腹腔膿瘍之治療，傳統上均採手術引流」之治療方式歷史背景，確認為背景性醫學知識，摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個section皆未提及「最近一、二十年來逐漸改為先以PCD引流後，PCD效果不佳時才手術」之治療方式演變，確認為背景性醫學知識，摘要未涵蓋",
+     "reason": "五個section皆未提及「最近一、二十年來逐漸改為先以PCD引流後，PCD效果不佳時才手術」之治療方式演變，確認為背景性醫學知識，摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_reasoning雖提及「白血球指數」，但未明確說明「當腹腔內有膿瘍發炎時，白血球數目會升高」之因果關係，確認摘要未涵蓋",
+     "reason": "section_reasoning雖提及「白血球指數」，但未明確說明「當腹腔內有膿瘍發炎時，白血球數目會升高」之因果關係，確認摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個section皆未提及「當感染受到控制後...白血球數目會逐漸回復正常值」之臨床指標變化，確認摘要未涵蓋",
+     "reason": "五個section皆未提及「當感染受到控制後...白血球數目會逐漸回復正常值」之臨床指標變化，確認摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個section皆未提及「僅憑白血球之數目，並不能一定完全反應感染是否有效被控制」之診斷限制，確認摘要未涵蓋",
+     "reason": "五個section皆未提及「僅憑白血球之數目，並不能一定完全反應感染是否有效被控制」之診斷限制，確認摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個section皆未提及「必須綜觀病人之其他症狀（例如血紅素之數目下降等），始能作周延及正確之判斷」之綜合判斷原則，確認摘要未涵蓋",
+     "reason": "五個section皆未提及「必須綜觀病人之其他症狀（例如血紅素之數目下降等），始能作周延及正確之判斷」之綜合判斷原則，確認摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions明確記載「本案有行政院衛生署醫事審會鑑定書共2份」，與「本案無法醫鑑定」之GT claim矛盾，但摘要確實未提及「無法醫鑑定」之主張，確認為重要程序性事實遺漏",
+     "reason": "section_opinions明確記載「本案有行政院衛生署醫事審會鑑定書共2份」，與「本案無法醫鑑定」之GT claim矛盾，但摘要確實未提及「無法醫鑑定」之主張，確認為重要程序性事實遺漏"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會第四次鑑定意見關於傳統手術與PCD引流的歷史演變細節未見於任何 section",
+     "reason": "醫審會第四次鑑定意見關於傳統手術與PCD引流的歷史演變細節未見於任何 section"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "手術效果優於PCD及風險比較之專業見解未見於任何 section",
+     "reason": "手術效果優於PCD及風險比較之專業見解未見於任何 section"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人醫師戊關於引流效果不佳具體跡象（膿及腐爛組織）之詳細證述未見於任何 section",
+     "reason": "證人醫師戊關於引流效果不佳具體跡象（膿及腐爛組織）之詳細證述未見於任何 section"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人醫師戊關於引流效果好時具體跡象（膿色變清、空洞縮小）之證述未見於任何 section",
+     "reason": "證人醫師戊關於引流效果好時具體跡象（膿色變清、空洞縮小）之證述未見於任何 section"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫審會第五次鑑定意見關於白血球與感染控制關係之詳細說明未見於任何 section",
+     "reason": "醫審會第五次鑑定意見關於白血球與感染控制關係之詳細說明未見於任何 section"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「抗生素治療」作為治療組成部分之陳述未見於任何 section",
+     "reason": "「抗生素治療」作為治療組成部分之陳述未見於任何 section"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "未有效治療必導致死之最終結果陳述雖可由「手術是挽救生命唯一方法」間接推論，但未見明確文字表述",
+     "reason": "未有效治療必導致死之最終結果陳述雖可由「手術是挽救生命唯一方法」間接推論，但未見明確文字表述"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人醫師關於敗血症與開刀關係之證述未見於任何 section",
+     "reason": "證人醫師關於敗血症與開刀關係之證述未見於任何 section"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人醫師甲關於敗血症不能開刀之證述未見於任何 section",
+     "reason": "證人醫師甲關於敗血症不能開刀之證述未見於任何 section"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人醫師戊關於敗血症優先介入性治療之證述未見於任何 section",
+     "reason": "證人醫師戊關於敗血症優先介入性治療之證述未見於任何 section"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人醫師戊關於敗血症徵候與介入性治療效果關係之證述未見於任何 section",
+     "reason": "證人醫師戊關於敗血症徵候與介入性治療效果關係之證述未見於任何 section"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「被告甲最終選擇開刀」雖有提及（10月11日手術），但未強調「病患身體未回復正常」之時點條件",
+     "reason": "「被告甲最終選擇開刀」雖有提及（10月11日手術），但未強調「病患身體未回復正常」之時點條件"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 126,
+   "pred_total": 46,
+   "matched": 72,
+   "partial": 19,
+   "missing": 35,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.828,
+  "compression_afg_chars": 1531,
+  "compression_source_chars": 8900,
+  "gt_length_ratio": 0.3013,
+  "gt_length_afg_chars": 1531,
+  "gt_length_gt_chars": 5081,
+  "section_balance": 0.3077
+ }
 }

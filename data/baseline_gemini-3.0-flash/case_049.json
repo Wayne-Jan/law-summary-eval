@@ -141,6 +141,514 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7138
+  "rule_based_avg": 0.7138,
+  "fact_recall": 0.446,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6169,
+  "quality_overall": 4.8286,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9226,
+  "uncited_rate": 0.02,
+  "faithfulness_combined": {
+   "score": 0.988,
+   "citation_fidelity": 0.98,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 23,
+   "correct": 23
+  },
+  "weighted_recall": 0.7482,
+  "missing_severity": {
+   "critical": 1,
+   "important": 37,
+   "minor": 28,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 僅提及「應注意」與「疏未注意」，未明確涵蓋「並無不能注意之情形」此過失法律構成要件",
+     "reason": "section_facts 僅提及「應注意」與「疏未注意」，未明確涵蓋「並無不能注意之情形」此過失法律構成要件"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未提及「輸血濃縮紅血球二單位」之醫療處置",
+     "reason": "遍查全部 5 個 section 原文，均未提及「輸血濃縮紅血球二單位」之醫療處置"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "GT「回天乏力」為明確醫學判斷用語，section_facts 僅以「經急救無效」敘述，屬改寫而非遺漏核心事實",
+     "reason": "GT「回天乏力」為明確醫學判斷用語，section_facts 僅以「經急救無效」敘述，屬改寫而非遺漏核心事實"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense 段僅提及「發現病患X已無生命跡象」，未明確陳述「即已呈死亡狀態」之時間點細節，確認維持 missing",
+     "reason": "defense 段僅提及「發現病患X已無生命跡象」，未明確陳述「即已呈死亡狀態」之時間點細節，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術併發症發生率評估屬背景性醫學知識，不影響判決結論理解",
+     "reason": "手術併發症發生率評估屬背景性醫學知識，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "術前詳細血液數值（血球比容37.7%）為重要醫學證據，影響血液稀釋與否的判斷",
+     "reason": "術前詳細血液數值（血球比容37.7%）為重要醫學證據，影響血液稀釋與否的判斷"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "22:36血液報告的具體數值（血球比容14.7%）為關鍵時間點醫療數據，影響出血量評估",
+     "reason": "22:36血液報告的具體數值（血球比容14.7%）為關鍵時間點醫療數據，影響出血量評估"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腹腔出血與醫療事件的因果關聯為專家鑑定核心論點，影響過失認定",
+     "reason": "腹腔出血與醫療事件的因果關聯為專家鑑定核心論點，影響過失認定"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "護理探視具體時間點為程序性紀錄，不影響判決結論理解",
+     "reason": "護理探視具體時間點為程序性紀錄，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "護理紀錄細節為程序性事實，不影響判決結論理解",
+     "reason": "護理紀錄細節為程序性事實，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "21:20超音波檢查時間與結果為重要醫療處置證據，影響疏失判斷",
+     "reason": "21:20超音波檢查時間與結果為重要醫療處置證據，影響疏失判斷"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "超音波檢測敏感度評論為專家意見，影響醫師甲疏失認定",
+     "reason": "超音波檢測敏感度評論為專家意見，影響醫師甲疏失認定"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師甲疏失評論為關鍵鑑定意見，summary僅提及被告乙疏失",
+     "reason": "醫師甲疏失評論為關鍵鑑定意見，summary僅提及被告乙疏失"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急救延遲採血時間差為重要醫療程序缺失證據，影響疏失認定",
+     "reason": "急救延遲採血時間差為重要醫療程序缺失證據，影響疏失認定"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "輸血2單位處置細節為程序性醫療記錄",
+     "reason": "輸血2單位處置細節為程序性醫療記錄"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "輸血量充足性評論為專家醫療意見，影響處置適當性判斷",
+     "reason": "輸血量充足性評論為專家醫療意見，影響處置適當性判斷"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血液檢驗精確度時效評論為背景性醫學討論",
+     "reason": "血液檢驗精確度時效評論為背景性醫學討論"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "術前完整血液檢查數值（白血球、血小板等）為重要醫學證據",
+     "reason": "術前完整血液檢查數值（白血球、血小板等）為重要醫學證據"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急救後完整血液報告數值（白血球22950等）為關鍵醫學證據",
+     "reason": "急救後完整血液報告數值（白血球22950等）為關鍵醫學證據"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血液稀釋與血紅素低估問題為反駁辯護的重要鑑定論點",
+     "reason": "血液稀釋與血紅素低估問題為反駁辯護的重要鑑定論點"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血液檢查參考價值評論為專家意見，影響證據採信",
+     "reason": "血液檢查參考價值評論為專家意見，影響證據採信"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "體重與原始血液量計算為出血量評估的基礎數據",
+     "reason": "體重與原始血液量計算為出血量評估的基礎數據"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血紅素流失量計算為出血量定量評估的重要依據",
+     "reason": "血紅素流失量計算為出血量定量評估的重要依據"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "流失血液量計算值（2803毫升）與summary提到的2600毫升不同，影響出血嚴重度判斷",
+     "reason": "流失血液量計算值（2803毫升）與summary提到的2600毫升不同，影響出血嚴重度判斷"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血15%生理症狀為背景性醫學知識",
+     "reason": "出血15%生理症狀為背景性醫學知識"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血15-25%生理症狀為背景性醫學知識",
+     "reason": "出血15-25%生理症狀為背景性醫學知識"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血25-40%生理症狀為背景性醫學知識",
+     "reason": "出血25-40%生理症狀為背景性醫學知識"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血>40%生理症狀為背景性醫學知識",
+     "reason": "出血>40%生理症狀為背景性醫學知識"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腹腔出血詳細分布位置為解剖發現的重要細節，影響出血來源判斷",
+     "reason": "腹腔出血詳細分布位置為解剖發現的重要細節，影響出血來源判斷"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "骨盤腔血液積聚與破裂處出血細節為解剖關鍵發現",
+     "reason": "骨盤腔血液積聚與破裂處出血細節為解剖關鍵發現"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "超過620c.c.出血量估計為鑑定基準數值，與summary的2600毫升不同",
+     "reason": "超過620c.c.出血量估計為鑑定基準數值，與summary的2600毫升不同"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "內臟鬱血現象為解剖重要發現，影響死因判斷",
+     "reason": "內臟鬱血現象為解剖重要發現，影響死因判斷"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管檢查結果為排除其他死因的背景性資訊",
+     "reason": "血管檢查結果為排除其他死因的背景性資訊"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "內臟缺血性變化為解剖重要發現，影響死因機轉理解",
+     "reason": "內臟缺血性變化為解剖重要發現，影響死因機轉理解"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "台大對出血量具體認同（多於620c.c.）為關鍵鑑定意見",
+     "reason": "台大對出血量具體認同（多於620c.c.）為關鍵鑑定意見"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "陰道斷端縫合處為出血來源的推論為鑑定核心結論，影響因果關係與過失認定",
+     "reason": "陰道斷端縫合處為出血來源的推論為鑑定核心結論，影響因果關係與過失認定"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血液稀釋問題為反駁辯護的重要醫學論點",
+     "reason": "血液稀釋問題為反駁辯護的重要醫學論點"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心肺急救不會導致腹腔積血之排除性論點為鑑定重要論證",
+     "reason": "心肺急救不會導致腹腔積血之排除性論點為鑑定重要論證"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急救不會造成傷口裂開之排除性論點為鑑定重要論證",
+     "reason": "急救不會造成傷口裂開之排除性論點為鑑定重要論證"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性事實：解剖屍體雖是鑑定基礎，但不影響判決核心邏輯理解",
+     "reason": "程序性事實：解剖屍體雖是鑑定基礎，但不影響判決核心邏輯理解"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "具體出血量數據（620c.c.）是鑑定的重要發現，影響出血嚴重程度的評估",
+     "reason": "具體出血量數據（620c.c.）是鑑定的重要發現，影響出血嚴重程度的評估"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "次要醫學細節：器官鬱血現象是解剖發現，不影響核心法律判斷",
+     "reason": "次要醫學細節：器官鬱血現象是解剖發現，不影響核心法律判斷"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "次要醫學細節：腸繫膜血塊位置具體描述，不影響出血事實認定",
+     "reason": "次要醫學細節：腸繫膜血塊位置具體描述，不影響出血事實認定"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "次要醫學細節：血管硬化檢查是排除其他死因的論證",
+     "reason": "次要醫學細節：血管硬化檢查是排除其他死因的論證"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會鑑定結論與法醫鑑定並列是重要的雙重認定，摘要僅提及法醫鑑定而遺漏醫審會認定",
+     "reason": "醫審會鑑定結論與法醫鑑定並列是重要的雙重認定，摘要僅提及法醫鑑定而遺漏醫審會認定"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "次要醫學技術論述：超音波檢測可行性",
+     "reason": "次要醫學技術論述：超音波檢測可行性"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告甲的過失認定：摘要僅提及被告乙的過失，遺漏另一位被告（被告甲）的疏失認定",
+     "reason": "被告甲的過失認定：摘要僅提及被告乙的過失，遺漏另一位被告（被告甲）的疏失認定"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "關鍵數值證據：血紅素 4.7g/dl 是認定大量出血的核心數據，雖在 facts 段落提及但在 reasoning 段落遺漏",
+     "reason": "關鍵數值證據：血紅素 4.7g/dl 是認定大量出血的核心數據，雖在 facts 段落提及但在 reasoning 段落遺漏"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "急救處置細節：輸血 2 單位 PRBC 是具體醫療處置記錄",
+     "reason": "急救處置細節：輸血 2 單位 PRBC 是具體醫療處置記錄"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "次要醫學判斷：輸血量不足的專業評估",
+     "reason": "次要醫學判斷：輸血量不足的專業評估"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫護整體處理評價：「積極度與方式」的過失認定與 pred claim 13 聚焦「疼痛警訊」層次不同",
+     "reason": "醫護整體處理評價：「積極度與方式」的過失認定與 pred claim 13 聚焦「疼痛警訊」層次不同"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "關鍵鑑定結論：「血液無明顯被稀釋」是反駁被告辯護的核心論證",
+     "reason": "關鍵鑑定結論：「血液無明顯被稀釋」是反駁被告辯護的核心論證"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "次要論證細節：血紅素數值非低估的判斷",
+     "reason": "次要論證細節：血紅素數值非低估的判斷"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "次要論證細節：第二次抽血無稀釋",
+     "reason": "次要論證細節：第二次抽血無稀釋"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性細節：實驗室一致性",
+     "reason": "程序性細節：實驗室一致性"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療程序細節：維生系統使用",
+     "reason": "醫療程序細節：維生系統使用"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性事實：依被告聲請囑託鑑定",
+     "reason": "程序性事實：依被告聲請囑託鑑定"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "重要鑑定結論：台大鑑定支持醫審會報告的認定",
+     "reason": "重要鑑定結論：台大鑑定支持醫審會報告的認定"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證據細節：筆跡和原子筆的具體比對發現，雖 pred claim 7 有提及「字跡與筆色」但未明確說「同一支原子筆」",
+     "reason": "證據細節：筆跡和原子筆的具體比對發現，雖 pred claim 7 有提及「字跡與筆色」但未明確說「同一支原子筆」"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人證詞細節：證人乙的具體證稱內容",
+     "reason": "證人證詞細節：證人乙的具體證稱內容"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "時間細節：證人乙的值班時間",
+     "reason": "時間細節：證人乙的值班時間"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證據力認定細節：證人乙證述虛偽的具體裁判理由",
+     "reason": "證據力認定細節：證人乙證述虛偽的具體裁判理由"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "時間細節：證人丁的到院時間",
+     "reason": "時間細節：證人丁的到院時間"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "重要證人觀察：證人丁關於病患痛苦和無醫護人員的直接觀察，是反駁被告辯詞的關鍵證據",
+     "reason": "重要證人觀察：證人丁關於病患痛苦和無醫護人員的直接觀察，是反駁被告辯詞的關鍵證據"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "死因推論限制：不得推論非因急性出血死亡，是重要的法律邏輯論證",
+     "reason": "死因推論限制：不得推論非因急性出血死亡，是重要的法律邏輯論證"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "因果關聯認定：內出血與手術的關聯是判決基礎事實",
+     "reason": "因果關聯認定：內出血與手術的關聯是判決基礎事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 51,
+   "matched": 52,
+   "partial": 20,
+   "missing": 67,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8662,
+  "compression_afg_chars": 1578,
+  "compression_source_chars": 11793,
+  "gt_length_ratio": 0.2426,
+  "gt_length_afg_chars": 1578,
+  "gt_length_gt_chars": 6505,
+  "section_balance": 0.3269
  }
 }
