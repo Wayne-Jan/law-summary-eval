@@ -136,5 +136,298 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7254,
+  "fact_recall": 0.6803,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8098,
+  "quality_overall": 4.8857,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.988,
+  "uncited_rate": 0.02,
+  "faithfulness_combined": {
+   "score": 0.988,
+   "citation_fidelity": 0.98,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 11,
+   "correct": 11
+  },
+  "weighted_recall": 0.877,
+  "missing_severity": {
+   "critical": 0,
+   "important": 10,
+   "minor": 25,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "確查 5 個 section 原文，僅 section_03_opinions.txt 提及「胸部鈍挫傷」，無「主訴胸痛」之具體描述，屬病史細節遺漏",
+     "reason": "確查 5 個 section 原文，僅 section_03_opinions.txt 提及「胸部鈍挫傷」，無「主訴胸痛」之具體描述，屬病史細節遺漏"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "確查 5 個 section 原文，section_03_opinions.txt 提及「敗血症休克」而非「心肺衰竭」，二者病理機轉不同，摘要未明確提及心肺衰竭",
+     "reason": "確查 5 個 section 原文，section_03_opinions.txt 提及「敗血症休克」而非「心肺衰竭」，二者病理機轉不同，摘要未明確提及心肺衰竭"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "確查 5 個 section 原文，被告甲的具體診斷發現（左側肋骨斷裂、氣胸、血胸）散見於鑑定意見但非以被告視角陳述，摘要未明確記載被告的診斷範圍",
+     "reason": "確查 5 個 section 原文，被告甲的具體診斷發現（左側肋骨斷裂、氣胸、血胸）散見於鑑定意見但非以被告視角陳述，摘要未明確記載被告的診斷範圍"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告辯稱「伊僅係住院總醫師，並非主治醫師」及「因休假、公差等因素無庸到院」涉及值班狀態與勤務資訊，係被告辯護之重要主張，惟生成摘要未提及",
+     "reason": "被告辯稱「伊僅係住院總醫師，並非主治醫師」及「因休假、公差等因素無庸到院」涉及值班狀態與勤務資訊，係被告辯護之重要主張，惟生成摘要未提及"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「醫學文獻原文影本9紙」之細節，確認生成摘要未包含",
+     "reason": "五個 section 原文均未提及「醫學文獻原文影本9紙」之細節，確認生成摘要未包含"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「電腦斷層掃描判讀報告附卷」之相關事實，確認生成摘要未包含",
+     "reason": "五個 section 原文均未提及「電腦斷層掃描判讀報告附卷」之相關事實，確認生成摘要未包含"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 提及被告「因休假、公差等因素無庸到院」，section_reasoning 也提及「不得以休假等事由圖免責任」，但生成摘要未提及鑑定機關未參酌此事实",
+     "reason": "section_defense 提及被告「因休假、公差等因素無庸到院」，section_reasoning 也提及「不得以休假等事由圖免責任」，但生成摘要未提及鑑定機關未參酌此事实"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「請求重行送請鑑定」之辯護主張，確認生成摘要未包含",
+     "reason": "五個 section 原文均未提及「請求重行送請鑑定」之辯護主張，確認生成摘要未包含"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 之鑑定意見未提及住院期間症狀持續的具體時間範圍；facts 與 reasoning 雖有提及腹部脹痛但未涵蓋『4月2日下午至4月4日凌晨』之完整時間描述，跨 section 合併後仍不完整",
+     "reason": "opinions section 之鑑定意見未提及住院期間症狀持續的具體時間範圍；facts 與 reasoning 雖有提及腹部脹痛但未涵蓋『4月2日下午至4月4日凌晨』之完整時間描述，跨 section 合併後仍不完整"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 雖有『病況迅速惡化，由腹膜炎導致敗血症休克』之描述，但未單獨明確表述『敗血症病情變化迅速』之特點；其他 sections 亦無對應內容",
+     "reason": "opinions section 雖有『病況迅速惡化，由腹膜炎導致敗血症休克』之描述，但未單獨明確表述『敗血症病情變化迅速』之特點；其他 sections 亦無對應內容"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 之鑑定意見未包含此法律評價；facts 雖有『導致失去及早診斷與手術搶救之先機』但缺少『重新評估』，全 sections 皆無完整對應語義",
+     "reason": "opinions section 之鑑定意見未包含此法律評價；facts 雖有『導致失去及早診斷與手術搶救之先機』但缺少『重新評估』，全 sections 皆無完整對應語義"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 僅認定被告實質上屬主治醫師，未提及『主治醫師依性質可分為二類』的一般性說明，屬制度背景",
+     "reason": "section_reasoning 僅認定被告實質上屬主治醫師，未提及『主治醫師依性質可分為二類』的一般性說明，屬制度背景"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及大型醫院醫師三類分類制度，屬制度背景說明",
+     "reason": "section_reasoning 未提及大型醫院醫師三類分類制度，屬制度背景說明"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及主治醫師行政編制與業務權限事務之區分，屬制度背景",
+     "reason": "section_reasoning 未提及主治醫師行政編制與業務權限事務之區分，屬制度背景"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 雖認定被告『實質上確屬病患X之主治醫師』，但未提『獨立權限執行醫療行為』之法律定義標準",
+     "reason": "section_reasoning 雖認定被告『實質上確屬病患X之主治醫師』，但未提『獨立權限執行醫療行為』之法律定義標準"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 未提及『執行醫療業務為斷』與『行政編制』兩種主治醫師概念之區分，屬學理說明",
+     "reason": "section_reasoning 未提及『執行醫療業務為斷』與『行政編制』兩種主治醫師概念之區分，屬學理說明"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 僅簡述『雖於A醫院編制上為住院總醫師』，未提『公立醫院編制限制』及『俟主治醫師有職缺才能升任』之背景",
+     "reason": "section_reasoning 僅簡述『雖於A醫院編制上為住院總醫師』，未提『公立醫院編制限制』及『俟主治醫師有職缺才能升任』之背景"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『F醫院僅有一位胸腔外科醫師』，無法找到依據",
+     "reason": "所有 section 均未提及『F醫院僅有一位胸腔外科醫師』，無法找到依據"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『有病患胸腔問題會找被告處理』之慣例，無法找到依據",
+     "reason": "所有 section 均未提及『有病患胸腔問題會找被告處理』之慣例，無法找到依據"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 僅提及『小腸鈍挫傷機率達16%』，未提及其他器官創傷機率之比較數據，屬醫學參考數據",
+     "reason": "section_reasoning 僅提及『小腸鈍挫傷機率達16%』，未提及其他器官創傷機率之比較數據，屬醫學參考數據"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『F醫院CT判讀雙重確認程序』之制度說明，無法找到依據",
+     "reason": "所有 section 均未提及『F醫院CT判讀雙重確認程序』之制度說明，無法找到依據"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『CT片係出院後才由放射科主任審閱』之細節，無法找到依據",
+     "reason": "所有 section 均未提及『CT片係出院後才由放射科主任審閱』之細節，無法找到依據"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『脹氣可經理學檢查及X光片判斷』之醫學常識說明",
+     "reason": "所有 section 均未提及『脹氣可經理學檢查及X光片判斷』之醫學常識說明"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『電腦斷層掃描目的係查詢有無其他問題』之目的說明",
+     "reason": "所有 section 均未提及『電腦斷層掃描目的係查詢有無其他問題』之目的說明"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『拍攝CT表示X光不足、須提高注意』之醫學判斷標準",
+     "reason": "所有 section 均未提及『拍攝CT表示X光不足、須提高注意』之醫學判斷標準"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『丁看X光片並建議進行CT』之過程細節，無法找到依據",
+     "reason": "所有 section 均未提及『丁看X光片並建議進行CT』之過程細節，無法找到依據"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『乙個人看圖不準』之證詞，無法找到依據",
+     "reason": "所有 section 均未提及『乙個人看圖不準』之證詞，無法找到依據"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning 認定被告具專科資格且實質為主治醫師，但未強調『係院內唯一胸腔外科醫師』",
+     "reason": "section_reasoning 認定被告具專科資格且實質為主治醫師，但未強調『係院內唯一胸腔外科醫師』"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts 僅簡述『照會醫師甲前往診治』，未提『請護士聯絡』之過程細節",
+     "reason": "section_facts 僅簡述『照會醫師甲前往診治』，未提『請護士聯絡』之過程細節"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts 提及『91年4月2日15時許照會醫師甲』，但未明確說明『共同判讀』及具體日期表述",
+     "reason": "section_facts 提及『91年4月2日15時許照會醫師甲』，但未明確說明『共同判讀』及具體日期表述"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_facts 雖有4月2日到4月4日之時間敘述，但未明確提及『從住院到病情惡化』之完整時間線及『失去先機』之評價",
+     "reason": "section_facts 雖有4月2日到4月4日之時間敘述，但未明確提及『從住院到病情惡化』之完整時間線及『失去先機』之評價"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_opinions 提及『雖經手術仍無法挽回生命』，section_reasoning 僅簡述『死亡』，屬重要結果描述",
+     "reason": "section_opinions 提及『雖經手術仍無法挽回生命』，section_reasoning 僅簡述『死亡』，屬重要結果描述"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 僅提及被告『具備一般外科與胸腔外科資格』，未提『重症專科』資格，屬專業資質範圍",
+     "reason": "section_reasoning 僅提及被告『具備一般外科與胸腔外科資格』，未提『重症專科』資格，屬專業資質範圍"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有 section 均未提及『CT醫囑係由T所為』之細節，無法找到依據",
+     "reason": "所有 section 均未提及『CT醫囑係由T所為』之細節，無法找到依據"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 僅簡述『被告甲雖曾巡房』及『處置符合早期處理原則』，未提具體日期時間（4月3日7時30分）及『插鼻胃管減壓、禁食』等處置細節",
+     "reason": "section_reasoning 僅簡述『被告甲雖曾巡房』及『處置符合早期處理原則』，未提具體日期時間（4月3日7時30分）及『插鼻胃管減壓、禁食』等處置細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 122,
+   "pred_total": 49,
+   "matched": 79,
+   "partial": 8,
+   "missing": 35,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8178,
+  "compression_afg_chars": 1469,
+  "compression_source_chars": 8062,
+  "gt_length_ratio": 0.3011,
+  "gt_length_afg_chars": 1469,
+  "gt_length_gt_chars": 4879,
+  "section_balance": 0.5556
+ }
 }
