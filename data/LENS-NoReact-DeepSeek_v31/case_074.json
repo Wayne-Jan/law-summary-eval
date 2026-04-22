@@ -137,6 +137,136 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7061
+  "rule_based_avg": 0.7061,
+  "fact_recall": 0.8447,
+  "fact_precision": 0.7983,
+  "fact_f1": 0.8208,
+  "quality_overall": 4.6286,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 0.98,
+  "citation_support_score": 0.974,
+  "uncited_rate": 0.056,
+  "faithfulness_combined": {
+   "score": 0.8744,
+   "citation_fidelity": 0.9251,
+   "fact_precision": 0.7983,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 49,
+   "correct": 49
+  },
+  "weighted_recall": 0.9256,
+  "missing_severity": {
+   "critical": 4,
+   "important": 3,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt提及「證人B醫師為病患X進行心導管檢查」，未提及「醫師K」。雖角色類似但名稱不同，無法確認為同一人物，維持missing",
+     "reason": "section_01_facts.txt提及「證人B醫師為病患X進行心導管檢查」，未提及「醫師K」。雖角色類似但名稱不同，無法確認為同一人物，維持missing"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt及各section均未提及「醫師C擔任普通病房之主治醫師」，維持missing",
+     "reason": "section_01_facts.txt及各section均未提及「醫師C擔任普通病房之主治醫師」，維持missing"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt提及心臟超音波檢查、心電圖檢查，但未提及「胸部Ｘ光檢查、尿液細菌檢查、抽血細菌檢查」。跨section檢視亦無此三項檢查之記載，維持missing",
+     "reason": "section_01_facts.txt提及心臟超音波檢查、心電圖檢查，但未提及「胸部Ｘ光檢查、尿液細菌檢查、抽血細菌檢查」。跨section檢視亦無此三項檢查之記載，維持missing"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt僅提及「主訴胸痛、冒冷汗」，未提及「胸骨後方壓迫性悶痛放射到背部」之具體症狀描述。section_05_reasoning.txt提及此症狀為「急性心肌梗塞」之症狀，非本案摘要focus，維持missing",
+     "reason": "section_01_facts.txt僅提及「主訴胸痛、冒冷汗」，未提及「胸骨後方壓迫性悶痛放射到背部」之具體症狀描述。section_05_reasoning.txt提及此症狀為「急性心肌梗塞」之症狀，非本案摘要focus，維持missing"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt及跨section均未明確提及「病患L未有敗血症」之診斷結論。section_02_defense.txt提及「無細菌感染跡象」，但「無細菌感染」不等於「未有敗血症」，維持missing",
+     "reason": "section_01_facts.txt及跨section均未明確提及「病患L未有敗血症」之診斷結論。section_02_defense.txt提及「無細菌感染跡象」，但「無細菌感染」不等於「未有敗血症」，維持missing"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「在臨床上已經符合急性心包膜炎之診斷」為鑑定意見之核心結論，section_03_opinions.txt提及「病患X臨床上已經符合急性心包膜炎的診斷」，但section_01_facts.txt確實未提及。作為關鍵醫療判斷事實，標記為critical missing",
+     "reason": "「在臨床上已經符合急性心包膜炎之診斷」為鑑定意見之核心結論，section_03_opinions.txt提及「病患X臨床上已經符合急性心包膜炎的診斷」，但section_01_facts.txt確實未提及。作為關鍵醫療判斷事實，標記為critical missing"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「不宜對病患L施打抗凝血藥物」為鑑定意見之核心醫療判斷，section_03_opinions.txt提及「使用抗凝血藥物肝素及抗血小板接受器藥物Tirofiban十分危險」，但section_01_facts.txt僅記載施打事實，未提及「不宜施打」之判斷。影響過失認定，標記為critical",
+     "reason": "「不宜對病患L施打抗凝血藥物」為鑑定意見之核心醫療判斷，section_03_opinions.txt提及「使用抗凝血藥物肝素及抗血小板接受器藥物Tirofiban十分危險」，但section_01_facts.txt僅記載施打事實，未提及「不宜施打」之判斷。影響過失認定，標記為critical"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「以免加重死亡之危險性」為風險警告描述，section_03_opinions.txt提及「有引起心包膜出血及心包膜填塞致死之可能」，但section_01_facts.txt未提及。屬重要風險告知事實，維持missing並標記important",
+     "reason": "「以免加重死亡之危險性」為風險警告描述，section_03_opinions.txt提及「有引起心包膜出血及心包膜填塞致死之可能」，但section_01_facts.txt未提及。屬重要風險告知事實，維持missing並標記important"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「依當時情形，又無不能注意之情事」為法律構成要件用語，出現於GT之法院判斷敘述中。section_01_facts.txt為事實陳述段落，未包含此法律判斷語句，維持missing並標記critical",
+     "reason": "「依當時情形，又無不能注意之情事」為法律構成要件用語，出現於GT之法院判斷敘述中。section_01_facts.txt為事實陳述段落，未包含此法律判斷語句，維持missing並標記critical"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「被告疏未注意」為起訴書及法院認定之核心過失描述。section_01_facts.txt末段提及「疏於注意予以追蹤檢查」，但非「被告疏未注意」之簡潔表述。此為過失認定關鍵詞，標記為critical",
+     "reason": "「被告疏未注意」為起訴書及法院認定之核心過失描述。section_01_facts.txt末段提及「疏於注意予以追蹤檢查」，但非「被告疏未注意」之簡潔表述。此為過失認定關鍵詞，標記為critical"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴人於95年4月4日請求傳喚證人屬程序性細節，非判決核心爭點，摘要未提及屬合理簡化",
+     "reason": "公訴人於95年4月4日請求傳喚證人屬程序性細節，非判決核心爭點，摘要未提及屬合理簡化"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴人請求傳喚告訴代理人屬程序性事實，非影響判決結論之關鍵內容，摘要未提及屬合理節略",
+     "reason": "公訴人請求傳喚告訴代理人屬程序性事實，非影響判決結論之關鍵內容，摘要未提及屬合理節略"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 103,
+   "pred_total": 119,
+   "matched": 83,
+   "partial": 8,
+   "missing": 12,
+   "hallucinated": 24
+  },
+  "compression_ratio": 0.5244,
+  "compression_afg_chars": 5565,
+  "compression_source_chars": 11700,
+  "gt_length_ratio": 1.7018,
+  "gt_length_afg_chars": 5565,
+  "gt_length_gt_chars": 3270,
+  "section_balance": 0.6875
  }
 }

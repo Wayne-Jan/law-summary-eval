@@ -138,6 +138,318 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.5743
+  "rule_based_avg": 0.5743,
+  "fact_recall": 0.6692,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8018,
+  "quality_overall": 4.5429,
+  "checklist_pass_rate": 0.9457,
+  "citation_accuracy": 0.7576,
+  "citation_support_score": 0.7773,
+  "uncited_rate": 0.119,
+  "faithfulness_combined": {
+   "score": 0.8005,
+   "citation_fidelity": 0.6674,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 28,
+   "correct": 28
+  },
+  "weighted_recall": 0.8672,
+  "missing_severity": {
+   "critical": 1,
+   "important": 13,
+   "minor": 24,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 雖提及醫師負責麻醉及恢復室照護，但未明確說明「平日主要負責」之日常職責描述，屬背景性資訊",
+     "reason": "section_facts 雖提及醫師負責麻醉及恢復室照護，但未明確說明「平日主要負責」之日常職責描述，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 僅提及「下午十四時二十分診斷為脂肪栓塞」，未提及14時35分轉送加護病房之具體時間，影響時間軸完整性",
+     "reason": "section_facts 僅提及「下午十四時二十分診斷為脂肪栓塞」，未提及14時35分轉送加護病房之具體時間，影響時間軸完整性"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生成摘要未包含「應注意、能注意，又無其他不能注意之情事，竟疏未注意」之法律過失構成要件描述，屬法律框架用語",
+     "reason": "生成摘要未包含「應注意、能注意，又無其他不能注意之情事，竟疏未注意」之法律過失構成要件描述，屬法律框架用語"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個section原文均未提及Fentany於上午8時30分施打及其藥效結束時間，屬關鍵麻醉時間點",
+     "reason": "五個section原文均未提及Fentany於上午8時30分施打及其藥效結束時間，屬關鍵麻醉時間點"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個section原文均未提及Pancuronium於上午9時施打及其藥效結束時間，屬關鍵麻醉時間點",
+     "reason": "五個section原文均未提及Pancuronium於上午9時施打及其藥效結束時間，屬關鍵麻醉時間點"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個section原文均未明確提及「病患應在麻醉藥品失效後逐漸清醒」之預期判斷",
+     "reason": "五個section原文均未明確提及「病患應在麻醉藥品失效後逐漸清醒」之預期判斷"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts記載「同日上午十時許結束」，與GT「上午9時50分」時間不符，無精確對應",
+     "reason": "section_facts記載「同日上午十時許結束」，與GT「上午9時50分」時間不符，無精確對應"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個section原文均未完整描述「已應可以研判非麻醉藥效所致，而係骨折併發症脂肪栓塞發生機率極高」之能力判斷面向，影響過失認定理解",
+     "reason": "五個section原文均未完整描述「已應可以研判非麻醉藥效所致，而係骨折併發症脂肪栓塞發生機率極高」之能力判斷面向，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_reasoning提及「會診神經外科、放射科及骨科醫師」但未明確標示13時15分之會診時間",
+     "reason": "section_reasoning提及「會診神經外科、放射科及骨科醫師」但未明確標示13時15分之會診時間"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個section原文均未提及「下午14時5分將病患推回恢復室」之具體時間",
+     "reason": "五個section原文均未提及「下午14時5分將病患推回恢復室」之具體時間"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "雖然section_opinions提及法醫研究所、醫審會、榮總麻醉部鑑定委員會三個鑑定機構，但摘要並未明確陳述「三次鑑定都認為沒有延遲醫療過失」，屬於辯護要點的細節性陳述",
+     "reason": "雖然section_opinions提及法醫研究所、醫審會、榮總麻醉部鑑定委員會三個鑑定機構，但摘要並未明確陳述「三次鑑定都認為沒有延遲醫療過失」，屬於辯護要點的細節性陳述"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense僅提及「高度懷疑患者併發脂肪栓塞」及「多科醫師會診」，未明確說明「四位醫生討論結果」的具體人數與形式",
+     "reason": "section_defense僅提及「高度懷疑患者併發脂肪栓塞」及「多科醫師會診」，未明確說明「四位醫生討論結果」的具體人數與形式"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section均未提及被告於10時40分及11時10分兩次向家屬解釋病情的具體時間點與細節",
+     "reason": "五個section均未提及被告於10時40分及11時10分兩次向家屬解釋病情的具體時間點與細節"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section均未提及「病患Y之母B不在場」的具體身份指稱",
+     "reason": "五個section均未提及「病患Y之母B不在場」的具體身份指稱"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense提及被告向「病人家屬」解釋，但未明確指稱「家屬A」或「B不在場」",
+     "reason": "section_defense提及被告向「病人家屬」解釋，但未明確指稱「家屬A」或「B不在場」"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "檢視全部五個 section，均未提及脂肪栓塞與頭部外傷腦部傷害的症狀相似性比較",
+     "reason": "檢視全部五個 section，均未提及脂肪栓塞與頭部外傷腦部傷害的症狀相似性比較"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "檢視全部五個 section，均未提及 Capan 氏分類法及次臨床性、亞急性、猛暴性三個子型",
+     "reason": "檢視全部五個 section，均未提及 Capan 氏分類法及次臨床性、亞急性、猛暴性三個子型"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 提及『在手術麻醉期間發生更不易察覺』，但未提及『麻醉結束時無法醒轉』之臨床表現；其他 section 亦未補充此細節",
+     "reason": "section_03_opinions.txt 提及『在手術麻醉期間發生更不易察覺』，但未提及『麻醉結束時無法醒轉』之臨床表現；其他 section 亦未補充此細節"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "檢視全部五個 section，均未提及猛暴性脂肪栓塞之高致死率 50%",
+     "reason": "檢視全部五個 section，均未提及猛暴性脂肪栓塞之高致死率 50%"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及 Fentanyl 為止痛藥，但未提及具體劑量 6ml（300ug）及『在建議劑量範圍內』之評價",
+     "reason": "section_05_reasoning.txt 提及 Fentanyl 為止痛藥，但未提及具體劑量 6ml（300ug）及『在建議劑量範圍內』之評價"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及『施打解麻藥物』但未明確指出 Naloxone 藥名，亦未提及『作為治療或鑑別診斷之用』",
+     "reason": "section_05_reasoning.txt 提及『施打解麻藥物』但未明確指出 Naloxone 藥名，亦未提及『作為治療或鑑別診斷之用』"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢視全部五個 section，均未提及術後頭暈嘔吐、primperan（metoclopramide）止吐藥等細節",
+     "reason": "檢視全部五個 section，均未提及術後頭暈嘔吐、primperan（metoclopramide）止吐藥等細節"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 提及『手術中肌肉鬆弛劑使用符合醫療準則』，但未詳列手術種類、部位、長短等劑量調整考量因素",
+     "reason": "section_03_opinions.txt 提及『手術中肌肉鬆弛劑使用符合醫療準則』，但未詳列手術種類、部位、長短等劑量調整考量因素"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及『五小時長期麻醉』，但未提及『病人於手術中曾恢復自發性呼吸』",
+     "reason": "section_05_reasoning.txt 提及『五小時長期麻醉』，但未提及『病人於手術中曾恢復自發性呼吸』"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及『使用肌肉鬆弛劑拮抗劑』但未詳述『恢復自發性呼吸』、『每分鐘10次』、『血氧濃度均為99％』等細節",
+     "reason": "section_05_reasoning.txt 提及『使用肌肉鬆弛劑拮抗劑』但未詳述『恢復自發性呼吸』、『每分鐘10次』、『血氧濃度均為99％』等細節"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 提及『手術中肌肉鬆弛劑使用符合醫療準則且無過量』，已間接排除肌肉鬆弛劑為傷害原因，但未如 GT claim 明確陳述『病人所產生的傷害應該不是肌肉鬆弛劑造成的』",
+     "reason": "section_03_opinions.txt 提及『手術中肌肉鬆弛劑使用符合醫療準則且無過量』，已間接排除肌肉鬆弛劑為傷害原因，但未如 GT claim 明確陳述『病人所產生的傷害應該不是肌肉鬆弛劑造成的』"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 提及『血氧濃度正常』，但未提及脂肪栓塞對 SpO2 及 EtCO2 之影響，亦未提及『骨折病人易產生脂肪栓塞，為麻醉醫師所深知』",
+     "reason": "section_05_reasoning.txt 提及『血氧濃度正常』，但未提及脂肪栓塞對 SpO2 及 EtCO2 之影響，亦未提及『骨折病人易產生脂肪栓塞，為麻醉醫師所深知』"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及『心跳、血壓穩定，血氧濃度正常』，但未提及急診室『心跳速率為每分鐘85次』之具體數據",
+     "reason": "section_05_reasoning.txt 提及『心跳、血壓穩定，血氧濃度正常』，但未提及急診室『心跳速率為每分鐘85次』之具體數據"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "檢視全部五個 section，均未提及『高度懷疑之態度』此臨床處置原則",
+     "reason": "檢視全部五個 section，均未提及『高度懷疑之態度』此臨床處置原則"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢視全部五個 section，均未提及美國麻醉醫學會恢復室準則或 1994 年修訂本",
+     "reason": "檢視全部五個 section，均未提及美國麻醉醫學會恢復室準則或 1994 年修訂本"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢視全部五個 section，均未詳細列出恢復室四項監測要求（氧合狀況、通氣能力、循環狀況、體溫）",
+     "reason": "檢視全部五個 section，均未詳細列出恢復室四項監測要求（氧合狀況、通氣能力、循環狀況、體溫）"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 提及『會診神經外科、放射科及骨科醫師』但未強調『緊急安排』及『立即之要務』的急迫性表述",
+     "reason": "section_05_reasoning.txt 提及『會診神經外科、放射科及骨科醫師』但未強調『緊急安排』及『立即之要務』的急迫性表述"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢視全部五個 section，均未提及處置時間點延誤認定的客觀困難及各級醫院處理能力差異",
+     "reason": "檢視全部五個 section，均未提及處置時間點延誤認定的客觀困難及各級醫院處理能力差異"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 提及『符合支持性治療標準』，但未明確說明『非特異性，支持性療法為主』的治療原則",
+     "reason": "section_03_opinions.txt 提及『符合支持性治療標準』，但未明確說明『非特異性，支持性療法為主』的治療原則"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "檢視全部五個 section，均未提及『支持性療法下未必一定能對提高存活率有助益』之侷限性論述",
+     "reason": "檢視全部五個 section，均未提及『支持性療法下未必一定能對提高存活率有助益』之侷限性論述"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢視全部五個 section，均未提及術前風險告知（感染、脂肪栓塞、癒合不良、不癒合）",
+     "reason": "檢視全部五個 section，均未提及術前風險告知（感染、脂肪栓塞、癒合不良、不癒合）"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢視全部五個 section，均未提及核子醫學肺部通氣血流檢查、快速螺旋掃描胸部電腦斷層掃描等特殊檢查",
+     "reason": "檢視全部五個 section，均未提及核子醫學肺部通氣血流檢查、快速螺旋掃描胸部電腦斷層掃描等特殊檢查"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "檢視全部五個 section，均未提及蜘蛛膜下腔出血之分型（原發型/繼發型）及『骨折後導致脂肪栓塞引起繼發性腦出血，由腦幹出血處流入蜘蛛膜下腔，係屬繼發性蜘蛛膜下腔出血』之病理機轉分析，此為死因鑑定之關鍵醫學論述",
+     "reason": "檢視全部五個 section，均未提及蜘蛛膜下腔出血之分型（原發型/繼發型）及『骨折後導致脂肪栓塞引起繼發性腦出血，由腦幹出血處流入蜘蛛膜下腔，係屬繼發性蜘蛛膜下腔出血』之病理機轉分析，此為死因鑑定之關鍵醫學論述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 133,
+   "pred_total": 67,
+   "matched": 83,
+   "partial": 12,
+   "missing": 38,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8816,
+  "compression_afg_chars": 2172,
+  "compression_source_chars": 18340,
+  "gt_length_ratio": 0.2786,
+  "gt_length_afg_chars": 2172,
+  "gt_length_gt_chars": 7797,
+  "section_balance": 0.5
  }
 }
