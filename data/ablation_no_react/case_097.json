@@ -150,5 +150,109 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8396,
+  "fact_recall": 0.8978,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9462,
+  "quality_overall": 4.6714,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.969,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 31
+  },
+  "weighted_recall": 0.9642,
+  "missing_severity": {
+   "critical": 0,
+   "important": 2,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「偵查起訴」為程序性事實，所有 sections 均未明確提及此法律程序用語",
+     "reason": "「偵查起訴」為程序性事實，所有 sections 均未明確提及此法律程序用語"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「醫師甲(下稱被告甲)」為別名定義性表述，摘要直接稱呼被告甲，無此定義句式",
+     "reason": "「醫師甲(下稱被告甲)」為別名定義性表述，摘要直接稱呼被告甲，無此定義句式"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「護理師乙(下稱被告乙)」為別名定義性表述，摘要直接稱呼被告乙，無此定義句式",
+     "reason": "「護理師乙(下稱被告乙)」為別名定義性表述，摘要直接稱呼被告乙，無此定義句式"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 原文確有「並將止血帶拿掉」一語，但 claims_defense.json claim_id 18 僅提取「通知開刀房拿自動加壓止血機打上左大腿」，遺漏止血帶移除動作，預測中無對應 claim",
+     "reason": "section_defense.txt 原文確有「並將止血帶拿掉」一語，但 claims_defense.json claim_id 18 僅提取「通知開刀房拿自動加壓止血機打上左大腿」，遺漏止血帶移除動作，預測中無對應 claim"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 確實未提及病歷竄改爭議及EMT紀錄可信度，該內容僅出現於 reasoning section；雖影響證據可信度評估，但非死因認定之關鍵事實",
+     "reason": "opinions section 確實未提及病歷竄改爭議及EMT紀錄可信度，該內容僅出現於 reasoning section；雖影響證據可信度評估，但非死因認定之關鍵事實"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決法院及日期為程序性背景資訊，不影響案情理解或無罪判決結論。檢視 section_04_verdict.txt 與 section_05_reasoning.txt 全文，確實未提及『臺灣新竹地方法院』及『105年8月31日』之判決資訊，維持 missing 判定。",
+     "reason": "判決法院及日期為程序性背景資訊，不影響案情理解或無罪判決結論。檢視 section_04_verdict.txt 與 section_05_reasoning.txt 全文，確實未提及『臺灣新竹地方法院』及『105年8月31日』之判決資訊，維持 missing 判定。"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "GT claim 描述「病患R在家中受傷時有大量出血情形」，經查五個 section 原文，雖有提及「現場已經大出血」（section_reasoning 證人鍾承桓證詞），但這指的是救護人員抵達現場時的狀況，而非「在家中受傷時」這個特定時間點的出血情形。section_facts 只描述傷口深可見骨、動靜脈血管完全切斷，並未明確敘述受傷當下家中的出血狀況。此項遺漏屬於背景性事實，不影響過失認定與判決結論理解。",
+     "reason": "GT claim 描述「病患R在家中受傷時有大量出血情形」，經查五個 section 原文，雖有提及「現場已經大出血」（section_reasoning 證人鍾承桓證詞），但這指的是救護人員抵達現場時的狀況，而非「在家中受傷時」這個特定時間點的出血情形。section_facts 只描述傷口深可見骨、動靜脈血管完全切斷，並未明確敘述受傷當下家中的出血狀況。此項遺漏屬於背景性事實，不影響過失認定與判決結論理解。"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "GT claim 描述「病患R送上救護車時有躁動、靜脈注射無法完成等症狀」，經查五個 section 原文，section_reasoning 提及「將送醫路途中傷者意識模糊、體溫低、臉色蒼白」，但未提及「躁動」或「靜脈注射無法完成」等特定症狀。section_opinions 提到的「無法打上靜脈血管」是醫療處置的泛指說明，非指涉送上救護車時的具體狀況。此項遺漏屬於次要事實，不影響過失認定與判決結論理解。",
+     "reason": "GT claim 描述「病患R送上救護車時有躁動、靜脈注射無法完成等症狀」，經查五個 section 原文，section_reasoning 提及「將送醫路途中傷者意識模糊、體溫低、臉色蒼白」，但未提及「躁動」或「靜脈注射無法完成」等特定症狀。section_opinions 提到的「無法打上靜脈血管」是醫療處置的泛指說明，非指涉送上救護車時的具體狀況。此項遺漏屬於次要事實，不影響過失認定與判決結論理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 130,
+   "matched": 82,
+   "partial": 3,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.5548,
+  "compression_afg_chars": 5651,
+  "compression_source_chars": 12694,
+  "gt_length_ratio": 1.8944,
+  "gt_length_afg_chars": 5651,
+  "gt_length_gt_chars": 2983,
+  "section_balance": 0.5179
+ }
 }

@@ -153,6 +153,451 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.6602
+  "rule_based_avg": 0.6602,
+  "fact_recall": 0.5918,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7435,
+  "quality_overall": 4.6857,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.8889,
+  "citation_support_score": 0.8645,
+  "uncited_rate": 0.034,
+  "faithfulness_combined": {
+   "score": 0.9152,
+   "citation_fidelity": 0.8587,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.8249,
+  "missing_severity": {
+   "critical": 1,
+   "important": 24,
+   "minor": 32,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "全部 5 個 section 均未提及『護士丁』為施行灌腸之執行者，僅提及『施行灌腸處置』而未指明執行人員",
+     "reason": "全部 5 個 section 均未提及『護士丁』為施行灌腸之執行者，僅提及『施行灌腸處置』而未指明執行人員"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "全部 5 個 section 均未提及『緊急會診一般外科主治醫師戊』之會診過程，僅 section_01_facts.txt 提及『緊急於10月1日凌晨進行手術』但未說明會診細節",
+     "reason": "全部 5 個 section 均未提及『緊急會診一般外科主治醫師戊』之會診過程，僅 section_01_facts.txt 提及『緊急於10月1日凌晨進行手術』但未說明會診細節"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "全部 5 個 section 均未詳述『小腸段切除吻合及直腸切除、人工肛門手術』等具體手術項目，section_01_facts.txt 僅概括為『緊急手術』『術中發現直腸裂孔及小腸壞死』",
+     "reason": "全部 5 個 section 均未詳述『小腸段切除吻合及直腸切除、人工肛門手術』等具體手術項目，section_01_facts.txt 僅概括為『緊急手術』『術中發現直腸裂孔及小腸壞死』"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "全部 5 個 section 均未提及『應請病患 H 停止進食，仔細觀察、積極尋找、確認其腹痛原因』等具體作為義務內容，section_05_reasoning.txt 僅提及『不應遽予施行灌腸處置』",
+     "reason": "全部 5 個 section 均未提及『應請病患 H 停止進食，仔細觀察、積極尋找、確認其腹痛原因』等具體作為義務內容，section_05_reasoning.txt 僅提及『不應遽予施行灌腸處置』"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "全部 5 個 section 均未明確記載『非親自診察病人，不得製作病歷』之法律義務條文，section_05_reasoning.txt 僅提及『依醫師法規定，非親自診察病人不得製作病歷或由他人代理診察』較 GT 簡略",
+     "reason": "全部 5 個 section 均未明確記載『非親自診察病人，不得製作病歷』之法律義務條文，section_05_reasoning.txt 僅提及『依醫師法規定，非親自診察病人不得製作病歷或由他人代理診察』較 GT 簡略"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 中被告甲僅主張死因係灌腸後用力排便致腸道破裂或腸系膜缺血導致小腸壞死，未提及腹痛具有反覆性以及與大腸鏡檢查無關之抗辯",
+     "reason": "section_02_defense.txt 中被告甲僅主張死因係灌腸後用力排便致腸道破裂或腸系膜缺血導致小腸壞死，未提及腹痛具有反覆性以及與大腸鏡檢查無關之抗辯"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及『開立醫囑時』，未載明具體時間『94年9月30日下午5時30分許』，該時間資訊見於 section_01_facts.txt",
+     "reason": "section_02_defense.txt 僅提及『開立醫囑時』，未載明具體時間『94年9月30日下午5時30分許』，該時間資訊見於 section_01_facts.txt"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及急診病歷上手寫『Diffuse tenderness』之記載",
+     "reason": "section_02_defense.txt 未提及急診病歷上手寫『Diffuse tenderness』之記載"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提及『腸道有脹氣情形』及『腸內脹氣』，但未提及急診病歷上手寫『Distended』之具體記載",
+     "reason": "section_02_defense.txt 提及『腸道有脹氣情形』及『腸內脹氣』，但未提及急診病歷上手寫『Distended』之具體記載"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 未提及手術切除壞死處後病患之意識、血壓、心跳改善之情況",
+     "reason": "section_02_defense.txt 未提及手術切除壞死處後病患之意識、血壓、心跳改善之情況"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未提及被告甲領有合法醫師執照及得獨立執行一般醫療行為之資格說明",
+     "reason": "section_02_defense.txt 未提及被告甲領有合法醫師執照及得獨立執行一般醫療行為之資格說明"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係鑑定委員會之一般性背景說明，非本案特有之鑑定結論",
+     "reason": "係鑑定委員會之一般性背景說明，非本案特有之鑑定結論"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "係鑑定委員會之一般性背景說明，非本案特有之鑑定結論",
+     "reason": "係鑑定委員會之一般性背景說明，非本案特有之鑑定結論"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "破裂尺寸為重要的醫學細節，影響對傷害嚴重程度的理解",
+     "reason": "破裂尺寸為重要的醫學細節，影響對傷害嚴重程度的理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "『併發症』定性為鑑定結論的重要描述，影響對事件性質的理解",
+     "reason": "『併發症』定性為鑑定結論的重要描述，影響對事件性質的理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "延遲就醫時間為關鍵時間點，影響過失因果關係的評斷",
+     "reason": "延遲就醫時間為關鍵時間點，影響過失因果關係的評斷"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "吻合處滲漏為後續病情惡化的關鍵因素，影響死因理解",
+     "reason": "吻合處滲漏為後續病情惡化的關鍵因素，影響死因理解"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生命徵象具體數值雖有鑑定參考價值，但不影響主要案情理解",
+     "reason": "生命徵象具體數值雖有鑑定參考價值，但不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病史為背景資訊，不影響主要鑑定結論",
+     "reason": "病史為背景資訊，不影響主要鑑定結論"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "其他診斷為背景醫療史，不影響本案鑑定結論",
+     "reason": "其他診斷為背景醫療史，不影響本案鑑定結論"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "小腸壞死為鑑定發現的重要病理事實，與被告辯解直接相關",
+     "reason": "小腸壞死為鑑定發現的重要病理事實，與被告辯解直接相關"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "對小腸壞死因的否定為鑑定反駁被告辯解的關鍵論點",
+     "reason": "對小腸壞死因的否定為鑑定反駁被告辯解的關鍵論點"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腸繫膜缺血典型表現為鑑定論證的重要醫學依據",
+     "reason": "腸繫膜缺血典型表現為鑑定論證的重要醫學依據"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "風險因子排除為鑑定否定腸繫膜缺血診斷的重要依據",
+     "reason": "風險因子排除為鑑定否定腸繫膜缺血診斷的重要依據"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "邏輯推論為鑑定論證的核心推理過程",
+     "reason": "邏輯推論為鑑定論證的核心推理過程"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "穿孔發生率為統計背景資訊，不影響本案個別判斷",
+     "reason": "穿孔發生率為統計背景資訊，不影響本案個別判斷"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "破裂機制為鑑定對因果關係的重要分析",
+     "reason": "破裂機制為鑑定對因果關係的重要分析"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腹膜炎標準症狀列表為一般醫學知識，非本案特有資訊",
+     "reason": "腹膜炎標準症狀列表為一般醫學知識，非本案特有資訊"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "症狀變異因素為一般醫學解釋，非核心鑑定結論",
+     "reason": "症狀變異因素為一般醫學解釋，非核心鑑定結論"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "滲出物內容為一般醫學知識列舉",
+     "reason": "滲出物內容為一般醫學知識列舉"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "X光檢查結果為鑑定對病情評估的重要依據",
+     "reason": "X光檢查結果為鑑定對病情評估的重要依據"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "X光診斷為鑑定對腹膜炎判斷的關鍵依據",
+     "reason": "X光診斷為鑑定對腹膜炎判斷的關鍵依據"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "『無法醫鑑定意見』為鑑定標題/結論的關鍵標識，影響對鑑定文件性質的理解",
+     "reason": "『無法醫鑑定意見』為鑑定標題/結論的關鍵標識，影響對鑑定文件性質的理解"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病歷手寫文字細節為程序性記載，不影響案情理解",
+     "reason": "病歷手寫文字細節為程序性記載，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "文字記載時間點為程序性細節，不影響核心事實理解",
+     "reason": "文字記載時間點為程序性細節，不影響核心事實理解"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "急診護理紀錄單細節為背景記載，非關鍵事實",
+     "reason": "急診護理紀錄單細節為背景記載，非關鍵事實"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院對被告甲特定辯解之駁斥細節，核心結論已於 section_05_reasoning.txt 涵蓋",
+     "reason": "法院對被告甲特定辯解之駁斥細節，核心結論已於 section_05_reasoning.txt 涵蓋"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "護理紀錄勾選細節為程序性記載",
+     "reason": "護理紀錄勾選細節為程序性記載"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告甲應以親自診斷結果為判斷依據，屬重要醫療義務，影響過失認定理解",
+     "reason": "被告甲應以親自診斷結果為判斷依據，屬重要醫療義務，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "具體時間點細節（下午5時30分）雖重要，但核心事實「17時30分許開立灌腸醫囑」已於 section_01_facts.txt 記載",
+     "reason": "具體時間點細節（下午5時30分）雖重要，但核心事實「17時30分許開立灌腸醫囑」已於 section_01_facts.txt 記載"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "灌腸執行時間細節為程序性記載",
+     "reason": "灌腸執行時間細節為程序性記載"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "灌腸時間間隔細節為技術性細節",
+     "reason": "灌腸時間間隔細節為技術性細節"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "抽血檢驗報告確認時間為程序性細節",
+     "reason": "抽血檢驗報告確認時間為程序性細節"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "白血球指數24000/cumm具體數值為關鍵檢驗數據，影響醫療判斷理解",
+     "reason": "白血球指數24000/cumm具體數值為關鍵檢驗數據，影響醫療判斷理解"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "腹膜炎其他症狀為重要病情資訊，影響病情嚴重程度理解",
+     "reason": "腹膜炎其他症狀為重要病情資訊，影響病情嚴重程度理解"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "灌腸可能加重症狀之風險描述，核心結論已涵蓋於「有違醫療常規」",
+     "reason": "灌腸可能加重症狀之風險描述，核心結論已涵蓋於「有違醫療常規」"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "他曾就診及他院灌腸處置為比較性背景資訊",
+     "reason": "他曾就診及他院灌腸處置為比較性背景資訊"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "他院就診時條件差異為比較性細節",
+     "reason": "他院就診時條件差異為比較性細節"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "比較性結論為論證過程細節",
+     "reason": "比較性結論為論證過程細節"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自發性大腸穿孔定義為專業術語解釋",
+     "reason": "自發性大腸穿孔定義為專業術語解釋"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會第三次鑑定書內容為重要鑑定意見來源",
+     "reason": "醫審會第三次鑑定書內容為重要鑑定意見來源"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「被告甲之辯解無足採」之結論已涵蓋於 section_05_reasoning.txt 「駁斥被告甲辯解」",
+     "reason": "「被告甲之辯解無足採」之結論已涵蓋於 section_05_reasoning.txt 「駁斥被告甲辯解」"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "鑑定次數雖 section_03_opinions.txt 提到「4份」，但非關鍵資訊",
+     "reason": "鑑定次數雖 section_03_opinions.txt 提到「4份」，但非關鍵資訊"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告甲應積極尋找確認腹痛原因之義務，屬醫師注意義務核心內容",
+     "reason": "被告甲應積極尋找確認腹痛原因之義務，屬醫師注意義務核心內容"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "降損義務為過失責任認定之重要內容",
+     "reason": "降損義務為過失責任認定之重要內容"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「本案事證明確」為程序性判斷用語",
+     "reason": "「本案事證明確」為程序性判斷用語"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "對被告及辯護人辯解之綜合評價「尚無足採」，核心意思已於 section_05_reasoning.txt 涵蓋",
+     "reason": "對被告及辯護人辯解之綜合評價「尚無足採」，核心意思已於 section_05_reasoning.txt 涵蓋"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 158,
+   "pred_total": 59,
+   "matched": 86,
+   "partial": 15,
+   "missing": 57,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9017,
+  "compression_afg_chars": 1570,
+  "compression_source_chars": 15972,
+  "gt_length_ratio": 0.2685,
+  "gt_length_afg_chars": 1570,
+  "gt_length_gt_chars": 5848,
+  "section_balance": 0.4054
  }
 }

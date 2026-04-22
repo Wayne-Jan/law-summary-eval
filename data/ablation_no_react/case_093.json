@@ -128,5 +128,291 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7261,
+  "fact_recall": 0.6757,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8065,
+  "quality_overall": 4.9429,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.9796,
+  "citation_support_score": 0.986,
+  "uncited_rate": 0.037,
+  "faithfulness_combined": {
+   "score": 0.966,
+   "citation_fidelity": 0.9434,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 16,
+   "correct": 16
+  },
+  "weighted_recall": 0.8258,
+  "missing_severity": {
+   "critical": 2,
+   "important": 20,
+   "minor": 12,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT記載「晚間8時19分許抵達」，section_facts記載「下午7時15分許」，存在明確時間衝突。遍查5個section均未發現「8時19分」之記載，確認為真正遺漏",
+     "reason": "GT記載「晚間8時19分許抵達」，section_facts記載「下午7時15分許」，存在明確時間衝突。遍查5個section均未發現「8時19分」之記載，確認為真正遺漏"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經查section_02_defense.txt確有「病患X表示了解」之記載，但生成摘要未提及。此為被告陳述過程中的細節回應，屬程序性事實。",
+     "reason": "經查section_02_defense.txt確有「病患X表示了解」之記載，但生成摘要未提及。此為被告陳述過程中的細節回應，屬程序性事實。"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經查section_02_defense.txt原文未明確記載被告「寫轉診單」之具體動作。雖section_05_reasoning.txt提及「開立轉診單」，但defense section本身未明確此細節，故維持missing。此為程序性記載細節。",
+     "reason": "經查section_02_defense.txt原文未明確記載被告「寫轉診單」之具體動作。雖section_05_reasoning.txt提及「開立轉診單」，但defense section本身未明確此細節，故維持missing。此為程序性記載細節。"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經查section_02_defense.txt全文，未發現被告在病歷上記載「建議病患坐計程車比較快」之相關內容。此為病歷記載細節，不影響案情核心理解。",
+     "reason": "經查section_02_defense.txt全文，未發現被告在病歷上記載「建議病患坐計程車比較快」之相關內容。此為病歷記載細節，不影響案情核心理解。"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經查section_02_defense.txt原文，被告僅陳述「因其有朋友陪同而認為比較快」，並未明確謂「不坐救護車的話計程車比較快」之因果推論表述。此為解釋性細節，屬背景性事實。",
+     "reason": "經查section_02_defense.txt原文，被告僅陳述「因其有朋友陪同而認為比較快」，並未明確謂「不坐救護車的話計程車比較快」之因果推論表述。此為解釋性細節，屬背景性事實。"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查section_02_defense.txt原文，辯護人主張「依醫審會鑑定報告意見，足證伊之處置符合醫療常規，並無過失」，然並未明確主張「死因並非心肌梗塞」。opinions section（鑑定意見）指出「不足以確定死亡原因為心肌梗塞」，但此非辯護人直接主張。此項遺漏影響對辯護要點（死因爭議）的完整理解。",
+     "reason": "經查section_02_defense.txt原文，辯護人主張「依醫審會鑑定報告意見，足證伊之處置符合醫療常規，並無過失」，然並未明確主張「死因並非心肌梗塞」。opinions section（鑑定意見）指出「不足以確定死亡原因為心肌梗塞」，但此非辯護人直接主張。此項遺漏影響對辯護要點（死因爭議）的完整理解。"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "經查section_02_defense.txt原文，辯護人雖主張處置符合醫療常規且無過失，但未明確出現「無因果關係」之用語。然而就防禦性法律主張而言，無過失即隱含無因果關係之意。此為核心法律主張之遺漏，影響判決結論理解。",
+     "reason": "經查section_02_defense.txt原文，辯護人雖主張處置符合醫療常規且無過失，但未明確出現「無因果關係」之用語。然而就防禦性法律主張而言，無過失即隱含無因果關係之意。此為核心法律主張之遺漏，影響判決結論理解。"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經查全部5個section原文（facts、defense、opinions、verdict、reasoning），均未發現「後來護士追出診所，已不見二人蹤影」之相關記載。確認為GT中雖有此claim但原文無此內容，屬次要事實細節。",
+     "reason": "經查全部5個section原文（facts、defense、opinions、verdict、reasoning），均未發現「後來護士追出診所，已不見二人蹤影」之相關記載。確認為GT中雖有此claim但原文無此內容，屬次要事實細節。"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "全部 5 個 section 皆無提及「病人並無心臟疾病或神經系統疾病之病史」之鑑定意見",
+     "reason": "全部 5 個 section 皆無提及「病人並無心臟疾病或神經系統疾病之病史」之鑑定意見"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "全部 5 個 section 皆無提及心室顫動電擊去顫延遲與死亡風險增加 8～10% 之醫學文獻數據",
+     "reason": "全部 5 個 section 皆無提及心室顫動電擊去顫延遲與死亡風險增加 8～10% 之醫學文獻數據"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "全部 5 個 section 皆無提及轉送途中有醫護人員急救對病人預後助益之醫學意見",
+     "reason": "全部 5 個 section 皆無提及轉送途中有醫護人員急救對病人預後助益之醫學意見"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "全部 5 個 section 皆無提及急救效果需視疾病根本原因及病情嚴重度而定之說明",
+     "reason": "全部 5 個 section 皆無提及急救效果需視疾病根本原因及病情嚴重度而定之說明"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 以「法院判斷被告甲前開診治過程...」開頭直接進入分析，無「本案之關鍵在於...醫療常規之過失」之爭點總結陳述，屬案件理解重要爭點",
+     "reason": "reasoning section 以「法院判斷被告甲前開診治過程...」開頭直接進入分析，無「本案之關鍵在於...醫療常規之過失」之爭點總結陳述，屬案件理解重要爭點"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及「病患因身體突感不適前往就診」之初始背景事實，屬背景性事實遺漏",
+     "reason": "reasoning section 未提及「病患因身體突感不適前往就診」之初始背景事實，屬背景性事實遺漏"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 完全未提及證人L及其證述內容，屬關鍵證人證詞缺失",
+     "reason": "reasoning section 完全未提及證人L及其證述內容，屬關鍵證人證詞缺失"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未提及證人L無從得知對話內容之情節，與 gt_claim_id 70 相關",
+     "reason": "reasoning section 未提及證人L無從得知對話內容之情節，與 gt_claim_id 70 相關"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 未明確陳述證人R證述「持心電圖向心臟科醫師確認」及「告知不排除心肌梗塞或心絞痛」之細節",
+     "reason": "reasoning section 未明確陳述證人R證述「持心電圖向心臟科醫師確認」及「告知不排除心肌梗塞或心絞痛」之細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 雖提及「告知病情可能為心肌梗塞」，但未明確陳述被告向病患告知「心絞痛」之可能性，屬部分資訊遺漏",
+     "reason": "reasoning section 雖提及「告知病情可能為心肌梗塞」，但未明確陳述被告向病患告知「心絞痛」之可能性，屬部分資訊遺漏"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 直接引用「法院綜合醫審會鑑定意見認定」，未明確陳述「本件經醫審會鑑定」之程序事實",
+     "reason": "reasoning section 直接引用「法院綜合醫審會鑑定意見認定」，未明確陳述「本件經醫審會鑑定」之程序事實"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "GT claim 主張「可認死亡原因為心肌梗塞之可能性」，但 reasoning section 明確記載「不足以確定病患X死亡原因為心肌梗塞」，兩者方向相反；pred summary 表述與 GT 不一致，屬死因認定關鍵差異",
+     "reason": "GT claim 主張「可認死亡原因為心肌梗塞之可能性」，但 reasoning section 明確記載「不足以確定病患X死亡原因為心肌梗塞」，兩者方向相反；pred summary 表述與 GT 不一致，屬死因認定關鍵差異"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 完全未提及證人C電話詢問被告關於死亡證明書開立之事宜",
+     "reason": "reasoning section 完全未提及證人C電話詢問被告關於死亡證明書開立之事宜"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 記載「未能排除主動脈剝離、肺動脈栓塞等其他疾病之可能性」，雖語意上隱含「不能排除心肌梗塞」，但未明確陳述「不能排除為急性心肌梗塞之可能性」之正面表述",
+     "reason": "reasoning section 記載「未能排除主動脈剝離、肺動脈栓塞等其他疾病之可能性」，雖語意上隱含「不能排除心肌梗塞」，但未明確陳述「不能排除為急性心肌梗塞之可能性」之正面表述"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 有「縱依公訴意旨認被告甲係建議病患X自行搭乘計程車」之回應，但未明確作為「公訴意旨認...」之事實陳述",
+     "reason": "reasoning section 有「縱依公訴意旨認被告甲係建議病患X自行搭乘計程車」之回應，但未明確作為「公訴意旨認...」之事實陳述"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未提及「G診所錄影畫面擷取之影像在卷可佐」之證據性描述",
+     "reason": "reasoning section 未提及「G診所錄影畫面擷取之影像在卷可佐」之證據性描述"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 雖提及「車程僅約15分鐘」，但未明確記載「下午7時15分許到達急診室」之具體時間點，屬關鍵時間資訊遺漏",
+     "reason": "reasoning section 雖提及「車程僅約15分鐘」，但未明確記載「下午7時15分許到達急診室」之具體時間點，屬關鍵時間資訊遺漏"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 雖有「相較於呼叫救護車並等候到場之時間，並無明顯較為費時」，但未明確涵蓋「加計等候救護車到場之時間」之完整比較邏輯",
+     "reason": "reasoning section 雖有「相較於呼叫救護車並等候到場之時間，並無明顯較為費時」，但未明確涵蓋「加計等候救護車到場之時間」之完整比較邏輯"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 完全未提及「檢傷護理站接到電話並紀錄細節」之證人C證述內容",
+     "reason": "reasoning section 完全未提及「檢傷護理站接到電話並紀錄細節」之證人C證述內容"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 提及「開立轉診單」，但未明確陳述「記載病歷摘要」及「轉診單影本在卷可佐」之證據性描述",
+     "reason": "reasoning section 提及「開立轉診單」，但未明確陳述「記載病歷摘要」及「轉診單影本在卷可佐」之證據性描述"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "跨 section 檢視：reasoning section 於不同句中分別提及「建議轉診」及「通知後送醫院」，但未明確區分為兩項獨立行為；pred claim 2 及 claim 12 分別涵蓋部分內容，但無單一 claim 完整對應",
+     "reason": "跨 section 檢視：reasoning section 於不同句中分別提及「建議轉診」及「通知後送醫院」，但未明確區分為兩項獨立行為；pred claim 2 及 claim 12 分別涵蓋部分內容，但無單一 claim 完整對應"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 有「縱依公訴意旨認被告甲係建議病患X自行搭乘計程車轉診」之回應，但未明確作為「公訴意旨認...」之獨立事實陳述",
+     "reason": "reasoning section 有「縱依公訴意旨認被告甲係建議病患X自行搭乘計程車轉診」之回應，但未明確作為「公訴意旨認...」之獨立事實陳述"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred claim 12 同時涵蓋「車程無明顯較為費時」及「難認有疏失」，已配對予 GT claim 96，GT claim 94 屬重複意義陳述",
+     "reason": "pred claim 12 同時涵蓋「車程無明顯較為費時」及「難認有疏失」，已配對予 GT claim 96，GT claim 94 屬重複意義陳述"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 提及「開立舌下硝化含片」及「符合醫療常規」，但未明確陳述「先減緩其當時症狀，以利爭取進行後續診斷、治療時間」之目的性描述，屬治療意圖關鍵資訊",
+     "reason": "reasoning section 提及「開立舌下硝化含片」及「符合醫療常規」，但未明確陳述「先減緩其當時症狀，以利爭取進行後續診斷、治療時間」之目的性描述，屬治療意圖關鍵資訊"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 雖有「尚非被告甲可事先防範而避免其發生之事」之結論，但未以「應注意、能注意而未注意」之法定過失標準表述",
+     "reason": "reasoning section 雖有「尚非被告甲可事先防範而避免其發生之事」之結論，但未以「應注意、能注意而未注意」之法定過失標準表述"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning section 有「尚不足為被告甲有罪之積極證明」「存有合理之懷疑」等結論性表述，但未明確出現「難逕對被告為不利之認定」之特定用語",
+     "reason": "reasoning section 有「尚不足為被告甲有罪之積極證明」「存有合理之懷疑」等結論性表述，但未明確出現「難逕對被告為不利之認定」之特定用語"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 111,
+   "pred_total": 81,
+   "matched": 73,
+   "partial": 4,
+   "missing": 34,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6894,
+  "compression_afg_chars": 3753,
+  "compression_source_chars": 12083,
+  "gt_length_ratio": 0.8194,
+  "gt_length_afg_chars": 3753,
+  "gt_length_gt_chars": 4580,
+  "section_balance": 0.5217
+ }
 }

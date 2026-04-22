@@ -136,5 +136,242 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6622,
+  "fact_recall": 0.6408,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7811,
+  "quality_overall": 4.8714,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.8519,
+  "citation_support_score": 0.8744,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9111,
+   "citation_fidelity": 0.8519,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 24,
+   "correct": 24
+  },
+  "weighted_recall": 0.8447,
+  "missing_severity": {
+   "critical": 2,
+   "important": 17,
+   "minor": 8,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未明確列出住院期間完整檢查項目清單（胸部Ｘ光、尿液細菌檢查、抽血細菌檢查、心臟超音波、心電圖），僅籠統提及症狀相關檢查結果。屬背景性事實細節遺漏。",
+     "reason": "section_01_facts.txt 未明確列出住院期間完整檢查項目清單（胸部Ｘ光、尿液細菌檢查、抽血細菌檢查、心臟超音波、心電圖），僅籠統提及症狀相關檢查結果。屬背景性事實細節遺漏。"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「血液培養未見細菌生長」、section_05_reasoning.txt 提及「2次血液檢驗均無細菌生長」，但未明確表述「未有敗血症」此排除性診斷。屬醫學推論層次的細節遺漏。",
+     "reason": "section_01_facts.txt 提及「血液培養未見細菌生長」、section_05_reasoning.txt 提及「2次血液檢驗均無細菌生長」，但未明確表述「未有敗血症」此排除性診斷。屬醫學推論層次的細節遺漏。"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 未提及1月17日呼吸困難及心電圖檢查發現ST段上升之特定事件。section_05_reasoning.txt 雖提及「由住院醫師於1月17日指示給予Tirofiban」，但未說明係因呼吸困難及心電圖異常所致。此為關鍵時間節點與診療決策原因，影響病程理解。",
+     "reason": "section_01_facts.txt 未提及1月17日呼吸困難及心電圖檢查發現ST段上升之特定事件。section_05_reasoning.txt 雖提及「由住院醫師於1月17日指示給予Tirofiban」，但未說明係因呼吸困難及心電圖異常所致。此為關鍵時間節點與診療決策原因，影響病程理解。"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt pred claim 9 僅籠統提及「指示用藥」；section_02_defense.txt 提及「施用Heparine及Tirofiban」但未標註劑量；section_05_reasoning.txt 提及「指示給予Tirofiban」但未提及「10ml/h」劑量。具體劑量為重要醫療處置細節。",
+     "reason": "section_01_facts.txt pred claim 9 僅籠統提及「指示用藥」；section_02_defense.txt 提及「施用Heparine及Tirofiban」但未標註劑量；section_05_reasoning.txt 提及「指示給予Tirofiban」但未提及「10ml/h」劑量。具體劑量為重要醫療處置細節。"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt pred claim 7 涵蓋部分症狀描述（胸骨後方壓迫性悶痛放射至背部、發燒、白血球增加、心電圖廣泛性ST段上升、血液培養未見細菌生長）及「臨床上已符合急性心包膜炎之診斷」，pred claim 8 提及「本應注意不宜施打...」，但未完整涵蓋「未有敗血症之表現」及「經歷檢查後」之注意義務前提結構。跨 section 檢視後，仍缺少敗血症排除之完整論述。",
+     "reason": "section_01_facts.txt pred claim 7 涵蓋部分症狀描述（胸骨後方壓迫性悶痛放射至背部、發燒、白血球增加、心電圖廣泛性ST段上升、血液培養未見細菌生長）及「臨床上已符合急性心包膜炎之診斷」，pred claim 8 提及「本應注意不宜施打...」，但未完整涵蓋「未有敗血症之表現」及「經歷檢查後」之注意義務前提結構。跨 section 檢視後，仍缺少敗血症排除之完整論述。"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt pred claim 8 提及「以免提高心包膜出血及死亡風險」，語義與「以免加重死亡之危險性」相近，但表述為「提高...風險」而非「加重...危險性」，且與 GT 的精確法律用語有差異。屬重要法律後果表述的細節差異。",
+     "reason": "section_01_facts.txt pred claim 8 提及「以免提高心包膜出血及死亡風險」，語義與「以免加重死亡之危險性」相近，但表述為「提高...風險」而非「加重...危險性」，且與 GT 的精確法律用語有差異。屬重要法律後果表述的細節差異。"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt、section_05_reasoning.txt 均未提及「依當時情形，又無不能注意之情事」此刑法過失犯構成要件中「注意能力」之前提條件。此為過失認定的關鍵法律要素，影響過失責任判斷。",
+     "reason": "section_01_facts.txt、section_05_reasoning.txt 均未提及「依當時情形，又無不能注意之情事」此刑法過失犯構成要件中「注意能力」之前提條件。此為過失認定的關鍵法律要素，影響過失責任判斷。"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_01_facts.txt 雖有 pred claim 8「本應注意」及 pred claim 10「未及時發覺」，但未明確陳述「疏未注意」此業務過失致死罪之核心過失要素。section_05_reasoning.txt 法院論述亦未採「疏未注意」之用語。此為犯罪構成要件的核心事實，屬致命遺漏。",
+     "reason": "section_01_facts.txt 雖有 pred claim 8「本應注意」及 pred claim 10「未及時發覺」，但未明確陳述「疏未注意」此業務過失致死罪之核心過失要素。section_05_reasoning.txt 法院論述亦未採「疏未注意」之用語。此為犯罪構成要件的核心事實，屬致命遺漏。"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "此與 gt_claim_id 14 為重複項目（同年月17日心電圖事件）。section_01_facts.txt 未提及被告於1月17日發現心電圖廣泛性ST段上升之事實。",
+     "reason": "此與 gt_claim_id 14 為重複項目（同年月17日心電圖事件）。section_01_facts.txt 未提及被告於1月17日發現心電圖廣泛性ST段上升之事實。"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt pred claim 9 提及「懷疑心肌梗塞」，但未明確表述被告「誤判」為「急性前壁及下壁心肌缺氧性傷害」之具體診斷。section_02_defense.txt 提及被告「高度懷疑急性心肌梗塞或冠狀動脈疾病」，但無「誤判」之價值判斷。此為檢察官主張之關鍵過失認定事實。",
+     "reason": "section_01_facts.txt pred claim 9 提及「懷疑心肌梗塞」，但未明確表述被告「誤判」為「急性前壁及下壁心肌缺氧性傷害」之具體診斷。section_02_defense.txt 提及被告「高度懷疑急性心肌梗塞或冠狀動脈疾病」，但無「誤判」之價值判斷。此為檢察官主張之關鍵過失認定事實。"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt pred claim 10 提及「未及時發覺並處理心包膜填塞」，屬過失行為描述，但未明確陳述「致病患L急性心包膜炎之病症並未改善」之因果結果。跨 section 檢視後，仍缺少「病症並未改善」之病程發展事實。",
+     "reason": "section_01_facts.txt pred claim 10 提及「未及時發覺並處理心包膜填塞」，屬過失行為描述，但未明確陳述「致病患L急性心包膜炎之病症並未改善」之因果結果。跨 section 檢視後，仍缺少「病症並未改善」之病程發展事實。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt pred claim 10 提及「心包膜填塞」但未完整描述「嗣後出現心包膜炎填塞之症狀」之病程演變過程。section_05_reasoning.txt 法院論述雖提及心包膜填塞之證據問題，但未補足「嗣後出現...症狀」之事實陳述。屬關鍵病程節點之部分遺漏。",
+     "reason": "section_01_facts.txt pred claim 10 提及「心包膜填塞」但未完整描述「嗣後出現心包膜炎填塞之症狀」之病程演變過程。section_05_reasoning.txt 法院論述雖提及心包膜填塞之證據問題，但未補足「嗣後出現...症狀」之事實陳述。屬關鍵病程節點之部分遺漏。"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "掃描全部 5 個 section 原文，均未見『製造法所不容許之風險』或『容許之風險』此具體法律概念，確認 truly missing",
+     "reason": "掃描全部 5 個 section 原文，均未見『製造法所不容許之風險』或『容許之風險』此具體法律概念，確認 truly missing"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "掃描全部 5 個 section 原文，均未見『縱對於心包膜炎患者...亦無心包膜出血填塞致死案例』此具體醫學事實陳述，確認 truly missing",
+     "reason": "掃描全部 5 個 section 原文，均未見『縱對於心包膜炎患者...亦無心包膜出血填塞致死案例』此具體醫學事實陳述，確認 truly missing"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查全5個section，僅理由段提及「1月15日心臟超音波未發現心包膜積水」，與GT主張「發現微量」不符；摘要未提及1月15日發現微量積水之說，維持missing",
+     "reason": "遍查全5個section，僅理由段提及「1月15日心臟超音波未發現心包膜積水」，與GT主張「發現微量」不符；摘要未提及1月15日發現微量積水之說，維持missing"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查section_facts、section_defense、section_opinions、section_verdict、section_reasoning均無提及「收縮壓起伏」或「90mmHg」相關臨床數據，維持missing",
+     "reason": "遍查section_facts、section_defense、section_opinions、section_verdict、section_reasoning均無提及「收縮壓起伏」或「90mmHg」相關臨床數據，維持missing"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定意見段明確記載第2次鑑定指出「本病歷無明顯電位交替現象」，Pred正確引用此結論；GT主張與實際鑑定意見矛盾，維持missing",
+     "reason": "鑑定意見段明確記載第2次鑑定指出「本病歷無明顯電位交替現象」，Pred正確引用此結論；GT主張與實際鑑定意見矛盾，維持missing"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "此為死因認定核心爭點。鑑定意見段與理由段均明確記載第2次鑑定認為「欠缺足夠臨床證據證實有心包膜填塞」，法院亦採此說；Pred正確報告鑑定與法院見解，維持missing",
+     "reason": "此為死因認定核心爭點。鑑定意見段與理由段均明確記載第2次鑑定認為「欠缺足夠臨床證據證實有心包膜填塞」，法院亦採此說；Pred正確報告鑑定與法院見解，維持missing"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查全5個section均無提及「心包膜放液手術」或「pericardiocentesis」相關建議；第1次鑑定僅建議「應立即安排心臟超音波檢查」，未具體提及放液手術，維持missing",
+     "reason": "遍查全5個section均無提及「心包膜放液手術」或「pericardiocentesis」相關建議；第1次鑑定僅建議「應立即安排心臟超音波檢查」，未具體提及放液手術，維持missing"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文中均未提及『丙醫師』及其對心包膜炎之研判，確認missing",
+     "reason": "五個section原文中均未提及『丙醫師』及其對心包膜炎之研判，確認missing"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "原文『尚難認有醫療上過失』與GT『不可因此反推被告當時依據被害人主訴及初步檢驗結果之判斷有何疏失』語義接近但未明確表達『不可反推』之論述，維持missing",
+     "reason": "原文『尚難認有醫療上過失』與GT『不可因此反推被告當時依據被害人主訴及初步檢驗結果之判斷有何疏失』語義接近但未明確表達『不可反推』之論述，維持missing"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts提及『血液培養未見細菌生長』屬事實陳述，但未明確表述『公訴人排除細菌感染致死』之論述，確認missing",
+     "reason": "section_facts提及『血液培養未見細菌生長』屬事實陳述，但未明確表述『公訴人排除細菌感染致死』之論述，確認missing"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未明確提及『實際為病患進行診治之醫師較能通盤瞭解當時病患之狀況』之論述，確認missing",
+     "reason": "五個section原文均未明確提及『實際為病患進行診治之醫師較能通盤瞭解當時病患之狀況』之論述，確認missing"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文雖有轉出加護病房之決定，但未明確論述『應以實際負責醫師判斷為準』之標準，確認missing",
+     "reason": "五個section原文雖有轉出加護病房之決定，但未明確論述『應以實際負責醫師判斷為準』之標準，確認missing"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『公訴人於本院95年4月4日審理時請求傳喚另外2位醫師』之程序事實，確認missing",
+     "reason": "五個section原文均未提及『公訴人於本院95年4月4日審理時請求傳喚另外2位醫師』之程序事實，確認missing"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『公訴人請求傳喚告訴代理人乙證明醫療過程有疏失』之程序事實，確認missing",
+     "reason": "五個section原文均未提及『公訴人請求傳喚告訴代理人乙證明醫療過程有疏失』之程序事實，確認missing"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『法院認無必要傳喚證人』之程序決定，確認missing",
+     "reason": "五個section原文均未提及『法院認無必要傳喚證人』之程序決定，確認missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 103,
+   "pred_total": 66,
+   "matched": 56,
+   "partial": 20,
+   "missing": 27,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8034,
+  "compression_afg_chars": 2300,
+  "compression_source_chars": 11700,
+  "gt_length_ratio": 0.7034,
+  "gt_length_afg_chars": 2300,
+  "gt_length_gt_chars": 3270,
+  "section_balance": 0.5455
+ }
 }
