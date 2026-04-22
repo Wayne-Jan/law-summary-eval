@@ -134,6 +134,402 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.8367
+  "rule_based_avg": 0.8367,
+  "fact_recall": 0.6056,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7544,
+  "quality_overall": 4.8786,
+  "checklist_pass_rate": 0.9841,
+  "citation_accuracy": 0.9318,
+  "citation_support_score": 0.9267,
+  "uncited_rate": 0.07,
+  "faithfulness_combined": {
+   "score": 0.9199,
+   "citation_fidelity": 0.8666,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.8551,
+  "missing_severity": {
+   "critical": 4,
+   "important": 12,
+   "minor": 34,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經檢查體溫、血壓、心跳等具體生命徵象數值，屬細節性醫療數據，未影響判決核心事實理解",
+     "reason": "經檢查體溫、血壓、心跳等具體生命徵象數值，屬細節性醫療數據，未影響判決核心事實理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "病患主訴之上腹痛、噁心、嘔吐及胸悶等症狀，在 section_01_facts.txt 中已有「初步臆斷為高血壓性心臟病及急性闌尾炎」間接涵蓋，屬症狀細節遺漏",
+     "reason": "病患主訴之上腹痛、噁心、嘔吐及胸悶等症狀，在 section_01_facts.txt 中已有「初步臆斷為高血壓性心臟病及急性闌尾炎」間接涵蓋，屬症狀細節遺漏"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "針對高血壓及胃腸疾病部分先予投藥治療之具體內容，屬治療過程細節，不影響死因與過失認定",
+     "reason": "針對高血壓及胃腸疾病部分先予投藥治療之具體內容，屬治療過程細節，不影響死因與過失認定"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "術後給予點滴、抗生素及維他命治療之具體內容，屬術後處置細節，非核心醫療過失爭點",
+     "reason": "術後給予點滴、抗生素及維他命治療之具體內容，屬術後處置細節，非核心醫療過失爭點"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "由住院醫師進行心肺復甦術、氣管插管、升壓劑及電擊治療之急救詳情，屬急救過程細節，死因已確認為右心房破裂",
+     "reason": "由住院醫師進行心肺復甦術、氣管插管、升壓劑及電擊治療之急救詳情，屬急救過程細節，死因已確認為右心房破裂"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "與 gt_claim_id 15 為重複項目，術後治療細節遺漏屬次要資訊",
+     "reason": "與 gt_claim_id 15 為重複項目，術後治療細節遺漏屬次要資訊"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "與 gt_claim_id 17 為重複項目，急救細節遺漏不影響死因認定",
+     "reason": "與 gt_claim_id 17 為重複項目，急救細節遺漏不影響死因認定"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "案經病患配偶訴請檢察官偵查起訴之具體提告人資訊，section_01_facts.txt 已有「案經被害人配偶告訴檢察官偵查起訴」，屬細節遺漏",
+     "reason": "案經病患配偶訴請檢察官偵查起訴之具體提告人資訊，section_01_facts.txt 已有「案經被害人配偶告訴檢察官偵查起訴」，屬細節遺漏"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "5個 section 中皆無『病歷的記載對於醫生對病人的診斷或是將來如果有醫療糾紛是很重要的』之對應內容",
+     "reason": "5個 section 中皆無『病歷的記載對於醫生對病人的診斷或是將來如果有醫療糾紛是很重要的』之對應內容"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "5個 section 中皆無『給他降血壓及胃腸科的藥物，並開兩天的藥讓病人帶回去』之細節",
+     "reason": "5個 section 中皆無『給他降血壓及胃腸科的藥物，並開兩天的藥讓病人帶回去』之細節"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "5個 section 中無『被告乙安排腹部Ｘ光檢查』之明確描述",
+     "reason": "5個 section 中無『被告乙安排腹部Ｘ光檢查』之明確描述"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 有外科實習醫師診治但未明確寫『向丁醫生報告』，其他 section 亦無對應",
+     "reason": "section_defense 有外科實習醫師診治但未明確寫『向丁醫生報告』，其他 section 亦無對應"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 有『他也研判這是急性闌尾炎』（指外科實習醫師），未明確寫『丁醫師也認為』",
+     "reason": "section_defense 有『他也研判這是急性闌尾炎』（指外科實習醫師），未明確寫『丁醫師也認為』"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "5個 section 皆無『會診時間大概是十點左右』之時間描述",
+     "reason": "5個 section 皆無『會診時間大概是十點左右』之時間描述"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 有『他有將此記載在病歷上面』但無『親自向丁醫生報告』之描述",
+     "reason": "section_defense 有『他有將此記載在病歷上面』但無『親自向丁醫生報告』之描述"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "5個 section 皆無『檢察官問病患Ｌ的太太...她說她不相信醫審會的判定』之對應內容",
+     "reason": "5個 section 皆無『檢察官問病患Ｌ的太太...她說她不相信醫審會的判定』之對應內容"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "5個 section 皆無『社會上有很多先天性疾病，但不是每個有先天性疾病的人任何大小病都要到醫學中心去看』之辯護論點，屬辯護要點",
+     "reason": "5個 section 皆無『社會上有很多先天性疾病，但不是每個有先天性疾病的人任何大小病都要到醫學中心去看』之辯護論點，屬辯護要點"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "5個 section 皆無『在相驗的時候病患Ｌ的太太一直否認她們家族有心臟病史』之描述，屬重要事實爭點",
+     "reason": "5個 section 皆無『在相驗的時候病患Ｌ的太太一直否認她們家族有心臟病史』之描述，屬重要事實爭點"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 有『當日病患是由黃主任看診』但未提『六點多』『開藥讓他帶回去』之細節",
+     "reason": "section_defense 有『當日病患是由黃主任看診』但未提『六點多』『開藥讓他帶回去』之細節"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "5個 section 皆無『八點快九點丁醫生請丙醫生過去會診，丙報告回來說不太像盲腸炎，丁醫生說再觀察』之細節",
+     "reason": "5個 section 皆無『八點快九點丁醫生請丙醫生過去會診，丙報告回來說不太像盲腸炎，丁醫生說再觀察』之細節"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "此為整體性無過失主張，5個 section 僅有被告個人抗辯，無概括性『病患來醫院整個流程醫院並沒有過失』之流程評價，屬核心辯護主張",
+     "reason": "此為整體性無過失主張，5個 section 僅有被告個人抗辯，無概括性『病患來醫院整個流程醫院並沒有過失』之流程評價，屬核心辯護主張"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第一次鑑定書日期及文號為程序性細節，不影響鑑定實質內容理解",
+     "reason": "第一次鑑定書日期及文號為程序性細節，不影響鑑定實質內容理解"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心包膜填塞原因『右心房破裂』為重要解剖發現，影響死因機制完整理解",
+     "reason": "心包膜填塞原因『右心房破裂』為重要解剖發現，影響死因機制完整理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "『其子患有馬凡氏症』家族病史細節遺漏，影響病史完整性",
+     "reason": "『其子患有馬凡氏症』家族病史細節遺漏，影響病史完整性"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "馬凡氏症遺傳特性（自體顯性遺傳、膠原形成缺陷）為背景醫學知識",
+     "reason": "馬凡氏症遺傳特性（自體顯性遺傳、膠原形成缺陷）為背景醫學知識"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "『15％基因突變』為醫學統計數據，屬背景資訊",
+     "reason": "『15％基因突變』為醫學統計數據，屬背景資訊"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "馬凡氏症診斷標準為背景醫學知識",
+     "reason": "馬凡氏症診斷標準為背景醫學知識"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "『95％心血管異常』為醫學統計數據，屬背景資訊",
+     "reason": "『95％心血管異常』為醫學統計數據，屬背景資訊"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "『80％升主動脈瘤』為醫學統計數據，屬背景資訊",
+     "reason": "『80％升主動脈瘤』為醫學統計數據，屬背景資訊"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第二次鑑定書日期及文號為程序性細節",
+     "reason": "第二次鑑定書日期及文號為程序性細節"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第三次鑑定書日期及文號為程序性細節",
+     "reason": "第三次鑑定書日期及文號為程序性細節"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "案件類型『業務過失致人於死』雖於 facts section 提及（檢察官起訴罪嫌），但 verdict section 本身確實未明確陳述案件類型，屬程序性背景事實，不影響判決結論理解",
+     "reason": "案件類型『業務過失致人於死』雖於 facts section 提及（檢察官起訴罪嫌），但 verdict section 本身確實未明確陳述案件類型，屬程序性背景事實，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "reasoning 段落未提及病患在急診室診斷為急性闌尾炎及建議手術的具體過程，雖 opinions 段有提及，但 reasoning 作為判決理由未完整涵蓋鑑定意見",
+     "reason": "reasoning 段落未提及病患在急診室診斷為急性闌尾炎及建議手術的具體過程，雖 opinions 段有提及，但 reasoning 作為判決理由未完整涵蓋鑑定意見"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術後病理報告結果為次要醫療細節，非判決核心論點",
+     "reason": "術後病理報告結果為次要醫療細節，非判決核心論點"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "急性闌尾炎醫療必要性說明為背景醫學知識，非判決關鍵事實認定",
+     "reason": "急性闌尾炎醫療必要性說明為背景醫學知識，非判決關鍵事實認定"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "謝醫師建議手術適應性的具體說明未在 reasoning 段落出現",
+     "reason": "謝醫師建議手術適應性的具體說明未在 reasoning 段落出現"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "病患死亡具體死因（主動脈剝離引起心包膜填塞）是理解判決結果的關鍵醫學事實，reasoning 段落嚴重遺漏",
+     "reason": "病患死亡具體死因（主動脈剝離引起心包膜填塞）是理解判決結果的關鍵醫學事實，reasoning 段落嚴重遺漏"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "急診手術必要性論述雖見於 opinions 段，但 reasoning 未完整引用以支持無罪判決理由",
+     "reason": "急診手術必要性論述雖見於 opinions 段，但 reasoning 未完整引用以支持無罪判決理由"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患就診時醫師已知馬凡氏症家族史及診斷過程是判決重要事實基礎，reasoning 段落遺漏影響案情理解",
+     "reason": "病患就診時醫師已知馬凡氏症家族史及診斷過程是判決重要事實基礎，reasoning 段落遺漏影響案情理解"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "外科醫師丁診斷及手術過程雖見於 opinions 段，但 reasoning 作為判決理由未完整涵蓋",
+     "reason": "外科醫師丁診斷及手術過程雖見於 opinions 段，但 reasoning 作為判決理由未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患主訴症狀及無典型主動脈剝離胸痛是法院判斷有無過失的重要依據，reasoning 段落未提及",
+     "reason": "病患主訴症狀及無典型主動脈剝離胸痛是法院判斷有無過失的重要依據，reasoning 段落未提及"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "胸部X光檢查結果及家族史具體資訊是判決重要事實認定基礎，reasoning 段落遺漏",
+     "reason": "胸部X光檢查結果及家族史具體資訊是判決重要事實認定基礎，reasoning 段落遺漏"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "臨床上確定診斷需進一步影像學檢查及難以求急診醫師單憑X光診斷之主張，雖見於 opinions 段，但 reasoning 段落未完整引用",
+     "reason": "臨床上確定診斷需進一步影像學檢查及難以求急診醫師單憑X光診斷之主張，雖見於 opinions 段，但 reasoning 段落未完整引用"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "關於醫師是否已知心臟血管疾病危險性及轉診疏失判定問題是判決核心爭點，reasoning 段落遺漏嚴重影響判決理由理解",
+     "reason": "關於醫師是否已知心臟血管疾病危險性及轉診疏失判定問題是判決核心爭點，reasoning 段落遺漏嚴重影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告丁建議手術醫療必要性及合理執業標準論述雖見於 opinions 段，但 reasoning 未完整引用",
+     "reason": "被告丁建議手術醫療必要性及合理執業標準論述雖見於 opinions 段，但 reasoning 未完整引用"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告乙職位及專業領域為背景資訊，雖 facts 段有提及，但 reasoning 段落遺漏不影響判決核心論點",
+     "reason": "被告乙職位及專業領域為背景資訊，雖 facts 段有提及，但 reasoning 段落遺漏不影響判決核心論點"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告丁職位及專業領域為背景資訊，雖 facts 段有提及，但 reasoning 段落遺漏不影響判決核心論點",
+     "reason": "被告丁職位及專業領域為背景資訊，雖 facts 段有提及，但 reasoning 段落遺漏不影響判決核心論點"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "馬凡氏症三大臨床表徵系統為背景醫學知識，雖 opinions 段有提及，但 reasoning 段落遺漏不影響判決結論理解",
+     "reason": "馬凡氏症三大臨床表徵系統為背景醫學知識，雖 opinions 段有提及，但 reasoning 段落遺漏不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "馬凡氏症嚴重度差異及發現年齡詳細說明為背景醫學知識，雖 opinions 段有提及，但 reasoning 段落遺漏不影響判決核心",
+     "reason": "馬凡氏症嚴重度差異及發現年齡詳細說明為背景醫學知識，雖 opinions 段有提及，但 reasoning 段落遺漏不影響判決核心"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「不能課予最高標準注意義務」是判決核心法律論點，直接影響無罪判決結論，reasoning 段落嚴重遺漏",
+     "reason": "「不能課予最高標準注意義務」是判決核心法律論點，直接影響無罪判決結論，reasoning 段落嚴重遺漏"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 161,
+   "pred_total": 57,
+   "matched": 84,
+   "partial": 27,
+   "missing": 50,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8145,
+  "compression_afg_chars": 2732,
+  "compression_source_chars": 14724,
+  "gt_length_ratio": 0.3387,
+  "gt_length_afg_chars": 2732,
+  "gt_length_gt_chars": 8065,
+  "section_balance": 0.6959
  }
 }

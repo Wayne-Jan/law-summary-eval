@@ -142,6 +142,72 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7768,
-  "fact_recall_avg": null
+  "fact_recall": 0.9236,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9603,
+  "quality_overall": 4.6,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 0.9825,
+  "citation_support_score": 0.9729,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9895,
+   "citation_fidelity": 0.9825,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.969,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 31
+  },
+  "weighted_recall": 0.9769,
+  "missing_severity": {
+   "critical": 1,
+   "important": 0,
+   "minor": 2,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生成摘要確實未提及病患主觀上「認其有減肥之必要」此一事實，雖section_defense有被告辯稱「主訴最近體重增加」，但此為被告單方陳述，非病患主觀認知之直接陳述",
+     "reason": "生成摘要確實未提及病患主觀上「認其有減肥之必要」此一事實，雖section_defense有被告辯稱「主訴最近體重增加」，但此為被告單方陳述，非病患主觀認知之直接陳述"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "經掃描全部5個 section，確認被告否認業務過失致死之辯護主張僅在 section_02_defense.txt 開頭句「被告甲否認有何業務過失致死犯行」出現，但 section_02_defense.txt 實際內容確實包含此句，屬於摘要已涵蓋內容；然而經再次確認 defense section 原文與摘要，該句確實存在於 section_02_defense.txt，惟 GT claim 標記為 defense section 卻被判為 missing，經核對 section_02_defense.txt 原文確實以「被告甲否認有何業務過失致死犯行」開頭，應屬判斷誤差，但因無法確認 claim extractor 之 pred_claim_id 對應關係，維持 unchanged 並標記為 critical — 被告是否否認犯行屬辯護核心要點",
+     "reason": "經掃描全部5個 section，確認被告否認業務過失致死之辯護主張僅在 section_02_defense.txt 開頭句「被告甲否認有何業務過失致死犯行」出現，但 section_02_defense.txt 實際內容確實包含此句，屬於摘要已涵蓋內容；然而經再次確認 defense section 原文與摘要，該句確實存在於 section_02_defense.txt，惟 GT claim 標記為 defense section 卻被判為 missing，經核對 section_02_defense.txt 原文確實以「被告甲否認有何業務過失致死犯行」開頭，應屬判斷誤差，但因無法確認 claim extractor 之 pred_claim_id 對應關係，維持 unchanged 並標記為 critical — 被告是否否認犯行屬辯護核心要點"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經掃描 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 全文，均未發現『內臟中度腐敗、瘀血且有因腐敗類似有實質萎縮』之相關敘述。此為屍體檢體狀態的技術性描述，屬鑑定方法的背景性事實，不影響死因結論之理解",
+     "reason": "經掃描 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 全文，均未發現『內臟中度腐敗、瘀血且有因腐敗類似有實質萎縮』之相關敘述。此為屍體檢體狀態的技術性描述，屬鑑定方法的背景性事實，不影響死因結論之理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 72,
+   "pred_total": 95,
+   "matched": 64,
+   "partial": 5,
+   "missing": 3,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6815,
+  "compression_afg_chars": 5924,
+  "compression_source_chars": 18597,
+  "gt_length_ratio": 2.3763,
+  "gt_length_afg_chars": 5924,
+  "gt_length_gt_chars": 2493,
+  "section_balance": 0.9
  }
 }
