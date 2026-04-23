@@ -1044,6 +1044,10 @@
       width: 14px; height: 14px; display: inline-flex; align-items: center; justify-content: center;
       color: currentColor; flex-shrink: 0;
     }
+    .login-password-wrap {
+      position: relative;
+      width: 100%;
+    }
     .login-fields select, .login-fields input {
       width: 100%;
       padding: 11px 13px;
@@ -1054,10 +1058,43 @@
       color: #475569;
       background: rgba(255,255,255,0.84);
     }
+    .login-password-wrap input {
+      padding-right: 44px;
+    }
     .login-fields select:focus, .login-fields input:focus {
       outline: none;
       border-color: #94a3b8;
       box-shadow: 0 0 0 3px rgba(148,163,184,0.16);
+    }
+    .login-password-toggle {
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      border: none;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--slate-400);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: color .15s, background-color .15s;
+    }
+    .login-password-toggle:hover {
+      color: var(--slate-700);
+      background: var(--slate-100);
+    }
+    .login-password-toggle:focus-visible {
+      outline: 2px solid rgba(79,70,229,.22);
+      outline-offset: 2px;
+    }
+    .login-password-toggle svg {
+      width: 18px;
+      height: 18px;
+      display: block;
     }
     .login-card .btn {
       width: 100%;
@@ -1491,7 +1528,15 @@
       <select id="loginUser">
         <option value="">-- 選擇評估者 --</option>
       </select>
-      <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()" />
+      <div class="login-password-wrap">
+        <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()" />
+        <button type="button" id="loginPasswordToggle" class="login-password-toggle" onclick="toggleLoginPasswordVisibility()" aria-label="顯示密碼" aria-pressed="false" title="顯示密碼">
+          <svg id="loginPasswordToggleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+          </svg>
+        </button>
+      </div>
       <div class="login-error" id="loginError"></div>
       <button class="btn btn-primary" onclick="doLogin()">登入</button>
     </div>
@@ -2425,11 +2470,32 @@ function showLoginOverlay() {
   }
   sel.style.display = '';
   document.getElementById('loginPassword').value = '';
+  setLoginPasswordVisibility(false);
   document.getElementById('loginError').textContent = '';
   document.getElementById('adminLoginLink').style.display = '';
 }
 
 let _adminLoginMode = false;
+function setLoginPasswordVisibility(visible) {
+  const input = document.getElementById('loginPassword');
+  const toggle = document.getElementById('loginPasswordToggle');
+  const icon = document.getElementById('loginPasswordToggleIcon');
+  if (!input || !toggle || !icon) return;
+  input.type = visible ? 'text' : 'password';
+  toggle.setAttribute('aria-pressed', visible ? 'true' : 'false');
+  toggle.setAttribute('aria-label', visible ? '隱藏密碼' : '顯示密碼');
+  toggle.title = visible ? '隱藏密碼' : '顯示密碼';
+  icon.innerHTML = visible
+    ? '<path d="m3 3 18 18"></path><path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path><path d="M9.36 5.56A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-4.2 4.79"></path><path d="M6.23 6.24C3.32 8.06 2 12 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.08-.86"></path>'
+    : '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle>';
+}
+
+function toggleLoginPasswordVisibility() {
+  const input = document.getElementById('loginPassword');
+  if (!input) return;
+  setLoginPasswordVisibility(input.type === 'password');
+}
+
 function toggleAdminLogin() {
   _adminLoginMode = !_adminLoginMode;
   const sel = document.getElementById('loginUser');
@@ -2461,6 +2527,10 @@ function applyMobileEvalAccess() {
   document.body.classList.toggle('mobile-eval-restricted', shouldRestrictMobileEval());
 }
 
+function syncRoleViewState() {
+  document.body.classList.toggle('medical-role', getCurrentRole() === 'medical');
+}
+
 function applyAuth() {
   const user = getSessionUser();
   const role = getSessionRole();
@@ -2476,7 +2546,7 @@ function applyAuth() {
     hideAdminPanel();
   }
   // Medical role: Phase 1 read-only
-  document.body.classList.toggle('medical-role', role === 'medical');
+  syncRoleViewState();
   applyMobileEvalAccess();
 }
 
@@ -3140,7 +3210,7 @@ function renderPhaseIndicators() {
   const locked = isCaseLocked(currentCase);
   const allDone = areAllCondsComplete(currentCase);
 
-  const isMedical = getSessionRole() === 'medical';
+  const isMedical = getCurrentRole() === 'medical';
   const phases = isMedical
     ? [{ num: 1, label: '摘要檢視' }, { num: 'tl', label: '時間軸評估' }]
     : [{ num: 1, label: '各版本評分' }, { num: 'tl', label: '時間軸評估' }];
@@ -3310,7 +3380,7 @@ async function loadPhase1() {
   document.querySelectorAll('#p1EvalForm .eval-item').forEach(el => {
     el.classList.toggle('frozen', frozen);
   });
-  const isMedical = getSessionRole() === 'medical';
+  const isMedical = getCurrentRole() === 'medical';
   if (frozen) {
     document.getElementById('p1CompleteBtn').disabled = true;
     document.getElementById('p1CompleteBtn').textContent = '已凍結';
@@ -3426,7 +3496,7 @@ function completePhase1() {
   if (isAdminInspectMode()) return;
   // TODO: re-enable freeze check before production
   // if (isPhase1Frozen(currentCase, currentCondIdx)) return;
-  const isMedical = getSessionRole() === 'medical';
+  const isMedical = getCurrentRole() === 'medical';
   if (isMedical) {
     // Medical role: read-only, just mark complete and move on
     const existing = getPhaseData(currentCase, currentCondIdx, 1) || {};
@@ -5668,6 +5738,7 @@ async function initAdminInspectFromURL() {
   if (getSessionRole() !== 'admin') {
     adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
     document.body.classList.remove('admin-inspect');
+    syncRoleViewState();
     setAdminInspectBanner();
     return;
   }
@@ -5676,6 +5747,7 @@ async function initAdminInspectFromURL() {
   if (params.get('admin_view') !== '1') {
     adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
     document.body.classList.remove('admin-inspect');
+    syncRoleViewState();
     setAdminInspectBanner();
     return;
   }
@@ -5684,6 +5756,7 @@ async function initAdminInspectFromURL() {
   if (!evaluator || !USERS[evaluator] || evaluator === 'admin') {
     adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
     document.body.classList.remove('admin-inspect');
+    syncRoleViewState();
     setAdminInspectBanner();
     return;
   }
@@ -5706,6 +5779,7 @@ async function initAdminInspectFromURL() {
     records,
   };
   document.body.classList.add('admin-inspect');
+  syncRoleViewState();
   hideAdminPanel();
 
   const targetCase = params.get('case');
@@ -5767,6 +5841,7 @@ function setAdminInspectBanner() {
 function exitAdminInspectMode() {
   adminInspect = { active: false, evaluator: '', evaluatorUid: '', role: '', records: new Map() };
   document.body.classList.remove('admin-inspect');
+  syncRoleViewState();
   setAdminInspectBanner();
   const url = new URL(location.href);
   url.searchParams.delete('admin_view');
