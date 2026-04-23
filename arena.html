@@ -368,6 +368,10 @@
             display: grid;
             gap: 12px;
         }
+        .login-password-wrap {
+            position: relative;
+            width: 100%;
+        }
         .login-fields select,
         .login-fields input {
             width: 100%;
@@ -379,11 +383,44 @@
             color: #475569;
             background: rgba(255, 255, 255, 0.84);
         }
+        .login-password-wrap input {
+            padding-right: 44px;
+        }
         .login-fields select:focus,
         .login-fields input:focus {
             outline: none;
             border-color: #94a3b8;
             box-shadow: 0 0 0 3px rgba(148, 163, 184, 0.16);
+        }
+        .login-password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 999px;
+            background: transparent;
+            color: #94a3b8;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.15s, background-color 0.15s;
+        }
+        .login-password-toggle:hover {
+            color: #475569;
+            background: #f1f5f9;
+        }
+        .login-password-toggle:focus-visible {
+            outline: 2px solid rgba(79, 70, 229, 0.22);
+            outline-offset: 2px;
+        }
+        .login-password-toggle svg {
+            width: 18px;
+            height: 18px;
+            display: block;
         }
         .login-error {
             min-height: 18px;
@@ -1458,7 +1495,17 @@
             <select id="loginUser">
                 <option value="">-- 選擇評審者 --</option>
             </select>
-            <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()">
+            <div class="login-password-wrap">
+                <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()">
+                <button type="button" id="loginPasswordToggle" class="login-password-toggle" onclick="toggleLoginPasswordVisibility()" aria-label="顯示密碼" aria-pressed="false" title="顯示密碼">
+                    <svg id="loginPasswordToggleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="m3 3 18 18"></path>
+                        <path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path>
+                        <path d="M9.36 5.56A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-4.2 4.79"></path>
+                        <path d="M6.23 6.24C3.32 8.06 2 12 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.08-.86"></path>
+                    </svg>
+                </button>
+            </div>
             <div class="login-error" id="loginError"></div>
             <button class="modal-confirm" id="loginSubmit" onclick="doLogin()">登入</button>
         </div>
@@ -1957,8 +2004,30 @@
         document.querySelector('#adminLoginLink span:last-child').textContent = '管理員入口';
         document.getElementById('loginPassword').placeholder = '密碼';
         document.getElementById('loginPassword').value = '';
+        setLoginPasswordVisibility(false);
         document.getElementById('loginError').textContent = '';
     }
+
+    function setLoginPasswordVisibility(visible) {
+        const input = document.getElementById('loginPassword');
+        const toggle = document.getElementById('loginPasswordToggle');
+        const icon = document.getElementById('loginPasswordToggleIcon');
+        if (!input || !toggle || !icon) return;
+        input.type = visible ? 'text' : 'password';
+        toggle.setAttribute('aria-pressed', visible ? 'true' : 'false');
+        toggle.setAttribute('aria-label', visible ? '隱藏密碼' : '顯示密碼');
+        toggle.title = visible ? '隱藏密碼' : '顯示密碼';
+        icon.innerHTML = visible
+            ? '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle>'
+            : '<path d="m3 3 18 18"></path><path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path><path d="M9.36 5.56A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-4.2 4.79"></path><path d="M6.23 6.24C3.32 8.06 2 12 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.08-.86"></path>';
+    }
+
+    function toggleLoginPasswordVisibility() {
+        const input = document.getElementById('loginPassword');
+        if (!input) return;
+        setLoginPasswordVisibility(input.type === 'password');
+    }
+    window.toggleLoginPasswordVisibility = toggleLoginPasswordVisibility;
 
     function toggleAdminLogin() {
         adminLoginMode = !adminLoginMode;
