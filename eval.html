@@ -1379,10 +1379,37 @@
     }
     .admin-inspect-banner.show { display:inline-flex; }
     .admin-inspect-banner .muted { color:#475569; font-weight:600; }
+    body.is-admin.admin-inspect .toolbar {
+      flex-wrap: wrap;
+      height: auto;
+      min-height: 56px;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      align-content: center;
+    }
+    body.is-admin.admin-inspect #caseSelect {
+      max-width: min(420px, 100%);
+      min-width: 240px;
+      flex: 1 1 320px;
+    }
     body.is-admin.admin-inspect select.eval-only { display: block; }
     body.is-admin.admin-inspect .cond-pills.eval-only,
     body.is-admin.admin-inspect .phase-indicators.eval-only,
     body.is-admin.admin-inspect .sep.eval-only { display: flex; }
+    body.is-admin.admin-inspect .cond-pills.eval-only,
+    body.is-admin.admin-inspect .phase-indicators.eval-only {
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scrollbar-width: none;
+    }
+    body.is-admin.admin-inspect .cond-pills.eval-only::-webkit-scrollbar,
+    body.is-admin.admin-inspect .phase-indicators.eval-only::-webkit-scrollbar { display: none; }
+    body.is-admin.admin-inspect .cond-pills.eval-only { flex: 999 1 520px; }
+    body.is-admin.admin-inspect .phase-indicators.eval-only,
+    body.is-admin.admin-inspect #userBadge,
+    body.is-admin.admin-inspect #adminInspectBanner { flex: 0 0 auto; }
     body.is-admin.admin-inspect .progress-subbar { display: flex; }
     body.is-admin.admin-inspect .main { display: flex; }
     body.is-admin.admin-inspect .footer { display: flex; }
@@ -2248,7 +2275,7 @@ function buildBackupHealthSummary(backups) {
   };
 }
 
-async function fetchBackupSnapshots(limit = 30) {
+async function fetchBackupSnapshots(limit = 10) {
   if (getSessionRole() !== 'admin' || !auth.currentUser) return [];
   const snapshot = await db.collection('eval_backups_daily').orderBy('snapshot_date', 'desc').limit(limit).get();
   return snapshot.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }));
@@ -3176,7 +3203,7 @@ function renderCondPills() {
   const el = document.getElementById('condPills');
   let html = '';
   const locked = isCaseLocked(currentCase);
-  const timelineLocked = currentPhase === 'tl';
+  const timelineLocked = currentPhase === 'tl' && !isAdminInspectMode();
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAdminInspectConditionLabel(currentCase, i);
     const done = isCondComplete(currentCase, i);
@@ -3193,7 +3220,7 @@ function renderCondPills() {
 }
 
 function switchCondition(idx) {
-  if (isCaseLocked(currentCase) || currentPhase === 'tl') return;
+  if (isCaseLocked(currentCase) || (currentPhase === 'tl' && !isAdminInspectMode())) return;
   saveCurrentState();
   currentCondIdx = idx;
   // Stay on the current phase — don't auto-jump
@@ -6162,7 +6189,7 @@ async function renderAdminContent() {
   let backups = [];
   try {
     await refreshAdminLatestRecordsCache(evaluators);
-    backups = await fetchBackupSnapshots(30);
+    backups = await fetchBackupSnapshots(10);
     // Build prev-snapshot map for diff
     for (let i = 0; i < backups.length; i++) {
       const id = backups[i].snapshot_id || backups[i].id;
@@ -6182,7 +6209,7 @@ async function renderAdminContent() {
   html += `<div style="padding:14px 16px;border:1px solid var(--slate-300);border-radius:16px;background:#fff;">`;
   html += `<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">`;
   html += `<div style="font-size:14px;font-weight:700;color:var(--slate-900);">備份歷程</div>`;
-  html += `<div style="font-size:12px;color:var(--slate-500);">最近 30 筆快照</div>`;
+  html += `<div style="font-size:12px;color:var(--slate-500);">最近 10 筆快照</div>`;
   html += `</div>`;
   html += buildAdminBackupHistory(backups, mobile);
   html += `</div></div>`;
