@@ -141,6 +141,394 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8584,
-  "fact_recall_avg": null
+  "fact_recall": 0.5714,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7273,
+  "quality_overall": 4.5,
+  "checklist_pass_rate": 0.9784,
+  "citation_accuracy": 0.8667,
+  "citation_support_score": 0.8467,
+  "uncited_rate": 0.0208,
+  "faithfulness_combined": {
+   "score": 0.9092,
+   "citation_fidelity": 0.8487,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 17
+  },
+  "weighted_recall": 0.7479,
+  "missing_severity": {
+   "critical": 9,
+   "important": 23,
+   "minor": 17,
+   "details": [
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『當日值班之住院醫師前來急救』為急救過程之關鍵事實，影響對醫療處置完整性之理解。掃描全部5個 section 原文均未提及住院醫師參與急救，僅 section_opinions 提及『心肺復甦術急救』但未指明人員",
+     "reason": "『當日值班之住院醫師前來急救』為急救過程之關鍵事實，影響對醫療處置完整性之理解。掃描全部5個 section 原文均未提及住院醫師參與急救，僅 section_opinions 提及『心肺復甦術急救』但未指明人員"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『同日晚間10時10分急救後恢復心跳及呼吸』之具體時間點為關鍵事實，影響時間軸完整性。section_defense 雖提及『經急救其呼吸、心跳雖有回復』但無具體時間，其餘 section 均未提及『10時10分』",
+     "reason": "『同日晚間10時10分急救後恢復心跳及呼吸』之具體時間點為關鍵事實，影響時間軸完整性。section_defense 雖提及『經急救其呼吸、心跳雖有回復』但無具體時間，其餘 section 均未提及『10時10分』"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "『轉送加護病房治療』為後續醫療處置過程，影響治療經過之完整理解。掃描全部5個 section 原文均未提及加護病房相關內容",
+     "reason": "『轉送加護病房治療』為後續醫療處置過程，影響治療經過之完整理解。掃描全部5個 section 原文均未提及加護病房相關內容"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『於102年6月14日死亡』為案件最終結果之關鍵時間點，直接影響判決結論理解。掃描全部5個 section 原文均未提及死亡日期，僅 section_facts 提及『重大不治之重傷害』但未明確記載死亡時間",
+     "reason": "『於102年6月14日死亡』為案件最終結果之關鍵時間點，直接影響判決結論理解。掃描全部5個 section 原文均未提及死亡日期，僅 section_facts 提及『重大不治之重傷害』但未明確記載死亡時間"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『麻醉科主治醫師等陸續前來協助急救』為急救人員組成之關鍵事實。掃描全部5個 section 原文均未提及『麻醉科主治醫師』參與急救",
+     "reason": "『麻醉科主治醫師等陸續前來協助急救』為急救人員組成之關鍵事實。掃描全部5個 section 原文均未提及『麻醉科主治醫師』參與急救"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『甦醒球之治療毫無反應』為急救過程中之關鍵醫療細節，涉及因果關係認定。section_facts 雖提及『氣管嚴重痙攣收縮』，但全文均未提及『甦醒球』治療及反應",
+     "reason": "『甦醒球之治療毫無反應』為急救過程中之關鍵醫療細節，涉及因果關係認定。section_facts 雖提及『氣管嚴重痙攣收縮』，但全文均未提及『甦醒球』治療及反應"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "『血氧飽和度無法回復』為病情變化之重要指標。section_facts 提及『無法測得任何血氧飽和度』係描述測量狀態，與 GT 所述『無法回復』之病情變化語義不完全等同，且全文未明確提及『血氧飽和度無法回復』",
+     "reason": "『血氧飽和度無法回復』為病情變化之重要指標。section_facts 提及『無法測得任何血氧飽和度』係描述測量狀態，與 GT 所述『無法回復』之病情變化語義不完全等同，且全文未明確提及『血氧飽和度無法回復』"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『直至插入氣管內管後，氧氣始能順利進入肺部』為急救處置細節之關鍵事實，涉及氣道處置過程。掃描全部5個 section 原文均未提及『氣管內管』之插入",
+     "reason": "『直至插入氣管內管後，氧氣始能順利進入肺部』為急救處置細節之關鍵事實，涉及氣道處置過程。掃描全部5個 section 原文均未提及『氣管內管』之插入"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『同日晚間10時10分急救後恢復心跳及呼吸』與 GT claim 14 內容重複，具體時間點為關鍵事實。掃描全部5個 section 原文均未提及『10時10分』之具體時間",
+     "reason": "『同日晚間10時10分急救後恢復心跳及呼吸』與 GT claim 14 內容重複，具體時間點為關鍵事實。掃描全部5個 section 原文均未提及『10時10分』之具體時間"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "『於102年6月14日死亡』與 GT claim 16 內容重複，死亡日期為案件結果之關鍵事實。掃描全部5個 section 原文均未提及『102年6月14日』之死亡日期",
+     "reason": "『於102年6月14日死亡』與 GT claim 16 內容重複，死亡日期為案件結果之關鍵事實。掃描全部5個 section 原文均未提及『102年6月14日』之死亡日期"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經查全部 5 個 section 原文，summary 確實未提及「病患於住院時，可能已有心臟功能不佳之情形」。opinions section 僅提及「急性肺水腫」之病況，但未明確提及住院時心臟功能不佳之背景，此為病患背景資訊，不影響主要案情理解",
+     "reason": "經查全部 5 個 section 原文，summary 確實未提及「病患於住院時，可能已有心臟功能不佳之情形」。opinions section 僅提及「急性肺水腫」之病況，但未明確提及住院時心臟功能不佳之背景，此為病患背景資訊，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經查全部 5 個 section 原文，summary 確實未提及「放置鼻胃管原則上需要開立醫囑」之程序要求。雖 facts section 提及檢察官指稱應由正式醫師開立醫囑，但 opinions section 作為鑑定意見段落並未明確載明此項醫療程序原則，影響對醫療規範的理解",
+     "reason": "經查全部 5 個 section 原文，summary 確實未提及「放置鼻胃管原則上需要開立醫囑」之程序要求。雖 facts section 提及檢察官指稱應由正式醫師開立醫囑，但 opinions section 作為鑑定意見段落並未明確載明此項醫療程序原則，影響對醫療規範的理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經查全部 5 個 section 原文，summary 確實未提及「若是鼻胃管到期或脫落需要更換，沿用原有之醫囑繼續執行，應該是合理可以接受的」之規定。雖 defense section 中被告提及「延用原先置放鼻胃管之醫囑」，但此為被告辯解而非鑑定意見，opinions section 未包含此項專業見解，影響對實習醫師行為合理性的評估",
+     "reason": "經查全部 5 個 section 原文，summary 確實未提及「若是鼻胃管到期或脫落需要更換，沿用原有之醫囑繼續執行，應該是合理可以接受的」之規定。雖 defense section 中被告提及「延用原先置放鼻胃管之醫囑」，但此為被告辯解而非鑑定意見，opinions section 未包含此項專業見解，影響對實習醫師行為合理性的評估"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "雖section_opinions提及肺水腫，但未提及慢性腎衰竭急性惡化，屬重要病情背景遺漏",
+     "reason": "雖section_opinions提及肺水腫，但未提及慢性腎衰竭急性惡化，屬重要病情背景遺漏"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "具體查房時間點屬於細節性事實，不影響主要案情理解",
+     "reason": "具體查房時間點屬於細節性事實，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "肺水腫病因分析為法院判斷因果關係之重要依據",
+     "reason": "肺水腫病因分析為法院判斷因果關係之重要依據"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_opinions僅提及「需給予」利尿劑，未明確確認醫師實際使用，屬治療細節",
+     "reason": "section_opinions僅提及「需給予」利尿劑，未明確確認醫師實際使用，屬治療細節"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療判斷細節，非判決核心爭點",
+     "reason": "醫療判斷細節，非判決核心爭點"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "插鼻胃管之醫療理由為判斷處置必要性的重要依據",
+     "reason": "插鼻胃管之醫療理由為判斷處置必要性的重要依據"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "具體症狀細節，未影響主要判斷",
+     "reason": "具體症狀細節，未影響主要判斷"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人W1具體證詞細節",
+     "reason": "證人W1具體證詞細節"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人W2證詞細節",
+     "reason": "證人W2證詞細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人翻閱病歷細節",
+     "reason": "證人翻閱病歷細節"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "生命徵象正常範圍為判斷處置適當性的重要事實",
+     "reason": "生命徵象正常範圍為判斷處置適當性的重要事實"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "此為判斷被告處置有無過失的重要前提事實",
+     "reason": "此為判斷被告處置有無過失的重要前提事實"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血氧濃度98%為具體客觀數據，影響病情判斷",
+     "reason": "血氧濃度98%為具體客觀數據，影響病情判斷"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人判斷意見",
+     "reason": "證人判斷意見"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人證詞",
+     "reason": "證人證詞"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人處置意見",
+     "reason": "證人處置意見"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "會議紀錄具體內容，雖重要但非判決唯一依據",
+     "reason": "會議紀錄具體內容，雖重要但非判決唯一依據"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫療實務普遍接受情形為判斷被告行為是否適當的重要依據",
+     "reason": "醫療實務普遍接受情形為判斷被告行為是否適當的重要依據"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "重插鼻胃管需開醫囑為程序爭點核心",
+     "reason": "重插鼻胃管需開醫囑為程序爭點核心"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "實習醫師可否獨立置放為重要爭點",
+     "reason": "實習醫師可否獨立置放為重要爭點"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證詞與會議紀錄相符的判斷",
+     "reason": "證詞與會議紀錄相符的判斷"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證詞可信度判斷",
+     "reason": "證詞可信度判斷"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫囑持續性質為判斷被告是否需重新開立醫囑的重要依據",
+     "reason": "醫囑持續性質為判斷被告是否需重新開立醫囑的重要依據"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "氣管痙攣爭議細節",
+     "reason": "氣管痙攣爭議細節"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "心肺功能與給氧效果關係為因果關係判斷的重要醫學依據",
+     "reason": "心肺功能與給氧效果關係為因果關係判斷的重要醫學依據"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人W1懷疑為關鍵爭點，涉及被告行為與損害結果的因果關係",
+     "reason": "證人W1懷疑為關鍵爭點，涉及被告行為與損害結果的因果關係"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "對證人推測的評價為法院心證重要依據",
+     "reason": "對證人推測的評價為法院心證重要依據"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "推測依據細節",
+     "reason": "推測依據細節"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "心臟功能不佳為判斷病情與給氧效果的重要背景",
+     "reason": "心臟功能不佳為判斷病情與給氧效果的重要背景"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "心肺功能與給氧效果關係為重要醫學判斷",
+     "reason": "心肺功能與給氧效果關係為重要醫學判斷"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "此為法院否定因果關係的核心論理，涉及判決結論",
+     "reason": "此為法院否定因果關係的核心論理，涉及判決結論"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "住院時具體病症為病情背景重要資訊",
+     "reason": "住院時具體病症為病情背景重要資訊"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病症共同原因分析為判斷病情惡化因素的重要依據",
+     "reason": "病症共同原因分析為判斷病情惡化因素的重要依據"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查五個 section，鑑定意見 section 雖提及急性肺水腫與氧氣面罩，但未明確提及「第二點」及「心臟功能不佳」之具體內容",
+     "reason": "遍查五個 section，鑑定意見 section 雖提及急性肺水腫與氧氣面罩，但未明確提及「第二點」及「心臟功能不佳」之具體內容"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查五個 section，未發現「心肺功能不佳會導致給氧效果不好」之具體醫學判斷",
+     "reason": "遍查五個 section，未發現「心肺功能不佳會導致給氧效果不好」之具體醫學判斷"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning 雖有類似因果邏輯，但未具體提及「對氧氣治療無良好反應」及「刺激氣管造成嚴重痙攣收縮」之反駁論述",
+     "reason": "section_reasoning 雖有類似因果邏輯，但未具體提及「對氧氣治療無良好反應」及「刺激氣管造成嚴重痙攣收縮」之反駁論述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 119,
+   "pred_total": 48,
+   "matched": 66,
+   "partial": 4,
+   "missing": 49,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.837,
+  "compression_afg_chars": 1777,
+  "compression_source_chars": 10904,
+  "gt_length_ratio": 0.4878,
+  "gt_length_afg_chars": 1777,
+  "gt_length_gt_chars": 3643,
+  "section_balance": 0.3455
  }
 }
