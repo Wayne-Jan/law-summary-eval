@@ -1532,8 +1532,10 @@
         <input type="password" id="loginPassword" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()" />
         <button type="button" id="loginPasswordToggle" class="login-password-toggle" onclick="toggleLoginPasswordVisibility()" aria-label="顯示密碼" aria-pressed="false" title="顯示密碼">
           <svg id="loginPasswordToggleIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path>
-            <circle cx="12" cy="12" r="3"></circle>
+            <path d="m3 3 18 18"></path>
+            <path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path>
+            <path d="M9.36 5.56A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-4.2 4.79"></path>
+            <path d="M6.23 6.24C3.32 8.06 2 12 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.08-.86"></path>
           </svg>
         </button>
       </div>
@@ -2486,8 +2488,8 @@ function setLoginPasswordVisibility(visible) {
   toggle.setAttribute('aria-label', visible ? '隱藏密碼' : '顯示密碼');
   toggle.title = visible ? '隱藏密碼' : '顯示密碼';
   icon.innerHTML = visible
-    ? '<path d="m3 3 18 18"></path><path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path><path d="M9.36 5.56A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-4.2 4.79"></path><path d="M6.23 6.24C3.32 8.06 2 12 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.08-.86"></path>'
-    : '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle>';
+    ? '<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"></path><circle cx="12" cy="12" r="3"></circle>'
+    : '<path d="m3 3 18 18"></path><path d="M10.6 10.7a2 2 0 0 0 2.7 2.7"></path><path d="M9.36 5.56A10.94 10.94 0 0 1 12 5c6.5 0 10 7 10 7a13.16 13.16 0 0 1-4.2 4.79"></path><path d="M6.23 6.24C3.32 8.06 2 12 2 12s3.5 7 10 7a9.8 9.8 0 0 0 4.08-.86"></path>';
 }
 
 function toggleLoginPasswordVisibility() {
@@ -6240,6 +6242,16 @@ function getEvaluatorCondStatus(evaluator, caseName, condIdx) {
 }
 
 function getEvaluatorCaseStatus(evaluator, caseName) {
+  const isMedical = USERS[evaluator] && USERS[evaluator].role === 'medical';
+  if (isMedical) {
+    const tl = loadAdminEvaluatorCaseTL(evaluator, caseName);
+    const tlDone = !!(tl && tl._complete);
+    const tlPartial = !!(tl && !tlDone && hasTLContent(tl));
+    if (tlDone) return 'complete';
+    if (tlPartial) return 'partial';
+    return 'empty';
+  }
+
   let allDone = true;
   let hasAny = false;
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
