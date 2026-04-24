@@ -152,6 +152,373 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6857,
-  "fact_recall_avg": null
+  "fact_recall": 0.6403,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7807,
+  "quality_overall": 4.8571,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.96,
+  "citation_support_score": 0.9639,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.976,
+   "citation_fidelity": 0.96,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 20,
+   "correct": 20
+  },
+  "weighted_recall": 0.8585,
+  "missing_severity": {
+   "critical": 1,
+   "important": 11,
+   "minor": 34,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部5個section，均未找到「急診醫師S安排X光檢查」之記載。雖有血管攝影記載，但X光檢查為不同檢查項目，確認為遺漏",
+     "reason": "經掃描全部5個section，均未找到「急診醫師S安排X光檢查」之記載。雖有血管攝影記載，但X光檢查為不同檢查項目，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部5個section，均未找到「觸診發現腫脹」之具體描述，確認為遺漏",
+     "reason": "經掃描全部5個section，均未找到「觸診發現腫脹」之具體描述，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "經掃描全部5個section，均未找到「腔室症候群」之診斷名稱。此為起始診斷，影響案情理解，確認為遺漏",
+     "reason": "經掃描全部5個section，均未找到「腔室症候群」之診斷名稱。此為起始診斷，影響案情理解，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部5個section，均未找到「醫師甲於8月8日前往病房觀察」之記載，確認為遺漏",
+     "reason": "經掃描全部5個section，均未找到「醫師甲於8月8日前往病房觀察」之記載，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經掃描全部5個section，均未提及「醫師H、醫師C公訴不受理」之程序事實，確認為遺漏（屬程序性背景事實）",
+     "reason": "經掃描全部5個section，均未提及「醫師H、醫師C公訴不受理」之程序事實，確認為遺漏（屬程序性背景事實）"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部5個section，均未找到「8月11日10時30分傷口黃褐色滲液及惡臭」之具體時間點記載，確認為遺漏",
+     "reason": "經掃描全部5個section，均未找到「8月11日10時30分傷口黃褐色滲液及惡臭」之具體時間點記載，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部5個section，均未以「應詳細注意病人之病情」之明確文字表述注意義務內容，確認為遺漏",
+     "reason": "經掃描全部5個section，均未以「應詳細注意病人之病情」之明確文字表述注意義務內容，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經掃描全部5個section，均未找到「依當時情形並無不能注意之情事」之原句，確認為遺漏（屬注意義務之前提條件）",
+     "reason": "經掃描全部5個section，均未找到「依當時情形並無不能注意之情事」之原句，確認為遺漏（屬注意義務之前提條件）"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經掃描全部5個section，均未找到「醫師甲疏未注意病人病情」之具體描述，確認為遺漏",
+     "reason": "經掃描全部5個section，均未找到「醫師甲疏未注意病人病情」之具體描述，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense僅提及「感染已受控制」，未明確提及「血液循環已呈現良好跡象」。section_03_opinions雖有「末梢血循可」，但屬鑑定意見段，非被告辯護內容。被告辯護主旨為感染控制，血液循環良好為鑑定認定之事實",
+     "reason": "section_02_defense僅提及「感染已受控制」，未明確提及「血液循環已呈現良好跡象」。section_03_opinions雖有「末梢血循可」，但屬鑑定意見段，非被告辯護內容。被告辯護主旨為感染控制，血液循環良好為鑑定認定之事實"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred claims未提及「證人醫師係C醫院...」之具體角色描述。pred_claim_19雖提及「質疑B醫院醫師證詞之客觀性」，但未指明證人身分為C醫院醫師。且全文皆以B醫院稱之，無C醫院之證人醫師",
+     "reason": "pred claims未提及「證人醫師係C醫院...」之具體角色描述。pred_claim_19雖提及「質疑B醫院醫師證詞之客觀性」，但未指明證人身分為C醫院醫師。且全文皆以B醫院稱之，無C醫院之證人醫師"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred claims未提及「對立之業務利害關係」。pred_claim_19僅提及「質疑...客觀性」，未上升到利害關係層面",
+     "reason": "pred claims未提及「對立之業務利害關係」。pred_claim_19僅提及「質疑...客觀性」，未上升到利害關係層面"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred claims未提及「非本案之鑑定證人」之程序性區分",
+     "reason": "pred claims未提及「非本案之鑑定證人」之程序性區分"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急診醫師初始評估疏失為鑑定意見重點，確認遺漏",
+     "reason": "急診醫師初始評估疏失為鑑定意見重點，確認遺漏"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "無血管損傷亦須行筋膜切開術之條件性處置，確認遺漏",
+     "reason": "無血管損傷亦須行筋膜切開術之條件性處置，確認遺漏"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管損傷重建後截肢風險比例，確認遺漏",
+     "reason": "血管損傷重建後截肢風險比例，確認遺漏"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管攝影與截肢風險關係，確認遺漏",
+     "reason": "血管攝影與截肢風險關係，確認遺漏"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "筋膜切開術後輸血2袋屬合理範圍，確認遺漏",
+     "reason": "筋膜切開術後輸血2袋屬合理範圍，確認遺漏"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "大量出血須另行手術止血，確認遺漏",
+     "reason": "大量出血須另行手術止血，確認遺漏"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "感染症狀及抗生素清創處置為重要醫療細節，確認遺漏",
+     "reason": "感染症狀及抗生素清創處置為重要醫療細節，確認遺漏"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術後轉入病房紀錄，確認遺漏",
+     "reason": "術後轉入病房紀錄，確認遺漏"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "傷口紗布包紮半石膏固定，確認遺漏",
+     "reason": "傷口紗布包紮半石膏固定，確認遺漏"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "無血循臨床表現，確認遺漏",
+     "reason": "無血循臨床表現，確認遺漏"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "膝關節脫臼立即導致血管阻塞機轉，確認遺漏",
+     "reason": "膝關節脫臼立即導致血管阻塞機轉，確認遺漏"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "脫臼與立即發紺關係，確認遺漏",
+     "reason": "脫臼與立即發紺關係，確認遺漏"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "脫臼4至6小時內造成組織壞死，確認遺漏",
+     "reason": "脫臼4至6小時內造成組織壞死，確認遺漏"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "97年8月10日傷口臭味組織壞死時間點為關鍵事實，確認遺漏",
+     "reason": "97年8月10日傷口臭味組織壞死時間點為關鍵事實，確認遺漏"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "紀錄缺失與動脈阻塞判斷關係，確認遺漏",
+     "reason": "紀錄缺失與動脈阻塞判斷關係，確認遺漏"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "短時間內不會組織壞死判斷，確認遺漏",
+     "reason": "短時間內不會組織壞死判斷，確認遺漏"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血循不佳對抗生素治療影響，確認遺漏",
+     "reason": "血循不佳對抗生素治療影響，確認遺漏"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "抗生素無效可能原因，確認遺漏",
+     "reason": "抗生素無效可能原因，確認遺漏"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術中出血500CC，確認遺漏",
+     "reason": "術中出血500CC，確認遺漏"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肌肉撕裂或靜脈斷裂造成出血，確認遺漏",
+     "reason": "肌肉撕裂或靜脈斷裂造成出血，確認遺漏"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "開放性傷口疼痛，確認遺漏",
+     "reason": "開放性傷口疼痛，確認遺漏"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "疼痛緩解時間，確認遺漏",
+     "reason": "疼痛緩解時間，確認遺漏"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血循與疼痛關係，確認遺漏",
+     "reason": "血循與疼痛關係，確認遺漏"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "復位後觸診限制，確認遺漏",
+     "reason": "復位後觸診限制，確認遺漏"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腫脹對診察限制，確認遺漏",
+     "reason": "腫脹對診察限制，確認遺漏"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "97年8月10日傷口黃褐色分泌物具體日期描述為重要時間點，確認遺漏",
+     "reason": "97年8月10日傷口黃褐色分泌物具體日期描述為重要時間點，確認遺漏"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性事實（A醫院醫師未到庭證稱），section原文未提及，不影響判決要旨理解",
+     "reason": "程序性事實（A醫院醫師未到庭證稱），section原文未提及，不影響判決要旨理解"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "入院護理紀錄細節，section原文未提及，屬程序性背景事實",
+     "reason": "入院護理紀錄細節，section原文未提及，屬程序性背景事實"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "傷口處理醫療細節（紗布包紮、半石膏固定），section原文未提及",
+     "reason": "傷口處理醫療細節（紗布包紮、半石膏固定），section原文未提及"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "關鍵證據時間點『晚間9時30分』，section原文雖提及『末梢血循可』但未提具體時間，影響證據時序理解",
+     "reason": "關鍵證據時間點『晚間9時30分』，section原文雖提及『末梢血循可』但未提具體時間，影響證據時序理解"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "A醫院病歷記載慣例，section原文未提及，屬背景性事實",
+     "reason": "A醫院病歷記載慣例，section原文未提及，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "未違反慣例之認定，section原文雖有類似意涵但未明確表述此結論",
+     "reason": "未違反慣例之認定，section原文雖有類似意涵但未明確表述此結論"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療目的之法理闡述，section原文未提及，屬法理論述",
+     "reason": "醫療目的之法理闡述，section原文未提及，屬法理論述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 81,
+   "matched": 85,
+   "partial": 8,
+   "missing": 46,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8176,
+  "compression_afg_chars": 2949,
+  "compression_source_chars": 16166,
+  "gt_length_ratio": 0.6782,
+  "gt_length_afg_chars": 2949,
+  "gt_length_gt_chars": 4348,
+  "section_balance": 0.5
  }
 }

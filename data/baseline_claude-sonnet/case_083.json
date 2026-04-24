@@ -155,6 +155,1340 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.659
+  "rule_based_avg": 0.659,
+  "fact_recall": 0.3742,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5447,
+  "quality_overall": 4.6286,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.963,
+  "citation_support_score": 0.9457,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9778,
+   "citation_fidelity": 0.963,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 23,
+   "correct": 23
+  },
+  "weighted_recall": 0.7465,
+  "missing_severity": {
+   "critical": 3,
+   "important": 61,
+   "minor": 120,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT明確指11月5日急診由「醫師乙」負責，但 facts 段明確記載「由值班之被告丙負責診治」，醫師身分不一致且無其他 section 可補充",
+     "reason": "GT明確指11月5日急診由「醫師乙」負責，但 facts 段明確記載「由值班之被告丙負責診治」，醫師身分不一致且無其他 section 可補充"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT指11月7日住院由「醫師丙」負責診治，但 facts 段明確記載「由被告乙負責診治」，醫師歸屬不一致",
+     "reason": "GT指11月7日住院由「醫師丙」負責診治，但 facts 段明確記載「由被告乙負責診治」，醫師歸屬不一致"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "妊娠囊尺寸（1.3公分×2.3公分）為具體醫療細節，pred未於任何 section 明確提及",
+     "reason": "妊娠囊尺寸（1.3公分×2.3公分）為具體醫療細節，pred未於任何 section 明確提及"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "9時45分略微恢復意識的精確時間點未於 pred 任何 section 提及，屬次要的時間細節",
+     "reason": "9時45分略微恢復意識的精確時間點未於 pred 任何 section 提及，屬次要的時間細節"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "10時30分再次失去意識的精確時間點未於 pred 任何 section 提及",
+     "reason": "10時30分再次失去意識的精確時間點未於 pred 任何 section 提及"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "11時4分到院前癲癇的精確時間點未於 pred 任何 section 提及，但「到院前已死亡」已涵蓋相關事實",
+     "reason": "11時4分到院前癲癇的精確時間點未於 pred 任何 section 提及，但「到院前已死亡」已涵蓋相關事實"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「無不能注意之情事」為法律條件用語，pred 以「應注意」表述義務內容，未使用 GT 的精確法律用語",
+     "reason": "「無不能注意之情事」為法律條件用語，pred 以「應注意」表述義務內容，未使用 GT 的精確法律用語"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "同 gt_claim_id 25，法律條件用語的表述差異",
+     "reason": "同 gt_claim_id 25，法律條件用語的表述差異"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT 指11月7日由「被告丙」負責，但 facts 段明確記載「由被告乙負責診治」，醫師歸屬存在明確衝突",
+     "reason": "GT 指11月7日由「被告丙」負責，但 facts 段明確記載「由被告乙負責診治」，醫師歸屬存在明確衝突"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "同 gt_claim_id 25，法律條件用語的表述差異",
+     "reason": "同 gt_claim_id 25，法律條件用語的表述差異"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 均未提及急救過程中的輸液和強心針細節，屬程序性事實",
+     "reason": "五個 section 均未提及急救過程中的輸液和強心針細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 被告甲辯稱中未提及『此後沒有再找過我看診』之後續追蹤情況",
+     "reason": "section_defense 被告甲辯稱中未提及『此後沒有再找過我看診』之後續追蹤情況"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 雖提及『卵巢及輸卵管部分均無問題』，但未明確陳述『無證據證明子宮外孕』之結論性主張",
+     "reason": "section_defense 雖提及『卵巢及輸卵管部分均無問題』，但未明確陳述『無證據證明子宮外孕』之結論性主張"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 各被告辯稱中未明確陳述『死亡結果與醫療行為無關』之概括性主張，雖 reasoning 有因果關係討論但未直接對應此辯方論點",
+     "reason": "section_defense 各被告辯稱中未明確陳述『死亡結果與醫療行為無關』之概括性主張，雖 reasoning 有因果關係討論但未直接對應此辯方論點"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 僅提及法醫師表示醫療常規應委由醫審會鑑定，未提及『檢察官於偵查中委請』之程序事實，屬程序性背景資訊",
+     "reason": "section_03_opinions.txt 僅提及法醫師表示醫療常規應委由醫審會鑑定，未提及『檢察官於偵查中委請』之程序事實，屬程序性背景資訊"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 提及『第1次鑑定』但未標示具體日期『97年3月20日』，日期細節遺漏",
+     "reason": "section_03_opinions.txt 提及『第1次鑑定』但未標示具體日期『97年3月20日』，日期細節遺漏"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及硬腦膜下血腫具體出血量約100ml之數據，此為判斷死因之重要醫學數據",
+     "reason": "section_03_opinions.txt 未提及硬腦膜下血腫具體出血量約100ml之數據，此為判斷死因之重要醫學數據"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及顱腔內出血量25-30ml以上之臨床意義閾值，影響對出血嚴重性之判斷",
+     "reason": "section_03_opinions.txt 未提及顱腔內出血量25-30ml以上之臨床意義閾值，影響對出血嚴重性之判斷"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未詳細載明懷疑子宮外孕時應進行之備血、β-hCG檢驗等標準檢查程序",
+     "reason": "section_03_opinions.txt 未詳細載明懷疑子宮外孕時應進行之備血、β-hCG檢驗等標準檢查程序"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及健新醫院具體處置劑量（黃體素100mg、動情素3mg），屬醫療處置細節",
+     "reason": "section_03_opinions.txt 未提及健新醫院具體處置劑量（黃體素100mg、動情素3mg），屬醫療處置細節"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 僅提及『服用抗凝血劑』，未明確標示Heparin 5000I.U.及Aspirin之具體劑量",
+     "reason": "section_03_opinions.txt 僅提及『服用抗凝血劑』，未明確標示Heparin 5000I.U.及Aspirin之具體劑量"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及應依賴實驗室檢查判斷藥量調整之醫學原則",
+     "reason": "section_03_opinions.txt 未提及應依賴實驗室檢查判斷藥量調整之醫學原則"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及病患未曾接受凝血功能實驗室檢查之關鍵事實，影響因果關係判斷",
+     "reason": "section_03_opinions.txt 未提及病患未曾接受凝血功能實驗室檢查之關鍵事實，影響因果關係判斷"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及高醫急救檢查因受休克及急救過程影響而無法作為鑑定參考",
+     "reason": "section_03_opinions.txt 未提及高醫急救檢查因受休克及急救過程影響而無法作為鑑定參考"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及肺部及內臟充血為休克後之共同現象",
+     "reason": "section_03_opinions.txt 未提及肺部及內臟充血為休克後之共同現象"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及腎臟出血及小血管壞死為休克後急救之常見現象",
+     "reason": "section_03_opinions.txt 未提及腎臟出血及小血管壞死為休克後急救之常見現象"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確載明無法判斷藥物是否為造成內出血之主因，影響因果關係認定",
+     "reason": "section_03_opinions.txt 未明確載明無法判斷藥物是否為造成內出血之主因，影響因果關係認定"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及病患並無全身性出血證據（僅兩處出血）",
+     "reason": "section_03_opinions.txt 未提及病患並無全身性出血證據（僅兩處出血）"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未詳細說明無法由陰道出血判斷輸卵管破裂之醫學理由",
+     "reason": "section_03_opinions.txt 未詳細說明無法由陰道出血判斷輸卵管破裂之醫學理由"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未明確區分腹內出血與陰道出血之估計方式及200ml血塊來源說明",
+     "reason": "section_03_opinions.txt 未明確區分腹內出血與陰道出血之估計方式及200ml血塊來源說明"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及200公撮骨盆腔出血，未明確總計300ml（含硬腦膜下100ml）之數據",
+     "reason": "section_03_opinions.txt 雖提及200公撮骨盆腔出血，未明確總計300ml（含硬腦膜下100ml）之數據"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及65Kgw體重、5000ml血液量及1000ml失血閾值之生理學計算",
+     "reason": "section_03_opinions.txt 未提及65Kgw體重、5000ml血液量及1000ml失血閾值之生理學計算"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確排除低容積性休克致死之完整推論過程",
+     "reason": "section_03_opinions.txt 未明確排除低容積性休克致死之完整推論過程"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及心跳加快、血壓降低為各種休克之共同症狀",
+     "reason": "section_03_opinions.txt 未提及心跳加快、血壓降低為各種休克之共同症狀"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及抽不到血及身體不適為各種休克之共同症狀",
+     "reason": "section_03_opinions.txt 未提及抽不到血及身體不適為各種休克之共同症狀"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及胸前燒焦痕跡與電擊短路現象之關聯",
+     "reason": "section_03_opinions.txt 未提及胸前燒焦痕跡與電擊短路現象之關聯"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及心肌內出血與強心藥物、電擊之關係",
+     "reason": "section_03_opinions.txt 未提及心肌內出血與強心藥物、電擊之關係"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及死亡證明書『癲癇性休克』應更正為『癲癇及休克』或『痙攣及休克』",
+     "reason": "section_03_opinions.txt 未提及死亡證明書『癲癇性休克』應更正為『癲癇及休克』或『痙攣及休克』"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 呈現兩者鑑定結果差異，但未明確使用『否定』法醫研究所判斷之用語",
+     "reason": "section_03_opinions.txt 呈現兩者鑑定結果差異，但未明確使用『否定』法醫研究所判斷之用語"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及100ml『實難謂少量』之明確判斷",
+     "reason": "section_03_opinions.txt 未提及100ml『實難謂少量』之明確判斷"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確說明『若不考慮硬腦膜下出血，並無其他致死原因』",
+     "reason": "section_03_opinions.txt 未明確說明『若不考慮硬腦膜下出血，並無其他致死原因』"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及『出血性休克無法排除亦無法證實』之不確定性表述",
+     "reason": "section_03_opinions.txt 未提及『出血性休克無法排除亦無法證實』之不確定性表述"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及頭部外傷，未明確以『文獻及病情綜合判斷』作為依據",
+     "reason": "section_03_opinions.txt 雖提及頭部外傷，未明確以『文獻及病情綜合判斷』作為依據"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 僅提及『無大規模研究指出會導致自發性顱內出血』，未完整呈現『雖有可能增加出血危險性』之語義",
+     "reason": "section_03_opinions.txt 僅提及『無大規模研究指出會導致自發性顱內出血』，未完整呈現『雖有可能增加出血危險性』之語義"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確載明『無法推定服用抗凝血劑為導致硬腦膜下出血之原因』",
+     "reason": "section_03_opinions.txt 未明確載明『無法推定服用抗凝血劑為導致硬腦膜下出血之原因』"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及Heparin劑量由5000IU更正為1000IU之修正",
+     "reason": "section_03_opinions.txt 未提及Heparin劑量由5000IU更正為1000IU之修正"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未明確闡述硬腦膜下血腫100ml容積超過25-30ml閾值、足以造成顱內壓升高及神經性傷害之機制說明，影響死因理解",
+     "reason": "section_03_opinions.txt 未明確闡述硬腦膜下血腫100ml容積超過25-30ml閾值、足以造成顱內壓升高及神經性傷害之機制說明，影響死因理解"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未明確闡述『容積壓迫』機制（非就失血量判斷），影響死因機制理解",
+     "reason": "section_03_opinions.txt 未明確闡述『容積壓迫』機制（非就失血量判斷），影響死因機制理解"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 雖提及『硬腦膜下血腫及其伴隨之神經性休克』，未完整呈現『血性液體壓迫引發神經性傷害造成休克』之因果鏈，影響死因結論理解",
+     "reason": "section_03_opinions.txt 雖提及『硬腦膜下血腫及其伴隨之神經性休克』，未完整呈現『血性液體壓迫引發神經性傷害造成休克』之因果鏈，影響死因結論理解"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 雖提及頭部外傷，未明確表述『導致硬腦膜下出血之直接原因應為頭部外傷』",
+     "reason": "section_03_opinions.txt 雖提及頭部外傷，未明確表述『導致硬腦膜下出血之直接原因應為頭部外傷』"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未明確列舉『心因性休克、出血性休克』等其他可能死因並說明無法支持出血性休克之理由",
+     "reason": "section_03_opinions.txt 未明確列舉『心因性休克、出血性休克』等其他可能死因並說明無法支持出血性休克之理由"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 提及臺灣婦產科醫學會鑑定但未標示具體日期『100年5月23日』",
+     "reason": "section_03_opinions.txt 提及臺灣婦產科醫學會鑑定但未標示具體日期『100年5月23日』"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 植入後28天無法偵測子宮內外同時受孕，但未明確提及妊娠囊最早可見時間（5週腹部超音波、4週陰道超音波）",
+     "reason": "section_03_opinions.txt 植入後28天無法偵測子宮內外同時受孕，但未明確提及妊娠囊最早可見時間（5週腹部超音波、4週陰道超音波）"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "系統性醫學說明細節，屬背景性醫學知識補充，不影響判決核心理解",
+     "reason": "系統性醫學說明細節，屬背景性醫學知識補充，不影響判決核心理解"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "相對困難程度的強調性描述，非核心鑑定結論",
+     "reason": "相對困難程度的強調性描述，非核心鑑定結論"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "β-hCG閾值數據細節，屬醫學文獻具體數值，非判決主要依據",
+     "reason": "β-hCG閾值數據細節，屬醫學文獻具體數值，非判決主要依據"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "20日診斷困難的判斷細節，摘要已提及「無法偵測」結論，具體數據為補充說明",
+     "reason": "20日診斷困難的判斷細節，摘要已提及「無法偵測」結論，具體數據為補充說明"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "穿刺術臨床現狀補充說明，摘要已提及「侵入性檢查」，細節為背景資訊",
+     "reason": "穿刺術臨床現狀補充說明，摘要已提及「侵入性檢查」，細節為背景資訊"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "休克統計數據，屬醫學文獻引用細節，非鑑定結論核心",
+     "reason": "休克統計數據，屬醫學文獻引用細節，非鑑定結論核心"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "休克原因分類詳表，屬醫學知識補充，非本案鑑定重點",
+     "reason": "休克原因分類詳表，屬醫學知識補充，非本案鑑定重點"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血容積與心臟排血量數據，屬醫學文獻細節說明",
+     "reason": "血容積與心臟排血量數據，屬醫學文獻細節說明"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血容積代償機制說明，屬醫學背景知識補充",
+     "reason": "血容積代償機制說明，屬醫學背景知識補充"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "體重血容量計算細節，屬醫學文獻具體數值補充",
+     "reason": "體重血容量計算細節，屬醫學文獻具體數值補充"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Williams Obstetric 文獻引用細節，具體頁數非必要",
+     "reason": "Williams Obstetric 文獻引用細節，具體頁數非必要"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "抗凝血劑適應症詳細說明，摘要已提及用藥原因",
+     "reason": "抗凝血劑適應症詳細說明，摘要已提及用藥原因"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本案病患病史細節，摘要已涵蓋人工生殖及用藥資訊",
+     "reason": "本案病患病史細節，摘要已涵蓋人工生殖及用藥資訊"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "β-hCG閾值重複項目，屬同一數據的另一表述",
+     "reason": "β-hCG閾值重複項目，屬同一數據的另一表述"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "子宮外孕死亡率統計，屬醫學文獻背景資訊",
+     "reason": "子宮外孕死亡率統計，屬醫學文獻背景資訊"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "高齡產婦死亡率文獻缺失說明，屬補充性背景資訊",
+     "reason": "高齡產婦死亡率文獻缺失說明，屬補充性背景資訊"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "自然受孕子宮外孕機率數據，屬醫學統計背景",
+     "reason": "自然受孕子宮外孕機率數據，屬醫學統計背景"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "人工生殖子宮外孕機率數據，屬醫學統計背景",
+     "reason": "人工生殖子宮外孕機率數據，屬醫學統計背景"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "人工生殖子宮外孕機率較高原因分析，屬醫學文獻細節",
+     "reason": "人工生殖子宮外孕機率較高原因分析，屬醫學文獻細節"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "子宮外孕危險因子列舉，屬醫學知識補充",
+     "reason": "子宮外孕危險因子列舉，屬醫學知識補充"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "陰道出血統計數據，屬醫學文獻細節補充",
+     "reason": "陰道出血統計數據，屬醫學文獻細節補充"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "子宮內孕時診斷依據詳細說明，摘要已涵蓋核心診斷困難結論",
+     "reason": "子宮內孕時診斷依據詳細說明，摘要已涵蓋核心診斷困難結論"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "早期合併子宮內外孕臨床表現詳細描述，屬補充性醫學說明",
+     "reason": "早期合併子宮內外孕臨床表現詳細描述，屬補充性醫學說明"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "輸卵管出血與症狀關聯描述，屬醫學機制補充說明",
+     "reason": "輸卵管出血與症狀關聯描述，屬醫學機制補充說明"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "先兆性流產定義，屬醫學術語解釋，摘要已使用該術語",
+     "reason": "先兆性流產定義，屬醫學術語解釋，摘要已使用該術語"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "症狀相似比較詳細說明，屬醫學機制補充",
+     "reason": "症狀相似比較詳細說明，屬醫學機制補充"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "輸卵管出血與症狀發展關聯，屬補充性醫學說明",
+     "reason": "輸卵管出血與症狀發展關聯，屬補充性醫學說明"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "輸卵管未破裂時診斷方式詳細說明，屬醫學文獻細節",
+     "reason": "輸卵管未破裂時診斷方式詳細說明，屬醫學文獻細節"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "輸卵管破裂後症狀描述，摘要已涵蓋核心診療資訊",
+     "reason": "輸卵管破裂後症狀描述，摘要已涵蓋核心診療資訊"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "本案病患病史綜合說明，摘要已涵蓋主要臨床資訊",
+     "reason": "本案病患病史綜合說明，摘要已涵蓋主要臨床資訊"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "解剖報告細節，摘要已涵蓋死因鑑定結論",
+     "reason": "解剖報告細節，摘要已涵蓋死因鑑定結論"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "推測性說明，屬醫學假設性討論，非鑑定結論",
+     "reason": "推測性說明，屬醫學假設性討論，非鑑定結論"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "早期無症狀診斷困難詳述，摘要已涵蓋核心診斷困難結論",
+     "reason": "早期無症狀診斷困難詳述，摘要已涵蓋核心診斷困難結論"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "診斷時機詳細描述，摘要已涵蓋主要鑑定意見",
+     "reason": "診斷時機詳細描述，摘要已涵蓋主要鑑定意見"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "例行超音波檢查發現意義，屬醫療常規補充說明",
+     "reason": "例行超音波檢查發現意義，屬醫療常規補充說明"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "緊急與非緊急治療方案詳述，屬醫療處置細節補充",
+     "reason": "緊急與非緊急治療方案詳述，屬醫療處置細節補充"
+    },
+    {
+     "gt_claim_id": 165,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "超音波儀器解析度說明，屬技術細節補充",
+     "reason": "超音波儀器解析度說明，屬技術細節補充"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "最終診斷需手術確認說明，屬醫學文獻補充",
+     "reason": "最終診斷需手術確認說明，屬醫學文獻補充"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血量與超音波檢測門檻說明，屬醫學細節補充",
+     "reason": "出血量與超音波檢測門檻說明，屬醫學細節補充"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "診斷依據詳細列表，摘要已涵蓋主要超音波檢查資訊",
+     "reason": "診斷依據詳細列表，摘要已涵蓋主要超音波檢查資訊"
+    },
+    {
+     "gt_claim_id": 169,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未涵蓋痙攣或休克時的診斷困難之鑑定細節",
+     "reason": "opinions section 未涵蓋痙攣或休克時的診斷困難之鑑定細節"
+    },
+    {
+     "gt_claim_id": 170,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及習慣性流產適應症及抗凝血劑成效評估的完整鑑定內容",
+     "reason": "opinions section 未提及習慣性流產適應症及抗凝血劑成效評估的完整鑑定內容"
+    },
+    {
+     "gt_claim_id": 171,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未涵蓋抗凝血劑劑量常規性的說明",
+     "reason": "opinions section 未涵蓋抗凝血劑劑量常規性的說明"
+    },
+    {
+     "gt_claim_id": 173,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及具體抽血數據（Hb 12.8、血小板 146000/μl）",
+     "reason": "opinions section 未提及具體抽血數據（Hb 12.8、血小板 146000/μl）"
+    },
+    {
+     "gt_claim_id": 174,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及急診室腹部超音波無腹內大量液體的檢查結果",
+     "reason": "opinions section 未提及急診室腹部超音波無腹內大量液體的檢查結果"
+    },
+    {
+     "gt_claim_id": 179,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及失血20%才會休克的具體生理學數據",
+     "reason": "opinions section 未提及失血20%才會休克的具體生理學數據"
+    },
+    {
+     "gt_claim_id": 180,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及200ml失血量與硬腦膜下出血因果關係的鑑定判斷",
+     "reason": "opinions section 未提及200ml失血量與硬腦膜下出血因果關係的鑑定判斷"
+    },
+    {
+     "gt_claim_id": 182,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未引用Williams教科書關於子宮外孕臨床症狀的內容",
+     "reason": "opinions section 未引用Williams教科書關於子宮外孕臨床症狀的內容"
+    },
+    {
+     "gt_claim_id": 184,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及Williams教科書陰道超音波敏感度專一度的數據",
+     "reason": "opinions section 未提及Williams教科書陰道超音波敏感度專一度的數據"
+    },
+    {
+     "gt_claim_id": 185,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及附屬器腫塊敏感度84%、專一度99%的數據",
+     "reason": "opinions section 未提及附屬器腫塊敏感度84%、專一度99%的數據"
+    },
+    {
+     "gt_claim_id": 186,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及直腸子宮間凹處液體及陰道腹部超音波併用的鑑定意見",
+     "reason": "opinions section 未提及直腸子宮間凹處液體及陰道腹部超音波併用的鑑定意見"
+    },
+    {
+     "gt_claim_id": 187,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及有經驗醫師運用腹部超音波檢查的觀點",
+     "reason": "opinions section 未提及有經驗醫師運用腹部超音波檢查的觀點"
+    },
+    {
+     "gt_claim_id": 188,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及陰道出血時陰道超音波適用時機的臨床判斷",
+     "reason": "opinions section 未提及陰道出血時陰道超音波適用時機的臨床判斷"
+    },
+    {
+     "gt_claim_id": 189,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及全國醫院診所Heparin使用情況的確認說明",
+     "reason": "opinions section 未提及全國醫院診所Heparin使用情況的確認說明"
+    },
+    {
+     "gt_claim_id": 190,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及國外Heparin在人工生殖治療的研究論文",
+     "reason": "opinions section 未提及國外Heparin在人工生殖治療的研究論文"
+    },
+    {
+     "gt_claim_id": 191,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及兩側肋膜腔積液（右側約200公撮、左側約350公撮）的詳細解剖數據",
+     "reason": "opinions section 未提及兩側肋膜腔積液（右側約200公撮、左側約350公撮）的詳細解剖數據"
+    },
+    {
+     "gt_claim_id": 193,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及頭部外表無外傷、頭皮下出血、硬腦膜下約100公撮血性液體等詳細解剖發現",
+     "reason": "opinions section 未提及頭部外表無外傷、頭皮下出血、硬腦膜下約100公撮血性液體等詳細解剖發現"
+    },
+    {
+     "gt_claim_id": 194,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及肺臟重量（左513公克、右712公克）及局部纖維化等詳細解剖細節",
+     "reason": "opinions section 未提及肺臟重量（左513公克、右712公克）及局部纖維化等詳細解剖細節"
+    },
+    {
+     "gt_claim_id": 200,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未明確提及醫師醫療上並未發現子宮外孕破裂與解剖發現的區分",
+     "reason": "opinions section 未明確提及醫師醫療上並未發現子宮外孕破裂與解剖發現的區分"
+    },
+    {
+     "gt_claim_id": 201,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及『癲癇性休克』定義的說明",
+     "reason": "opinions section 未提及『癲癇性休克』定義的說明"
+    },
+    {
+     "gt_claim_id": 202,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及肺部充血與心臟停止後全身性充血關聯的病理說明",
+     "reason": "opinions section 未提及肺部充血與心臟停止後全身性充血關聯的病理說明"
+    },
+    {
+     "gt_claim_id": 203,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及腎臟出血與Heparin多因子影響的鑑定判斷",
+     "reason": "opinions section 未提及腎臟出血與Heparin多因子影響的鑑定判斷"
+    },
+    {
+     "gt_claim_id": 204,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及硬腦膜下出血與癲癇碰撞因果關係的鑑定判斷",
+     "reason": "opinions section 未提及硬腦膜下出血與癲癇碰撞因果關係的鑑定判斷"
+    },
+    {
+     "gt_claim_id": 205,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及Heparin、Aspirin、Progynova多因子對血液變化影響的判斷",
+     "reason": "opinions section 未提及Heparin、Aspirin、Progynova多因子對血液變化影響的判斷"
+    },
+    {
+     "gt_claim_id": 207,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及抽不到血原因（血管塌陷或血管細）的分析",
+     "reason": "opinions section 未提及抽不到血原因（血管塌陷或血管細）的分析"
+    },
+    {
+     "gt_claim_id": 208,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及急救電擊CPR與心肌出血關聯的說明",
+     "reason": "opinions section 未提及急救電擊CPR與心肌出血關聯的說明"
+    },
+    {
+     "gt_claim_id": 209,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及癲癇判斷資料來源（G醫院記載）的說明",
+     "reason": "opinions section 未提及癲癇判斷資料來源（G醫院記載）的說明"
+    },
+    {
+     "gt_claim_id": 210,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及硬腦膜下出血與死亡時間、抽筋先後判定困難性的鑑定意見",
+     "reason": "opinions section 未提及硬腦膜下出血與死亡時間、抽筋先後判定困難性的鑑定意見"
+    },
+    {
+     "gt_claim_id": 211,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及『癲癇相關性休克』定義及異位妊娠破裂助因的完整說明",
+     "reason": "opinions section 未提及『癲癇相關性休克』定義及異位妊娠破裂助因的完整說明"
+    },
+    {
+     "gt_claim_id": 212,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及絨毛滋養細胞及兩側妊娠組織懷疑的詳細解剖判斷",
+     "reason": "opinions section 未提及絨毛滋養細胞及兩側妊娠組織懷疑的詳細解剖判斷"
+    },
+    {
+     "gt_claim_id": 213,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及DNA相同不能否定非同時妊娠發生的說明",
+     "reason": "opinions section 未提及DNA相同不能否定非同時妊娠發生的說明"
+    },
+    {
+     "gt_claim_id": 214,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及檢體採取無法鑑定組織來源的說明",
+     "reason": "opinions section 未提及檢體採取無法鑑定組織來源的說明"
+    },
+    {
+     "gt_claim_id": 215,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及肝脾腎充血為最後休克表現的說明",
+     "reason": "opinions section 未提及肝脾腎充血為最後休克表現的說明"
+    },
+    {
+     "gt_claim_id": 216,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及少量硬腦膜下出血不致快速死亡的鑑定判斷",
+     "reason": "opinions section 未提及少量硬腦膜下出血不致快速死亡的鑑定判斷"
+    },
+    {
+     "gt_claim_id": 217,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及肋膜腔積液非血塊性（由肺臟充血造成）的說明",
+     "reason": "opinions section 未提及肋膜腔積液非血塊性（由肺臟充血造成）的說明"
+    },
+    {
+     "gt_claim_id": 218,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section 未提及Heparin和Aspirin預防血栓作用的說明",
+     "reason": "opinions section 未提及Heparin和Aspirin預防血栓作用的說明"
+    },
+    {
+     "gt_claim_id": 219,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及枕部出血與癲癇碰撞因果關係的鑑定判斷",
+     "reason": "opinions section 未提及枕部出血與癲癇碰撞因果關係的鑑定判斷"
+    },
+    {
+     "gt_claim_id": 221,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及94年11月9日詳細時間（9時10分至10時40分）及處置方向的說明",
+     "reason": "opinions section 未提及94年11月9日詳細時間（9時10分至10時40分）及處置方向的說明"
+    },
+    {
+     "gt_claim_id": 222,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及無腹部脹大、無腹內大出血症狀的具體病情描述",
+     "reason": "opinions section 未提及無腹部脹大、無腹內大出血症狀的具體病情描述"
+    },
+    {
+     "gt_claim_id": 223,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "opinions section 未提及危急情況下優先維持生命跡象及延誤治療黃金期的判斷",
+     "reason": "opinions section 未提及危急情況下優先維持生命跡象及延誤治療黃金期的判斷"
+    },
+    {
+     "gt_claim_id": 230,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未明確提及『絨毛等妊娠組織』之解剖發現細節",
+     "reason": "五個section原文均未明確提及『絨毛等妊娠組織』之解剖發現細節"
+    },
+    {
+     "gt_claim_id": 232,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『顯微鏡觀察』及『血塊中有絨毛』等技術細節",
+     "reason": "五個section原文均未提及『顯微鏡觀察』及『血塊中有絨毛』等技術細節"
+    },
+    {
+     "gt_claim_id": 235,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及法醫師無法得知陰道出血量",
+     "reason": "五個section原文均未提及法醫師無法得知陰道出血量"
+    },
+    {
+     "gt_claim_id": 238,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『健新醫院病歷』記載癲癇情況",
+     "reason": "五個section原文均未提及『健新醫院病歷』記載癲癇情況"
+    },
+    {
+     "gt_claim_id": 240,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及高醫醫院血液檢驗報告血紅素值12.8 g/dl之具體數據",
+     "reason": "五個section原文均未提及高醫醫院血液檢驗報告血紅素值12.8 g/dl之具體數據"
+    },
+    {
+     "gt_claim_id": 243,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "癲癇成因為死因認定之關鍵議題，section_reasoning.txt 雖提及未能說明出血機轉，但未明確指出法醫師對癲癇成因未能說明",
+     "reason": "癲癇成因為死因認定之關鍵議題，section_reasoning.txt 雖提及未能說明出血機轉，但未明確指出法醫師對癲癇成因未能說明"
+    },
+    {
+     "gt_claim_id": 244,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『不能排除其他因素單獨引起』涉及死因認定之不確定性，五個section原文均未明確表述此不确定論述",
+     "reason": "『不能排除其他因素單獨引起』涉及死因認定之不確定性，五個section原文均未明確表述此不确定論述"
+    },
+    {
+     "gt_claim_id": 250,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "檢察官具體注意義務主張已於section_facts涵蓋，reasoning section未重複詳述屬合理",
+     "reason": "檢察官具體注意義務主張已於section_facts涵蓋，reasoning section未重複詳述屬合理"
+    },
+    {
+     "gt_claim_id": 258,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『腹腔鏡手術或剖腹手術才能確診』為重要診斷標準，五個section原文均未提及",
+     "reason": "『腹腔鏡手術或剖腹手術才能確診』為重要診斷標準，五個section原文均未提及"
+    },
+    {
+     "gt_claim_id": 260,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未詳細提及β-HCG值及陰道出血不可靠等技術細節",
+     "reason": "五個section原文均未詳細提及β-HCG值及陰道出血不可靠等技術細節"
+    },
+    {
+     "gt_claim_id": 261,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未明確對比先兆性流產與子宮外孕症狀相似性",
+     "reason": "五個section原文均未明確對比先兆性流產與子宮外孕症狀相似性"
+    },
+    {
+     "gt_claim_id": 262,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『出血量要到一定程度才能經由超音波檢查發現』之技術細節",
+     "reason": "五個section原文均未提及『出血量要到一定程度才能經由超音波檢查發現』之技術細節"
+    },
+    {
+     "gt_claim_id": 267,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未詳細記載94年11月9日上午特定時段之具體症狀描述",
+     "reason": "五個section原文均未詳細記載94年11月9日上午特定時段之具體症狀描述"
+    },
+    {
+     "gt_claim_id": 268,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未明確提及『控制和預防抽搐』之處置方向",
+     "reason": "五個section原文均未明確提及『控制和預防抽搐』之處置方向"
+    },
+    {
+     "gt_claim_id": 271,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文雖提及急救，但未明確表述『以維持生命跡象為優先』",
+     "reason": "五個section原文雖提及急救，但未明確表述『以維持生命跡象為優先』"
+    },
+    {
+     "gt_claim_id": 272,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及『延誤治療的黃金期』之表述",
+     "reason": "五個section原文均未提及『延誤治療的黃金期』之表述"
+    },
+    {
+     "gt_claim_id": 274,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "鑑定機構公信力為法院採信鑑定意見之關鍵依據，五個section原文均未明確表述『引用醫學文獻』及『具有公信力』等評價性文字",
+     "reason": "鑑定機構公信力為法院採信鑑定意見之關鍵依據，五個section原文均未明確表述『引用醫學文獻』及『具有公信力』等評價性文字"
+    },
+    {
+     "gt_claim_id": 275,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『可信度甚高』為法院對鑑定意見之採信評價，五個section原文均未明確表述",
+     "reason": "『可信度甚高』為法院對鑑定意見之採信評價，五個section原文均未明確表述"
+    },
+    {
+     "gt_claim_id": 276,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文雖提及『腦神經外科鑑定證人』及『婦產科鑑定證人』，但未明確提及『洪純隆醫師』、『簡婉儀醫師』姓名",
+     "reason": "五個section原文雖提及『腦神經外科鑑定證人』及『婦產科鑑定證人』，但未明確提及『洪純隆醫師』、『簡婉儀醫師』姓名"
+    },
+    {
+     "gt_claim_id": 277,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文雖提及專家證人，但未明確表述『以鑑定證人身分接受交互詰問』之程序細節",
+     "reason": "五個section原文雖提及專家證人，但未明確表述『以鑑定證人身分接受交互詰問』之程序細節"
+    },
+    {
+     "gt_claim_id": 280,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未明確表述『應屬正確可信』之評價性結論",
+     "reason": "五個section原文均未明確表述『應屬正確可信』之評價性結論"
+    },
+    {
+     "gt_claim_id": 282,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未明確限定檢察官證據『僅』有法醫研究所鑑定書",
+     "reason": "五個section原文均未明確限定檢察官證據『僅』有法醫研究所鑑定書"
+    },
+    {
+     "gt_claim_id": 284,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「『癲癇痙攣、失去意識後暫時清醒又失去意識』為死因機轉之關鍵質疑，section_reasoning.txt 雖提及未能說明出血機轉，但未明確涵蓋癲癇意識變化之具體質疑",
+     "reason": "「『癲癇痙攣、失去意識後暫時清醒又失去意識』為死因機轉之關鍵質疑，section_reasoning.txt 雖提及未能說明出血機轉，但未明確涵蓋癲癇意識變化之具體質疑"
+    },
+    {
+     "gt_claim_id": 289,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 提及「法醫研究所死因鑑定書未能合理說明」，但未提及鑑定證人洪純隆、簡婉儀否定法醫研究所意見",
+     "reason": "section_05_reasoning.txt 提及「法醫研究所死因鑑定書未能合理說明」，但未提及鑑定證人洪純隆、簡婉儀否定法醫研究所意見"
+    },
+    {
+     "gt_claim_id": 290,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及醫審會等機構以醫學文獻動搖法醫研究所證明力的具體論述",
+     "reason": "section_05_reasoning.txt 未提及醫審會等機構以醫學文獻動搖法醫研究所證明力的具體論述"
+    },
+    {
+     "gt_claim_id": 291,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及法醫研究所鑑定書難採信，但未明確表述「難採取法醫研究所對於死因之鑑定意見」",
+     "reason": "section_05_reasoning.txt 雖提及法醫研究所鑑定書難採信，但未明確表述「難採取法醫研究所對於死因之鑑定意見」"
+    },
+    {
+     "gt_claim_id": 292,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 最末段提及「未能證明...有何相當因果關係」，但未使用「遽認」這一表述",
+     "reason": "section_05_reasoning.txt 最末段提及「未能證明...有何相當因果關係」，但未使用「遽認」這一表述"
+    },
+    {
+     "gt_claim_id": 293,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及法醫師表明注意義務屬婦產科專業知識範疇",
+     "reason": "section_05_reasoning.txt 未提及法醫師表明注意義務屬婦產科專業知識範疇"
+    },
+    {
+     "gt_claim_id": 294,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未完整引用檢察官的具體指控內容",
+     "reason": "section_05_reasoning.txt 未完整引用檢察官的具體指控內容"
+    },
+    {
+     "gt_claim_id": 300,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及告訴人關於超音波檢查附屬器的具體質疑",
+     "reason": "section_05_reasoning.txt 未提及告訴人關於超音波檢查附屬器的具體質疑"
+    },
+    {
+     "gt_claim_id": 301,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及告訴人質疑電擊急救方法錯誤",
+     "reason": "section_05_reasoning.txt 未提及告訴人質疑電擊急救方法錯誤"
+    },
+    {
+     "gt_claim_id": 302,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及告訴人質疑延誤轉診時間",
+     "reason": "section_05_reasoning.txt 未提及告訴人質疑延誤轉診時間"
+    },
+    {
+     "gt_claim_id": 303,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及告訴人指被害人住院前在家中大量失血",
+     "reason": "section_05_reasoning.txt 未提及告訴人指被害人住院前在家中大量失血"
+    },
+    {
+     "gt_claim_id": 304,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及告訴人關於胚胎大小的具體質疑",
+     "reason": "section_05_reasoning.txt 未提及告訴人關於胚胎大小的具體質疑"
+    },
+    {
+     "gt_claim_id": 305,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及告訴人指摘未在起訴書記載範圍內",
+     "reason": "section_05_reasoning.txt 未提及告訴人指摘未在起訴書記載範圍內"
+    },
+    {
+     "gt_claim_id": 306,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及法院調取解剖照片的程序事項",
+     "reason": "section_05_reasoning.txt 未提及法院調取解剖照片的程序事項"
+    },
+    {
+     "gt_claim_id": 307,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及採取血跡及DNA比對的程序事項",
+     "reason": "section_05_reasoning.txt 未提及採取血跡及DNA比對的程序事項"
+    },
+    {
+     "gt_claim_id": 308,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 提及「多位專家證人」，但未具體提及「鑑定證人簡婉儀證述明確」及「超音波影像照片可佐」",
+     "reason": "section_05_reasoning.txt 提及「多位專家證人」，但未具體提及「鑑定證人簡婉儀證述明確」及「超音波影像照片可佐」"
+    },
+    {
+     "gt_claim_id": 310,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及抗凝血劑、阿司匹靈治療先兆性流產的醫學文獻依據",
+     "reason": "section_05_reasoning.txt 未提及抗凝血劑、阿司匹靈治療先兆性流產的醫學文獻依據"
+    },
+    {
+     "gt_claim_id": 311,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及抗凝血劑、阿司匹靈之適法性問題",
+     "reason": "section_05_reasoning.txt 未提及抗凝血劑、阿司匹靈之適法性問題"
+    },
+    {
+     "gt_claim_id": 312,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及抗凝血劑與骨盆腔血液或硬腦膜下失血的關聯性問題",
+     "reason": "section_05_reasoning.txt 未提及抗凝血劑與骨盆腔血液或硬腦膜下失血的關聯性問題"
+    },
+    {
+     "gt_claim_id": 313,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及高醫醫院血液檢驗報告",
+     "reason": "section_05_reasoning.txt 未提及高醫醫院血液檢驗報告"
+    },
+    {
+     "gt_claim_id": 314,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確提及抗凝血劑與死亡的因果關係問題",
+     "reason": "section_05_reasoning.txt 未明確提及抗凝血劑與死亡的因果關係問題"
+    },
+    {
+     "gt_claim_id": 315,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及被告楊永裕不曾使用抗凝血劑",
+     "reason": "section_05_reasoning.txt 未提及被告楊永裕不曾使用抗凝血劑"
+    },
+    {
+     "gt_claim_id": 316,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及電擊急救合理性及相關鑑定意見",
+     "reason": "section_05_reasoning.txt 未提及電擊急救合理性及相關鑑定意見"
+    },
+    {
+     "gt_claim_id": 317,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及救護車到達時間及延誤轉診爭議",
+     "reason": "section_05_reasoning.txt 未提及救護車到達時間及延誤轉診爭議"
+    },
+    {
+     "gt_claim_id": 318,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及告訴人關於胚胎大小之質疑及病歷記載「SAC 1.9 cm」",
+     "reason": "section_05_reasoning.txt 未提及告訴人關於胚胎大小之質疑及病歷記載「SAC 1.9 cm」"
+    },
+    {
+     "gt_claim_id": 319,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及28天無法偵測，但未明確說「植入後28天始能發現」",
+     "reason": "section_05_reasoning.txt 雖提及28天無法偵測，但未明確說「植入後28天始能發現」"
+    },
+    {
+     "gt_claim_id": 320,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及法醫師解剖時妊娠組織需顯微鏡觀察",
+     "reason": "section_05_reasoning.txt 未提及法醫師解剖時妊娠組織需顯微鏡觀察"
+    },
+    {
+     "gt_claim_id": 321,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及告訴人混淆胚胎與胚囊之問題",
+     "reason": "section_05_reasoning.txt 未提及告訴人混淆胚胎與胚囊之問題"
+    },
+    {
+     "gt_claim_id": 326,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確提及「業務過失致人於死罪之成立要件」",
+     "reason": "section_05_reasoning.txt 未明確提及「業務過失致人於死罪之成立要件」"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 330,
+   "pred_total": 81,
+   "matched": 105,
+   "partial": 37,
+   "missing": 188,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9149,
+  "compression_afg_chars": 2846,
+  "compression_source_chars": 33455,
+  "gt_length_ratio": 0.1612,
+  "gt_length_afg_chars": 2846,
+  "gt_length_gt_chars": 17655,
+  "section_balance": 0.1959
  }
 }

@@ -145,6 +145,878 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.6124
+  "rule_based_avg": 0.6124,
+  "fact_recall": 0.2572,
+  "fact_precision": 1.0,
+  "fact_f1": 0.4092,
+  "quality_overall": 4.8429,
+  "checklist_pass_rate": 0.9784,
+  "citation_accuracy": 0.6,
+  "citation_support_score": 0.7143,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.76,
+   "citation_fidelity": 0.6,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.6301,
+  "missing_severity": {
+   "critical": 17,
+   "important": 40,
+   "minor": 61,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「術後至加護病房治療」為術後照護地點之背景性事實，五段摘要均未提及，不影響判決主文及過失認定之理解",
+     "reason": "「術後至加護病房治療」為術後照護地點之背景性事實，五段摘要均未提及，不影響判決主文及過失認定之理解"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有section均未提及手術同意書第2頁具體記載內容，屬程序性細節",
+     "reason": "所有section均未提及手術同意書第2頁具體記載內容，屬程序性細節"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 未提及『大略講過』之說明方式，屬表述細節差異",
+     "reason": "section_defense 未提及『大略講過』之說明方式，屬表述細節差異"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 未提及『可能沒有逐條逐項說明』之保留說法，屬細節遺漏",
+     "reason": "section_defense 未提及『可能沒有逐條逐項說明』之保留說法，屬細節遺漏"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 未提及『大致上都有說明』之概括主張，屬細節遺漏",
+     "reason": "section_defense 未提及『大致上都有說明』之概括主張，屬細節遺漏"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 僅提及『骨折呈現不穩定狀態』，未提及『前、中、後段都已經裂開』之具體影像細節，影響骨折嚴重程度理解",
+     "reason": "section_defense 僅提及『骨折呈現不穩定狀態』，未提及『前、中、後段都已經裂開』之具體影像細節，影響骨折嚴重程度理解"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "pred_claim_id 3 僅提『告知有保守療法與手術治療』，與『所有的治療方式』範圍有別（缺復健療法等），屬告知範圍爭議關鍵",
+     "reason": "pred_claim_id 3 僅提『告知有保守療法與手術治療』，與『所有的治療方式』範圍有別（缺復健療法等），屬告知範圍爭議關鍵"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred_claim_id 3 已涵蓋核心內容，但『都有告知』之強調程度未完整呈現",
+     "reason": "pred_claim_id 3 已涵蓋核心內容，但『都有告知』之強調程度未完整呈現"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 僅暗示保守療法不適用（故建議手術），未明確表達『不是一個好的選擇』之價值判斷，屬辯護要點",
+     "reason": "section_defense 僅暗示保守療法不適用（故建議手術），未明確表達『不是一個好的選擇』之價值判斷，屬辯護要點"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及『翻身動到脊椎骨仍會疼痛』之具體情境描述，此為論證保守治療困難之關鍵事實",
+     "reason": "所有section均未提及『翻身動到脊椎骨仍會疼痛』之具體情境描述，此為論證保守治療困難之關鍵事實"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及『不同意則不手術』之條件式主張，此為知情同意核心論點",
+     "reason": "所有section均未提及『不同意則不手術』之條件式主張，此為知情同意核心論點"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_reasoning 提及住院診療計畫書但未提及『復健療法』，與GT主張之三種療法有落差，屬告知內容爭議",
+     "reason": "section_reasoning 提及住院診療計畫書但未提及『復健療法』，與GT主張之三種療法有落差，屬告知內容爭議"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及『專業角度評估建議』之辯護框架，屬醫師專業裁量權之關鍵論證",
+     "reason": "所有section均未提及『專業角度評估建議』之辯護框架，屬醫師專業裁量權之關鍵論證"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 提及『不穩定狀態』但未提及『不確定的脊椎骨折』醫學術語，屬專業診斷表述差異",
+     "reason": "section_defense 提及『不穩定狀態』但未提及『不確定的脊椎骨折』醫學術語，屬專業診斷表述差異"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_facts 提止痛藥但未具體說明『多種止痛藥物相當劑量』，影響論證止痛無效之說服力",
+     "reason": "section_facts 提止痛藥但未具體說明『多種止痛藥物相當劑量』，影響論證止痛無效之說服力"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有section均未提及『無法期待連續多月靜躺』之論點，此為反駁保守治療可行性之關鍵主張",
+     "reason": "所有section均未提及『無法期待連續多月靜躺』之論點，此為反駁保守治療可行性之關鍵主張"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred_claim_id 3 提及『供家屬決定』可推論有家屬同意，但未明確『病患及其家屬同意』之主張",
+     "reason": "pred_claim_id 3 提及『供家屬決定』可推論有家屬同意，但未明確『病患及其家屬同意』之主張"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_reasoning 僅提及手術同意書，未提及『麻醉同意書』，屬證據文件細節",
+     "reason": "section_reasoning 僅提及手術同意書，未提及『麻醉同意書』，屬證據文件細節"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及「術前評估尚未發現有疏失之處」的結論性判斷",
+     "reason": "5個section原文均未提及「術前評估尚未發現有疏失之處」的結論性判斷"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及治療方式可選擇保守治療及手術治療",
+     "reason": "5個section原文均未提及治療方式可選擇保守治療及手術治療"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及保守治療即穿著背架及藥物治療",
+     "reason": "5個section原文均未提及保守治療即穿著背架及藥物治療"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及手術治療即為鋼釘植入或椎體重建",
+     "reason": "5個section原文均未提及手術治療即為鋼釘植入或椎體重建"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及椎體重建手術可用材料之詳細選項",
+     "reason": "5個section原文均未提及椎體重建手術可用材料之詳細選項"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及依病患C當時病況上述材料均可使用之判斷",
+     "reason": "5個section原文均未提及依病患C當時病況上述材料均可使用之判斷"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及骨水泥材料為聚甲基丙烯酸甲酯及其特性",
+     "reason": "5個section原文均未提及骨水泥材料為聚甲基丙烯酸甲酯及其特性"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及骨水泥植入時溫度較高可能造成神經損傷",
+     "reason": "5個section原文均未提及骨水泥植入時溫度較高可能造成神經損傷"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及硫酸鈣可為身體吸收等材料特性",
+     "reason": "5個section原文均未提及硫酸鈣可為身體吸收等材料特性"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及磷酸鈣吸收速率等特性",
+     "reason": "5個section原文均未提及磷酸鈣吸收速率等特性"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及上述材料均有發生缺血性中風之可能性",
+     "reason": "5個section原文均未提及上述材料均有發生缺血性中風之可能性"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及缺血性中風為手術罕見之併發症",
+     "reason": "5個section原文均未提及缺血性中風為手術罕見之併發症"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及缺血性中風之危險因子包括高血壓、心臟病等",
+     "reason": "5個section原文均未提及缺血性中風之危險因子包括高血壓、心臟病等"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及缺血性中風發生之原因包括血管阻塞等",
+     "reason": "5個section原文均未提及缺血性中風發生之原因包括血管阻塞等"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未詳細說明左頸動脈狹窄、手術壓力等導致缺血性中風之多重原因",
+     "reason": "5個section原文均未詳細說明左頸動脈狹窄、手術壓力等導致缺血性中風之多重原因"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及術後缺血性中風緊急處置之具體細節",
+     "reason": "5個section原文均未提及術後缺血性中風緊急處置之具體細節"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及手術中失血共約2000c.c.之數據",
+     "reason": "5個section原文均未提及手術中失血共約2000c.c.之數據"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及脊椎手術失血量變化很大沒有一定標準",
+     "reason": "5個section原文均未提及脊椎手術失血量變化很大沒有一定標準"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及手術中輸血紅血球6單位之細節",
+     "reason": "5個section原文均未提及手術中輸血紅血球6單位之細節"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及手術後緊急輸血紅血球2單位等細節",
+     "reason": "5個section原文均未提及手術後緊急輸血紅血球2單位等細節"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及緊急輸血劑量應屬適當之判斷",
+     "reason": "5個section原文均未提及緊急輸血劑量應屬適當之判斷"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及不建議使用血栓溶解劑或抗凝血劑之建議",
+     "reason": "5個section原文均未提及不建議使用血栓溶解劑或抗凝血劑之建議"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未明確提及醫師甲就缺血性中風所為處置符合醫療常規之結論",
+     "reason": "5個section原文均未明確提及醫師甲就缺血性中風所為處置符合醫療常規之結論"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未明確說明使用硫酸鈣而非骨水泥",
+     "reason": "5個section原文均未明確說明使用硫酸鈣而非骨水泥"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及硫酸鈣與低血壓/休克之文獻案例",
+     "reason": "5個section原文均未提及硫酸鈣與低血壓/休克之文獻案例"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及低血壓麻醉手術可能導致低血壓或休克",
+     "reason": "5個section原文均未提及低血壓麻醉手術可能導致低血壓或休克"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及平均動脈壓50至60毫米汞柱之建議數值",
+     "reason": "5個section原文均未提及平均動脈壓50至60毫米汞柱之建議數值"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及低血壓休克與缺血性腦中風之因果關係",
+     "reason": "5個section原文均未提及低血壓休克與缺血性腦中風之因果關係"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及脊椎斷層掃瞄影像排除骨釘刺入胸腔血管",
+     "reason": "5個section原文均未提及脊椎斷層掃瞄影像排除骨釘刺入胸腔血管"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及術後胸腔積水情形及其明暗度判斷",
+     "reason": "5個section原文均未提及術後胸腔積水情形及其明暗度判斷"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及影像顯示無植入骨釘刺入胸腔血管",
+     "reason": "5個section原文均未提及影像顯示無植入骨釘刺入胸腔血管"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及第一次手術僅出血300c.c.之數據",
+     "reason": "5個section原文均未提及第一次手術僅出血300c.c.之數據"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及術後傷口持續滲血為骨科手術常見情形",
+     "reason": "5個section原文均未提及術後傷口持續滲血為骨科手術常見情形"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及傷口滲血之可能原因",
+     "reason": "5個section原文均未提及傷口滲血之可能原因"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及止血清創手術之適應症",
+     "reason": "5個section原文均未提及止血清創手術之適應症"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未明確提及無胸腔大出血",
+     "reason": "5個section原文均未明確提及無胸腔大出血"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未提及骨水泥可能導致肺部栓塞、腦中風、死亡之風險",
+     "reason": "5個section原文均未提及骨水泥可能導致肺部栓塞、腦中風、死亡之風險"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "5個section原文均未明確區分使用硫酸鈣而非骨水泥",
+     "reason": "5個section原文均未明確區分使用硫酸鈣而非骨水泥"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 僅提及「若硫酸鈣流入血管應先導致肺部栓塞」，未提及「硫酸鈣植入人體內並未有上述併發症之案例」的文獻研究結論。",
+     "reason": "section_03_opinions.txt 僅提及「若硫酸鈣流入血管應先導致肺部栓塞」，未提及「硫酸鈣植入人體內並未有上述併發症之案例」的文獻研究結論。"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及「無法證實病人有肺部栓塞之情形」的明確診斷結論，此為因果關係排除的關鍵認定。",
+     "reason": "section_03_opinions.txt 未提及「無法證實病人有肺部栓塞之情形」的明確診斷結論，此為因果關係排除的關鍵認定。"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及人工代用骨灌注的注意事項（灌注針解剖位置、壓力、注入量）。",
+     "reason": "section_03_opinions.txt 未提及人工代用骨灌注的注意事項（灌注針解剖位置、壓力、注入量）。"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及術中發生外漏時的處置方式。",
+     "reason": "section_03_opinions.txt 未提及術中發生外漏時的處置方式。"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及應使用移動式X光機透視的要求。",
+     "reason": "section_03_opinions.txt 未提及應使用移動式X光機透視的要求。"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及術中實際使用fluoroscope（移動式X光機）的紀錄。",
+     "reason": "section_03_opinions.txt 未提及術中實際使用fluoroscope（移動式X光機）的紀錄。"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及CT影像切面差異導致無法判斷鈣化是否加劇的技術限制。",
+     "reason": "section_03_opinions.txt 未提及CT影像切面差異導致無法判斷鈣化是否加劇的技術限制。"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及術後治療方式的詳細內容（血壓控制、補充血液等）。",
+     "reason": "section_03_opinions.txt 未提及術後治療方式的詳細內容（血壓控制、補充血液等）。"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及大出血與廣泛性缺血效的醫學關聯說明。",
+     "reason": "section_03_opinions.txt 未提及大出血與廣泛性缺血效的醫學關聯說明。"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及血管硬化或狹窄疾病導致缺血性腦中風的風險因子說明。",
+     "reason": "section_03_opinions.txt 未提及血管硬化或狹窄疾病導致缺血性腦中風的風險因子說明。"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及全身麻醉無法發現中風的醫學常規限制。",
+     "reason": "section_03_opinions.txt 未提及全身麻醉無法發現中風的醫學常規限制。"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及術後中風的處置方式（緊急電腦斷層檢查等）。",
+     "reason": "section_03_opinions.txt 未提及術後中風的處置方式（緊急電腦斷層檢查等）。"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及椎骨融合術成功率數據。",
+     "reason": "section_03_opinions.txt 未提及椎骨融合術成功率數據。"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未完整列舉大腦動脈栓塞的高風險因子清單。",
+     "reason": "section_03_opinions.txt 未完整列舉大腦動脈栓塞的高風險因子清單。"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未詳述脊椎爆裂性骨折的疼痛指數及止痛劑使用需求。",
+     "reason": "section_03_opinions.txt 未詳述脊椎爆裂性骨折的疼痛指數及止痛劑使用需求。"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及保守復健治療的適應症條件。",
+     "reason": "section_03_opinions.txt 未提及保守復健治療的適應症條件。"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 未提及脊椎骨折不穩定的詳細手術適應症（椎體壓迫比例、變型角度等）。",
+     "reason": "section_03_opinions.txt 未提及脊椎骨折不穩定的詳細手術適應症（椎體壓迫比例、變型角度等）。"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 未提及病患病歷無大腦動脈栓塞高風險因子的內容。",
+     "reason": "section_03_opinions.txt 未提及病患病歷無大腦動脈栓塞高風險因子的內容。"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_03_opinions.txt 未提及大腦動脈栓塞屬不可預測併發機的鑑定結論。",
+     "reason": "section_03_opinions.txt 未提及大腦動脈栓塞屬不可預測併發機的鑑定結論。"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "證人W關於被告 initially 建議手術的證詞為告知義務爭議之關鍵事實，影響判決理解",
+     "reason": "證人W關於被告 initially 建議手術的證詞為告知義務爭議之關鍵事實，影響判決理解"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "告訴人W詢問保守治療方式之事實為判斷醫師是否善盡告知義務之重要依據",
+     "reason": "告訴人W詢問保守治療方式之事實為判斷醫師是否善盡告知義務之重要依據"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "被告「一定要開刀」之具體說詞為法院認定告知義務範圍之關鍵證據",
+     "reason": "被告「一定要開刀」之具體說詞為法院認定告知義務範圍之關鍵證據"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "當天晚上辦理住院手續之時間點雖不影響判決結論，但屬案情時間軸",
+     "reason": "當天晚上辦理住院手續之時間點雖不影響判決結論，但屬案情時間軸"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "手術同意書由護士交付之程序事實為空白同意書爭議之核心",
+     "reason": "手術同意書由護士交付之程序事實為空白同意書爭議之核心"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "空白同意書及護士「例行作業」說明為法院判斷告知程序之關鍵證詞",
+     "reason": "空白同意書及護士「例行作業」說明為法院判斷告知程序之關鍵證詞"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告96年9月10日下午之行為為證人W證詞可信度評估之重要背景",
+     "reason": "被告96年9月10日下午之行為為證人W證詞可信度評估之重要背景"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "被告是否說明保守復健方式為本案過失認定之核心爭議",
+     "reason": "被告是否說明保守復健方式為本案過失認定之核心爭議"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患C之夫於民事程序中之證詞為法院綜合判斷之重要參考",
+     "reason": "病患C之夫於民事程序中之證詞為法院綜合判斷之重要參考"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告承認可用保守治療之說法為認定告知義務範圍之重要證據",
+     "reason": "被告承認可用保守治療之說法為認定告知義務範圍之重要證據"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人F是否參與開刀影響對其證詞可信度之評估",
+     "reason": "證人F是否參與開刀影響對其證詞可信度之評估"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人F負責照顧及術後治療為理解案情分工之重要事實",
+     "reason": "證人F負責照顧及術後治療為理解案情分工之重要事實"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "自費人工代用骨手術之說明過程為自費項目告知義務之關鍵事實",
+     "reason": "自費人工代用骨手術之說明過程為自費項目告知義務之關鍵事實"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "住院診療計畫書核章為認定醫療團隊責任歸屬之重要證據",
+     "reason": "住院診療計畫書核章為認定醫療團隊責任歸屬之重要證據"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院對說明程序可能性之分析為理解法院心證形成之重要推理",
+     "reason": "法院對說明程序可能性之分析為理解法院心證形成之重要推理"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "F醫師與同意書收走時序為判斷證人證詞可信度之重要時間點",
+     "reason": "F醫師與同意書收走時序為判斷證人證詞可信度之重要時間點"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "F醫師進入病房及相關問答為理解告知過程之重要細節",
+     "reason": "F醫師進入病房及相關問答為理解告知過程之重要細節"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "F醫師「應直接問被告」之回應為醫療團隊內部分工說明責任之關鍵證據",
+     "reason": "F醫師「應直接問被告」之回應為醫療團隊內部分工說明責任之關鍵證據"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "簽完同意書當天下午之對話為被告是否善盡補充說明義務之重要事實",
+     "reason": "簽完同意書當天下午之對話為被告是否善盡補充說明義務之重要事實"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人W有機會詢問F醫師為法院認定家屬未積極詢問之依據",
+     "reason": "證人W有機會詢問F醫師為法院認定家屬未積極詢問之依據"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人W放棄詢問機會為法院減輕被告責任之關鍵推理",
+     "reason": "證人W放棄詢問機會為法院減輕被告責任之關鍵推理"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "被告主觀認知已由F說明為法院認定被告無違反告知義務之核心心證",
+     "reason": "被告主觀認知已由F說明為法院認定被告無違反告知義務之核心心證"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "法院「無從知悉疑問不得遽認違反告知義務」之推理為判決無罪之關鍵法律論證",
+     "reason": "法院「無從知悉疑問不得遽認違反告知義務」之推理為判決無罪之關鍵法律論證"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "麻醉科醫生S之證詞為認定麻醉告知程序之關鍵專業證據",
+     "reason": "麻醉科醫生S之證詞為認定麻醉告知程序之關鍵專業證據"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "麻醉同意書一般簽署程序為法院比對本件程序之參考基準",
+     "reason": "麻醉同意書一般簽署程序為法院比對本件程序之參考基準"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "由麻醉科主治醫生說明之程序事實為認定麻醉告知義務履行之重要證據",
+     "reason": "由麻醉科主治醫生說明之程序事實為認定麻醉告知義務履行之重要證據"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "與證人Y證詞相符之認定為證詞可信度評估之重要依據",
+     "reason": "與證人Y證詞相符之認定為證詞可信度評估之重要依據"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人W在院時間為背景性事實，不影響判決結論",
+     "reason": "證人W在院時間為背景性事實，不影響判決結論"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "同意書交付具體時間為程序細節，屬次要事實",
+     "reason": "同意書交付具體時間為程序細節，屬次要事實"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "F醫師到達時序為程序細節，屬次要事實",
+     "reason": "F醫師到達時序為程序細節，屬次要事實"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "麻醉評估單填寫問題為程序細節，屬次要事實",
+     "reason": "麻醉評估單填寫問題為程序細節，屬次要事實"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Y醫師當天下午互動為理解醫病溝通過程之重要事實",
+     "reason": "Y醫師當天下午互動為理解醫病溝通過程之重要事實"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人W證詞前後歧異為法院質疑其證詞可信度之關鍵理由",
+     "reason": "證人W證詞前後歧異為法院質疑其證詞可信度之關鍵理由"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院「已有可疑」之推理為心證形成之重要表述",
+     "reason": "法院「已有可疑」之推理為心證形成之重要表述"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院對證人W證詞「尚有疑問」之認定為判斷證據取捨之關鍵心證",
+     "reason": "法院對證人W證詞「尚有疑問」之認定為判斷證據取捨之關鍵心證"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "證人Y已解釋詳盡之認定為法院排除麻醉告知缺失之核心依據",
+     "reason": "證人Y已解釋詳盡之認定為法院排除麻醉告知缺失之核心依據"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "證人W有足夠機會詢問之認定為法院減輕醫方責任之關鍵論證",
+     "reason": "證人W有足夠機會詢問之認定為法院減輕醫方責任之關鍵論證"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "Y醫師未違反程序之認定為麻醉過程無過失之結論性判斷",
+     "reason": "Y醫師未違反程序之認定為麻醉過程無過失之結論性判斷"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "空白同意書及未共同討論風險「令人生疑」為法院對告訴人主張之質疑，影響過失認定",
+     "reason": "空白同意書及未共同討論風險「令人生疑」為法院對告訴人主張之質疑，影響過失認定"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "治療方式選擇之綜合判斷原則為法院認定手術建議適當性之醫療標準論述",
+     "reason": "治療方式選擇之綜合判斷原則為法院認定手術建議適當性之醫療標準論述"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未出現「醫師本於個人專業之判斷空間」此重要法律原則",
+     "reason": "五個section原文均未出現「醫師本於個人專業之判斷空間」此重要法律原則"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "五個section原文均未出現「不得以結果推論過失」之重要法律原則，影響判決理由理解",
+     "reason": "五個section原文均未出現「不得以結果推論過失」之重要法律原則，影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 170,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未出現「不得以推測或擬制之方法」之法律原則",
+     "reason": "五個section原文均未出現「不得以推測或擬制之方法」之法律原則"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 173,
+   "pred_total": 43,
+   "matched": 39,
+   "partial": 11,
+   "missing": 123,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9345,
+  "compression_afg_chars": 1111,
+  "compression_source_chars": 16956,
+  "gt_length_ratio": 0.1784,
+  "gt_length_afg_chars": 1111,
+  "gt_length_gt_chars": 6226,
+  "section_balance": 0.1733
  }
 }
