@@ -129,6 +129,605 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7121
+  "rule_based_avg": 0.7121,
+  "fact_recall": 0.4379,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6091,
+  "quality_overall": 4.6071,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.7727,
+  "citation_support_score": 0.776,
+  "uncited_rate": 0.082,
+  "faithfulness_combined": {
+   "score": 0.8256,
+   "citation_fidelity": 0.7093,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.7723,
+  "missing_severity": {
+   "critical": 2,
+   "important": 27,
+   "minor": 50,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要未提及急診醫師H之具體身份，僅泛稱「急診醫師」，屬細節遺漏",
+     "reason": "摘要未提及急診醫師H之具體身份，僅泛稱「急診醫師」，屬細節遺漏"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要未提及高血壓及胃腸疾病之具體投藥治療內容，屬治療細節遺漏",
+     "reason": "摘要未提及高血壓及胃腸疾病之具體投藥治療內容，屬治療細節遺漏"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅提及「經急診醫師初步臆斷」，未列明X光、抽血、心電圖等具體檢查項目",
+     "reason": "摘要僅提及「經急診醫師初步臆斷」，未列明X光、抽血、心電圖等具體檢查項目"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要提及診斷結果但未載明醫師向家屬「告知需開刀切除」之溝通過程",
+     "reason": "摘要提及診斷結果但未載明醫師向家屬「告知需開刀切除」之溝通過程"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要未提及術後給予點滴、抗生素及維他命等具體治療內容",
+     "reason": "摘要未提及術後給予點滴、抗生素及維他命等具體治療內容"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅提及「經搶救後」死亡，未詳載CPR、插管、升壓劑、電擊等急救細節",
+     "reason": "摘要僅提及「經搶救後」死亡，未詳載CPR、插管、升壓劑、電擊等急救細節"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要提及家屬曾提及馬凡氏症病史，但未載明「其妻要求會診心臟科醫師」之具體請求",
+     "reason": "摘要提及家屬曾提及馬凡氏症病史，但未載明「其妻要求會診心臟科醫師」之具體請求"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要記載手術過程但未明確提及被告丁「聽信被告乙之診斷」之主觀認知細節",
+     "reason": "摘要記載手術過程但未明確提及被告丁「聽信被告乙之診斷」之主觀認知細節"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要未提及術後給予點滴、抗生素及維他命之治療內容（與gt_claim_id 15重複）",
+     "reason": "摘要未提及術後給予點滴、抗生素及維他命之治療內容（與gt_claim_id 15重複）"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅泛稱「經搶救後」，未載明住院醫師L進行CPR、插管等具體急救措施",
+     "reason": "摘要僅泛稱「經搶救後」，未載明住院醫師L進行CPR、插管等具體急救措施"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告乙、丁否認過失的基礎辯護立場，pred未明確提及二人共同否認犯行",
+     "reason": "被告乙、丁否認過失的基礎辯護立場，pred未明確提及二人共同否認犯行"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫學判斷標準的技術性論述，pred未涉及",
+     "reason": "醫學判斷標準的技術性論述，pred未涉及"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred雖有「檢視相關檢查報告」但未明確X光片、心電圖及血液檢查報告之具體項目",
+     "reason": "pred雖有「檢視相關檢查報告」但未明確X光片、心電圖及血液檢查報告之具體項目"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "對起訴程序錯誤的具體指控，pred未涵蓋",
+     "reason": "對起訴程序錯誤的具體指控，pred未涵蓋"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "對檢察官事實認定錯誤的指控，pred未明確涉及",
+     "reason": "對檢察官事實認定錯誤的指控，pred未明確涉及"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "病歷記載重要性的推論前提，pred未提及",
+     "reason": "病歷記載重要性的推論前提，pred未提及"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "病歷重要性的普遍性論述，pred未涉及",
+     "reason": "病歷重要性的普遍性論述，pred未涉及"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "推論結論未在pred明確涵蓋",
+     "reason": "推論結論未在pred明確涵蓋"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "初次內科診治的詳細處置內容（降血壓藥物、胃腸科藥物、開藥帶回），pred未涵蓋",
+     "reason": "初次內科診治的詳細處置內容（降血壓藥物、胃腸科藥物、開藥帶回），pred未涵蓋"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "檢查目的（判斷有無急性心臟病）未在pred明確提及",
+     "reason": "檢查目的（判斷有無急性心臟病）未在pred明確提及"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「安排腹部X光檢查」之具體處置未在pred明確提及",
+     "reason": "「安排腹部X光檢查」之具體處置未在pred明確提及"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "丙醫師記載病歷之細節，pred雖有「家屬提及馬凡氏症」但未涵蓋「丙醫師記載病歷」",
+     "reason": "丙醫師記載病歷之細節，pred雖有「家屬提及馬凡氏症」但未涵蓋「丙醫師記載病歷」"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "丙醫師的診斷及病歷記載，pred未涉及",
+     "reason": "丙醫師的診斷及病歷記載，pred未涉及"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "丙向丁報告的流程，pred未涉及",
+     "reason": "丙向丁報告的流程，pred未涉及"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "丁醫師認同丙醫師診斷的過程，pred未涉及",
+     "reason": "丁醫師認同丙醫師診斷的過程，pred未涉及"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "對起訴內容的具體否認（家屬向內科醫生提到馬凡氏症要求會診心臟科），pred未涵蓋",
+     "reason": "對起訴內容的具體否認（家屬向內科醫生提到馬凡氏症要求會診心臟科），pred未涵蓋"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "症狀學醫學論述及急性主動脈剝離症狀特徵，pred未涉及",
+     "reason": "症狀學醫學論述及急性主動脈剝離症狀特徵，pred未涉及"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "心電圖及抽血檢查的具體結果（無急性心臟病徵候），pred未涉及",
+     "reason": "心電圖及抽血檢查的具體結果（無急性心臟病徵候），pred未涉及"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "鑑定報告作為依據引用，pred雖有類似論述但未明確引用鑑定報告",
+     "reason": "鑑定報告作為依據引用，pred雖有類似論述但未明確引用鑑定報告"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「病患也有解一次大便」之細節，pred未涉及",
+     "reason": "「病患也有解一次大便」之細節，pred未涉及"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "會診具體時間（十點左右），pred未提及",
+     "reason": "會診具體時間（十點左右），pred未提及"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "丙向丁報告的具體過程及病歷記載，pred未涉及",
+     "reason": "丙向丁報告的具體過程及病歷記載，pred未涉及"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "pred「照顧權責移交外科」與GT「由外科來處理病人」語境不同，GT強調會診過程而非權責轉移",
+     "reason": "pred「照顧權責移交外科」與GT「由外科來處理病人」語境不同，GT強調會診過程而非權責轉移"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "高血壓診斷及闌尾炎破裂風險，pred未明確涉及",
+     "reason": "高血壓診斷及闌尾炎破裂風險，pred未明確涉及"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "黃主任初診過程，pred未涉及",
+     "reason": "黃主任初診過程，pred未涉及"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告丁評估心臟病對闌尾炎開刀無影響之論述，pred雖有「家屬提及馬凡氏症」但未涵蓋此評估內容",
+     "reason": "被告丁評估心臟病對闌尾炎開刀無影響之論述，pred雖有「家屬提及馬凡氏症」但未涵蓋此評估內容"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告丁與病患太太之對話細節，pred未涉及",
+     "reason": "被告丁與病患太太之對話細節，pred未涉及"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "偵查庭對話內容，pred未涉及",
+     "reason": "偵查庭對話內容，pred未涉及"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "一般性論述，pred未涉及",
+     "reason": "一般性論述，pred未涉及"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "相驗過程之陳述，pred未涉及",
+     "reason": "相驗過程之陳述，pred未涉及"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "推論內容（家屬否認→甲不會提出會診），pred未涉及",
+     "reason": "推論內容（家屬否認→甲不會提出會診），pred未涉及"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「權責轉移時間點（簽同意書時）之具體論述，pred「會診後權責移交外科」與GT「簽同意書時才轉移」定義範圍不同",
+     "reason": "「權責轉移時間點（簽同意書時）之具體論述，pred「會診後權責移交外科」與GT「簽同意書時才轉移」定義範圍不同"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "黃醫生初診過程，pred未涉及",
+     "reason": "黃醫生初診過程，pred未涉及"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "接班時間細節（八點），pred未提及",
+     "reason": "接班時間細節（八點），pred未提及"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「丙報告回來說不太像盲腸炎、丁醫生說再觀察」之過程，pred涉及「會診外科」但未涵蓋此決策過程",
+     "reason": "「丙報告回來說不太像盲腸炎、丁醫生說再觀察」之過程，pred涉及「會診外科」但未涵蓋此決策過程"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「丁醫生看到病歷上記載馬凡氏症」之資訊來源，pred claim 11「家屬提及」與GT「病歷記載」資訊來源不同",
+     "reason": "「丁醫生看到病歷上記載馬凡氏症」之資訊來源，pred claim 11「家屬提及」與GT「病歷記載」資訊來源不同"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「醫院整個流程無過失」之整體性主張，pred僅有個別被告無過失之論述，非醫院整體流程辯護",
+     "reason": "「醫院整個流程無過失」之整體性主張，pred僅有個別被告無過失之論述，非醫院整體流程辯護"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第一次鑑定之具體日期(90年1月3日)與文號(衛署醫字第0900002408號)為程序性資訊，五個section均未提及此細節",
+     "reason": "第一次鑑定之具體日期(90年1月3日)與文號(衛署醫字第0900002408號)為程序性資訊，五個section均未提及此細節"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患主訴「胸部悶痛」雖於facts段有提及「胸悶」，但opinions段未記載此症状細節。跨section合併後，opinions本身仍缺少此醫學意見相關症狀描述",
+     "reason": "病患主訴「胸部悶痛」雖於facts段有提及「胸悶」，但opinions段未記載此症状細節。跨section合併後，opinions本身仍缺少此醫學意見相關症狀描述"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「其子患有馬凡氏症」之家族病史細節，雖於facts段提及「家屬雖曾提及病患X之子患有馬凡氏症」，但opinions段未記載。此為理解個案背景之重要資訊",
+     "reason": "「其子患有馬凡氏症」之家族病史細節，雖於facts段提及「家屬雖曾提及病患X之子患有馬凡氏症」，但opinions段未記載。此為理解個案背景之重要資訊"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "馬凡氏症為「自體顯性遺傳疾病，導致膠原形成缺陷」之病理機制說明，五個section均未提及此醫學背景知識",
+     "reason": "馬凡氏症為「自體顯性遺傳疾病，導致膠原形成缺陷」之病理機制說明，五個section均未提及此醫學背景知識"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「15％病人為基因突變引起」之統計資訊，五個section均未提及",
+     "reason": "「15％病人為基因突變引起」之統計資訊，五個section均未提及"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "馬凡氏症「診斷以臨床判斷為主，根據骨骼肌肉系統、眼睛病變及其他遺傳特徵」之診斷標準，五個section均未提及",
+     "reason": "馬凡氏症「診斷以臨床判斷為主，根據骨骼肌肉系統、眼睛病變及其他遺傳特徵」之診斷標準，五個section均未提及"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「95％馬凡氏症病人有心臟血管異常」之統計資訊，五個section均未提及",
+     "reason": "「95％馬凡氏症病人有心臟血管異常」之統計資訊，五個section均未提及"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「80％馬凡氏症病人有升主動脈瘤」之統計資訊，五個section均未提及",
+     "reason": "「80％馬凡氏症病人有升主動脈瘤」之統計資訊，五個section均未提及"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「動脈瘤剝離是馬凡氏症主要死因」之醫學知識，雖reasoning段提及死因為主動脈剝離，但未明確連結此為馬凡氏症之主要死因",
+     "reason": "「動脈瘤剝離是馬凡氏症主要死因」之醫學知識，雖reasoning段提及死因為主動脈剝離，但未明確連結此為馬凡氏症之主要死因"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「X光片雖有可能為升主動脈瘤，惟確定診斷須進一步影像學檢查」之診斷局限性說明，雖opinions段提及「不宜苛求第一線醫師能單憑X光診斷」，但未明確提及「升主動脈瘤」及「進一步影像學檢查」之具體內容",
+     "reason": "「X光片雖有可能為升主動脈瘤，惟確定診斷須進一步影像學檢查」之診斷局限性說明，雖opinions段提及「不宜苛求第一線醫師能單憑X光診斷」，但未明確提及「升主動脈瘤」及「進一步影像學檢查」之具體內容"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第二次鑑定之日期(90年12月11日)與文號(衛署醫字第0900074357號)為程序性資訊，五個section均未提及",
+     "reason": "第二次鑑定之日期(90年12月11日)與文號(衛署醫字第0900074357號)為程序性資訊，五個section均未提及"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「未見急診醫師對病患之馬凡氏症與外科醫師或麻醉科醫師討論之文字記載」之病歷缺失資訊，五個section均未提及",
+     "reason": "「未見急診醫師對病患之馬凡氏症與外科醫師或麻醉科醫師討論之文字記載」之病歷缺失資訊，五個section均未提及"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「胸部X光片無相關醫師報告，急診病歷上亦無描述」之病歷記載問題，五個section均未提及",
+     "reason": "「胸部X光片無相關醫師報告，急診病歷上亦無描述」之病歷記載問題，五個section均未提及"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「李君有馬凡氏症家族病史、高血壓、胸悶和急性闌尾炎」之完整病史整合，雖各症狀分散於不同section，但opinions段本身未完整呈現此整合性病史",
+     "reason": "「李君有馬凡氏症家族病史、高血壓、胸悶和急性闌尾炎」之完整病史整合，雖各症狀分散於不同section，但opinions段本身未完整呈現此整合性病史"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「宜儘速轉送附近醫學中心作進一步診察及治療」之轉診建議為重要醫療處置意見，五個section均未提及。此涉及醫療決策關鍵內容之遺漏",
+     "reason": "「宜儘速轉送附近醫學中心作進一步診察及治療」之轉診建議為重要醫療處置意見，五個section均未提及。此涉及醫療決策關鍵內容之遺漏"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第三次鑑定之日期(91年9月9日)與文號(衛署醫字第0910054527號)為程序性資訊，五個section均未提及",
+     "reason": "第三次鑑定之日期(91年9月9日)與文號(衛署醫字第0910054527號)為程序性資訊，五個section均未提及"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「以初步臆斷高血壓性心臟病及急性闌尾炎，而術後未會診心臟科醫師或轉院，尚難認定其有醫療過失」之詳細無過失理由，雖reasoning段提及相關論述，但未完整呈現此鑑定結論之完整邏輯。此為判決結論之關鍵依據",
+     "reason": "「以初步臆斷高血壓性心臟病及急性闌尾炎，而術後未會診心臟科醫師或轉院，尚難認定其有醫療過失」之詳細無過失理由，雖reasoning段提及相關論述，但未完整呈現此鑑定結論之完整邏輯。此為判決結論之關鍵依據"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "審閱全篇5個section原文，verdict段落僅陳述「認定被告乙、丁均無罪」，未明確提及案件類型為「業務過失致人於死案件」。雖facts段提及檢察官起訴罪嫌，但verdict段本身未標示案件性質，確屬遺漏。此為重要程序性資訊，影響對案件完整理解。",
+     "reason": "審閱全篇5個section原文，verdict段落僅陳述「認定被告乙、丁均無罪」，未明確提及案件類型為「業務過失致人於死案件」。雖facts段提及檢察官起訴罪嫌，但verdict段本身未標示案件性質，確屬遺漏。此為重要程序性資訊，影響對案件完整理解。"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院論證過程描述，屬程序性說明，不影響判決結論理解",
+     "reason": "法院論證過程描述，屬程序性說明，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "急性闌尾炎醫學背景說明，屬背景知識補充",
+     "reason": "急性闌尾炎醫學背景說明，屬背景知識補充"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫師乙責任判定討論，屬程序性說明",
+     "reason": "醫師乙責任判定討論，屬程序性說明"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "術後未會診心臟科討論，非核心論點",
+     "reason": "術後未會診心臟科討論，非核心論點"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "針對被告乙單獨分析，與整體無罪結論無實質差異",
+     "reason": "針對被告乙單獨分析，與整體無罪結論無實質差異"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「補強證據」術語未使用，但「合理懷疑」已涵蓋相同意涵",
+     "reason": "「補強證據」術語未使用，但「合理懷疑」已涵蓋相同意涵"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "馬凡氏症臨床表徵詳細說明，屬醫學背景知識",
+     "reason": "馬凡氏症臨床表徵詳細說明，屬醫學背景知識"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "馬凡氏症病程發展詳細說明，屬醫學背景知識",
+     "reason": "馬凡氏症病程發展詳細說明，屬醫學背景知識"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "與 GT 125「升主動脈剝離非常難診斷」重複，已於他處涵蓋",
+     "reason": "與 GT 125「升主動脈剝離非常難診斷」重複，已於他處涵蓋"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "患病率統計數據，屬補充性資訊",
+     "reason": "患病率統計數據，屬補充性資訊"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫師經驗累積困難說明，section_05_reasoning.txt 已有「難以期待醫師能即時確診罕見之馬凡氏症」概括意涵",
+     "reason": "醫師經驗累積困難說明，section_05_reasoning.txt 已有「難以期待醫師能即時確診罕見之馬凡氏症」概括意涵"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告非專科醫師身分說明，section_05_reasoning.txt 「不宜苛求」已涵蓋此意",
+     "reason": "被告非專科醫師身分說明，section_05_reasoning.txt 「不宜苛求」已涵蓋此意"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫院等級設施詳細說明，section_05_reasoning.txt 已有「並非醫學中心」概括",
+     "reason": "醫院等級設施詳細說明，section_05_reasoning.txt 已有「並非醫學中心」概括"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "與 GT 147、149 重複內容",
+     "reason": "與 GT 147、149 重複內容"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 161,
+   "pred_total": 49,
+   "matched": 59,
+   "partial": 23,
+   "missing": 79,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.91,
+  "compression_afg_chars": 1325,
+  "compression_source_chars": 14724,
+  "gt_length_ratio": 0.1643,
+  "gt_length_afg_chars": 1325,
+  "gt_length_gt_chars": 8065,
+  "section_balance": 0.3114
  }
 }

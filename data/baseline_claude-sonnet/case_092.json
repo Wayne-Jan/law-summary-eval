@@ -130,5 +130,361 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7575,
+  "fact_recall": 0.6168,
+  "fact_precision": 1.0,
+  "fact_f1": 0.763,
+  "quality_overall": 4.8286,
+  "checklist_pass_rate": 0.973,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9909,
+  "uncited_rate": 0.014,
+  "faithfulness_combined": {
+   "score": 0.9916,
+   "citation_fidelity": 0.986,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.917,
+  "numerical_detail": {
+   "total_numerical": 24,
+   "correct": 22
+  },
+  "weighted_recall": 0.8637,
+  "missing_severity": {
+   "critical": 0,
+   "important": 12,
+   "minor": 32,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查5個section原文，均未提及病患S服刑起始日期與罪名，生成摘要確實未涵蓋此背景資訊",
+     "reason": "遍查5個section原文，均未提及病患S服刑起始日期與罪名，生成摘要確實未涵蓋此背景資訊"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts檢察官起訴段落雖有『且依當時情形亦無不能注意之情事』，然生成摘要未擷取此法律注意義務判斷，屬重要法律事實遺漏",
+     "reason": "section_facts檢察官起訴段落雖有『且依當時情形亦無不能注意之情事』，然生成摘要未擷取此法律注意義務判斷，屬重要法律事實遺漏"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查5個section原文，均未提及被告乙已歿及不受理判決，此為影響案件組成之重要事實",
+     "reason": "遍查5個section原文，均未提及被告乙已歿及不受理判決，此為影響案件組成之重要事實"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts記載被告甲診視內容為『發燒、一般感冒、心臟病及脹氣』，section_defense被告甲辯稱『未發現異狀』，均未提及『發現腹水』之檢查結果",
+     "reason": "section_facts記載被告甲診視內容為『發燒、一般感冒、心臟病及脹氣』，section_defense被告甲辯稱『未發現異狀』，均未提及『發現腹水』之檢查結果"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts僅提及『安排血液生化檢查』，未列明白蛋白、肌酸酐、白血球等具體檢驗項目，跨section檢視仍無完整對應",
+     "reason": "section_facts僅提及『安排血液生化檢查』，未列明白蛋白、肌酸酐、白血球等具體檢驗項目，跨section檢視仍無完整對應"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查5個section原文，均未提及應安排『腹部超音波檢查』之醫療常規建議，屬醫療標準事實遺漏",
+     "reason": "遍查5個section原文，均未提及應安排『腹部超音波檢查』之醫療常規建議，屬醫療標準事實遺漏"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts提及『施行清創引流手術』，section_opinions提及『病灶清創手術』，然均未明確陳述『清創手術比抗生素更重要且必須』之比較性論述，摘要確實未涵蓋此醫療常規判斷",
+     "reason": "section_facts提及『施行清創引流手術』，section_opinions提及『病灶清創手術』，然均未明確陳述『清創手術比抗生素更重要且必須』之比較性論述，摘要確實未涵蓋此醫療常規判斷"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "此項目與GT #9內容重複（同為『同月22日中午12時58分許』之休克狀態），屬冗余項目，GT #9已評定為partial，涵蓋核心事實",
+     "reason": "此項目與GT #9內容重複（同為『同月22日中午12時58分許』之休克狀態），屬冗余項目，GT #9已評定為partial，涵蓋核心事實"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學理論性描述，屬背景知識，非本案關鍵事實",
+     "reason": "醫學理論性描述，屬背景知識，非本案關鍵事實"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "疾病進展症狀的醫學描述，屬鑑定意見中的背景知識",
+     "reason": "疾病進展症狀的醫學描述，屬鑑定意見中的背景知識"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "無適當治療後果的醫學描述，屬背景性知識",
+     "reason": "無適當治療後果的醫學描述，屬背景性知識"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "產氣性細菌症狀的醫學細節，屬次要醫學背景",
+     "reason": "產氣性細菌症狀的醫學細節，屬次要醫學背景"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "陰囊腫脹鑑別診斷之醫學列舉，屬背景知識",
+     "reason": "陰囊腫脹鑑別診斷之醫學列舉，屬背景知識"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖為醫學關聯性陳述，但摘要已提及福耳尼埃氏壞疽症導致陰囊壞疽，關聯性已隱含",
+     "reason": "雖為醫學關聯性陳述，但摘要已提及福耳尼埃氏壞疽症導致陰囊壞疽，關聯性已隱含"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "早期症狀相似性的醫學描述，屬醫學背景知識",
+     "reason": "早期症狀相似性的醫學描述，屬醫學背景知識"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "臨床診斷指標雖重要，但摘要係以鑑定意見是否遵守醫療常規為主軸，臨床細節未完整記載",
+     "reason": "臨床診斷指標雖重要，但摘要係以鑑定意見是否遵守醫療常規為主軸，臨床細節未完整記載"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "細菌培養治療原則，屬醫學處置細節",
+     "reason": "細菌培養治療原則，屬醫學處置細節"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "原發疾病治療描述，屬醫學背景",
+     "reason": "原發疾病治療描述，屬醫學背景"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "詳細生化檢查項目列表，屬次要細節",
+     "reason": "詳細生化檢查項目列表，屬次要細節"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢驗報告單日期，屬程序性細節",
+     "reason": "檢驗報告單日期，屬程序性細節"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "陰囊超音波檢查診斷水腫的醫學說明，屬次要醫療知識",
+     "reason": "陰囊超音波檢查診斷水腫的醫學說明，屬次要醫療知識"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "身體診察方式的醫學描述，屬鑑定意見中的方法論說明",
+     "reason": "身體診察方式的醫學描述，屬鑑定意見中的方法論說明"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "身體診察定義，屬醫學術語解釋",
+     "reason": "身體診察定義，屬醫學術語解釋"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病歷未記載身體診察結果屬重要鑑定意見，但 pred claim 7 已涵蓋「病歷資料記載不明確」之核心",
+     "reason": "病歷未記載身體診察結果屬重要鑑定意見，但 pred claim 7 已涵蓋「病歷資料記載不明確」之核心"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病歷未記載超音波檢查屬重要鑑定發現，但 pred claim 7 已涵蓋「病歷資料記載不明確」之核心",
+     "reason": "病歷未記載超音波檢查屬重要鑑定發現，但 pred claim 7 已涵蓋「病歷資料記載不明確」之核心"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "台灣泌尿科醫學會函覆內容，屬專業機構意見引用",
+     "reason": "台灣泌尿科醫學會函覆內容，屬專業機構意見引用"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "一般陰囊腫大與福耳尼埃氏壞疽症區別，屬醫學鑑別診斷知識",
+     "reason": "一般陰囊腫大與福耳尼埃氏壞疽症區別，屬醫學鑑別診斷知識"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "細菌感染造成陰囊腫大的醫學說明，屬背景知識",
+     "reason": "細菌感染造成陰囊腫大的醫學說明，屬背景知識"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及11月20日就診之具體記錄，僅於section_01_facts.txt提及「同月20日上午，由被告乙診視」。此為背景時序事實，不影響判決理由核心論述",
+     "reason": "section_05_reasoning.txt 未提及11月20日就診之具體記錄，僅於section_01_facts.txt提及「同月20日上午，由被告乙診視」。此為背景時序事實，不影響判決理由核心論述"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及「11月20日至22日中午無就診紀錄」。section_03_opinions.txt雖有「病患甲自同月20日至22日之間無就診紀錄」，但reasoning段作為判決核心論證未完整引用此關鍵時間缺口，影響對病程空白期之理解",
+     "reason": "section_05_reasoning.txt 未提及「11月20日至22日中午無就診紀錄」。section_03_opinions.txt雖有「病患甲自同月20日至22日之間無就診紀錄」，但reasoning段作為判決核心論證未完整引用此關鍵時間缺口，影響對病程空白期之理解"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未提及「無病程照護紀錄」。雖section_03_opinions.txt有「無病程照護紀錄」之表述，然reasoning段未完整呈現此照護缺失，影響對病歷資料不完備程度之評估",
+     "reason": "section_05_reasoning.txt 未提及「無病程照護紀錄」。雖section_03_opinions.txt有「無病程照護紀錄」之表述，然reasoning段未完整呈現此照護缺失，影響對病歷資料不完備程度之評估"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未直接陳述「無法判斷病程進展之實際情形」。雖有「病程進展難以評估」等相關表述，然「無法判斷實際情形」之強調程度不同，影響對鑑定結論精確性之理解",
+     "reason": "section_05_reasoning.txt 未直接陳述「無法判斷病程進展之實際情形」。雖有「病程進展難以評估」等相關表述，然「無法判斷實際情形」之強調程度不同，影響對鑑定結論精確性之理解"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「陰囊腫脹及發炎可能於極短時間內由陰囊水腫演變為陰囊蜂窩性組織炎」。此為疾病機轉背景知識，雖有助理解病情發展，然非判決理由核心論證",
+     "reason": "section_05_reasoning.txt 未提及「陰囊腫脹及發炎可能於極短時間內由陰囊水腫演變為陰囊蜂窩性組織炎」。此為疾病機轉背景知識，雖有助理解病情發展，然非判決理由核心論證"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「陰囊蜂窩性組織炎可能進展至福耳尼埃氏壞疽症」。雖有「演變為陰囊蜂窩性組織炎或福耳尼埃氏壞疽症」之表述，然未明確陳述前者進展至後者之因果鏈，屬疾病機轉背景，非核心論證",
+     "reason": "section_05_reasoning.txt 未提及「陰囊蜂窩性組織炎可能進展至福耳尼埃氏壞疽症」。雖有「演變為陰囊蜂窩性組織炎或福耳尼埃氏壞疽症」之表述，然未明確陳述前者進展至後者之因果鏈，屬疾病機轉背景，非核心論證"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「敗血症導致病患休克及死亡」之因果鏈描述。section_01_facts.txt提及「因敗血性休克而死亡」，然reasoning段未展開論述此因果機轉，屬結論性事實而非論證重點",
+     "reason": "section_05_reasoning.txt 未提及「敗血症導致病患休克及死亡」之因果鏈描述。section_01_facts.txt提及「因敗血性休克而死亡」，然reasoning段未展開論述此因果機轉，屬結論性事實而非論證重點"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 未明確陳述「病歷資料無任何關於後續追蹤及照護之記載」。雖有「病歷資料記載不明確」之概括表述，然未具體點出「後續追蹤及照護」之缺失，影響對病歷不完備程度之理解",
+     "reason": "section_05_reasoning.txt 未明確陳述「病歷資料無任何關於後續追蹤及照護之記載」。雖有「病歷資料記載不明確」之概括表述，然未具體點出「後續追蹤及照護」之缺失，影響對病歷不完備程度之理解"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「福耳尼埃氏壞疽症併有糖尿病者死亡率可達36%以上，約為無糖尿病患者的2至3倍」。Pred claim 9、10僅提及一般死亡率數據，未涵蓋糖尿病風險因素之細緻數據，屬補充性統計資訊",
+     "reason": "section_05_reasoning.txt 未提及「福耳尼埃氏壞疽症併有糖尿病者死亡率可達36%以上，約為無糖尿病患者的2至3倍」。Pred claim 9、10僅提及一般死亡率數據，未涵蓋糖尿病風險因素之細緻數據，屬補充性統計資訊"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「治療前已出現敗血症者，死亡率78%以上，約為無敗血症者的4至5倍」。Pred claim僅提及「死亡率在20%以上，甚至達100%」，未區分敗血症有無之風險差異，屬補充性統計資訊",
+     "reason": "section_05_reasoning.txt 未提及「治療前已出現敗血症者，死亡率78%以上，約為無敗血症者的4至5倍」。Pred claim僅提及「死亡率在20%以上，甚至達100%」，未區分敗血症有無之風險差異，屬補充性統計資訊"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「年齡過大者死亡率較高」。此為風險因素補充說明，非判決理由核心 mortality 論證",
+     "reason": "section_05_reasoning.txt 未提及「年齡過大者死亡率較高」。此為風險因素補充說明，非判決理由核心 mortality 論證"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未明確提出「治療時機延遲者死亡率較高」之風險因素論述。雖有死亡率數據比較，然未直接將「延遲治療」列為獨立風險因素",
+     "reason": "section_05_reasoning.txt 未明確提出「治療時機延遲者死亡率較高」之風險因素論述。雖有死亡率數據比較，然未直接將「延遲治療」列為獨立風險因素"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「經適當內外科治療，患者死亡率仍超過40%」。Pred claim 9提及「死亡率仍達8%至67%」，涵蓋範圍更廣，然「超過40%」之特定數據點未明確陳述",
+     "reason": "section_05_reasoning.txt 未提及「經適當內外科治療，患者死亡率仍超過40%」。Pred claim 9提及「死亡率仍達8%至67%」，涵蓋範圍更廣，然「超過40%」之特定數據點未明確陳述"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「Dr.Kaiser及Cerra」之研究引用。此為專業文獻佐證，屬補充性醫學證據",
+     "reason": "section_05_reasoning.txt 未提及「Dr.Kaiser及Cerra」之研究引用。此為專業文獻佐證，屬補充性醫學證據"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「有限度的切除壞死組織，死亡率高達75%」。此為特定治療方式之統計數據，屬補充性醫學資訊",
+     "reason": "section_05_reasoning.txt 未提及「有限度的切除壞死組織，死亡率高達75%」。此為特定治療方式之統計數據，屬補充性醫學資訊"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未提及「作積極之擴創，死亡率在10%左右」。此為特定治療方式之統計數據，屬補充性醫學資訊",
+     "reason": "section_05_reasoning.txt 未提及「作積極之擴創，死亡率在10%左右」。此為特定治療方式之統計數據，屬補充性醫學資訊"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 137,
+   "pred_total": 71,
+   "matched": 76,
+   "partial": 17,
+   "missing": 44,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7413,
+  "compression_afg_chars": 2569,
+  "compression_source_chars": 9931,
+  "gt_length_ratio": 0.5936,
+  "gt_length_afg_chars": 2569,
+  "gt_length_gt_chars": 4328,
+  "section_balance": 0.5349
+ }
 }
