@@ -21,8 +21,7 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud",
-  "baseline_ollama_deepseek-v4-flash-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,6 +134,226 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.8667,
-  "fact_recall_avg": null
+  "fact_recall": 0.6408,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7811,
+  "quality_overall": 4.7429,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.6316,
+  "citation_support_score": 0.6957,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.779,
+   "citation_fidelity": 0.6316,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 5,
+   "correct": 5
+  },
+  "weighted_recall": 0.8451,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 17,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「返家後發現手指沒有知覺且不能握合」之後續症狀",
+     "reason": "五個 section 原文均未提及「返家後發現手指沒有知覺且不能握合」之後續症狀"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個 section 原文均未明確提及101年4月26日前往基隆C醫院檢查之事件",
+     "reason": "五個 section 原文均未明確提及101年4月26日前往基隆C醫院檢查之事件"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五個 section 原文均未出現「依當時情況並無不能注意之情形」此法律前提用語，屬法律推論性質",
+     "reason": "五個 section 原文均未出現「依當時情況並無不能注意之情形」此法律前提用語，屬法律推論性質"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "五個 section 原文雖提及B醫院手術，但未明確記載「尺神經、尺動脈及尺側屈腕肌腱之接合手術」之具體內容",
+     "reason": "五個 section 原文雖提及B醫院手術，但未明確記載「尺神經、尺動脈及尺側屈腕肌腱之接合手術」之具體內容"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT包含被告甲的具體身分（101年4月21日為T醫院急診科主治醫師）、負責診治病患Z、指示被告乙縫合等事實。經跨section檢視：facts段提及「被告甲、被告乙均為從事醫療業務之人，分別為A醫院急診室之主治醫師」，但日期僅見於起訴事實片段（101年4月21日），且pred使用「A醫院」而非「T醫院」，亦未明確陳述被告甲「指示」被告乙縫合之指揮關係。defense段本身更簡短，完全未提及日期、醫院名稱及指示情節。綜合五段內容，此GT claim之核心事實（日期、醫院名稱、指示關係）在pred中確實遺漏。",
+     "reason": "GT包含被告甲的具體身分（101年4月21日為T醫院急診科主治醫師）、負責診治病患Z、指示被告乙縫合等事實。經跨section檢視：facts段提及「被告甲、被告乙均為從事醫療業務之人，分別為A醫院急診室之主治醫師」，但日期僅見於起訴事實片段（101年4月21日），且pred使用「A醫院」而非「T醫院」，亦未明確陳述被告甲「指示」被告乙縫合之指揮關係。defense段本身更簡短，完全未提及日期、醫院名稱及指示情節。綜合五段內容，此GT claim之核心事實（日期、醫院名稱、指示關係）在pred中確實遺漏。"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT包含被告乙的具體背景（在S醫院接受畢業後一般醫學訓練之住院醫師、分派到T醫院接受急診科訓練）。經跨section檢視：facts段僅簡述為「住院醫師」，defense段僅提及「被告乙否認犯行」，opinions、verdict、reasoning各段均未提及被告乙之訓練機構（S醫院）、訓練性質（畢業後一般醫學訓練）、或分派細節。pred僅有概括性身分描述，缺乏GT要求之背景資訊。",
+     "reason": "GT包含被告乙的具體背景（在S醫院接受畢業後一般醫學訓練之住院醫師、分派到T醫院接受急診科訓練）。經跨section檢視：facts段僅簡述為「住院醫師」，defense段僅提及「被告乙否認犯行」，opinions、verdict、reasoning各段均未提及被告乙之訓練機構（S醫院）、訓練性質（畢業後一般醫學訓練）、或分派細節。pred僅有概括性身分描述，缺乏GT要求之背景資訊。"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT包含被告乙於101年4月21日診視病患Z左臂傷口、依被告甲指示縫合等具體行為描述。經跨section檢視：facts段提及「逕命被告乙縫合傷口」但係起訴事實之控訴語境，非defense視角；defense段僅簡述「伊縫合前有請告訴人動手，無異狀」，未提及日期（101年4月21日）、醫院（T醫院）、或「依被告甲指示」之指揮關係。跨section合併後仍缺少日期、醫院名稱、明確之指示關係等關鍵資訊。",
+     "reason": "GT包含被告乙於101年4月21日診視病患Z左臂傷口、依被告甲指示縫合等具體行為描述。經跨section檢視：facts段提及「逕命被告乙縫合傷口」但係起訴事實之控訴語境，非defense視角；defense段僅簡述「伊縫合前有請告訴人動手，無異狀」，未提及日期（101年4月21日）、醫院（T醫院）、或「依被告甲指示」之指揮關係。跨section合併後仍缺少日期、醫院名稱、明確之指示關係等關鍵資訊。"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 僅簡述「須注意合併傷害徵候」，未展開詳細清單；屬鑑定意見之細節性描述，非判決核心爭點",
+     "reason": "section_03_opinions.txt 僅簡述「須注意合併傷害徵候」，未展開詳細清單；屬鑑定意見之細節性描述，非判決核心爭點"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 提及「合併傷害徵候」但未具體解釋內容；屬專業標準之細部說明",
+     "reason": "section_03_opinions.txt 提及「合併傷害徵候」但未具體解釋內容；屬專業標準之細部說明"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未明確提及症狀與骨折或神經、肌腱斷裂之對應關係；屬醫學知識推論層級",
+     "reason": "各 section 均未明確提及症狀與骨折或神經、肌腱斷裂之對應關係；屬醫學知識推論層級"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未提及拇指和食指不能對掌成O形之具體症狀；屬尺神經損傷之細部臨床表現",
+     "reason": "各 section 均未提及拇指和食指不能對掌成O形之具體症狀；屬尺神經損傷之細部臨床表現"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未提及小指與拇指對捏障礙；屬尺神經損傷之細部臨床表現",
+     "reason": "各 section 均未提及小指與拇指對捏障礙；屬尺神經損傷之細部臨床表現"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未提及手內肌癱瘓、握力減少及手靈活性喪失；屬神經損傷後續影響之細節描述",
+     "reason": "各 section 均未提及手內肌癱瘓、握力減少及手靈活性喪失；屬神經損傷後續影響之細節描述"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未提及尺動脈斷裂之持續主動出血症狀；屬血管損傷症狀之細節",
+     "reason": "各 section 均未提及尺動脈斷裂之持續主動出血症狀；屬血管損傷症狀之細節"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未提及左手腕尺動脈脈搏變小或摸不到之檢查發現；屬血管損傷之細部徵候",
+     "reason": "各 section 均未提及左手腕尺動脈脈搏變小或摸不到之檢查發現；屬血管損傷之細部徵候"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未明確提及尺動脈斷裂則脈搏摸不到之醫學原則；屬專業判斷準則",
+     "reason": "各 section 均未明確提及尺動脈斷裂則脈搏摸不到之醫學原則；屬專業判斷準則"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未提及動脈破損附近持續搏動性腫脹症狀；屬血管損傷之細部徵候",
+     "reason": "各 section 均未提及動脈破損附近持續搏動性腫脹症狀；屬血管損傷之細部徵候"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未提及尺側屈腕肌肌腱斷裂之腕部屈曲及內收功能受損症狀；屬肌腱損傷細節",
+     "reason": "各 section 均未提及尺側屈腕肌肌腱斷裂之腕部屈曲及內收功能受損症狀；屬肌腱損傷細節"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 提及「以身體診察及神經學檢查判斷」[CH_10]，section_05_reasoning.txt 提及「理學檢查為主」[CH_10]，但未明確說明急診檢視係以臨床症狀及理學檢查為基礎之原則性論述；屬鑑定意見之核心方法論",
+     "reason": "section_03_opinions.txt 提及「以身體診察及神經學檢查判斷」[CH_10]，section_05_reasoning.txt 提及「理學檢查為主」[CH_10]，但未明確說明急診檢視係以臨床症狀及理學檢查為基礎之原則性論述；屬鑑定意見之核心方法論"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "各 section 均未提及懷疑損傷時會請外科醫師檢視或安排手術探查之處置原則；屬臨床處置流程之重要資訊",
+     "reason": "各 section 均未提及懷疑損傷時會請外科醫師檢視或安排手術探查之處置原則；屬臨床處置流程之重要資訊"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各 section 均未提及骨折檢查之處置方式；X光檢查僅被間接提及[CH_11]，未涉及電腦斷層檢查之補充說明",
+     "reason": "各 section 均未提及骨折檢查之處置方式；X光檢查僅被間接提及[CH_11]，未涉及電腦斷層檢查之補充說明"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 僅提及「進一步檢查」但未列出具體項目；section_05_reasoning.txt 亦未展開詳細檢查清單；屬鑑定意見之細節列舉",
+     "reason": "section_03_opinions.txt 僅提及「進一步檢查」但未列出具體項目；section_05_reasoning.txt 亦未展開詳細檢查清單；屬鑑定意見之細節列舉"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性事實（公訴人聲請函詢及其裁定），跨 section 搜尋後確認 summary 未提及，不影響判決實體結論理解",
+     "reason": "程序性事實（公訴人聲請函詢及其裁定），跨 section 搜尋後確認 summary 未提及，不影響判決實體結論理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性事實（辯護人聲請傳喚證人及再送鑑定），跨 section 搜尋後確認 summary 未提及，不影響判決實體結論理解",
+     "reason": "程序性事實（辯護人聲請傳喚證人及再送鑑定），跨 section 搜尋後確認 summary 未提及，不影響判決實體結論理解"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性事實（法院對辯護人聲請無調查必要的裁定），跨 section 搜尋後確認 summary 未提及，不影響判決實體結論理解",
+     "reason": "程序性事實（法院對辯護人聲請無調查必要的裁定），跨 section 搜尋後確認 summary 未提及，不影響判決實體結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 71,
+   "pred_total": 33,
+   "matched": 45,
+   "partial": 1,
+   "missing": 25,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8755,
+  "compression_afg_chars": 1127,
+  "compression_source_chars": 9053,
+  "gt_length_ratio": 0.479,
+  "gt_length_afg_chars": 1127,
+  "gt_length_gt_chars": 2353,
+  "section_balance": 0.375
  }
 }

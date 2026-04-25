@@ -96,6 +96,9 @@ EXCLUDED_CONDITIONS = {
     "baseline_ollama_qwen3-next-80b-cloud",
     "baseline_ollama_nemotron-3-super-cloud",
     "baseline_ollama_mistral-large-3-675b-cloud",
+    "baseline_ollama_deepseek-v4-flash-cloud",
+    "LENS-Full-DeepSeek_v31_writer_deepseek_v4",
+    "LENS-Writer-DeepSeek-v4",
 }
 
 CONDITION_LABELS = {
