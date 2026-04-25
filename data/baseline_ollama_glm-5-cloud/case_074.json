@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,6 +138,325 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.633
+  "rule_based_avg": 0.633,
+  "fact_recall": 0.5194,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6837,
+  "quality_overall": 4.8,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 0.9375,
+  "citation_support_score": 0.9611,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9625,
+   "citation_fidelity": 0.9375,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 6,
+   "correct": 6
+  },
+  "weighted_recall": 0.7767,
+  "missing_severity": {
+   "critical": 5,
+   "important": 20,
+   "minor": 14,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "轉診經過（臺北門診中心→G醫院）係重要就醫流程事實，影響對案件時間軸與醫療過程之理解",
+     "reason": "轉診經過（臺北門診中心→G醫院）係重要就醫流程事實，影響對案件時間軸與醫療過程之理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫師K擔任心導管檢查醫師為醫療團隊組成細節，屬背景性事實，不影響核心案情理解",
+     "reason": "醫師K擔任心導管檢查醫師為醫療團隊組成細節，屬背景性事實，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫師C擔任普通病房之主治醫師為醫療團隊組成細節，屬背景性事實",
+     "reason": "醫師C擔任普通病房之主治醫師為醫療團隊組成細節，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "詳細檢查項目清單屬程序性事實，摘要已概括提及檢查，不影響核心案情",
+     "reason": "詳細檢查項目清單屬程序性事實，摘要已概括提及檢查，不影響核心案情"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "具體症狀描述（胸骨後方壓迫性悶痛放射到背部）為關鍵醫療發現，影響對病情嚴重程度與診斷難度之理解",
+     "reason": "具體症狀描述（胸骨後方壓迫性悶痛放射到背部）為關鍵醫療發現，影響對病情嚴重程度與診斷難度之理解"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "發燒、白血球增加等症狀為重要臨床表現，與心包膜炎診斷相關",
+     "reason": "發燒、白血球增加等症狀為重要臨床表現，與心包膜炎診斷相關"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "心電圖廣泛性ST段上升為關鍵檢查結果，直接影響診斷方向判斷",
+     "reason": "心電圖廣泛性ST段上升為關鍵檢查結果，直接影響診斷方向判斷"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "血液培養報告未有細菌生長為重要檢查結果，涉及停用抗生素之合理性判斷",
+     "reason": "血液培養報告未有細菌生長為重要檢查結果，涉及停用抗生素之合理性判斷"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "未有敗血症之診斷涉及死因排除與診斷方向",
+     "reason": "未有敗血症之診斷涉及死因排除與診斷方向"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢察官起訴為程序性事實，摘要已提及罪名與業務過失致死罪，起訴程序本身不影響案情實體內容",
+     "reason": "檢察官起訴為程序性事實，摘要已提及罪名與業務過失致死罪，起訴程序本身不影響案情實體內容"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "此為起訴意旨核心過失指控，將多項關鍵症狀與檢查結果整合為注意義務之客觀基礎，影響過失認定之完整理解",
+     "reason": "此為起訴意旨核心過失指控，將多項關鍵症狀與檢查結果整合為注意義務之客觀基礎，影響過失認定之完整理解"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "不宜施打抗凝血藥物為注意義務之核心內容，涉及過失行為之法律評價",
+     "reason": "不宜施打抗凝血藥物為注意義務之核心內容，涉及過失行為之法律評價"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "加重死亡危險性之因果關係為過失致死罪之關鍵構成要件要素",
+     "reason": "加重死亡危險性之因果關係為過失致死罪之關鍵構成要件要素"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "無不能注意之情事為注意義務可履行性之判斷，影響過失成立與否",
+     "reason": "無不能注意之情事為注意義務可履行性之判斷，影響過失成立與否"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "具體日期（17日）與檢查情境（呼吸困難時接受心電圖）為重要時間節點與臨床情境",
+     "reason": "具體日期（17日）與檢查情境（呼吸困難時接受心電圖）為重要時間節點與臨床情境"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "急性前壁及下壁心肌缺氧性傷害之具體診斷內容影響對誤判性質之理解，雖摘要提及誤判為心肌梗塞，但具體診斷內容更為精確",
+     "reason": "急性前壁及下壁心肌缺氧性傷害之具體診斷內容影響對誤判性質之理解，雖摘要提及誤判為心肌梗塞，但具體診斷內容更為精確"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遽予指示之急迫性與劑量（10ml/h）為重要處置細節",
+     "reason": "遽予指示之急迫性與劑量（10ml/h）為重要處置細節"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "病症並未改善之結果為病情演變之重要節點",
+     "reason": "病症並未改善之結果為病情演變之重要節點"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "嗣後出現心包膜炎填塞之症狀為病情演變描述，直接關係死亡原因與過失因果關係",
+     "reason": "嗣後出現心包膜炎填塞之症狀為病情演變描述，直接關係死亡原因與過失因果關係"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「診斷與用藥並無製造法所不容許之風險」之法理論述，五段原文均未提及",
+     "reason": "「診斷與用藥並無製造法所不容許之風險」之法理論述，五段原文均未提及"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「隨時檢測注意病患用藥反應」之注意義務履行論點，五段原文均未提及",
+     "reason": "「隨時檢測注意病患用藥反應」之注意義務履行論點，五段原文均未提及"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「急性心包膜炎非絕對唯一診斷」之具體辯護論點，五段原文均未明確表述",
+     "reason": "「急性心包膜炎非絕對唯一診斷」之具體辯護論點，五段原文均未明確表述"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「急性心包膜炎與心肌梗塞或冠狀動脈疾病死亡率及危險性相距甚遠」之比較論證，五段原文均未提及",
+     "reason": "「急性心包膜炎與心肌梗塞或冠狀動脈疾病死亡率及危險性相距甚遠」之比較論證，五段原文均未提及"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「縱對心包膜炎患者施用系爭藥物亦無出血填塞致死案例」之醫學論點，五段原文均未提及",
+     "reason": "「縱對心包膜炎患者施用系爭藥物亦無出血填塞致死案例」之醫學論點，五段原文均未提及"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「停用抗生素之時間並無不當」之時間適當性辯護論點，五段原文均未明確提及",
+     "reason": "「停用抗生素之時間並無不當」之時間適當性辯護論點，五段原文均未明確提及"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「停用抗生素與死亡間相當因果關係」之論點遺漏，屬核心過失認定與因果關係問題，影響判決結論理解",
+     "reason": "「停用抗生素與死亡間相當因果關係」之論點遺漏，屬核心過失認定與因果關係問題，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「被告甲與醫療團隊共同依據醫學專業判斷轉出加護病房」之決策過程論述，五段原文均未提及",
+     "reason": "「被告甲與醫療團隊共同依據醫學專業判斷轉出加護病房」之決策過程論述，五段原文均未提及"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查全部 5 個 section，皆未提及『1月15日心臟超音波檢查』之具體日期與結果，確認遺漏",
+     "reason": "遍查全部 5 個 section，皆未提及『1月15日心臟超音波檢查』之具體日期與結果，確認遺漏"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查全部 5 個 section，皆未提及『1月17日發現心電圖急性心包膜炎變化時應立即做心臟超音波』之具體臨床時點與處置建議",
+     "reason": "遍查全部 5 個 section，皆未提及『1月17日發現心電圖急性心包膜炎變化時應立即做心臟超音波』之具體臨床時點與處置建議"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查全部 5 個 section，皆未提及『1月19日冠狀動脈攝影結果正常應重新思考診斷』之具體時點與建議",
+     "reason": "遍查全部 5 個 section，皆未提及『1月19日冠狀動脈攝影結果正常應重新思考診斷』之具體時點與建議"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "1月15日心臟超音波檢查結果在任何 section 均未提及，屬重要醫療事實",
+     "reason": "1月15日心臟超音波檢查結果在任何 section 均未提及，屬重要醫療事實"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「翌日檢查追查病因」屬細節性事實未提及，非判決核心",
+     "reason": "「翌日檢查追查病因」屬細節性事實未提及，非判決核心"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「轉出後仍持續關注」為法院論述細節，非判決關鍵要點",
+     "reason": "「轉出後仍持續關注」為法院論述細節，非判決關鍵要點"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「主治醫師判斷權威性」屬論證鋪陳，非核心判決理由",
+     "reason": "「主治醫師判斷權威性」屬論證鋪陳，非核心判決理由"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「主治醫師判斷權限」屬論證鋪陳，非核心判決理由",
+     "reason": "「主治醫師判斷權限」屬論證鋪陳，非核心判決理由"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴人傳喚證人之程序請求，屬程序性事實",
+     "reason": "公訴人傳喚證人之程序請求，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴人傳喚告訴代理人之程序請求，屬程序性事實",
+     "reason": "公訴人傳喚告訴代理人之程序請求，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病歷記錄完整性屬證據評價細節",
+     "reason": "病歷記錄完整性屬證據評價細節"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院委託醫審會鑑定程序已在 opinions section 涵蓋",
+     "reason": "法院委託醫審會鑑定程序已在 opinions section 涵蓋"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 103,
+   "pred_total": 39,
+   "matched": 43,
+   "partial": 21,
+   "missing": 39,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9321,
+  "compression_afg_chars": 794,
+  "compression_source_chars": 11700,
+  "gt_length_ratio": 0.2428,
+  "gt_length_afg_chars": 794,
+  "gt_length_gt_chars": 3270,
+  "section_balance": 0.4062
  }
 }

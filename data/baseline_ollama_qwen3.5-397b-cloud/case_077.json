@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -144,5 +145,529 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7119,
+  "fact_recall": 0.3771,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5477,
+  "quality_overall": 4.6857,
+  "checklist_pass_rate": 0.9891,
+  "citation_accuracy": 0.8571,
+  "citation_support_score": 0.8227,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9143,
+   "citation_fidelity": 0.8571,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 22
+  },
+  "weighted_recall": 0.6441,
+  "missing_severity": {
+   "critical": 14,
+   "important": 30,
+   "minor": 24,
+   "details": [
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "經查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段原文，均未提及「8月13日」或「轉出加護病房」之資訊。此為程序性時間點事實，非判決關鍵事項。",
+     "reason": "經查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段原文，均未提及「8月13日」或「轉出加護病房」之資訊。此為程序性時間點事實，非判決關鍵事項。"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "經查全部五段 section 原文，section_defense 僅提及「血管夾」一種方法，未見「縫線結紮及縫線縫合」等三種開刀方法之完整說明。此為鑑定意見之技術細節，雖影響案情完整理解，但不影響判決結論。",
+     "reason": "經查全部五段 section 原文，section_defense 僅提及「血管夾」一種方法，未見「縫線結紮及縫線縫合」等三種開刀方法之完整說明。此為鑑定意見之技術細節，雖影響案情完整理解，但不影響判決結論。"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "各 section 均未提及腦中風、心臟衰竭等具體合併症列表，影響手術風險說明之完整性",
+     "reason": "各 section 均未提及腦中風、心臟衰竭等具體合併症列表，影響手術風險說明之完整性"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「「嚴重即可能死亡」之風險強調語句未在 section_defense 原文中出現",
+     "reason": "「「嚴重即可能死亡」之風險強調語句未在 section_defense 原文中出現"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「「急性心臟衰竭」為死因描述，雖其他 section 有提及，但 defense section 作為被告辯護主張，未明確說明死亡原因",
+     "reason": "「「急性心臟衰竭」為死因描述，雖其他 section 有提及，但 defense section 作為被告辯護主張，未明確說明死亡原因"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「「術後第四小時大出血合併休克」為死亡關鍵時點與機制，section_defense 未提及",
+     "reason": "「「術後第四小時大出血合併休克」為死亡關鍵時點與機制，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「「冠狀動脈嚴重狹窄合併心肌缺血、心臟收縮功能不良」為辯方主張之死因合併考量因素，section_defense 未提及",
+     "reason": "「「冠狀動脈嚴重狹窄合併心肌缺血、心臟收縮功能不良」為辯方主張之死因合併考量因素，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「「出血休克導致心肌惡性循環」之因果機制說明，section_defense 未提及",
+     "reason": "「「出血休克導致心肌惡性循環」之因果機制說明，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「「大出血引起血流不足、血壓降低」之病理機制，section_defense 未提及",
+     "reason": "「「大出血引起血流不足、血壓降低」之病理機制，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「「體外循環維生系統救治」為重要救治措施，section_defense 未提及",
+     "reason": "「「體外循環維生系統救治」為重要救治措施，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「「第二次開胸手術發現出血點之具體位置（右冠狀動脈大隱靜脈分支）」為關鍵事實，section_defense 未提及",
+     "reason": "「「第二次開胸手術發現出血點之具體位置（右冠狀動脈大隱靜脈分支）」為關鍵事實，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「「止血後檢查血管暢通性」之細節，section_defense 未提及",
+     "reason": "「「止血後檢查血管暢通性」之細節，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「「術後出血原因繁多」之詳細列表（凝血功能異常、各種出血位置等），section_defense 未提及",
+     "reason": "「「術後出血原因繁多」之詳細列表（凝血功能異常、各種出血位置等），section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「「出血原因可能造成說明書登載的大出血」之關聯說明，section_defense 未提及",
+     "reason": "「「出血原因可能造成說明書登載的大出血」之關聯說明，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「「European Journal of Cardiothoracic Surgery」文獻引用，section_defense 未提及",
+     "reason": "「「European Journal of Cardiothoracic Surgery」文獻引用，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「「血管夾脫落原因無法確切得知」之辯方主張，section_defense 僅提及測試無誤，未明確表達原因無法確定",
+     "reason": "「「血管夾脫落原因無法確切得知」之辯方主張，section_defense 僅提及測試無誤，未明確表達原因無法確定"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「「胸管引流量正常引流淡紅組織液」為重要監測事實，section_defense 未提及",
+     "reason": "「「胸管引流量正常引流淡紅組織液」為重要監測事實，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「「胸管引流量不符合再手術止血標準」之專業判斷依據，section_defense 未提及",
+     "reason": "「「胸管引流量不符合再手術止血標準」之專業判斷依據，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「「被告狂奔而至」之現場描述，section_defense 未提及",
+     "reason": "「「被告狂奔而至」之現場描述，section_defense 未提及"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「「實無所謂怠忽病情延誤治療」之明確否認語句，section_defense 雖整體否認過失但未使用此等明確表述",
+     "reason": "「「實無所謂怠忽病情延誤治療」之明確否認語句，section_defense 雖整體否認過失但未使用此等明確表述"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "術後血壓數值範圍（106/65至170/83）雖見於 section_reasoning.txt，但 opinions section 原文及 pred claims 均未提及該數值",
+     "reason": "術後血壓數值範圍（106/65至170/83）雖見於 section_reasoning.txt，但 opinions section 原文及 pred claims 均未提及該數值"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血管夾脫落與血壓升高之關聯判斷雖見於 section_reasoning.txt，但 pred claims 未涵蓋此鑑定意見",
+     "reason": "血管夾脫落與血壓升高之關聯判斷雖見於 section_reasoning.txt，但 pred claims 未涵蓋此鑑定意見"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "血管夾脫落部位為隱靜脈導管分枝之詳細事實，各 section 原文及 pred claims 均未明確提及",
+     "reason": "血管夾脫落部位為隱靜脈導管分枝之詳細事實，各 section 原文及 pred claims 均未明確提及"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾用途說明為背景性醫療知識，非本案核心事實",
+     "reason": "血管夾用途說明為背景性醫療知識，非本案核心事實"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明內容為產品背景資訊，非判決核心論述",
+     "reason": "使用說明內容為產品背景資訊，非判決核心論述"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "被告使用血管夾符合醫療常規之結論性陳述，屬鑑定意見關鍵結論",
+     "reason": "被告使用血管夾符合醫療常規之結論性陳述，屬鑑定意見關鍵結論"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾裝置位置細節，屬具體醫療操作資訊",
+     "reason": "血管夾裝置位置細節，屬具體醫療操作資訊"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明對裝置位置之限制規範為細節資訊",
+     "reason": "使用說明對裝置位置之限制規範為細節資訊"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術同意書告知內容涉及告知義務之程序事實，屬重要法律爭點",
+     "reason": "手術同意書告知內容涉及告知義務之程序事實，屬重要法律爭點"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術同意書經簽字為證明告知義務已履行之事實",
+     "reason": "手術同意書經簽字為證明告知義務已履行之事實"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "未能認定被告未盡說明義務為免責之核心法律結論，影響判決結論理解",
+     "reason": "未能認定被告未盡說明義務為免責之核心法律結論，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "術後生命徵象穩定為評估醫師處置適當性之事實基礎",
+     "reason": "術後生命徵象穩定為評估醫師處置適當性之事實基礎"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "出血事故處置適當無延誤為過失認定之關鍵，影響判決結論",
+     "reason": "出血事故處置適當無延誤為過失認定之關鍵，影響判決結論"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "尚無違背醫療常規之結論直接影響過失成立與否",
+     "reason": "尚無違背醫療常規之結論直接影響過失成立與否"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "手術過程難謂有疏失為醫師免責之核心論述",
+     "reason": "手術過程難謂有疏失為醫師免責之核心論述"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "血管夾脫落為不可預期併發症屬免責事由之關鍵認定，影響判決結論",
+     "reason": "血管夾脫落為不可預期併發症屬免責事由之關鍵認定，影響判決結論"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "尚難認為醫師之責任為最終責任認定結論，直接影響判決結果",
+     "reason": "尚難認為醫師之責任為最終責任認定結論，直接影響判決結果"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "靜脈分枝多種處理方式為醫療技術細節",
+     "reason": "靜脈分枝多種處理方式為醫療技術細節"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "手術紀錄無描述其他處理方式為細節資訊",
+     "reason": "手術紀錄無描述其他處理方式為細節資訊"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管夾行政核准資訊為產品背景",
+     "reason": "血管夾行政核准資訊為產品背景"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用前測試要求為操作細節",
+     "reason": "使用前測試要求為操作細節"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "採用血管夾阻斷血管無違反醫療常規為重要結論",
+     "reason": "採用血管夾阻斷血管無違反醫療常規為重要結論"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "使用說明書規範細節",
+     "reason": "使用說明書規範細節"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「吸管及激烈疼痛」屬術後常見情形為醫療判斷細節",
+     "reason": "「吸管及激烈疼痛」屬術後常見情形為醫療判斷細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "處理方式原則性陳述",
+     "reason": "處理方式原則性陳述"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "疼痛處理用藥細節",
+     "reason": "疼痛處理用藥細節"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "出血處置方式為一般醫療知識",
+     "reason": "出血處置方式為一般醫療知識"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師施以嗎啡合乎醫療常規為重要辯護及鑑定結論",
+     "reason": "醫師施以嗎啡合乎醫療常規為重要辯護及鑑定結論"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "自訴人關於血管夾說明義務之具體主張，在 section_facts 僅泛稱「未親自診斷即指示注射嗎啡及裝設血管夾不當」，未明確提及「設置血管夾之方式」之說明義務主張",
+     "reason": "自訴人關於血管夾說明義務之具體主張，在 section_facts 僅泛稱「未親自診斷即指示注射嗎啡及裝設血管夾不當」，未明確提及「設置血管夾之方式」之說明義務主張"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "自訴人關於血管夾脫落風險說明義務之主張，跨 section 檢視均未見明確記載，屬辯駁要點遺漏",
+     "reason": "自訴人關於血管夾脫落風險說明義務之主張，跨 section 檢視均未見明確記載，屬辯駁要點遺漏"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "三種開刀方法（設置血管夾、縫線結紮、縫線縫合）之說明義務主張，跨 section 均未見提及",
+     "reason": "三種開刀方法（設置血管夾、縫線結紮、縫線縫合）之說明義務主張，跨 section 均未見提及"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫療法第63條具體條文內容為程序性法規引用，section_reasoning 提及「手術同意書」已涵蓋核心概念",
+     "reason": "醫療法第63條具體條文內容為程序性法規引用，section_reasoning 提及「手術同意書」已涵蓋核心概念"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "護理紀錄單作為證據之記載屬細節性證據方法，section_reasoning 已提及「病歷等在卷可參」",
+     "reason": "護理紀錄單作為證據之記載屬細節性證據方法，section_reasoning 已提及「病歷等在卷可參」"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會對「咬管及激烈疼痛」屬術後常見情形之判斷，跨 section 均未見記載，屬鑑定意見細節遺漏",
+     "reason": "醫審會對「咬管及激烈疼痛」屬術後常見情形之判斷，跨 section 均未見記載，屬鑑定意見細節遺漏"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會關於劇烈疼痛及出血時應給予之具體藥物及處置建議（嗎啡、鎮靜劑、止血藥物、再次開胸探查術等），跨 section 均未見記載",
+     "reason": "醫審會關於劇烈疼痛及出血時應給予之具體藥物及處置建議（嗎啡、鎮靜劑、止血藥物、再次開胸探查術等），跨 section 均未見記載"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「死亡與血管夾脫落有因果關係」係本案關鍵事實認定，雖 section_opinions 提及「血管夾脫落導致大出血致死」，但未明確記載「死亡與血管夾脫落有關係」之因果關係表述，影響判決理由理解",
+     "reason": "「死亡與血管夾脫落有因果關係」係本案關鍵事實認定，雖 section_opinions 提及「血管夾脫落導致大出血致死」，但未明確記載「死亡與血管夾脫落有關係」之因果關係表述，影響判決理由理解"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血管夾脫落具體部位（隱靜脈導管的分枝）之技術性細節，跨 section 均未見記載",
+     "reason": "血管夾脫落具體部位（隱靜脈導管的分枝）之技術性細節，跨 section 均未見記載"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「脫落原因不明」係法院重要事實認定，與舉證責任分配相關，跨 section 均未見明確記載，影響判決結論理解",
+     "reason": "「脫落原因不明」係法院重要事實認定，與舉證責任分配相關，跨 section 均未見明確記載，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血管夾在冠狀動脈繞道手術中之醫療用途說明，屬技術背景事實，跨 section 均未見記載",
+     "reason": "血管夾在冠狀動脈繞道手術中之醫療用途說明，屬技術背景事實，跨 section 均未見記載"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "血管夾使用說明之規範內容（可施用於血管及管狀組織）屬產品規格細節",
+     "reason": "血管夾使用說明之規範內容（可施用於血管及管狀組織）屬產品規格細節"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "使用說明對裝置位置無限制之事實，屬產品規格細節",
+     "reason": "使用說明對裝置位置無限制之事實，屬產品規格細節"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「術後生命徵象穩定」係被告辯護之重要事實基礎，用於證明手術成功，跨 section 均未見明確記載",
+     "reason": "「術後生命徵象穩定」係被告辯護之重要事實基礎，用於證明手術成功，跨 section 均未見明確記載"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「被告對出血事故之處置適當且無延誤」係過失認定之核心爭點，section_reasoning 雖提及「合乎醫療常規」但未明確記載「並無延誤」，影響判決結論理解",
+     "reason": "「被告對出血事故之處置適當且無延誤」係過失認定之核心爭點，section_reasoning 雖提及「合乎醫療常規」但未明確記載「並無延誤」，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「手術過程難謂有何疏失」係法院對手術過程之直接認定，與過失責任判斷密切相關，section_reasoning 未明確記載，影響判決結論理解",
+     "reason": "「手術過程難謂有何疏失」係法院對手術過程之直接認定，與過失責任判斷密切相關，section_reasoning 未明確記載，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「血管夾脫落屬術後併發症，為不可預期或避免之風險」係本案無罪判決之重要法律依據，跨 section 均未見完整記載，影響判決結論理解",
+     "reason": "「血管夾脫落屬術後併發症，為不可預期或避免之風險」係本案無罪判決之重要法律依據，跨 section 均未見完整記載，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「血管夾經衛生署核准及使用前不需測試」係被告舉證責任之重要事實基礎，跨 section 均未見提及",
+     "reason": "「血管夾經衛生署核准及使用前不需測試」係被告舉證責任之重要事實基礎，跨 section 均未見提及"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「採用血管夾阻斷血管之方式無違反醫療常規」係法院對手術方式之認定，section_reasoning 雖提及相關內容但未明確記載此表述",
+     "reason": "「採用血管夾阻斷血管之方式無違反醫療常規」係法院對手術方式之認定，section_reasoning 雖提及相關內容但未明確記載此表述"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「自訴人證據方法無從說服形成有罪心證」係舉證責任與心證說明，section_reasoning 末段提及「無其他積極證據足認」但語句形式不同",
+     "reason": "「自訴人證據方法無從說服形成有罪心證」係舉證責任與心證說明，section_reasoning 末段提及「無其他積極證據足認」但語句形式不同"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 118,
+   "pred_total": 37,
+   "matched": 40,
+   "partial": 9,
+   "missing": 69,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8759,
+  "compression_afg_chars": 1303,
+  "compression_source_chars": 10502,
+  "gt_length_ratio": 0.3374,
+  "gt_length_afg_chars": 1303,
+  "gt_length_gt_chars": 3862,
+  "section_balance": 0.2821
+ }
 }

@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -155,5 +156,207 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.719,
+  "fact_recall": 0.6774,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8077,
+  "quality_overall": 4.8857,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 32,
+   "correct": 32
+  },
+  "weighted_recall": 0.8925,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 14,
+   "details": [
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 中被告乙僅提及「為確認傷口位置而先拆除紗布檢視傷口」，未明確提及「左邊膝膕」位置及「很大傷口」之描述。跨 sections 查閱後，其他段落亦無此具體細節。屬辯護要點遺漏。",
+     "reason": "section_defense.txt 中被告乙僅提及「為確認傷口位置而先拆除紗布檢視傷口」，未明確提及「左邊膝膕」位置及「很大傷口」之描述。跨 sections 查閱後，其他段落亦無此具體細節。屬辯護要點遺漏。"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段原文，均未見「傷口長10公分、寬6公分、深5公分」之尺寸描述。屬關鍵事實數據遺漏。",
+     "reason": "遍查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段原文，均未見「傷口長10公分、寬6公分、深5公分」之尺寸描述。屬關鍵事實數據遺漏。"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查五段原文，均未見「急救2小時後發現膝膕處開始滲血」之時序描述。屬處置過程細節遺漏。",
+     "reason": "遍查五段原文，均未見「急救2小時後發現膝膕處開始滲血」之時序描述。屬處置過程細節遺漏。"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 中被告甲僅提及「裝上彈性繃帶」，未提及「另一個」之順序細節。跨 sections 查閱後，其他段落亦無此細節。屬處置步驟細節遺漏。",
+     "reason": "section_defense.txt 中被告甲僅提及「裝上彈性繃帶」，未提及「另一個」之順序細節。跨 sections 查閱後，其他段落亦無此細節。屬處置步驟細節遺漏。"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五段原文，均未見「通知開刀房拿自動加壓止血機打上左大腿」之處置描述。屬醫療處置要點遺漏。",
+     "reason": "遍查五段原文，均未見「通知開刀房拿自動加壓止血機打上左大腿」之處置描述。屬醫療處置要點遺漏。"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五段原文，均未見「將止血帶拿掉」之動作描述。屬醫療處置關鍵動作遺漏。",
+     "reason": "遍查五段原文，均未見「將止血帶拿掉」之動作描述。屬醫療處置關鍵動作遺漏。"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense.txt 中被告甲僅提及「伊即做心肺復甦術」，未提及「總共做3個半小時」之時長及「仍然無效」之結果。section_facts.txt 雖有起訴事實之時間範圍，但摘要未抽取此時長資訊。屬關鍵時序事實遺漏。",
+     "reason": "section_defense.txt 中被告甲僅提及「伊即做心肺復甦術」，未提及「總共做3個半小時」之時長及「仍然無效」之結果。section_facts.txt 雖有起訴事實之時間範圍，但摘要未抽取此時長資訊。屬關鍵時序事實遺漏。"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五段原文，均未見「出血量不到50CC」之量化數據。section_defense.txt 中被告乙僅泛稱「評估出血量大」。屬量化事實數據遺漏。",
+     "reason": "遍查五段原文，均未見「出血量不到50CC」之量化數據。section_defense.txt 中被告乙僅泛稱「評估出血量大」。屬量化事實數據遺漏。"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五段原文，均未見「輸血4500CC」之總量數據。section_facts.txt 僅提及「開始輸血」而未提總量。屬量化治療數據遺漏。",
+     "reason": "遍查五段原文，均未見「輸血4500CC」之總量數據。section_facts.txt 僅提及「開始輸血」而未提總量。屬量化治療數據遺漏。"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查五段原文，均未見「每5分鐘施打增血壓素」之處置頻率描述。屬處置細節遺漏。",
+     "reason": "遍查五段原文，均未見「每5分鐘施打增血壓素」之處置頻率描述。屬處置細節遺漏。"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『右腳背、左膝部、左小腿前部及右手前臂之銳器傷害』之法醫鑑定細節，僅提及左膕部切割傷",
+     "reason": "五個 section 原文均未提及『右腳背、左膝部、左小腿前部及右手前臂之銳器傷害』之法醫鑑定細節，僅提及左膕部切割傷"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『其他部位為表層外傷、不會造成死亡』之法醫鑑定意見",
+     "reason": "五個 section 原文均未提及『其他部位為表層外傷、不會造成死亡』之法醫鑑定意見"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『家屬質疑病歷竄改及EMT紀錄驗證可信度』之鑑定內容",
+     "reason": "五個 section 原文均未提及『家屬質疑病歷竄改及EMT紀錄驗證可信度』之鑑定內容"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『19:58開始急救及護士取下固定器改用紗布彈繃固定』之T醫學院鑑定細節",
+     "reason": "五個 section 原文均未提及『19:58開始急救及護士取下固定器改用紗布彈繃固定』之T醫學院鑑定細節"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『急救標準程序應第一時間打上周邊靜脈血管』之規範內容",
+     "reason": "五個 section 原文均未提及『急救標準程序應第一時間打上周邊靜脈血管』之規範內容"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『創傷或兒科患者常遇到無法打上靜脈血管』之說明",
+     "reason": "五個 section 原文均未提及『創傷或兒科患者常遇到無法打上靜脈血管』之說明"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『中央靜脈導管與皮膚切開術效果差異不大、取決於醫師熟練度』之鑑定意見",
+     "reason": "五個 section 原文均未提及『中央靜脈導管與皮膚切開術效果差異不大、取決於醫師熟練度』之鑑定意見"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『中央靜脈導管與皮膚切開術需特殊器材、廣泛消毒、耗時較長』之技術細節",
+     "reason": "五個 section 原文均未提及『中央靜脈導管與皮膚切開術需特殊器材、廣泛消毒、耗時較長』之技術細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『嚴重休克患者打上靜脈血管需1-2小時以上』之臨床經驗數據",
+     "reason": "五個 section 原文均未提及『嚴重休克患者打上靜脈血管需1-2小時以上』之臨床經驗數據"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_01_facts、section_03_opinions、section_05_reasoning各段均未提及傷口具體尺寸「10×6×5cm」及「深可見骨」等詳細描述，僅提及「左膕部切割傷」，屬細節性醫療事實不影響判決結論",
+     "reason": "section_01_facts、section_03_opinions、section_05_reasoning各段均未提及傷口具體尺寸「10×6×5cm」及「深可見骨」等詳細描述，僅提及「左膕部切割傷」，屬細節性醫療事實不影響判決結論"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "所有section原文均未明確描述「在家中受傷時」的出血狀況，section_05_reasoning僅提及「到院時已無持續大量出血」，屬背景性醫療事實",
+     "reason": "所有section原文均未明確描述「在家中受傷時」的出血狀況，section_05_reasoning僅提及「到院時已無持續大量出血」，屬背景性醫療事實"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts提及「無法以穿刺方式就周邊靜脈打點滴」，但未提及「躁動」或「救護車上」之症狀，section_defense亦未記載救護車上情況。此為影響醫療處置時機理解之重要背景事實",
+     "reason": "section_01_facts提及「無法以穿刺方式就周邊靜脈打點滴」，但未提及「躁動」或「救護車上」之症狀，section_defense亦未記載救護車上情況。此為影響醫療處置時機理解之重要背景事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 41,
+   "matched": 55,
+   "partial": 16,
+   "missing": 22,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8816,
+  "compression_afg_chars": 1503,
+  "compression_source_chars": 12694,
+  "gt_length_ratio": 0.5039,
+  "gt_length_afg_chars": 1503,
+  "gt_length_gt_chars": 2983,
+  "section_balance": 0.5909
+ }
 }

@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -135,5 +136,599 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7161,
+  "fact_recall": 0.4124,
+  "fact_precision": 1.0,
+  "fact_f1": 0.584,
+  "quality_overall": 4.7571,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.222,
+  "faithfulness_combined": {
+   "score": 0.8668,
+   "citation_fidelity": 0.778,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.6983,
+  "missing_severity": {
+   "critical": 6,
+   "important": 34,
+   "minor": 38,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全篇五段 section，均未見「高血壓、攝護腺肥大」等既往病史之完整描述，僅 section_facts 提及「心臟病」於主訴欄，影響對病患整體病情之理解",
+     "reason": "遍查全篇五段 section，均未見「高血壓、攝護腺肥大」等既往病史之完整描述，僅 section_facts 提及「心臟病」於主訴欄，影響對病患整體病情之理解"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查五段 section 均未提及「99年3月疝氣修補手術」之既往手術史，此為重要背景資訊，影響因果關係理解",
+     "reason": "遍查五段 section 均未提及「99年3月疝氣修補手術」之既往手術史，此為重要背景資訊，影響因果關係理解"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查五段 section 均未見「家庭暴力罪」「9月9日起服刑」等入監原因及時間，影響對案情背景之完整理解",
+     "reason": "遍查五段 section 均未見「家庭暴力罪」「9月9日起服刑」等入監原因及時間，影響對案情背景之完整理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 提及「11月17日上午經由醫師乙診治並安排血液生化檢查」，但未涵蓋「評估有心臟病及脹氣之病徵」之具體診斷內容",
+     "reason": "section_facts 提及「11月17日上午經由醫師乙診治並安排血液生化檢查」，但未涵蓋「評估有心臟病及脹氣之病徵」之具體診斷內容"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 雖有「送往A醫院」「施行多次清創手術」，但缺少「緊急」時序強調及「清創引流手術」之具體處置描述，語義覆蓋不完整",
+     "reason": "section_facts 雖有「送往A醫院」「施行多次清創手術」，但缺少「緊急」時序強調及「清創引流手術」之具體處置描述，語義覆蓋不完整"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 已有「同月27日下午宣告不治死亡」，僅缺少精確時間（下午4時4分），死亡日期已涵蓋，時間精度為次要細節",
+     "reason": "section_facts 已有「同月27日下午宣告不治死亡」，僅缺少精確時間（下午4時4分），死亡日期已涵蓋，時間精度為次要細節"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "遍查五段 section 均未見「並無不能注意之情事」之過失構成要件判斷，此為影響被告過失責任認定之關鍵法律事實",
+     "reason": "遍查五段 section 均未見「並無不能注意之情事」之過失構成要件判斷，此為影響被告過失責任認定之關鍵法律事實"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "section_facts 僅有「未開立處方」之泛稱，未具體涵蓋「未開立抗生素」及「作出上開醫療處置」之完整過失行為描述，影響過失認定之理解",
+     "reason": "section_facts 僅有「未開立處方」之泛稱，未具體涵蓋「未開立抗生素」及「作出上開醫療處置」之完整過失行為描述，影響過失認定之理解"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查五段 section 均未提及「被告乙已歿」及「不受理判決」，此為程序性事實，不影響本案被告甲之實體判斷",
+     "reason": "遍查五段 section 均未提及「被告乙已歿」及「不受理判決」，此為程序性事實，不影響本案被告甲之實體判斷"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查五段 section 均未見「收（退）病舍建議書紀錄」「陰囊疾病」之記載內容，屬處置細節",
+     "reason": "遍查五段 section 均未見「收（退）病舍建議書紀錄」「陰囊疾病」之記載內容，屬處置細節"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查五段 section 均未提及「腹水產生」之重要醫療徵象，影響對病情評估完整性之理解",
+     "reason": "遍查五段 section 均未提及「腹水產生」之重要醫療徵象，影響對病情評估完整性之理解"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 提及「血液生化檢查」，section_opinions 提及「心臟、肝臟、腎臟疾病之排除」，但未具體涵蓋「白蛋白、肌酸酐及白血球」等檢查項目",
+     "reason": "section_facts 提及「血液生化檢查」，section_opinions 提及「心臟、肝臟、腎臟疾病之排除」，但未具體涵蓋「白蛋白、肌酸酐及白血球」等檢查項目"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查五段 section 均未見「腹部超音波檢查」之具體檢查項目建議",
+     "reason": "遍查五段 section 均未見「腹部超音波檢查」之具體檢查項目建議"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts 及 section_opinions 雖提及「清創手術」及「抗生素」，但未強調「清創手術更為重要且必須」之重要性評價",
+     "reason": "section_facts 及 section_opinions 雖提及「清創手術」及「抗生素」，但未強調「清創手術更為重要且必須」之重要性評價"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts 僅記載被告乙（醫師丙）給予藥物，但未涵蓋「疏未注意」「未送轉院治療」「未作出清創手術」等過失描述，影響對另一被告行為之完整理解",
+     "reason": "section_facts 僅記載被告乙（醫師丙）給予藥物，但未涵蓋「疏未注意」「未送轉院治療」「未作出清創手術」等過失描述，影響對另一被告行為之完整理解"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "防禦段確實未提及病患『下體疼痛』之主訴症狀，屬背景性事實遺漏",
+     "reason": "防禦段確實未提及病患『下體疼痛』之主訴症狀，屬背景性事實遺漏"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "防禦段未提及『未再開立處方』之處置細節",
+     "reason": "防禦段未提及『未再開立處方』之處置細節"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "防禦段提及『觀察』但未明確記載『收住病舍觀察』之處置",
+     "reason": "防禦段提及『觀察』但未明確記載『收住病舍觀察』之處置"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "防禦段未提及收病舍建議書之診斷欄位記載內容",
+     "reason": "防禦段未提及收病舍建議書之診斷欄位記載內容"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "防禦段未提及福耳尼埃氏壞疽症病程認定之相關辯護",
+     "reason": "防禦段未提及福耳尼埃氏壞疽症病程認定之相關辯護"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "防禦段遺漏被告甲『非泌尿專科醫師』之專業背景主張，影響過失認定理解",
+     "reason": "防禦段遺漏被告甲『非泌尿專科醫師』之專業背景主張，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "防禦段遺漏『未聽聞或醫治過該病症』之經驗抗辯，影響注意義務判斷",
+     "reason": "防禦段遺漏『未聽聞或醫治過該病症』之經驗抗辯，影響注意義務判斷"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "防禦段遺漏『無從判斷該專科病症』之能力限制主張，屬關鍵辯護要點",
+     "reason": "防禦段遺漏『無從判斷該專科病症』之能力限制主張，屬關鍵辯護要點"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "防禦段未提及20日抗生素治療之後續處置時間點",
+     "reason": "防禦段未提及20日抗生素治療之後續處置時間點"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "防禦段未提及22日送醫急救之關鍵時間節點",
+     "reason": "防禦段未提及22日送醫急救之關鍵時間節點"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "防禦段未提及27日死亡之時間點，影響病程時間軸理解",
+     "reason": "防禦段未提及27日死亡之時間點，影響病程時間軸理解"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "防禦段未提及『看診日至死亡相隔8日』之時間間隔主張，與因果關係抗辯相關",
+     "reason": "防禦段未提及『看診日至死亡相隔8日』之時間間隔主張，與因果關係抗辯相關"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "防禦段完全遺漏辯護人『難謂有相當因果關係』之核心法律主張，影響判決結論理解",
+     "reason": "防禦段完全遺漏辯護人『難謂有相當因果關係』之核心法律主張，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "疾病定義屬背景醫學知識，摘要已涵蓋鑑定結論，未提及詳細定義不影響判決理解",
+     "reason": "疾病定義屬背景醫學知識，摘要已涵蓋鑑定結論，未提及詳細定義不影響判決理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "疾病成因屬背景醫學知識，非本案關鍵爭點",
+     "reason": "疾病成因屬背景醫學知識，非本案關鍵爭點"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "疾病進展症狀屬背景醫學知識，非本案關鍵爭點",
+     "reason": "疾病進展症狀屬背景醫學知識，非本案關鍵爭點"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "併發症描述屬背景醫學知識",
+     "reason": "併發症描述屬背景醫學知識"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "產氣性細菌徵象屬背景醫學知識",
+     "reason": "產氣性細菌徵象屬背景醫學知識"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "陰囊腫脹多種原因屬背景醫學知識",
+     "reason": "陰囊腫脹多種原因屬背景醫學知識"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "關聯性為基礎醫學常識，摘要已涵蓋相關討論",
+     "reason": "關聯性為基礎醫學常識，摘要已涵蓋相關討論"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "診斷要點與醫師應注意義務相關，影響過失認定之理解",
+     "reason": "診斷要點與醫師應注意義務相關，影響過失認定之理解"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療原則涉及醫療常規認定",
+     "reason": "治療原則涉及醫療常規認定"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "同時治療原發疾病屬醫療常規",
+     "reason": "同時治療原發疾病屬醫療常規"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "具體檢查項目為程序性細節",
+     "reason": "具體檢查項目為程序性細節"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_reasoning.txt 提及「生化檢驗未含白血球指數」，但 opinions 段未提及",
+     "reason": "section_reasoning.txt 提及「生化檢驗未含白血球指數」，但 opinions 段未提及"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢驗報告日期為程序性細節",
+     "reason": "檢驗報告日期為程序性細節"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師獲知檢驗結果的時間點影響過失認定時序",
+     "reason": "醫師獲知檢驗結果的時間點影響過失認定時序"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患就診主訴為案情事實基礎",
+     "reason": "病患就診主訴為案情事實基礎"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師的診斷評估涉及醫療處置妥當性認定",
+     "reason": "醫師的診斷評估涉及醫療處置妥當性認定"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "收病舍建議書為程序性文件",
+     "reason": "收病舍建議書為程序性文件"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions.txt 已提及「病歷記載不明確，無法判定就診時之確切病況」，語義涵蓋「無法判斷病因」",
+     "reason": "section_opinions.txt 已提及「病歷記載不明確，無法判定就診時之確切病況」，語義涵蓋「無法判斷病因」"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "超音波檢查為可採行之診斷手段，影響過失認定",
+     "reason": "超音波檢查為可採行之診斷手段，影響過失認定"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "身體診察方式與醫師注意義務相關",
+     "reason": "身體診察方式與醫師注意義務相關"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "身體診察定義為背景醫學知識",
+     "reason": "身體診察定義為背景醫學知識"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "身體診察結果記錄涉及病歷完整性與舉證能力",
+     "reason": "身體診察結果記錄涉及病歷完整性與舉證能力"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "超音波檢查記錄為程序性細節",
+     "reason": "超音波檢查記錄為程序性細節"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖與 claim 92 相關，但屬補充性說明，摘要已涵蓋核心區辨要點",
+     "reason": "雖與 claim 92 相關，但屬補充性說明，摘要已涵蓋核心區辨要點"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "11月20日上午就診為次要時間節點，非判決理由核心論證",
+     "reason": "11月20日上午就診為次要時間節點，非判決理由核心論證"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "就診紀錄缺失為背景事實，reasoning section 重點在因果關係論證",
+     "reason": "就診紀錄缺失為背景事實，reasoning section 重點在因果關係論證"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病程照護紀錄缺失為背景性事實，非判決關鍵論點",
+     "reason": "病程照護紀錄缺失為背景性事實，非判決關鍵論點"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "11月20日抗生素處方為facts段細節，reasoning段未展開論述",
+     "reason": "11月20日抗生素處方為facts段細節，reasoning段未展開論述"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病程演進機制雖與因果關係相關，但摘要以「存活率分析」簡化論證",
+     "reason": "病程演進機制雖與因果關係相關，但摘要以「存活率分析」簡化論證"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "疾病進展鏈條為醫學背景知識，摘要採簡化論證",
+     "reason": "疾病進展鏈條為醫學背景知識，摘要採簡化論證"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "敗血症併發症為醫學機制細節，摘要已涵蓋「死亡結果」",
+     "reason": "敗血症併發症為醫學機制細節，摘要已涵蓋「死亡結果」"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「已盡醫療注意」認定涉及過失存否判斷，雖摘要提及「未盡應為之醫療措施」，但缺少「起初處置或可認為已盡注意」之衡平論述",
+     "reason": "「已盡醫療注意」認定涉及過失存否判斷，雖摘要提及「未盡應為之醫療措施」，但缺少「起初處置或可認為已盡注意」之衡平論述"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病歷追蹤記載缺失是因果關係無法認定的關鍵證據因素",
+     "reason": "病歷追蹤記載缺失是因果關係無法認定的關鍵證據因素"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "疾病發展多項因素已簡化為「存活率分析」，屬論證方式選擇",
+     "reason": "疾病發展多項因素已簡化為「存活率分析」，屬論證方式選擇"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「病歷資料記載不明確」為法院認定因果關係無法證明之核心依據",
+     "reason": "「病歷資料記載不明確」為法院認定因果關係無法證明之核心依據"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "台灣泌尿科醫學會函覆結論為鑑定意見重要組成，影響事實認定",
+     "reason": "台灣泌尿科醫學會函覆結論為鑑定意見重要組成，影響事實認定"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會鑑定結論為法院判斷因果關係之關鍵證據",
+     "reason": "醫審會鑑定結論為法院判斷因果關係之關鍵證據"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "假設性情境分析（若僅為單純陰囊感染）為法院否定因果關係之論證環節",
+     "reason": "假設性情境分析（若僅為單純陰囊感染）為法院否定因果關係之論證環節"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病程進展難以評估屬醫學不確定性陳述，已簡化為「存活率分析」",
+     "reason": "病程進展難以評估屬醫學不確定性陳述，已簡化為「存活率分析」"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "死亡率數據8%-67%為存活率分析之統計基礎",
+     "reason": "死亡率數據8%-67%為存活率分析之統計基礎"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "糖尿病死亡率數據為患者危險因子分析（該患者有糖尿病）",
+     "reason": "糖尿病死亡率數據為患者危險因子分析（該患者有糖尿病）"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "敗血症死亡率數據為關鍵統計依據（該患者死於敗血症）",
+     "reason": "敗血症死亡率數據為關鍵統計依據（該患者死於敗血症）"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "年齡因素雖重要，但摘要以「存活率分析」整體涵蓋",
+     "reason": "年齡因素雖重要，但摘要以「存活率分析」整體涵蓋"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "治療時機延遲為本案爭議核心，摘要雖提及未及時治療但未量化死亡率比較",
+     "reason": "治療時機延遲為本案爭議核心，摘要雖提及未及時治療但未量化死亡率比較"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "死亡率大於20%為存活率推算之關鍵閾值，與僅約15%可存活數據相關",
+     "reason": "死亡率大於20%為存活率推算之關鍵閾值，與僅約15%可存活數據相關"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "死亡率大於40%為適當治療仍難存活之論證基礎",
+     "reason": "死亡率大於40%為適當治療仍難存活之論證基礎"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "文獻引用為佐證性資料，摘要已以「存活率分析」概括",
+     "reason": "文獻引用為佐證性資料，摘要已以「存活率分析」概括"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "有限度切除死亡率為醫學文獻細節，摘要簡化論證",
+     "reason": "有限度切除死亡率為醫學文獻細節，摘要簡化論證"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "積極擴創死亡率為醫學文獻細節，摘要簡化論證",
+     "reason": "積極擴創死亡率為醫學文獻細節，摘要簡化論證"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "存活率0%-80%範圍為法院推算僅約15%可存活之統計基礎",
+     "reason": "存活率0%-80%範圍為法院推算僅約15%可存活之統計基礎"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 137,
+   "pred_total": 45,
+   "matched": 54,
+   "partial": 5,
+   "missing": 78,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8535,
+  "compression_afg_chars": 1455,
+  "compression_source_chars": 9931,
+  "gt_length_ratio": 0.3362,
+  "gt_length_afg_chars": 1455,
+  "gt_length_gt_chars": 4328,
+  "section_balance": 0.35
+ }
 }

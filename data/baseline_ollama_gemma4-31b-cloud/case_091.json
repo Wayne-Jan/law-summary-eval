@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -139,5 +140,382 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7796,
+  "fact_recall": 0.5756,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7307,
+  "quality_overall": 4.6571,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 1.0,
+  "uncited_rate": 0.023,
+  "faithfulness_combined": {
+   "score": 0.9862,
+   "citation_fidelity": 0.977,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 11,
+   "correct": 11
+  },
+  "weighted_recall": 0.8571,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 43,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，皆僅提及「病患X自行拔除鼻胃管，值班護理師通知被告甲」，未出現「次子發現」之細節。屬程序性旁枝事實，不影響主要案情理解。",
+     "reason": "遍查五個 section 原文，皆僅提及「病患X自行拔除鼻胃管，值班護理師通知被告甲」，未出現「次子發現」之細節。屬程序性旁枝事實，不影響主要案情理解。"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段原文，均未提及「轉送加護病房」之相關敘述。此為關鍵醫療處置事實，影響傷害嚴重程度之完整理解。",
+     "reason": "遍查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段原文，均未提及「轉送加護病房」之相關敘述。此為關鍵醫療處置事實，影響傷害嚴重程度之完整理解。"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，facts 段僅泛稱「雖經急救恢復心跳呼吸」，未列舉「麻醉科主治醫師」等參與急救人員之具體職稱。屬程序性細節，不影響主要事實認定。",
+     "reason": "遍查五個 section 原文，facts 段僅泛稱「雖經急救恢復心跳呼吸」，未列舉「麻醉科主治醫師」等參與急救人員之具體職稱。屬程序性細節，不影響主要事實認定。"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts section 確有「造成氣管嚴重痙攣收縮」之敘述，但遍查五段原文均未提及「甦醒球」治療細節。屬特定醫療處置敘述之遺漏，不影響主要因果關係理解。",
+     "reason": "facts section 確有「造成氣管嚴重痙攣收縮」之敘述，但遍查五段原文均未提及「甦醒球」治療細節。屬特定醫療處置敘述之遺漏，不影響主要因果關係理解。"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "facts section 有「血氧飽和度無法測得」，但未描述整個「無法回復」的過程敘述。屬時間過程描述細節，不影響主要事實認定。",
+     "reason": "facts section 有「血氧飽和度無法測得」，但未描述整個「無法回復」的過程敘述。屬時間過程描述細節，不影響主要事實認定。"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，均未出現「插入氣管內管」之相關敘述。屬急救處置細節，不影響主要案情理解。",
+     "reason": "遍查五個 section 原文，均未出現「插入氣管內管」之相關敘述。屬急救處置細節，不影響主要案情理解。"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "雖 section_facts.txt 提及『臺北醫學大學醫學系7年級學生』，但 opinions section 未提及此身分細節，且該資訊涉及實習醫師執行權限之背景理解，屬重要事實遺漏",
+     "reason": "雖 section_facts.txt 提及『臺北醫學大學醫學系7年級學生』，但 opinions section 未提及此身分細節，且該資訊涉及實習醫師執行權限之背景理解，屬重要事實遺漏"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，均未提及『大學時期醫師養成過程、基礎與臨床醫學教育及醫院見習課程』等細節，屬背景性事實遺漏",
+     "reason": "遍查五個 section 原文，均未提及『大學時期醫師養成過程、基礎與臨床醫學教育及醫院見習課程』等細節，屬背景性事實遺漏"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，均未提及『職前訓練』之要求，屬程序性背景事實遺漏",
+     "reason": "遍查五個 section 原文，均未提及『職前訓練』之要求，屬程序性背景事實遺漏"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，均未提及職前訓練之具體內容（抽血、心電圖、鼻胃管、導尿管等），屬細節性背景事實遺漏",
+     "reason": "遍查五個 section 原文，均未提及職前訓練之具體內容（抽血、心電圖、鼻胃管、導尿管等），屬細節性背景事實遺漏"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，均未提及『血管擴張劑及高劑量利尿劑治療』，雖屬醫療處置細節，但影響對病患病況及治療方案之完整理解，屬重要事實遺漏",
+     "reason": "遍查五個 section 原文，均未提及『血管擴張劑及高劑量利尿劑治療』，雖屬醫療處置細節，但影響對病患病況及治療方案之完整理解，屬重要事實遺漏"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「隔日早上查房時發現肺水腫」的具體時間點",
+     "reason": "判決理由未提及「隔日早上查房時發現肺水腫」的具體時間點"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及肺水腫「左心衰竭或水喝太多」的具體病因分析",
+     "reason": "判決理由未提及肺水腫「左心衰竭或水喝太多」的具體病因分析"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及使用利尿劑治療肺水腫的情節",
+     "reason": "判決理由未提及使用利尿劑治療肺水腫的情節"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「拿下氧氣面罩進食影響血氧濃度」的具體風險說明",
+     "reason": "判決理由未提及「拿下氧氣面罩進食影響血氧濃度」的具體風險說明"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由提及「不適合以正常方式進食」，但未明確說明「因無法拿下氧氣面罩而須插鼻胃管」的因果關係",
+     "reason": "判決理由提及「不適合以正常方式進食」，但未明確說明「因無法拿下氧氣面罩而須插鼻胃管」的因果關係"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未明確說明鼻胃管「餵食和餵藥」的具體用途",
+     "reason": "判決理由未明確說明鼻胃管「餵食和餵藥」的具體用途"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「病患口鼻處有許多分泌物不斷湧出」的症狀描述",
+     "reason": "判決理由未提及「病患口鼻處有許多分泌物不斷湧出」的症狀描述"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「鼻胃管接上引流袋以避免吸入性肺炎」的具體指示",
+     "reason": "判決理由未提及「鼻胃管接上引流袋以避免吸入性肺炎」的具體指示"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及證人W2在下午已知病患呼吸狀況不好的具體情節",
+     "reason": "判決理由未提及證人W2在下午已知病患呼吸狀況不好的具體情節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及證人W2急救後翻閱病歷才知道氧氣流量很大的情節",
+     "reason": "判決理由未提及證人W2急救後翻閱病歷才知道氧氣流量很大的情節"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「病歷記載病患除氧氣流量大以外其他生命徵象正常」的細節",
+     "reason": "判決理由未提及「病歷記載病患除氧氣流量大以外其他生命徵象正常」的細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由雖提及病況評估，但未明確陳述「生命徵象無不適合放置鼻胃管原因」",
+     "reason": "判決理由雖提及病況評估，但未明確陳述「生命徵象無不適合放置鼻胃管原因」"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「血氧濃度達98%」的具體數值及「因病患戴高濃度氧氣罩」的條件",
+     "reason": "判決理由未提及「血氧濃度達98%」的具體數值及「因病患戴高濃度氧氣罩」的條件"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及證人W2認為病患「還是需要戴高濃度氧氣面罩」的具體意見",
+     "reason": "判決理由未提及證人W2認為病患「還是需要戴高濃度氧氣面罩」的具體意見"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及證人W1所述「置放鼻胃管係因病患須進食服藥」的說明",
+     "reason": "判決理由未提及證人W1所述「置放鼻胃管係因病患須進食服藥」的說明"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及證人W2表示「會將鼻胃管置放回去」的具體陳述",
+     "reason": "判決理由未提及證人W2表示「會將鼻胃管置放回去」的具體陳述"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由雖提及高濃度氧氣面罩，但未明確提及「101年1月11日需要輸入大量氧氣」的具體時間點",
+     "reason": "判決理由雖提及高濃度氧氣面罩，但未明確提及「101年1月11日需要輸入大量氧氣」的具體時間點"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未明確提及「置放前生命徵象無不適合放置鼻胃管之情況」的肯定性陳述",
+     "reason": "判決理由未明確提及「置放前生命徵象無不適合放置鼻胃管之情況」的肯定性陳述"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "判決理由(CH_10)僅簡述實習醫師可執行鼻胃管置放，未明確提及「醫審會鑑定意見第一點及W醫院實習醫學生臨床職務討論會議」之完整依據",
+     "reason": "判決理由(CH_10)僅簡述實習醫師可執行鼻胃管置放，未明確提及「醫審會鑑定意見第一點及W醫院實習醫學生臨床職務討論會議」之完整依據"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「醫師職務工作單將NG放置列為工作項目」的具體文件內容",
+     "reason": "判決理由未提及「醫師職務工作單將NG放置列為工作項目」的具體文件內容"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由提及「事後再補開醫囑」，但未提及證人W1證稱「需要另外再開醫囑」的具體內容",
+     "reason": "判決理由提及「事後再補開醫囑」，但未提及證人W1證稱「需要另外再開醫囑」的具體內容"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由雖提及實習醫師可獨立執行，但未明確引用「證人W2、H」的證稱內容",
+     "reason": "判決理由雖提及實習醫師可獨立執行，但未明確引用「證人W2、H」的證稱內容"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「證人所述與W醫院會議紀錄相符」的結論性陳述",
+     "reason": "判決理由未提及「證人所述與W醫院會議紀錄相符」的結論性陳述"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由雖採信相關證據，但未明確提及「證人所述較符合實際情況」的比較性結論",
+     "reason": "判決理由雖採信相關證據，但未明確提及「證人所述較符合實際情況」的比較性結論"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「中國醫藥大學附設醫院意見函」關於醫囑持續性質的說明",
+     "reason": "判決理由未提及「中國醫藥大學附設醫院意見函」關於醫囑持續性質的說明"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由雖提及心臟功能不佳，但未明確陳述「心肺功能不佳導致給氧效果不好」的因果關係",
+     "reason": "判決理由雖提及心臟功能不佳，但未明確陳述「心肺功能不佳導致給氧效果不好」的因果關係"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由提及「僅屬主治醫師之推測」，但未詳細說明證人W1對「氣管痙攣收縮」的具體推測內容",
+     "reason": "判決理由提及「僅屬主治醫師之推測」，但未詳細說明證人W1對「氣管痙攣收縮」的具體推測內容"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及證人W1推測的具體依據「接氣管內管前對氧氣治療毫無反應」",
+     "reason": "判決理由未提及證人W1推測的具體依據「接氣管內管前對氧氣治療毫無反應」"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由雖提及心肺功能相關內容，但未明確陳述「心肺功能不佳導致給氧效果不好」的因果關係",
+     "reason": "判決理由雖提及心肺功能相關內容，但未明確陳述「心肺功能不佳導致給氧效果不好」的因果關係"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由提及「肺水腫及心臟功能不佳」，但未提及「慢性腎衰竭急性惡化」及具體住院日期",
+     "reason": "判決理由提及「肺水腫及心臟功能不佳」，但未提及「慢性腎衰竭急性惡化」及具體住院日期"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未提及「肺水腫與慢性腎衰竭共同原因可能是心臟問題」的綜合病因分析",
+     "reason": "判決理由未提及「肺水腫與慢性腎衰竭共同原因可能是心臟問題」的綜合病因分析"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未明確提及「醫審會鑑定意見第二點」關於心臟功能不佳與肺水腫的具體內容",
+     "reason": "判決理由未明確提及「醫審會鑑定意見第二點」關於心臟功能不佳與肺水腫的具體內容"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由雖提及心肺功能相關內容，但未明確陳述「心肺功能不佳導致給氧效果不好」的因果關係",
+     "reason": "判決理由雖提及心肺功能相關內容，但未明確陳述「心肺功能不佳導致給氧效果不好」的因果關係"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由雖有類似論點，但未明確提及「急救過程中對氧氣治療無良好反應」的具體情境",
+     "reason": "判決理由雖有類似論點，但未明確提及「急救過程中對氧氣治療無良好反應」的具體情境"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由提及「不適合以正常方式進食」及「鼻胃管」，但未明確包含「胃部減壓」之具體目的",
+     "reason": "判決理由提及「不適合以正常方式進食」及「鼻胃管」，但未明確包含「胃部減壓」之具體目的"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "判決理由未明確提及「被告置放鼻胃管動作正確」的肯定性結論",
+     "reason": "判決理由未明確提及「被告置放鼻胃管動作正確」的肯定性結論"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 119,
+   "pred_total": 44,
+   "matched": 65,
+   "partial": 7,
+   "missing": 47,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8726,
+  "compression_afg_chars": 1389,
+  "compression_source_chars": 10904,
+  "gt_length_ratio": 0.3813,
+  "gt_length_afg_chars": 1389,
+  "gt_length_gt_chars": 3643,
+  "section_balance": 0.3455
+ }
 }

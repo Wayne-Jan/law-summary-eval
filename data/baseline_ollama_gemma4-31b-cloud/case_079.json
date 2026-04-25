@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -145,5 +146,109 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8626,
+  "fact_recall": 0.7986,
+  "fact_precision": 1.0,
+  "fact_f1": 0.888,
+  "quality_overall": 4.3429,
+  "checklist_pass_rate": 0.9185,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9893,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.733,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 11
+  },
+  "weighted_recall": 0.9398,
+  "missing_severity": {
+   "critical": 1,
+   "important": 3,
+   "minor": 4,
+   "details": [
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "全文檢查後確認無明確『2天』時間跨度描述，雖可從日期推算，但非明確陳述，屬時間細節不影響核心案情",
+     "reason": "全文檢查後確認無明確『2天』時間跨度描述，雖可從日期推算，但非明確陳述，屬時間細節不影響核心案情"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 原文均未提及第1週藥包中6種藥物或食品之明細（HCA、Strocain、EPO、SSim、泰胃美、維他命B1），屬辯方主張之藥物細節，影響案情完整理解",
+     "reason": "五個 section 原文均未提及第1週藥包中6種藥物或食品之明細（HCA、Strocain、EPO、SSim、泰胃美、維他命B1），屬辯方主張之藥物細節，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及25公克代餐及Ducolax瀉劑，屬次要劑量細節",
+     "reason": "五個 section 原文均未提及25公克代餐及Ducolax瀉劑，屬次要劑量細節"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及第2週代餐改為37.5公克，屬次要週期性劑量變化",
+     "reason": "五個 section 原文均未提及第2週代餐改為37.5公克，屬次要週期性劑量變化"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「服用PPA可能造成腦中風出血」，此為辯方主張之醫療效果要點，影響辯護要旨理解",
+     "reason": "五個 section 原文均未提及「服用PPA可能造成腦中風出血」，此為辯方主張之醫療效果要點，影響辯護要旨理解"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「被告未接獲甲詢問藥品之電話」，屬程序性背景事實",
+     "reason": "五個 section 原文均未提及「被告未接獲甲詢問藥品之電話」，屬程序性背景事實"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經掃描全部5個section原文，均未發現「內臟中度腐敗」「瘀血」「腐敗類似實質萎縮」等檢體狀態描述，確實遺漏此鑑定細節",
+     "reason": "經掃描全部5個section原文，均未發現「內臟中度腐敗」「瘀血」「腐敗類似實質萎縮」等檢體狀態描述，確實遺漏此鑑定細節"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "全部5個section原文均未提及「併用來源不明之毒品」與「毒物產生交互反應」之組合論點。reasoning section僅提到「施用安非他命、古柯鹼等毒品」，未完整覆蓋GT claim之特定表述，屬影響因果關係認定之關鍵遺漏。",
+     "reason": "全部5個section原文均未提及「併用來源不明之毒品」與「毒物產生交互反應」之組合論點。reasoning section僅提到「施用安非他命、古柯鹼等毒品」，未完整覆蓋GT claim之特定表述，屬影響因果關係認定之關鍵遺漏。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 72,
+   "pred_total": 49,
+   "matched": 51,
+   "partial": 13,
+   "missing": 8,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9083,
+  "compression_afg_chars": 1706,
+  "compression_source_chars": 18597,
+  "gt_length_ratio": 0.6843,
+  "gt_length_afg_chars": 1706,
+  "gt_length_gt_chars": 2493,
+  "section_balance": 0.7727
+ }
 }

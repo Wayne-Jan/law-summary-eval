@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -139,5 +140,186 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8538,
+  "fact_recall": 0.7188,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8364,
+  "quality_overall": 4.6286,
+  "checklist_pass_rate": 0.984,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9875,
+  "uncited_rate": 0.164,
+  "faithfulness_combined": {
+   "score": 0.9016,
+   "citation_fidelity": 0.836,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.938,
+  "numerical_detail": {
+   "total_numerical": 16,
+   "correct": 15
+  },
+  "weighted_recall": 0.825,
+  "missing_severity": {
+   "critical": 7,
+   "important": 9,
+   "minor": 3,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「返回門診」於section_05_reasoning.txt（證人B證詞）有提及，但「戒菸」於全部5個section原文中皆未出現，確認為遺漏",
+     "reason": "「返回門診」於section_05_reasoning.txt（證人B證詞）有提及，但「戒菸」於全部5個section原文中皆未出現，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「無不能注意之情形」此法律認定於全部5個section原文中皆未出現，確認為遺漏",
+     "reason": "「無不能注意之情形」此法律認定於全部5個section原文中皆未出現，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "病患至B醫院就診之時間點為案情重要時間軸，僅出現在section_01_facts.txt，section_02_defense.txt未提及，維持missing",
+     "reason": "病患至B醫院就診之時間點為案情重要時間軸，僅出現在section_01_facts.txt，section_02_defense.txt未提及，維持missing"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "主動脈剝離診斷為本案關鍵醫療事實，直接影響過失認定，section_02_defense.txt未提及，維持missing",
+     "reason": "主動脈剝離診斷為本案關鍵醫療事實，直接影響過失認定，section_02_defense.txt未提及，維持missing"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "主動脈剝離不會立即死亡為辯護論點之醫學基礎，section_02_defense.txt未明確提及，維持missing",
+     "reason": "主動脈剝離不會立即死亡為辯護論點之醫學基礎，section_02_defense.txt未明確提及，維持missing"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "診斷至手術之10小時間隔為辯護關鍵時間論證，section_02_defense.txt未提及，維持missing",
+     "reason": "診斷至手術之10小時間隔為辯護關鍵時間論證，section_02_defense.txt未提及，維持missing"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "檢查符合主訴及急救原則為被告醫療常規抗辯之核心，雖section_05_reasoning.txt有所涵蓋，但section_02_defense.txt未明確主張，維持missing",
+     "reason": "檢查符合主訴及急救原則為被告醫療常規抗辯之核心，雖section_05_reasoning.txt有所涵蓋，但section_02_defense.txt未明確主張，維持missing"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "血壓升高、脈搏加速之異常狀況為對比論證關鍵，section_02_defense.txt未提及，維持missing",
+     "reason": "血壓升高、脈搏加速之異常狀況為對比論證關鍵，section_02_defense.txt未提及，維持missing"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "G醫院醫師因異常始作電腦斷層為類比論證核心，section_02_defense.txt未提及，維持missing",
+     "reason": "G醫院醫師因異常始作電腦斷層為類比論證核心，section_02_defense.txt未提及，維持missing"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "離開K醫院至手術經過十多小時為辯護時間論證，section_02_defense.txt未提及，維持missing",
+     "reason": "離開K醫院至手術經過十多小時為辯護時間論證，section_02_defense.txt未提及，維持missing"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「係G醫院手術失敗」為被告實質抗辯主張，將死亡歸因於他院，section_02_defense.txt未明確提及，維持missing",
+     "reason": "「係G醫院手術失敗」為被告實質抗辯主張，將死亡歸因於他院，section_02_defense.txt未明確提及，維持missing"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "離院服用藥物詳細種類屬次要醫療細節，不影響案情核心理解",
+     "reason": "離院服用藥物詳細種類屬次要醫療細節，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「病人若仍有胸痛症狀，須再進一步安排電腦斷層」屬鑑定意見中的重要治療建議，影響醫療處置理解",
+     "reason": "「病人若仍有胸痛症狀，須再進一步安排電腦斷層」屬鑑定意見中的重要治療建議，影響醫療處置理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "離院時胸痛是否改善之病歷記載限制屬次要細節",
+     "reason": "離院時胸痛是否改善之病歷記載限制屬次要細節"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "K醫院就診時未診斷為主動脈剝離屬關鍵診斷事實，影響過失認定與因果關係判斷",
+     "reason": "K醫院就診時未診斷為主動脈剝離屬關鍵診斷事實，影響過失認定與因果關係判斷"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "K醫院至G醫院期間未發生血管破裂屬關鍵病程事實，直接影響因果關係判定",
+     "reason": "K醫院至G醫院期間未發生血管破裂屬關鍵病程事實，直接影響因果關係判定"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "G醫院確診主動脈剝離並手術屬關鍵事實，影響完整案情理解",
+     "reason": "G醫院確診主動脈剝離並手術屬關鍵事實，影響完整案情理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "術後因多重器官衰竭死亡屬關鍵死因事實，影響判決結論理解",
+     "reason": "術後因多重器官衰竭死亡屬關鍵死因事實，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "reasoning section 未明確提及「97年4月7日凌晨3時許」前往汐止分院的具體時間點，此為時序細節遺漏，屬次要事實",
+     "reason": "reasoning section 未明確提及「97年4月7日凌晨3時許」前往汐止分院的具體時間點，此為時序細節遺漏，屬次要事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 80,
+   "pred_total": 55,
+   "matched": 54,
+   "partial": 7,
+   "missing": 19,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8395,
+  "compression_afg_chars": 1617,
+  "compression_source_chars": 10076,
+  "gt_length_ratio": 0.5844,
+  "gt_length_afg_chars": 1617,
+  "gt_length_gt_chars": 2767,
+  "section_balance": 0.4167
+ }
 }

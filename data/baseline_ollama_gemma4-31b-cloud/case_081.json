@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -173,5 +174,837 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6531,
+  "fact_recall": 0.4821,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6505,
+  "quality_overall": 4.4643,
+  "checklist_pass_rate": 0.9402,
+  "citation_accuracy": 0.9697,
+  "citation_support_score": 0.9543,
+  "uncited_rate": 0.016,
+  "faithfulness_combined": {
+   "score": 0.9725,
+   "citation_fidelity": 0.9542,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 21,
+   "correct": 21
+  },
+  "weighted_recall": 0.749,
+  "missing_severity": {
+   "critical": 14,
+   "important": 49,
+   "minor": 49,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "組織架構背景資訊，不影響案情核心理解",
+     "reason": "組織架構背景資訊，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "健檢中心服務目的說明，屬背景性資訊",
+     "reason": "健檢中心服務目的說明，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告甲業務範圍雖重要，但摘要已提及放射線科主任醫師身分",
+     "reason": "被告甲業務範圍雖重要，但摘要已提及放射線科主任醫師身分"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "Inderal處方權為案件關鍵事實，摘要未明確提及",
+     "reason": "Inderal處方權為案件關鍵事實，摘要未明確提及"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告丙身分資訊，但摘要已有護理人員角色描述",
+     "reason": "被告丙身分資訊，但摘要已有護理人員角色描述"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬商討過程細節，非核心案情",
+     "reason": "家屬商討過程細節，非核心案情"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "費用金額為程序性事實",
+     "reason": "費用金額為程序性事實"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "圈選「氣喘發作」之具體情節，屬細節性資訊",
+     "reason": "圈選「氣喘發作」之具體情節，屬細節性資訊"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "自訴人對專員D叮嚀內容涉及關鍵病史告知",
+     "reason": "自訴人對專員D叮嚀內容涉及關鍵病史告知"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "專員D回覆內容，屬對話細節",
+     "reason": "專員D回覆內容，屬對話細節"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "顯影劑同意書簽署程序",
+     "reason": "顯影劑同意書簽署程序"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "病患勾選氣喘病史為重要醫療紀錄",
+     "reason": "病患勾選氣喘病史為重要醫療紀錄"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "進入檢查室細節",
+     "reason": "進入檢查室細節"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "8時55分生命徵象數值",
+     "reason": "8時55分生命徵象數值"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "護理人員判斷心跳偏高之過失認定依據",
+     "reason": "護理人員判斷心跳偏高之過失認定依據"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "護理人員知悉異常未處置之過失認定，影響刑責判斷",
+     "reason": "護理人員知悉異常未處置之過失認定，影響刑責判斷"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "因心跳過快改作MRI之檢查流程變更",
+     "reason": "因心跳過快改作MRI之檢查流程變更"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "護理人員離開協助另一受檢者之細節",
+     "reason": "護理人員離開協助另一受檢者之細節"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "護理人員應知悉血氧下降未處置之過失認定，影響刑責",
+     "reason": "護理人員應知悉血氧下降未處置之過失認定，影響刑責"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "9時47分血氧數值",
+     "reason": "9時47分血氧數值"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "送返家時間及家屬同意細節",
+     "reason": "送返家時間及家屬同意細節"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "被告乙刑責指控為案件核心",
+     "reason": "被告乙刑責指控為案件核心"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "過敏試驗驗證之醫療常規",
+     "reason": "過敏試驗驗證之醫療常規"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "Inderal藥理分類與適應症為專業判斷依據",
+     "reason": "Inderal藥理分類與適應症為專業判斷依據"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "Inderal禁忌症（氣喘患者禁用）為案件核心事實",
+     "reason": "Inderal禁忌症（氣喘患者禁用）為案件核心事實"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "醫師應具備之專業常識",
+     "reason": "醫師應具備之專業常識"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "處方開立來源之責任歸屬",
+     "reason": "處方開立來源之責任歸屬"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "被告甲刑責指控為案件核心",
+     "reason": "被告甲刑責指控為案件核心"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "被告己（陳大中）刑責指控為案件核心",
+     "reason": "被告己（陳大中）刑責指控為案件核心"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "被告丁管理疏失之具體指控",
+     "reason": "被告丁管理疏失之具體指控"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "被告丁對被告甲行為之督導責任",
+     "reason": "被告丁對被告甲行為之督導責任"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "被告丁對被告乙行為之督導責任",
+     "reason": "被告丁對被告乙行為之督導責任"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "被告丁因果關係指控",
+     "reason": "被告丁因果關係指控"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "被告丁刑責指控為案件核心",
+     "reason": "被告丁刑責指控為案件核心"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告丙加護病房主任身分與pred claim 4衝突",
+     "reason": "被告丙加護病房主任身分與pred claim 4衝突"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告丙對醫療疏失之認知情節",
+     "reason": "被告丙對醫療疏失之認知情節"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "死亡原因具體描述（藥物過敏、氣喘急性發作、心肺衰竭）",
+     "reason": "死亡原因具體描述（藥物過敏、氣喘急性發作、心肺衰竭）"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "死亡種類歸類",
+     "reason": "死亡種類歸類"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「保險金請求權」損害之情節未在任何section原文中出現，屬程序性附帶事實",
+     "reason": "「保險金請求權」損害之情節未在任何section原文中出現，屬程序性附帶事實"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「被告丙業務登載不實罪責」之指控：section_facts記載被告乙○○有登載不實指控，但被告丙之罪責指控未明確涵蓋",
+     "reason": "「被告丙業務登載不實罪責」之指控：section_facts記載被告乙○○有登載不實指控，但被告丙之罪責指控未明確涵蓋"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「被告甲、乙、丙、丁、戊及己涉犯刑法第276條第2項之業務過失致死罪嫌」之統合陳述不存在於任何section，影響全案刑事罪名理解",
+     "reason": "「被告甲、乙、丙、丁、戊及己涉犯刑法第276條第2項之業務過失致死罪嫌」之統合陳述不存在於任何section，影響全案刑事罪名理解"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「被告丙涉犯刑法第215條之業務登載不實罪嫌」：section_facts僅提及被告乙○○有登載不實指控，被告丙之第215條罪嫌未出現",
+     "reason": "「被告丙涉犯刑法第215條之業務登載不實罪嫌」：section_facts僅提及被告乙○○有登載不實指控，被告丙之第215條罪嫌未出現"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "雖有個別被告抗辯，但「均否認犯罪」之總結性陳述未明確出現，屬程序性事實",
+     "reason": "雖有個別被告抗辯，但「均否認犯罪」之總結性陳述未明確出現，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫院配置細節，不影響案情理解",
+     "reason": "醫院配置細節，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告戊個人認知細節，不影響案情理解",
+     "reason": "被告戊個人認知細節，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "檢查後流程細節，不影響案情理解",
+     "reason": "檢查後流程細節，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫院部門配置背景資訊",
+     "reason": "醫院部門配置背景資訊"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "人員調度細節，不影響案情理解",
+     "reason": "人員調度細節，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "具體生理數值細節",
+     "reason": "具體生理數值細節"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "檢查類型細節，summary 僅提及「以利檢查」未指明64切CT",
+     "reason": "檢查類型細節，summary 僅提及「以利檢查」未指明64切CT"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告乙角色爭議：GT claim 指乙依常規決定給藥，但 summary 將給藥行為歸於丙○○，涉及不同被告之責任歸屬",
+     "reason": "被告乙角色爭議：GT claim 指乙依常規決定給藥，但 summary 將給藥行為歸於丙○○，涉及不同被告之責任歸屬"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "檢查過程細節描述",
+     "reason": "檢查過程細節描述"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "處置流程細節",
+     "reason": "處置流程細節"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫療處置細節",
+     "reason": "醫療處置細節"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "監測行為細節",
+     "reason": "監測行為細節"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "病患主訴細節，summary 僅記載「發現呼吸困難」",
+     "reason": "病患主訴細節，summary 僅記載「發現呼吸困難」"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "行為人歸屬爭議：GT claim 指乙給予氧氣面罩，但 summary 將此行為歸於丙○○，涉及不同被告責任",
+     "reason": "行為人歸屬爭議：GT claim 指乙給予氧氣面罩，但 summary 將此行為歸於丙○○，涉及不同被告責任"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "行政流程細節",
+     "reason": "行政流程細節"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "噴劑使用次數及效果細節",
+     "reason": "噴劑使用次數及效果細節"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "具體生理數值範圍",
+     "reason": "具體生理數值範圍"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "日期爭議：GT claim 稱98年9月18日，但 section_facts 明確記載97年9月18日，summary 亦記載97年，年份差異影響時序理解",
+     "reason": "日期爭議：GT claim 稱98年9月18日，但 section_facts 明確記載97年9月18日，summary 亦記載97年，年份差異影響時序理解"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "行政流程日期細節",
+     "reason": "行政流程日期細節"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "行政流程日期細節",
+     "reason": "行政流程日期細節"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "法律抗辯主張「健檢不是看診」涉及醫療行為定性，影響過失要件判斷",
+     "reason": "法律抗辯主張「健檢不是看診」涉及醫療行為定性，影響過失要件判斷"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "服藥判斷細節",
+     "reason": "服藥判斷細節"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "被告甲行蹤細節",
+     "reason": "被告甲行蹤細節"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "法律抗辯主張「有問題應請當班醫師處理」涉及責任歸屬與醫療分工",
+     "reason": "法律抗辯主張「有問題應請當班醫師處理」涉及責任歸屬與醫療分工"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫療專業判斷標準細節",
+     "reason": "醫療專業判斷標準細節"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "醫療專業判斷標準細節",
+     "reason": "醫療專業判斷標準細節"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性引用文字，缺少具體鑑定書編號，不影響案情理解",
+     "reason": "程序性引用文字，缺少具體鑑定書編號，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及PRN醫囑使用方式的具體說明（如acetaminophen範例），影響醫囑操作機制的完整理解",
+     "reason": "遍查5個section原文均未提及PRN醫囑使用方式的具體說明（如acetaminophen範例），影響醫囑操作機制的完整理解"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及PRN醫囑讓護士有裁量權的概念，影響醫療責任歸屬的理解",
+     "reason": "遍查5個section原文均未提及PRN醫囑讓護士有裁量權的概念，影響醫療責任歸屬的理解"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及PRN醫囑開立前提（應無使用禁忌症），影響醫囑開立標準的理解",
+     "reason": "遍查5個section原文均未提及PRN醫囑開立前提（應無使用禁忌症），影響醫囑開立標準的理解"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及PRN醫囑不當開立的問題，影響醫囑適當性判斷的理解",
+     "reason": "遍查5個section原文均未提及PRN醫囑不當開立的問題，影響醫囑適當性判斷的理解"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及預設醫囑開立時應詳問病史的義務，影響醫師注意義務的完整理解",
+     "reason": "遍查5個section原文均未提及預設醫囑開立時應詳問病史的義務，影響醫師注意義務的完整理解"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性引用文字，無具體實質內容",
+     "reason": "程序性引用文字，無具體實質內容"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及急診室10時7分的具體生命徵象數據（血壓140/59、心跳65等），影響病情嚴重程度判斷的完整性",
+     "reason": "遍查5個section原文均未提及急診室10時7分的具體生命徵象數據（血壓140/59、心跳65等），影響病情嚴重程度判斷的完整性"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文雖提及插管時間但未強調「未立即」的處置時機判斷，影響急救時機評估的完整性",
+     "reason": "遍查5個section原文雖提及插管時間但未強調「未立即」的處置時機判斷，影響急救時機評估的完整性"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文未提及支氣管擴張劑治療，僅提及氧氣面罩，影響急救處置完整性的理解",
+     "reason": "遍查5個section原文未提及支氣管擴張劑治療，僅提及氧氣面罩，影響急救處置完整性的理解"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及10時35分SaO2升為86%的具體數值變化，影響治療效果評估的完整性",
+     "reason": "遍查5個section原文均未提及10時35分SaO2升為86%的具體數值變化，影響治療效果評估的完整性"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文雖有血氧改善但未明確提及「非經插管仍有相當之改善」的評語，影響治療有效性判斷的理解",
+     "reason": "遍查5個section原文雖有血氧改善但未明確提及「非經插管仍有相當之改善」的評語，影響治療有效性判斷的理解"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文雖提及插管決定但未提及「抽血檢驗報告」作為評估依據，影響決策過程完整性的理解",
+     "reason": "遍查5個section原文雖提及插管決定但未提及「抽血檢驗報告」作為評估依據，影響決策過程完整性的理解"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性引用文字，無具體實質內容",
+     "reason": "程序性引用文字，無具體實質內容"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及2005 ACLS準則及11項突發狀況原因列舉，影響專業醫學標準判斷的完整性",
+     "reason": "遍查5個section原文均未提及2005 ACLS準則及11項突發狀況原因列舉，影響專業醫學標準判斷的完整性"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文均未提及支氣管痙攣與氣喘發作關係的醫學理論說明，影響病因分析的理解",
+     "reason": "遍查5個section原文均未提及支氣管痙攣與氣喘發作關係的醫學理論說明，影響病因分析的理解"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文雖有治療結果描述但未提及「若經適當換氣應為有效治療」的預期效果說明，影響醫療處置標準的理解",
+     "reason": "遍查5個section原文雖有治療結果描述但未提及「若經適當換氣應為有效治療」的預期效果說明，影響醫療處置標準的理解"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查5個section原文雖有提及血氧提升至100%但未提及起始值67%及時間點10時57分，影響治療過程完整性的理解",
+     "reason": "遍查5個section原文雖有提及血氧提升至100%但未提及起始值67%及時間點10時57分，影響治療過程完整性的理解"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "雖section_reasoning.txt有「在短短幾分鐘內急劇變化至死亡」之文句，但遍查claims_{section}.json中無對應GT claim確切匹配此描述，無法確認其為matched",
+     "reason": "雖section_reasoning.txt有「在短短幾分鐘內急劇變化至死亡」之文句，但遍查claims_{section}.json中無對應GT claim確切匹配此描述，無法確認其為matched"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性引用文字，無具體實質內容",
+     "reason": "程序性引用文字，無具體實質內容"
+    },
+    {
+     "gt_claim_id": 180,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 原文雖提及醫囑單及被告甲開立處方，但未明確記載「醫囑單上確實記載10mg Inderal 1粒MANADR並由被告甲具名」之細節",
+     "reason": "各 section 原文雖提及醫囑單及被告甲開立處方，但未明確記載「醫囑單上確實記載10mg Inderal 1粒MANADR並由被告甲具名」之細節"
+    },
+    {
+     "gt_claim_id": 182,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense.txt 雖提及「評估表註記氣喘控制良好」，但未完整涵蓋「註記有氣喘、使用藥物控制、控制情形良好」三個要素",
+     "reason": "section_defense.txt 雖提及「評估表註記氣喘控制良好」，但未完整涵蓋「註記有氣喘、使用藥物控制、控制情形良好」三個要素"
+    },
+    {
+     "gt_claim_id": 184,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_facts.txt 雖提及給藥行為，但未明確記載「依常規按醫囑單上的記載」之具體過程",
+     "reason": "section_facts.txt 雖提及給藥行為，但未明確記載「依常規按醫囑單上的記載」之具體過程"
+    },
+    {
+     "gt_claim_id": 187,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_reasoning.txt 雖提及違反醫療常規，但未明確記載「對於Inderal會誘發氣喘發作一事不能推諉不知」之注意義務法律判斷",
+     "reason": "section_reasoning.txt 雖提及違反醫療常規，但未明確記載「對於Inderal會誘發氣喘發作一事不能推諉不知」之注意義務法律判斷"
+    },
+    {
+     "gt_claim_id": 188,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense.txt 雖提及「依檢查常規」辯護，但未完整記載「PRN ORDER」「不需要再照會醫師」之具體法律辯護要點",
+     "reason": "section_defense.txt 雖提及「依檢查常規」辯護，但未完整記載「PRN ORDER」「不需要再照會醫師」之具體法律辯護要點"
+    },
+    {
+     "gt_claim_id": 189,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 原文均未記載護理士公會函覆之具體內容及文號",
+     "reason": "各 section 原文均未記載護理士公會函覆之具體內容及文號"
+    },
+    {
+     "gt_claim_id": 190,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 原文均未記載PRN醫囑之臨床實例說明（普拿疼退燒使用）",
+     "reason": "各 section 原文均未記載PRN醫囑之臨床實例說明（普拿疼退燒使用）"
+    },
+    {
+     "gt_claim_id": 191,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 原文均未詳細說明PRN醫囑「應是此醫囑係可被執行，而無使用之禁忌症」之前提條件",
+     "reason": "各 section 原文均未詳細說明PRN醫囑「應是此醫囑係可被執行，而無使用之禁忌症」之前提條件"
+    },
+    {
+     "gt_claim_id": 192,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 原文均未提及「倘此藥在該病人是不該使用之情況，醫師卻開出PRN醫囑，並不恰當」之法律判斷",
+     "reason": "各 section 原文均未提及「倘此藥在該病人是不該使用之情況，醫師卻開出PRN醫囑，並不恰當」之法律判斷"
+    },
+    {
+     "gt_claim_id": 193,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 原文均未詳述醫師開立預設醫囑應「詳問病人之病史，並隨病人之狀況調整」之義務",
+     "reason": "各 section 原文均未詳述醫師開立預設醫囑應「詳問病人之病史，並隨病人之狀況調整」之義務"
+    },
+    {
+     "gt_claim_id": 195,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense.txt 雖提及「制式格式且通用於所有受檢人」，但未完整涵蓋「醫院跨科會議、參酌其他醫院作法、整合各醫療專科決議」之關鍵細節",
+     "reason": "section_defense.txt 雖提及「制式格式且通用於所有受檢人」，但未完整涵蓋「醫院跨科會議、參酌其他醫院作法、整合各醫療專科決議」之關鍵細節"
+    },
+    {
+     "gt_claim_id": 196,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning.txt 雖提及「未親自問診」，但未明確結合「放射科主治醫師」之專業背景說明注意義務",
+     "reason": "section_reasoning.txt 雖提及「未親自問診」，但未明確結合「放射科主治醫師」之專業背景說明注意義務"
+    },
+    {
+     "gt_claim_id": 198,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_defense.txt 雖提及「伊僅是掛名」，但未明確記載「在處方箋上具名」之事實與責任關聯",
+     "reason": "section_defense.txt 雖提及「伊僅是掛名」，但未明確記載「在處方箋上具名」之事實與責任關聯"
+    },
+    {
+     "gt_claim_id": 202,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 原文均未提及8時55分心跳值92次之具體檢測數據",
+     "reason": "各 section 原文均未提及8時55分心跳值92次之具體檢測數據"
+    },
+    {
+     "gt_claim_id": 208,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_facts.txt 雖提及9時42分出現呼吸不順暢，但未記載「血壓140/80、心跳94次/分、SaO2：90%」之詳細生命徵象數據",
+     "reason": "section_facts.txt 雖提及9時42分出現呼吸不順暢，但未記載「血壓140/80、心跳94次/分、SaO2：90%」之詳細生命徵象數據"
+    },
+    {
+     "gt_claim_id": 209,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "各 section 原文均未提及9時47分SaO2仍維持90%之具體數值",
+     "reason": "各 section 原文均未提及9時47分SaO2仍維持90%之具體數值"
+    },
+    {
+     "gt_claim_id": 215,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_facts.txt 雖提及「被告陳大中未及時插管延誤急救」之指控，但未明確記載「造成病情延誤」之主張",
+     "reason": "section_facts.txt 雖提及「被告陳大中未及時插管延誤急救」之指控，但未明確記載「造成病情延誤」之主張"
+    },
+    {
+     "gt_claim_id": 216,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_facts.txt 雖提及「10時7分病患X到達急診室」，但未記載「血壓140/59、心跳65、呼吸速率30、SaO2：67%」之詳細生命徵象",
+     "reason": "section_facts.txt 雖提及「10時7分病患X到達急診室」，但未記載「血壓140/59、心跳65、呼吸速率30、SaO2：67%」之詳細生命徵象"
+    },
+    {
+     "gt_claim_id": 225,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_reasoning.txt 雖提及「短短幾分鐘內急劇變化至死亡」，但未明確記載「10時57分至11時」之精確時間範圍",
+     "reason": "section_reasoning.txt 雖提及「短短幾分鐘內急劇變化至死亡」，但未明確記載「10時57分至11時」之精確時間範圍"
+    },
+    {
+     "gt_claim_id": 226,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 原文均未記載ACLS準則之11項突發狀況原因列表",
+     "reason": "各 section 原文均未記載ACLS準則之11項突發狀況原因列表"
+    },
+    {
+     "gt_claim_id": 227,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 原文均未記載支氣管痙攣氣喘治療之詳細醫學原理說明",
+     "reason": "各 section 原文均未記載支氣管痙攣氣喘治療之詳細醫學原理說明"
+    },
+    {
+     "gt_claim_id": 247,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "各 section 原文均未提及「外力介入導致意外死亡」之相驗程序法律問題",
+     "reason": "各 section 原文均未提及「外力介入導致意外死亡」之相驗程序法律問題"
+    },
+    {
+     "gt_claim_id": 250,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "section_reasoning.txt 雖提及判決無罪結果，但未明確記載「查無其他積極證據證明業務登載不實」之證據狀態分析，此為判決結論之關鍵法律基礎",
+     "reason": "section_reasoning.txt 雖提及判決無罪結果，但未明確記載「查無其他積極證據證明業務登載不實」之證據狀態分析，此為判決結論之關鍵法律基礎"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 251,
+   "pred_total": 62,
+   "matched": 106,
+   "partial": 30,
+   "missing": 115,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8303,
+  "compression_afg_chars": 1821,
+  "compression_source_chars": 10728,
+  "gt_length_ratio": 0.1841,
+  "gt_length_afg_chars": 1821,
+  "gt_length_gt_chars": 9891,
+  "section_balance": 0.2316
+ }
 }

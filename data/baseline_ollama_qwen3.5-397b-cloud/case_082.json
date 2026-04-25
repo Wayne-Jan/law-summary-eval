@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -134,5 +135,207 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7719,
+  "fact_recall": 0.6562,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7925,
+  "quality_overall": 4.8286,
+  "checklist_pass_rate": 0.9457,
+  "citation_accuracy": 0.8462,
+  "citation_support_score": 0.8519,
+  "uncited_rate": 0.023,
+  "faithfulness_combined": {
+   "score": 0.896,
+   "citation_fidelity": 0.8267,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.8375,
+  "missing_severity": {
+   "critical": 2,
+   "important": 13,
+   "minor": 7,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT 原文明確記載「要求病患D戒菸、返回門診治療」，pred 僅提及「給予藥物」，未提及戒菸指示及返回門診治療的醫療建議。reasoning section 雖有「建議病患D...回K醫院門診」的法院認定，但非 facts section 內容，pred facts 確實遺漏此醫療處置要點",
+     "reason": "GT 原文明確記載「要求病患D戒菸、返回門診治療」，pred 僅提及「給予藥物」，未提及戒菸指示及返回門診治療的醫療建議。reasoning section 雖有「建議病患D...回K醫院門診」的法院認定，但非 facts section 內容，pred facts 確實遺漏此醫療處置要點"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT 原文「依病患D病歷及救護紀錄表所載，病患D有心臟病史」屬關鍵病史背景，經全面檢查 5 個 sections，pred 所有段落均未提及病患心臟病史，確實遺漏",
+     "reason": "GT 原文「依病患D病歷及救護紀錄表所載，病患D有心臟病史」屬關鍵病史背景，經全面檢查 5 個 sections，pred 所有段落均未提及病患心臟病史，確實遺漏"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT 原文「到院時之症狀與心臟、血管、神經疾病有關」為檢察官起訴要旨中對症狀關聯性的主張，pred 雖列出「胸痛、胸悶、背痛、左側肢體無力」等症狀，但未明確提及症狀與心臟、血管、神經疾病的關聯性論述，確實遺漏",
+     "reason": "GT 原文「到院時之症狀與心臟、血管、神經疾病有關」為檢察官起訴要旨中對症狀關聯性的主張，pred 雖列出「胸痛、胸悶、背痛、左側肢體無力」等症狀，但未明確提及症狀與心臟、血管、神經疾病的關聯性論述，確實遺漏"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "GT 原文「依當時情形，被告甲無不能注意之情形」係過失責任認定的關鍵要件，屬於判決結論理解的核心事實。經全面檢查 5 個 sections，pred 均未提及此注意能力狀態的法律判斷，確實遺漏此影響判決結論的關鍵事實",
+     "reason": "GT 原文「依當時情形，被告甲無不能注意之情形」係過失責任認定的關鍵要件，屬於判決結論理解的核心事實。經全面檢查 5 個 sections，pred 均未提及此注意能力狀態的法律判斷，確實遺漏此影響判決結論的關鍵事實"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「如有不舒服要立刻返院，白天後要至門診就醫檢查」之具體指示內容未見於摘要，section_reasoning雖有「如仍有不舒服可至門診」但缺少「立刻返院」及「白天後」之時間限定",
+     "reason": "「如有不舒服要立刻返院，白天後要至門診就醫檢查」之具體指示內容未見於摘要，section_reasoning雖有「如仍有不舒服可至門診」但缺少「立刻返院」及「白天後」之時間限定"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "同意出院之具體時間「晚間9時55分」為事實性細節，雖見於section_facts，但生成摘要未涵蓋",
+     "reason": "同意出院之具體時間「晚間9時55分」為事實性細節，雖見於section_facts，但生成摘要未涵蓋"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "主動脈剝離檢查至手術相隔「長達10小時」之時間細節未見於任何 section，屬辯方主張之 peripheral 事實",
+     "reason": "主動脈剝離檢查至手術相隔「長達10小時」之時間細節未見於任何 section，屬辯方主張之 peripheral 事實"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section未提及「做了許多檢查都符合主訴及急救原則」之辯護主張，section_reasoning雖有「檢查符合醫療常規」但屬法院認定而非被告辯護",
+     "reason": "defense section未提及「做了許多檢查都符合主訴及急救原則」之辯護主張，section_reasoning雖有「檢查符合醫療常規」但屬法院認定而非被告辯護"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "GT羅列「血壓、脈搏、呼吸、意識、行動能力、語言能力均正常」之多項生理指標，摘要僅有「血壓、心跳均正常」及「可下床步行」，資訊不完整；「告知仍有不舒服要回診」雖見於section_reasoning但非屬defense section內容",
+     "reason": "GT羅列「血壓、脈搏、呼吸、意識、行動能力、語言能力均正常」之多項生理指標，摘要僅有「血壓、心跳均正常」及「可下床步行」，資訊不完整；「告知仍有不舒服要回診」雖見於section_reasoning但非屬defense section內容"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "G醫院汐止分院時「血壓大幅升高、脈搏加速」之異常狀況未見於摘要，屬辯方事實主張之細節",
+     "reason": "G醫院汐止分院時「血壓大幅升高、脈搏加速」之異常狀況未見於摘要，屬辯方事實主張之細節"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「因血壓脈搏異常始進一步作電腦斷層掃瞄」之因果關係說明與診斷過程未見於摘要，屬辯方論證G醫院與被告處置差異之重要主張",
+     "reason": "「因血壓脈搏異常始進一步作電腦斷層掃瞄」之因果關係說明與診斷過程未見於摘要，屬辯方論證G醫院與被告處置差異之重要主張"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「G醫院汐止分院急診醫師C證述檢查與被告相同」之證人證詞主張未見於摘要，屬辯方舉證之重要防禦論點",
+     "reason": "「G醫院汐止分院急診醫師C證述檢查與被告相同」之證人證詞主張未見於摘要，屬辯方舉證之重要防禦論點"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「檢查及診斷符合醫療常規」之概括性辯護主張未見於defense section摘要，section_reasoning雖有類似認定但屬法院結論",
+     "reason": "「檢查及診斷符合醫療常規」之概括性辯護主張未見於defense section摘要，section_reasoning雖有類似認定但屬法院結論"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「不能苛責兩小時內確診無特性疾病」之具體辯護論點未見於摘要，屬被告重要防禦理由",
+     "reason": "「不能苛責兩小時內確診無特性疾病」之具體辯護論點未見於摘要，屬被告重要防禦理由"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "離開K醫院至手術「經過十幾個小時」之時間細節未見於摘要，屬辯方主張時序之 peripheral 事實",
+     "reason": "離開K醫院至手術「經過十幾個小時」之時間細節未見於摘要，屬辯方主張時序之 peripheral 事實"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「最後於手術後死亡」之死亡時序細節已見於section_facts及section_opinions，摘要未涵蓋此時間點",
+     "reason": "「最後於手術後死亡」之死亡時序細節已見於section_facts及section_opinions，摘要未涵蓋此時間點"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "「此係G醫院之手術失敗」之關鍵辯護主張未見於摘要，屬被告直接挑戰死因歸責之重要論點",
+     "reason": "「此係G醫院之手術失敗」之關鍵辯護主張未見於摘要，屬被告直接挑戰死因歸責之重要論點"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "鑑定意見中建議病人若仍有胸痛症狀須再進一步安排電腦斷層，此為鑑定意見的重要診斷建議，影響案情完整理解",
+     "reason": "鑑定意見中建議病人若仍有胸痛症狀須再進一步安排電腦斷層，此為鑑定意見的重要診斷建議，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定意見中提及病人在離院時胸痛是否已經改善無法從病歷辨認，此為病歷記錄狀態的補充說明，屬背景性事實",
+     "reason": "鑑定意見中提及病人在離院時胸痛是否已經改善無法從病歷辨認，此為病歷記錄狀態的補充說明，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病人於B醫院確定診斷為主動脈剝離並接受手術，此為後續醫療經過的重要事實，雖見於facts段但opinions段鑑定意見未提及",
+     "reason": "病人於B醫院確定診斷為主動脈剝離並接受手術，此為後續醫療經過的重要事實，雖見於facts段但opinions段鑑定意見未提及"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病人術後因敗血症併多重器官衰竭及蜘蛛膜下出血死亡，此為死因相關的重要事實，雖見於facts段但opinions段鑑定意見未詳述死因",
+     "reason": "病人術後因敗血症併多重器官衰竭及蜘蛛膜下出血死亡，此為死因相關的重要事實，雖見於facts段但opinions段鑑定意見未詳述死因"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "如廁細節（由其子攙扶至廁所門口並自行進入）未見於任何 section 原文，屬背景性事實遺漏，不影響判決結論理解",
+     "reason": "如廁細節（由其子攙扶至廁所門口並自行進入）未見於任何 section 原文，屬背景性事實遺漏，不影響判決結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 80,
+   "pred_total": 44,
+   "matched": 47,
+   "partial": 11,
+   "missing": 22,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.839,
+  "compression_afg_chars": 1622,
+  "compression_source_chars": 10076,
+  "gt_length_ratio": 0.5862,
+  "gt_length_afg_chars": 1622,
+  "gt_length_gt_chars": 2767,
+  "section_balance": 0.5185
+ }
 }

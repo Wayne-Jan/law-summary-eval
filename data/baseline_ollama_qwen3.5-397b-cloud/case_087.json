@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -178,5 +179,452 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.5692,
+  "fact_recall": 0.5042,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6704,
+  "quality_overall": 4.7,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.8148,
+  "citation_support_score": 0.837,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.8889,
+   "citation_fidelity": 0.8148,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.7599,
+  "missing_severity": {
+   "critical": 3,
+   "important": 22,
+   "minor": 32,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "生成摘要僅提及「緊急手術」，未明確指出「動脈繞道手術」之具體手術類型，屬重要醫療事實遺漏，影響對醫療處置的理解",
+     "reason": "生成摘要僅提及「緊急手術」，未明確指出「動脈繞道手術」之具體手術類型，屬重要醫療事實遺漏，影響對醫療處置的理解"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未發現「人工心肺葉克膜機」或「葉克膜」之相關記載，此為重大醫療處置事實遺漏",
+     "reason": "遍查全部 5 個 section 原文，均未發現「人工心肺葉克膜機」或「葉克膜」之相關記載，此為重大醫療處置事實遺漏"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均僅提及「同年 10 月 20 日死亡」，未見「10 月 3 日轉診至 T 醫院」之事實，屬重要時間節點與醫療過程遺漏",
+     "reason": "遍查全部 5 個 section 原文，均僅提及「同年 10 月 20 日死亡」，未見「10 月 3 日轉診至 T 醫院」之事實，屬重要時間節點與醫療過程遺漏"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "雖 section_02_defense.txt 提及「如果伊不能處理，會請外科緊急開刀」，但未明確表述「甲並無能力進行治療」及「僅能經由外科醫生進行外科動脈繞道手術」之因果關係，屬重要醫療責任事實遺漏",
+     "reason": "雖 section_02_defense.txt 提及「如果伊不能處理，會請外科緊急開刀」，但未明確表述「甲並無能力進行治療」及「僅能經由外科醫生進行外科動脈繞道手術」之因果關係，屬重要醫療責任事實遺漏"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，section_02_defense.txt 雖提及門診有「討論處置方式」，但未明確記載「未被告知得以決定是否以藥物治療或是直接採取動脈繞道手術」等具體替代方案告知缺失，屬重要知情同意事實遺漏",
+     "reason": "遍查全部 5 個 section 原文，section_02_defense.txt 雖提及門診有「討論處置方式」，但未明確記載「未被告知得以決定是否以藥物治療或是直接採取動脈繞道手術」等具體替代方案告知缺失，屬重要知情同意事實遺漏"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "遍查全部 5 個 section 原文，section_02_defense.txt 提及「併發症發生可以緊急處置」，與「無克服之可能性」之表述相反，此為起訴方主張之重大過失構成要件事實，屬影響判決結論理解之致命事實遺漏",
+     "reason": "遍查全部 5 個 section 原文，section_02_defense.txt 提及「併發症發生可以緊急處置」，與「無克服之可能性」之表述相反，此為起訴方主張之重大過失構成要件事實，屬影響判決結論理解之致命事實遺漏"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，section_02_defense.txt 僅提及「除非是 VIP」作為例外情況，並未明確記載「未預為安排 VIP 病房」之事實，屬重要醫療準備事實遺漏",
+     "reason": "遍查全部 5 個 section 原文，section_02_defense.txt 僅提及「除非是 VIP」作為例外情況，並未明確記載「未預為安排 VIP 病房」之事實，屬重要醫療準備事實遺漏"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未發現「此乃醫師之兩大過失」之總結性表述，此為起訴意旨之核心主張，屬重要法律主張事實遺漏",
+     "reason": "遍查全部 5 個 section 原文，均未發現「此乃醫師之兩大過失」之總結性表述，此為起訴意旨之核心主張，屬重要法律主張事實遺漏"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 未提及總醫師巡房告知之細節；跨 section 檢查亦無此內容，屬程序性輔助證據事實",
+     "reason": "section_defense 未提及總醫師巡房告知之細節；跨 section 檢查亦無此內容，屬程序性輔助證據事實"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 僅提及患者親自簽署同意書，未提及見證人身分；雖 reasoning 提到告訴人S為患者之妻，但未明確連結為見證人，屬程序性事實",
+     "reason": "section_defense 僅提及患者親自簽署同意書，未提及見證人身分；雖 reasoning 提到告訴人S為患者之妻，但未明確連結為見證人，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 說明「告知病患本人」，未明確說明家屬不在場；雖 reasoning 有提及家屬不在場之內容，但摘要未涵蓋，屬次要事實",
+     "reason": "section_defense 說明「告知病患本人」，未明確說明家屬不在場；雖 reasoning 有提及家屬不在場之內容，但摘要未涵蓋，屬次要事實"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 未提及第一次手術（97年3月4日）前已告知家屬之辯護要點；reasoning 雖提及3月4日同意書，但摘要遺漏此辯護時間點，影響辯護完整性理解",
+     "reason": "section_defense 未提及第一次手術（97年3月4日）前已告知家屬之辯護要點；reasoning 雖提及3月4日同意書，但摘要遺漏此辯護時間點，影響辯護完整性理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 提及患者曾有顱內出血病史，但未提及97年7、8月藥物治療後仍有胸悶之症狀持續；跨 section 檢查無對應內容，影響再次手術必要性之理解",
+     "reason": "section_defense 提及患者曾有顱內出血病史，但未提及97年7、8月藥物治療後仍有胸悶之症狀持續；跨 section 檢查無對應內容，影響再次手術必要性之理解"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 未提及核子醫學檢查及血管再狹窄之判讀；reasoning 雖有多處提及，但摘要未涵蓋，影響再次住院決策之醫療依據理解",
+     "reason": "section_defense 未提及核子醫學檢查及血管再狹窄之判讀；reasoning 雖有多處提及，但摘要未涵蓋，影響再次住院決策之醫療依據理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 提及「依據國際醫學準則評估，本案病患之治療確實應以心導管手術為最優先之選擇」，但未明確提及內科治療、外科開刀等替代方案之討論；影響告知義務完整性理解",
+     "reason": "section_defense 提及「依據國際醫學準則評估，本案病患之治療確實應以心導管手術為最優先之選擇」，但未明確提及內科治療、外科開刀等替代方案之討論；影響告知義務完整性理解"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 提及「經患者同意才安排住院」，但未明確指出9月22日下午之具體日期；具體時間點雖有價值但不影響核心事實",
+     "reason": "section_defense 提及「經患者同意才安排住院」，但未明確指出9月22日下午之具體日期；具體時間點雖有價值但不影響核心事實"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 未提及傍晚時再次到病房溝通之事實；reasoning 雖提及「下午大約5點30分」之溝通，但摘要未涵蓋，影響告知義務履行完整性之理解",
+     "reason": "section_defense 未提及傍晚時再次到病房溝通之事實；reasoning 雖提及「下午大約5點30分」之溝通，但摘要未涵蓋，影響告知義務履行完整性之理解"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 未提及「一般伊等都會將可以治療方式跟病人解釋」之慣行做法說明；影響被告辯護中關於慣行告知義務履行方式之理解",
+     "reason": "section_defense 未提及「一般伊等都會將可以治療方式跟病人解釋」之慣行做法說明；影響被告辯護中關於慣行告知義務履行方式之理解"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "健保給付規範屬於背景性醫療制度資訊，非本案判決之關鍵爭點，不影響過失認定或判決結果理解",
+     "reason": "健保給付規範屬於背景性醫療制度資訊，非本案判決之關鍵爭點，不影響過失認定或判決結果理解"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "穩定性心絞痛1%致死風險數據為背景醫療統計資訊，本案病患為急性心肌梗塞，此統計不影響本案案情理解或判決結論",
+     "reason": "穩定性心絞痛1%致死風險數據為背景醫療統計資訊，本案病患為急性心肌梗塞，此統計不影響本案案情理解或判決結論"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急性冠心症與穩定性心絞痛之風險比較為補充性醫療背景說明，生成摘要已提及急性心肌梗塞治療之相關鑑定意見，風險比較數據非判決關鍵",
+     "reason": "急性冠心症與穩定性心絞痛之風險比較為補充性醫療背景說明，生成摘要已提及急性心肌梗塞治療之相關鑑定意見，風險比較數據非判決關鍵"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "告知義務具體內容範圍（治療風險、併發症、副作用、死亡率等）是法院法律判斷之重要依據，摘要未提及影響告知義務論理完整性",
+     "reason": "告知義務具體內容範圍（治療風險、併發症、副作用、死亡率等）是法院法律判斷之重要依據，摘要未提及影響告知義務論理完整性"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "3月4日轉診細節及轉診單具體內容為背景性事實，不影響主要案情理解",
+     "reason": "3月4日轉診細節及轉診單具體內容為背景性事實，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "家屬簽署同意書之具體日期為程序性細節，已於 defense 段提及「病患有親自簽...同意書」及「見證人是病患之妻」，核心事實已覆蓋",
+     "reason": "家屬簽署同意書之具體日期為程序性細節，已於 defense 段提及「病患有親自簽...同意書」及「見證人是病患之妻」，核心事實已覆蓋"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告訴人知悉風險之推論為細節性事實",
+     "reason": "告訴人知悉風險之推論為細節性事實"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "民事庭證詞及具體時間為證據細節",
+     "reason": "民事庭證詞及具體時間為證據細節"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "護理紀錄具體時間為程序性細節",
+     "reason": "護理紀錄具體時間為程序性細節"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "簽署時間細節（第二天早上）已於 defense 段提及",
+     "reason": "簽署時間細節（第二天早上）已於 defense 段提及"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "9月15日門診具體內容及核醫檢查結果為細節性醫療事實",
+     "reason": "9月15日門診具體內容及核醫檢查結果為細節性醫療事實"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "刀片氣球治療選擇之醫學判斷為 detailed medical reasoning",
+     "reason": "刀片氣球治療選擇之醫學判斷為 detailed medical reasoning"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患同意過程細節已於 defense 段提及「患者同意」",
+     "reason": "病患同意過程細節已於 defense 段提及「患者同意」"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "症狀及藥物評估為背景性醫療判斷",
+     "reason": "症狀及藥物評估為背景性醫療判斷"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "顱內出血病史已於 defense 段提及「患者曾有顱內出血之病史」",
+     "reason": "顱內出血病史已於 defense 段提及「患者曾有顱內出血之病史」"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "肝素風險之醫學判斷為 detailed medical reasoning",
+     "reason": "肝素風險之醫學判斷為 detailed medical reasoning"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "國內外醫療指引為 supporting detail",
+     "reason": "國內外醫療指引為 supporting detail"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "通話譯文細節為 evidence detail",
+     "reason": "通話譯文細節為 evidence detail"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "藥物支架風險說明為醫療細節",
+     "reason": "藥物支架風險說明為醫療細節"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患信任表示為情感性細節",
+     "reason": "病患信任表示為情感性細節"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告供述一致性為 court observation detail",
+     "reason": "被告供述一致性為 court observation detail"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "8月15日門診已於 defense 段提及「在97年8月，患者因為胸痛接受核子醫學檢查」",
+     "reason": "8月15日門診已於 defense 段提及「在97年8月，患者因為胸痛接受核子醫學檢查」"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "9月15日報告及住院時間軸為 temporal detail",
+     "reason": "9月15日報告及住院時間軸為 temporal detail"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患知悉檢查目的之推論為次要事實",
+     "reason": "病患知悉檢查目的之推論為次要事實"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患同意過程已於 pred claim 2 涵蓋「病患乃於充分瞭解後始決定選擇接受治療性心導管手術」",
+     "reason": "病患同意過程已於 pred claim 2 涵蓋「病患乃於充分瞭解後始決定選擇接受治療性心導管手術」"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病歷原文引用為 evidence detail",
+     "reason": "病歷原文引用為 evidence detail"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "同意書內容比對為 detailed evidence comparison",
+     "reason": "同意書內容比對為 detailed evidence comparison"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "同意書詳細內容已於 defense 段提及「病患有親自簽心導管檢查及治療同意書」",
+     "reason": "同意書詳細內容已於 defense 段提及「病患有親自簽心導管檢查及治療同意書」"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "文件影本在卷為程序性陳述",
+     "reason": "文件影本在卷為程序性陳述"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "併發症不確定性之告知義務論理是法院重要法律判斷，摘要未提及影響告知義務範圍之理解",
+     "reason": "併發症不確定性之告知義務論理是法院重要法律判斷，摘要未提及影響告知義務範圍之理解"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "健保局規定是法院判斷醫院資格之重要法律依據",
+     "reason": "健保局規定是法院判斷醫院資格之重要法律依據"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "心臟外科待命規定是醫療常規判斷之重要依據",
+     "reason": "心臟外科待命規定是醫療常規判斷之重要依據"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "健保制度資格規定為重要法律背景",
+     "reason": "健保制度資格規定為重要法律背景"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "手術室配合告知義務範圍之法院判斷為重要法律論理",
+     "reason": "手術室配合告知義務範圍之法院判斷為重要法律論理"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "緊急手術室使用不確定性是法院論證無需預留之重要理由",
+     "reason": "緊急手術室使用不確定性是法院論證無需預留之重要理由"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "預留手術室義務判斷為重要法律結論",
+     "reason": "預留手術室義務判斷為重要法律結論"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "手術室配合告知義務之最終法院判斷為重要法律論理",
+     "reason": "手術室配合告知義務之最終法院判斷為重要法律論理"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "醫療水準符合性判斷是無罪判決之核心法律依據，影響過失認定",
+     "reason": "醫療水準符合性判斷是無罪判決之核心法律依據，影響過失認定"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「應注意而未注意」之法律判斷是過失認定之關鍵，直接影響判決結論理解",
+     "reason": "「應注意而未注意」之法律判斷是過失認定之關鍵，直接影響判決結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 118,
+   "pred_total": 40,
+   "matched": 58,
+   "partial": 3,
+   "missing": 57,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9643,
+  "compression_afg_chars": 1241,
+  "compression_source_chars": 34806,
+  "gt_length_ratio": 0.2626,
+  "gt_length_afg_chars": 1241,
+  "gt_length_gt_chars": 4725,
+  "section_balance": 0.2653
+ }
 }

@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -124,5 +125,585 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6895,
+  "fact_recall": 0.4271,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5985,
+  "quality_overall": 4.4143,
+  "checklist_pass_rate": 0.962,
+  "citation_accuracy": 0.9643,
+  "citation_support_score": 0.9429,
+  "uncited_rate": 0.068,
+  "faithfulness_combined": {
+   "score": 0.9392,
+   "citation_fidelity": 0.8987,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.669,
+  "missing_severity": {
+   "critical": 7,
+   "important": 53,
+   "minor": 16,
+   "details": [
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "主治醫師身份認定是本案關鍵爭點，GT 指「醫師R」（劉奇樺）負責病患照顧，但 facts 段僅提及「醫師乙」，雖可能為同一人之匿名化差異，但 pred 未明確對應",
+     "reason": "主治醫師身份認定是本案關鍵爭點，GT 指「醫師R」（劉奇樺）負責病患照顧，但 facts 段僅提及「醫師乙」，雖可能為同一人之匿名化差異，但 pred 未明確對應"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「轉院至Z醫院時呈左側肢體側癱」是重要病程記錄，facts 段僅提及在A醫院時「左側肢體無力」，未提及轉院至Z醫院時之該症狀",
+     "reason": "「轉院至Z醫院時呈左側肢體側癱」是重要病程記錄，facts 段僅提及在A醫院時「左側肢體無力」，未提及轉院至Z醫院時之該症狀"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「右側瞳孔略大於左側」是醫學檢查的重要客觀徵象，涉及腦壓變化判斷，所有 section 均未提及",
+     "reason": "「右側瞳孔略大於左側」是醫學檢查的重要客觀徵象，涉及腦壓變化判斷，所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「全套腦血管攝影檢查」及「大於100CC之動靜脈畸形」是病因診斷之關鍵事實，直接影響治療決策與過失認定，opinions 段僅簡述「有動靜脈畸形」而未提及檢查方式及大小",
+     "reason": "「全套腦血管攝影檢查」及「大於100CC之動靜脈畸形」是病因診斷之關鍵事實，直接影響治療決策與過失認定，opinions 段僅簡述「有動靜脈畸形」而未提及檢查方式及大小"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「帶狀迴經鎌狀中隔下之脫出」是具體醫學影像發現，屬專業鑑定細節，所有 section 均未提及",
+     "reason": "「帶狀迴經鎌狀中隔下之脫出」是具體醫學影像發現，屬專業鑑定細節，所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「顳葉鉤狀迴經大腦天幕之脫出」是具體醫學影像發現，屬專業鑑定細節，所有 section 均未提及",
+     "reason": "「顳葉鉤狀迴經大腦天幕之脫出」是具體醫學影像發現，屬專業鑑定細節，所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「腦幹四週之顱底池皆因腦浮腫受壓迫而看不見」是具體醫學影像發現，屬專業鑑定細節，所有 section 均未提及",
+     "reason": "「腦幹四週之顱底池皆因腦浮腫受壓迫而看不見」是具體醫學影像發現，屬專業鑑定細節，所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「腦壓急速上升」是判斷是否應立即手術的關鍵臨床指標，直接影響過失認定，所有 section 均未明確提及",
+     "reason": "「腦壓急速上升」是判斷是否應立即手術的關鍵臨床指標，直接影響過失認定，所有 section 均未明確提及"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「醫師R建議病患L應手術開刀治療」是本案核心爭點之一，涉及醫師是否盡到告知義務及建議時機，defense 段雖提及「積極建議手術」但未明確指出是「醫師R」所為",
+     "reason": "「醫師R建議病患L應手術開刀治療」是本案核心爭點之一，涉及醫師是否盡到告知義務及建議時機，defense 段雖提及「積極建議手術」但未明確指出是「醫師R」所為"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「家屬對Z醫院之治療能力產生動搖」屬家屬主觀態度，雖影響轉院決策，但非判決核心事實",
+     "reason": "「家屬對Z醫院之治療能力產生動搖」屬家屬主觀態度，雖影響轉院決策，但非判決核心事實"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「家屬決定再轉診V醫院治療」之「V醫院」與 pred「C醫院」不符，GT 明確記載轉診至榮民總醫院（V醫院），此為轉院事實之重要細節",
+     "reason": "「家屬決定再轉診V醫院治療」之「V醫院」與 pred「C醫院」不符，GT 明確記載轉診至榮民總醫院（V醫院），此為轉院事實之重要細節"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「送達V醫院時，病患L呈兩眼瞳孔放大」是重要臨床徵象，顯示腦幹受損嚴重程度，所有 section 均未提及",
+     "reason": "「送達V醫院時，病患L呈兩眼瞳孔放大」是重要臨床徵象，顯示腦幹受損嚴重程度，所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「送達V醫院時，病患L無腦幹之正常反應」是重要臨床徵象，顯示病情惡化程度，所有 section 均未提及",
+     "reason": "「送達V醫院時，病患L無腦幹之正常反應」是重要臨床徵象，顯示病情惡化程度，所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「案經病患L之父提起告訴」屬程序性事實，facts 段僅提及「案經檢察官偵查起訴」，未明確指出由家屬提告，但不影響實體判決理解",
+     "reason": "「案經病患L之父提起告訴」屬程序性事實，facts 段僅提及「案經檢察官偵查起訴」，未明確指出由家屬提告，但不影響實體判決理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "同 GT_16，「全套腦血管攝影檢查」及「大於100CC之動靜脈畸形」是病因診斷之關鍵事實",
+     "reason": "同 GT_16，「全套腦血管攝影檢查」及「大於100CC之動靜脈畸形」是病因診斷之關鍵事實"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "同 GT_17-18，具體醫學影像發現「帶狀迴經鎌狀中隔下之脫出及顳葉鉤狀迴經大腦天幕之脫出」均未於任何 section 呈現",
+     "reason": "同 GT_17-18，具體醫學影像發現「帶狀迴經鎌狀中隔下之脫出及顳葉鉤狀迴經大腦天幕之脫出」均未於任何 section 呈現"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "同 GT_19，「腦幹四週之顱底池皆因腦浮腫受壓迫而看不見」未於任何 section 呈現",
+     "reason": "同 GT_19，「腦幹四週之顱底池皆因腦浮腫受壓迫而看不見」未於任何 section 呈現"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "同 GT_20，「腦壓急速上升」是判斷是否應立即手術的關鍵臨床指標",
+     "reason": "同 GT_20，「腦壓急速上升」是判斷是否應立即手術的關鍵臨床指標"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「立即開刀取出血腫可防止因腦幹進一步受壓迫而逐漸昏迷，危及生命」是檢察官論述之因果關係核心，直接關聯過失與死亡結果，所有 section 均未提及此醫療判斷",
+     "reason": "「立即開刀取出血腫可防止因腦幹進一步受壓迫而逐漸昏迷，危及生命」是檢察官論述之因果關係核心，直接關聯過失與死亡結果，所有 section 均未提及此醫療判斷"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「依當時之情形，並無不能注意之情事」是注意義務的法律判斷語句，屬檢察官論述之法律評價，facts 段未完整引用此法律主張",
+     "reason": "「依當時之情形，並無不能注意之情事」是注意義務的法律判斷語句，屬檢察官論述之法律評價，facts 段未完整引用此法律主張"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部5個section，未發現「病患來B醫院急診已清楚呈現左側完全癱瘓」之描述。section_01_facts僅提及「左側肢體無力」發生在A醫院初診時，非B醫院急診。此為辯護要點（主張急診時已明確呈現症狀），遺漏會影響對被告辯解完整性的理解。",
+     "reason": "經查全部5個section，未發現「病患來B醫院急診已清楚呈現左側完全癱瘓」之描述。section_01_facts僅提及「左側肢體無力」發生在A醫院初診時，非B醫院急診。此為辯護要點（主張急診時已明確呈現症狀），遺漏會影響對被告辯解完整性的理解。"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部5個section，未發現「急診醫師正確反應執行電腦斷層掃描」之描述。section_01_facts提及電腦斷層在A醫院執行，非B醫院急診。此為辯護關鍵主張（主張B醫院急診處置正確），遺漏影響對醫療過程辯護的理解。",
+     "reason": "經查全部5個section，未發現「急診醫師正確反應執行電腦斷層掃描」之描述。section_01_facts提及電腦斷層在A醫院執行，非B醫院急診。此為辯護關鍵主張（主張B醫院急診處置正確），遺漏影響對醫療過程辯護的理解。"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部5個section，未發現「電腦斷層掃描清楚看出出血」之描述。section_01_facts提及A醫院電腦斷層發現出血，未提及B醫院急診CT看出出血。此為辯護要點，遺漏影響對診斷時機辯解的理解。",
+     "reason": "經查全部5個section，未發現「電腦斷層掃描清楚看出出血」之描述。section_01_facts提及A醫院電腦斷層發現出血，未提及B醫院急診CT看出出血。此為辯護要點，遺漏影響對診斷時機辯解的理解。"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部5個section，未發現「該疾病在B醫院無法治療」之描述。section_01_facts提及A醫院無適當治療設施，未提及B醫院無法治療。此為辯護關鍵主張（說明轉院必要性），遺漏影響對醫療決策辯解的理解。",
+     "reason": "經查全部5個section，未發現「該疾病在B醫院無法治療」之描述。section_01_facts提及A醫院無適當治療設施，未提及B醫院無法治療。此為辯護關鍵主張（說明轉院必要性），遺漏影響對醫療決策辯解的理解。"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部5個section，未發現「B醫院做出轉院的指示」之描述。section_01_facts記載係由家屬決定轉診，未提及B醫院做出轉院指示。此為辯護要點，遺漏影響對醫療責任歸屬的理解。",
+     "reason": "經查全部5個section，未發現「B醫院做出轉院的指示」之描述。section_01_facts記載係由家屬決定轉診，未提及B醫院做出轉院指示。此為辯護要點，遺漏影響對醫療責任歸屬的理解。"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部5個section，未發現「醫師R做出完整而適當的醫囑及處置」之描述。section_05_reasoning提及醫師乙「有下醫囑單給予藥物治療並予以每小時監測」，但未明確評價為「完整而適當」。此為辯護核心主張（主張醫療行為無疏失），遺漏影響對醫療品質辯解的理解。",
+     "reason": "經查全部5個section，未發現「醫師R做出完整而適當的醫囑及處置」之描述。section_05_reasoning提及醫師乙「有下醫囑單給予藥物治療並予以每小時監測」，但未明確評價為「完整而適當」。此為辯護核心主張（主張醫療行為無疏失），遺漏影響對醫療品質辯解的理解。"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "經查全部5個section，未發現「Z醫院建議的手術時機為正確」或任何提及Z醫院的內容。此為辯護要點（主張手術時機判斷正確），遺漏影響對治療決策辯解的理解。",
+     "reason": "經查全部5個section，未發現「Z醫院建議的手術時機為正確」或任何提及Z醫院的內容。此為辯護要點（主張手術時機判斷正確），遺漏影響對治療決策辯解的理解。"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "鑑定意見細節，涉及動靜脈畸形診斷關鍵，但非判決結論核心",
+     "reason": "鑑定意見細節，涉及動靜脈畸形診斷關鍵，但非判決結論核心"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "解剖位置細節，屬專業鑑定內容",
+     "reason": "解剖位置細節，屬專業鑑定內容"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "涉及院方處置疏失認定",
+     "reason": "涉及院方處置疏失認定"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "涉及因果關係與治療時機判斷",
+     "reason": "涉及因果關係與治療時機判斷"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定結論補充說明，非核心事實",
+     "reason": "鑑定結論補充說明，非核心事實"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "涉及治療延遲的具體認定",
+     "reason": "涉及治療延遲的具體認定"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "解剖學專業描述，屬鑑定細節",
+     "reason": "解剖學專業描述，屬鑑定細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "解剖學專業描述",
+     "reason": "解剖學專業描述"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "涉及治療必要性與風險評估",
+     "reason": "涉及治療必要性與風險評估"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "涉及治療標準與被告主張評價",
+     "reason": "涉及治療標準與被告主張評價"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "涉及對被告主張的專業評價",
+     "reason": "涉及對被告主張的專業評價"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "涉及二次鑑定結論",
+     "reason": "涉及二次鑑定結論"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫學診斷標準，涉及診療過失判斷",
+     "reason": "醫學診斷標準，涉及診療過失判斷"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "處置標準，涉及應為檢查項目",
+     "reason": "處置標準，涉及應為檢查項目"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療流程標準",
+     "reason": "治療流程標準"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療原則",
+     "reason": "治療原則"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療決定因素",
+     "reason": "治療決定因素"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療選項說明",
+     "reason": "治療選項說明"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療選項說明",
+     "reason": "治療選項說明"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術風險評估",
+     "reason": "手術風險評估"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "風險比較評估",
+     "reason": "風險比較評估"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療考量因素",
+     "reason": "治療考量因素"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "診斷標準",
+     "reason": "診斷標準"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療判斷標準",
+     "reason": "治療判斷標準"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術決定標準",
+     "reason": "手術決定標準"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "手術時機標準",
+     "reason": "手術時機標準"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療決定因素",
+     "reason": "治療決定因素"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療選項說明",
+     "reason": "治療選項說明"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "開刀建議標準",
+     "reason": "開刀建議標準"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療可能性評估",
+     "reason": "治療可能性評估"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫療處置細節清單，屬專業知識內容",
+     "reason": "醫療處置細節清單，屬專業知識內容"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，均未提及 V 醫院診斷證明書之診斷欄具體記載內容「腦動靜脈異常併顱內出血」，屬於診斷證明書細節性資訊，不影響案情核心理解",
+     "reason": "遍查全部 5 個 section 原文，均未提及 V 醫院診斷證明書之診斷欄具體記載內容「腦動靜脈異常併顱內出血」，屬於診斷證明書細節性資訊，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，均未提及 X 光片經放射科專業醫師用紅筆標示動靜脈畸形位置之細節，屬於技術性證據處理細節，不影響法院認定結論",
+     "reason": "遍查全部 5 個 section 原文，均未提及 X 光片經放射科專業醫師用紅筆標示動靜脈畸形位置之細節，屬於技術性證據處理細節，不影響法院認定結論"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 僅提及「病患確實有動靜脈畸形」，未提及「右腦額葉有一小型之動靜脈畸形，同時伴有一血管破裂後所形成之假性動脈」之詳細解剖位置與病態描述，屬於醫學細節，不影響核心鑑定結論",
+     "reason": "section_03_opinions.txt 僅提及「病患確實有動靜脈畸形」，未提及「右腦額葉有一小型之動靜脈畸形，同時伴有一血管破裂後所形成之假性動脈」之詳細解剖位置與病態描述，屬於醫學細節，不影響核心鑑定結論"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，未明確記載醫審會第一次鑑定意見「未注意」病患腦動靜脈畸形狀況之評價用語，僅在 section_05_reasoning.txt 提及「醫審會第一次鑑定意見認無腦動靜脈畸形」，屬於法院論證細節",
+     "reason": "遍查全部 5 個 section 原文，未明確記載醫審會第一次鑑定意見「未注意」病患腦動靜脈畸形狀況之評價用語，僅在 section_05_reasoning.txt 提及「醫審會第一次鑑定意見認無腦動靜脈畸形」，屬於法院論證細節"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未提及第二次鑑定關於「91年2月1日電腦斷層掃描已呈現右腦有大片之血腫，同時腦壓已上升」之具體醫療發現，此為認定醫療過失之關鍵時機點，影響延遲治療疏失之理解",
+     "reason": "遍查全部 5 個 section 原文，均未提及第二次鑑定關於「91年2月1日電腦斷層掃描已呈現右腦有大片之血腫，同時腦壓已上升」之具體醫療發現，此為認定醫療過失之關鍵時機點，影響延遲治療疏失之理解"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未提及「血腫之大小在60CC以上...應予以手術取出」之醫學標準與血腫體積數據，此為判斷是否應手術之重要醫療準則",
+     "reason": "遍查全部 5 個 section 原文，均未提及「血腫之大小在60CC以上...應予以手術取出」之醫學標準與血腫體積數據，此為判斷是否應手術之重要醫療準則"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未提及 Z 醫院於「91年2月1日、6日」執行電腦斷層掃描之具體日期，僅在 section_01_facts.txt 提及「因電腦斷層攝影發現」，缺少關鍵時間節點資訊",
+     "reason": "遍查全部 5 個 section 原文，均未提及 Z 醫院於「91年2月1日、6日」執行電腦斷層掃描之具體日期，僅在 section_01_facts.txt 提及「因電腦斷層攝影發現」，缺少關鍵時間節點資訊"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未提及 Z 醫院於「91年2月4日」執行頭部血管攝影之具體日期與檢查項目，GT facts TL_10 明確記載此為重要檢查時間點",
+     "reason": "遍查全部 5 個 section 原文，均未提及 Z 醫院於「91年2月4日」執行頭部血管攝影之具體日期與檢查項目，GT facts TL_10 明確記載此為重要檢查時間點"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未提及 Z 醫院於「91年2月6日」建議手術治療之具體日期，GT facts TL_14 明確記載此為關鍵醫療決策時間點",
+     "reason": "遍查全部 5 個 section 原文，均未提及 Z 醫院於「91年2月6日」建議手術治療之具體日期，GT facts TL_14 明確記載此為關鍵醫療決策時間點"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未提及病患 L 於「91年2月4日下午4時昏迷指數曾經達到7分」之具體時間與昏迷指數數值，GT facts TL_12 明確記載此為病情惡化關鍵指標",
+     "reason": "遍查全部 5 個 section 原文，均未提及病患 L 於「91年2月4日下午4時昏迷指數曾經達到7分」之具體時間與昏迷指數數值，GT facts TL_12 明確記載此為病情惡化關鍵指標"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查全部 5 個 section 原文，均未提及病患 L 昏迷指數於「91年2月5日晚間10時回升至11分」之具體時間與數值變化，GT facts TL_13 明確記載此為病情波動重要資訊",
+     "reason": "遍查全部 5 個 section 原文，均未提及病患 L 昏迷指數於「91年2月5日晚間10時回升至11分」之具體時間與數值變化，GT facts TL_13 明確記載此為病情波動重要資訊"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_03_opinions.txt 僅提及「腦內血腫是否手術需考慮多重狀況」，但未詳列「血腫之大小及腦浮腫之程度、血腫之位置、病人之臨床狀況等因素」之完整判斷要素，影響對手術決策標準之完整理解",
+     "reason": "section_03_opinions.txt 僅提及「腦內血腫是否手術需考慮多重狀況」，但未詳列「血腫之大小及腦浮腫之程度、血腫之位置、病人之臨床狀況等因素」之完整判斷要素，影響對手術決策標準之完整理解"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，均未提及「血腫侵犯及基核或腦幹等重要部位...方不需進行手術」之例外情形說明，屬於醫學專業之例外條款",
+     "reason": "遍查全部 5 個 section 原文，均未提及「血腫侵犯及基核或腦幹等重要部位...方不需進行手術」之例外情形說明，屬於醫學專業之例外條款"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，均未明確提及「腦部血塊之大小非為決定是否施以手術之標準」之醫療原則陳述",
+     "reason": "遍查全部 5 個 section 原文，均未明確提及「腦部血塊之大小非為決定是否施以手術之標準」之醫療原則陳述"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，均未提及「就腦動靜脈畸形破裂引起之腦內血腫，與沒有腦動靜脈畸形之腦內血腫之醫療處置等相關問題」之具體鑑定問題描述，僅提及向神經外科醫學會詢問鑑定意見",
+     "reason": "遍查全部 5 個 section 原文，均未提及「就腦動靜脈畸形破裂引起之腦內血腫，與沒有腦動靜脈畸形之腦內血腫之醫療處置等相關問題」之具體鑑定問題描述，僅提及向神經外科醫學會詢問鑑定意見"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section 原文，均未提及病患 L 於「91年2月6日下午」轉院之具體時間，section_01_facts.txt 僅提及「病況惡化後轉診」",
+     "reason": "遍查全部 5 個 section 原文，均未提及病患 L 於「91年2月6日下午」轉院之具體時間，section_01_facts.txt 僅提及「病況惡化後轉診」"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「於同年二月十九日不治死亡」，未提及「91年2月19日上午11時許因腦動靜脈異常併顱內出血致呼吸衰竭死亡」之具體時間、死因與死亡機轉，影響對死亡原因之完整理解",
+     "reason": "section_01_facts.txt 僅提及「於同年二月十九日不治死亡」，未提及「91年2月19日上午11時許因腦動靜脈異常併顱內出血致呼吸衰竭死亡」之具體時間、死因與死亡機轉，影響對死亡原因之完整理解"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "遍查全部 5 個 section 原文，section_05_reasoning.txt 第三段提及「難認病患 X 死亡與 B 醫院之醫療行為間具有相當因果關係」，但未明確提及「Z 醫院之醫療行為無過失可言」之法院認定。雖判決無罪可推論無過失，但法院未於理由中明確使用「無過失」用語，影響對法院核心論證邏輯之完整理解",
+     "reason": "遍查全部 5 個 section 原文，section_05_reasoning.txt 第三段提及「難認病患 X 死亡與 B 醫院之醫療行為間具有相當因果關係」，但未明確提及「Z 醫院之醫療行為無過失可言」之法院認定。雖判決無罪可推論無過失，但法院未於理由中明確使用「無過失」用語，影響對法院核心論證邏輯之完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 144,
+   "pred_total": 44,
+   "matched": 55,
+   "partial": 13,
+   "missing": 76,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8866,
+  "compression_afg_chars": 1394,
+  "compression_source_chars": 12289,
+  "gt_length_ratio": 0.254,
+  "gt_length_afg_chars": 1394,
+  "gt_length_gt_chars": 5488,
+  "section_balance": 0.3404
+ }
 }

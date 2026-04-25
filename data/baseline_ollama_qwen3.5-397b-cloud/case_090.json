@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -130,5 +131,648 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6583,
+  "fact_recall": 0.3705,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5407,
+  "quality_overall": 4.5286,
+  "checklist_pass_rate": 0.9628,
+  "citation_accuracy": 0.6818,
+  "citation_support_score": 0.6409,
+  "uncited_rate": 0.162,
+  "faithfulness_combined": {
+   "score": 0.7428,
+   "citation_fidelity": 0.5713,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.929,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 13
+  },
+  "weighted_recall": 0.6547,
+  "missing_severity": {
+   "critical": 7,
+   "important": 45,
+   "minor": 33,
+   "details": [
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "轉介流程及住院手續為程序性背景事實，不影響醫療過失核心爭議理解",
+     "reason": "轉介流程及住院手續為程序性背景事實，不影響醫療過失核心爭議理解"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "9月17日檢查結果正常的具體日期為背景性時間資訊，pred已提及糞便潛血一價陽性之關鍵異常，不影響核心案情",
+     "reason": "9月17日檢查結果正常的具體日期為背景性時間資訊，pred已提及糞便潛血一價陽性之關鍵異常，不影響核心案情"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "化療開始日期（9月22日）及口服藥物prednisolone為重要治療時序資訊，影響治療過程完整理解，但非致命性缺失",
+     "reason": "化療開始日期（9月22日）及口服藥物prednisolone為重要治療時序資訊，影響治療過程完整理解，但非致命性缺失"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "9月29日MTX劑量（13,840mg/m²）為檢察官指控超量用藥之關鍵數據，影響醫療常規爭議理解",
+     "reason": "9月29日MTX劑量（13,840mg/m²）為檢察官指控超量用藥之關鍵數據，影響醫療常規爭議理解"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "10月7日MTX劑量（13,360mg/m²）為第二次高劑量化療記錄，對劑量爭議時序理解重要",
+     "reason": "10月7日MTX劑量（13,360mg/m²）為第二次高劑量化療記錄，對劑量爭議時序理解重要"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "10月10日主訴血便為病情惡化關鍵時間點，影響出血發生時序及因果關係判斷",
+     "reason": "10月10日主訴血便為病情惡化關鍵時間點，影響出血發生時序及因果關係判斷"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "死亡具體時間（10月18日上午7時28分）為精確時間戳記，pred已提及死亡事實，具體時間細節缺失不影響判決結果理解",
+     "reason": "死亡具體時間（10月18日上午7時28分）為精確時間戳記，pred已提及死亡事實，具體時間細節缺失不影響判決結果理解"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官起訴指出被告甲應注意依醫療常規進行再確認檢查之論點為公訴意旨核心，影響攻防理由完整理解",
+     "reason": "檢察官起訴指出被告甲應注意依醫療常規進行再確認檢查之論點為公訴意旨核心，影響攻防理由完整理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出化療增加消化道出血風險之論點為檢察官醫學依據，影響過失指控理解",
+     "reason": "檢察官指出化療增加消化道出血風險之論點為檢察官醫學依據，影響過失指控理解"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出應會診專科醫師之論點為重要攻防依據",
+     "reason": "檢察官指出應會診專科醫師之論點為重要攻防依據"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢察官指出經驗性投藥之替代處置論點為檢察官列舉選項之一，非核心攻防",
+     "reason": "檢察官指出經驗性投藥之替代處置論點為檢察官列舉選項之一，非核心攻防"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "檢察官指出MTX劑量不超過3,000mg/m²之醫療常規為檢察官指控超量給藥之核心依據，直接影響過失認定理解",
+     "reason": "檢察官指出MTX劑量不超過3,000mg/m²之醫療常規為檢察官指控超量給藥之核心依據，直接影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢察官指出無不能注意之情事為法律程式性表述，pred已涵蓋過失指控主旨",
+     "reason": "檢察官指出無不能注意之情事為法律程式性表述，pred已涵蓋過失指控主旨"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出密集高劑量化療及口服藥物之指控為檢察官主張之治療過失具體內容",
+     "reason": "檢察官指出密集高劑量化療及口服藥物之指控為檢察官主張之治療過失具體內容"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出血便與嚴重胃腸道出血因果論點為檢察官主張之結果事實",
+     "reason": "檢察官指出血便與嚴重胃腸道出血因果論點為檢察官主張之結果事實"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出疏未衡量身體狀況之論點為檢察官過失指控重要組成",
+     "reason": "檢察官指出疏未衡量身體狀況之論點為檢察官過失指控重要組成"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "檢察官指出9月29日高劑量MTX超過建議劑量數倍之論點，為劑量過失指控之核心數據主張",
+     "reason": "檢察官指出9月29日高劑量MTX超過建議劑量數倍之論點，為劑量過失指控之核心數據主張"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "檢察官指出10月7日高劑量MTX超過建議劑量數倍之論點，為第二次劑量過失指控",
+     "reason": "檢察官指出10月7日高劑量MTX超過建議劑量數倍之論點，為第二次劑量過失指控"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出10月10日血便主訴時間點為檢察官指控時序重要一環",
+     "reason": "檢察官指出10月10日血便主訴時間點為檢察官指控時序重要一環"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出未會診外科放射線科之具體論點，pred僅簡述未會診，缺少拯救內科治療可能失敗之目的描述",
+     "reason": "檢察官指出未會診外科放射線科之具體論點，pred僅簡述未會診，缺少拯救內科治療可能失敗之目的描述"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "檢察官指出克多炎抑制血小板功能增加死亡風險之論點為檢察官主張之因果強化論述，直接影響過失致死理解",
+     "reason": "檢察官指出克多炎抑制血小板功能增加死亡風險之論點為檢察官主張之因果強化論述，直接影響過失致死理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出未考慮癌症輕重緩急與潛在風險疾病之論點為醫療決策完整性之重要依據",
+     "reason": "檢察官指出未考慮癌症輕重緩急與潛在風險疾病之論點為醫療決策完整性之重要依據"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官指出未考量依疾病病程所應採取之化學治療藥物建議劑量之論點為劑量合理性判斷之重要背景",
+     "reason": "檢察官指出未考量依疾病病程所應採取之化學治療藥物建議劑量之論點為劑量合理性判斷之重要背景"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢察官指出應注意能注意而不注意之過失醫療作為為刑法過失法律定型表述，pred已涵蓋醫療過失實質內容",
+     "reason": "檢察官指出應注意能注意而不注意之過失醫療作為為刑法過失法律定型表述，pred已涵蓋醫療過失實質內容"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "骨髓抑制醫學定義為背景性醫學知識解釋，section_opinions.txt已提及骨髓抑制術語實際使用，定義細節缺失不影響案情",
+     "reason": "骨髓抑制醫學定義為背景性醫學知識解釋，section_opinions.txt已提及骨髓抑制術語實際使用，定義細節缺失不影響案情"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全部五個 section 均未提及「罕見極度惡性」之描述，僅 facts 段提及「伯基特氏淋巴瘤」診斷，屬辯護要點影響案情理解",
+     "reason": "全部五個 section 均未提及「罕見極度惡性」之描述，僅 facts 段提及「伯基特氏淋巴瘤」診斷，屬辯護要點影響案情理解"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 section 均未提及「不治療必定死亡」之預後說明",
+     "reason": "全部 section 均未提及「不治療必定死亡」之預後說明"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 section 均未提及「化療有治癒希望」之治療前景說明",
+     "reason": "全部 section 均未提及「化療有治癒希望」之治療前景說明"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 section 均未詳列治療前檢查項目（血液、肝腎功能、電解值、骨髓、血糖、X光、全身斷層掃瞄等）",
+     "reason": "全部 section 均未詳列治療前檢查項目（血液、肝腎功能、電解值、骨髓、血糖、X光、全身斷層掃瞄等）"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 section 均未明確提及「確認病患身體狀況能夠接受化學治療」之陳述",
+     "reason": "全部 section 均未明確提及「確認病患身體狀況能夠接受化學治療」之陳述"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "雖 facts 段提及住院化療事實，但未載明係被告「提出建議」之主張",
+     "reason": "雖 facts 段提及住院化療事實，但未載明係被告「提出建議」之主張"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "facts 段提及糞便潛血檢查，但 defense section 未特別強調「一價陽性反應」之具體結果，且此項屬程序性事實",
+     "reason": "facts 段提及糞便潛血檢查，但 defense section 未特別強調「一價陽性反應」之具體結果，且此項屬程序性事實"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense 段僅提及「注射克多炎」但未載明「10月16日、17日」之具體日期",
+     "reason": "defense 段僅提及「注射克多炎」但未載明「10月16日、17日」之具體日期"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense 段僅提及給予克多炎緩解發燒，未說明「其他退燒藥物已經無效」之背景",
+     "reason": "defense 段僅提及給予克多炎緩解發燒，未說明「其他退燒藥物已經無效」之背景"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "reasoning 段提及白血球監測，但未明確載明 defense 主張之「當時病人血球較低」",
+     "reason": "reasoning 段提及白血球監測，但未明確載明 defense 主張之「當時病人血球較低」"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全部 section 均未提及「血球較低不適合做侵入性檢查」之關鍵辯護理由，影響辯護要點理解",
+     "reason": "全部 section 均未提及「血球較低不適合做侵入性檢查」之關鍵辯護理由，影響辯護要點理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 section 均未明確說明會診外科、放射線科之目的為「做侵入性檢查」",
+     "reason": "全部 section 均未明確說明會診外科、放射線科之目的為「做侵入性檢查」"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense 段僅提及「依據抽血數值及臨床症狀判斷無消化性潰瘍徵兆，故未進行內視鏡檢查」，未明確主張「不適合做侵入性檢查所以沒有給予會診」，屬辯護要點差異",
+     "reason": "defense 段僅提及「依據抽血數值及臨床症狀判斷無消化性潰瘍徵兆，故未進行內視鏡檢查」，未明確主張「不適合做侵入性檢查所以沒有給予會診」，屬辯護要點差異"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "defense 段提及「法醫解剖未發現腸胃道出血現象」與其臨床觀察相符，但未明確表示「法醫鑑定結果與伊臨床上看到的是一致的」之用語",
+     "reason": "defense 段提及「法醫解剖未發現腸胃道出血現象」與其臨床觀察相符，但未明確表示「法醫鑑定結果與伊臨床上看到的是一致的」之用語"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "opinions 段提及死因含骨髓抑制，但未載明 defense 主張「化療本來就有可能導致骨髓抑制」之辯解",
+     "reason": "opinions 段提及死因含骨髓抑制，但未載明 defense 主張「化療本來就有可能導致骨髓抑制」之辯解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 section 均未提及「病程進展可能造成骨髓抑制」之替代因果主張",
+     "reason": "全部 section 均未提及「病程進展可能造成骨髓抑制」之替代因果主張"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全部 section 均未提及「伯基特氏淋巴瘤是人類已知最高惡性度之腫瘤」之惡性度論述，屬高劑量化療正當化之關鍵論據",
+     "reason": "全部 section 均未提及「伯基特氏淋巴瘤是人類已知最高惡性度之腫瘤」之惡性度論述，屬高劑量化療正當化之關鍵論據"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全部 section 均未提及「低劑量化療無法徹底清除腫瘤反而增加抗藥性」之治療策略辯解",
+     "reason": "全部 section 均未提及「低劑量化療無法徹底清除腫瘤反而增加抗藥性」之治療策略辯解"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全部 section 均未明確主張「必須使用高劑量化療」之治療方針，reasoning 段僅提及劑量換算未超標",
+     "reason": "全部 section 均未明確主張「必須使用高劑量化療」之治療方針，reasoning 段僅提及劑量換算未超標"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全部 section 均未提及「9月29日、10月7日分別給予MTX 13,840mg、13,360mg」之具體劑量與日期，影響用藥爭議理解",
+     "reason": "全部 section 均未提及「9月29日、10月7日分別給予MTX 13,840mg、13,360mg」之具體劑量與日期，影響用藥爭議理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 section 均未特別強調「上述劑量是注射到病患身上之劑量」之用語確認",
+     "reason": "全部 section 均未特別強調「上述劑量是注射到病患身上之劑量」之用語確認"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_opinions 提及「第一次、第二次、第三次鑑定」共3份，GT claim 稱「2份」與原文不符，摘要未提及份數資訊",
+     "reason": "section_opinions 提及「第一次、第二次、第三次鑑定」共3份，GT claim 稱「2份」與原文不符，摘要未提及份數資訊"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「住院後化學治療前檢查結果正常」之相關敘述",
+     "reason": "遍查五個 section 原文，未見「住院後化學治療前檢查結果正常」之相關敘述"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「乳酸去氫酵素（SDH）正常」之相關檢驗數值",
+     "reason": "遍查五個 section 原文，未見「乳酸去氫酵素（SDH）正常」之相關檢驗數值"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「體溫36.0度、心跳85次、呼吸20次、血壓111/59mmHg」等具體生命徵象數值",
+     "reason": "遍查五個 section 原文，未見「體溫36.0度、心跳85次、呼吸20次、血壓111/59mmHg」等具體生命徵象數值"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「經驗性投藥處理以降低胃腸道出血風險」之相關敘述",
+     "reason": "遍查五個 section 原文，未見「經驗性投藥處理以降低胃腸道出血風險」之相關敘述"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「prednisolone 增加腸胃道出血風險」之相關醫療細節",
+     "reason": "遍查五個 section 原文，未見「prednisolone 增加腸胃道出血風險」之相關醫療細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「二週後解血便」之確切時間點敘述",
+     "reason": "遍查五個 section 原文，未見「二週後解血便」之確切時間點敘述"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，雖 section_facts 提及「注射退燒針克多炎」，但未見「10月16日及17日各給一劑」之具體時間與劑量",
+     "reason": "遍查五個 section 原文，雖 section_facts 提及「注射退燒針克多炎」，但未見「10月16日及17日各給一劑」之具體時間與劑量"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「診斷分期確定後進行化學治療約2至3週」之療程計畫",
+     "reason": "遍查五個 section 原文，未見「診斷分期確定後進行化學治療約2至3週」之療程計畫"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「cyclophosphamid」藥物名稱",
+     "reason": "遍查五個 section 原文，未見「cyclophosphamid」藥物名稱"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，未見「無標準劑量、無標準給藥天數」之相關敘述",
+     "reason": "遍查五個 section 原文，未見「無標準劑量、無標準給藥天數」之相關敘述"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「密集性高劑量化療前出血風險考量」之詳細醫療評估",
+     "reason": "遍查五個 section 原文，未見「密集性高劑量化療前出血風險考量」之詳細醫療評估"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「會診後評估是否繼續施行化學治療或加強腸胃道藥物治療」之雙向評估",
+     "reason": "遍查五個 section 原文，未見「會診後評估是否繼續施行化學治療或加強腸胃道藥物治療」之雙向評估"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「內視鏡檢查視會診後評估結果而定」之決策邏輯",
+     "reason": "遍查五個 section 原文，未見「內視鏡檢查視會診後評估結果而定」之決策邏輯"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，雖 section_facts 提及血便，但未見「10月10日」之確切日期",
+     "reason": "遍查五個 section 原文，雖 section_facts 提及血便，但未見「10月10日」之確切日期"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「無從依據檢驗結果查知腸胃道出血症狀」之因果推論",
+     "reason": "遍查五個 section 原文，未見「無從依據檢驗結果查知腸胃道出血症狀」之因果推論"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "遍查五個 section 原文，雖 section_reasoning 提及劑量換算，但未見「超過建議劑量2倍以上、9月29日MTX13,840mg、10月7日MTX13,360mg」之具體數值與比較",
+     "reason": "遍查五個 section 原文，雖 section_reasoning 提及劑量換算，但未見「超過建議劑量2倍以上、9月29日MTX13,840mg、10月7日MTX13,360mg」之具體數值與比較"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "遍查五個 section 原文，pred claim 部分涵蓋「未會診」但未涵蓋「prednisolone、退燒針克多炎（keto）」等藥物指控",
+     "reason": "遍查五個 section 原文，pred claim 部分涵蓋「未會診」但未涵蓋「prednisolone、退燒針克多炎（keto）」等藥物指控"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「脊髓腔內注射預防中樞神經腫瘤復發」之相關敘述",
+     "reason": "遍查五個 section 原文，未見「脊髓腔內注射預防中樞神經腫瘤復發」之相關敘述"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「增加腦脊髓液藥物濃度、降低中樞神經腫瘤復發風險」之治療機轉",
+     "reason": "遍查五個 section 原文，未見「增加腦脊髓液藥物濃度、降低中樞神經腫瘤復發風險」之治療機轉"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「MTX 8-15g/㎡」之劑量範圍",
+     "reason": "遍查五個 section 原文，未見「MTX 8-15g/㎡」之劑量範圍"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「急性白血病與高惡性淋巴瘤」之適應症說明",
+     "reason": "遍查五個 section 原文，未見「急性白血病與高惡性淋巴瘤」之適應症說明"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遍查五個 section 原文，未見「各國各家醫院慣用劑量依其治療處方而異」之醫療慣例說明",
+     "reason": "遍查五個 section 原文，未見「各國各家醫院慣用劑量依其治療處方而異」之醫療慣例說明"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "遍查五個 section 原文，未見「MTX劑量1gm到15gm不等」之劑量範圍",
+     "reason": "遍查五個 section 原文，未見「MTX劑量1gm到15gm不等」之劑量範圍"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「經驗性投藥」為鑑定意見中具體建議事項，屬醫療處置評估要點，摘要未提及",
+     "reason": "「經驗性投藥」為鑑定意見中具體建議事項，屬醫療處置評估要點，摘要未提及"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "第二次鑑定意見與第一次意見不同，屬鑑定爭點，摘要未提及",
+     "reason": "第二次鑑定意見與第一次意見不同，屬鑑定爭點，摘要未提及"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "會診專業科醫師之建議為鑑定意見重要內容，摘要未提及",
+     "reason": "會診專業科醫師之建議為鑑定意見重要內容，摘要未提及"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "10月10日血便為具體時間點，屬病程細節",
+     "reason": "10月10日血便為具體時間點，屬病程細節"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "prednisolone 藥名已於其他段落提及，此處為風險說明",
+     "reason": "prednisolone 藥名已於其他段落提及，此處為風險說明"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "白血球具體數值為檢驗細節",
+     "reason": "白血球具體數值為檢驗細節"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "白血球具體數值為檢驗細節",
+     "reason": "白血球具體數值為檢驗細節"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "白血球顆粒百分比為檢驗細節",
+     "reason": "白血球顆粒百分比為檢驗細節"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "抗生素更換細節（Tienam）為病程處置細節",
+     "reason": "抗生素更換細節（Tienam）為病程處置細節"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "抗黴菌藥物細節（Diflucan）為病程處置細節",
+     "reason": "抗黴菌藥物細節（Diflucan）為病程處置細節"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "抗黴菌藥物更換細節（Cancidas）為病程處置細節",
+     "reason": "抗黴菌藥物更換細節（Cancidas）為病程處置細節"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "文獻名稱（Principles of Cancer Treatment）為引用細節",
+     "reason": "文獻名稱（Principles of Cancer Treatment）為引用細節"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「難逕以白血球數量論斷不應續行化學治療」為法院重要法律判斷，摘要未明確提及",
+     "reason": "「難逕以白血球數量論斷不應續行化學治療」為法院重要法律判斷，摘要未明確提及"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "公訴人推論內容為法院反駁對象，屬論證結構要點",
+     "reason": "公訴人推論內容為法院反駁對象，屬論證結構要點"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「依公訴人所提出之證據，僅能證明...」為判決核心法律論證，涉及證據評價與舉證責任分配，影響判決結論理解",
+     "reason": "「依公訴人所提出之證據，僅能證明...」為判決核心法律論證，涉及證據評價與舉證責任分配，影響判決結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 37,
+   "matched": 49,
+   "partial": 5,
+   "missing": 85,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8977,
+  "compression_afg_chars": 1143,
+  "compression_source_chars": 11168,
+  "gt_length_ratio": 0.2228,
+  "gt_length_afg_chars": 1143,
+  "gt_length_gt_chars": 5131,
+  "section_balance": 0.2759
+ }
 }

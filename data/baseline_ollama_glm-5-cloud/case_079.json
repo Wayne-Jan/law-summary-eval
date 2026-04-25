@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -140,5 +141,193 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6488,
+  "fact_recall": 0.6875,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8148,
+  "quality_overall": 4.9,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.7647,
+  "citation_support_score": 0.8,
+  "uncited_rate": 0.214,
+  "faithfulness_combined": {
+   "score": 0.7606,
+   "citation_fidelity": 0.6011,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.929,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 13
+  },
+  "weighted_recall": 0.8843,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 15,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要僅提及「由被告看診」，未明確強調「親自擔任門診」之親自性，但此為醫師執業之常態理解，不影響案情",
+     "reason": "摘要僅提及「由被告看診」，未明確強調「親自擔任門診」之親自性，但此為醫師執業之常態理解，不影響案情"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要未提及病患主觀認知有減肥必要，僅客觀陳述BMI數值，屬背景性事實，不影響過失責任判斷",
+     "reason": "摘要未提及病患主觀認知有減肥必要，僅客觀陳述BMI數值，屬背景性事實，不影響過失責任判斷"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要提及送醫急救與死亡結果，未明確記載「入加護病房」之中間過程，屬程序性細節，不影響因果關係理解",
+     "reason": "摘要提及送醫急救與死亡結果，未明確記載「入加護病房」之中間過程，屬程序性細節，不影響因果關係理解"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要提及「同年月14日」昏迷與死亡結果，未明確記載「16日上午9時30分」之確切死亡時間，但死亡日期與時序已正確呈現",
+     "reason": "摘要提及「同年月14日」昏迷與死亡結果，未明確記載「16日上午9時30分」之確切死亡時間，但死亡日期與時序已正確呈現"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要未提及中樞神經興奮劑可能導致年輕女性腦出血之醫學風險，此為檢察官起訴論據之一，雖法院最終否定因果關係，但屬案情重要背景",
+     "reason": "摘要未提及中樞神經興奮劑可能導致年輕女性腦出血之醫學風險，此為檢察官起訴論據之一，雖法院最終否定因果關係，但屬案情重要背景"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要未明確提及「並無不能注意之情形」之主觀注意能力前提，此為過失罪判斷要件之一，影響過失責任理解",
+     "reason": "摘要未明確提及「並無不能注意之情形」之主觀注意能力前提，此為過失罪判斷要件之一，影響過失責任理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要未明確記載「2天後」之服藥時間長度，雖提及服藥事實，但時間要素對因果關係判斷具重要性（法院認定需3-5年才能形成病態肥大）",
+     "reason": "摘要未明確記載「2天後」之服藥時間長度，雖提及服藥事實，但時間要素對因果關係判斷具重要性（法院認定需3-5年才能形成病態肥大）"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "與gt_claim_id 7為同一事實之重複GT claim，已於gt_claim_id 7改判為matched",
+     "reason": "與gt_claim_id 7為同一事實之重複GT claim，已於gt_claim_id 7改判為matched"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "與gt_claim_id 8為同一事實之重複GT claim，已於gt_claim_id 8標記",
+     "reason": "與gt_claim_id 8為同一事實之重複GT claim，已於gt_claim_id 8標記"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "摘要提及「急救後仍死亡」之結果，未明確描述「病況持續惡化」之動態過程，屬病程細節，非核心事實",
+     "reason": "摘要提及「急救後仍死亡」之結果，未明確描述「病況持續惡化」之動態過程，屬病程細節，非核心事實"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經搜尋全部5個section，均未提及「主訴最近體重增加」，確認缺失",
+     "reason": "經搜尋全部5個section，均未提及「主訴最近體重增加」，確認缺失"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "開立藥物期間具體週數為細節性事實，summary未提及不影響辯護主軸理解",
+     "reason": "開立藥物期間具體週數為細節性事實，summary未提及不影響辯護主軸理解"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "詳細藥物清單為清單式細節，無損辯護要點理解",
+     "reason": "詳細藥物清單為清單式細節，無損辯護要點理解"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "代餐劑量及Ducolax屬細節性用藥資訊",
+     "reason": "代餐劑量及Ducolax屬細節性用藥資訊"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "第2週用藥調整為治療細節",
+     "reason": "第2週用藥調整為治療細節"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "PPA風險說明為背景醫學資訊，未直接影響判決結果",
+     "reason": "PPA風險說明為背景醫學資訊，未直接影響判決結果"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "接獲電話與否為程序性抗辯，不影響過失認定核心",
+     "reason": "接獲電話與否為程序性抗辯，不影響過失認定核心"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "鑑定報告具體日期為程序性資訊，不影響死因機轉理解",
+     "reason": "鑑定報告具體日期為程序性資訊，不影響死因機轉理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均無提及 Mephentermine 藥物分類為禁藥之相關內容",
+     "reason": "五個 section 原文均無提及 Mephentermine 藥物分類為禁藥之相關內容"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均無提及 Mephentermine 使用過量導致安非他命中毒之內容",
+     "reason": "五個 section 原文均無提及 Mephentermine 使用過量導致安非他命中毒之內容"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 72,
+   "pred_total": 42,
+   "matched": 47,
+   "partial": 5,
+   "missing": 20,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9336,
+  "compression_afg_chars": 1234,
+  "compression_source_chars": 18597,
+  "gt_length_ratio": 0.495,
+  "gt_length_afg_chars": 1234,
+  "gt_length_gt_chars": 2493,
+  "section_balance": 0.6296
+ }
 }

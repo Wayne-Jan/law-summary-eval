@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -132,5 +133,1026 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.4229,
+  "fact_recall": 0.2602,
+  "fact_precision": 1.0,
+  "fact_f1": 0.413,
+  "quality_overall": 4.7857,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.4762,
+  "citation_support_score": 0.5826,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.6857,
+   "citation_fidelity": 0.4762,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.6718,
+  "missing_severity": {
+   "critical": 5,
+   "important": 44,
+   "minor": 90,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "摘要未提及醫師應注意Tegretol是否屬核准適應症之注意義務，雖section_opinions及section_reasoning提及「適應症外使用」，但係說明未違反醫療常規，而非醫師應注意之義務",
+     "reason": "摘要未提及醫師應注意Tegretol是否屬核准適應症之注意義務，雖section_opinions及section_reasoning提及「適應症外使用」，但係說明未違反醫療常規，而非醫師應注意之義務"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「A醫院心臟內科專科醫師」，未提及「臺中縣沙鹿鎮光田醫院」具體名稱，確認維持 missing",
+     "reason": "section_01_facts.txt 僅提及「A醫院心臟內科專科醫師」，未提及「臺中縣沙鹿鎮光田醫院」具體名稱，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「民國89年7月起」，未提及「7月26日」具體日期，確認維持 missing",
+     "reason": "section_01_facts.txt 僅提及「民國89年7月起」，未提及「7月26日」具體日期，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「90年12月12日」門診時病患主訴雙腳麻木，與 GT 之「89年12月12日」不符，且摘要未明確提及「已有數日」，確認維持 missing",
+     "reason": "section_01_facts.txt 提及「90年12月12日」門診時病患主訴雙腳麻木，與 GT 之「89年12月12日」不符，且摘要未明確提及「已有數日」，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 確實提及「懷疑為神經根病變，先給予三環抗憂鬱藥物治療」，但此係在 facts 段而非 defense 段，gt_claim_id 23 歸屬 defense section 比對，故於 defense section 維持 missing",
+     "reason": "section_01_facts.txt 確實提及「懷疑為神經根病變，先給予三環抗憂鬱藥物治療」，但此係在 facts 段而非 defense 段，gt_claim_id 23 歸屬 defense section 比對，故於 defense section 維持 missing"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「91年1月9日」改以 Tegretol 藥物治療，與 GT 之「90年1月9日」不符，且未提及「給予28日份藥量」，確認維持 missing",
+     "reason": "section_01_facts.txt 提及「91年1月9日」改以 Tegretol 藥物治療，與 GT 之「90年1月9日」不符，且未提及「給予28日份藥量」，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「91年2月6日」回診繼續開立 Tegretol，與 GT 之「90年2月6日」不符，且未提及「四週份量」，確認維持 missing",
+     "reason": "section_01_facts.txt 提及「91年2月6日」回診繼續開立 Tegretol，與 GT 之「90年2月6日」不符，且未提及「四週份量」，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「91年2月11日」因「全身紅疹」急診住院，與 GT 之「90年2月11日」不符，且摘要嚴重省略「皮膚水泡式出疹及口腔潰瘍併膿樣分泌物、眼睛紅腫、持續發燒畏寒、血尿及黃疸」等詳細症狀，確認維持 missing",
+     "reason": "section_01_facts.txt 提及「91年2月11日」因「全身紅疹」急診住院，與 GT 之「90年2月11日」不符，且摘要嚴重省略「皮膚水泡式出疹及口腔潰瘍併膿樣分泌物、眼睛紅腫、持續發燒畏寒、血尿及黃疸」等詳細症狀，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section，均未提及「症狀並未明顯改善」之事實，確認維持 missing",
+     "reason": "遍查全部 5 個 section，均未提及「症狀並未明顯改善」之事實，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section，均未提及「病危通知」，僅 facts 段提及「後於2月25日死亡」，確認維持 missing",
+     "reason": "遍查全部 5 個 section，均未提及「病危通知」，僅 facts 段提及「後於2月25日死亡」，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「2月16日轉至B醫院」，但未提及「90年」年份，與 GT 之「90年2月16日」日期不完整匹配，確認維持 missing",
+     "reason": "section_01_facts.txt 提及「2月16日轉至B醫院」，但未提及「90年」年份，與 GT 之「90年2月16日」日期不完整匹配，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及「後於2月25日死亡」，但未提及「90年」年份，與 GT 之「90年2月25日」日期不完整匹配，確認維持 missing",
+     "reason": "section_01_facts.txt 提及「後於2月25日死亡」，但未提及「90年」年份，與 GT 之「90年2月25日」日期不完整匹配，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查全部 5 個 section，均未提及「本件用藥不需要經過病患同意」之辯護主張，確認維持 missing",
+     "reason": "遍查全部 5 個 section，均未提及「本件用藥不需要經過病患同意」之辯護主張，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查全部 5 個 section，均未提及「病例記載蔡連壽血型為B型，無藥物過敏」，確認維持 missing",
+     "reason": "遍查全部 5 個 section，均未提及「病例記載蔡連壽血型為B型，無藥物過敏」，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查全部 5 個 section，均未提及「被告並非主治醫師」之辯護主張，確認維持 missing",
+     "reason": "遍查全部 5 個 section，均未提及「被告並非主治醫師」之辯護主張，確認維持 missing"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及「臨床上極為罕見」特性，屬鑑定細節",
+     "reason": "摘要未提及「臨床上極為罕見」特性，屬鑑定細節"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未詳述病症原因多樣性，屬背景知識",
+     "reason": "摘要未詳述病症原因多樣性，屬背景知識"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要僅提及「適應症外使用」，未列完整核准適應症清單",
+     "reason": "摘要僅提及「適應症外使用」，未列完整核准適應症清單"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及法令規範狀況",
+     "reason": "摘要未提及法令規範狀況"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及藥物使用必要性之醫療常規要求",
+     "reason": "摘要未提及藥物使用必要性之醫療常規要求"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未明確提及適應症外使用需徵得病患同意",
+     "reason": "摘要未明確提及適應症外使用需徵得病患同意"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及醫師追蹤用藥結果之義務",
+     "reason": "摘要未提及醫師追蹤用藥結果之義務"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及90年以前藥害救濟案例",
+     "reason": "摘要未提及90年以前藥害救濟案例"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及衛生署發函警示之具體日期",
+     "reason": "摘要未提及衛生署發函警示之具體日期"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及非核准適應症不予救濟之規定",
+     "reason": "摘要未提及非核准適應症不予救濟之規定"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未涵蓋鑑定書詳細案情概要的病患就診起始時間",
+     "reason": "摘要未涵蓋鑑定書詳細案情概要的病患就診起始時間"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及病人痛風病史",
+     "reason": "摘要未提及病人痛風病史"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及詳細用藥記錄（Indocid、Voren等）",
+     "reason": "摘要未提及詳細用藥記錄（Indocid、Voren等）"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未涵蓋詳細用藥歷程（Tilcotil、Sulindec等）",
+     "reason": "摘要未涵蓋詳細用藥歷程（Tilcotil、Sulindec等）"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及高三酸甘油脂血症病史",
+     "reason": "摘要未提及高三酸甘油脂血症病史"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及降血脂藥物Lopid使用",
+     "reason": "摘要未提及降血脂藥物Lopid使用"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及下肢疼痛就診記錄",
+     "reason": "摘要未提及下肢疼痛就診記錄"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及腰椎退化性關節炎診斷",
+     "reason": "摘要未提及腰椎退化性關節炎診斷"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及脊髓檢查結果",
+     "reason": "摘要未提及脊髓檢查結果"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未詳細記載止痛藥物治療次數",
+     "reason": "摘要未詳細記載止痛藥物治療次數"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及足部症狀及血管擴張藥物",
+     "reason": "摘要未提及足部症狀及血管擴張藥物"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及高血壓治療",
+     "reason": "摘要未提及高血壓治療"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及心臟病病史",
+     "reason": "摘要未提及心臟病病史"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及多項心血管藥物",
+     "reason": "摘要未提及多項心血管藥物"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及前列腺肥大治療",
+     "reason": "摘要未提及前列腺肥大治療"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及白內障診斷",
+     "reason": "摘要未提及白內障診斷"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及定期診療起始時間",
+     "reason": "摘要未提及定期診療起始時間"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未詳細列出89年7月26日開藥內容",
+     "reason": "摘要未詳細列出89年7月26日開藥內容"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及病況穩定期間",
+     "reason": "摘要未提及病況穩定期間"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及止痛藥使用狀況",
+     "reason": "摘要未提及止痛藥使用狀況"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及降血壓藥停用",
+     "reason": "摘要未提及降血壓藥停用"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及毛地黃停用",
+     "reason": "摘要未提及毛地黃停用"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未詳細列出90年11月14日門診用藥",
+     "reason": "摘要未詳細列出90年11月14日門診用藥"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及雙腳麻木症狀（facts section 有提及）",
+     "reason": "摘要未提及雙腳麻木症狀（facts section 有提及）"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及Tofranil三環抗憂鬱藥物治療（facts section 提及「三環抗憂鬱藥物」）",
+     "reason": "摘要未提及Tofranil三環抗憂鬱藥物治療（facts section 提及「三環抗憂鬱藥物」）"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未詳細記載Tegretol開始使用的日期及劑量（facts section 有提及日期）",
+     "reason": "摘要未詳細記載Tegretol開始使用的日期及劑量（facts section 有提及日期）"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及具體藥量（218日份）",
+     "reason": "摘要未提及具體藥量（218日份）"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未詳細列出91年2月6日所有症狀（facts section 概括提及）",
+     "reason": "摘要未詳細列出91年2月6日所有症狀（facts section 概括提及）"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及抽血檢查結果",
+     "reason": "摘要未提及抽血檢查結果"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要未提及續開藥具體量數（facts section 僅概括提及「繼續開立」）",
+     "reason": "摘要未提及續開藥具體量數（facts section 僅概括提及「繼續開立」）"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "追加藥物細節（Voren、Medicon-A、Garason）未見於任何段落，屬醫療程序細節，不影響鑑定意見理解",
+     "reason": "追加藥物細節（Voren、Medicon-A、Garason）未見於任何段落，屬醫療程序細節，不影響鑑定意見理解"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急診時詳細症狀（口腔潰瘍併膿樣分泌物、眼睛紅腫四天、血尿及黃疸）未見於任何段落，facts段僅簡述「全身紅疹等症狀」",
+     "reason": "急診時詳細症狀（口腔潰瘍併膿樣分泌物、眼睛紅腫四天、血尿及黃疸）未見於任何段落，facts段僅簡述「全身紅疹等症狀」"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓數據（159/73 mmHg）未見於任何段落，屬理學檢查細節",
+     "reason": "血壓數據（159/73 mmHg）未見於任何段落，屬理學檢查細節"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "脈搏數據（113次/分）未見於任何段落，屬理學檢查細節",
+     "reason": "脈搏數據（113次/分）未見於任何段落，屬理學檢查細節"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "呼吸速率數據（20次/分）未見於任何段落，屬理學檢查細節",
+     "reason": "呼吸速率數據（20次/分）未見於任何段落，屬理學檢查細節"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "體溫數據（37.6度）未見於任何段落，屬理學檢查細節",
+     "reason": "體溫數據（37.6度）未見於任何段落，屬理學檢查細節"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "發炎指數CRP（7.1 mg/dL）未見於任何段落，屬檢驗數據細節",
+     "reason": "發炎指數CRP（7.1 mg/dL）未見於任何段落，屬檢驗數據細節"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "膽紅素數據（總膽紅素9.2 mg/dL、結合型8.3 mg/dL）未見於任何段落，屬檢驗數據細節",
+     "reason": "膽紅素數據（總膽紅素9.2 mg/dL、結合型8.3 mg/dL）未見於任何段落，屬檢驗數據細節"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "肝功能指數（ALT 112 U/L、AST 82 U/L）未見於任何段落，屬檢驗數據細節",
+     "reason": "肝功能指數（ALT 112 U/L、AST 82 U/L）未見於任何段落，屬檢驗數據細節"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腹部超音波結果（肝硬化、脾臟腫大、膽結石、左腎囊腫）未見於任何段落，屬檢查細節",
+     "reason": "腹部超音波結果（肝硬化、脾臟腫大、膽結石、左腎囊腫）未見於任何段落，屬檢查細節"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "胸部X光結果（心臟擴大、主動脈硬化）未見於任何段落，屬檢查細節",
+     "reason": "胸部X光結果（心臟擴大、主動脈硬化）未見於任何段落，屬檢查細節"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "住院建議決策過程未見於任何段落，屬醫療程序細節",
+     "reason": "住院建議決策過程未見於任何段落，屬醫療程序細節"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "住院日期（二月十一日）與科別（肝膽腸胃科）未見於任何段落，facts段僅簡述「急診住院」",
+     "reason": "住院日期（二月十一日）與科別（肝膽腸胃科）未見於任何段落，facts段僅簡述「急診住院」"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "會診皮膚科過程未見於任何段落，屬醫療程序細節",
+     "reason": "會診皮膚科過程未見於任何段落，屬醫療程序細節"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "住院期間症狀變化（二月十一日至十六日症狀無明顯改善）未見於任何段落，影響病情發展理解",
+     "reason": "住院期間症狀變化（二月十一日至十六日症狀無明顯改善）未見於任何段落，影響病情發展理解"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "住院期間併發症狀（發燒、畏寒、腹瀉、流鼻血）未見於任何段落，屬症狀細節",
+     "reason": "住院期間併發症狀（發燒、畏寒、腹瀉、流鼻血）未見於任何段落，屬症狀細節"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病危通知與轉診過程未見於任何段落，facts段僅簡述「於2月16日轉至B醫院」",
+     "reason": "病危通知與轉診過程未見於任何段落，facts段僅簡述「於2月16日轉至B醫院」"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "轉診時理學檢查細節（軀幹背部痂皮、脫屑及水皰）未見於任何段落，層級為重要的外觀描述",
+     "reason": "轉診時理學檢查細節（軀幹背部痂皮、脫屑及水皰）未見於任何段落，層級為重要的外觀描述"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "轉診時症狀（黏膜破皮、輕度呼吸困難、黃疸、腹脹）未見於任何段落，屬症狀細節",
+     "reason": "轉診時症狀（黏膜破皮、輕度呼吸困難、黃疸、腹脹）未見於任何段落，屬症狀細節"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "清創術與燒燙傷病房治療過程未見於任何段落，影響後續治療流程理解",
+     "reason": "清創術與燒燙傷病房治療過程未見於任何段落，影響後續治療流程理解"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "再次清創手術日期（二月十八日）未見於任何段落，屬治療時間細節",
+     "reason": "再次清創手術日期（二月十八日）未見於任何段落，屬治療時間細節"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "傷口細菌培養結果未見於任何段落，屬檢驗細節",
+     "reason": "傷口細菌培養結果未見於任何段落，屬檢驗細節"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腹部電腦斷層檢查結果未見於任何段落，屬檢查細節",
+     "reason": "腹部電腦斷層檢查結果未見於任何段落，屬檢查細節"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「黃疸指數及發炎指數持續升高」未見於任何段落，影響病情惡化趨勢理解",
+     "reason": "「黃疸指數及發炎指數持續升高」未見於任何段落，影響病情惡化趨勢理解"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「敗血性休克、急性腎衰竭及全血球減少症等表徵」未見於任何段落，屬關鍵病生理轉折",
+     "reason": "「敗血性休克、急性腎衰竭及全血球減少症等表徵」未見於任何段落，屬關鍵病生理轉折"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「積極治療後病況仍惡化並持續產生休克」未見於任何段落，影響治療反應與預後理解",
+     "reason": "「積極治療後病況仍惡化並持續產生休克」未見於任何段落，影響治療反應與預後理解"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「家屬於二月二十五日辦理病危自動出院，而於自宅死亡」未見於任何段落，facts段僅簡述「後於2月25日死亡」，遺漏關鍵時間點與死亡地點",
+     "reason": "「家屬於二月二十五日辦理病危自動出院，而於自宅死亡」未見於任何段落，facts段僅簡述「後於2月25日死亡」，遺漏關鍵時間點與死亡地點"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「出院時主要診斷為史蒂文強森症候群」未明確見於任何段落，雖opinions段提及該症候群為死因，但未明確標示為出院診斷",
+     "reason": "「出院時主要診斷為史蒂文強森症候群」未明確見於任何段落，雖opinions段提及該症候群為死因，但未明確標示為出院診斷"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「出院時其他診斷列表（敗血症、肝硬化等）未見於任何段落，屬診斷細節",
+     "reason": "「出院時其他診斷列表（敗血症、肝硬化等）未見於任何段落，屬診斷細節"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred claim僅用「病患X」匿名，未提及具體開藥日期「九十一年一月九日、二月六日」及病患姓名「蔡連壽」、四週份量等細節",
+     "reason": "pred claim僅用「病患X」匿名，未提及具體開藥日期「九十一年一月九日、二月六日」及病患姓名「蔡連壽」、四週份量等細節"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未提及醫師法第十二條之一的具體施行日期，僅提及「醫師法告知義務」未明確日期",
+     "reason": "pred未提及醫師法第十二條之一的具體施行日期，僅提及「醫師法告知義務」未明確日期"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未引用醫療法第五十八條的具體條文內容及訂定日期",
+     "reason": "pred未引用醫療法第五十八條的具體條文內容及訂定日期"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred提及「醫師法告知義務」但未詳細引用醫師法第十二條之一的具體條文內容",
+     "reason": "pred提及「醫師法告知義務」但未詳細引用醫師法第十二條之一的具體條文內容"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及第一次開藥時法律尚未規定病歷記載用藥情形，影響對法律適用時點的理解",
+     "reason": "pred未提及第一次開藥時法律尚未規定病歷記載用藥情形，影響對法律適用時點的理解"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及第二次開藥時依法應記載用藥情形的法律義務",
+     "reason": "pred未提及第二次開藥時依法應記載用藥情形的法律義務"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及病歷未記載用藥情形的事實，屬病歷完整性重要資訊",
+     "reason": "pred未提及病歷未記載用藥情形的事實，屬病歷完整性重要資訊"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及證人蔡慧敏的證詞內容，影響對告知義務履行的判斷",
+     "reason": "pred未提及證人蔡慧敏的證詞內容，影響對告知義務履行的判斷"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及史蒂文強森症候群的具體發生率數據「萬分之一點四」",
+     "reason": "pred未提及史蒂文強森症候群的具體發生率數據「萬分之一點四」"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未提及被告關於說明需時「五至十幾分鐘」的自承內容",
+     "reason": "pred未提及被告關於說明需時「五至十幾分鐘」的自承內容"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及九十年以前其他醫師使用Tegretol導致SJS並申請藥害救濟的案例，影響對藥物風險認知脈絡的理解",
+     "reason": "pred未提及九十年以前其他醫師使用Tegretol導致SJS並申請藥害救濟的案例，影響對藥物風險認知脈絡的理解"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及衛生署發函的具體日期及文號「衛署藥字第０九０００一二一三四號」",
+     "reason": "pred未提及衛生署發函的具體日期及文號「衛署藥字第０九０００一二一三四號」"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred提及「依鑑定意見」但未引用第一次鑑定書的具體內容關於告知藥物好處壞處",
+     "reason": "pred提及「依鑑定意見」但未引用第一次鑑定書的具體內容關於告知藥物好處壞處"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred雖提及「依鑑定意見」但未引用第二次鑑定書關於「事先告知並經同意是關鍵」的具體內容",
+     "reason": "pred雖提及「依鑑定意見」但未引用第二次鑑定書關於「事先告知並經同意是關鍵」的具體內容"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未引用第二次鑑定書關於「告知內容仍嫌不足」「並無提到嚴重副作用」的具體評價",
+     "reason": "pred未引用第二次鑑定書關於「告知內容仍嫌不足」「並無提到嚴重副作用」的具體評價"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未詳細列出Tegretol的完整適應症範圍",
+     "reason": "pred未詳細列出Tegretol的完整適應症範圍"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及被告原以三環抗鬱劑治療、後改用Tegretol的完整治療過程",
+     "reason": "pred未提及被告原以三環抗鬱劑治療、後改用Tegretol的完整治療過程"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred僅提及「劑量尚屬合理」但未提及Tegretol的具體劑量標準「一百mg，每天兩次或三次」",
+     "reason": "pred僅提及「劑量尚屬合理」但未提及Tegretol的具體劑量標準「一百mg，每天兩次或三次」"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未提及神經痛慢性病性質及二十八日份給藥的合理性論述",
+     "reason": "pred未提及神經痛慢性病性質及二十八日份給藥的合理性論述"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未提及Tegretol常見副作用（頭暈、走路不穩）及其機制",
+     "reason": "pred未提及Tegretol常見副作用（頭暈、走路不穩）及其機制"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未詳細提及Tegretol的皮膚過敏副作用及SJS作為範例",
+     "reason": "pred未詳細提及Tegretol的皮膚過敏副作用及SJS作為範例"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未提及造血功能及肝功能異常等副作用及檢測建議",
+     "reason": "pred未提及造血功能及肝功能異常等副作用及檢測建議"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未提及治療前檢測非臨床常規的論述",
+     "reason": "pred未提及治療前檢測非臨床常規的論述"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "pred未提及定期檢測無法預測史蒂文強森症候群",
+     "reason": "pred未提及定期檢測無法預測史蒂文強森症候群"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及史蒂文強森症候群與病患特殊體質的關聯",
+     "reason": "pred未提及史蒂文強森症候群與病患特殊體質的關聯"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及第一次開藥時未作任何檢測的事實",
+     "reason": "pred未提及第一次開藥時未作任何檢測的事實"
+    },
+    {
+     "gt_claim_id": 153,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及第二次開藥時病患的具體症狀及抽血檢查結果",
+     "reason": "pred未提及第二次開藥時病患的具體症狀及抽血檢查結果"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及第二次開藥時僅作抽血檢測的事實",
+     "reason": "pred未提及第二次開藥時僅作抽血檢測的事實"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred提及二月六日回診但未詳述「發燒及畏寒三至四天，眼睛紅腫、乾咳及流鼻水」等具體症狀",
+     "reason": "pred提及二月六日回診但未詳述「發燒及畏寒三至四天，眼睛紅腫、乾咳及流鼻水」等具體症狀"
+    },
+    {
+     "gt_claim_id": 157,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及二月十一日就診及住院的詳細經過與症狀",
+     "reason": "pred未提及二月十一日就診及住院的詳細經過與症狀"
+    },
+    {
+     "gt_claim_id": 159,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及兩家醫院病歷資料確認診斷的證據基礎",
+     "reason": "pred未提及兩家醫院病歷資料確認診斷的證據基礎"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及排除其他藥物（降尿酸藥物、Voren）與SJS相關性的論述",
+     "reason": "pred未提及排除其他藥物（降尿酸藥物、Voren）與SJS相關性的論述"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "pred未提及其他診所用藥與疾病的因果排除論述",
+     "reason": "pred未提及其他診所用藥與疾病的因果排除論述"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "排除其他藥物加重危害之論述未在摘要中出現，影響死因機轉之完整理解",
+     "reason": "排除其他藥物加重危害之論述未在摘要中出現，影響死因機轉之完整理解"
+    },
+    {
+     "gt_claim_id": 165,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "臺中榮民總醫院清創術處置之鑑定意見未摘要，影響因果關係排除之論述完整",
+     "reason": "臺中榮民總醫院清創術處置之鑑定意見未摘要，影響因果關係排除之論述完整"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "光田醫院後期處置不妥之論述未出現在摘要，影響因果關係判斷之完整呈現",
+     "reason": "光田醫院後期處置不妥之論述未出現在摘要，影響因果關係判斷之完整呈現"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "光田醫院住院期間症狀無改善之過程未詳述，影響案情時間脈絡理解",
+     "reason": "光田醫院住院期間症狀無改善之過程未詳述，影響案情時間脈絡理解"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "轉診至臺中榮總之具體事件（病危通知、家屬要求）未摘要，影響案情完整性",
+     "reason": "轉診至臺中榮總之具體事件（病危通知、家屬要求）未摘要，影響案情完整性"
+    },
+    {
+     "gt_claim_id": 169,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "光田醫院診療具體指明為介入因素，此為影響因果關係認定之關鍵事實",
+     "reason": "光田醫院診療具體指明為介入因素，此為影響因果關係認定之關鍵事實"
+    },
+    {
+     "gt_claim_id": 170,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "臺中榮總清創術處置之鑑定意見未出現於摘要，影響因果關係排除論證",
+     "reason": "臺中榮總清創術處置之鑑定意見未出現於摘要，影響因果關係排除論證"
+    },
+    {
+     "gt_claim_id": 171,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "光田醫院後期處置與死亡結果因果關係無法論斷，為影響判決之關鍵論述",
+     "reason": "光田醫院後期處置與死亡結果因果關係無法論斷，為影響判決之關鍵論述"
+    },
+    {
+     "gt_claim_id": 172,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "死亡證明書記載內容為卷證程序性事實，非案情核心",
+     "reason": "死亡證明書記載內容為卷證程序性事實，非案情核心"
+    },
+    {
+     "gt_claim_id": 179,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "非侵入性醫療行為與同意規定之法律適用為辯護要點之一",
+     "reason": "非侵入性醫療行為與同意規定之法律適用為辯護要點之一"
+    },
+    {
+     "gt_claim_id": 180,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫師法第十二條之一之具體條文內容為法律援引",
+     "reason": "醫師法第十二條之一之具體條文內容為法律援引"
+    },
+    {
+     "gt_claim_id": 181,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "開立藥物無需徵得同意之法律爭點為辯論要旨",
+     "reason": "開立藥物無需徵得同意之法律爭點為辯論要旨"
+    },
+    {
+     "gt_claim_id": 184,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "禁止以推測擬制方法論罪之刑事法原則直接關係判決無罪結論",
+     "reason": "禁止以推測擬制方法論罪之刑事法原則直接關係判決無罪結論"
+    },
+    {
+     "gt_claim_id": 186,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告知後同意法則之學說概念為背景法理論述",
+     "reason": "告知後同意法則之學說概念為背景法理論述"
+    },
+    {
+     "gt_claim_id": 187,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告知後同意法則之例外情形為法理細節",
+     "reason": "告知後同意法則之例外情形為法理細節"
+    },
+    {
+     "gt_claim_id": 188,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "告知後同意法則之理論基礎為學理論述",
+     "reason": "告知後同意法則之理論基礎為學理論述"
+    },
+    {
+     "gt_claim_id": 189,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "一般理性病患標準之司法實務見解為告知義務判斷關鍵",
+     "reason": "一般理性病患標準之司法實務見解為告知義務判斷關鍵"
+    },
+    {
+     "gt_claim_id": 190,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫師告知義務內容範疇之具體論述影響過失認定",
+     "reason": "醫師告知義務內容範疇之具體論述影響過失認定"
+    },
+    {
+     "gt_claim_id": 191,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患年齡背景及長期就診關係為補充性事實",
+     "reason": "病患年齡背景及長期就診關係為補充性事實"
+    },
+    {
+     "gt_claim_id": 193,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫療常規判斷標準之定義為專業鑑定關鍵",
+     "reason": "醫療常規判斷標準之定義為專業鑑定關鍵"
+    },
+    {
+     "gt_claim_id": 195,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "案發時適用法律條文及施行日期為程序性引用",
+     "reason": "案發時適用法律條文及施行日期為程序性引用"
+    },
+    {
+     "gt_claim_id": 196,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "現行醫療法條文不適用之論述為法理說明",
+     "reason": "現行醫療法條文不適用之論述為法理說明"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 196,
+   "pred_total": 49,
+   "matched": 45,
+   "partial": 12,
+   "missing": 139,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9427,
+  "compression_afg_chars": 1434,
+  "compression_source_chars": 25039,
+  "gt_length_ratio": 0.0649,
+  "gt_length_afg_chars": 1434,
+  "gt_length_gt_chars": 22111,
+  "section_balance": 0.0548
+ }
 }

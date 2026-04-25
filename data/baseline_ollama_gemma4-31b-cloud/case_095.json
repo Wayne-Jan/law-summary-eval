@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -137,5 +138,144 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8823,
+  "fact_recall": 0.6831,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8117,
+  "quality_overall": 4.6857,
+  "checklist_pass_rate": 0.9634,
+  "citation_accuracy": 0.9524,
+  "citation_support_score": 0.972,
+  "uncited_rate": 0.036,
+  "faithfulness_combined": {
+   "score": 0.9509,
+   "citation_fidelity": 0.9181,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 5,
+   "correct": 5
+  },
+  "weighted_recall": 0.9155,
+  "missing_severity": {
+   "critical": 0,
+   "important": 5,
+   "minor": 8,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「依當時情況並無不能注意之情形」為注意義務有無障礙之法律評價，事實段確未提及，屬於起訴事實陳述之一環，影響過失認定的前提理解",
+     "reason": "「依當時情況並無不能注意之情形」為注意義務有無障礙之法律評價，事實段確未提及，屬於起訴事實陳述之一環，影響過失認定的前提理解"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 鑑定意見中雖有提及「例如詢問病人是否會麻及是否能正常動作」，但生成摘要未涵蓋此具體檢查方法，屬專業細節性遺漏，不影響核心鑑定意旨理解",
+     "reason": "section_03_opinions.txt 鑑定意見中雖有提及「例如詢問病人是否會麻及是否能正常動作」，但生成摘要未涵蓋此具體檢查方法，屬專業細節性遺漏，不影響核心鑑定意旨理解"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "跨 section 檢索（facts、defense、opinions、verdict、reasoning）均未出現「傷口種類、傷口部位、受傷時間、污染程度、異物、傷口紀錄」等完整列舉，確認為摘要未涵蓋之專業指引細節",
+     "reason": "跨 section 檢索（facts、defense、opinions、verdict、reasoning）均未出現「傷口種類、傷口部位、受傷時間、污染程度、異物、傷口紀錄」等完整列舉，確認為摘要未涵蓋之專業指引細節"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_03_opinions.txt 中「合併傷害」段落提及症狀，但未明確建立「症狀→骨折/神經/肌腱斷裂」之因果關聯說明，生成摘要確未涵蓋此診斷邏輯",
+     "reason": "section_03_opinions.txt 中「合併傷害」段落提及症狀，但未明確建立「症狀→骨折/神經/肌腱斷裂」之因果關聯說明，生成摘要確未涵蓋此診斷邏輯"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "cross-section 檢索未發現「臨床診斷有其侷限，無法百分之百確認」之明確表述，雖 section_05_reasoning.txt 有提及「無積極證據證明」等類似概念，但非同一語義，確認為遺漏",
+     "reason": "cross-section 檢索未發現「臨床診斷有其侷限，無法百分之百確認」之明確表述，雖 section_05_reasoning.txt 有提及「無積極證據證明」等類似概念，但非同一語義，確認為遺漏"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及「以臨床症狀及理學檢查為基礎」，但該表述位於 reasoning 而非 opinions section，且生成摘要未明確說明此診斷基礎，維持 missing 判定",
+     "reason": "section_05_reasoning.txt 雖提及「以臨床症狀及理學檢查為基礎」，但該表述位於 reasoning 而非 opinions section，且生成摘要未明確說明此診斷基礎，維持 missing 判定"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "跨 section 全文檢索未發現「請外科醫師前來檢視或安排手術探查」之相關內容，確認為摘要未涵蓋之處置流程",
+     "reason": "跨 section 全文檢索未發現「請外科醫師前來檢視或安排手術探查」之相關內容，確認為摘要未涵蓋之處置流程"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及「手術前未經影像檢查確認」，但未明確說明「骨折懷疑時安排電腦斷層」之標準流程，屬鑑定意見中之細節性處置規範",
+     "reason": "section_05_reasoning.txt 提及「手術前未經影像檢查確認」，但未明確說明「骨折懷疑時安排電腦斷層」之標準流程，屬鑑定意見中之細節性處置規範"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "跨 section 檢索未發現「動脈損傷時安排電腦斷層血管攝影檢查或轉診」之具體說明，屬專業處置細節",
+     "reason": "跨 section 檢索未發現「動脈損傷時安排電腦斷層血管攝影檢查或轉診」之具體說明，屬專業處置細節"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 生成摘要僅提及「視需要安排進一步檢查」，未列舉「核磁造影、電腦斷層血管攝影、關節鏡、神經肌電圖」等具體檢查項目，屬細節性遺漏",
+     "reason": "section_03_opinions.txt 生成摘要僅提及「視需要安排進一步檢查」，未列舉「核磁造影、電腦斷層血管攝影、關節鏡、神經肌電圖」等具體檢查項目，屬細節性遺漏"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經審查全部五個 section 原文（facts、defense、opinions、verdict、reasoning），均未發現關於「公訴人聲請向急診醫學會或相類學術或醫療單位函詢」及其被駁回之程序事項。此為程序性事實，不影響主要案情理解。",
+     "reason": "經審查全部五個 section 原文（facts、defense、opinions、verdict、reasoning），均未發現關於「公訴人聲請向急診醫學會或相類學術或醫療單位函詢」及其被駁回之程序事項。此為程序性事實，不影響主要案情理解。"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經審查全部五個 section 原文，均未發現關於「辯護人聲請傳喚證人及再送鑑定」之程序事項。此為程序性事實，不影響主要案情理解。",
+     "reason": "經審查全部五個 section 原文，均未發現關於「辯護人聲請傳喚證人及再送鑑定」之程序事項。此為程序性事實，不影響主要案情理解。"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "經審查全部五個 section 原文，均未發現關於「辯護人聲請傳喚證人等及再送鑑定，均無調查必要」之程序事項。此為程序性事實，不影響主要案情理解。",
+     "reason": "經審查全部五個 section 原文，均未發現關於「辯護人聲請傳喚證人等及再送鑑定，均無調查必要」之程序事項。此為程序性事實，不影響主要案情理解。"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 71,
+   "pred_total": 55,
+   "matched": 39,
+   "partial": 19,
+   "missing": 13,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7958,
+  "compression_afg_chars": 1849,
+  "compression_source_chars": 9053,
+  "gt_length_ratio": 0.7858,
+  "gt_length_afg_chars": 1849,
+  "gt_length_gt_chars": 2353,
+  "section_balance": 0.625
+ }
 }

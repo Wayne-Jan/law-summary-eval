@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -139,5 +140,403 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7879,
+  "fact_recall": 0.5691,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7254,
+  "quality_overall": 4.5857,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.985,
+  "uncited_rate": 0.015,
+  "faithfulness_combined": {
+   "score": 0.991,
+   "citation_fidelity": 0.985,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 26,
+   "correct": 26
+  },
+  "weighted_recall": 0.7561,
+  "missing_severity": {
+   "critical": 6,
+   "important": 28,
+   "minor": 16,
+   "details": [
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "GT指被告甲懷疑病情應立即處置，但summary之facts段明確寫被告乙檢視X光懷疑為左側氣血胸；跨section檢查（defense/opinions/verdict/reasoning）均無被告甲於8時40分許到場懷疑病情之記載，核心過失指控事實未涵蓋",
+     "reason": "GT指被告甲懷疑病情應立即處置，但summary之facts段明確寫被告乙檢視X光懷疑為左側氣血胸；跨section檢查（defense/opinions/verdict/reasoning）均無被告甲於8時40分許到場懷疑病情之記載，核心過失指控事實未涵蓋"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "GT含「依當時情況無不能注意之能事，竟疏未注意及此」、「違反醫學常規」等法律規範性表述；facts段雖有「竟延誤處置」及時間線（8:40至10:40），但缺少前述過失注意義務之法律框架描述",
+     "reason": "GT含「依當時情況無不能注意之能事，竟疏未注意及此」、「違反醫學常規」等法律規範性表述；facts段雖有「竟延誤處置」及時間線（8:40至10:40），但缺少前述過失注意義務之法律框架描述"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "GT指被告乙依被告甲指示施作胸管引流，但facts段明確寫「由被告甲施作胸管引流」；opinions及reasoning雖提及「被告乙、甲放置胸管」，但未明確寫出乙依甲指示施作之關係，關鍵處置行為歸屬事實不一致",
+     "reason": "GT指被告乙依被告甲指示施作胸管引流，但facts段明確寫「由被告甲施作胸管引流」；opinions及reasoning雖提及「被告乙、甲放置胸管」，但未明確寫出乙依甲指示施作之關係，關鍵處置行為歸屬事實不一致"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查5個section均未發現被告乙「向家屬建議要做胸部插管」的明確記載，pred僅提及放置胸管需家屬同意，未明確記載建議行為",
+     "reason": "遍查5個section均未發現被告乙「向家屬建議要做胸部插管」的明確記載，pred僅提及放置胸管需家屬同意，未明確記載建議行為"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "法醫研究所「1200毫升」具體數值未在pred中出現。pred 22僅提及「約1000毫升」，與GT「約1200毫升」數值不符，且未明確提及「內景檢查」及失血性休克論斷",
+     "reason": "法醫研究所「1200毫升」具體數值未在pred中出現。pred 22僅提及「約1000毫升」，與GT「約1200毫升」數值不符，且未明確提及「內景檢查」及失血性休克論斷"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個section，未找到「未及詳閱病歷記載」「未考量病患T之血壓數據」等具體指控醫審會鑑定程序瑕疵的文字，pred僅轉述法院質疑醫審會鑑定結果難認允當，未詳述具體程序瑕疵",
+     "reason": "遍查五個section，未找到「未及詳閱病歷記載」「未考量病患T之血壓數據」等具體指控醫審會鑑定程序瑕疵的文字，pred僅轉述法院質疑醫審會鑑定結果難認允當，未詳述具體程序瑕疵"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個section，未找到「醫審會未考量心臟酵素數據」「死因應與心臟受損有關」等具體辯護主張。pred提及被告丙追蹤心臟酵素及法院質疑醫審會鑑定，但未明確主張死因與心臟受損相關",
+     "reason": "遍查五個section，未找到「醫審會未考量心臟酵素數據」「死因應與心臟受損有關」等具體辯護主張。pred提及被告丙追蹤心臟酵素及法院質疑醫審會鑑定，但未明確主張死因與心臟受損相關"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查五個section，未找到「醫審會之兩次鑑定報告有重大瑕疵」及「應以臺灣胸腔及心臟血管外科學會之鑑定較為可採」的明確比較主張。pred僅提及法院採信學會意見質疑醫審會鑑定，未明確聲稱醫審會報告有「重大瑕疵」",
+     "reason": "遍查五個section，未找到「醫審會之兩次鑑定報告有重大瑕疵」及「應以臺灣胸腔及心臟血管外科學會之鑑定較為可採」的明確比較主張。pred僅提及法院採信學會意見質疑醫審會鑑定，未明確聲稱醫審會報告有「重大瑕疵」"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均無提及醫師丙將症狀歸因於骨折疼痛之醫審會認定",
+     "reason": "五個 section 原文均無提及醫師丙將症狀歸因於骨折疼痛之醫審會認定"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均無提及醫審會對照胸部X光片處置之負面評價",
+     "reason": "五個 section 原文均無提及醫審會對照胸部X光片處置之負面評價"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均無明確記載醫審會建議重新進行身體評估之事項",
+     "reason": "五個 section 原文均無明確記載醫審會建議重新進行身體評估之事項"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均無明確記載醫審會建議重新檢視胸管功能之事項",
+     "reason": "五個 section 原文均無明確記載醫審會建議重新檢視胸管功能之事項"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確提及『死亡方式為意外』之法醫認定",
+     "reason": "五個 section 原文均未明確提及『死亡方式為意外』之法醫認定"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及法醫解剖發現之具體出血量數據（300毫升）",
+     "reason": "五個 section 原文均未提及法醫解剖發現之具體出血量數據（300毫升）"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及左側胸腔內出血約1200毫升之具體數據",
+     "reason": "五個 section 原文均未提及左側胸腔內出血約1200毫升之具體數據"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及腹腔內出血約100毫升之法醫發現",
+     "reason": "五個 section 原文均未提及腹腔內出血約100毫升之法醫發現"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及其餘實質器官無外傷異常之法醫檢查結果",
+     "reason": "五個 section 原文均未提及其餘實質器官無外傷異常之法醫檢查結果"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未完整記載臺灣胸腔及心臟血管外科學會關於休克機制之多因素說明",
+     "reason": "五個 section 原文均未完整記載臺灣胸腔及心臟血管外科學會關於休克機制之多因素說明"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及『單由出血量無法判斷是否足以造成失血性休克』，但為法院引述之簡化版本，未完整呈現『單由此出血量無法判斷是否足以造成失血性休克死亡』之原文",
+     "reason": "section_05_reasoning.txt 雖提及『單由出血量無法判斷是否足以造成失血性休克』，但為法院引述之簡化版本，未完整呈現『單由此出血量無法判斷是否足以造成失血性休克死亡』之原文"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及出血量可能因心肺復甦術造成，但未完整呈現『病患T之左胸出血量可能因施做心肺復甦術造成』之因果關係敘述",
+     "reason": "section_05_reasoning.txt 雖提及出血量可能因心肺復甦術造成，但未完整呈現『病患T之左胸出血量可能因施做心肺復甦術造成』之因果關係敘述"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及上午7時40分許進行胸部X光檢查，但未註明『經插管急救後』之時間關聯",
+     "reason": "section_01_facts.txt 提及上午7時40分許進行胸部X光檢查，但未註明『經插管急救後』之時間關聯"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及上午8時56分胸部X光診斷左側血胸之具體時間點",
+     "reason": "五個 section 原文均未提及上午8時56分胸部X光診斷左側血胸之具體時間點"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及血壓約100/60毫米汞柱且無休克症狀，但未明確歸屬為『臺灣胸腔及心臟血管外科學會』之意見",
+     "reason": "section_05_reasoning.txt 雖提及血壓約100/60毫米汞柱且無休克症狀，但未明確歸屬為『臺灣胸腔及心臟血管外科學會』之意見"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及『持續心跳加速及出冷汗是休克之早期症狀』之醫學專業意見",
+     "reason": "五個 section 原文均未提及『持續心跳加速及出冷汗是休克之早期症狀』之醫學專業意見"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『血壓下降通常是休克較晚期之症狀』之醫學意見",
+     "reason": "五個 section 原文均未提及『血壓下降通常是休克較晚期之症狀』之醫學意見"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及『休克並非是心跳加速及出冷汗的唯一診斷』之鑑別說明",
+     "reason": "五個 section 原文均未提及『休克並非是心跳加速及出冷汗的唯一診斷』之鑑別說明"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts.txt 註明為95年4月14日，與GT之97年不符；原文僅提及95年，此處疑似GT錯誤或摘要錯誤",
+     "reason": "section_01_facts.txt 註明為95年4月14日，與GT之97年不符；原文僅提及95年，此處疑似GT錯誤或摘要錯誤"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 雖提及被告丙採取止痛、冰敷等處置，但未完整列舉『止痛針劑、冰敷、注射止血劑、追蹤心肌酶、完整心電圖檢查及多次理學檢查』之詳細處置項目",
+     "reason": "section_05_reasoning.txt 雖提及被告丙採取止痛、冰敷等處置，但未完整列舉『止痛針劑、冰敷、注射止血劑、追蹤心肌酶、完整心電圖檢查及多次理學檢查』之詳細處置項目"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 雖提及被告丙並非沒有作為且符合醫療常規，但未明確記載『難以認定是否有診斷疏失』之學會完整意見",
+     "reason": "section_05_reasoning.txt 雖提及被告丙並非沒有作為且符合醫療常規，但未明確記載『難以認定是否有診斷疏失』之學會完整意見"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及『胸管引流之功能與病患之病程發展沒有直接關係』之學會意見",
+     "reason": "五個 section 原文均未提及『胸管引流之功能與病患之病程發展沒有直接關係』之學會意見"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及引流肋膜內積液目的之詳細說明",
+     "reason": "五個 section 原文均未提及引流肋膜內積液目的之詳細說明"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及『重新置放胸管或確認胸管之功能並非當時病患急需之臨床處置』之學會意見",
+     "reason": "五個 section 原文均未提及『重新置放胸管或確認胸管之功能並非當時病患急需之臨床處置』之學會意見"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及『經胸管留置引流後未引出預期之積液（血）乃臨床常見狀況』之學會說明",
+     "reason": "五個 section 原文均未提及『經胸管留置引流後未引出預期之積液（血）乃臨床常見狀況』之學會說明"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及胸管引流失敗常見可能原因之詳細列舉",
+     "reason": "五個 section 原文均未提及胸管引流失敗常見可能原因之詳細列舉"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_01_facts.txt 提及上午10時50分許進行心肺復甦術，但未明確註明『因病患T血壓、心跳驟降而啟動』之原因",
+     "reason": "section_01_facts.txt 提及上午10時50分許進行心肺復甦術，但未明確註明『因病患T血壓、心跳驟降而啟動』之原因"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及醫師依據ACSS訓練常規進行醫療措施",
+     "reason": "五個 section 原文均未提及醫師依據ACSS訓練常規進行醫療措施"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及『無法獲知醫師有無時間考慮到引流失敗所有可能性』之學會意見",
+     "reason": "五個 section 原文均未提及『無法獲知醫師有無時間考慮到引流失敗所有可能性』之學會意見"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未完整記載『就算醫師有想到上述所有可能性...也不可能進行任何處置』之醫學判斷",
+     "reason": "五個 section 原文均未完整記載『就算醫師有想到上述所有可能性...也不可能進行任何處置』之醫學判斷"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 雖提及死因不明確，但未明確歸屬為『臺灣胸腔及心臟血管外科學會』之意見；此為影響判決結論之關鍵鑑定意見",
+     "reason": "section_05_reasoning.txt 雖提及死因不明確，但未明確歸屬為『臺灣胸腔及心臟血管外科學會』之意見；此為影響判決結論之關鍵鑑定意見"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五個 section 原文均未提及『法醫鑑定書所鑑定之事項為原本受傷加上兩次心肺復甦術之結果』之學會意見",
+     "reason": "五個 section 原文均未提及『法醫鑑定書所鑑定之事項為原本受傷加上兩次心肺復甦術之結果』之學會意見"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "section_05_reasoning.txt 雖提及『臺灣胸腔及心臟血管外科學會認...無法認定被告三人有明顯疏失導致死亡』，但pred未完整呈現『對病人之醫療處置有明顯之疏失而導致其死亡』之完整語義；此為影響判決結論之關鍵鑑定意見",
+     "reason": "section_05_reasoning.txt 雖提及『臺灣胸腔及心臟血管外科學會認...無法認定被告三人有明顯疏失導致死亡』，但pred未完整呈現『對病人之醫療處置有明顯之疏失而導致其死亡』之完整語義；此為影響判決結論之關鍵鑑定意見"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要僅提及「醫審會鑑定書共2份」，未說明係由檢察官委託，影響對訴追程序之理解",
+     "reason": "摘要僅提及「醫審會鑑定書共2份」，未說明係由檢察官委託，影響對訴追程序之理解"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未區分第一次與第二次鑑定之具體結論，未明確提及第一次鑑定認住院後醫師丙處置失當",
+     "reason": "摘要未區分第一次與第二次鑑定之具體結論，未明確提及第一次鑑定認住院後醫師丙處置失當"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未提及醫師丙「僅」考慮骨折疼痛原因之判斷限制，僅描述其採取之處置措施",
+     "reason": "摘要未提及醫師丙「僅」考慮骨折疼痛原因之判斷限制，僅描述其採取之處置措施"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "反事實推論為因果關係認定之核心，若列入鑑別診斷則可提早診斷體腔內出血，屬關鍵過失認定邏輯",
+     "reason": "反事實推論為因果關係認定之核心，若列入鑑別診斷則可提早診斷體腔內出血，屬關鍵過失認定邏輯"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未引用醫審會第二次鑑定之具體原文，影響對鑑定意見細節之理解",
+     "reason": "摘要未引用醫審會第二次鑑定之具體原文，影響對鑑定意見細節之理解"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "雖提及死因爭議，但未明確指出檢察官係「依據法醫研究所之鑑定」認定死因",
+     "reason": "雖提及死因爭議，但未明確指出檢察官係「依據法醫研究所之鑑定」認定死因"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "程序性事實，與106、117等claim內容有重疊，摘要已提及醫審會鑑定",
+     "reason": "程序性事實，與106、117等claim內容有重疊，摘要已提及醫審會鑑定"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "檢察官起訴立場之關鍵事實，摘要未明確表述檢察官依鑑定結果認定被告有過失",
+     "reason": "檢察官起訴立場之關鍵事實，摘要未明確表述檢察官依鑑定結果認定被告有過失"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院不採醫審會鑑定之理由之一，影響對判決理由完整理解",
+     "reason": "法院不採醫審會鑑定之理由之一，影響對判決理由完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 66,
+   "matched": 67,
+   "partial": 6,
+   "missing": 50,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8278,
+  "compression_afg_chars": 1882,
+  "compression_source_chars": 10929,
+  "gt_length_ratio": 0.4485,
+  "gt_length_afg_chars": 1882,
+  "gt_length_gt_chars": 4196,
+  "section_balance": 0.1538
+ }
 }

@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -141,5 +142,340 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7326,
+  "fact_recall": 0.6047,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7536,
+  "quality_overall": 4.7,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.9667,
+  "citation_support_score": 0.9688,
+  "uncited_rate": 0.087,
+  "faithfulness_combined": {
+   "score": 0.9296,
+   "citation_fidelity": 0.8826,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 14,
+   "correct": 14
+  },
+  "weighted_recall": 0.7829,
+  "missing_severity": {
+   "critical": 2,
+   "important": 11,
+   "minor": 28,
+   "details": [
+    {
+     "gt_claim_id": 23,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病患既往雙側疝氣手術史為背景性病史，不影響本案醫療過失之核心判斷，所有 section 均未詳細提及",
+     "reason": "病患既往雙側疝氣手術史為背景性病史，不影響本案醫療過失之核心判斷，所有 section 均未詳細提及"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "症狀持續3個月為求診背景資訊，非鑑定意見核心爭點，section_01_facts.txt 及 section_03_opinions.txt 均未提及此細節",
+     "reason": "症狀持續3個月為求診背景資訊，非鑑定意見核心爭點，section_01_facts.txt 及 section_03_opinions.txt 均未提及此細節"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "臨床建議「主要以手術修補處置」屬一般醫學常識，pred claim 2 已提及施行手術，雖未明確表述「建議」字樣，但不影響鑑定結論理解",
+     "reason": "臨床建議「主要以手術修補處置」屬一般醫學常識，pred claim 2 已提及施行手術，雖未明確表述「建議」字樣，但不影響鑑定結論理解"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「pred claim 2 提及手術內容，但未明確描述「給予病患建議」之溝通過程；屬程序性細節，不影響過失認定",
+     "reason": "「pred claim 2 提及手術內容，但未明確描述「給予病患建議」之溝通過程；屬程序性細節，不影響過失認定"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「pred claim 2 提及施行睪丸固定術，但未明確說明「無法復位則須固定」之適應症條件；屬技術細節",
+     "reason": "「pred claim 2 提及施行睪丸固定術，但未明確說明「無法復位則須固定」之適應症條件；屬技術細節"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「精索血管術後出血機制（結紮鬆脫或電燒再出血）未在 pred 中提及；但 section_05_reasoning.txt 提及「並無明顯遭剪斷或損壞」，屬次要佐證細節",
+     "reason": "「精索血管術後出血機制（結紮鬆脫或電燒再出血）未在 pred 中提及；但 section_05_reasoning.txt 提及「並無明顯遭剪斷或損壞」，屬次要佐證細節"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「手術出血量20ml之具體數據未在 pred 或任何 section 中出現；屬量化細節，不影響過失判斷",
+     "reason": "「手術出血量20ml之具體數據未在 pred 或任何 section 中出現；屬量化細節，不影響過失判斷"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「冰敷可使血管收縮之生理機制未明確闡述；pred claim 4 僅提及「冰敷陰囊」作為處置，屬次要醫學原理說明",
+     "reason": "「冰敷可使血管收縮之生理機制未明確闡述；pred claim 4 僅提及「冰敷陰囊」作為處置，屬次要醫學原理說明"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「傷口感染之處置（細菌培養、換藥、抗生素）未完整描述；pred claim 4 僅提及冰敷及藥物治療，屬處置細節遺漏",
+     "reason": "「傷口感染之處置（細菌培養、換藥、抗生素）未完整描述；pred claim 4 僅提及冰敷及藥物治療，屬處置細節遺漏"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「感染惡化需清創之條件未明確說明；pred claim 4 僅言「無需進行清創手術」，未完整呈現清創適應症之雙向條件",
+     "reason": "「感染惡化需清創之條件未明確說明；pred claim 4 僅言「無需進行清創手術」，未完整呈現清創適應症之雙向條件"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「抬高患部之具體處置未明確提及；pred claim 4 雖有「抬高患部」字樣，但 GT claim 指「未提及抬高患部」應屬標記誤差，此處維持 missing 係因無法確認",
+     "reason": "「抬高患部之具體處置未明確提及；pred claim 4 雖有「抬高患部」字樣，但 GT claim 指「未提及抬高患部」應屬標記誤差，此處維持 missing 係因無法確認"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「出院時是否「無發燒」之具體徵候未在 pred 或 sections 中明確記載；屬次要病情描述",
+     "reason": "「出院時是否「無發燒」之具體徵候未在 pred 或 sections 中明確記載；屬次要病情描述"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「出院時傷口敷料無滲濕之細節未提及；屬護理記錄細節，不影響醫療常規判斷",
+     "reason": "「出院時傷口敷料無滲濕之細節未提及；屬護理記錄細節，不影響醫療常規判斷"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「疼痛指數2分之具體評估數據未在 pred 或 sections 中出現；屬量化指標遺漏",
+     "reason": "「疼痛指數2分之具體評估數據未在 pred 或 sections 中出現；屬量化指標遺漏"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「「持續觀察病人陰囊患部即可，尚無需進行清創手術」之完整表述，pred claim 4 已涵蓋核心含義，此處維持 missing 係因語句完整性判斷差異",
+     "reason": "「「持續觀察病人陰囊患部即可，尚無需進行清創手術」之完整表述，pred claim 4 已涵蓋核心含義，此處維持 missing 係因語句完整性判斷差異"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「開立抗發炎止痛藥物及預約三日後回診之具體處置頻率未完整描述；pred claim 4 僅提及「藥物治療」，屬處置細節遺漏",
+     "reason": "「開立抗發炎止痛藥物及預約三日後回診之具體處置頻率未完整描述；pred claim 4 僅提及「藥物治療」，屬處置細節遺漏"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「出院後未按時回診之具體狀況未在 pred 中明確描述；section_01_facts.txt 及 section_05_reasoning.txt 亦未詳述",
+     "reason": "「出院後未按時回診之具體狀況未在 pred 中明確描述；section_01_facts.txt 及 section_05_reasoning.txt 亦未詳述"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「出院時無缺血性壞死之客觀檢查佐證為重要醫療判斷依據；pred 雖提及「持續觀察」但未明確說明「無客觀檢查佐證」之關鍵結論，影響術後處置合理性理解",
+     "reason": "「出院時無缺血性壞死之客觀檢查佐證為重要醫療判斷依據；pred 雖提及「持續觀察」但未明確說明「無客觀檢查佐證」之關鍵結論，影響術後處置合理性理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「出院時無敗血症徵候屬病情穩定之佐證；pred claim 4 提及「符合醫療常規」已間接涵蓋，屬次要病情描述",
+     "reason": "「出院時無敗血症徵候屬病情穩定之佐證；pred claim 4 提及「符合醫療常規」已間接涵蓋，屬次要病情描述"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「左側陰囊「輕微」血腫之程度描述未精確對應；pred 僅泛稱「陰囊血腫」，屬描述細節差異",
+     "reason": "「左側陰囊「輕微」血腫之程度描述未精確對應；pred 僅泛稱「陰囊血腫」，屬描述細節差異"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「手術與陰囊血腫之「關聯性」明確判定為重要鑑定結論；pred claim 3 雖提及因果關係（「所造成」），但未明確以「關聯」表述，影響因果關係完整理解",
+     "reason": "「手術與陰囊血腫之「關聯性」明確判定為重要鑑定結論；pred claim 3 雖提及因果關係（「所造成」），但未明確以「關聯」表述，影響因果關係完整理解"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「睪丸缺血性壞死之四大可能原因為重要醫學說明；pred 僅提及「細小困難辨識血管」單一原因，未能完整呈現全部可能原因，影響醫學判斷之全面性",
+     "reason": "「睪丸缺血性壞死之四大可能原因為重要醫學說明；pred 僅提及「細小困難辨識血管」單一原因，未能完整呈現全部可能原因，影響醫學判斷之全面性"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「血腫為睪丸缺血性壞死「可能原因之一」之明確定性表述為重要因果關係判斷；pred 僅泛稱「所造成」未明確「可能原因」之限定語氣，影響因果關係精確理解",
+     "reason": "「血腫為睪丸缺血性壞死「可能原因之一」之明確定性表述為重要因果關係判斷；pred 僅泛稱「所造成」未明確「可能原因」之限定語氣，影響因果關係精確理解"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「99年11月20日之具體日期及「第一天」之時間標示未完整對應；section_01_facts.txt 提及11月20日出院，pred 未明確「第一天」之時間框架",
+     "reason": "「99年11月20日之具體日期及「第一天」之時間標示未完整對應；section_01_facts.txt 提及11月20日出院，pred 未明確「第一天」之時間框架"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「11月21日之具體出院日期未在 pred 明確標示；section_01_facts.txt 雖有提及，但 pred 未精確對應",
+     "reason": "「11月21日之具體出院日期未在 pred 明確標示；section_01_facts.txt 雖有提及，但 pred 未精確對應"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「出院後「未曾再至醫師甲門診回診」之具體就醫行為未在 pred 明確描述",
+     "reason": "「出院後「未曾再至醫師甲門診回診」之具體就醫行為未在 pred 明確描述"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「出院時睪丸是否有壞死「無客觀檢查佐證」之關鍵不確定性表述為重要鑑定論述；pred 未完整涵蓋此重要保留條件，影響術後處置判斷之合理性理解",
+     "reason": "「出院時睪丸是否有壞死「無客觀檢查佐證」之關鍵不確定性表述為重要鑑定論述；pred 未完整涵蓋此重要保留條件，影響術後處置判斷之合理性理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「「無法判斷」關聯性之最終結論為鑑定意見之核心論斷；此遺漏影響對醫審會鑑定結論之完整理解，屬致命性遺漏",
+     "reason": "「「無法判斷」關聯性之最終結論為鑑定意見之核心論斷；此遺漏影響對醫審會鑑定結論之完整理解，屬致命性遺漏"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「11月21日無睪丸發炎徵候之具體記載為次要觀察細節；section_01_facts.txt 提及同日有陰囊瘀血及腫脹，pred 未明確區分「發炎」與「腫脹」",
+     "reason": "「11月21日無睪丸發炎徵候之具體記載為次要觀察細節；section_01_facts.txt 提及同日有陰囊瘀血及腫脹，pred 未明確區分「發炎」與「腫脹」"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「病理報告「無精索血管損傷說明」為否定血管損傷之重要證據；pred 雖於 claim 5 提及血管定義，但未明確引用病理報告佐證精索血管完整性，影響舉證完整性",
+     "reason": "「病理報告「無精索血管損傷說明」為否定血管損傷之重要證據；pred 雖於 claim 5 提及血管定義，但未明確引用病理報告佐證精索血管完整性，影響舉證完整性"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「病理報告「無結紮鬆脫或電燒再出血說明」為排除術後出血機制之重要證據；pred 未及此細節，影響對血管完整性論證之全面性",
+     "reason": "「病理報告「無結紮鬆脫或電燒再出血說明」為排除術後出血機制之重要證據；pred 未及此細節，影響對血管完整性論證之全面性"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「顯微鏡下發現「組織化血栓」之病理細節為重要醫學證據；pred 未及此發現，影響對病理報告內容之完整呈現",
+     "reason": "「顯微鏡下發現「組織化血栓」之病理細節為重要醫學證據；pred 未及此發現，影響對病理報告內容之完整呈現"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「血栓存在於「微小不可肉眼辨識單一血管內」之限定描述為重要病理特徵；pred 未及此細節，影響血栓性質之準確理解",
+     "reason": "「血栓存在於「微小不可肉眼辨識單一血管內」之限定描述為重要病理特徵；pred 未及此細節，影響血栓性質之準確理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「「無法判定」血管栓塞與睪丸壞死關聯性之結論為重要因果關係判斷；此遺漏影響對鑑定意見不確定性情境之完整理解，屬致命性遺漏",
+     "reason": "「「無法判定」血管栓塞與睪丸壞死關聯性之結論為重要因果關係判斷；此遺漏影響對鑑定意見不確定性情境之完整理解，屬致命性遺漏"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「照片顯示「精索血管具完整度」為否定手術疏失之關鍵物證；section_05_reasoning.txt 雖有提及，但 pred 未明確對應此 GT claim，影響舉證完整性",
+     "reason": "「照片顯示「精索血管具完整度」為否定手術疏失之關鍵物證；section_05_reasoning.txt 雖有提及，但 pred 未明確對應此 GT claim，影響舉證完整性"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「傷口「處於癒合期約一個月」之時間推斷及位置吻合之描述為次要細節；section_05_reasoning.txt 雖有提及傷口位置，但 pred 未精確對應",
+     "reason": "「傷口「處於癒合期約一個月」之時間推斷及位置吻合之描述為次要細節；section_05_reasoning.txt 雖有提及傷口位置，但 pred 未精確對應"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "照片傷口位置區分（陰囊vs睪丸）屬細節性技術分析，不影響鑑定結論理解",
+     "reason": "照片傷口位置區分（陰囊vs睪丸）屬細節性技術分析，不影響鑑定結論理解"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "照片角度限制屬技術性說明，非鑑定核心發現",
+     "reason": "照片角度限制屬技術性說明，非鑑定核心發現"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "表皮傷口出血表現形式屬醫學細節，不影響整體鑑定意見理解",
+     "reason": "表皮傷口出血表現形式屬醫學細節，不影響整體鑑定意見理解"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "傷口與血腫關聯性係照片解讀細節，非鑑定主要結論",
+     "reason": "傷口與血腫關聯性係照片解讀細節，非鑑定主要結論"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "遍查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五個 section 原文，均未發現「沾黏」或「因沾黏無法逕將睪丸復位」之相關敘述，確認摘要確實遺漏此手術細節",
+     "reason": "遍查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五個 section 原文，均未發現「沾黏」或「因沾黏無法逕將睪丸復位」之相關敘述，確認摘要確實遺漏此手術細節"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 86,
+   "pred_total": 46,
+   "matched": 51,
+   "partial": 2,
+   "missing": 33,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8384,
+  "compression_afg_chars": 1566,
+  "compression_source_chars": 9691,
+  "gt_length_ratio": 0.526,
+  "gt_length_afg_chars": 1566,
+  "gt_length_gt_chars": 2977,
+  "section_balance": 0.4483
+ }
 }

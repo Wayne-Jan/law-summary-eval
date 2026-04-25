@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -136,5 +137,760 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7589,
+  "fact_recall": 0.3401,
+  "fact_precision": 1.0,
+  "fact_f1": 0.5076,
+  "quality_overall": 4.7125,
+  "checklist_pass_rate": 0.9918,
+  "citation_accuracy": 0.6087,
+  "citation_support_score": 0.5875,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.7652,
+   "citation_fidelity": 0.6087,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.688,
+  "missing_severity": {
+   "critical": 9,
+   "important": 42,
+   "minor": 50,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫院全名為背景資訊，不影響案情核心理解",
+     "reason": "醫院全名為背景資訊，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "入院血紅素具體數值為背景檢驗數據，雖未明確記載9.9但defense提及「略低」，不影響整體貧血判斷理解",
+     "reason": "入院血紅素具體數值為背景檢驗數據，雖未明確記載9.9但defense提及「略低」，不影響整體貧血判斷理解"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "2月28日17時25分具體時間點未在摘要任何section出現，屬細節遺漏",
+     "reason": "2月28日17時25分具體時間點未在摘要任何section出現，屬細節遺漏"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "3月2日13時30分具體時間點未出現，僅defense提及3月2日INR數值，無時間戳",
+     "reason": "3月2日13時30分具體時間點未出現，僅defense提及3月2日INR數值，無時間戳"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "3月3日09時30分具體時間點未出現，雖提及3月3日INR 3.06但時間不同",
+     "reason": "3月3日09時30分具體時間點未出現，雖提及3月3日INR 3.06但時間不同"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "coumadin過量懷疑為自訴人主張，defense僅提及服用可邁丁致凝血時間延長，未明確提及「過量懷疑」",
+     "reason": "coumadin過量懷疑為自訴人主張，defense僅提及服用可邁丁致凝血時間延長，未明確提及「過量懷疑」"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「雙手亂抓身上管路」具體動作描述未出現，摘要僅提及「躁動現象」，屬症狀細節",
+     "reason": "「雙手亂抓身上管路」具體動作描述未出現，摘要僅提及「躁動現象」，屬症狀細節"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "3月6日4時30分時間點未出現，摘要僅提及2時20分躁動，該時段症狀細節遺漏",
+     "reason": "3月6日4時30分時間點未出現，摘要僅提及2時20分躁動，該時段症狀細節遺漏"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "SPO2具體數值85-88%未出現，雖defense提及動脈血氧濃度但無具體數值",
+     "reason": "SPO2具體數值85-88%未出現，雖defense提及動脈血氧濃度但無具體數值"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "3月6日5時許自言自語時間點未出現，屬時間軸細節",
+     "reason": "3月6日5時許自言自語時間點未出現，屬時間軸細節"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "3月6日6時許抽血具體時間點未出現，屬程序性時間細節",
+     "reason": "3月6日6時許抽血具體時間點未出現，屬程序性時間細節"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "3月6日7時許通知醫師具體時間點未出現，屬程序性時間細節",
+     "reason": "3月6日7時許通知醫師具體時間點未出現，屬程序性時間細節"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "Lasix排尿劑醫囑未出現，屬具體處置細節",
+     "reason": "Lasix排尿劑醫囑未出現，屬具體處置細節"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「意識喪失、發紺、脈搏停止、無血壓」詳細症狀未完整出現，摘要僅提及「心因性猝死而休克死亡」",
+     "reason": "「意識喪失、發紺、脈搏停止、無血壓」詳細症狀未完整出現，摘要僅提及「心因性猝死而休克死亡」"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "3月6日7時15分呼吸變慢、無反應具體時間點未出現，屬時間軸細節",
+     "reason": "3月6日7時15分呼吸變慢、無反應具體時間點未出現，屬時間軸細節"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "連續注射Bosmin時間與劑量未出現，屬急救過程細節",
+     "reason": "連續注射Bosmin時間與劑量未出現，屬急救過程細節"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "8時6分PT值18.4具體數值未出現，屬檢驗數據細節",
+     "reason": "8時6分PT值18.4具體數值未出現，屬檢驗數據細節"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "8時33分血紅素HB 5.7具體數值未出現，屬檢驗數據細節",
+     "reason": "8時33分血紅素HB 5.7具體數值未出現，屬檢驗數據細節"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "9時7分心臟局部出血、嚴重貧血具體時間點與診斷未出現，屬病情變化細節",
+     "reason": "9時7分心臟局部出血、嚴重貧血具體時間點與診斷未出現，屬病情變化細節"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「病患Y之子二人」具體人數未出現，摘要僅提及「自訴人」，屬程序背景資訊",
+     "reason": "「病患Y之子二人」具體人數未出現，摘要僅提及「自訴人」，屬程序背景資訊"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "雖defense提及血紅素9.9與「較參考值略低」，但未明確提及正常值12～16g/dl對照，屬細節性參考資訊",
+     "reason": "雖defense提及血紅素9.9與「較參考值略低」，但未明確提及正常值12～16g/dl對照，屬細節性參考資訊"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「手術前應可預見內出血併發症」為自訴人過失指控核心，影響過失認定理解",
+     "reason": "「手術前應可預見內出血併發症」為自訴人過失指控核心，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「僅給予口服藥物、注射點滴後送病房」為自訴人主張之過失內容，影響案情完整理解",
+     "reason": "「僅給予口服藥物、注射點滴後送病房」為自訴人主張之過失內容，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「未以動脈血氧分析監測」為自訴人主張之過失內容，雖defense提及監測SPO2但主張角度不同",
+     "reason": "「未以動脈血氧分析監測」為自訴人主張之過失內容，雖defense提及監測SPO2但主張角度不同"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「到院時診斷為心搏過緩」的時間點描述",
+     "reason": "五個 section 均未提及「到院時診斷為心搏過緩」的時間點描述"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「進一步處置必要」這一主觀判斷依據",
+     "reason": "五個 section 均未提及「進一步處置必要」這一主觀判斷依據"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「追蹤可邁丁濃度數據」的具體細節",
+     "reason": "五個 section 均未提及「追蹤可邁丁濃度數據」的具體細節"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未提及「可邁丁濃度較高不適合施作心導管」這一關鍵辯護理由，影響過失認定",
+     "reason": "五個 section 均未提及「可邁丁濃度較高不適合施作心導管」這一關鍵辯護理由，影響過失認定"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「鼠蹊部裝置節律器」的部位細節",
+     "reason": "五個 section 均未提及「鼠蹊部裝置節律器」的部位細節"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「節律器入針處滲血疼痛而移除」的過程",
+     "reason": "五個 section 均未提及「節律器入針處滲血疼痛而移除」的過程"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「3月1日置換節律器（脖子置入）」的具體日期與方式",
+     "reason": "五個 section 均未提及「3月1日置換節律器（脖子置入）」的具體日期與方式"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未明確提及「置換節律器後情況穩定」",
+     "reason": "五個 section 均未明確提及「置換節律器後情況穩定」"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 均未提及「3月4日因家屬不在改期」的程序細節",
+     "reason": "五個 section 均未提及「3月4日因家屬不在改期」的程序細節"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「2月28日INR數值4.74」的具體數據",
+     "reason": "五個 section 均未提及「2月28日INR數值4.74」的具體數據"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「3月2日INR為4.32」的具體數據",
+     "reason": "五個 section 均未提及「3月2日INR為4.32」的具體數據"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「心臟及腹部超音波檢驗」的檢查項目",
+     "reason": "五個 section 均未提及「心臟及腹部超音波檢驗」的檢查項目"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「凝血時間判斷以INR為依據」的醫學標準說明",
+     "reason": "五個 section 均未提及「凝血時間判斷以INR為依據」的醫學標準說明"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「PT、APTT僅為參考數值」的辯護論點",
+     "reason": "五個 section 均未提及「PT、APTT僅為參考數值」的辯護論點"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個 section 均未提及「慢性貧血、體重減少5公斤」的背景病史",
+     "reason": "五個 section 均未提及「慢性貧血、體重減少5公斤」的背景病史"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「手術前說明風險並經家屬同意」的告知義務細節",
+     "reason": "五個 section 均未提及「手術前說明風險並經家屬同意」的告知義務細節"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未明確提及「無因出血產生死亡」的因果關係辯護，影響判決結論理解",
+     "reason": "五個 section 均未明確提及「無因出血產生死亡」的因果關係辯護，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「心導管檢查後嚴密觀察生命現象」",
+     "reason": "五個 section 均未提及「心導管檢查後嚴密觀察生命現象」"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「給予氧氣、監測SPO2、調整氧氣使用」的處置細節",
+     "reason": "五個 section 均未提及「給予氧氣、監測SPO2、調整氧氣使用」的處置細節"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「氧氣濃度一度降低後回復正常」的過程",
+     "reason": "五個 section 均未提及「氧氣濃度一度降低後回復正常」的過程"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未提及「被告無消極不處理」的直接辯駁，影響過失認定",
+     "reason": "五個 section 均未提及「被告無消極不處理」的直接辯駁，影響過失認定"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未提及「3月6日7時許病情突然惡化」的具體時間點",
+     "reason": "五個 section 均未提及「3月6日7時許病情突然惡化」的具體時間點"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未提及「因心因性休克導致死亡」的完整因果描述，影響死因理解",
+     "reason": "五個 section 均未提及「因心因性休克導致死亡」的完整因果描述，影響死因理解"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「理學檢查未發現內出血」",
+     "reason": "五個 section 均未提及「理學檢查未發現內出血」"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未提及「無延誤救治之過失」的完整辯護主張，影響過失認定",
+     "reason": "五個 section 均未提及「無延誤救治之過失」的完整辯護主張，影響過失認定"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「急救過程中臉色蒼白、血紅素較低」的觀察細節",
+     "reason": "五個 section 均未提及「急救過程中臉色蒼白、血紅素較低」的觀察細節"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「基於積極治療考量立即輸血」的辯護邏輯",
+     "reason": "五個 section 均未提及「基於積極治療考量立即輸血」的辯護邏輯"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未提及「輸血不代表先前有出血」的關鍵辯護論點，影響因果關係認定",
+     "reason": "五個 section 均未提及「輸血不代表先前有出血」的關鍵辯護論點，影響因果關係認定"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五個 section 均未提及「7時開始急救、注射大量藥物點滴」",
+     "reason": "五個 section 均未提及「7時開始急救、注射大量藥物點滴」"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未提及「急救抽血因稀釋導致檢測失真」的辯護論點，影響證據評價",
+     "reason": "五個 section 均未提及「急救抽血因稀釋導致檢測失真」的辯護論點，影響證據評價"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "五個 section 均未提及「難依該次血紅素推斷出血」的結論性辯護",
+     "reason": "五個 section 均未提及「難依該次血紅素推斷出血」的結論性辯護"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "2月28日抽血檢查結果（凝血功能異常、輕度貧血）為背景性醫療細節，五個 section 原文均未提及",
+     "reason": "2月28日抽血檢查結果（凝血功能異常、輕度貧血）為背景性醫療細節，五個 section 原文均未提及"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未開立 coumadin 之具體事實未在五個 section 中出現",
+     "reason": "未開立 coumadin 之具體事實未在五個 section 中出現"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "全身身體檢查及詢問大便顏色等詳細過程未在五個 section 中敘述",
+     "reason": "全身身體檢查及詢問大便顏色等詳細過程未在五個 section 中敘述"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫師認定貧血原因的具體判斷未在五個 section 中出現",
+     "reason": "醫師認定貧血原因的具體判斷未在五個 section 中出現"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "C醫院抗凝血藥物作用時間（2-5天）為技術性細節，五個 section 均未提及",
+     "reason": "C醫院抗凝血藥物作用時間（2-5天）為技術性細節，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "入院血紅素值9.9g/dl及輸血判斷為醫療處置關鍵數據，影響案情理解",
+     "reason": "入院血紅素值9.9g/dl及輸血判斷為醫療處置關鍵數據，影響案情理解"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "阿托品治療及其效果為醫療處置細節，五個 section 均未提及",
+     "reason": "阿托品治療及其效果為醫療處置細節，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "首次裝置心臟節律器後心跳血壓回復正常之事實未在五個 section 中明確提及",
+     "reason": "首次裝置心臟節律器後心跳血壓回復正常之事實未在五個 section 中明確提及"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心臟節律器移除原因（滲血、疼痛）及心跳降至35次/分之具體過程未在五個 section 中敘述",
+     "reason": "心臟節律器移除原因（滲血、疼痛）及心跳降至35次/分之具體過程未在五個 section 中敘述"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "右內頸靜脈置放心臟節律器之詳細過程未在五個 section 中出現",
+     "reason": "右內頸靜脈置放心臟節律器之詳細過程未在五個 section 中出現"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "裝置後密切注意滲血之具體記載未在五個 section 中出現",
+     "reason": "裝置後密切注意滲血之具體記載未在五個 section 中出現"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "發現滲血後之具體處置過程（移除節律器、改置右內頸靜脈）未在五個 section 中詳述",
+     "reason": "發現滲血後之具體處置過程（移除節律器、改置右內頸靜脈）未在五個 section 中詳述"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心導管檢查前檢驗凝血功能及血紅素之原則為程序性技術規範，五個 section 均未提及",
+     "reason": "心導管檢查前檢驗凝血功能及血紅素之原則為程序性技術規範，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "非緊急心導管檢查之 INR 建議標準（<2-2.5）為背景技術資訊，五個 section 均未提及",
+     "reason": "非緊急心導管檢查之 INR 建議標準（<2-2.5）為背景技術資訊，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "高危險群病人 INR 治療濃度維持建議（2-3之間）為背景技術資訊，五個 section 均未提及",
+     "reason": "高危險群病人 INR 治療濃度維持建議（2-3之間）為背景技術資訊，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病人年齡、病史及高危險群分類之完整描述未在五個 section 中出現",
+     "reason": "病人年齡、病史及高危險群分類之完整描述未在五個 section 中出現"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "3月3日 INR 值3.06為關鍵檢驗數據，影響心導管檢查時機判斷之理解",
+     "reason": "3月3日 INR 值3.06為關鍵檢驗數據，影響心導管檢查時機判斷之理解"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "3月6日 INR 值1.53為關鍵檢驗數據，影響病情評估之理解",
+     "reason": "3月6日 INR 值1.53為關鍵檢驗數據，影響病情評估之理解"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心導管檢查當日未檢驗凝血功能之事實影響醫療常規判斷之理解",
+     "reason": "心導管檢查當日未檢驗凝血功能之事實影響醫療常規判斷之理解"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "coumadin 作用時間約2-5天為背景技術資訊，五個 section 均未提及",
+     "reason": "coumadin 作用時間約2-5天為背景技術資訊，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "3月3日至3月5日未服用抗凝血藥之事實未在五個 section 中出現",
+     "reason": "3月3日至3月5日未服用抗凝血藥之事實未在五個 section 中出現"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "電腦斷層掃描替代心導管檢查之可能性為背景資訊，五個 section 均未提及",
+     "reason": "電腦斷層掃描替代心導管檢查之可能性為背景資訊，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "心導管檢查之不可替代性為背景資訊，五個 section 均未提及",
+     "reason": "心導管檢查之不可替代性為背景資訊，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心導管檢查之必要性為醫療處置正當性的核心論點，影響判決結論理解",
+     "reason": "心導管檢查之必要性為醫療處置正當性的核心論點，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急救時心電圖顯示心臟節律器正常之事實未在五個 section 中明確提及",
+     "reason": "急救時心電圖顯示心臟節律器正常之事實未在五個 section 中明確提及"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急救時 INR 值接近正常之事實未在五個 section 中明確提及",
+     "reason": "急救時 INR 值接近正常之事實未在五個 section 中明確提及"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "身體及超音波檢查確認無出血之事實未在五個 section 中明確提及",
+     "reason": "身體及超音波檢查確認無出血之事實未在五個 section 中明確提及"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急診檢傷分類為第一級為病患嚴重程度的重要指標，影響案情理解",
+     "reason": "急診檢傷分類為第一級為病患嚴重程度的重要指標，影響案情理解"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "心導管檢查前心跳呼吸血壓已回復正常之事實影響病情評估理解",
+     "reason": "心導管檢查前心跳呼吸血壓已回復正常之事實影響病情評估理解"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "檢傷第一級危險狀態已解除之事實影響醫療處置正當性判斷",
+     "reason": "檢傷第一級危險狀態已解除之事實影響醫療處置正當性判斷"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "輸出入量差異（2320cc）及通知醫師之事實為關鍵醫療監測紀錄，影響案情理解",
+     "reason": "輸出入量差異（2320cc）及通知醫師之事實為關鍵醫療監測紀錄，影響案情理解"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "發現病人呼吸變慢、叫喚無反應、無法量血壓而進行急救之過程為關鍵事件，影響判決結論理解",
+     "reason": "發現病人呼吸變慢、叫喚無反應、無法量血壓而進行急救之過程為關鍵事件，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "入院日期為關鍵時間點，雖於section_01_facts提及「99年2月28日」，但生成摘要未記載，影響案情時間軸理解",
+     "reason": "入院日期為關鍵時間點，雖於section_01_facts提及「99年2月28日」，但生成摘要未記載，影響案情時間軸理解"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "具體藥物名稱為重要醫療資訊，雖section_02_defense提及「抗凝血藥」，但生成摘要未提Digoxin、Cordarone等具體藥名，影響對病患病史的完整理解",
+     "reason": "具體藥物名稱為重要醫療資訊，雖section_02_defense提及「抗凝血藥」，但生成摘要未提Digoxin、Cordarone等具體藥名，影響對病患病史的完整理解"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "簽署同意書之具體時間點為程序性細節，summary已提及「自訴人已於手術同意書及麻醉同意書簽名」，具體時辰不影響告知義務判斷",
+     "reason": "簽署同意書之具體時間點為程序性細節，summary已提及「自訴人已於手術同意書及麻醉同意書簽名」，具體時辰不影響告知義務判斷"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "輸血欄勾選為同意書細節內容，summary僅概括提及「簽名」，未細分各欄位勾選狀況，屬次要資訊",
+     "reason": "輸血欄勾選為同意書細節內容，summary僅概括提及「簽名」，未細分各欄位勾選狀況，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "自訴人教育程度為法院論證告知義務已盡的輔助依據，屬背景性資訊",
+     "reason": "自訴人教育程度為法院論證告知義務已盡的輔助依據，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 144,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人證詞內容未在生成摘要中呈現，summary僅陳述法院結論「已盡告知義務」，未提及證人反對證詞",
+     "reason": "證人證詞內容未在生成摘要中呈現，summary僅陳述法院結論「已盡告知義務」，未提及證人反對證詞"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "簽名者身分細節（自訴人vs病患Y之夫）為事實認定細節，summary已概括提及「自訴人簽名」",
+     "reason": "簽名者身分細節（自訴人vs病患Y之夫）為事實認定細節，summary已概括提及「自訴人簽名」"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "3月4日及5日未再檢驗INR為自訴人指控重點之一，生成摘要隻字未提，影響對醫療處置爭議的完整理解",
+     "reason": "3月4日及5日未再檢驗INR為自訴人指控重點之一，生成摘要隻字未提，影響對醫療處置爭議的完整理解"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "3月5日心導管檢查日期為關鍵時間點，summary雖提及「心導管檢查」但未標明具體日期，影響時間軸理解",
+     "reason": "3月5日心導管檢查日期為關鍵時間點，summary雖提及「心導管檢查」但未標明具體日期，影響時間軸理解"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "惡化症狀及急救過程為重要事實細節，summary僅提及「發現異常時通知被告」，未描述具體症狀，影響對病患狀況的理解",
+     "reason": "惡化症狀及急救過程為重要事實細節，summary僅提及「發現異常時通知被告」，未描述具體症狀，影響對病患狀況的理解"
+    },
+    {
+     "gt_claim_id": 162,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血紅素9.9g/dl及與C醫院既往檢查比較為輸血爭議之關鍵醫療數據，生成摘要未提具體數值與比較，影響醫療判斷理解",
+     "reason": "血紅素9.9g/dl及與C醫院既往檢查比較為輸血爭議之關鍵醫療數據，生成摘要未提具體數值與比較，影響醫療判斷理解"
+    },
+    {
+     "gt_claim_id": 163,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "住院期間無出血現象為否定過失之重要事實基礎，summary未明確陳述，影響因果關係理解",
+     "reason": "住院期間無出血現象為否定過失之重要事實基礎，summary未明確陳述，影響因果關係理解"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "未輸血治療難謂過失為法院重要法律論證，summary雖提及辯方主張血紅素在合理範圍，但未完整呈現法院對輸血議題之認定",
+     "reason": "未輸血治療難謂過失為法院重要法律論證，summary雖提及辯方主張血紅素在合理範圍，但未完整呈現法院對輸血議題之認定"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "超音波檢查未發現出血為重要醫療事實，support出血非死因之論證，summary未提及影響因果關係之完整理解",
+     "reason": "超音波檢查未發現出血為重要醫療事實，support出血非死因之論證，summary未提及影響因果關係之完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 172,
+   "pred_total": 50,
+   "matched": 46,
+   "partial": 25,
+   "missing": 101,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8728,
+  "compression_afg_chars": 1233,
+  "compression_source_chars": 9695,
+  "gt_length_ratio": 0.2527,
+  "gt_length_afg_chars": 1233,
+  "gt_length_gt_chars": 4880,
+  "section_balance": 0.2727
+ }
 }

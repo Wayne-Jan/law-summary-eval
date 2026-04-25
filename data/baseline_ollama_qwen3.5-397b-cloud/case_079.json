@@ -21,7 +21,8 @@
   "baseline_ollama_gpt-oss-120b-cloud",
   "baseline_ollama_kimi-k2.5-cloud",
   "baseline_ollama_gemma4-31b-cloud",
-  "baseline_ollama_qwen3.5-397b-cloud"
+  "baseline_ollama_qwen3.5-397b-cloud",
+  "baseline_ollama_deepseek-v4-flash-cloud"
  ],
  "condition_labels": {
   "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -140,5 +141,221 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7636,
+  "fact_recall": 0.6181,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7639,
+  "quality_overall": 4.7286,
+  "checklist_pass_rate": 0.9457,
+  "citation_accuracy": 0.7692,
+  "citation_support_score": 0.7667,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.8615,
+   "citation_fidelity": 0.7692,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 17
+  },
+  "weighted_recall": 0.8056,
+  "missing_severity": {
+   "critical": 0,
+   "important": 18,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "病患求診動機（減肥需求）屬於案情理解的重要背景，在各 section 原文中皆無明確對應",
+     "reason": "病患求診動機（減肥需求）屬於案情理解的重要背景，在各 section 原文中皆無明確對應"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "入加護病房照護為醫療過程細節，section_opinions.txt 僅提「送往B醫院急救」，無後續住院資訊，屬程序性事實遺漏",
+     "reason": "入加護病房照護為醫療過程細節，section_opinions.txt 僅提「送往B醫院急救」，無後續住院資訊，屬程序性事實遺漏"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "衛生署肥胖治療指引及BMI標準為專業醫療標準依據，影響過失判斷，在各 section 原文中皆無提及",
+     "reason": "衛生署肥胖治療指引及BMI標準為專業醫療標準依據，影響過失判斷，在各 section 原文中皆無提及"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "BMI計算值22.49為背景資訊，雖與體重相關但屬衍生數據，不影響核心案情理解",
+     "reason": "BMI計算值22.49為背景資訊，雖與體重相關但屬衍生數據，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「無不能注意之情形」屬過失要件判斷，影響業務過失成立與否，在各 section 原文中皆無明確對應",
+     "reason": "「無不能注意之情形」屬過失要件判斷，影響業務過失成立與否，在各 section 原文中皆無明確對應"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「服用藥物2天」為時間細節，section_reasoning.txt 提及「2、3日」但非明確2天，屬時間精確度差異",
+     "reason": "「服用藥物2天」為時間細節，section_reasoning.txt 提及「2、3日」但非明確2天，屬時間精確度差異"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "與GT 8（入加護病房）為同一事實之重複項目，屬程序性事實遺漏",
+     "reason": "與GT 8（入加護病房）為同一事實之重複項目，屬程序性事實遺漏"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「病況持續惡化」為死亡過程描述，影響因果關係理解，在各 section 中僅提「多器官衰竭死亡」無惡化過程",
+     "reason": "「病況持續惡化」為死亡過程描述，影響因果關係理解，在各 section 中僅提「多器官衰竭死亡」無惡化過程"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "就診日期為程序性背景事實，未影響判決結論理解，五個 section 均未提及此細節",
+     "reason": "就診日期為程序性背景事實，未影響判決結論理解，五個 section 均未提及此細節"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "病患主訴內容影響案情完整理解，五個 section 均未提及「主訴最近體重增加」",
+     "reason": "病患主訴內容影響案情完整理解，五個 section 均未提及「主訴最近體重增加」"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "開立藥品時間長度為重要案情細節，五個 section 均未提及「2週」",
+     "reason": "開立藥品時間長度為重要案情細節，五個 section 均未提及「2週」"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "第1週藥物品項清單為重要事實細節，五個 section 均未列舉具體藥物品項",
+     "reason": "第1週藥物品項清單為重要事實細節，五個 section 均未列舉具體藥物品項"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "代餐及Ducolax為重要藥品細節，五個 section 均未提及",
+     "reason": "代餐及Ducolax為重要藥品細節，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "第2週藥品調整為重要事實細節，五個 section 均未提及「代餐改為37.5公克」",
+     "reason": "第2週藥品調整為重要事實細節，五個 section 均未提及「代餐改為37.5公克」"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "尿液檢驗未檢出PPA為被告重要辯護論點，五個 section 均未明確提及「未檢出PPA」",
+     "reason": "尿液檢驗未檢出PPA為被告重要辯護論點，五個 section 均未明確提及「未檢出PPA」"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "PPA與腦中風出血之醫學關聯為重要辯護論點，五個 section 均未提及",
+     "reason": "PPA與腦中風出血之醫學關聯為重要辯護論點，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「不可能造成死亡之結果」為被告核心辯護主張，summary雖提及「多重器官衰竭係長期病變所致」但未完整涵蓋「不可能造成死亡」之明確表述",
+     "reason": "「不可能造成死亡之結果」為被告核心辯護主張，summary雖提及「多重器官衰竭係長期病變所致」但未完整涵蓋「不可能造成死亡」之明確表述"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "摘要提及「全身內臟之實質病變」概括描述，但未提及「內臟中度腐敗、瘀血、腐敗類似實質萎縮」等解剖細節；屬鑑定意見的背景性細節，不影響死因結論理解",
+     "reason": "摘要提及「全身內臟之實質病變」概括描述，但未提及「內臟中度腐敗、瘀血、腐敗類似實質萎縮」等解剖細節；屬鑑定意見的背景性細節，不影響死因結論理解"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及「同時合用交感神經興奮劑所致的心律不整」之鑑定意見；雖 reasoning 段提及「致命性之心律不整」，但缺少鑑定書中對交感神經興奮劑與心律不整因果關係的專業意見",
+     "reason": "摘要未提及「同時合用交感神經興奮劑所致的心律不整」之鑑定意見；雖 reasoning 段提及「致命性之心律不整」，但缺少鑑定書中對交感神經興奮劑與心律不整因果關係的專業意見"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及「肝、腎實質細胞間進行性病變」之鑑定細節；雖有「全身內臟之實質病變」概括，但缺乏肝腎特定器官損傷的專業鑑定內容，影響死因機轉的完整理解",
+     "reason": "摘要未提及「肝、腎實質細胞間進行性病變」之鑑定細節；雖有「全身內臟之實質病變」概括，但缺乏肝腎特定器官損傷的專業鑑定內容，影響死因機轉的完整理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要僅提及「甚難排除其同時服用 PPA 等多種交感神經興奮劑所致」，未提及「心室節律障礙、心室心跳快速、心室顫動及心因性休克」等具體病理機轉；屬鑑定意見的核心專業內容",
+     "reason": "摘要僅提及「甚難排除其同時服用 PPA 等多種交感神經興奮劑所致」，未提及「心室節律障礙、心室心跳快速、心室顫動及心因性休克」等具體病理機轉；屬鑑定意見的核心專業內容"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及「肺臟水腫和缺氧性腦病變」之鑑定發現；屬死因機轉的重要病理變化，影響對死亡過程的完整理解",
+     "reason": "摘要未提及「肺臟水腫和缺氧性腦病變」之鑑定發現；屬死因機轉的重要病理變化，影響對死亡過程的完整理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及「Mephentermine 係類安非他命，屬安非他命之一種，非衛生署核准之藥物（禁藥）」；屬藥物性質與合法性之關鍵鑑定意見，影響對案件背景的理解",
+     "reason": "摘要未提及「Mephentermine 係類安非他命，屬安非他命之一種，非衛生署核准之藥物（禁藥）」；屬藥物性質與合法性之關鍵鑑定意見，影響對案件背景的理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "摘要未提及「Mephentermine 使用過量時會出現安非他命中毒現象，重則當然可能造成死亡」之毒性風險鑑定意見；屬藥物毒性機制的重要說明",
+     "reason": "摘要未提及「Mephentermine 使用過量時會出現安非他命中毒現象，重則當然可能造成死亡」之毒性風險鑑定意見；屬藥物毒性機制的重要說明"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 72,
+   "pred_total": 43,
+   "matched": 41,
+   "partial": 7,
+   "missing": 24,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9302,
+  "compression_afg_chars": 1299,
+  "compression_source_chars": 18597,
+  "gt_length_ratio": 0.5211,
+  "gt_length_afg_chars": 1299,
+  "gt_length_gt_chars": 2493,
+  "section_balance": 0.3
+ }
 }
