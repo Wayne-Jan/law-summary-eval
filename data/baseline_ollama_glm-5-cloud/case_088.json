@@ -153,6 +153,534 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7804,
-  "fact_recall_avg": null
+  "fact_recall": 0.4676,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6373,
+  "quality_overall": 4.5714,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.8095,
+  "citation_support_score": 0.813,
+  "uncited_rate": 0.023,
+  "faithfulness_combined": {
+   "score": 0.8745,
+   "citation_fidelity": 0.7909,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 15
+  },
+  "weighted_recall": 0.7746,
+  "missing_severity": {
+   "critical": 2,
+   "important": 21,
+   "minor": 46,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "原始判決書第四段雖有「術後告訴人轉入一般病房接受照護」之記載，但facts段摘要僅提及「進行右下肢筋膜切開手術後即離去」，未明確提及轉入病房之事實，維持missing",
+     "reason": "原始判決書第四段雖有「術後告訴人轉入一般病房接受照護」之記載，但facts段摘要僅提及「進行右下肢筋膜切開手術後即離去」，未明確提及轉入病房之事實，維持missing"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "原始判決書提到被告辯稱術後屢次探視，但法院認定事實中未明確確認被告甲於8月8日親自觀察之事實，facts段摘要亦未提及，維持missing",
+     "reason": "原始判決書提到被告辯稱術後屢次探視，但法院認定事實中未明確確認被告甲於8月8日親自觀察之事實，facts段摘要亦未提及，維持missing"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "此乃起訴事實主張之核心疏失，雖reasoning段提到「病歷雖未詳細記載末梢血循狀態」，但facts段摘要未明確提及「未再觀察患肢末梢血液循環」之具體疏失描述，維持missing",
+     "reason": "此乃起訴事實主張之核心疏失，雖reasoning段提到「病歷雖未詳細記載末梢血循狀態」，但facts段摘要未明確提及「未再觀察患肢末梢血液循環」之具體疏失描述，維持missing"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "原始判決書第一段公訴意旨有「術後傷口持續滲血」之記載，但facts段摘要未提及此事實，維持missing",
+     "reason": "原始判決書第一段公訴意旨有「術後傷口持續滲血」之記載，但facts段摘要未提及此事實，維持missing"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "原始判決書第一段雖有提及，但facts段摘要未提及值班醫師H探視之具體時間點，屬程序性細節，維持missing",
+     "reason": "原始判決書第一段雖有提及，但facts段摘要未提及值班醫師H探視之具體時間點，屬程序性細節，維持missing"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "原始判決書第一段雖有提及，但facts段摘要未提及醫師C探視之具體時間點，屬程序性細節，維持missing",
+     "reason": "原始判決書第一段雖有提及，但facts段摘要未提及醫師C探視之具體時間點，屬程序性細節，維持missing"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "此乃病情變化之關鍵描述，雖reasoning段提及相關護理紀錄，但facts段摘要未明確反映「持續惡化」之過程，維持missing",
+     "reason": "此乃病情變化之關鍵描述，雖reasoning段提及相關護理紀錄，但facts段摘要未明確反映「持續惡化」之過程，維持missing"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "原始判決書中確有8月11日傷口滲液及惡臭之護理紀錄，但facts段摘要未提及此關鍵時間點及具體徵狀，維持missing",
+     "reason": "原始判決書中確有8月11日傷口滲液及惡臭之護理紀錄，但facts段摘要未提及此關鍵時間點及具體徵狀，維持missing"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "此乃注意義務之法律表述，facts段摘要雖提及注意義務但未詳述具體內容，屬法律要件之標準描述，維持missing",
+     "reason": "此乃注意義務之法律表述，facts段摘要雖提及注意義務但未詳述具體內容，屬法律要件之標準描述，維持missing"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "此乃起訴事實之法律標準表述，facts段摘要未提及「無不能注意之情事」，屬次要法律細節，維持missing",
+     "reason": "此乃起訴事實之法律標準表述，facts段摘要未提及「無不能注意之情事」，屬次要法律細節，維持missing"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「此乃起訴事實之主張，雖reasoning段有相關論述，但facts段摘要未明確提及「疏未注意病人病情」之作為義務違反，維持missing",
+     "reason": "「此乃起訴事實之主張，雖reasoning段有相關論述，但facts段摘要未明確提及「疏未注意病人病情」之作為義務違反，維持missing"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「原始判決書第一段公訴意旨有「術後傷口持續滲血，均無人看護」之記載，但facts段摘要僅提及傷口滲血，未提及「均無人看護」之關鍵主張，維持missing",
+     "reason": "「原始判決書第一段公訴意旨有「術後傷口持續滲血，均無人看護」之記載，但facts段摘要僅提及傷口滲血，未提及「均無人看護」之關鍵主張，維持missing"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "綜查全部五個 section 原文，未見被告明確陳述『膝蓋脫臼未復位造成膝部血管外傷性阻塞』此具體醫學判斷文字，僅見被告辯稱『到院時右膝蓋無脫臼』及『應係轉院後發生脫臼』，為間接推論而非直接主張",
+     "reason": "綜查全部五個 section 原文，未見被告明確陳述『膝蓋脫臼未復位造成膝部血管外傷性阻塞』此具體醫學判斷文字，僅見被告辯稱『到院時右膝蓋無脫臼』及『應係轉院後發生脫臼』，為間接推論而非直接主張"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅記載『伊術後屢次探視』及『診斷證明書係依家屬描述事後開立』，未明確提及被告向家屬說明右下肢恢復情形的具體內容",
+     "reason": "section_02_defense.txt 僅記載『伊術後屢次探視』及『診斷證明書係依家屬描述事後開立』，未明確提及被告向家屬說明右下肢恢復情形的具體內容"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "綜查全部五個 section 原文，未見『細菌培養為陽性』之具體記載，僅見『住院期間傷口感染已受控制』及『使用抗生素』等概括性陳述",
+     "reason": "綜查全部五個 section 原文，未見『細菌培養為陽性』之具體記載，僅見『住院期間傷口感染已受控制』及『使用抗生素』等概括性陳述"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "綜查全部五個 section 原文，未見抗生素換藥層級（第一代換成第三代強效）之具體記載",
+     "reason": "綜查全部五個 section 原文，未見抗生素換藥層級（第一代換成第三代強效）之具體記載"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "綜查全部五個 section 原文，未見『細菌培養為陰性』之具體記載",
+     "reason": "綜查全部五個 section 原文，未見『細菌培養為陰性』之具體記載"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅記載『住院期間傷口感染已受控制』，未明確提及『右下肢血液循環已呈現良好跡象』之表述，與『感染受控制』係不同概念",
+     "reason": "section_02_defense.txt 僅記載『住院期間傷口感染已受控制』，未明確提及『右下肢血液循環已呈現良好跡象』之表述，與『感染受控制』係不同概念"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "綜查全部五個 section 原文，未見『腔室壓力100毫米汞柱』之具體數值記載，此為被告辯護之關鍵醫學數據",
+     "reason": "綜查全部五個 section 原文，未見『腔室壓力100毫米汞柱』之具體數值記載，此為被告辯護之關鍵醫學數據"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "綜查全部五個 section 原文，未見被告明確主張『很高截肢比率』之醫療統計論點，係重要辯護論點遺漏",
+     "reason": "綜查全部五個 section 原文，未見被告明確主張『很高截肢比率』之醫療統計論點，係重要辯護論點遺漏"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 僅記載『診斷證明書係依家屬描述事後開立』，未完整陳述『C醫院急診病歷並無發黑發臭記載』之論點",
+     "reason": "section_02_defense.txt 僅記載『診斷證明書係依家屬描述事後開立』，未完整陳述『C醫院急診病歷並無發黑發臭記載』之論點"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "綜查全部五個 section 原文，section_03_opinions.txt 鑑定意見記載『若膝關節脫臼壓迫血管，4至6小時即造成壞死』，被告並未主張『3至4小時』之論點，此為被告辯護的醫學常理論點遺漏",
+     "reason": "綜查全部五個 section 原文，section_03_opinions.txt 鑑定意見記載『若膝關節脫臼壓迫血管，4至6小時即造成壞死』，被告並未主張『3至4小時』之論點，此為被告辯護的醫學常理論點遺漏"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "綜查全部五個 section 原文，未見被告明確主張『C醫院未及時實施右膝蓋復位術』之論點，此為被告歸責於C醫院的核心辯護論點，嚴重影響案情理解",
+     "reason": "綜查全部五個 section 原文，未見被告明確主張『C醫院未及時實施右膝蓋復位術』之論點，此為被告歸責於C醫院的核心辯護論點，嚴重影響案情理解"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及『B醫院醫師與伊具業務利害關係』，未明確提及『證人醫師係C醫院負責診治病患L之醫師』之身分描述",
+     "reason": "section_02_defense.txt 僅提及『B醫院醫師與伊具業務利害關係』，未明確提及『證人醫師係C醫院負責診治病患L之醫師』之身分描述"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 未見明確記載『證人醫師非本案之鑑定證人』之身分區分",
+     "reason": "section_02_defense.txt 未見明確記載『證人醫師非本案之鑑定證人』之身分區分"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及『B醫院醫師與伊具業務利害關係』，未明確主張『證言已失客觀』",
+     "reason": "section_02_defense.txt 僅提及『B醫院醫師與伊具業務利害關係』，未明確主張『證言已失客觀』"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及『診斷證明書係依家屬描述事後開立』，未明確記載『開立右膝脫臼之診斷證明書』之具體內容",
+     "reason": "section_02_defense.txt 僅提及『診斷證明書係依家屬描述事後開立』，未明確記載『開立右膝脫臼之診斷證明書』之具體內容"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急診醫師未立即發現的具體症狀細節，屬事實背景陳述，不影響判決主文理解",
+     "reason": "急診醫師未立即發現的具體症狀細節，屬事實背景陳述，不影響判決主文理解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "雖reasoning段有提『術前X光檢查顯示無骨折或脫臼』，但opinions鑑定意見段落本身確實未提及此X光結果",
+     "reason": "雖reasoning段有提『術前X光檢查顯示無骨折或脫臼』，但opinions鑑定意見段落本身確實未提及此X光結果"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "照會整形外科的具體過程細節，opinions原文未明確提及",
+     "reason": "照會整形外科的具體過程細節，opinions原文未明確提及"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師甲、乙、丙無疏失的認定結論雖重要，但已包含在『無過失』的整體判斷中，原pred claim已有『診斷無疏失』之對應",
+     "reason": "醫師甲、乙、丙無疏失的認定結論雖重要，但已包含在『無過失』的整體判斷中，原pred claim已有『診斷無疏失』之對應"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急診醫囑開立血管攝影卻未執行之事實，涉及疏失認定，屬重要事實",
+     "reason": "急診醫囑開立血管攝影卻未執行之事實，涉及疏失認定，屬重要事實"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管重建手術的醫學建議細節，屬鑑定技術細節",
+     "reason": "血管重建手術的醫學建議細節，屬鑑定技術細節"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「若無血管損傷亦須筋膜切開術」的醫學論述細節",
+     "reason": "「若無血管損傷亦須筋膜切開術」的醫學論述細節"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "截肢風險的鑑定論述細節",
+     "reason": "截肢風險的鑑定論述細節"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血管攝影仍可能截肢的醫學論述",
+     "reason": "血管攝影仍可能截肢的醫學論述"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "輸血細節的醫學論述",
+     "reason": "輸血細節的醫學論述"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "大量出血處理的醫學論述細節",
+     "reason": "大量出血處理的醫學論述細節"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "感染症狀及處理的醫學論述細節",
+     "reason": "感染症狀及處理的醫學論述細節"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「術後照護是否適當」的判斷標準，涉及本案過失認定核心",
+     "reason": "「術後照護是否適當」的判斷標準，涉及本案過失認定核心"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「術後轉入病房」的過程細節",
+     "reason": "「術後轉入病房」的過程細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「紗布包紮、半石膏固定」的具體處置細節",
+     "reason": "「紗布包紮、半石膏固定」的具體處置細節"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「末梢血循可→血液循環回復」的因果推論，為本案重要判斷依據",
+     "reason": "「末梢血循可→血液循環回復」的因果推論，為本案重要判斷依據"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「無血循症狀」的醫學論述",
+     "reason": "「無血循症狀」的醫學論述"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「末梢血循可→未必血管攝影」的推論為案件判斷重要依據",
+     "reason": "「末梢血循可→未必血管攝影」的推論為案件判斷重要依據"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「血管攝影適應症」的醫療常規判斷",
+     "reason": "「血管攝影適應症」的醫療常規判斷"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「組織壞死時間判斷（手術後3天）」為本案時間軸重要資訊",
+     "reason": "「組織壞死時間判斷（手術後3天）」為本案時間軸重要資訊"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「筋膜切開術可避免組織壞死」的醫學論述細節",
+     "reason": "「筋膜切開術可避免組織壞死」的醫學論述細節"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「無法判斷動脈阻塞」的推論",
+     "reason": "「無法判斷動脈阻塞」的推論"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「短時間內不會組織壞死」的醫學論述",
+     "reason": "「短時間內不會組織壞死」的醫學論述"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「血循不佳影響抗生素效果」的醫學論述",
+     "reason": "「血循不佳影響抗生素效果」的醫學論述"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「抗生素無效原因判斷」的醫學論述",
+     "reason": "「抗生素無效原因判斷」的醫學論述"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「出血量其他原因」的醫學論述",
+     "reason": "「出血量其他原因」的醫學論述"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「開放性傷口疼痛」的醫學論述",
+     "reason": "「開放性傷口疼痛」的醫學論述"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「疼痛緩解時間」的醫學論述",
+     "reason": "「疼痛緩解時間」的醫學論述"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「大面積傷口影響疼痛判斷」的醫學論述",
+     "reason": "「大面積傷口影響疼痛判斷」的醫學論述"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「身體診察診斷骨折脫臼」的醫學論述",
+     "reason": "「身體診察診斷骨折脫臼」的醫學論述"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「復位後無法觸診發現」的醫學論述",
+     "reason": "「復位後無法觸診發現」的醫學論述"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「會診醫師應詳細檢查」的醫療規範論述",
+     "reason": "「會診醫師應詳細檢查」的醫療規範論述"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「腔室症候群影響診察」的醫學論述",
+     "reason": "「腔室症候群影響診察」的醫學論述"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「傷口分泌物和臭味」的具體細節",
+     "reason": "「傷口分泌物和臭味」的具體細節"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「術後照護重點」為本案過失認定的重要醫療常規論述",
+     "reason": "「術後照護重點」為本案過失認定的重要醫療常規論述"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "『A醫院醫師未到庭證稱』屬程序性事實，reasoning section 原文未提及，不影響過失認定之核心理解",
+     "reason": "『A醫院醫師未到庭證稱』屬程序性事實，reasoning section 原文未提及，不影響過失認定之核心理解"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "『傷口以紗布包紮、半石膏固定』屬醫療處置細節，reasoning section 原文未提及，不影響過失與因果關係之判斷",
+     "reason": "『傷口以紗布包紮、半石膏固定』屬醫療處置細節，reasoning section 原文未提及，不影響過失與因果關係之判斷"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "『醫審會鑑定報告亦同此認定』屬意見引用程序，reasoning section 原文未明確提及，不影響事實認定結論",
+     "reason": "『醫審會鑑定報告亦同此認定』屬意見引用程序，reasoning section 原文未明確提及，不影響事實認定結論"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『無法確認住院期間已發生』雖與『無證據證明出院前即已存在』語義相近，但reasoning原文已表達此意，惟未用『無法確認』之確切表述，維持原判",
+     "reason": "『無法確認住院期間已發生』雖與『無證據證明出院前即已存在』語義相近，但reasoning原文已表達此意，惟未用『無法確認』之確切表述，維持原判"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『證人等候值班醫護人員均未發現異常』屬證人證詞內容，reasoning section 原文未明確提及證人到庭情形，維持missing",
+     "reason": "『證人等候值班醫護人員均未發現異常』屬證人證詞內容，reasoning section 原文未明確提及證人到庭情形，維持missing"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "『未違反該院慣例』之結論性陳述，reasoning section 原文未明確提及，維持missing",
+     "reason": "『未違反該院慣例』之結論性陳述，reasoning section 原文未明確提及，維持missing"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "『醫療之目的...法理說明』屬法理論述，reasoning section 原文未提及，維持missing",
+     "reason": "『醫療之目的...法理說明』屬法理論述，reasoning section 原文未提及，維持missing"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 44,
+   "matched": 60,
+   "partial": 10,
+   "missing": 69,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9276,
+  "compression_afg_chars": 1170,
+  "compression_source_chars": 16166,
+  "gt_length_ratio": 0.2691,
+  "gt_length_afg_chars": 1170,
+  "gt_length_gt_chars": 4348,
+  "section_balance": 0.3269
  }
 }
