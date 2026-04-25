@@ -136,6 +136,262 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.8384
+  "rule_based_avg": 0.8384,
+  "fact_recall": 0.5312,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6939,
+  "quality_overall": 4.8429,
+  "checklist_pass_rate": 0.9895,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.952,
+  "uncited_rate": 0.041,
+  "faithfulness_combined": {
+   "score": 0.9754,
+   "citation_fidelity": 0.959,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 3,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 13,
+   "correct": 13
+  },
+  "weighted_recall": 0.825,
+  "missing_severity": {
+   "critical": 2,
+   "important": 8,
+   "minor": 20,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts原文僅提到「經救護車送往A醫院急診」，缺少「家屬報請」、「臺北縣政府消防局」等細節，屬程序性事實",
+     "reason": "section_facts原文僅提到「經救護車送往A醫院急診」，缺少「家屬報請」、「臺北縣政府消防局」等細節，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts原文僅提到「並給藥物」，未列出具體藥物名稱（抗組織胺、化痰、退燒止痛、胃藥、硝化甘油舌下含片），影響醫療處置內容理解",
+     "reason": "section_facts原文僅提到「並給藥物」，未列出具體藥物名稱（抗組織胺、化痰、退燒止痛、胃藥、硝化甘油舌下含片），影響醫療處置內容理解"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "各section原文均未提及「要求戒菸、返回門診治療」之醫囑內容，僅提到「告知不適需回診」",
+     "reason": "各section原文均未提及「要求戒菸、返回門診治療」之醫囑內容，僅提到「告知不適需回診」"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "各section原文均未明確提及「病患有心臟病史」此一重要醫療背景資訊",
+     "reason": "各section原文均未明確提及「病患有心臟病史」此一重要醫療背景資訊"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts原文描述症狀但未明確建立「與心臟、血管、神經疾病有關」之醫學關聯，影響案情理解",
+     "reason": "section_facts原文描述症狀但未明確建立「與心臟、血管、神經疾病有關」之醫學關聯，影響案情理解"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts提到「由被告甲進行診斷及檢查」但未明確其「擔任急診值班醫師」之職務身分",
+     "reason": "section_facts提到「由被告甲進行診斷及檢查」但未明確其「擔任急診值班醫師」之職務身分"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「無不能注意之情形」為注意能力之重要法律事實，影響過失認定，各section原文均未提及",
+     "reason": "「無不能注意之情形」為注意能力之重要法律事實，影響過失認定，各section原文均未提及"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense提及「因當時其血壓、心跳均正常且可下床步行，伊始同意出院」，但未明確提及「認病患狀況可先返家休息」之主觀判斷表述",
+     "reason": "section_defense提及「因當時其血壓、心跳均正常且可下床步行，伊始同意出院」，但未明確提及「認病患狀況可先返家休息」之主觀判斷表述"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_reasoning提及「告知不適需回診」，但未提及「如有不舒服要立刻返院，白天後要至門診就醫檢查」之詳細指示內容",
+     "reason": "section_reasoning提及「告知不適需回診」，但未提及「如有不舒服要立刻返院，白天後要至門診就醫檢查」之詳細指示內容"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_facts提及「晚間9時55分許離院」，但section_defense未提及具體出院時間， defense section缺少此關鍵時間點",
+     "reason": "section_facts提及「晚間9時55分許離院」，但section_defense未提及具體出院時間， defense section缺少此關鍵時間點"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_facts提及「翌日凌晨3時許病情惡化，經送往B醫院」，section_reasoning提及「B醫院急診醫師證人丙」，但section_defense未提及後續就醫之時間地點",
+     "reason": "section_facts提及「翌日凌晨3時許病情惡化，經送往B醫院」，section_reasoning提及「B醫院急診醫師證人丙」，但section_defense未提及後續就醫之時間地點"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_facts提及「B醫院診斷為主動脈剝離」，但section_defense未提及後續醫院之檢查診斷結果",
+     "reason": "section_facts提及「B醫院診斷為主動脈剝離」，但section_defense未提及後續醫院之檢查診斷結果"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查全5個section均未提及「主動脈剝離病症並不會立即死亡」之醫學見解",
+     "reason": "遍查全5個section均未提及「主動脈剝離病症並不會立即死亡」之醫學見解"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense提及「十餘小時」，但未完整描述「檢查出主動脈剝離至手術相隔10小時」之時間間隔細節",
+     "reason": "section_defense提及「十餘小時」，但未完整描述「檢查出主動脈剝離至手術相隔10小時」之時間間隔細節"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense及section_reasoning提及多項檢查，但未明確總結「符合病患當時之主訴及急救之原則」",
+     "reason": "section_defense及section_reasoning提及多項檢查，但未明確總結「符合病患當時之主訴及急救之原則」"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "與GT 26重複，pred claim 4已匹配GT 26，此處維持missing以避免重複計數",
+     "reason": "與GT 26重複，pred claim 4已匹配GT 26，此處維持missing以避免重複計數"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense提及「血壓、心跳均正常且可下床步行」，section_reasoning提及「檢查結果無特殊異狀」，但未詳述「血壓、脈搏、呼吸、意識、行動能力、語言能力均正常」之完整生命徵象評估",
+     "reason": "section_defense提及「血壓、心跳均正常且可下床步行」，section_reasoning提及「檢查結果無特殊異狀」，但未詳述「血壓、脈搏、呼吸、意識、行動能力、語言能力均正常」之完整生命徵象評估"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查全5個section均未提及「血壓大幅升高、脈搏加速之異常狀況」",
+     "reason": "遍查全5個section均未提及「血壓大幅升高、脈搏加速之異常狀況」"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "遍查全5個section均未提及「因血壓大幅升高、脈搏加速之異常狀況，始進一步作電腦斷層掃瞄」之診斷過程",
+     "reason": "遍查全5個section均未提及「因血壓大幅升高、脈搏加速之異常狀況，始進一步作電腦斷層掃瞄」之診斷過程"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_reasoning提及「證人即B醫院急診醫師證人丙證稱，其對病患X之初檢與被告在A醫院所為相同」，但未明確提及「初步判斷也是相同」之證詞內容",
+     "reason": "section_reasoning提及「證人即B醫院急診醫師證人丙證稱，其對病患X之初檢與被告在A醫院所為相同」，但未明確提及「初步判斷也是相同」之證詞內容"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "遍查全5個section均未提及「不能苛責兩小時內確診」之辯護論點",
+     "reason": "遍查全5個section均未提及「不能苛責兩小時內確診」之辯護論點"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "critical",
+     "text": "section_opinions提及「被告對病患之處置尚未發現有疏失之處」，section_reasoning提及「難認有何疏失」，但未明確總結「診治並無疏失」之辯護主張",
+     "reason": "section_opinions提及「被告對病患之處置尚未發現有疏失之處」，section_reasoning提及「難認有何疏失」，但未明確總結「診治並無疏失」之辯護主張"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "掃描全部五個 section 均未發現『若仍有胸痛症狀須再進一步安排電腦斷層』之建議，屬醫療細節建議，不影響判決結論理解",
+     "reason": "掃描全部五個 section 均未發現『若仍有胸痛症狀須再進一步安排電腦斷層』之建議，屬醫療細節建議，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "掃描全部 sections 均未發現『胸痛是否已經改善無法從病歷辨認』之記載，屬病歷記載細節",
+     "reason": "掃描全部 sections 均未發現『胸痛是否已經改善無法從病歷辨認』之記載，屬病歷記載細節"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary 提及 B 醫院、C 醫院但未特別提及 K 醫院或未診斷為主動脈剝離之敘述，屬機構名稱差異",
+     "reason": "summary 提及 B 醫院、C 醫院但未特別提及 K 醫院或未診斷為主動脈剝離之敘述，屬機構名稱差異"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "summary 提及『送往B醫院診斷為主動脈剝離，轉送C醫院手術』，未明確提及 G 醫院，屬機構名稱細節",
+     "reason": "summary 提及『送往B醫院診斷為主動脈剝離，轉送C醫院手術』，未明確提及 G 醫院，屬機構名稱細節"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人B偵查中證詞細節（設備不足、建議門診）未在pred任何段落出現，影響法院心證形成過程的理解",
+     "reason": "證人B偵查中證詞細節（設備不足、建議門診）未在pred任何段落出現，影響法院心證形成過程的理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人B審理中證詞細節（告知回診或轉院）未在pred任何段落出現，影響事實認定完整性",
+     "reason": "證人B審理中證詞細節（告知回診或轉院）未在pred任何段落出現，影響事實認定完整性"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患如廁細節（其子攙扶至廁所門口、自行進入）屬事實背景陳述，不影響法律判斷核心",
+     "reason": "病患如廁細節（其子攙扶至廁所門口、自行進入）屬事實背景陳述，不影響法律判斷核心"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患由家屬攙扶步行離院細節屬事實背景，pred已提及「行動能力稍有好轉」，核心狀態已涵蓋",
+     "reason": "病患由家屬攙扶步行離院細節屬事實背景，pred已提及「行動能力稍有好轉」，核心狀態已涵蓋"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 80,
+   "pred_total": 49,
+   "matched": 35,
+   "partial": 15,
+   "missing": 30,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.863,
+  "compression_afg_chars": 1380,
+  "compression_source_chars": 10076,
+  "gt_length_ratio": 0.4987,
+  "gt_length_afg_chars": 1380,
+  "gt_length_gt_chars": 2767,
+  "section_balance": 0.4444
  }
 }
