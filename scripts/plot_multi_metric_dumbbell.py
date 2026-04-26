@@ -100,10 +100,10 @@ CANONICAL_ORDER_COMMERCIAL = [
 
 CANONICAL_ORDER_OPENSOURCE = [
     "LENS-Full-DeepSeek_v31_writer_gemma4",
+    "LENS-Full-GPT-OSS_writer_gpt_oss",
     "LENS-Full-DeepSeek_v31",
     "LENS-NoAFG-DeepSeek_v31",
     "LENS-NoReact-DeepSeek_v31",
-    "LENS-Full-GPT-OSS_writer_gpt_oss",
     "baseline_ollama_deepseek-v3.1-671b-cloud",
     "baseline_ollama_gemma4-31b-cloud",
     "baseline_ollama_glm-5-cloud",

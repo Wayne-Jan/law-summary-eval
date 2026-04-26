@@ -13,10 +13,10 @@
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
   "LENS-Full-DeepSeek_v31_writer_gemma4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
-  "LENS-Full-GPT-OSS_writer_gpt_oss",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -141,6 +141,233 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6065,
-  "fact_recall_avg": null
+  "fact_recall": 0.75,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8571,
+  "quality_overall": 4.7,
+  "checklist_pass_rate": 0.9402,
+  "citation_accuracy": 0.973,
+  "citation_support_score": 0.9263,
+  "uncited_rate": 0.023,
+  "faithfulness_combined": {
+   "score": 0.9704,
+   "citation_fidelity": 0.9506,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 0.957,
+  "numerical_detail": {
+   "total_numerical": 23,
+   "correct": 22
+  },
+  "weighted_recall": 0.9127,
+  "missing_severity": {
+   "critical": 1,
+   "important": 5,
+   "minor": 20,
+   "details": [
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查全部五個 section，未明確提及住院期間（9月25日後）持續存在之腹痛與發燒徵候，僅提及轉院前症狀，維持 missing",
+     "reason": "遍查全部五個 section，未明確提及住院期間（9月25日後）持續存在之腹痛與發燒徵候，僅提及轉院前症狀，維持 missing"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 僅提及「十月四日進行電腦斷層檢查」，與 GT「住院同日（九月二十五日）」之日期明顯不符，維持 missing",
+     "reason": "section_facts.txt 僅提及「十月四日進行電腦斷層檢查」，與 GT「住院同日（九月二十五日）」之日期明顯不符，維持 missing"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_facts.txt 記載「十月八日更換較粗之引流管，十月十日再新置一處引流管」，與 GT「十月八日新插」之時間與動作均不一致，維持 missing",
+     "reason": "section_facts.txt 記載「十月八日更換較粗之引流管，十月十日再新置一處引流管」，與 GT「十月八日新插」之時間與動作均不一致，維持 missing"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_facts.txt 僅提及被告甲「於A醫院外科值班」、「負責主治」，未強調「專業外科醫師」之專業身份表述，屬 minor 差異，維持 missing",
+     "reason": "section_facts.txt 僅提及被告甲「於A醫院外科值班」、「負責主治」，未強調「專業外科醫師」之專業身份表述，屬 minor 差異，維持 missing"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "遍查全部五個 section，未見「病患及家屬要求手術」之記載，反而是 section_reasoning 指出被告「未履行告知義務」，此為關鍵事實差異，影響過失認定，維持 missing",
+     "reason": "遍查全部五個 section，未見「病患及家屬要求手術」之記載，反而是 section_reasoning 指出被告「未履行告知義務」，此為關鍵事實差異，影響過失認定，維持 missing"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 未明確提及被告甲隸屬醫院名稱，屬背景身分資訊，不影響辯護主張理解",
+     "reason": "section_defense.txt 未明確提及被告甲隸屬醫院名稱，屬背景身分資訊，不影響辯護主張理解"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 未提及85年10月1日會診日期，屬時間細節，不影響核心辯護論點",
+     "reason": "section_defense.txt 未提及85年10月1日會診日期，屬時間細節，不影響核心辯護論點"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "此為病患背景事實，section_defense.txt 未提及轉診具體日期，不影響辯護主張",
+     "reason": "此為病患背景事實，section_defense.txt 未提及轉診具體日期，不影響辯護主張"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "手術日期為事實背景，section_defense.txt 未明確陳述，不影響辯護論點",
+     "reason": "手術日期為事實背景，section_defense.txt 未明確陳述，不影響辯護論點"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "診斷方式為背景事實，section_defense.txt 未提及電腦斷層檢查",
+     "reason": "診斷方式為背景事實，section_defense.txt 未提及電腦斷層檢查"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "轉院日期為背景資訊，section_defense.txt 未明確提及9月25日",
+     "reason": "轉院日期為背景資訊，section_defense.txt 未明確提及9月25日"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 未提及由放射科醫師決定施行插管引流之細節",
+     "reason": "section_defense.txt 未提及由放射科醫師決定施行插管引流之細節"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "病患就診歷史為背景資訊，section_defense.txt 未提及9月18日至F醫院就診",
+     "reason": "病患就診歷史為背景資訊，section_defense.txt 未提及9月18日至F醫院就診"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "轉院原因為背景事實，section_defense.txt 未明確提及「病情未獲改善」",
+     "reason": "轉院原因為背景事實，section_defense.txt 未明確提及「病情未獲改善」"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 提及醫療處置「合理且有效」，但未明確使用「盡力醫治」之表述",
+     "reason": "section_defense.txt 提及醫療處置「合理且有效」，但未明確使用「盡力醫治」之表述"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 提及治療成效良好，但未與「大部分相同病情之患者」進行對比",
+     "reason": "section_defense.txt 提及治療成效良好，但未與「大部分相同病情之患者」進行對比"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense.txt 未明確提及「善盡醫師職責」之表述",
+     "reason": "section_defense.txt 未明確提及「善盡醫師職責」之表述"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "為鑑定背景細節，屬輔助性事實",
+     "reason": "為鑑定背景細節，屬輔助性事實"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫審會鑑定意見要點，影響案情完整理解",
+     "reason": "醫審會鑑定意見要點，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫審會鑑定意見要點，影響案情完整理解",
+     "reason": "醫審會鑑定意見要點，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "為背景性醫療常識說明",
+     "reason": "為背景性醫療常識說明"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "為背景性治療方式演變說明",
+     "reason": "為背景性治療方式演變說明"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "為醫學判斷輔助說明",
+     "reason": "為醫學判斷輔助說明"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "為醫學判斷輔助說明",
+     "reason": "為醫學判斷輔助說明"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "為醫學判斷輔助說明",
+     "reason": "為醫學判斷輔助說明"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "為程序性說明",
+     "reason": "為程序性說明"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 126,
+   "pred_total": 88,
+   "matched": 89,
+   "partial": 11,
+   "missing": 26,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7238,
+  "compression_afg_chars": 2458,
+  "compression_source_chars": 8900,
+  "gt_length_ratio": 0.4838,
+  "gt_length_afg_chars": 2458,
+  "gt_length_gt_chars": 5081,
+  "section_balance": 0.3077
  }
 }

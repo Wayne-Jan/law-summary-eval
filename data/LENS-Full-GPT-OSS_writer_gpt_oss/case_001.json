@@ -13,10 +13,10 @@
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
   "LENS-Full-DeepSeek_v31_writer_gemma4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
-  "LENS-Full-GPT-OSS_writer_gpt_oss",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -130,6 +130,129 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7798
+  "rule_based_avg": 0.7798,
+  "fact_recall": 0.8333,
+  "fact_precision": 0.9898,
+  "fact_f1": 0.9049,
+  "quality_overall": 4.8429,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 0.9375,
+  "citation_support_score": 0.8861,
+  "uncited_rate": 0.051,
+  "faithfulness_combined": {
+   "score": 0.9297,
+   "citation_fidelity": 0.8897,
+   "fact_precision": 0.9898,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 22
+  },
+  "weighted_recall": 0.9355,
+  "missing_severity": {
+   "critical": 2,
+   "important": 3,
+   "minor": 6,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「醫師乙為病患X作X光檢查及開立促進末梢血管循環之藥劑」僅出現於 defense section，facts section 確實未提及此細節，屬辯護要點而非核心事實",
+     "reason": "「醫師乙為病患X作X光檢查及開立促進末梢血管循環之藥劑」僅出現於 defense section，facts section 確實未提及此細節，屬辯護要點而非核心事實"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "「本件事證明確」為程序性表述，verdict section 原文僅記載判決結果（有期徒刑七月、緩刑二年、判決確定未上訴），無此特定法律用語，不影響實質判決結論理解",
+     "reason": "「本件事證明確」為程序性表述，verdict section 原文僅記載判決結果（有期徒刑七月、緩刑二年、判決確定未上訴），無此特定法律用語，不影響實質判決結論理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "診斷證明書開具為重要醫療處置事實，影響案情完整性",
+     "reason": "診斷證明書開具為重要醫療處置事實，影響案情完整性"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "被告甲是否察覺腦部異狀涉及過失認定，影響判決結論理解",
+     "reason": "被告甲是否察覺腦部異狀涉及過失認定，影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病歷記載完整性影響過失評價，屬重要事實",
+     "reason": "病歷記載完整性影響過失評價，屬重要事實"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "出院時仍認定心肌梗塞直接關係誤診事實與過失認定",
+     "reason": "出院時仍認定心肌梗塞直接關係誤診事實與過失認定"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "主治醫師定義涉及職責範圍認定，影響過失歸責",
+     "reason": "主治醫師定義涉及職責範圍認定，影響過失歸責"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告乙院長身分屬行政職務事實，非核心醫療過失爭點",
+     "reason": "被告乙院長身分屬行政職務事實，非核心醫療過失爭點"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫院醫師人數屬背景性事實，不影響過失認定",
+     "reason": "醫院醫師人數屬背景性事實，不影響過失認定"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "家屬證人證述屬程序性證據，非關鍵事實認定",
+     "reason": "家屬證人證述屬程序性證據，非關鍵事實認定"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告乙陳述內容屬附帶事實",
+     "reason": "被告乙陳述內容屬附帶事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 98,
+   "matched": 73,
+   "partial": 9,
+   "missing": 11,
+   "hallucinated": 1
+  },
+  "compression_ratio": 0.2286,
+  "compression_afg_chars": 3841,
+  "compression_source_chars": 4979,
+  "gt_length_ratio": 1.2581,
+  "gt_length_afg_chars": 3841,
+  "gt_length_gt_chars": 3053,
+  "section_balance": 0.7692
  }
 }

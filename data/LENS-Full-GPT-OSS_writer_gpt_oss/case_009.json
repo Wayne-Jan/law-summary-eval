@@ -13,10 +13,10 @@
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
   "LENS-Full-DeepSeek_v31_writer_gemma4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
-  "LENS-Full-GPT-OSS_writer_gpt_oss",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -131,5 +131,116 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.748,
+  "fact_recall": 0.6892,
+  "fact_precision": 1.0,
+  "fact_f1": 0.816,
+  "quality_overall": 4.2429,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 0.8,
+  "citation_support_score": 0.8412,
+  "uncited_rate": 0.097,
+  "faithfulness_combined": {
+   "score": 0.8334,
+   "citation_fidelity": 0.7224,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 18,
+   "correct": 18
+  },
+  "weighted_recall": 0.8829,
+  "missing_severity": {
+   "critical": 0,
+   "important": 4,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "戊反應不適症狀的具體人名細節，屬程序背景事實，不影響案情核心理解",
+     "reason": "戊反應不適症狀的具體人名細節，屬程序背景事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「戊反應症狀時醫師疏於觀察」涉及因果關係時間點，雖重要但 pred 已涵蓋「未密切觀察」核心過失",
+     "reason": "「戊反應症狀時醫師疏於觀察」涉及因果關係時間點，雖重要但 pred 已涵蓋「未密切觀察」核心過失"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "搜尋全部 5 個 section 均無「因為協商判決，鑑定內容未明載」之語義對應，屬程序性背景事實",
+     "reason": "搜尋全部 5 個 section 均無「因為協商判決，鑑定內容未明載」之語義對應，屬程序性背景事實"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "各 section 原文均未提及「上訴期間」或「未上訴」之程序事項，屬程序性遺漏，不影響主文理解",
+     "reason": "各 section 原文均未提及「上訴期間」或「未上訴」之程序事項，屬程序性遺漏，不影響主文理解"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "各 section 原文均未提及「判決確定」之程序終結狀態，屬程序性遺漏",
+     "reason": "各 section 原文均未提及「判決確定」之程序終結狀態，屬程序性遺漏"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 原文僅提及『協商合意』，未明確記載『與病患K父母丙、戊已達成和解』之具體和解事實",
+     "reason": "section_05_reasoning.txt 原文僅提及『協商合意』，未明確記載『與病患K父母丙、戊已達成和解』之具體和解事實"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 原文未提及『撤回告訴』之具體程序行為及『96年10月31日』之日期",
+     "reason": "section_05_reasoning.txt 原文未提及『撤回告訴』之具體程序行為及『96年10月31日』之日期"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt 原文未記載『表明不再追究被告刑事責任』之意思表示",
+     "reason": "section_05_reasoning.txt 原文未記載『表明不再追究被告刑事責任』之意思表示"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 雖描述協商判決程序，但未明確指出『判決書內文無判決理由』之特殊性質，此為協商判決之背景特性",
+     "reason": "section_05_reasoning.txt 雖描述協商判決程序，但未明確指出『判決書內文無判決理由』之特殊性質，此為協商判決之背景特性"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 37,
+   "pred_total": 31,
+   "matched": 23,
+   "partial": 5,
+   "missing": 9,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.4379,
+  "compression_afg_chars": 996,
+  "compression_source_chars": 1772,
+  "gt_length_ratio": 1.0257,
+  "gt_length_afg_chars": 996,
+  "gt_length_gt_chars": 971,
+  "section_balance": 0.3333
+ }
 }

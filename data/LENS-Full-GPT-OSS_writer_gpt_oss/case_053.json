@@ -13,10 +13,10 @@
   "baseline_gpt-5.3",
   "baseline_gpt-5.4-thinking",
   "LENS-Full-DeepSeek_v31_writer_gemma4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss",
   "LENS-Full-DeepSeek_v31",
   "LENS-NoAFG-DeepSeek_v31",
   "LENS-NoReact-DeepSeek_v31",
-  "LENS-Full-GPT-OSS_writer_gpt_oss",
   "baseline_ollama_deepseek-v3.1-671b-cloud",
   "baseline_ollama_glm-5-cloud",
   "baseline_ollama_gpt-oss-120b-cloud",
@@ -167,5 +167,480 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.5758,
+  "fact_recall": 0.5267,
+  "fact_precision": 1.0,
+  "fact_f1": 0.69,
+  "quality_overall": 4.6429,
+  "checklist_pass_rate": 0.9674,
+  "citation_accuracy": 0.9688,
+  "citation_support_score": 0.8686,
+  "uncited_rate": 0.024,
+  "faithfulness_combined": {
+   "score": 0.9673,
+   "citation_fidelity": 0.9455,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.909,
+  "numerical_detail": {
+   "total_numerical": 22,
+   "correct": 20
+  },
+  "weighted_recall": 0.7533,
+  "missing_severity": {
+   "critical": 7,
+   "important": 36,
+   "minor": 18,
+   "details": [
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "病危通知發出具體時間點屬事實細節，雖section_reasoning提及轉院後D醫院進行緊急處置，但未明確提及「發出病危通知」之程序性事實",
+     "reason": "病危通知發出具體時間點屬事實細節，雖section_reasoning提及轉院後D醫院進行緊急處置，但未明確提及「發出病危通知」之程序性事實"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經檢視所有 5 個 section 原文（facts、defense、opinions、verdict、reasoning），均未發現「行政院衛生署醫事審議委員會」或「醫審會」字樣，亦未提及鑑定書數量為 2 份，確認屬於遺漏",
+     "reason": "經檢視所有 5 個 section 原文（facts、defense、opinions、verdict、reasoning），均未發現「行政院衛生署醫事審議委員會」或「醫審會」字樣，亦未提及鑑定書數量為 2 份，確認屬於遺漏"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "經檢視所有 section 原文，雖 section_facts 及 section_defense 提及「敗血症引發心肺衰竭死亡」，但未明確提及「瀰漫性血管內凝固病變（DIC）」此醫學診斷；DIC 為死因重要組成部分，遺漏將影響案情理解，屬 critical 缺失",
+     "reason": "經檢視所有 section 原文，雖 section_facts 及 section_defense 提及「敗血症引發心肺衰竭死亡」，但未明確提及「瀰漫性血管內凝固病變（DIC）」此醫學診斷；DIC 為死因重要組成部分，遺漏將影響案情理解，屬 critical 缺失"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，section_opinions 雖提及「血小板降低」為福尼爾氏壞死症症狀之一，但未明確論述「敗血症之病患可能發生血小板過低之併發症」之因果關係；此為醫學專業意見，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，section_opinions 雖提及「血小板降低」為福尼爾氏壞死症症狀之一，但未明確論述「敗血症之病患可能發生血小板過低之併發症」之因果關係；此為醫學專業意見，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，未發現「血小板輸注」之相關論述，確認屬於遺漏；此為醫療處置意見，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，未發現「血小板輸注」之相關論述，確認屬於遺漏；此為醫療處置意見，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經檢視所有 section 原文，section_opinions 提及「細菌易於傷口擴散，形成嚴重感染」及「引發敗血症」，可間接推導感染與敗血症之關係，但未明確陳述「敗血症的主要成因為感染」；屬語義隱含但非明確表述，維持 missing",
+     "reason": "經檢視所有 section 原文，section_opinions 提及「細菌易於傷口擴散，形成嚴重感染」及「引發敗血症」，可間接推導感染與敗血症之關係，但未明確陳述「敗血症的主要成因為感染」；屬語義隱含但非明確表述，維持 missing"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，未發現「血小板輸注與預後因子關聯」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，未發現「血小板輸注與預後因子關聯」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，未發現「輸注血小板對預後效果」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，未發現「輸注血小板對預後效果」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，未發現「輸注血小板與敗血症惡化關係」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，未發現「輸注血小板與敗血症惡化關係」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，未發現「輸注血小板與死亡率關係」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，未發現「輸注血小板與死亡率關係」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，未發現「血小板輸注目的」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，未發現「血小板輸注目的」之論述，確認屬於遺漏；此為鑑定意見之核心論點，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，section_facts 提及「6月18日，病患X家屬要求轉診」，但未提及「6月17日應考慮主動轉診」之鑑定意見；此為醫療決策時機之專業意見，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，section_facts 提及「6月18日，病患X家屬要求轉診」，但未提及「6月17日應考慮主動轉診」之鑑定意見；此為醫療決策時機之專業意見，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "經檢視所有 section 原文，未發現「即使轉診也難保證挽回生命」之論述，確認屬於遺漏；此為鑑定意見關於轉診效果之評估，屬 important 缺失",
+     "reason": "經檢視所有 section 原文，未發現「即使轉診也難保證挽回生命」之論述，確認屬於遺漏；此為鑑定意見關於轉診效果之評估，屬 important 缺失"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "經檢視所有 section 原文，未發現「延誤轉診是否為致死因素」之不確定性論述，確認屬於遺漏；此為因果關係認定之關鍵保留意見，影響判決結論理解，屬 critical 缺失",
+     "reason": "經檢視所有 section 原文，未發現「延誤轉診是否為致死因素」之不確定性論述，確認屬於遺漏；此為因果關係認定之關鍵保留意見，影響判決結論理解，屬 critical 缺失"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經檢視所有 section 原文，未發現「法醫意見」之有無論述，確認屬於遺漏；此為程序性事實，屬 minor 缺失",
+     "reason": "經檢視所有 section 原文，未發現「法醫意見」之有無論述，確認屬於遺漏；此為程序性事實，屬 minor 缺失"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "壞死性筋膜炎的醫學定義屬背景知識，summary未詳述不影響判決理解",
+     "reason": "壞死性筋膜炎的醫學定義屬背景知識，summary未詳述不影響判決理解"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "福尼爾氏壞死症的醫學定義屬背景知識，summary僅提及「併發福尼爾氏壞死症」已足夠",
+     "reason": "福尼爾氏壞死症的醫學定義屬背景知識，summary僅提及「併發福尼爾氏壞死症」已足夠"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「最常見之相關並存疾病」為統計事實，非判決核心要素",
+     "reason": "「最常見之相關並存疾病」為統計事實，非判決核心要素"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "完整症狀清單為醫學背景知識，reasoning section已提及關鍵症狀（陰囊紅腫、敗血症徵兆）",
+     "reason": "完整症狀清單為醫學背景知識，reasoning section已提及關鍵症狀（陰囊紅腫、敗血症徵兆）"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "全身性症狀清單中的關鍵項目（心跳每分鐘110次、白血球計數）已在summary中提及",
+     "reason": "全身性症狀清單中的關鍵項目（心跳每分鐘110次、白血球計數）已在summary中提及"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "氣性壞疽擴展速度為過細醫學細節，非判決關鍵論證",
+     "reason": "氣性壞疽擴展速度為過細醫學細節，非判決關鍵論證"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "擴創手術應切除至正常組織的技術標準涉及醫療常規，但summary已涵蓋「擴創手術」核心概念",
+     "reason": "擴創手術應切除至正常組織的技術標準涉及醫療常規，但summary已涵蓋「擴創手術」核心概念"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "術後出現特定症狀即可能罹患壞死性筋膜炎的判斷準則屬醫學論證，影響對過失認定的理解",
+     "reason": "術後出現特定症狀即可能罹患壞死性筋膜炎的判斷準則屬醫學論證，影響對過失認定的理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "福尼爾氏壞死症的成因（細菌感染）及治療原則（抗生素+立即擴創）是判決核心論證，summary未完整涵蓋",
+     "reason": "福尼爾氏壞死症的成因（細菌感染）及治療原則（抗生素+立即擴創）是判決核心論證，summary未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "擴創手術目的（切除壞死組織、阻斷發炎、隔絕感染）是法院認定因果關係的關鍵",
+     "reason": "擴創手術目的（切除壞死組織、阻斷發炎、隔絕感染）是法院認定因果關係的關鍵"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "鑑定證人關於形成時間的證詞屬佐證細節，非判決關鍵論證",
+     "reason": "鑑定證人關於形成時間的證詞屬佐證細節，非判決關鍵論證"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "80-90%統計數據為佐證資訊，summary已提及糖尿病患者易併發此症",
+     "reason": "80-90%統計數據為佐證資訊，summary已提及糖尿病患者易併發此症"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "會陰擴創能力等於陰囊擴創能力的醫學邏輯推論，是法院認定被告有能力的關鍵理由",
+     "reason": "會陰擴創能力等於陰囊擴創能力的醫學邏輯推論，是法院認定被告有能力的關鍵理由"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人乙關於傷口流血、壓迫止血、傷口腐爛過程的證詞是重要事實證據",
+     "reason": "證人乙關於傷口流血、壓迫止血、傷口腐爛過程的證詞是重要事實證據"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告於轉院當日未再做進一步處理是關鍵事實，影響過失認定",
+     "reason": "被告於轉院當日未再做進一步處理是關鍵事實，影響過失認定"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "鑑定證人關於擴創手術應記錄於病歷的醫療常規說明，是法院認定病歷無擴創記錄的重要性的依據",
+     "reason": "鑑定證人關於擴創手術應記錄於病歷的醫療常規說明，是法院認定病歷無擴創記錄的重要性的依據"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告在偵查及準備程序中未曾主張6/15發現福尼爾氏壞死症，與審理時說詞矛盾，影響可信度判斷",
+     "reason": "被告在偵查及準備程序中未曾主張6/15發現福尼爾氏壞死症，與審理時說詞矛盾，影響可信度判斷"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病歷中無福尼爾氏壞死症診斷記載是重要事實，反駁被告辯詞",
+     "reason": "病歷中無福尼爾氏壞死症診斷記載是重要事實，反駁被告辯詞"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告無法清楚說明判斷依據影響其辯詞可信度，屬重要事實認定",
+     "reason": "被告無法清楚說明判斷依據影響其辯詞可信度，屬重要事實認定"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "切開引流100%、有限切除75%、積極擴創10%的死亡率數據是法院認定因果關係與量刑的核心醫學證據",
+     "reason": "切開引流100%、有限切除75%、積極擴創10%的死亡率數據是法院認定因果關係與量刑的核心醫學證據"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "檢察官關於血小板數值（32,000→24,000）的起訴主張是重要的爭點事實",
+     "reason": "檢察官關於血小板數值（32,000→24,000）的起訴主張是重要的爭點事實"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "檢察官關於Transamine、Bosmin止血及未輸血小板、未轉診的起訴主張是完整爭點",
+     "reason": "檢察官關於Transamine、Bosmin止血及未輸血小板、未轉診的起訴主張是完整爭點"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫事審議委員會關於血小板輸注功效的專業意見是法院否定因果關係的關鍵依據",
+     "reason": "醫事審議委員會關於血小板輸注功效的專業意見是法院否定因果關係的關鍵依據"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "6/16白血球15,100、6/17心跳110與敗血症徵兆的對應是重要醫療事實認定",
+     "reason": "6/16白血球15,100、6/17心跳110與敗血症徵兆的對應是重要醫療事實認定"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫事審議委員會關於轉診時機的意見是重要鑑定見解",
+     "reason": "醫事審議委員會關於轉診時機的意見是重要鑑定見解"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "50%死亡率及延誤轉診因果關係難認定是法院論證的重要部分，涉及判決理由完整性",
+     "reason": "50%死亡率及延誤轉診因果關係難認定是法院論證的重要部分，涉及判決理由完整性"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "法院否定血小板輸注與死亡因果關係的結論是判決核心理由之一",
+     "reason": "法院否定血小板輸注與死亡因果關係的結論是判決核心理由之一"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "6/17出血量減少及輸血小板必要性可疑是法院駁回檢察官主張的重要理由",
+     "reason": "6/17出血量減少及輸血小板必要性可疑是法院駁回檢察官主張的重要理由"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "50%死亡率及延誤轉診因果關係難認定是判決關鍵論證，重複出現表示其重要性",
+     "reason": "50%死亡率及延誤轉診因果關係難認定是判決關鍵論證，重複出現表示其重要性"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "法院認定檢察官舉證不足、延誤轉診過失與死亡因果關係無法證明，是判決的核心法律結論",
+     "reason": "法院認定檢察官舉證不足、延誤轉診過失與死亡因果關係無法證明，是判決的核心法律結論"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "壓迫止血與輸注血小板適應症的醫學見解屬論證細節，非核心判決理由",
+     "reason": "壓迫止血與輸注血小板適應症的醫學見解屬論證細節，非核心判決理由"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血小板正常值與病患術後數據（24,000/μl）是檢察官主張的重要依據",
+     "reason": "血小板正常值與病患術後數據（24,000/μl）是檢察官主張的重要依據"
+    },
+    {
+     "gt_claim_id": 136,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血小板低下為敗血症結果而非原因的病理機轉解釋是醫學論證",
+     "reason": "血小板低下為敗血症結果而非原因的病理機轉解釋是醫學論證"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "改善敗血症的方法與血小板輸注無關的見解是法院的核心論證",
+     "reason": "改善敗血症的方法與血小板輸注無關的見解是法院的核心論證"
+    },
+    {
+     "gt_claim_id": 138,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "PT、APTT凝血功能正常及無急迫輸注必要是重要事實認定",
+     "reason": "PT、APTT凝血功能正常及無急迫輸注必要是重要事實認定"
+    },
+    {
+     "gt_claim_id": 139,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "DIC診斷標準之臨床症狀描述屬醫學細節",
+     "reason": "DIC診斷標準之臨床症狀描述屬醫學細節"
+    },
+    {
+     "gt_claim_id": 140,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患未達DIC程度的判斷是法院的事實認定",
+     "reason": "病患未達DIC程度的判斷是法院的事實認定"
+    },
+    {
+     "gt_claim_id": 141,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "D醫院6/20術前輸注血小板等細節時間線為佐證資訊",
+     "reason": "D醫院6/20術前輸注血小板等細節時間線為佐證資訊"
+    },
+    {
+     "gt_claim_id": 142,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血小板輸注目的為避免流血而非治療細菌感染是法院否定因果關係的重要理由",
+     "reason": "血小板輸注目的為避免流血而非治療細菌感染是法院否定因果關係的重要理由"
+    },
+    {
+     "gt_claim_id": 143,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未提及「血小板輸注目的」「並非失血過多致死」等因果論述，屬法院對血小板議題之法律論理遺漏",
+     "reason": "五個section原文均未提及「血小板輸注目的」「並非失血過多致死」等因果論述，屬法院對血小板議題之法律論理遺漏"
+    },
+    {
+     "gt_claim_id": 145,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及「6月17日出血量減少」之事實細節",
+     "reason": "五個section原文均未提及「6月17日出血量減少」之事實細節"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及「6月18日轉院至D醫院」「凝血功能正常」等醫療細節",
+     "reason": "五個section原文均未提及「6月18日轉院至D醫院」「凝血功能正常」等醫療細節"
+    },
+    {
+     "gt_claim_id": 147,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未提及「無血小板低下合併大量出血」之認定",
+     "reason": "五個section原文均未提及「無血小板低下合併大量出血」之認定"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個section原文均未比較「D醫院醫師與被告處理方式相同」",
+     "reason": "五個section原文均未比較「D醫院醫師與被告處理方式相同」"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未明確記載法院否定「未輸注血小板」與死亡因果關係之結論，此為法院對檢察官主張之回應",
+     "reason": "五個section原文均未明確記載法院否定「未輸注血小板」與死亡因果關係之結論，此為法院對檢察官主張之回應"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個section原文均未明確記載法院認定「檢察官證據不足以證明未輸注血小板及未轉診與死亡有因果關係」之判斷",
+     "reason": "五個section原文均未明確記載法院認定「檢察官證據不足以證明未輸注血小板及未轉診與死亡有因果關係」之判斷"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 150,
+   "pred_total": 85,
+   "matched": 70,
+   "partial": 18,
+   "missing": 62,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8143,
+  "compression_afg_chars": 2406,
+  "compression_source_chars": 12959,
+  "gt_length_ratio": 0.2301,
+  "gt_length_afg_chars": 2406,
+  "gt_length_gt_chars": 10456,
+  "section_balance": 0.3
+ }
 }
