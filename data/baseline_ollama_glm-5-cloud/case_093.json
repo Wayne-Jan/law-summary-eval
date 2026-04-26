@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -128,5 +130,312 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6925,
+  "fact_recall": 0.6171,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7632,
+  "quality_overall": 4.7,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.5714,
+  "citation_support_score": 0.5957,
+  "uncited_rate": 0.023,
+  "faithfulness_combined": {
+   "score": 0.735,
+   "citation_fidelity": 0.5583,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.8198,
+  "missing_severity": {
+   "critical": 0,
+   "important": 23,
+   "minor": 14,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "掛號過程細節為程序性背景事實，不影響核心案情理解",
+     "reason": "掛號過程細節為程序性背景事實，不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "測量血壓與冒冷汗症狀為就醫細節，facts 段已提及「胸悶」核心症狀",
+     "reason": "測量血壓與冒冷汗症狀為就醫細節，facts 段已提及「胸悶」核心症狀"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "批價與陪同至心電室為程序性細節，不影響核心診療事實",
+     "reason": "批價與陪同至心電室為程序性細節，不影響核心診療事實"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "護士持心電圖至心臟科醫師確認的細節，facts 段未提及，但 defense 段有「請心臟科醫師確認」之簡化描述",
+     "reason": "護士持心電圖至心臟科醫師確認的細節，facts 段未提及，但 defense 段有「請心臟科醫師確認」之簡化描述"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "轉診告知義務之法條內容為重要法律要件，影響過失認定理解",
+     "reason": "轉診告知義務之法條內容為重要法律要件，影響過失認定理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "未告知轉診原因及風險為重要過失指控，影響案情理解",
+     "reason": "未告知轉診原因及風險為重要過失指控，影響案情理解"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "舌下含片後續追蹤觀察之疏失為重要診療細節，影響過失認定",
+     "reason": "舌下含片後續追蹤觀察之疏失為重要診療細節，影響過失認定"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有 section 均未提及病歷記載『建議病患坐計程車比較快』之具體內容，屬辯護要點遺漏",
+     "reason": "所有 section 均未提及病歷記載『建議病患坐計程車比較快』之具體內容，屬辯護要點遺漏"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有 section 均未提及被告記載理由之說明，屬次要細節",
+     "reason": "所有 section 均未提及被告記載理由之說明，屬次要細節"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "defense section 未明確提出『無因果關係』此法律主張，雖 reasoning 中有相關論述但未直述該主張",
+     "reason": "defense section 未明確提出『無因果關係』此法律主張，雖 reasoning 中有相關論述但未直述該主張"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有 section 均未提及護士追出診所之情節，屬程序性細節",
+     "reason": "所有 section 均未提及護士追出診所之情節，屬程序性細節"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "section_opinions.txt 僅摘要提及鑑定結果，未提及「病人無心臟疾病或神經系統疾病之病史」此基礎事實",
+     "reason": "section_opinions.txt 僅摘要提及鑑定結果，未提及「病人無心臟疾病或神經系統疾病之病史」此基礎事實"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "生成摘要未提及心室顫動延遲電擊之死亡率數據（8～10%），跨 section 檢查均無此具體數據",
+     "reason": "生成摘要未提及心室顫動延遲電擊之死亡率數據（8～10%），跨 section 檢查均無此具體數據"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "生成摘要未提及轉送途中進行CPR及電擊治療可增加回復心跳機會之醫學見解",
+     "reason": "生成摘要未提及轉送途中進行CPR及電擊治療可增加回復心跳機會之醫學見解"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "生成摘要未提及急救效果取決於疾病根本原因及病情嚴重度之鑑定見解",
+     "reason": "生成摘要未提及急救效果取決於疾病根本原因及病情嚴重度之鑑定見解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "生成摘要未提及心律不整電擊治療需視心律種類及生命徵象決定之專業鑑定內容",
+     "reason": "生成摘要未提及心律不整電擊治療需視心律種類及生命徵象決定之專業鑑定內容"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "生成摘要未提及PEA無脈性心臟電氣活動病人應進行CPR而非電擊之處置規範",
+     "reason": "生成摘要未提及PEA無脈性心臟電氣活動病人應進行CPR而非電擊之處置規範"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "生成摘要未提及心肌梗塞病人電擊治療需視是否引致需電擊心律不整而定之判定條件",
+     "reason": "生成摘要未提及心肌梗塞病人電擊治療需視是否引致需電擊心律不整而定之判定條件"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "生成摘要未提及國際治療指引建議轉送可施行緊急心導管治療醫院之建議",
+     "reason": "生成摘要未提及國際治療指引建議轉送可施行緊急心導管治療醫院之建議"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要未提及診所醫師對後送醫院設備、處置能力及實際交通時間了解限制之說明",
+     "reason": "生成摘要未提及診所醫師對後送醫院設備、處置能力及實際交通時間了解限制之說明"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生成摘要未單獨提及診所醫師考慮與後送醫院合作默契及演習演練之因素",
+     "reason": "生成摘要未單獨提及診所醫師考慮與後送醫院合作默契及演習演練之因素"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人L之證述內容未見於任何 section 原文，屬證據評價相關事實，影響對證據完整性的理解",
+     "reason": "證人L之證述內容未見於任何 section 原文，屬證據評價相關事實，影響對證據完整性的理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人L無從得知對話內容之證述限制未見於任何 section 原文，影響證據能力評價",
+     "reason": "證人L無從得知對話內容之證述限制未見於任何 section 原文，影響證據能力評價"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人R之詳細證述內容雖部分見於 section_defense，但「持心電圖向診所心臟科醫師確認後」等細節未在 reasoning section 完整呈現，影響心證形成過程理解",
+     "reason": "證人R之詳細證述內容雖部分見於 section_defense，但「持心電圖向診所心臟科醫師確認後」等細節未在 reasoning section 完整呈現，影響心證形成過程理解"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "醫審會鑑定之事實雖見於 section_opinions，作為獨立 claim 陳述鑑定事實本身對判決理由理解影響較小",
+     "reason": "醫審會鑑定之事實雖見於 section_opinions，作為獨立 claim 陳述鑑定事實本身對判決理由理解影響較小"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "死因為急性心肌梗塞之可能性係重要醫療事實，影響因果關係判斷，section_opinions 雖有相關內容但未在 reasoning section 明確呈現",
+     "reason": "死因為急性心肌梗塞之可能性係重要醫療事實，影響因果關係判斷，section_opinions 雖有相關內容但未在 reasoning section 明確呈現"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "未能排除主動脈剝離、肺動脈栓塞之可能係重要鑑別診斷資訊，影響死因認定之完整性理解",
+     "reason": "未能排除主動脈剝離、肺動脈栓塞之可能係重要鑑別診斷資訊，影響死因認定之完整性理解"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人C開立死亡證明書前之諮詢為旁證細節，對判決核心理由理解影響較小",
+     "reason": "證人C開立死亡證明書前之諮詢為旁證細節，對判決核心理由理解影響較小"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "死因不能排除為急性心肌梗塞之可能性係重要醫療事實認定，影響過失與因果關係判斷",
+     "reason": "死因不能排除為急性心肌梗塞之可能性係重要醫療事實認定，影響過失與因果關係判斷"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "診所醫療設備侷限係被告判斷依據之重要事實，影響轉診處置合理性的理解",
+     "reason": "診所醫療設備侷限係被告判斷依據之重要事實，影響轉診處置合理性的理解"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫療行為程序原則係法院判斷被告注意義務之重要法律論據，影響過失認定",
+     "reason": "醫療行為程序原則係法院判斷被告注意義務之重要法律論據，影響過失認定"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴意旨關於搭乘計程車之具體指控內容未見於 section_facts 原文，對爭點理解有影響但屬程序性事實",
+     "reason": "公訴意旨關於搭乘計程車之具體指控內容未見於 section_facts 原文，對爭點理解有影響但屬程序性事實"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "錄影畫面佐證為證據形式陳述，對判決理由實質內容理解影響較小",
+     "reason": "錄影畫面佐證為證據形式陳述，對判決理由實質內容理解影響較小"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴意旨關於逕建議搭乘計程車之具體指控未見於 section_facts 原文，屬程序性事實",
+     "reason": "公訴意旨關於逕建議搭乘計程車之具體指控未見於 section_facts 原文，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "轉診部分無疏失之結論性陳述雖可從 section_reasoning 整體推論得出，但未作為獨立 claim 明確陳述，影響判決要旨理解",
+     "reason": "轉診部分無疏失之結論性陳述雖可從 section_reasoning 整體推論得出，但未作為獨立 claim 明確陳述，影響判決要旨理解"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "途中與友人交談之細節為背景性事實，用於說明病患當時狀況尚可，屬佐證細節",
+     "reason": "途中與友人交談之細節為背景性事實，用於說明病患當時狀況尚可，屬佐證細節"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告依專業能力、醫療設備及病患情況判斷之過程係法院認定無過失之重要事實基礎，影響判決理由理解",
+     "reason": "被告依專業能力、醫療設備及病患情況判斷之過程係法院認定無過失之重要事實基礎，影響判決理由理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 111,
+   "pred_total": 44,
+   "matched": 63,
+   "partial": 11,
+   "missing": 37,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8795,
+  "compression_afg_chars": 1456,
+  "compression_source_chars": 12083,
+  "gt_length_ratio": 0.3179,
+  "gt_length_afg_chars": 1456,
+  "gt_length_gt_chars": 4580,
+  "section_balance": 0.375
+ }
 }

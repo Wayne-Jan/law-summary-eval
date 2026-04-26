@@ -44,6 +44,7 @@ EXTRA_CONDITIONS = OrderedDict(
         ("baseline_ollama_nemotron-3-super-cloud", {"label": "Nemotron 3 Super (120B / 12A)", "group": "開源模型"}),
         ("baseline_ollama_gemma4-31b-cloud", {"label": "Gemma 4 (30.7B)", "group": "開源模型"}),
         ("LENS-Full-DeepSeek_v31_writer_gemma4", {"label": "LENS-Gemma 4", "group": "開源模型"}),
+        ("LENS-Full-GPT-OSS_writer_gpt_oss", {"label": "LENS-GPT-OSS", "group": "開源模型"}),
     ]
 )
 
@@ -66,6 +67,7 @@ DISPLAY_LABELS = {
     "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
     "baseline_ollama_gemma4-31b-cloud": "Gemma 4 (30.7B)",
     "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+    "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS",
     "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
     "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",
@@ -181,6 +183,7 @@ CONDITION_ORDER = [
     "LENS-Full-DeepSeek_v31",
     "LENS-NoAFG-DeepSeek_v31",
     "LENS-NoReact-DeepSeek_v31",
+    "LENS-Full-GPT-OSS_writer_gpt_oss",
     # Open-source baselines (alphabetical)
 ]
 

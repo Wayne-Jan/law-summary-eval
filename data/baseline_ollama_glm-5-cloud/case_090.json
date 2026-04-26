@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -132,6 +134,520 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6731,
-  "fact_recall_avg": null
+  "fact_recall": 0.4317,
+  "fact_precision": 1.0,
+  "fact_f1": 0.603,
+  "quality_overall": 4.7286,
+  "checklist_pass_rate": 0.9728,
+  "citation_accuracy": 0.92,
+  "citation_support_score": 0.9258,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.952,
+   "citation_fidelity": 0.92,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 4,
+  "numerical_fidelity": 0.882,
+  "numerical_detail": {
+   "total_numerical": 17,
+   "correct": 15
+  },
+  "weighted_recall": 0.7458,
+  "missing_severity": {
+   "critical": 5,
+   "important": 29,
+   "minor": 33,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "98年6月病史起始及右頸淋巴結腫大症狀於各section均未提及，屬背景病史性質",
+     "reason": "98年6月病史起始及右頸淋巴結腫大症狀於各section均未提及，屬背景病史性質"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "骨髓檢查結果（惡性淋巴瘤尚未侵入骨髓）於各section均未提及，屬重要診斷資訊",
+     "reason": "骨髓檢查結果（惡性淋巴瘤尚未侵入骨髓）於各section均未提及，屬重要診斷資訊"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官關於化學治療直接引起或增加消化道出血風險之論述，於各section均未詳細提及",
+     "reason": "檢察官關於化學治療直接引起或增加消化道出血風險之論述，於各section均未詳細提及"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官關於應進行消化道內視鏡檢查及評估是否繼續化療之具體論述未完整呈現",
+     "reason": "檢察官關於應進行消化道內視鏡檢查及評估是否繼續化療之具體論述未完整呈現"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢察官關於經驗性投藥處理之論述，於各section均未提及，為替代性處置建議",
+     "reason": "檢察官關於經驗性投藥處理之論述，於各section均未提及，為替代性處置建議"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢察官關於「並無不能注意之情事」之過失要件論述，屬法律標準用語",
+     "reason": "檢察官關於「並無不能注意之情事」之過失要件論述，屬法律標準用語"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官關於口服藥物增加胃腸道出血風險之指控，與摘要所述退燒針克多炎屬不同藥物及時點",
+     "reason": "檢察官關於口服藥物增加胃腸道出血風險之指控，與摘要所述退燒針克多炎屬不同藥物及時點"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官關於疏未衡量病患身體狀況以評估是否繼續化療之論述，於各section均未完整呈現",
+     "reason": "檢察官關於疏未衡量病患身體狀況以評估是否繼續化療之論述，於各section均未完整呈現"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官關於未考慮癌症輕重緩急與病患潛在風險疾病之論述，屬重要過失指控",
+     "reason": "檢察官關於未考慮癌症輕重緩急與病患潛在風險疾病之論述，屬重要過失指控"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢察官關於「應注意、能注意而不注意」之過失要件概括論述，屬法律標準用語",
+     "reason": "檢察官關於「應注意、能注意而不注意」之過失要件概括論述，屬法律標準用語"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「骨髓抑制」之醫學定義解釋，屬背景醫學知識性質，非案件核心事實",
+     "reason": "「骨髓抑制」之醫學定義解釋，屬背景醫學知識性質，非案件核心事實"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全文未提及「若不經治療一定會死亡」，雖為治療必要性之背景資訊，但不影響核心案情理解",
+     "reason": "全文未提及「若不經治療一定會死亡」，雖為治療必要性之背景資訊，但不影響核心案情理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及治療前詳細檢查清單（血液、肝腎功能、電解值、骨髓、血糖、X光、全身斷層掃瞄），屬程序性細節",
+     "reason": "全文未提及治療前詳細檢查清單（血液、肝腎功能、電解值、骨髓、血糖、X光、全身斷層掃瞄），屬程序性細節"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未明確提及「確認病患身體狀況能夠接受化學治療」，屬程序性事實",
+     "reason": "全文未明確提及「確認病患身體狀況能夠接受化學治療」，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及「提出住院進行化療之建議」，雖有提到病患住院，但無明確建議住院之表述",
+     "reason": "全文未提及「提出住院進行化療之建議」，雖有提到病患住院，但無明確建議住院之表述"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全文未提及「當時病人血球較低」，此為被告未會診之重要理由，影響防禦論述完整性",
+     "reason": "全文未提及「當時病人血球較低」，此為被告未會診之重要理由，影響防禦論述完整性"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全文未提及「病人血球較低不適合做侵入性檢查」，此為被告未安排會診之關鍵辯護理由",
+     "reason": "全文未提及「病人血球較低不適合做侵入性檢查」，此為被告未安排會診之關鍵辯護理由"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全文未提及「會診外科、放射線科醫師主要是為了做侵入性檢查」，屬被告辯護之背景性事實",
+     "reason": "全文未提及「會診外科、放射線科醫師主要是為了做侵入性檢查」，屬被告辯護之背景性事實"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全文未提及「伊認為病人並不適合做侵入性檢查，所以沒有給予會診」，遺漏被告未會診之具體理由，影響防禦論述理解",
+     "reason": "全文未提及「伊認為病人並不適合做侵入性檢查，所以沒有給予會診」，遺漏被告未會診之具體理由，影響防禦論述理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全文未提及「低劑量之化學治療無法徹底清除腫瘤，反而會增加腫瘤的抗藥性」，遺漏被告主張高劑量化療之重要論據",
+     "reason": "全文未提及「低劑量之化學治療無法徹底清除腫瘤，反而會增加腫瘤的抗藥性」，遺漏被告主張高劑量化療之重要論據"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "全文未提及「必須使用高劑量的化學治療」，遺漏被告對劑量選擇之核心辯護",
+     "reason": "全文未提及「必須使用高劑量的化學治療」，遺漏被告對劑量選擇之核心辯護"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "化療前檢查結果屬背景性事實，不影響醫療常規判斷核心",
+     "reason": "化療前檢查結果屬背景性事實，不影響醫療常規判斷核心"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "SDH指數屬檢驗細節，非鑑定意見核心爭點",
+     "reason": "SDH指數屬檢驗細節，非鑑定意見核心爭點"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "生命徵象具體數值屬背景性事實",
+     "reason": "生命徵象具體數值屬背景性事實"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts 已提及糞便潛血陽性，opinions 段未重複屬合理",
+     "reason": "section_facts 已提及糞便潛血陽性，opinions 段未重複屬合理"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫療常規要求進行再確認檢查或內視鏡屬重要鑑定意見，影響醫療過失判斷",
+     "reason": "醫療常規要求進行再確認檢查或內視鏡屬重要鑑定意見，影響醫療過失判斷"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經驗性投藥屬替代處置選項，非核心爭點",
+     "reason": "經驗性投藥屬替代處置選項，非核心爭點"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "prednisolone 增加出血風險屬醫療行為評估重要項目",
+     "reason": "prednisolone 增加出血風險屬醫療行為評估重要項目"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_facts 及 defense 已提及血便，opinions 段未重複屬合理",
+     "reason": "section_facts 及 defense 已提及血便，opinions 段未重複屬合理"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "克多炎注射日期屬醫療行為時間軸重要資訊",
+     "reason": "克多炎注射日期屬醫療行為時間軸重要資訊"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未會診外科、放射線科屬醫療常規爭議重要內容",
+     "reason": "未會診外科、放射線科屬醫療常規爭議重要內容"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "增加死亡風險之評估屬鑑定意見關鍵結論",
+     "reason": "增加死亡風險之評估屬鑑定意見關鍵結論"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "化療療程長度屬治療背景資訊",
+     "reason": "化療療程長度屬治療背景資訊"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "cyclophosphamide 屬藥物細節，非核心爭點",
+     "reason": "cyclophosphamide 屬藥物細節，非核心爭點"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "無標準劑量屬文獻背景說明",
+     "reason": "無標準劑量屬文獻背景說明"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "糞便潛血異常性質已於 facts 段隱含提及",
+     "reason": "糞便潛血異常性質已於 facts 段隱含提及"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "判讀需視病患狀況屬解釋性說明",
+     "reason": "判讀需視病患狀況屬解釋性說明"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "糞便潛血陽性與消化道出血風險關聯屬醫療常規判斷重要依據",
+     "reason": "糞便潛血陽性與消化道出血風險關聯屬醫療常規判斷重要依據"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "應會診專科醫師評估屬重要醫療常規建議",
+     "reason": "應會診專科醫師評估屬重要醫療常規建議"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "內視鏡檢查時機屬程序性細節",
+     "reason": "內視鏡檢查時機屬程序性細節"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "10月10日血便已於 defense 及 facts 提及",
+     "reason": "10月10日血便已於 defense 及 facts 提及"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未進行內視鏡及會診屬醫療行為評估重要內容",
+     "reason": "未進行內視鏡及會診屬醫療行為評估重要內容"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "無從查知腸胃道出血屬因果關係判斷關鍵",
+     "reason": "無從查知腸胃道出血屬因果關係判斷關鍵"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "MTX建議劑量上限為鑑定爭議核心，直接影響劑量過高之過失認定",
+     "reason": "MTX建議劑量上限為鑑定爭議核心，直接影響劑量過高之過失認定"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "具體MTX劑量數值為案件關鍵事實，影響是否超過建議劑量之判斷",
+     "reason": "具體MTX劑量數值為案件關鍵事實，影響是否超過建議劑量之判斷"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "違反醫療常規行為明細屬鑑定意見核心內容",
+     "reason": "違反醫療常規行為明細屬鑑定意見核心內容"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "「醫療行為未必與死亡有關」為鑑定意見關鍵結論，直接影響因果關係認定",
+     "reason": "「醫療行為未必與死亡有關」為鑑定意見關鍵結論，直接影響因果關係認定"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腦脊髓液藥物濃度與復發風險屬醫療效果評估重要內容",
+     "reason": "腦脊髓液藥物濃度與復發風險屬醫療效果評估重要內容"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "MTX劑量範圍屬劑量爭議重要文獻依據",
+     "reason": "MTX劑量範圍屬劑量爭議重要文獻依據"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "MTX適應症屬背景性醫學知識",
+     "reason": "MTX適應症屬背景性醫學知識"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "各醫院慣用劑量差異屬背景說明",
+     "reason": "各醫院慣用劑量差異屬背景說明"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "MTX劑量範圍1-15gm/㎡屬劑量爭議重要文獻依據",
+     "reason": "MTX劑量範圍1-15gm/㎡屬劑量爭議重要文獻依據"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "具體劑量8gm/㎡及容許劑量評估屬劑量爭議關鍵",
+     "reason": "具體劑量8gm/㎡及容許劑量評估屬劑量爭議關鍵"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "系爭摘要確未提及第一次醫審會鑑定意見之具體內容，雖 section_03_opinions.txt 有記載，但 reasoning section 生成摘要未涵蓋此鑑定細節",
+     "reason": "系爭摘要確未提及第一次醫審會鑑定意見之具體內容，雖 section_03_opinions.txt 有記載，但 reasoning section 生成摘要未涵蓋此鑑定細節"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "系爭摘要未提及第一次鑑定關於經驗性投藥之建議，屬鑑定意見細節遺漏",
+     "reason": "系爭摘要未提及第一次鑑定關於經驗性投藥之建議，屬鑑定意見細節遺漏"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "系爭摘要未明確記載第一次鑑定認為「不符醫療常規」之具體認定",
+     "reason": "系爭摘要未明確記載第一次鑑定認為「不符醫療常規」之具體認定"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "系爭摘要未提及第二次鑑定關於會診專業科醫師之意見，雖 section_03_opinions.txt 有「未會診外科與死亡無關」之反向表述，但摘要未收錄",
+     "reason": "系爭摘要未提及第二次鑑定關於會診專業科醫師之意見，雖 section_03_opinions.txt 有「未會診外科與死亡無關」之反向表述，但摘要未收錄"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要未提及10月10日血便之具體日期，僅於因果關係論述中隱含提及，日期細節遺漏屬次要事實",
+     "reason": "系爭摘要未提及10月10日血便之具體日期，僅於因果關係論述中隱含提及，日期細節遺漏屬次要事實"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要未詳列 prednisolone、克多炎注射液等具體藥物名稱及其增加腸胃道出血風險之機制，屬醫療細節遺漏",
+     "reason": "系爭摘要未詳列 prednisolone、克多炎注射液等具體藥物名稱及其增加腸胃道出血風險之機制，屬醫療細節遺漏"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要未提及10月5日白血球5,000/ul之具體數據，僅概括提及白血球低下",
+     "reason": "系爭摘要未提及10月5日白血球5,000/ul之具體數據，僅概括提及白血球低下"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要未提及10月8日白血球1,000/ul之具體數據",
+     "reason": "系爭摘要未提及10月8日白血球1,000/ul之具體數據"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要未提及10月8日顆粒球85.0%之具體數據",
+     "reason": "系爭摘要未提及10月8日顆粒球85.0%之具體數據"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要僅概括提及「抗生素」，未明確記載Cefrome藥物名稱",
+     "reason": "系爭摘要僅概括提及「抗生素」，未明確記載Cefrome藥物名稱"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要未提及Tienam抗生素更換之具體處置",
+     "reason": "系爭摘要未提及Tienam抗生素更換之具體處置"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要未提及Diflucan抗黴菌藥物之使用",
+     "reason": "系爭摘要未提及Diflucan抗黴菌藥物之使用"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "系爭摘要未提及Cancidas抗黴菌藥物之更換",
+     "reason": "系爭摘要未提及Cancidas抗黴菌藥物之更換"
+    },
+    {
+     "gt_claim_id": 137,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "系爭摘要未明確提及「無其他積極事證」此無罪判決之關鍵理由，影響判決結論理解",
+     "reason": "系爭摘要未明確提及「無其他積極事證」此無罪判決之關鍵理由，影響判決結論理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 139,
+   "pred_total": 52,
+   "matched": 48,
+   "partial": 24,
+   "missing": 67,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8849,
+  "compression_afg_chars": 1285,
+  "compression_source_chars": 11168,
+  "gt_length_ratio": 0.2504,
+  "gt_length_afg_chars": 1285,
+  "gt_length_gt_chars": 5131,
+  "section_balance": 0.1351
  }
 }

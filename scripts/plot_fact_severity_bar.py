@@ -62,6 +62,7 @@ LABELS = {
     "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5",
     "baseline_ollama_gemma4-31b-cloud": "Gemma 4",
     "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS Gemma 4",
+    "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS GPT-OSS",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5",
 }
 

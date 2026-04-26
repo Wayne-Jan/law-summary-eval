@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -132,5 +134,88 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8333,
+  "fact_recall": 0.8667,
+  "fact_precision": 1.0,
+  "fact_f1": 0.9286,
+  "quality_overall": 4.9,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.9091,
+  "citation_support_score": 0.9148,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9455,
+   "citation_fidelity": 0.9091,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 6,
+   "correct": 6
+  },
+  "weighted_recall": 0.9722,
+  "missing_severity": {
+   "critical": 0,
+   "important": 0,
+   "minor": 5,
+   "details": [
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經查閱全部五個section，均未提及「其他種名引起之感染查無相關文獻」此細節，屬鑑定意見中的背景性文獻說明",
+     "reason": "經查閱全部五個section，均未提及「其他種名引起之感染查無相關文獻」此細節，屬鑑定意見中的背景性文獻說明"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "opinions section僅提及「有可能於注射當日或數日內發病」，未含「1天至數10日、平均約1週」之具體統計資訊；遍查其他section亦無此潛伏期統計細節",
+     "reason": "opinions section僅提及「有可能於注射當日或數日內發病」，未含「1天至數10日、平均約1週」之具體統計資訊；遍查其他section亦無此潛伏期統計細節"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經查閱全部五個section，均未提及其他感染途徑（遭植物劃傷、原發性血液感染、腸胃道感染），屬鑑定意見中的補充性醫學資訊",
+     "reason": "經查閱全部五個section，均未提及其他感染途徑（遭植物劃傷、原發性血液感染、腸胃道感染），屬鑑定意見中的補充性醫學資訊"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經查閱全部五個section，均未明確提及「感染機率與輸液污染及無菌操作之關聯」此因果論述，reasoning section雖提及點滴瓶污染源之可能性，但未上升至機率層次之概括性表述",
+     "reason": "經查閱全部五個section，均未明確提及「感染機率與輸液污染及無菌操作之關聯」此因果論述，reasoning section雖提及點滴瓶污染源之可能性，但未上升至機率層次之概括性表述"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "經查閱全部五個section，均未詳細列舉無菌技術操作之具體項目（洗手、皮膚消毒、包裝檢查等），defense section僅泛稱「堅持無菌操作」，reasoning section亦未展開具體項目",
+     "reason": "經查閱全部五個section，均未詳細列舉無菌技術操作之具體項目（洗手、皮膚消毒、包裝檢查等），defense section僅泛稱「堅持無菌操作」，reasoning section亦未展開具體項目"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 60,
+   "pred_total": 43,
+   "matched": 49,
+   "partial": 6,
+   "missing": 5,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8423,
+  "compression_afg_chars": 1319,
+  "compression_source_chars": 8366,
+  "gt_length_ratio": 0.4712,
+  "gt_length_afg_chars": 1319,
+  "gt_length_gt_chars": 2799,
+  "section_balance": 0.6875
+ }
 }

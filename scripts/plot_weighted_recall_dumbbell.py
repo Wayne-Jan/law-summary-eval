@@ -65,6 +65,7 @@ CANONICAL_PRIORITY = {
     "LENS-Full-DeepSeek_v31": 21,
     "LENS-NoReact-DeepSeek_v31": 22,
     "LENS-NoAFG-DeepSeek_v31": 23,
+    "LENS-Full-GPT-OSS_writer_gpt_oss": 24,
 }
 
 DISPLAY_LABELS = {
@@ -86,6 +87,7 @@ DISPLAY_LABELS = {
     "baseline_ollama_kimi-k2.5-cloud": "Kimi K2.5 (1T / 32A)",
     "baseline_ollama_gemma4-31b-cloud": "Gemma 4",
     "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+    "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS",
     "baseline_ollama_qwen3-next-80b-cloud": "Qwen3 Next (80B / 3A)",
     "baseline_ollama_qwen3.5-397b-cloud": "Qwen3.5 (397B / 17A)",
     "baseline_ollama_nemotron-3-super-cloud": "Nemotron 3 Super (120B / 12A)",

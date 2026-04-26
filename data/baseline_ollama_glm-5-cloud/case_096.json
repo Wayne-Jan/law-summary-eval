@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -127,6 +129,402 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7259
+  "rule_based_avg": 0.7259,
+  "fact_recall": 0.4495,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6203,
+  "quality_overall": 4.7714,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.9571,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 1.0,
+   "citation_fidelity": 1.0,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.7829,
+  "missing_severity": {
+   "critical": 2,
+   "important": 17,
+   "minor": 31,
+   "details": [
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "就診症狀細節（發燒、咳嗽、呼吸困難）與具體時間（12:20）未在summary任何section提及，影響案情時序理解",
+     "reason": "就診症狀細節（發燒、咳嗽、呼吸困難）與具體時間（12:20）未在summary任何section提及，影響案情時序理解"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "醫師發現無法測得血壓及心跳停止之關鍵事實未提及，影響急救時機理解",
+     "reason": "醫師發現無法測得血壓及心跳停止之關鍵事實未提及，影響急救時機理解"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬質疑診治行為屬程序性背景，核心案情已由檢察官起訴涵蓋",
+     "reason": "家屬質疑診治行為屬程序性背景，核心案情已由檢察官起訴涵蓋"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「請T至診所理論」為糾紛過程細節，非核心事實",
+     "reason": "「請T至診所理論」為糾紛過程細節，非核心事實"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告明知病歷應詳實記錄之主觀認知未提及，影響登載不實故意之認定理解",
+     "reason": "被告明知病歷應詳實記錄之主觀認知未提及，影響登載不實故意之認定理解"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "實際就診時間（上午10時）與病歷登載時間（12:20）之對比未提及，影響登載不實事實理解",
+     "reason": "實際就診時間（上午10時）與病歷登載時間（12:20）之對比未提及，影響登載不實事實理解"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "完整看診流程細節（量血壓、抽血、心電圖、點滴、舌下錠）未詳細記載",
+     "reason": "完整看診流程細節（量血壓、抽血、心電圖、點滴、舌下錠）未詳細記載"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告否認2-3分鐘內血壓心跳驟停之辯解內容未提及，影響對醫療過程之完整理解",
+     "reason": "被告否認2-3分鐘內血壓心跳驟停之辯解內容未提及，影響對醫療過程之完整理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "與claim 17時間登載內容重疊，已由pred claim 7涵蓋核心事實",
+     "reason": "與claim 17時間登載內容重疊，已由pred claim 7涵蓋核心事實"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "病歷英文登載「Sudden cardiac arrest 3minits after to my clinic」之具體文字未提及，影響登載不實內容之細節理解",
+     "reason": "病歷英文登載「Sudden cardiac arrest 3minits after to my clinic」之具體文字未提及，影響登載不實內容之細節理解"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "給藥順序記載之操縱（撰寫在第一次點滴注射前）為關鍵登載不實行為，未提及影響案情理解",
+     "reason": "給藥順序記載之操縱（撰寫在第一次點滴注射前）為關鍵登載不實行為，未提及影響案情理解"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "交付病歷予司法警察機關之行使行為屬程序性事實",
+     "reason": "交付病歷予司法警察機關之行使行為屬程序性事實"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "對醫事主管機關與家屬權益之損害為法條構成要件描述，屬法律評價而非核心事實",
+     "reason": "對醫事主管機關與家屬權益之損害為法條構成要件描述，屬法律評價而非核心事實"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "各 section 均未提及被告不知道確切到診時間之辯述，屬細節性描述",
+     "reason": "各 section 均未提及被告不知道確切到診時間之辯述，屬細節性描述"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts.txt 起訴事實雖提及「12：20PM」，但係檢察官指控內容，非被告辯稱之看到病患時間；summary 中未提及被告主張的具體時間點",
+     "reason": "section_01_facts.txt 起訴事實雖提及「12：20PM」，但係檢察官指控內容，非被告辯稱之看到病患時間；summary 中未提及被告主張的具體時間點"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 僅提及「病歷所載時間為伊看診時間」，未明確說明「看到病人時才寫」此細節",
+     "reason": "section_02_defense.txt 僅提及「病歷所載時間為伊看診時間」，未明確說明「看到病人時才寫」此細節"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "各 section 均未提及被告「每次重大疾病會看錶記時間」之習慣描述，屬被告辯護細節",
+     "reason": "各 section 均未提及被告「每次重大疾病會看錶記時間」之習慣描述，屬被告辯護細節"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 雞提及病患「臉色發青、血壓極低」，但未明確提及「趕緊檢查、量血壓」之動作描述，影響辯護論理完整性",
+     "reason": "section_02_defense.txt 雞提及病患「臉色發青、血壓極低」，但未明確提及「趕緊檢查、量血壓」之動作描述，影響辯護論理完整性"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "各 section 均未提及被告辯稱有做「心電圖」之描述，此為被告辯護重要環節卻未見於摘要",
+     "reason": "各 section 均未提及被告辯稱有做「心電圖」之描述，此為被告辯護重要環節卻未見於摘要"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "各 section 均未提及「心電圖做完後沒有2分鐘」之相關時間敘述，與心電圖操作環節相關",
+     "reason": "各 section 均未提及「心電圖做完後沒有2分鐘」之相關時間敘述，與心電圖操作環節相關"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "各 section 均未提及被告辯稱「從心電圖可以看出來是死亡的心電圖」之判讀描述",
+     "reason": "各 section 均未提及被告辯稱「從心電圖可以看出來是死亡的心電圖」之判讀描述"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "CPR 目的之背景知識，原文各 section 均未提及，屬醫療常規背景資訊",
+     "reason": "CPR 目的之背景知識，原文各 section 均未提及，屬醫療常規背景資訊"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "強心升壓藥物之使用，原文各 section 均未提及",
+     "reason": "強心升壓藥物之使用，原文各 section 均未提及"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "舌下含片造成血壓下降之作用機制，reasoning section 僅從反面論述「不會造成血壓下降」，未正面說明「會造成血壓下降」之機制",
+     "reason": "舌下含片造成血壓下降之作用機制，reasoning section 僅從反面論述「不會造成血壓下降」，未正面說明「會造成血壓下降」之機制"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "靜脈注射給藥方式，原文各 section 均未提及",
+     "reason": "靜脈注射給藥方式，原文各 section 均未提及"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "醫審會「無心跳病人給予舌下含片無常規」是 reasoning 核心醫療常規論點，摘要簡化為「無效醫療」概念，遺漏具體醫療常規判定",
+     "reason": "醫審會「無心跳病人給予舌下含片無常規」是 reasoning 核心醫療常規論點，摘要簡化為「無效醫療」概念，遺漏具體醫療常規判定"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "摘要未明確提及「無效醫療」概念，影響對法院因果關係論證的理解",
+     "reason": "摘要未明確提及「無效醫療」概念，影響對法院因果關係論證的理解"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「無效醫療與病人之死亡間無因果關係」是判決核心因果推論，遺漏影響判決結論理解",
+     "reason": "「無效醫療與病人之死亡間無因果關係」是判決核心因果推論，遺漏影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病歷記載順序細節（History of COPD...後始載給Nitroglycerin）為程序性事實",
+     "reason": "病歷記載順序細節（History of COPD...後始載給Nitroglycerin）為程序性事實"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "法院「尚有可疑」的質疑細節未在摘要中體現",
+     "reason": "法院「尚有可疑」的質疑細節未在摘要中體現"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「未能證明病患仍有心跳」的舉證不足判定細節未提及",
+     "reason": "「未能證明病患仍有心跳」的舉證不足判定細節未提及"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "檢驗報告時間存疑問題未在 reasoning section 原文中體現",
+     "reason": "檢驗報告時間存疑問題未在 reasoning section 原文中體現"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「無從推論診治時間」的時間推論困難未提及",
+     "reason": "「無從推論診治時間」的時間推論困難未提及"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「證人證述病患因感冒頭痛求診的細節未在 reasoning section 出現",
+     "reason": "「證人證述病患因感冒頭痛求診的細節未在 reasoning section 出現"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「病患未立即表明病症危急」的事實認定細節未在 reasoning section 出現",
+     "reason": "「病患未立即表明病症危急」的事實認定細節未在 reasoning section 出現"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「證人S發覺後立即帶診」的具體事實細節未在 reasoning section 出現",
+     "reason": "「證人S發覺後立即帶診」的具體事實細節未在 reasoning section 出現"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「量血壓、測心電圖、CPR等處置順序」的具體操作細節未在 reasoning section 出現",
+     "reason": "「量血壓、測心電圖、CPR等處置順序」的具體操作細節未在 reasoning section 出現"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「精確就診時間12時20分許」雖重要但 summary 已有大致時間概念",
+     "reason": "「精確就診時間12時20分許」雖重要但 summary 已有大致時間概念"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「即使轉診仍會死亡」的可能性表述雖與「縱早轉診亦難避免死亡」有關，但法院強調的「無法排除」語氣未完整呈現",
+     "reason": "「即使轉診仍會死亡」的可能性表述雖與「縱早轉診亦難避免死亡」有關，但法院強調的「無法排除」語氣未完整呈現"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「仍有合理懷疑」是刑事判決關鍵法律用語，摘要僅提「舉證不足」未完整呈現",
+     "reason": "「仍有合理懷疑」是刑事判決關鍵法律用語，摘要僅提「舉證不足」未完整呈現"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「轉診與死亡無關連→難認過失」的完整推論鏈是判決核心結論，摘要簡化為「難認有延誤過失」遺漏因果關係論證",
+     "reason": "「轉診與死亡無關連→難認過失」的完整推論鏈是判決核心結論，摘要簡化為「難認有延誤過失」遺漏因果關係論證"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「病歷英文記載細節」為事實描述性細節",
+     "reason": "「病歷英文記載細節」為事實描述性細節"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「舌下含片記載位置細節」為事實認定細節",
+     "reason": "「舌下含片記載位置細節」為事實認定細節"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「證人R1候診室證詞細節」為證人證述細節",
+     "reason": "「證人R1候診室證詞細節」為證人證述細節"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「無創造病危假象之必要」的反駁論點未在 reasoning section 原文中明確出現",
+     "reason": "「無創造病危假象之必要」的反駁論點未在 reasoning section 原文中明確出現"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「給予舌下含片及注射藥劑」的具體醫療處置事實在摘要中被簡化",
+     "reason": "「給予舌下含片及注射藥劑」的具體醫療處置事實在摘要中被簡化"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「被告偵查中供稱」的具體供述細節未在 reasoning section 出現",
+     "reason": "「被告偵查中供稱」的具體供述細節未在 reasoning section 出現"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「事後依記憶記載病歷」的事實細節未在 reasoning section 出現",
+     "reason": "「事後依記憶記載病歷」的事實細節未在 reasoning section 出現"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「記載方式可能性的多種解釋」為法院論證細節未完整呈現",
+     "reason": "「記載方式可能性的多種解釋」為法院論證細節未完整呈現"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「存有合理懷疑，猶未到達確信其為真實之程度」是刑事判決無罪核心法理表述，摘要簡化為「舉證不足」遺漏重要法律語境",
+     "reason": "「存有合理懷疑，猶未到達確信其為真實之程度」是刑事判決無罪核心法理表述，摘要簡化為「舉證不足」遺漏重要法律語境"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 109,
+   "pred_total": 33,
+   "matched": 39,
+   "partial": 20,
+   "missing": 50,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9024,
+  "compression_afg_chars": 1092,
+  "compression_source_chars": 11187,
+  "gt_length_ratio": 0.2773,
+  "gt_length_afg_chars": 1092,
+  "gt_length_gt_chars": 3938,
+  "section_balance": 0.4565
  }
 }

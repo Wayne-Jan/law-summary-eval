@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -130,5 +132,361 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6649,
+  "fact_recall": 0.5472,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7073,
+  "quality_overall": 4.6571,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.68,
+  "citation_support_score": 0.6808,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.808,
+   "citation_fidelity": 0.68,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 5,
+   "correct": 5
+  },
+  "weighted_recall": 0.8333,
+  "missing_severity": {
+   "critical": 0,
+   "important": 9,
+   "minor": 35,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "全身健康檢查之背景事實，summary 雖提及大腸鏡檢查但未明確敘述為健檢，屬背景性資訊",
+     "reason": "全身健康檢查之背景事實，summary 雖提及大腸鏡檢查但未明確敘述為健檢，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "summary 事實段記載「隨後病患X離院」，與 GT「並未自行離院」存在矛盾，視為遺漏",
+     "reason": "summary 事實段記載「隨後病患X離院」，與 GT「並未自行離院」存在矛盾，視為遺漏"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "五段 section 均未提及病患請院方通知醫師之細節，屬程序性背景",
+     "reason": "五段 section 均未提及病患請院方通知醫師之細節，屬程序性背景"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "急救持續時間係重要醫療時間軸，影響後續併發症理解，五段均未提及",
+     "reason": "急救持續時間係重要醫療時間軸，影響後續併發症理解，五段均未提及"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "病危通知之確切時間點 5 時 4 分，五段均未提及",
+     "reason": "病危通知之確切時間點 5 時 4 分，五段均未提及"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "轉入加護病房之確切時間點 5 時 10 分，五段均未提及",
+     "reason": "轉入加護病房之確切時間點 5 時 10 分，五段均未提及"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "後續住院時間軸（至 12 月 20 日、30 日），五段均未提及",
+     "reason": "後續住院時間軸（至 12 月 20 日、30 日），五段均未提及"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "人工肛門使用期間之敘述，五段均未提及",
+     "reason": "人工肛門使用期間之敘述，五段均未提及"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "102 年 4 月 8 日再次住院之時間點，五段均未提及",
+     "reason": "102 年 4 月 8 日再次住院之時間點，五段均未提及"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "造口關閉手術之敘述，五段均未提及",
+     "reason": "造口關閉手術之敘述，五段均未提及"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "102 年 4 月 23 日出院之時間點，五段均未提及",
+     "reason": "102 年 4 月 23 日出院之時間點，五段均未提及"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "單純大腸鏡檢查穿孔機率 0.17% 之統計數據，五段均未提及",
+     "reason": "單純大腸鏡檢查穿孔機率 0.17% 之統計數據，五段均未提及"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "腸穿孔約 50% 死亡率之統計，係理解延誤診斷嚴重性之重要醫學背景",
+     "reason": "腸穿孔約 50% 死亡率之統計，係理解延誤診斷嚴重性之重要醫學背景"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "延誤診斷腹膜炎及敗血症為主要死因之敘述，係理解本案過失爭點之關鍵",
+     "reason": "延誤診斷腹膜炎及敗血症為主要死因之敘述，係理解本案過失爭點之關鍵"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告認定情況不嚴重而建議離院之主張，五段均未提及，係過失認定之重要爭點",
+     "reason": "被告認定情況不嚴重而建議離院之主張，五段均未提及，係過失認定之重要爭點"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告應請院方告知禁食之義務論述，五段均未提及",
+     "reason": "被告應請院方告知禁食之義務論述，五段均未提及"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "應提供軟食之建議，五段均未提及，屬次要醫囑細節",
+     "reason": "應提供軟食之建議，五段均未提及，屬次要醫囑細節"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告未告知禁食或軟食之事實，五段均未提及，係過失爭議之關鍵",
+     "reason": "被告未告知禁食或軟食之事實，五段均未提及，係過失爭議之關鍵"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "院方提供硬食中餐之事實，五段均未提及，係因果關係判斷之重要事實",
+     "reason": "院方提供硬食中餐之事實，五段均未提及，係因果關係判斷之重要事實"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告理當詢問進食情況之注意義務論述，五段均未提及",
+     "reason": "被告理當詢問進食情況之注意義務論述，五段均未提及"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "若得知進食硬食應考量後果之因果推論，五段均未提及",
+     "reason": "若得知進食硬食應考量後果之因果推論，五段均未提及"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "背景性醫療常規知識，五段原文均未涵蓋息肉處置之詳細醫療常規說明",
+     "reason": "背景性醫療常規知識，五段原文均未涵蓋息肉處置之詳細醫療常規說明"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術前同意書風險數值細節，五段原文均未提及0.17%之具體數據",
+     "reason": "術前同意書風險數值細節，五段原文均未提及0.17%之具體數據"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "說明書風險比率細節，五段原文均未提及1.7%之具體數據",
+     "reason": "說明書風險比率細節，五段原文均未提及1.7%之具體數據"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "同意書誤載事實，五段原文均未涵蓋風險數值誤載之說明",
+     "reason": "同意書誤載事實，五段原文均未涵蓋風險數值誤載之說明"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "息肉大小細節（0.2公分），五段原文未提及具體尺寸",
+     "reason": "息肉大小細節（0.2公分），五段原文未提及具體尺寸"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "息肉大小與處置方式之醫療常規，五段原文未涵蓋",
+     "reason": "息肉大小與處置方式之醫療常規，五段原文未涵蓋"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術後常見症狀之詳細描述，五段原文未提及輕微脹痛、血便等具體症狀",
+     "reason": "術後常見症狀之詳細描述，五段原文未提及輕微脹痛、血便等具體症狀"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "嚴重症狀需立即檢查之醫療指引，五段原文未涵蓋",
+     "reason": "嚴重症狀需立即檢查之醫療指引，五段原文未涵蓋"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "立即性穿孔特徵之技術細節，五段原文未提及內視鏡觀察腹腔、腹膜等具體特徵",
+     "reason": "立即性穿孔特徵之技術細節，五段原文未提及內視鏡觀察腹腔、腹膜等具體特徵"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遲發性穿孔時間範圍（1週內），五段原文未提及具體時間統計",
+     "reason": "遲發性穿孔時間範圍（1週內），五段原文未提及具體時間統計"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "遲發性穿孔症狀時序之詳細說明，五段原文未涵蓋症狀出現時序之描述",
+     "reason": "遲發性穿孔症狀時序之詳細說明，五段原文未涵蓋症狀出現時序之描述"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腹脹發生率統計（60-80%），五段原文未提及具體數據",
+     "reason": "腹脹發生率統計（60-80%），五段原文未提及具體數據"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "術後腹脹時間統計（40-60%），五段原文未提及具體數據",
+     "reason": "術後腹脹時間統計（40-60%），五段原文未提及具體數據"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腸穿孔症狀詳情（腹脹、腹痛、發燒、休克），五段原文未完整涵蓋",
+     "reason": "腸穿孔症狀詳情（腹脹、腹痛、發燒、休克），五段原文未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "症狀與穿孔程度關係，五段原文未涵蓋",
+     "reason": "症狀與穿孔程度關係，五段原文未涵蓋"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "腸穿孔檢驗方式之詳細說明，五段原文未完整涵蓋",
+     "reason": "腸穿孔檢驗方式之詳細說明，五段原文未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "小穿孔保守療法之詳細說明，五段原文未涵蓋禁食、抗生素等具體處置",
+     "reason": "小穿孔保守療法之詳細說明，五段原文未涵蓋禁食、抗生素等具體處置"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "大穿孔處置方式（內視鏡止血夾縫合），五段原文未涵蓋",
+     "reason": "大穿孔處置方式（內視鏡止血夾縫合），五段原文未涵蓋"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "未察覺穿孔嚴重後果之因果機制說明，五段原文未完整涵蓋",
+     "reason": "未察覺穿孔嚴重後果之因果機制說明，五段原文未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "外科手術縫合之治療流程說明，五段原文未涵蓋",
+     "reason": "外科手術縫合之治療流程說明，五段原文未涵蓋"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "嚴重情況手術選項（部分腸切除、暫時性造口術），五段原文雖於facts段提及實際手術內容，但未於opinions段作為醫學會意見之治療選項說明",
+     "reason": "嚴重情況手術選項（部分腸切除、暫時性造口術），五段原文雖於facts段提及實際手術內容，但未於opinions段作為醫學會意見之治療選項說明"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "法院名稱（臺灣士林地方法院）與判決日期（民國106年3月10日）屬程序性資訊，雖未完整呈現於摘要中，但不影響判決主文（無罪認定）之理解",
+     "reason": "法院名稱（臺灣士林地方法院）與判決日期（民國106年3月10日）屬程序性資訊，雖未完整呈現於摘要中，但不影響判決主文（無罪認定）之理解"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 全文未提及被告甲知悉病患X已用過午餐之事實，僅提及病患甫完成心臟超音波檢查且能站立談話，未提及用餐資訊",
+     "reason": "section_05_reasoning.txt 全文未提及被告甲知悉病患X已用過午餐之事實，僅提及病患甫完成心臟超音波檢查且能站立談話，未提及用餐資訊"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 106,
+   "pred_total": 41,
+   "matched": 54,
+   "partial": 8,
+   "missing": 44,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9168,
+  "compression_afg_chars": 1174,
+  "compression_source_chars": 14107,
+  "gt_length_ratio": 0.3937,
+  "gt_length_afg_chars": 1174,
+  "gt_length_gt_chars": 2982,
+  "section_balance": 0.16
+ }
 }

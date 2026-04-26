@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -132,5 +134,228 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7843,
+  "fact_recall": 0.5417,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7027,
+  "quality_overall": 4.8429,
+  "checklist_pass_rate": 0.9946,
+  "citation_accuracy": 0.8421,
+  "citation_support_score": 0.8263,
+  "uncited_rate": 0.12,
+  "faithfulness_combined": {
+   "score": 0.8446,
+   "citation_fidelity": 0.741,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 5,
+   "correct": 5
+  },
+  "weighted_recall": 0.7778,
+  "missing_severity": {
+   "critical": 3,
+   "important": 9,
+   "minor": 13,
+   "details": [
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「無不能注意之情形」為法律要件用語，遍查五個 section 原文均未見此明確表述，維持 missing",
+     "reason": "「無不能注意之情形」為法律要件用語，遍查五個 section 原文均未見此明確表述，維持 missing"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「D醫院」、「被告提供點滴瓶」等過程細節遍查五 section 均未見對應，僅 reasoning 段提及「點滴瓶檢驗」但未說明來源，影響感染源確認過程理解，維持 missing",
+     "reason": "「D醫院」、「被告提供點滴瓶」等過程細節遍查五 section 均未見對應，僅 reasoning 段提及「點滴瓶檢驗」但未說明來源，影響感染源確認過程理解，維持 missing"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "病患感染 Pantoea 之事實雖見於 opinions 與 reasoning 段，但 defense section 摘要中僅以否認對象形式間接提及（pred claim 6「致使告訴人受感染」屬否定結構），未獨立陳述感染事實。Pantoea 感染為本案核心醫療事實，影響案情完整理解。",
+     "reason": "病患感染 Pantoea 之事實雖見於 opinions 與 reasoning 段，但 defense section 摘要中僅以否認對象形式間接提及（pred claim 6「致使告訴人受感染」屬否定結構），未獨立陳述感染事實。Pantoea 感染為本案核心醫療事實，影響案情完整理解。"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑定書份數屬細節資訊，五段經查均未明確提及「1份」",
+     "reason": "鑑定書份數屬細節資訊，五段經查均未明確提及「1份」"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患就診日期及低血壓、發燒、腹瀉等症狀細節未在opinions段完整呈現，影響病徵與鑑定意見之關聯理解",
+     "reason": "病患就診日期及低血壓、發燒、腹瀉等症狀細節未在opinions段完整呈現，影響病徵與鑑定意見之關聯理解"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「其他種名引起之感染查無文獻」之論述，五段經查均未提及",
+     "reason": "「其他種名引起之感染查無文獻」之論述，五段經查均未提及"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "感染潛伏期「1天至數10日，平均約1週」之時間範圍未提及，影響因果關係時間點判定",
+     "reason": "感染潛伏期「1天至數10日，平均約1週」之時間範圍未提及，影響因果關係時間點判定"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「菌血症症狀需視含菌量多寡」之論述，五段經查均未提及",
+     "reason": "「菌血症症狀需視含菌量多寡」之論述，五段經查均未提及"
+    },
+    {
+     "gt_claim_id": 31,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「植物劃傷、原發性血液感染、腸胃道感染」等其他感染途徑，五段經查均未提及",
+     "reason": "「植物劃傷、原發性血液感染、腸胃道感染」等其他感染途徑，五段經查均未提及"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「施打針劑被感染之機率」與輸液污染及無菌技術之關聯論述未完整覆蓋",
+     "reason": "「施打針劑被感染之機率」與輸液污染及無菌技術之關聯論述未完整覆蓋"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "無菌技術操作具體項目（洗手、皮膚消毒等）之列舉未提及",
+     "reason": "無菌技術操作具體項目（洗手、皮膚消毒等）之列舉未提及"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「針劑或輸液管路於使用前未開封即遭到污染」之具體情境未明確提及",
+     "reason": "「針劑或輸液管路於使用前未開封即遭到污染」之具體情境未明確提及"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Pantoea菌項下有7種種名菌之專業分類資訊，reasoning原文僅提及「種類繁多，僅特定種類可感染人類」，未明確說明7種之數量，屬鑑定意見專業細節遺漏",
+     "reason": "Pantoea菌項下有7種種名菌之專業分類資訊，reasoning原文僅提及「種類繁多，僅特定種類可感染人類」，未明確說明7種之數量，屬鑑定意見專業細節遺漏"
+    },
+    {
+     "gt_claim_id": 38,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "僅有2類種名菌可造成人類感染之具體醫學資訊（Pantoea.dispersa及Pantoea.aggsomerans），reasoning原文未提及，影響對感染源鑑定限制的理解",
+     "reason": "僅有2類種名菌可造成人類感染之具體醫學資訊（Pantoea.dispersa及Pantoea.aggsomerans），reasoning原文未提及，影響對感染源鑑定限制的理解"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患感染應為該2類種名菌其中之一之推論，reasoning原文未提及，此為法院連結鑑定意見與本案事實之重要邏輯步驟",
+     "reason": "病患感染應為該2類種名菌其中之一之推論，reasoning原文未提及，此為法院連結鑑定意見與本案事實之重要邏輯步驟"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "點滴瓶「未再鑑定種名」之明確事實陳述，pred claim 3僅提及「無法確認」，未明確說明是因未進行種名鑑定所致，屬鑑定程序關鍵事實",
+     "reason": "點滴瓶「未再鑑定種名」之明確事實陳述，pred claim 3僅提及「無法確認」，未明確說明是因未進行種名鑑定所致，屬鑑定程序關鍵事實"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "D醫院使用自動化儀器鑑定且無法進行種名鑑定之技術細節，reasoning原文未提及，屬鑑定方法背景資訊",
+     "reason": "D醫院使用自動化儀器鑑定且無法進行種名鑑定之技術細節，reasoning原文未提及，屬鑑定方法背景資訊"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人Z於警詢時之詳細證詞內容（告知病患菌種及未經種名/PFGE鑑定），reasoning原文完全未提及，屬證人證詞細節",
+     "reason": "證人Z於警詢時之詳細證詞內容（告知病患菌種及未經種名/PFGE鑑定），reasoning原文完全未提及，屬證人證詞細節"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告於本院審理時稱點滴瓶由助理從醫療廢棄物尋獲之完整細節，pred claim 4僅提及「從醫療廢棄物尋獲」，缺少被告陳述及助理尋獲等細節",
+     "reason": "被告於本院審理時稱點滴瓶由助理從醫療廢棄物尋獲之完整細節，pred claim 4僅提及「從醫療廢棄物尋獲」，缺少被告陳述及助理尋獲等細節"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「尚難僅憑血液培養結果和點滴瓶檢驗結果即謂病患由點滴瓶感染」之完整推論結構，pred claim 6以「無法證明感染係因疏未無菌操作所致」簡化呈現，缺少「尚難僅憑...即謂」之司法推論語氣及完整邏輯鏈，影響對法院心證形成過程的理解",
+     "reason": "「尚難僅憑血液培養結果和點滴瓶檢驗結果即謂病患由點滴瓶感染」之完整推論結構，pred claim 6以「無法證明感染係因疏未無菌操作所致」簡化呈現，缺少「尚難僅憑...即謂」之司法推論語氣及完整邏輯鏈，影響對法院心證形成過程的理解"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "美白針劑具體成分配方（南光製藥生理食鹽水、諾貝爾注射液等4種），reasoning原文以「調劑之藥劑」概括，未列舉具體成分",
+     "reason": "美白針劑具體成分配方（南光製藥生理食鹽水、諾貝爾注射液等4種），reasoning原文以「調劑之藥劑」概括，未列舉具體成分"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "注射液「各別包裝」之包裝細節，reasoning原文未提及，屬藥劑形式背景資訊",
+     "reason": "注射液「各別包裝」之包裝細節，reasoning原文未提及，屬藥劑形式背景資訊"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Pantoea菌可能來源包括「注射針筒」之細節，pred claim 5僅提及「輸液管路」和「調劑之藥劑」，未涵蓋注射針筒，影響對替代污染來源完整性的理解",
+     "reason": "Pantoea菌可能來源包括「注射針筒」之細節，pred claim 5僅提及「輸液管路」和「調劑之藥劑」，未涵蓋注射針筒，影響對替代污染來源完整性的理解"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「能否僅以點滴瓶檢出Pantoea菌即謂檢出該菌來源確係因疏未無菌技術操作所致，顯有疑問」之完整推論，pred以因果關係無法證明簡化呈現，缺少「顯有疑問」之司法論證語氣，影響對法院證據評價標準的理解",
+     "reason": "「能否僅以點滴瓶檢出Pantoea菌即謂檢出該菌來源確係因疏未無菌技術操作所致，顯有疑問」之完整推論，pred以因果關係無法證明簡化呈現，缺少「顯有疑問」之司法論證語氣，影響對法院證據評價標準的理解"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「存有合理之懷疑，認尚未達有罪之確信」之無罪判決核心法理，pred claim 7直接跳到無罪判決，完全遺漏此關鍷無罪論證過程，屬判決結論理解之致命缺陷",
+     "reason": "「存有合理之懷疑，認尚未達有罪之確信」之無罪判決核心法理，pred claim 7直接跳到無罪判決，完全遺漏此關鍷無罪論證過程，屬判決結論理解之致命缺陷"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 60,
+   "pred_total": 25,
+   "matched": 30,
+   "partial": 5,
+   "missing": 25,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9127,
+  "compression_afg_chars": 730,
+  "compression_source_chars": 8366,
+  "gt_length_ratio": 0.2608,
+  "gt_length_afg_chars": 730,
+  "gt_length_gt_chars": 2799,
+  "section_balance": 0.4375
+ }
 }

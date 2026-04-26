@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -150,5 +152,368 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6827,
+  "fact_recall": 0.4624,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6324,
+  "quality_overall": 4.7,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.2667,
+  "citation_support_score": 0.38,
+  "uncited_rate": 0.405,
+  "faithfulness_combined": {
+   "score": 0.4952,
+   "citation_fidelity": 0.1587,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 10,
+   "correct": 10
+  },
+  "weighted_recall": 0.7527,
+  "missing_severity": {
+   "critical": 0,
+   "important": 24,
+   "minor": 21,
+   "details": [
+    {
+     "gt_claim_id": 1,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 僅提及「服務於A醫院」，未提及「新竹分院」細節；機構資訊不完整但核心醫院資訊已涵蓋，屬次要資訊缺失",
+     "reason": "section_01_facts.txt 僅提及「服務於A醫院」，未提及「新竹分院」細節；機構資訊不完整但核心醫院資訊已涵蓋，屬次要資訊缺失"
+    },
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 將醫師與護理師合併敘述為「服務於A醫院」，未獨立說明護理師乙之機構隸屬；機構資訊碎片化但可推知，屬次要資訊缺失",
+     "reason": "section_01_facts.txt 將醫師與護理師合併敘述為「服務於A醫院」，未獨立說明護理師乙之機構隸屬；機構資訊碎片化但可推知，屬次要資訊缺失"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「因左膕部切割傷大量出血」，未提及受傷地點（居處）及原因（不慎碰撞玻璃）；此為關鍵案情要素，影響對事件背景的理解",
+     "reason": "section_01_facts.txt 僅提及「因左膕部切割傷大量出血」，未提及受傷地點（居處）及原因（不慎碰撞玻璃）；此為關鍵案情要素，影響對事件背景的理解"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「導致病患X因出血性休克死亡」，但未提及具體死亡時間（23:35）；死亡時間屬重要時間節點，影響時序完整性",
+     "reason": "section_01_facts.txt 提及「導致病患X因出血性休克死亡」，但未提及具體死亡時間（23:35）；死亡時間屬重要時間節點，影響時序完整性"
+    },
+    {
+     "gt_claim_id": 9,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 未提及「檢察官偵查起訴」程序；此為程序性事實，不影響案情核心理解",
+     "reason": "section_01_facts.txt 未提及「檢察官偵查起訴」程序；此為程序性事實，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 直接使用「被告二人」稱呼，未採用「醫師甲(下稱被告甲)」之定義式稱謂；此為形式定義差異，不影響事實理解",
+     "reason": "section_01_facts.txt 直接使用「被告二人」稱呼，未採用「醫師甲(下稱被告甲)」之定義式稱謂；此為形式定義差異，不影響事實理解"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_01_facts.txt 使用「被告二人」合併稱呼，未單獨定義「護理師乙(下稱被告乙)」；形式定義差異，不影響事實理解",
+     "reason": "section_01_facts.txt 使用「被告二人」合併稱呼，未單獨定義「護理師乙(下稱被告乙)」；形式定義差異，不影響事實理解"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 僅提及「未及時輸血」，未完整呈現「本應注意接獲病患R大量失血情形後，應準備血液予以輸血」之注意義務規範；此為檢察官指控核心，屬重要法律論述",
+     "reason": "section_01_facts.txt 僅提及「未及時輸血」，未完整呈現「本應注意接獲病患R大量失血情形後，應準備血液予以輸血」之注意義務規範；此為檢察官指控核心，屬重要法律論述"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「遲未施打點滴」，但未完整說明「應先輸液後始檢查傷口」之注意義務規範；影響對檢方論據之完整理解",
+     "reason": "section_01_facts.txt 提及「遲未施打點滴」，但未完整說明「應先輸液後始檢查傷口」之注意義務規範；影響對檢方論據之完整理解"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「拆除...導致未適當止血」，但未完整說明「解開後應立即為有效之止血方式」之注意義務規範；影響對檢方論據之完整理解",
+     "reason": "section_01_facts.txt 提及「拆除...導致未適當止血」，但未完整說明「解開後應立即為有效之止血方式」之注意義務規範；影響對檢方論據之完整理解"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 及全體 section 原文未提及「客觀上並無不能注意之情事」；此為過失認定要件之一，影響對過失責任判斷的理解",
+     "reason": "section_01_facts.txt 及全體 section 原文未提及「客觀上並無不能注意之情事」；此為過失認定要件之一，影響對過失責任判斷的理解"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「未適當止血」，但未明確提及「出血點加壓驟減」之物理後果；影響對傷害機轉的理解",
+     "reason": "section_01_facts.txt 提及「未適當止血」，但未明確提及「出血點加壓驟減」之物理後果；影響對傷害機轉的理解"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "查 section_01_facts.txt、section_02_defense.txt、section_05_reasoning.txt 均未明確提及被告甲於20時進行CPR時「已知」持續出血之主觀認知；跨section合併後仍缺乏「已知」之主觀認定",
+     "reason": "查 section_01_facts.txt、section_02_defense.txt、section_05_reasoning.txt 均未明確提及被告甲於20時進行CPR時「已知」持續出血之主觀認知；跨section合併後仍缺乏「已知」之主觀認定"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "查 section_02_defense.txt 提及「因休克血管萎縮難以打點滴」，section_05_reasoning.txt 提及「血管塌陷」，但均未提及被告甲於20時進行CPR時「已知無法穿刺」之主觀認知時間點；跨section合併後仍不完整",
+     "reason": "查 section_02_defense.txt 提及「因休克血管萎縮難以打點滴」，section_05_reasoning.txt 提及「血管塌陷」，但均未提及被告甲於20時進行CPR時「已知無法穿刺」之主觀認知時間點；跨section合併後仍不完整"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 提及「遲未施打點滴...致延誤救治」，但未提及「切開皮膚方式」之具體處置方法及「20分鐘後」之特定時間；影響對處置過程的完整理解",
+     "reason": "section_01_facts.txt 提及「遲未施打點滴...致延誤救治」，但未提及「切開皮膚方式」之具體處置方法及「20分鐘後」之特定時間；影響對處置過程的完整理解"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_03_opinions.txt 提及「耗時32分鐘完成皮膚切開術進行輸血」，但 section_01_facts.txt 及 section_05_reasoning.txt 均未明確提及「送抵醫院後32分鐘始開始輸血」的時間計算；跨section合併仍不夠完整",
+     "reason": "section_03_opinions.txt 提及「耗時32分鐘完成皮膚切開術進行輸血」，但 section_01_facts.txt 及 section_05_reasoning.txt 均未明確提及「送抵醫院後32分鐘始開始輸血」的時間計算；跨section合併仍不夠完整"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_01_facts.txt 及全體 section 原文均未提及「持續失血狀況長達半小時以上」之具體時長；影響對失血程度與時間關聯的理解",
+     "reason": "section_01_facts.txt 及全體 section 原文均未提及「持續失血狀況長達半小時以上」之具體時長；影響對失血程度與時間關聯的理解"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "摘要提及急救過程與止血結果，但未明確陳述「用紗布壓迫血管」之具體手法，屬次要醫療處置細節",
+     "reason": "摘要提及急救過程與止血結果，但未明確陳述「用紗布壓迫血管」之具體手法，屬次要醫療處置細節"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "無任何 section 明確提及「在膝蓋裝上彈性繃帶」之具體處置步驟，屬程序性細節",
+     "reason": "無任何 section 明確提及「在膝蓋裝上彈性繃帶」之具體處置步驟，屬程序性細節"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「急救2小時後發現滲血」為評估被告處置時序之關鍵時間點，遺漏影響案情時序理解",
+     "reason": "「急救2小時後發現滲血」為評估被告處置時序之關鍵時間點，遺漏影響案情時序理解"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「打上另一個彈性繃帶」為細節性醫療處置程序，屬次要資訊",
+     "reason": "「打上另一個彈性繃帶」為細節性醫療處置程序，屬次要資訊"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「自動加壓止血機」為急救設備之具體名稱，遺漏不影響整體案情理解",
+     "reason": "「自動加壓止血機」為急救設備之具體名稱，遺漏不影響整體案情理解"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「將止血帶拿掉」為處置步驟細節，未影響判決結論之關鍵事實",
+     "reason": "「將止血帶拿掉」為處置步驟細節，未影響判決結論之關鍵事實"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「總共做3個半小時」為評估急救持續性與盡力程度之關鍵資訊，遺漏影響對急救強度之完整理解",
+     "reason": "「總共做3個半小時」為評估急救持續性與盡力程度之關鍵資訊，遺漏影響對急救強度之完整理解"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「輸血4500CC」為具體量化數據，摘要雖提輸血但未提確切總量，屬次要量化細節",
+     "reason": "「輸血4500CC」為具體量化數據，摘要雖提輸血但未提確切總量，屬次要量化細節"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "「每5分鐘施打增血壓素」為給藥頻率細節，屬程序性次要資訊",
+     "reason": "「每5分鐘施打增血壓素」為給藥頻率細節，屬程序性次要資訊"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「被告乙評估出血量很大」涉及護理師之專業判斷與訴訟爭點相關，遺漏影響對被告立場之完整理解",
+     "reason": "「被告乙評估出血量很大」涉及護理師之專業判斷與訴訟爭點相關，遺漏影響對被告立場之完整理解"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "紗布塞入傷口加壓止血的具體步驟屬於鑑定細節，摘要已涵蓋「符合醫療常規」之結論，程序性細節遺漏不影響判決理解",
+     "reason": "紗布塞入傷口加壓止血的具體步驟屬於鑑定細節，摘要已涵蓋「符合醫療常規」之結論，程序性細節遺漏不影響判決理解"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "右腳背等其他部位銳器傷害屬於法醫鑑定細節，非致死原因，不影響死因認定及判決結論",
+     "reason": "右腳背等其他部位銳器傷害屬於法醫鑑定細節，非致死原因，不影響死因認定及判決結論"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "表層外傷嚴重程度評估屬補充性鑑定意見，非關鍵死因，不影響判決結論",
+     "reason": "表層外傷嚴重程度評估屬補充性鑑定意見，非關鍵死因，不影響判決結論"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "死亡方式（意外死）屬於法醫鑑定分類，摘要已明確記載死因為左膘部銳器切割傷，死亡方式遺漏不影響判決理解",
+     "reason": "死亡方式（意外死）屬於法醫鑑定分類，摘要已明確記載死因為左膘部銳器切割傷，死亡方式遺漏不影響判決理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病歷竄改爭議與鑑定意見屬程序性鑑定內容，與最終無罪判決無直接因果關係",
+     "reason": "病歷竄改爭議與鑑定意見屬程序性鑑定內容，與最終無罪判決無直接因果關係"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "急救病人標準程序屬背景性醫療常規說明，非具體鑑定結論，不影響判決理解",
+     "reason": "急救病人標準程序屬背景性醫療常規說明，非具體鑑定結論，不影響判決理解"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "無法打上靜脈血管為創傷患者常見狀況的鑑定意見，係法院認定醫師採取皮膚切開術合理性的重要依據，影響過失認定",
+     "reason": "無法打上靜脈血管為創傷患者常見狀況的鑑定意見，係法院認定醫師採取皮膚切開術合理性的重要依據，影響過失認定"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "中央靜脈導管與皮膚切開術效果比較的鑑定意見，係說明醫師選擇處置方式合理性的重要依據，影響過失認定",
+     "reason": "中央靜脈導管與皮膚切開術效果比較的鑑定意見，係說明醫師選擇處置方式合理性的重要依據，影響過失認定"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "特殊器材需求與消毒程序的鑑定意見，係說明皮膚切開術耗時合理性的重要依據，影響過失認定",
+     "reason": "特殊器材需求與消毒程序的鑑定意見，係說明皮膚切開術耗時合理性的重要依據，影響過失認定"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "嚴重休克患者靜脈建立所需時間的臨床經驗鑑定意見，係支持「耗時32分鐘仍屬合理」結論的關鍵論證，影響過失認定",
+     "reason": "嚴重休克患者靜脈建立所需時間的臨床經驗鑑定意見，係支持「耗時32分鐘仍屬合理」結論的關鍵論證，影響過失認定"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院對多項證據（證人證述、病歷、護理紀錄）進行互核相符之認定，屬證據評價核心，生成摘要未提及",
+     "reason": "法院對多項證據（證人證述、病歷、護理紀錄）進行互核相符之認定，屬證據評價核心，生成摘要未提及"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "傷口具體尺寸（10×6×5cm）雖見於原文，但屬醫療細節，不影響法律判斷理解",
+     "reason": "傷口具體尺寸（10×6×5cm）雖見於原文，但屬醫療細節，不影響法律判斷理解"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "家中受傷時出血情形屬背景事實，非判決核心爭點",
+     "reason": "家中受傷時出血情形屬背景事實，非判決核心爭點"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "救護車上躁動、靜脈注射失敗等症狀細節未在生成摘要出現，屬醫療過程細節",
+     "reason": "救護車上躁動、靜脈注射失敗等症狀細節未在生成摘要出現，屬醫療過程細節"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "心跳停止具體時間（20時06分）為關鍵時間節點，影響急救時間線理解",
+     "reason": "心跳停止具體時間（20時06分）為關鍵時間節點，影響急救時間線理解"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『已盡客觀性義務』為法院對被告注意義務履行程度之法律評價，屬重要法律判斷",
+     "reason": "『已盡客觀性義務』為法院對被告注意義務履行程度之法律評價，屬重要法律判斷"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『通常一般之人均不致有所懷疑』為刑事證據法重要標準表述，影響心證形成理解",
+     "reason": "『通常一般之人均不致有所懷疑』為刑事證據法重要標準表述，影響心證形成理解"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "『罪證有疑，利於被告』之證據法則為無罪判決核心法律依據",
+     "reason": "『罪證有疑，利於被告』之證據法則為無罪判決核心法律依據"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 42,
+   "matched": 38,
+   "partial": 10,
+   "missing": 45,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.9159,
+  "compression_afg_chars": 1068,
+  "compression_source_chars": 12694,
+  "gt_length_ratio": 0.358,
+  "gt_length_afg_chars": 1068,
+  "gt_length_gt_chars": 2983,
+  "section_balance": 0.3462
+ }
 }

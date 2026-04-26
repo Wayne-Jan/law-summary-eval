@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -132,6 +134,723 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.6329,
-  "fact_recall_avg": null
+  "fact_recall": 0.2591,
+  "fact_precision": 1.0,
+  "fact_f1": 0.4116,
+  "quality_overall": 4.6,
+  "checklist_pass_rate": 1.0,
+  "citation_accuracy": 1.0,
+  "citation_support_score": 0.95,
+  "uncited_rate": 0.206,
+  "faithfulness_combined": {
+   "score": 0.8764,
+   "citation_fidelity": 0.794,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 12,
+   "correct": 12
+  },
+  "weighted_recall": 0.6642,
+  "missing_severity": {
+   "critical": 2,
+   "important": 38,
+   "minor": 56,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "病患既往病史（高血壓、心臟病、攝護腺肥大），五個 section 均未提及，屬背景性資訊",
+     "reason": "病患既往病史（高血壓、心臟病、攝護腺肥大），五個 section 均未提及，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 3,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "疝氣手術病史，五個 section 均未提及，屬背景性資訊",
+     "reason": "疝氣手術病史，五個 section 均未提及，屬背景性資訊"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫師P於11月17日上午診治之詳細評估，section_facts僅提日期，五個 section 均未提及「上午」及「心臟病及脹氣之病徵」",
+     "reason": "醫師P於11月17日上午診治之詳細評估，section_facts僅提日期，五個 section 均未提及「上午」及「心臟病及脹氣之病徵」"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫師P安排血液生化檢查，五個 section 均未提及",
+     "reason": "醫師P安排血液生化檢查，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 12,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "檢察官「明知病患S於同月17日就診，經治療後相關病症未改善」之具體指控，屬起訴關鍵事實，五個 section 均未提及",
+     "reason": "檢察官「明知病患S於同月17日就診，經治療後相關病症未改善」之具體指控，屬起訴關鍵事實，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「陰囊水腫排除心臟、肝臟、腎臟疾病」之醫療常規，五個 section 均未提及",
+     "reason": "「陰囊水腫排除心臟、肝臟、腎臟疾病」之醫療常規，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「陰囊感染應給予抗生素並尋求病因」之醫療常規，五個 section 均未提及",
+     "reason": "「陰囊感染應給予抗生素並尋求病因」之醫療常規，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「受限於設備能力應儘快戒外就醫」之醫療常規，五個 section 均未提及",
+     "reason": "「受限於設備能力應儘快戒外就醫」之醫療常規，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「並無不能注意之情事」之事實認定，五個 section 均未提及",
+     "reason": "「並無不能注意之情事」之事實認定，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告乙11月20日上午診治，五個 section 均未提及",
+     "reason": "被告乙11月20日上午診治，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告乙已歿及不受理判決，五個 section 均未提及",
+     "reason": "被告乙已歿及不受理判決，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "收病舍建議書紀錄記載原因為陰囊疾病，五個 section 均未提及",
+     "reason": "收病舍建議書紀錄記載原因為陰囊疾病，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "被告甲發現腹水產生，屬重要體徵，五個 section 均未提及",
+     "reason": "被告甲發現腹水產生，屬重要體徵，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 22,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "白蛋白、肌酸酐、白血球抽血檢查項目之醫療常規，五個 section 均未提及",
+     "reason": "白蛋白、肌酸酐、白血球抽血檢查項目之醫療常規，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「應安排腹部超音波檢查排除腹內及肝膽疾病」之醫療常規，屬重要處置，五個 section 均未提及",
+     "reason": "「應安排腹部超音波檢查排除腹內及肝膽疾病」之醫療常規，屬重要處置，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告乙疏失內容（僅給予口服抗生素、未送轉院、未清創），五個 section 均未提及",
+     "reason": "被告乙疏失內容（僅給予口服抗生素、未送轉院、未清創），五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "「被告甲過失不作為造成症狀惡化演變為陰囊蜂窩性組織炎及福耳尼埃氏壞疽症」之因果關係論述，屬核心指控，五個 section 均未提及",
+     "reason": "「被告甲過失不作為造成症狀惡化演變為陰囊蜂窩性組織炎及福耳尼埃氏壞疽症」之因果關係論述，屬核心指控，五個 section 均未提及"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「因此陷入休克」之因果陳述，section_facts提及休克但未強調因果關係",
+     "reason": "「因此陷入休克」之因果陳述，section_facts提及休克但未強調因果關係"
+    },
+    {
+     "gt_claim_id": 32,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "病患主訴「下體疼痛」雖為被告辯稱內容之一，但屬細節性事實，不影響對被告辯護主張之整體理解",
+     "reason": "病患主訴「下體疼痛」雖為被告辯稱內容之一，但屬細節性事實，不影響對被告辯護主張之整體理解"
+    },
+    {
+     "gt_claim_id": 36,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "11月17日感冒用藥處方史為背景性事實，雖有助理解就醫脈絡，但非被告辯護核心主張",
+     "reason": "11月17日感冒用藥處方史為背景性事實，雖有助理解就醫脈絡，但非被告辯護核心主張"
+    },
+    {
+     "gt_claim_id": 39,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "收病舍建議書「診斷結果」欄之具體記載屬程序性細節，生成摘要已提及「收住病舍觀察」，主要處置方式已涵蓋",
+     "reason": "收病舍建議書「診斷結果」欄之具體記載屬程序性細節，生成摘要已提及「收住病舍觀察」，主要處置方式已涵蓋"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "福耳尼埃氏壞疽症病程發展之辯稱雖重要，但於 reasoning section 已論及「無法確認病患於就診時確已罹患」，跨 section 合併後主要爭點已呈現",
+     "reason": "福耳尼埃氏壞疽症病程發展之辯稱雖重要，但於 reasoning section 已論及「無法確認病患於就診時確已罹患」，跨 section 合併後主要爭點已呈現"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告非泌尿專科醫師之身分，雖為辯護背景要素，但生成摘要於 defense section 中確未提及，影響對被告專業能力辯稱之完整理解",
+     "reason": "被告非泌尿專科醫師之身分，雖為辯護背景要素，但生成摘要於 defense section 中確未提及，影響對被告專業能力辯稱之完整理解"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "被告無福耳尼埃氏壞疽症診治經驗之主張，與非專科醫師之身分相互關聯，屬辯護要點之一",
+     "reason": "被告無福耳尼埃氏壞疽症診治經驗之主張，與非專科醫師之身分相互關聯，屬辯護要點之一"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "「被告無從判斷專科病症」為其辯稱能力不足之核心論點，雖與 claim 43、44 為同一辯護脈絡，但生成摘要未提及",
+     "reason": "「被告無從判斷專科病症」為其辯稱能力不足之核心論點，雖與 claim 43、44 為同一辯護脈絡，但生成摘要未提及"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "辯護人之因果關係主張雖與被告甲方論點實質相同，但辯護人獨立論述之區分有助於呈現辯方整體策略",
+     "reason": "辯護人之因果關係主張雖與被告甲方論點實質相同，但辯護人獨立論述之區分有助於呈現辯方整體策略"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要僅簡要提及醫審會鑑定結論，未詳述疾病定義",
+     "reason": "醫學背景知識，預測摘要僅簡要提及醫審會鑑定結論，未詳述疾病定義"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未提及病因細節",
+     "reason": "醫學背景知識，預測摘要未提及病因細節"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未提及早期症狀",
+     "reason": "醫學背景知識，預測摘要未提及早期症狀"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未提及病程進展",
+     "reason": "醫學背景知識，預測摘要未提及病程進展"
+    },
+    {
+     "gt_claim_id": 55,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未提及未治療後果",
+     "reason": "醫學背景知識，預測摘要未提及未治療後果"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未提及產氣性細菌表現",
+     "reason": "醫學背景知識，預測摘要未提及產氣性細菌表現"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未列舉陰囊腫脹原因",
+     "reason": "醫學背景知識，預測摘要未列舉陰囊腫脹原因"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未明確提及關聯性",
+     "reason": "醫學背景知識，預測摘要未明確提及關聯性"
+    },
+    {
+     "gt_claim_id": 59,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未提及症狀相似性",
+     "reason": "醫學背景知識，預測摘要未提及症狀相似性"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學背景知識，預測摘要未提及診斷徵象",
+     "reason": "醫學背景知識，預測摘要未提及診斷徵象"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "治療原則，預測摘要未詳述",
+     "reason": "治療原則，預測摘要未詳述"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "治療原則，預測摘要未詳述",
+     "reason": "治療原則，預測摘要未詳述"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "治療原則，預測摘要未詳述",
+     "reason": "治療原則，預測摘要未詳述"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "治療原則，預測摘要未詳述",
+     "reason": "治療原則，預測摘要未詳述"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢查細節，預測摘要未詳述",
+     "reason": "檢查細節，預測摘要未詳述"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "檢查缺漏資訊，影響案情理解（白血球指數為重要感染指標）",
+     "reason": "檢查缺漏資訊，影響案情理解（白血球指數為重要感染指標）"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "程序性時間點",
+     "reason": "程序性時間點"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師知情時間點，影響過失認定",
+     "reason": "醫師知情時間點，影響過失認定"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患症狀持續，影響未改善之認定",
+     "reason": "病患症狀持續，影響未改善之認定"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫審會認定事實，影響案情理解",
+     "reason": "醫審會認定事實，影響案情理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫療常規建議，影響過失認定",
+     "reason": "醫療常規建議，影響過失認定"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑別診斷建議",
+     "reason": "鑑別診斷建議"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑別診斷建議",
+     "reason": "鑑別診斷建議"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "鑑別診斷建議",
+     "reason": "鑑別診斷建議"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "治療建議，影響過失認定",
+     "reason": "治療建議，影響過失認定"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "轉診建議，影響過失認定",
+     "reason": "轉診建議，影響過失認定"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病患主訴，影響診斷情境理解",
+     "reason": "病患主訴，影響診斷情境理解"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫師評估診斷，影響過失認定",
+     "reason": "醫師評估診斷，影響過失認定"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病舍建議書記載",
+     "reason": "病舍建議書記載"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病歷記載缺漏，影響無法判斷病因之認定",
+     "reason": "病歷記載缺漏，影響無法判斷病因之認定"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢查方法",
+     "reason": "檢查方法"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "早期診察徵象，影響過失認定",
+     "reason": "早期診察徵象，影響過失認定"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "身體診察定義",
+     "reason": "身體診察定義"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病歷未記載診察結果，影響無法判斷病因之認定",
+     "reason": "病歷未記載診察結果，影響無法判斷病因之認定"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "病歷無超音波記載，影響無法判斷病因之認定",
+     "reason": "病歷無超音波記載，影響無法判斷病因之認定"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "轉診建議，影響過失認定",
+     "reason": "轉診建議，影響過失認定"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫學會意見",
+     "reason": "醫學會意見"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "疾病區分，影響因果關係判斷",
+     "reason": "疾病區分，影響因果關係判斷"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "疾病性質說明，影響因果關係判斷",
+     "reason": "疾病性質說明，影響因果關係判斷"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「11月20日上午至T所內衛生科就診」之具體時間點，僅 defense 段提及「翌(20)日即經抗生素治療」但未明確就診時間與地點",
+     "reason": "五個 section 原文均未提及「11月20日上午至T所內衛生科就診」之具體時間點，僅 defense 段提及「翌(20)日即經抗生素治療」但未明確就診時間與地點"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「11月20日上午至同月22日中午期間無就診紀錄」之病歷空白期間",
+     "reason": "五個 section 原文均未提及「11月20日上午至同月22日中午期間無就診紀錄」之病歷空白期間"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「11月20日上午至同月22日中午期間無病程照護紀錄」",
+     "reason": "五個 section 原文均未提及「11月20日上午至同月22日中午期間無病程照護紀錄」"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確提及「無法判斷病程進展之實際情形」之綜合判斷",
+     "reason": "五個 section 原文均未明確提及「無法判斷病程進展之實際情形」之綜合判斷"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「11月20日上午開立處方以抗生素治療」之具體時間及醫師",
+     "reason": "五個 section 原文均未提及「11月20日上午開立處方以抗生素治療」之具體時間及醫師"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確記載「陰囊腫脹及發炎可能於極短時間內由陰囊水腫演變為陰囊蜂窩性組織炎」之具體疾病演變路徑描述",
+     "reason": "五個 section 原文均未明確記載「陰囊腫脹及發炎可能於極短時間內由陰囊水腫演變為陰囊蜂窩性組織炎」之具體疾病演變路徑描述"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確記載「陰囊蜂窩性組織炎可能進展至福耳尼埃氏壞疽症」之演變路徑",
+     "reason": "五個 section 原文均未明確記載「陰囊蜂窩性組織炎可能進展至福耳尼埃氏壞疽症」之演變路徑"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確記載「福耳尼埃氏壞疽症可能引發敗血症導致病患休克及死亡」之因果鏈描述",
+     "reason": "五個 section 原文均未明確記載「福耳尼埃氏壞疽症可能引發敗血症導致病患休克及死亡」之因果鏈描述"
+    },
+    {
+     "gt_claim_id": 103,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「醫師起初給予抗生素之處置或可認為已盡到醫療上之注意」之法律評價",
+     "reason": "五個 section 原文均未提及「醫師起初給予抗生素之處置或可認為已盡到醫療上之注意」之法律評價"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確提及「病歷資料無任何關於後續追蹤及照護之記載」",
+     "reason": "五個 section 原文均未明確提及「病歷資料無任何關於後續追蹤及照護之記載」"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「無法判斷本案是否因判斷錯誤或延誤送大型醫療機構導致病患死亡」之因果關係不確定性",
+     "reason": "五個 section 原文均未提及「無法判斷本案是否因判斷錯誤或延誤送大型醫療機構導致病患死亡」之因果關係不確定性"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確提及「疾病發展涉及細菌種類、毒性強弱、病人抵抗力等多項因素」之完整因素列表",
+     "reason": "五個 section 原文均未明確提及「疾病發展涉及細菌種類、毒性強弱、病人抵抗力等多項因素」之完整因素列表"
+    },
+    {
+     "gt_claim_id": 107,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未明確提及「因病歷資料記載不明確，無從判斷是否足以導致病患罹患福耳尼埃氏壞疽症而死亡之必然結果」",
+     "reason": "五個 section 原文均未明確提及「因病歷資料記載不明確，無從判斷是否足以導致病患罹患福耳尼埃氏壞疽症而死亡之必然結果」"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「迨翌日始由同案被告開立抗生素」之具體細節",
+     "reason": "五個 section 原文均未提及「迨翌日始由同案被告開立抗生素」之具體細節"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確提及「福耳尼埃氏壞疽症病程進展難以評估」",
+     "reason": "五個 section 原文均未明確提及「福耳尼埃氏壞疽症病程進展難以評估」"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未明確提及「福耳尼埃氏壞疽症牽涉細菌種類、毒性強弱、病人抵抗力及就醫時間等多項因素」之完整因素列表",
+     "reason": "五個 section 原文均未明確提及「福耳尼埃氏壞疽症牽涉細菌種類、毒性強弱、病人抵抗力及就醫時間等多項因素」之完整因素列表"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「若病患S於11月19日就診時之病況已演變為陰囊蜂窩性組織炎」之假設情境",
+     "reason": "五個 section 原文均未提及「若病患S於11月19日就診時之病況已演變為陰囊蜂窩性組織炎」之假設情境"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「福耳尼埃氏壞疽症併有糖尿病者死亡率可達36%以上」之統計數據",
+     "reason": "五個 section 原文均未提及「福耳尼埃氏壞疽症併有糖尿病者死亡率可達36%以上」之統計數據"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「福耳尼埃氏壞疽症治療前已出現敗血症者，死亡率78%以上」之統計數據",
+     "reason": "五個 section 原文均未提及「福耳尼埃氏壞疽症治療前已出現敗血症者，死亡率78%以上」之統計數據"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「福耳尼埃氏壞疽症病患年齡過大者死亡率較高」",
+     "reason": "五個 section 原文均未提及「福耳尼埃氏壞疽症病患年齡過大者死亡率較高」"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「福耳尼埃氏壞疽症治療時機延遲者死亡率較高」",
+     "reason": "五個 section 原文均未提及「福耳尼埃氏壞疽症治療時機延遲者死亡率較高」"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "雖 section_opinions.txt 有「若未適切治療死亡率更高」，但未明確記載「高於20%」之具體數字",
+     "reason": "雖 section_opinions.txt 有「若未適切治療死亡率更高」，但未明確記載「高於20%」之具體數字"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「經適當內外科治療，患者死亡率仍超過40%」",
+     "reason": "五個 section 原文均未提及「經適當內外科治療，患者死亡率仍超過40%」"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「Dr.Kaiser及Cerra曾報導...死亡率高達100%」",
+     "reason": "五個 section 原文均未提及「Dr.Kaiser及Cerra曾報導...死亡率高達100%」"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「有限度的切除壞死組織，死亡率高達75%」",
+     "reason": "五個 section 原文均未提及「有限度的切除壞死組織，死亡率高達75%」"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「作積極之擴創，死亡率在10%左右」",
+     "reason": "五個 section 原文均未提及「作積極之擴創，死亡率在10%左右」"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「及時適切治療之存活率約為33%至92%」",
+     "reason": "五個 section 原文均未提及「及時適切治療之存活率約為33%至92%」"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "五個 section 原文均未提及「未經及時適切治療之存活率為0%至80%」",
+     "reason": "五個 section 原文均未提及「未經及時適切治療之存活率為0%至80%」"
+    },
+    {
+     "gt_claim_id": 130,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "五個 section 原文均未完整表述「被告甲確有業務過失致死之犯行，尚無足夠之證據予以證明」之雙重否定結構",
+     "reason": "五個 section 原文均未完整表述「被告甲確有業務過失致死之犯行，尚無足夠之證據予以證明」之雙重否定結構"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未明確表述「不能遽認被告甲確有被訴之犯行」之法律用語",
+     "reason": "五個 section 原文均未明確表述「不能遽認被告甲確有被訴之犯行」之法律用語"
+    },
+    {
+     "gt_claim_id": 135,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "五個 section 原文均未提及「無足夠證據確信公訴意旨之指述為真實」之表述",
+     "reason": "五個 section 原文均未提及「無足夠證據確信公訴意旨之指述為真實」之表述"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 137,
+   "pred_total": 34,
+   "matched": 30,
+   "partial": 11,
+   "missing": 96,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8995,
+  "compression_afg_chars": 998,
+  "compression_source_chars": 9931,
+  "gt_length_ratio": 0.2306,
+  "gt_length_afg_chars": 998,
+  "gt_length_gt_chars": 4328,
+  "section_balance": 0.093
  }
 }

@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -132,5 +134,459 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.6927,
+  "fact_recall": 0.4767,
+  "fact_precision": 1.0,
+  "fact_f1": 0.6457,
+  "quality_overall": 4.7286,
+  "checklist_pass_rate": 0.9837,
+  "citation_accuracy": 0.5833,
+  "citation_support_score": 0.588,
+  "uncited_rate": 0.057,
+  "faithfulness_combined": {
+   "score": 0.73,
+   "citation_fidelity": 0.5501,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 9,
+   "correct": 9
+  },
+  "weighted_recall": 0.8114,
+  "missing_severity": {
+   "critical": 0,
+   "important": 15,
+   "minor": 43,
+   "details": [
+    {
+     "gt_claim_id": 2,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "昏迷指數 E4M6V5 精確數值雖未出現於 section_facts，但「意識狀態逐漸惡化」已涵蓋其意識狀態描述，屬次要細節",
+     "reason": "昏迷指數 E4M6V5 精確數值雖未出現於 section_facts，但「意識狀態逐漸惡化」已涵蓋其意識狀態描述，屬次要細節"
+    },
+    {
+     "gt_claim_id": 4,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「全身虛弱」病歷記載細節未於 section_facts 提及，但核心症狀「噁心、嘔吐」已涵蓋，屬次要細節",
+     "reason": "「全身虛弱」病歷記載細節未於 section_facts 提及，但核心症狀「噁心、嘔吐」已涵蓋，屬次要細節"
+    },
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "肌力5分、深部肌腱反射等詳細身體診察數據未於 section_facts 出現，屬次要醫療細節",
+     "reason": "肌力5分、深部肌腱反射等詳細身體診察數據未於 section_facts 出現，屬次要醫療細節"
+    },
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "護理師S告知被告甲的具體通報情節未於 section_facts 詳述，屬次要程序性細節",
+     "reason": "護理師S告知被告甲的具體通報情節未於 section_facts 詳述，屬次要程序性細節"
+    },
+    {
+     "gt_claim_id": 10,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬陪伴在側的事實未於 section_facts 提及，屬次要背景資訊",
+     "reason": "家屬陪伴在側的事實未於 section_facts 提及，屬次要背景資訊"
+    },
+    {
+     "gt_claim_id": 11,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "17:20昏迷指數7分精確時間點未於 section_facts 出現，屬次要時間細節",
+     "reason": "17:20昏迷指數7分精確時間點未於 section_facts 出現，屬次要時間細節"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "護理師詢問用藥狀況的具體對話未於 section_facts 詳述，屬次要程序細節",
+     "reason": "護理師詢問用藥狀況的具體對話未於 section_facts 詳述，屬次要程序細節"
+    },
+    {
+     "gt_claim_id": 14,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬說明藥物種類的具體細節未於 section_facts 出現，但「服用鎮靜劑」已於 defense 提及，屬次要細節",
+     "reason": "家屬說明藥物種類的具體細節未於 section_facts 出現，但「服用鎮靜劑」已於 defense 提及，屬次要細節"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "護理師G告知被告甲的具體通報情節未於 section_facts 詳述，屬次要程序細節",
+     "reason": "護理師G告知被告甲的具體通報情節未於 section_facts 詳述，屬次要程序細節"
+    },
+    {
+     "gt_claim_id": 16,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告甲表示待做CT的具體對話未於 section_facts 出現，但「安排腦部電腦斷層掃瞄」已涵蓋，屬次要細節",
+     "reason": "被告甲表示待做CT的具體對話未於 section_facts 出現，但「安排腦部電腦斷層掃瞄」已涵蓋，屬次要細節"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "17:40診視的精確時間點未於 section_facts 出現，屬次要時間細節",
+     "reason": "17:40診視的精確時間點未於 section_facts 出現，屬次要時間細節"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "向家屬解釋解毒劑用途的具體對話未於 section_facts 詳述，屬次要溝通細節",
+     "reason": "向家屬解釋解毒劑用途的具體對話未於 section_facts 詳述，屬次要溝通細節"
+    },
+    {
+     "gt_claim_id": 19,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬表示接受的事實未於 section_facts 提及，屬次要程序細節",
+     "reason": "家屬表示接受的事實未於 section_facts 提及，屬次要程序細節"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "被告甲向家屬表示疑似藥物過量的具體對話未於 section_facts 詳述，但診斷方向已涵蓋，屬次要細節",
+     "reason": "被告甲向家屬表示疑似藥物過量的具體對話未於 section_facts 詳述，但診斷方向已涵蓋，屬次要細節"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬回家查看藥物的情節未於 section_facts 提及，屬次要過程細節",
+     "reason": "家屬回家查看藥物的情節未於 section_facts 提及，屬次要過程細節"
+    },
+    {
+     "gt_claim_id": 25,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家人返回說明藥袋的具體情節未於 section_facts 出現，屬次要過程細節",
+     "reason": "家人返回說明藥袋的具體情節未於 section_facts 出現，屬次要過程細節"
+    },
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "18:08表示要做CT的精確時間點未於 section_facts 出現，屬次要時間細節",
+     "reason": "18:08表示要做CT的精確時間點未於 section_facts 出現，屬次要時間細節"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "CT結果為「右側囊腫」屬重要醫療發現，影響後續治療決策，section_facts 未提及此項結果",
+     "reason": "CT結果為「右側囊腫」屬重要醫療發現，影響後續治療決策，section_facts 未提及此項結果"
+    },
+    {
+     "gt_claim_id": 30,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "19:08向家屬解釋CT結果的精確時間點未於 section_facts 出現，屬次要時間細節",
+     "reason": "19:08向家屬解釋CT結果的精確時間點未於 section_facts 出現，屬次要時間細節"
+    },
+    {
+     "gt_claim_id": 34,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "ICU評估屬重要醫療處置決策，影響病患收治，section_facts 未提及此項評估",
+     "reason": "ICU評估屬重要醫療處置決策，影響病患收治，section_facts 未提及此項評估"
+    },
+    {
+     "gt_claim_id": 35,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "9:15向家屬解釋病情的精確時間點未於 section_facts 出現，屬次要時間細節",
+     "reason": "9:15向家屬解釋病情的精確時間點未於 section_facts 出現，屬次要時間細節"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "檢傷記錄詳細內容未於 section_facts 出現，屬次要醫療記錄細節",
+     "reason": "檢傷記錄詳細內容未於 section_facts 出現，屬次要醫療記錄細節"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "TIA過去病史屬重要醫療背景資訊，可能影響診斷判斷，section_facts 未提及此項病史",
+     "reason": "TIA過去病史屬重要醫療背景資訊，可能影響診斷判斷，section_facts 未提及此項病史"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "初始昏迷指數E4V5M6精確數值未於 section_facts 出現，屬次要醫療數據細節",
+     "reason": "初始昏迷指數E4V5M6精確數值未於 section_facts 出現，屬次要醫療數據細節"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "生命徵象具體數據（體溫、脈搏等）未於 section_facts 出現，屬次要醫療數據細節",
+     "reason": "生命徵象具體數據（體溫、脈搏等）未於 section_facts 出現，屬次要醫療數據細節"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "精神官能症病史及用藥記錄屬重要診斷依據，影響醫師初步判斷，section_facts 未詳述此項病史記錄",
+     "reason": "精神官能症病史及用藥記錄屬重要診斷依據，影響醫師初步判斷，section_facts 未詳述此項病史記錄"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「抗焦慮藥物過量」具體診斷用語屬重要醫療判斷事實，section_facts 僅泛稱「藥物過量」而未明確「抗焦慮」",
+     "reason": "「抗焦慮藥物過量」具體診斷用語屬重要醫療判斷事實，section_facts 僅泛稱「藥物過量」而未明確「抗焦慮」"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "16:05時間點的具體處置未於 section_facts 單獨詳述，屬次要時間細節",
+     "reason": "16:05時間點的具體處置未於 section_facts 單獨詳述，屬次要時間細節"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "護理師S通報意識惡化的具體情節未於 section_facts 詳述，屬次要程序細節",
+     "reason": "護理師S通報意識惡化的具體情節未於 section_facts 詳述，屬次要程序細節"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "醫師詢問家屬的具體對象（X）未於 section_facts 明確提及，屬次要對象細節",
+     "reason": "醫師詢問家屬的具體對象（X）未於 section_facts 明確提及，屬次要對象細節"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "家屬說明用藥習慣的具體內容未於 section_facts 詳述，但「服用鎮靜劑」已涵蓋，屬次要細節",
+     "reason": "家屬說明用藥習慣的具體內容未於 section_facts 詳述，但「服用鎮靜劑」已涵蓋，屬次要細節"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "注射Anexate後狀態未好轉的具體描述未於 section_facts 出現，屬次要醫療觀察細節",
+     "reason": "注射Anexate後狀態未好轉的具體描述未於 section_facts 出現，屬次要醫療觀察細節"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「未有其他檢查及治療」屬重要醫療處置事實，涉及是否積極處置爭議點，section_facts 未明確提及",
+     "reason": "「未有其他檢查及治療」屬重要醫療處置事實，涉及是否積極處置爭議點，section_facts 未明確提及"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「僅支持性處置」屬重要醫療處置事實，涉及醫療常規爭議，section_facts 未明確提及此處置範圍",
+     "reason": "「僅支持性處置」屬重要醫療處置事實，涉及醫療常規爭議，section_facts 未明確提及此處置範圍"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「翌日早上病患具體症狀（雙眼向左側、無法說話）未於 section_facts 詳述，屬次要症狀細節",
+     "reason": "「翌日早上病患具體症狀（雙眼向左側、無法說話）未於 section_facts 詳述，屬次要症狀細節"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「收治住院」屬重要醫療處置流程事實，影響後續治療，section_facts 未提及收治住院",
+     "reason": "「收治住院」屬重要醫療處置流程事實，影響後續治療，section_facts 未提及收治住院"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「住院後MRI檢查」未於 section_facts 出現，但「電腦斷層掃瞄」已涵蓋主要影像檢查，屬次要檢查細節",
+     "reason": "「住院後MRI檢查」未於 section_facts 出現，但「電腦斷層掃瞄」已涵蓋主要影像檢查，屬次要檢查細節"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「頭顱成形術」未於 section_facts 出現，但「顱骨切除術」已涵蓋主要手術，屬次要後續手術細節",
+     "reason": "「頭顱成形術」未於 section_facts 出現，但「顱骨切除術」已涵蓋主要手術，屬次要後續手術細節"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "「保證人地位」屬法律概念陳述，非純粹事實描述，section_facts 未提及此法律術語",
+     "reason": "「保證人地位」屬法律概念陳述，非純粹事實描述，section_facts 未提及此法律術語"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經查全部 section 文本，均未提及「至急診室發生意識障礙之情形」作為獨立事件，section_facts 僅提到「就診期間...意識狀態逐漸惡化」",
+     "reason": "經查全部 section 文本，均未提及「至急診室發生意識障礙之情形」作為獨立事件，section_facts 僅提到「就診期間...意識狀態逐漸惡化」"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經查全部 section 文本，均未提及「IMP：Left MCA infarction+drug problems？」之會診紀錄單記載內容",
+     "reason": "經查全部 section 文本，均未提及「IMP：Left MCA infarction+drug problems？」之會診紀錄單記載內容"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "經查全部 section 文本，均未提及「轉入加護病房觀察」或「核磁共振MRI檢查」之建議",
+     "reason": "經查全部 section 文本，均未提及「轉入加護病房觀察」或「核磁共振MRI檢查」之建議"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_facts 提及「突發性噁心、嘔吐」但未提及「全身無力」或「入院時主訴」，其餘 section 亦未補充此資訊",
+     "reason": "section_facts 提及「突發性噁心、嘔吐」但未提及「全身無力」或「入院時主訴」，其餘 section 亦未補充此資訊"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_facts 提及「就診期間...逐漸惡化」係指症狀於就診中發展，與 GT claim「入院當時已有」之時間點描述不同，跨 section 合併後仍無法確認入院時即存在腦中風症狀",
+     "reason": "section_facts 提及「就診期間...逐漸惡化」係指症狀於就診中發展，與 GT claim「入院當時已有」之時間點描述不同，跨 section 合併後仍無法確認入院時即存在腦中風症狀"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Anexate藥理機制為背景性醫學知識，各section原文均未詳細說明，不影響案情核心理解",
+     "reason": "Anexate藥理機制為背景性醫學知識，各section原文均未詳細說明，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 105,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "BZD性質與用途為背景性醫學知識，各section原文均未詳細說明，不影響案情核心理解",
+     "reason": "BZD性質與用途為背景性醫學知識，各section原文均未詳細說明，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "Anexate臨床用途為背景性醫學知識，各section原文均未詳細說明，不影響案情核心理解",
+     "reason": "Anexate臨床用途為背景性醫學知識，各section原文均未詳細說明，不影響案情核心理解"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血液及尿液檢查結果為鑑定意見中之客觀檢驗數據，各section原文均未提及，屬次要背景資訊",
+     "reason": "血液及尿液檢查結果為鑑定意見中之客觀檢驗數據，各section原文均未提及，屬次要背景資訊"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "18時30分檢查後具體時間點與症狀表現為重要時間軸資訊，facts section雖提及檢查與症狀但未標註具體時間，影響時間序列完整性",
+     "reason": "18時30分檢查後具體時間點與症狀表現為重要時間軸資訊，facts section雖提及檢查與症狀但未標註具體時間，影響時間序列完整性"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "18時50分電聯神經外科S醫師為會診時間軸關鍵節點，各section原文雖提及電聯神經外科但未標註具體時間，影響時間序列完整性",
+     "reason": "18時50分電聯神經外科S醫師為會診時間軸關鍵節點，各section原文雖提及電聯神經外科但未標註具體時間，影響時間序列完整性"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "S醫師出庭證詞為專家證人之關鍵意見，說明右側囊腫非急性問題與意識改變無直接相關，各section原文均未提及，影響鑑定意見完整性",
+     "reason": "S醫師出庭證詞為專家證人之關鍵意見，說明右側囊腫非急性問題與意識改變無直接相關，各section原文均未提及，影響鑑定意見完整性"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "未會診神經內科之具體判斷理由為鑑定意見核心內容，各section原文均未提及，影響醫療常規判斷之理解",
+     "reason": "未會診神經內科之具體判斷理由為鑑定意見核心內容，各section原文均未提及，影響醫療常規判斷之理解"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決日期與法院全名屬程序性事實，section_verdict僅提及「法院作出判決」",
+     "reason": "判決日期與法院全名屬程序性事實，section_verdict僅提及「法院作出判決」"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "案件類型（業務過失致重傷害）影響判決性質理解，section_verdict未提及",
+     "reason": "案件類型（業務過失致重傷害）影響判決性質理解，section_verdict未提及"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "verdict",
+     "severity": "important",
+     "text": "自訴程序之提起屬重要程序事實，section_verdict未提及",
+     "reason": "自訴程序之提起屬重要程序事實，section_verdict未提及"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "承受訴訟人資訊未出現於任何section原文，屬程序性事實",
+     "reason": "承受訴訟人資訊未出現於任何section原文，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全篇五段section，未見自訴人主張「依據電腦斷層掃瞄及核磁共振檢查報告用語，遽謂急性腦中風仍有注射rtPA之適用」此一辯論內容",
+     "reason": "遍查全篇五段section，未見自訴人主張「依據電腦斷層掃瞄及核磁共振檢查報告用語，遽謂急性腦中風仍有注射rtPA之適用」此一辯論內容"
+    },
+    {
+     "gt_claim_id": 127,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "遍查全篇section，被告實際係判斷為「藥物過量」而非「腦中風」，GT claim所述「合理認定為腦中風病徵」與文本不符，摘要未提及此主張正確",
+     "reason": "遍查全篇section，被告實際係判斷為「藥物過量」而非「腦中風」，GT claim所述「合理認定為腦中風病徵」與文本不符，摘要未提及此主張正確"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 129,
+   "pred_total": 53,
+   "matched": 52,
+   "partial": 19,
+   "missing": 58,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8874,
+  "compression_afg_chars": 1350,
+  "compression_source_chars": 11989,
+  "gt_length_ratio": 0.3951,
+  "gt_length_afg_chars": 1350,
+  "gt_length_gt_chars": 3417,
+  "section_balance": 0.2588
+ }
 }

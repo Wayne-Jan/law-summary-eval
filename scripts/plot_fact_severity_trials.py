@@ -41,6 +41,7 @@ DISPLAY_LABELS = {
     "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
     "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
     "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+    "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS",
     "baseline_ollama_gemma4-31b-cloud": "Gemma 4",
     "baseline_claude-haiku": "Claude Haiku 4.5",
     "baseline_claude-sonnet": "Claude Sonnet 4.6",
@@ -70,6 +71,7 @@ CANONICAL_PRIORITY = {
     "LENS-Full-DeepSeek_v31": 21,
     "LENS-NoAFG-DeepSeek_v31": 22,
     "LENS-NoReact-DeepSeek_v31": 23,
+    "LENS-Full-GPT-OSS_writer_gpt_oss": 24,
 }
 
 EXCLUDED_CONDITIONS = {

@@ -44,7 +44,8 @@
   "LENS-Full-DeepSeek_v31": "LENS-DeepSeek v3.1-A",
   "LENS-NoAFG-DeepSeek_v31": "LENS-DeepSeek v3.1-B",
   "LENS-NoReact-DeepSeek_v31": "LENS-DeepSeek v3.1-C",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "LENS-Gemma 4",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "LENS-GPT-OSS"
  },
  "condition_groups": {
   "claude_afg_v5.1": "商用模型",
@@ -67,7 +68,8 @@
   "LENS-Full-DeepSeek_v31": "開源模型",
   "LENS-NoAFG-DeepSeek_v31": "開源模型",
   "LENS-NoReact-DeepSeek_v31": "開源模型",
-  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型"
+  "LENS-Full-DeepSeek_v31_writer_gemma4": "開源模型",
+  "LENS-Full-GPT-OSS_writer_gpt_oss": "開源模型"
  },
  "sections": [
   {
@@ -152,6 +154,184 @@
  "complexity_score": 0,
  "eval": {
   "rule_based_avg": 0.7548,
-  "fact_recall_avg": null
+  "fact_recall": 0.7581,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8624,
+  "quality_overall": 4.7286,
+  "checklist_pass_rate": 0.9891,
+  "citation_accuracy": 0.913,
+  "citation_support_score": 0.9161,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9478,
+   "citation_fidelity": 0.913,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.933,
+  "numerical_detail": {
+   "total_numerical": 15,
+   "correct": 14
+  },
+  "weighted_recall": 0.9032,
+  "missing_severity": {
+   "critical": 0,
+   "important": 8,
+   "minor": 11,
+   "details": [
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「應先輸液後始檢查傷口」之注意義務經查遍五個 section 均未見明確記載，僅 facts 提及「應注意病患大量失血情形」，確實遺漏此具體義務",
+     "reason": "「應先輸液後始檢查傷口」之注意義務經查遍五個 section 均未見明確記載，僅 facts 提及「應注意病患大量失血情形」，確實遺漏此具體義務"
+    },
+    {
+     "gt_claim_id": 15,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "「客觀上並無不能注意之情事」此法律要件經查遍五個 section 均未見記載，屬重要法律要件遺漏",
+     "reason": "「客觀上並無不能注意之情事」此法律要件經查遍五個 section 均未見記載，屬重要法律要件遺漏"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 5 個 section 原文均未提及「傷口長10公分、寬6公分、深5公分」之具體維度，僅 defense 段提及「很大傷口」。雖 reasoning 段 gt_claim_id 81 提及「面積約10×6×5cm」，但與本項「長10公分、寬6公分、深5公分」為不同概念（面積 vs 三維尺寸）。確屬 missing。",
+     "reason": "全部 5 個 section 原文均未提及「傷口長10公分、寬6公分、深5公分」之具體維度，僅 defense 段提及「很大傷口」。雖 reasoning 段 gt_claim_id 81 提及「面積約10×6×5cm」，但與本項「長10公分、寬6公分、深5公分」為不同概念（面積 vs 三維尺寸）。確屬 missing。"
+    },
+    {
+     "gt_claim_id": 37,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 5 個 section 原文均未出現「發現未繼續流血」之表述。defense 段僅提及「當時左邊小腿並未出血」，語義為「並未出血」而非「未繼續流血」。確屬 missing，屬次要資訊。",
+     "reason": "全部 5 個 section 原文均未出現「發現未繼續流血」之表述。defense 段僅提及「當時左邊小腿並未出血」，語義為「並未出血」而非「未繼續流血」。確屬 missing，屬次要資訊。"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "全部 5 個 section 原文均未提及「將止血帶拿掉」。defense 段提及「裝上彈性繃帶」、facts 段提及「拆除包紮」、opinions 段提及「取下抽氣式骨折固定器」，但均未明確提及「止血帶」。確屬 missing，屬次要醫療處置細節。",
+     "reason": "全部 5 個 section 原文均未提及「將止血帶拿掉」。defense 段提及「裝上彈性繃帶」、facts 段提及「拆除包紮」、opinions 段提及「取下抽氣式骨折固定器」，但均未明確提及「止血帶」。確屬 missing，屬次要醫療處置細節。"
+    },
+    {
+     "gt_claim_id": 60,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "法醫鑑定提及之其他部位銳器傷害（右腳背、右手前臂）屬傷勢細節，不影響死因判斷及主要案情理解",
+     "reason": "法醫鑑定提及之其他部位銳器傷害（右腳背、右手前臂）屬傷勢細節，不影響死因判斷及主要案情理解"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "表層外傷不會造成死亡之判斷屬補充說明，核心死因（左膕部切割傷）已於摘要中明確，不影響主要案情理解",
+     "reason": "表層外傷不會造成死亡之判斷屬補充說明，核心死因（左膕部切割傷）已於摘要中明確，不影響主要案情理解"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "到院時生命徵象詳細數值（血壓、脈搏、GCS等）為鑑定意見之重要客觀依據，遺漏影響對「瀕死狀態」判斷之完整理解",
+     "reason": "到院時生命徵象詳細數值（血壓、脈搏、GCS等）為鑑定意見之重要客觀依據，遺漏影響對「瀕死狀態」判斷之完整理解"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "病歷可信度及家屬質疑竄改屬證據能力判斷之程序性說明，不影響主要鑑定意見之理解",
+     "reason": "病歷可信度及家屬質疑竄改屬證據能力判斷之程序性說明，不影響主要鑑定意見之理解"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "急救病人標準程序關於建立靜脈管道之規定，為判斷被告甲處置是否合規之重要專業依據，遺漏影響對急救程序合理性的理解",
+     "reason": "急救病人標準程序關於建立靜脈管道之規定，為判斷被告甲處置是否合規之重要專業依據，遺漏影響對急救程序合理性的理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "中央靜脈導管與皮膚切開術作為第二選擇之專業說明，為理解被告甲選擇切開術原因之重要背景，遺漏影響對急救決策合理性的理解",
+     "reason": "中央靜脈導管與皮膚切開術作為第二選擇之專業說明，為理解被告甲選擇切開術原因之重要背景，遺漏影響對急救決策合理性的理解"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "兩種方式效果比較及醫師熟練度考量，為法院認定被告甲選擇切開術是否合理之關鍵鑑定依據，遺漏影響對判斷過失之理解",
+     "reason": "兩種方式效果比較及醫師熟練度考量，為法院認定被告甲選擇切開術是否合理之關鍵鑑定依據，遺漏影響對判斷過失之理解"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "特殊器材、廣泛性消毒、耗時較長等細節為專業操作說明，不影響對「32分鐘內完成輸血已盡全力」核心結論之理解",
+     "reason": "特殊器材、廣泛性消毒、耗時較長等細節為專業操作說明，不影響對「32分鐘內完成輸血已盡全力」核心結論之理解"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "嚴重休克患者耗時1-2小時打上靜脈血管為非罕見狀況，為判斷32分鐘是否屬合理延遲之重要專業參照，遺漏影響對時間合理性的理解",
+     "reason": "嚴重休克患者耗時1-2小時打上靜脈血管為非罕見狀況，為判斷32分鐘是否屬合理延遲之重要專業參照，遺漏影響對時間合理性的理解"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "傷口具體尺寸（10×6×5cm）及「深可見骨」之描述遍尋5個section原文均未出現，屬重要事實遺漏",
+     "reason": "傷口具體尺寸（10×6×5cm）及「深可見骨」之描述遍尋5個section原文均未出現，屬重要事實遺漏"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「在家中受傷時有大量出血」此一事實於全部section原文中均未提及，僅提及到院時之出血性休克狀態",
+     "reason": "「在家中受傷時有大量出血」此一事實於全部section原文中均未提及，僅提及到院時之出血性休克狀態"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「送上救護車時有躁動、靜脈注射無法完成」等症狀於全部section原文均未出現，屬救護過程細節遺漏",
+     "reason": "「送上救護車時有躁動、靜脈注射無法完成」等症狀於全部section原文均未出現，屬救護過程細節遺漏"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「「通常一般之人均不致有所懷疑」之證據標準用語於全部section原文均未出現，reasoning段僅提及「無其他積極證據」，屬法律論述用語遺漏",
+     "reason": "「「通常一般之人均不致有所懷疑」之證據標準用語於全部section原文均未出現，reasoning段僅提及「無其他積極證據」，屬法律論述用語遺漏"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「「罪證有疑，利於被告」之法則明確用語於全部section原文均未出現，屬法律原則表述遺漏",
+     "reason": "「「罪證有疑，利於被告」之法則明確用語於全部section原文均未出現，屬法律原則表述遺漏"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 93,
+   "pred_total": 76,
+   "matched": 67,
+   "partial": 7,
+   "missing": 19,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8584,
+  "compression_afg_chars": 1798,
+  "compression_source_chars": 12694,
+  "gt_length_ratio": 0.6027,
+  "gt_length_afg_chars": 1798,
+  "gt_length_gt_chars": 2983,
+  "section_balance": 0.5909
  }
 }
