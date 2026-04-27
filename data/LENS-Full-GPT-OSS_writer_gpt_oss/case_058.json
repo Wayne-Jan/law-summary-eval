@@ -150,6 +150,493 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.713
+  "rule_based_avg": 0.713,
+  "fact_recall": 0.5392,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7006,
+  "quality_overall": 4.5143,
+  "checklist_pass_rate": 0.9565,
+  "citation_accuracy": 0.9615,
+  "citation_support_score": 0.9594,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9769,
+   "citation_fidelity": 0.9615,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 1.0,
+  "numerical_detail": {
+   "total_numerical": 26,
+   "correct": 26
+  },
+  "weighted_recall": 0.8233,
+  "missing_severity": {
+   "critical": 0,
+   "important": 25,
+   "minor": 38,
+   "details": [
+    {
+     "gt_claim_id": 31,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "辯方僅主張「患者X於91年8月20日曾自行外出至其他診所打針」，全文未提「多次不假外出」，cross-section檢查亦無此概括性描述",
+     "reason": "辯方僅主張「患者X於91年8月20日曾自行外出至其他診所打針」，全文未提「多次不假外出」，cross-section檢查亦無此概括性描述"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢察官函請鑑定程序，屬程序性背景事實，非核心醫療爭點",
+     "reason": "檢察官函請鑑定程序，屬程序性背景事實，非核心醫療爭點"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "慢性腎衰竭病理特徵之詳細描述，為背景醫學知識",
+     "reason": "慢性腎衰竭病理特徵之詳細描述，為背景醫學知識"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "慢性腎衰竭自然病程之背景描述",
+     "reason": "慢性腎衰竭自然病程之背景描述"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "惡化速度圖表方法為技術性細節",
+     "reason": "惡化速度圖表方法為技術性細節"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "85年5月17日之歷史病史數據，時間點較早",
+     "reason": "85年5月17日之歷史病史數據，時間點較早"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "91年8月22日超音波檢查結果，為補充檢查",
+     "reason": "91年8月22日超音波檢查結果，為補充檢查"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "洗腎標準之一般醫學知識",
+     "reason": "洗腎標準之一般醫學知識"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "自然病程洗腎預估時間",
+     "reason": "自然病程洗腎預估時間"
+    },
+    {
+     "gt_claim_id": 53,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "氨基糖甘類使用注意事項，屬一般用藥須知",
+     "reason": "氨基糖甘類使用注意事項，屬一般用藥須知"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "革蘭氏陽性菌感染時Gentamycin使用考量，與用藥適當性判斷相關",
+     "reason": "革蘭氏陽性菌感染時Gentamycin使用考量，與用藥適當性判斷相關"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢察官第二次委請鑑定程序，屬程序性事實",
+     "reason": "檢察官第二次委請鑑定程序，屬程序性事實"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "提早75天洗腎之具體數據，pred已提及洗腎結果",
+     "reason": "提早75天洗腎之具體數據，pred已提及洗腎結果"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "臀部膿瘍感染菌種類型之詳細說明",
+     "reason": "臀部膿瘍感染菌種類型之詳細說明"
+    },
+    {
+     "gt_claim_id": 68,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「一開始使用」Gentamycin之適當性評估，與過失認定相關",
+     "reason": "「一開始使用」Gentamycin之適當性評估，與過失認定相關"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「單純使用Stazolin」替代方案，關係用藥過失認定",
+     "reason": "「單純使用Stazolin」替代方案，關係用藥過失認定"
+    },
+    {
+     "gt_claim_id": 71,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「繼續傷害腎功能」之具體表述，與過失認定相關",
+     "reason": "「繼續傷害腎功能」之具體表述，與過失認定相關"
+    },
+    {
+     "gt_claim_id": 72,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "其他替代藥物比較屬補充說明",
+     "reason": "其他替代藥物比較屬補充說明"
+    },
+    {
+     "gt_claim_id": 75,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "檢察官提起公訴程序性事實",
+     "reason": "檢察官提起公訴程序性事實"
+    },
+    {
+     "gt_claim_id": 76,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "被告聲請第三次鑑定程序，與訴訟權行使相關",
+     "reason": "被告聲請第三次鑑定程序，與訴訟權行使相關"
+    },
+    {
+     "gt_claim_id": 77,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "第三次鑑定事項詳細清單，pred已涵蓋核心結論",
+     "reason": "第三次鑑定事項詳細清單，pred已涵蓋核心結論"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "8月15日Ccr值7.19 cc/分鐘為補充數據",
+     "reason": "8月15日Ccr值7.19 cc/分鐘為補充數據"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「慢性腎衰竭合併急性腎衰竭」之明確診斷，影響病因分析理解",
+     "reason": "「慢性腎衰竭合併急性腎衰竭」之明確診斷，影響病因分析理解"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "腎功能惡化三大原因明確列出（原來嚴重腎衰竭、細菌感染、Gentamycin）",
+     "reason": "腎功能惡化三大原因明確列出（原來嚴重腎衰竭、細菌感染、Gentamycin）"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "「若無本次事件」之自然病程預後假設",
+     "reason": "「若無本次事件」之自然病程預後假設"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "「若8月15日停藥」之假設情境分析，關係因果關係判斷",
+     "reason": "「若8月15日停藥」之假設情境分析，關係因果關係判斷"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "經掃描全部 5 個 section 原文，section_verdict 僅提及案號「94年度易字第346號」與刑度，未明確提及判決日期「民國97年09月30日」。此為程序性事實遺漏，不影響案情本質理解。",
+     "reason": "經掃描全部 5 個 section 原文，section_verdict 僅提及案號「94年度易字第346號」與刑度，未明確提及判決日期「民國97年09月30日」。此為程序性事實遺漏，不影響案情本質理解。"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告偵查中自承之具體治療方式陳述，屬重要醫療標準事實，確認所有 section 均未提及",
+     "reason": "被告偵查中自承之具體治療方式陳述，屬重要醫療標準事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "細菌培養前後抗生素使用規範，屬重要醫療標準細節，確認所有 section 均未提及",
+     "reason": "細菌培養前後抗生素使用規範，屬重要醫療標準細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告審理中自承細菌培養結果之具體陳述，屬重要事實細節，確認所有 section 均未提及",
+     "reason": "被告審理中自承細菌培養結果之具體陳述，屬重要事實細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "皮膚膿瘍細菌感染特性之醫學背景事實，屬背景性醫學知識，確認所有 section 均未提及",
+     "reason": "皮膚膿瘍細菌感染特性之醫學背景事實，屬背景性醫學知識，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "金黃色葡萄球菌流行病學統計數據，屬背景性醫學知識，確認所有 section 均未提及",
+     "reason": "金黃色葡萄球菌流行病學統計數據，屬背景性醫學知識，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "細菌培養失敗率文獻統計，屬背景性醫學知識，確認所有 section 均未提及",
+     "reason": "細菌培養失敗率文獻統計，屬背景性醫學知識，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 100,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "細菌培養失敗影響因子，屬背景性醫學知識，確認所有 section 均未提及",
+     "reason": "細菌培養失敗影響因子，屬背景性醫學知識，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "Cefazolin作用機轉，屬背景性藥理學知識，確認所有 section 均未提及",
+     "reason": "Cefazolin作用機轉，屬背景性藥理學知識，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 102,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "Gentamycin作用機轉，雖屬藥理學知識但為本案關鍵藥物，屬重要醫療標準細節，確認所有 section 均未提及",
+     "reason": "Gentamycin作用機轉，雖屬藥理學知識但為本案關鍵藥物，屬重要醫療標準細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患多次不假外出之具體事實認定，影響因果關係爭點理解，確認所有 section 均未明確提及「多次」",
+     "reason": "病患多次不假外出之具體事實認定，影響因果關係爭點理解，確認所有 section 均未明確提及「多次」"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患偵查中關於C診所證述之具體內容，屬重要事實細節，確認所有 section 均未提及",
+     "reason": "病患偵查中關於C診所證述之具體內容，屬重要事實細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 112,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患審理中關於8月16-18日離院原因之具體證述，屬重要事實細節，確認所有 section 均未提及",
+     "reason": "病患審理中關於8月16-18日離院原因之具體證述，屬重要事實細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 113,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "病患關於8月20日看診情況之具體證述，屬重要事實細節，確認所有 section 均未提及",
+     "reason": "病患關於8月20日看診情況之具體證述，屬重要事實細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 114,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "病患未曾向護士提及其他就診之細節，屬次要事實，確認所有 section 均未提及",
+     "reason": "病患未曾向護士提及其他就診之細節，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "請假單具體日期之程序性事實，屬次要事實，確認所有 section 均未提及",
+     "reason": "請假單具體日期之程序性事實，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "8月16日護理紀錄具體內容之程序性事實，屬次要事實，確認所有 section 均未提及",
+     "reason": "8月16日護理紀錄具體內容之程序性事實，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "8月18日護理紀錄具體內容之程序性事實，屬次要事實，確認所有 section 均未提及",
+     "reason": "8月18日護理紀錄具體內容之程序性事實，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 118,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "8月20日護理紀錄具體內容之程序性事實，屬次要事實，確認所有 section 均未提及",
+     "reason": "8月20日護理紀錄具體內容之程序性事實，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 119,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "請假單具體事由「洗頭髮」之程序性細節，屬次要事實，確認所有 section 均未提及",
+     "reason": "請假單具體事由「洗頭髮」之程序性細節，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "請假單具體事由「回家」之程序性細節，屬次要事實，確認所有 section 均未提及",
+     "reason": "請假單具體事由「回家」之程序性細節，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "健保局函文具體文號之程序性細節，屬次要事實，確認所有 section 均未提及",
+     "reason": "健保局函文具體文號之程序性細節，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人甲偵查中關於8月20日上午之具體證述，屬重要事實細節，確認所有 section 均未提及",
+     "reason": "證人甲偵查中關於8月20日上午之具體證述，屬重要事實細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "證人甲關於8月20日下午病患情況之具體證述，屬重要事實細節，確認所有 section 均未提及",
+     "reason": "證人甲關於8月20日下午病患情況之具體證述，屬重要事實細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人甲關於健保卡之具體證述細節，屬次要事實，確認所有 section 均未提及",
+     "reason": "證人甲關於健保卡之具體證述細節，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告關於健保卡保管之具體陳述，屬次要事實，確認所有 section 均未提及",
+     "reason": "被告關於健保卡保管之具體陳述，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人甲審理中關於辦理出院之具體證述，屬次要事實細節，確認所有 section 均未提及",
+     "reason": "證人甲審理中關於辦理出院之具體證述，屬次要事實細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 131,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人丙交接之具體時間，屬次要程序性事實，確認所有 section 均未提及",
+     "reason": "證人丙交接之具體時間，屬次要程序性事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 132,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "證人丙未親自見聞之細節，屬次要事實，確認所有 section 均未提及",
+     "reason": "證人丙未親自見聞之細節，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 134,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告關於健保局資料無法呈現所有打針情形之詳細論點，屬重要辯護要點，確認所有 section 均未完整記載此論點",
+     "reason": "被告關於健保局資料無法呈現所有打針情形之詳細論點，屬重要辯護要點，確認所有 section 均未完整記載此論點"
+    },
+    {
+     "gt_claim_id": 148,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "8月16日醫囑簽署改為「L」之具體病歷紀錄細節，屬次要事實，確認所有 section 均未提及",
+     "reason": "8月16日醫囑簽署改為「L」之具體病歷紀錄細節，屬次要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 151,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告自承8月16日至20日醫師L依據其處方未修改繼續使用之細節，屬重要事實認定，確認所有 section 均未提及",
+     "reason": "被告自承8月16日至20日醫師L依據其處方未修改繼續使用之細節，屬重要事實認定，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告8月16日出國之具體事實，影響責任歸屬時間點認定，屬重要事實，確認所有 section 均未提及",
+     "reason": "被告8月16日出國之具體事實，影響責任歸屬時間點認定，屬重要事實，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "被告告知代理醫師L由其下醫囑單之交接說明，屬重要事實細節，確認所有 section 均未提及",
+     "reason": "被告告知代理醫師L由其下醫囑單之交接說明，屬重要事實細節，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "迄至8月15日仍係由被告負責診治並決定繼續施用Gentamycin之責任歸屬，屬重要過失認定事實，確認所有 section 均未完整涵蓋",
+     "reason": "迄至8月15日仍係由被告負責診治並決定繼續施用Gentamycin之責任歸屬，屬重要過失認定事實，確認所有 section 均未完整涵蓋"
+    },
+    {
+     "gt_claim_id": 158,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "法院關於「醫師L難違背被告指示自行停用Gentamycin」之推論，屬重要責任歸屬認定，確認所有 section 均未提及",
+     "reason": "法院關於「醫師L難違背被告指示自行停用Gentamycin」之推論，屬重要責任歸屬認定，確認所有 section 均未提及"
+    },
+    {
+     "gt_claim_id": 160,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "GT claim 關鍵在於被告「明知」金黃色葡萄球菌感染且Stazolin可有效治療此具體醫學發現，檢視全篇五段摘要，雖 section_opinions 提及「Cefazolin對金黃色葡萄球菌有效」、section_facts 提及「得知金黃色葡萄球菌培養結果」，但均未明確連結「被告已知Stazolin可有效治療金黃色葡萄球菌」此一認知狀態與用藥決策之因果關係，屬重要醫療判斷依據遺漏",
+     "reason": "GT claim 關鍵在於被告「明知」金黃色葡萄球菌感染且Stazolin可有效治療此具體醫學發現，檢視全篇五段摘要，雖 section_opinions 提及「Cefazolin對金黃色葡萄球菌有效」、section_facts 提及「得知金黃色葡萄球菌培養結果」，但均未明確連結「被告已知Stazolin可有效治療金黃色葡萄球菌」此一認知狀態與用藥決策之因果關係，屬重要醫療判斷依據遺漏"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 166,
+   "pred_total": 73,
+   "matched": 82,
+   "partial": 15,
+   "missing": 69,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.8315,
+  "compression_afg_chars": 2329,
+  "compression_source_chars": 13825,
+  "gt_length_ratio": 0.2823,
+  "gt_length_afg_chars": 2329,
+  "gt_length_gt_chars": 8249,
+  "section_balance": 0.5191
  }
 }
