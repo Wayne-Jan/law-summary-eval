@@ -137,5 +137,347 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.8222,
+  "fact_recall": 0.6341,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7761,
+  "quality_overall": 4.9,
+  "checklist_pass_rate": 0.9783,
+  "citation_accuracy": 0.9828,
+  "citation_support_score": 0.9548,
+  "uncited_rate": 0.0,
+  "faithfulness_combined": {
+   "score": 0.9897,
+   "citation_fidelity": 0.9828,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.983,
+  "numerical_detail": {
+   "total_numerical": 58,
+   "correct": 57
+  },
+  "weighted_recall": 0.8347,
+  "missing_severity": {
+   "critical": 3,
+   "important": 13,
+   "minor": 26,
+   "details": [
+    {
+     "gt_claim_id": 26,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "胸管置放執行者GT為醫師乙，pred claim 15為醫師丙，此為關鍵事實錯誤，影響過失責任歸屬判定，確認所有section均未正確記載醫師乙執行胸管放置之事實",
+     "reason": "胸管置放執行者GT為醫師乙，pred claim 15為醫師丙，此為關鍵事實錯誤，影響過失責任歸屬判定，確認所有section均未正確記載醫師乙執行胸管放置之事實"
+    },
+    {
+     "gt_claim_id": 27,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "醫師甲、乙應警覺胸管無功能之關鍵疏失事實，經查section_facts僅提及「未能確保胸管功能」但歸責於醫師丙，責任主體錯誤，影響過失認定",
+     "reason": "醫師甲、乙應警覺胸管無功能之關鍵疏失事實，經查section_facts僅提及「未能確保胸管功能」但歸責於醫師丙，責任主體錯誤，影響過失認定"
+    },
+    {
+     "gt_claim_id": 28,
+     "source_section": "facts",
+     "severity": "critical",
+     "text": "醫師甲、乙均未注意胸管問題之共同疏失，pred將責任歸給醫師丙，責任主體錯誤，影響判決對過失行為人之認定",
+     "reason": "醫師甲、乙均未注意胸管問題之共同疏失，pred將責任歸給醫師丙，責任主體錯誤，影響判決對過失行為人之認定"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section全文檢索，未見「被告乙等人穩定病患心跳、血壓並找出原因」之相關記載，確認缺失",
+     "reason": "五個section全文檢索，未見「被告乙等人穩定病患心跳、血壓並找出原因」之相關記載，確認缺失"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section全文檢索，未見「被告乙有跟家屬建議要做胸部插管」之明確記載，僅見「需家屬同意」之程序性描述，未說明由誰建議，確認缺失",
+     "reason": "五個section全文檢索，未見「被告乙有跟家屬建議要做胸部插管」之明確記載，僅見「需家屬同意」之程序性描述，未說明由誰建議，確認缺失"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_01_facts提及骨折，但因匿名化關係未明確指「病患T」；心臟酵素僅見「追蹤」記載未見「升高」確認。GT claim之完整語意（骨折＋酵素升高）未被完整覆蓋，確認缺失（minor：屬背景性醫療發現）",
+     "reason": "section_01_facts提及骨折，但因匿名化關係未明確指「病患T」；心臟酵素僅見「追蹤」記載未見「升高」確認。GT claim之完整語意（骨折＋酵素升高）未被完整覆蓋，確認缺失（minor：屬背景性醫療發現）"
+    },
+    {
+     "gt_claim_id": 56,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "五個section全文檢索，未見「被告丙追蹤血紅素、照胸部X光」之記載——pred claim將此行為歸於被告乙，與GT claim之被告丙不一致，確認缺失",
+     "reason": "五個section全文檢索，未見「被告丙追蹤血紅素、照胸部X光」之記載——pred claim將此行為歸於被告乙，與GT claim之被告丙不一致，確認缺失"
+    },
+    {
+     "gt_claim_id": 57,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section全文僅見「醫審會鑑定有誤」之概括評價，未見「未及詳閱病歷記載，且未考量血壓數據」之具體程序性指控，確認缺失（minor：屬程序性批評）",
+     "reason": "section全文僅見「醫審會鑑定有誤」之概括評價，未見「未及詳閱病歷記載，且未考量血壓數據」之具體程序性指控，確認缺失（minor：屬程序性批評）"
+    },
+    {
+     "gt_claim_id": 58,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section全文僅見「醫審會鑑定有誤」之概括評價，未見「醫審會指稱被告丙處置失當，應有違誤」之直接針對被告丙的具體反駁，確認缺失（minor：屬程序性批評）",
+     "reason": "section全文僅見「醫審會鑑定有誤」之概括評價，未見「醫審會指稱被告丙處置失當，應有違誤」之直接針對被告丙的具體反駁，確認缺失（minor：屬程序性批評）"
+    },
+    {
+     "gt_claim_id": 61,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section全文僅見「醫審會鑑定有誤」之概括評價，未見「醫審會認被告甲、乙為上述醫療處置有所不當，顯不足採」之完整論述——特別是「顯不足採」之直接否定用語未見，確認缺失（minor：屬論證完整性問題）",
+     "reason": "section全文僅見「醫審會鑑定有誤」之概括評價，未見「醫審會認被告甲、乙為上述醫療處置有所不當，顯不足採」之完整論述——特別是「顯不足採」之直接否定用語未見，確認缺失（minor：屬論證完整性問題）"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "五section合併後，心臟酵素數據於section_02_defense提及「追蹤」，section_opinions提及「心肌酵素檢查」，但均未見「未正確判斷死因應與心臟受損有關」之完整推論鏈。此涉及死因認定之關鍵辯護主張，確認缺失（important）",
+     "reason": "五section合併後，心臟酵素數據於section_02_defense提及「追蹤」，section_opinions提及「心肌酵素檢查」，但均未見「未正確判斷死因應與心臟受損有關」之完整推論鏈。此涉及死因認定之關鍵辯護主張，確認缺失（important）"
+    },
+    {
+     "gt_claim_id": 63,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense提及「臺灣胸腔及心臟血管外科學會函覆認為該鑑定有誤」，屬部分覆蓋；但未見「醫審會之兩次鑑定報告有重大瑕疵」及「較為可採」之直接比較評價。此涉及鑑定證據採信之關鍵問題，確認缺失（important）",
+     "reason": "section_02_defense提及「臺灣胸腔及心臟血管外科學會函覆認為該鑑定有誤」，屬部分覆蓋；但未見「醫審會之兩次鑑定報告有重大瑕疵」及「較為可採」之直接比較評價。此涉及鑑定證據採信之關鍵問題，確認缺失（important）"
+    },
+    {
+     "gt_claim_id": 65,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "五段摘要均未提及醫師丙僅將症狀歸因於骨折疼痛之具體診斷考量",
+     "reason": "五段摘要均未提及醫師丙僅將症狀歸因於骨折疼痛之具體診斷考量"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫審會對照X光負面評價未見於摘要，屬專家意見細節",
+     "reason": "醫審會對照X光負面評價未見於摘要，屬專家意見細節"
+    },
+    {
+     "gt_claim_id": 70,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "醫審會建議重新身體評估及建立引流路徑之具體建議未見於摘要",
+     "reason": "醫審會建議重新身體評估及建立引流路徑之具體建議未見於摘要"
+    },
+    {
+     "gt_claim_id": 74,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "死亡方式為意外之法醫認定未見於摘要，屬死因細節",
+     "reason": "死亡方式為意外之法醫認定未見於摘要，屬死因細節"
+    },
+    {
+     "gt_claim_id": 78,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "其餘實質器官無異常之解剖發現未見於摘要",
+     "reason": "其餘實質器官無異常之解剖發現未見於摘要"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "休克早期症狀之醫學判斷未見於摘要",
+     "reason": "休克早期症狀之醫學判斷未見於摘要"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓下降為休克晚期症狀之醫學判斷未見於摘要",
+     "reason": "血壓下降為休克晚期症狀之醫學判斷未見於摘要"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "休克非唯一診斷之醫學說明未見於摘要",
+     "reason": "休克非唯一診斷之醫學說明未見於摘要"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "GT 年份「97年」與案件實際年份「95年」不符，屬 peripheral 資訊",
+     "reason": "GT 年份「97年」與案件實際年份「95年」不符，屬 peripheral 資訊"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "被告丙具體處置內容之詳列未見於摘要",
+     "reason": "被告丙具體處置內容之詳列未見於摘要"
+    },
+    {
+     "gt_claim_id": 90,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "學會對被告丙評價未見於摘要",
+     "reason": "學會對被告丙評價未見於摘要"
+    },
+    {
+     "gt_claim_id": 91,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "胸管引流功能與病程關係之意見未見於摘要",
+     "reason": "胸管引流功能與病程關係之意見未見於摘要"
+    },
+    {
+     "gt_claim_id": 92,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "引流肋膜積液目的之醫學說明未見於摘要",
+     "reason": "引流肋膜積液目的之醫學說明未見於摘要"
+    },
+    {
+     "gt_claim_id": 93,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "重新置放胸管非急需處置之意見未見於摘要",
+     "reason": "重新置放胸管非急需處置之意見未見於摘要"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "引流失敗為臨床常見狀況之說明未見於摘要",
+     "reason": "引流失敗為臨床常見狀況之說明未見於摘要"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "引流失敗可能原因之詳列未見於摘要",
+     "reason": "引流失敗可能原因之詳列未見於摘要"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "ACSS訓練常規之處置依據未見於摘要",
+     "reason": "ACSS訓練常規之處置依據未見於摘要"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "醫師是否有時間考慮所有可能性之意見未見於摘要",
+     "reason": "醫師是否有時間考慮所有可能性之意見未見於摘要"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "血壓心跳未恢復前無法分辨積液原因之意見未見於摘要",
+     "reason": "血壓心跳未恢復前無法分辨積液原因之意見未見於摘要"
+    },
+    {
+     "gt_claim_id": 101,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "法醫鑑定書鑑定範圍限制（無法判定因果關係）未見於摘要",
+     "reason": "法醫鑑定書鑑定範圍限制（無法判定因果關係）未見於摘要"
+    },
+    {
+     "gt_claim_id": 104,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt未提及檢察官委託醫審會進行兩次鑑定之程序性事實，屬背景資訊，不影響判決結論理解",
+     "reason": "section_05_reasoning.txt未提及檢察官委託醫審會進行兩次鑑定之程序性事實，屬背景資訊，不影響判決結論理解"
+    },
+    {
+     "gt_claim_id": 106,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未提及醫審會第一次鑑定具體認定醫師丙處置失當之內容，影響對鑑定意見爭議之完整理解",
+     "reason": "section_05_reasoning.txt未提及醫審會第一次鑑定具體認定醫師丙處置失當之內容，影響對鑑定意見爭議之完整理解"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未提及醫師丙僅考慮骨折疼痛原因之具體診斷疏漏，影響對被告過失爭議之完整理解",
+     "reason": "section_05_reasoning.txt未提及醫師丙僅考慮骨折疼痛原因之具體診斷疏漏，影響對被告過失爭議之完整理解"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未提及醫師丙未將休克列入鑑別診斷之關鍵疏漏，影響對被告過失爭議之完整理解",
+     "reason": "section_05_reasoning.txt未提及醫師丙未將休克列入鑑別診斷之關鍵疏漏，影響對被告過失爭議之完整理解"
+    },
+    {
+     "gt_claim_id": 110,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未提及若將休克列入鑑別診斷可提早診斷體腔內出血之假設性論述，影響對醫審會鑑定意旨之理解",
+     "reason": "section_05_reasoning.txt未提及若將休克列入鑑別診斷可提早診斷體腔內出血之假設性論述，影響對醫審會鑑定意旨之理解"
+    },
+    {
+     "gt_claim_id": 111,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt雖提及醫審會第二次鑑定補充說明，但未明確引用「醫師丙應進一步追查，以避免延誤診斷病患T左胸遲發性血胸」之原文，影響對鑑定內容之準確理解",
+     "reason": "section_05_reasoning.txt雖提及醫審會第二次鑑定補充說明，但未明確引用「醫師丙應進一步追查，以避免延誤診斷病患T左胸遲發性血胸」之原文，影響對鑑定內容之準確理解"
+    },
+    {
+     "gt_claim_id": 115,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未提及檢察官依據法醫研究所鑑定認定死因包括失血性休克，影響對檢察官起訴論據之完整理解",
+     "reason": "section_05_reasoning.txt未提及檢察官依據法醫研究所鑑定認定死因包括失血性休克，影響對檢察官起訴論據之完整理解"
+    },
+    {
+     "gt_claim_id": 116,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt未明確提及檢察官囑託醫審會鑑定被告醫療處置有無疏失之程序性事實，屬背景資訊",
+     "reason": "section_05_reasoning.txt未明確提及檢察官囑託醫審會鑑定被告醫療處置有無疏失之程序性事實，屬背景資訊"
+    },
+    {
+     "gt_claim_id": 117,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未提及檢察官依據醫審會鑑定結果認為被告確有醫療過失，影響對檢方立場與法院判斷差異之理解",
+     "reason": "section_05_reasoning.txt未提及檢察官依據醫審會鑑定結果認為被告確有醫療過失，影響對檢方立場與法院判斷差異之理解"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "section_05_reasoning.txt未提及醫審會鑑定未考量被告依據病患生命跡象所為急救處置之具體質疑，影響對法院不採醫審會意見理由之完整理解",
+     "reason": "section_05_reasoning.txt未提及醫審會鑑定未考量被告依據病患生命跡象所為急救處置之具體質疑，影響對法院不採醫審會意見理由之完整理解"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 123,
+   "pred_total": 89,
+   "matched": 75,
+   "partial": 6,
+   "missing": 42,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.7123,
+  "compression_afg_chars": 3144,
+  "compression_source_chars": 10929,
+  "gt_length_ratio": 0.7493,
+  "gt_length_afg_chars": 3144,
+  "gt_length_gt_chars": 4196,
+  "section_balance": 0.4872
+ }
 }

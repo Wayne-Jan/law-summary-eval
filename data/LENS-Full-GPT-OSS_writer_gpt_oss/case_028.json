@@ -135,5 +135,242 @@
  },
  "verdict_type": "unknown",
  "complexity_score": 0,
- "eval": null
+ "eval": {
+  "rule_based_avg": 0.7393,
+  "fact_recall": 0.7022,
+  "fact_precision": 1.0,
+  "fact_f1": 0.8251,
+  "quality_overall": 4.5143,
+  "checklist_pass_rate": 0.9293,
+  "citation_accuracy": 0.9231,
+  "citation_support_score": 0.8897,
+  "uncited_rate": 0.063,
+  "faithfulness_combined": {
+   "score": 0.919,
+   "citation_fidelity": 0.8649,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 2,
+  "numerical_fidelity": 0.611,
+  "numerical_detail": {
+   "total_numerical": 18,
+   "correct": 11
+  },
+  "weighted_recall": 0.9044,
+  "missing_severity": {
+   "critical": 1,
+   "important": 10,
+   "minor": 16,
+   "details": [
+    {
+     "gt_claim_id": 8,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "遍查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段原文，均未提及「無法開刀救治」或相關語義，摘要確實遺漏此治療限制事實",
+     "reason": "遍查 section_facts、section_defense、section_opinions、section_verdict、section_reasoning 五段原文，均未提及「無法開刀救治」或相關語義，摘要確實遺漏此治療限制事實"
+    },
+    {
+     "gt_claim_id": 17,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "與 gt_claim_id:8 為同一事實陳述，五段原文均未提及「無法開刀救治」，維持 missing 判定",
+     "reason": "與 gt_claim_id:8 為同一事實陳述，五段原文均未提及「無法開刀救治」，維持 missing 判定"
+    },
+    {
+     "gt_claim_id": 20,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 雖有被告辯稱內容，但摘要未明確提及「被告否認有何過失致死犯行」之基本立場聲明",
+     "reason": "section_02_defense.txt 雖有被告辯稱內容，但摘要未明確提及「被告否認有何過失致死犯行」之基本立場聲明"
+    },
+    {
+     "gt_claim_id": 29,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 雖提及「吃奶、體溫、精神皆正常」，但未明確出現「如果生理狀況不正常，是不可能吃得下奶的」之因果推論",
+     "reason": "section_02_defense.txt 雖提及「吃奶、體溫、精神皆正常」，但未明確出現「如果生理狀況不正常，是不可能吃得下奶的」之因果推論"
+    },
+    {
+     "gt_claim_id": 33,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 分別提及設備不足及初期正常，但未合併陳述「設備及當時病患表現不可能讓伊發現」，且 pred claim 14 已用於其他 GT claim",
+     "reason": "section_02_defense.txt 分別提及設備不足及初期正常，但未合併陳述「設備及當時病患表現不可能讓伊發現」，且 pred claim 14 已用於其他 GT claim"
+    },
+    {
+     "gt_claim_id": 40,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 提及「證人亦於二月二十八日09時多次觀察仍無異狀」，但未提及「媽媽剛生產完還住在院內、下樓看小孩」之具體情境",
+     "reason": "section_05_reasoning.txt 提及「證人亦於二月二十八日09時多次觀察仍無異狀」，但未提及「媽媽剛生產完還住在院內、下樓看小孩」之具體情境"
+    },
+    {
+     "gt_claim_id": 41,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提及「伊於發現鼠蹊部瘀青後即轉診」，但未強調「後來才發現」之時間先後敘述",
+     "reason": "section_02_defense.txt 提及「伊於發現鼠蹊部瘀青後即轉診」，但未強調「後來才發現」之時間先後敘述"
+    },
+    {
+     "gt_claim_id": 44,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 提及「出生後一至三小時內表現正常」及「其後血液滲出加速」，但未出現「脾臟破裂可能會在24小時後才發現」之具體醫學見解",
+     "reason": "section_02_defense.txt 提及「出生後一至三小時內表現正常」及「其後血液滲出加速」，但未出現「脾臟破裂可能會在24小時後才發現」之具體醫學見解"
+    },
+    {
+     "gt_claim_id": 45,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提及病情變化序列，但未突出「一發現後，其速度就非常快了」之急迫性描述",
+     "reason": "section_02_defense.txt 提及病情變化序列，但未突出「一發現後，其速度就非常快了」之急迫性描述"
+    },
+    {
+     "gt_claim_id": 46,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_03_opinions.txt 為醫審會鑑定意見，被告辯護中未提及「行政院衛生署醫事審議委員會指稱伊沒有注意到脾臟破裂」之轉述",
+     "reason": "section_03_opinions.txt 為醫審會鑑定意見，被告辯護中未提及「行政院衛生署醫事審議委員會指稱伊沒有注意到脾臟破裂」之轉述"
+    },
+    {
+     "gt_claim_id": 47,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_02_defense.txt 雖有「因診所設備不足，伊無法即時診斷」，但未明確出現「然在那種情況下，伊是檢查不出來的」之主張",
+     "reason": "section_02_defense.txt 雖有「因診所設備不足，伊無法即時診斷」，但未明確出現「然在那種情況下，伊是檢查不出來的」之主張"
+    },
+    {
+     "gt_claim_id": 48,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 提及「診所設備不足」，但未具體陳述「當伊發現時，醫院裡也沒有儀器可檢查」之情境",
+     "reason": "section_02_defense.txt 提及「診所設備不足」，但未具體陳述「當伊發現時，醫院裡也沒有儀器可檢查」之情境"
+    },
+    {
+     "gt_claim_id": 49,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 為被告辯稱內容，但未出現「伊不知錯在那裡」之主張",
+     "reason": "section_02_defense.txt 為被告辯稱內容，但未出現「伊不知錯在那裡」之主張"
+    },
+    {
+     "gt_claim_id": 50,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_02_defense.txt 雖提及多種可能原因，但未出現「鼠蹊部出血有很多種原因」之概括性陳述",
+     "reason": "section_02_defense.txt 雖提及多種可能原因，但未出現「鼠蹊部出血有很多種原因」之概括性陳述"
+    },
+    {
+     "gt_claim_id": 51,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有 section 皆未提及「G醫院也懷疑是嵌入性脫腸」之診斷過程",
+     "reason": "所有 section 皆未提及「G醫院也懷疑是嵌入性脫腸」之診斷過程"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "所有 section 皆未提及「第二天照超音波後才發現是脾臟出血而不是嵌入性脫腸」之診斷排除過程",
+     "reason": "所有 section 皆未提及「第二天照超音波後才發現是脾臟出血而不是嵌入性脫腸」之診斷排除過程"
+    },
+    {
+     "gt_claim_id": 64,
+     "source_section": "verdict",
+     "severity": "minor",
+     "text": "判決確定之程序性背景事實，屬於次要資訊",
+     "reason": "判決確定之程序性背景事實，屬於次要資訊"
+    },
+    {
+     "gt_claim_id": 67,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "公訴人病菌感染論點屬背景資訊，非判決核心爭點，reasoning section 確未提及",
+     "reason": "公訴人病菌感染論點屬背景資訊，非判決核心爭點，reasoning section 確未提及"
+    },
+    {
+     "gt_claim_id": 69,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "轉送G醫院地點名稱雖遺漏，但時間資訊已於其他claim覆蓋，不影響案情理解",
+     "reason": "轉送G醫院地點名稱雖遺漏，但時間資訊已於其他claim覆蓋，不影響案情理解"
+    },
+    {
+     "gt_claim_id": 79,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "瘀青長度證詞屬細節性描述，非關鍵事實認定",
+     "reason": "瘀青長度證詞屬細節性描述，非關鍵事實認定"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "瘀青外觀紅腫描述屬證人證詞細節，非法院認定核心",
+     "reason": "瘀青外觀紅腫描述屬證人證詞細節，非法院認定核心"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "凌晨三、四點接獲通知時間點屬次要時間資訊",
+     "reason": "凌晨三、四點接獲通知時間點屬次要時間資訊"
+    },
+    {
+     "gt_claim_id": 83,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "肚子腫脹、睪丸瘀血係醫師觀察重要症狀，影響病情判斷理解",
+     "reason": "肚子腫脹、睪丸瘀血係醫師觀察重要症狀，影響病情判斷理解"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "血紅素2.6gm/dL具體數值反映患者嚴重貧血狀態，屬關鍵醫療數據",
+     "reason": "血紅素2.6gm/dL具體數值反映患者嚴重貧血狀態，屬關鍵醫療數據"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "不敢開刀原因屬醫療過程細節，非過失認定核心",
+     "reason": "不敢開刀原因屬醫療過程細節，非過失認定核心"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "本案關鍵問題在於疏失誤判與因果關係，屬判決核心爭點，reasoning section 完全未明確陳述",
+     "reason": "本案關鍵問題在於疏失誤判與因果關係，屬判決核心爭點，reasoning section 完全未明確陳述"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "被告甲之夫證詞屬背景資訊，reasoning section 未引用",
+     "reason": "被告甲之夫證詞屬背景資訊，reasoning section 未引用"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 136,
+   "pred_total": 80,
+   "matched": 82,
+   "partial": 27,
+   "missing": 27,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6739,
+  "compression_afg_chars": 1923,
+  "compression_source_chars": 5897,
+  "gt_length_ratio": 0.4271,
+  "gt_length_afg_chars": 1923,
+  "gt_length_gt_chars": 4502,
+  "section_balance": 0.5758
+ }
 }
