@@ -148,6 +148,472 @@
  "verdict_type": "unknown",
  "complexity_score": 0,
  "eval": {
-  "rule_based_avg": 0.7312
+  "rule_based_avg": 0.7312,
+  "fact_recall": 0.6587,
+  "fact_precision": 1.0,
+  "fact_f1": 0.7943,
+  "quality_overall": 4.5643,
+  "checklist_pass_rate": 0.9185,
+  "citation_accuracy": 0.976,
+  "citation_support_score": 0.9643,
+  "uncited_rate": 0.025,
+  "faithfulness_combined": {
+   "score": 0.971,
+   "citation_fidelity": 0.9516,
+   "fact_precision": 1.0,
+   "weights": {
+    "citation_fidelity": 0.6,
+    "fact_precision": 0.4
+   }
+  },
+  "compliance": 5,
+  "numerical_fidelity": 0.942,
+  "numerical_detail": {
+   "total_numerical": 52,
+   "correct": 49
+  },
+  "weighted_recall": 0.8483,
+  "missing_severity": {
+   "critical": 2,
+   "important": 22,
+   "minor": 36,
+   "details": [
+    {
+     "gt_claim_id": 5,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_reasoning 提及「預定於7月23日至7月27日接受三次雙重過濾血漿分離術」但未明確確認7月23日是否實際執行，且 section_facts 未提及日期特異性的血漿置換術，屬於重要時間事實遺漏",
+     "reason": "section_reasoning 提及「預定於7月23日至7月27日接受三次雙重過濾血漿分離術」但未明確確認7月23日是否實際執行，且 section_facts 未提及日期特異性的血漿置換術，屬於重要時間事實遺漏"
+    },
+    {
+     "gt_claim_id": 6,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_reasoning 僅說明預定期程，未明確確認7月25日是否實際執行血漿置換術; section_facts 完全未提及此日期，屬重要治療時間點遺漏",
+     "reason": "section_reasoning 僅說明預定期程，未明確確認7月25日是否實際執行血漿置換術; section_facts 完全未提及此日期，屬重要治療時間點遺漏"
+    },
+    {
+     "gt_claim_id": 7,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_reasoning 記載「7月26日...當日PRA值...」，未確認7月27日是否進行血漿置換術; section_facts 未提及此日期，屬重要治療時間點遺漏",
+     "reason": "section_reasoning 記載「7月26日...當日PRA值...」，未確認7月27日是否進行血漿置換術; section_facts 未提及此日期，屬重要治療時間點遺漏"
+    },
+    {
+     "gt_claim_id": 13,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_reasoning 記載9月30日症狀與治療，但未明確提及「住進加護病房」此重要臨床處置轉變，屬重要病情變化遺漏",
+     "reason": "section_reasoning 記載9月30日症狀與治療，但未明確提及「住進加護病房」此重要臨床處置轉變，屬重要病情變化遺漏"
+    },
+    {
+     "gt_claim_id": 18,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_reasoning 僅記載法院認定「自訴人並未於此期間...提出其他潛在捐贈者（如病患X之子）之意向」，與 GT claim「曾向移植團隊表示原本是病患之兒子要捐腎」語義相反，確認摘要未提及此事實主張，屬重要案情背景遺漏",
+     "reason": "section_reasoning 僅記載法院認定「自訴人並未於此期間...提出其他潛在捐贈者（如病患X之子）之意向」，與 GT claim「曾向移植團隊表示原本是病患之兒子要捐腎」語義相反，確認摘要未提及此事實主張，屬重要案情背景遺漏"
+    },
+    {
+     "gt_claim_id": 21,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_reasoning 記載法院認定「被告甲無義務對未簽署同意之其他人進行HLA比對」，與 GT claim「未就病患之兒子進行HLA比對」雖相關，但摘要表達的是法律判斷而非 GT claim 所指稱的事實陳述，確認 missing",
+     "reason": "section_reasoning 記載法院認定「被告甲無義務對未簽署同意之其他人進行HLA比對」，與 GT claim「未就病患之兒子進行HLA比對」雖相關，但摘要表達的是法律判斷而非 GT claim 所指稱的事實陳述，確認 missing"
+    },
+    {
+     "gt_claim_id": 23,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_reasoning 提及「建議採自費方式進行相關檢測及治療」但未提及「3萬元」及「3次」等具體數字; section_facts 亦未提及此等承諾細節，屬重要醫療承諾內容遺漏",
+     "reason": "section_reasoning 提及「建議採自費方式進行相關檢測及治療」但未提及「3萬元」及「3次」等具體數字; section_facts 亦未提及此等承諾細節，屬重要醫療承諾內容遺漏"
+    },
+    {
+     "gt_claim_id": 24,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "section_reasoning 明確記載「7月26日...當日PRA值CLASS I 10.69%、CLASS II 71.90%」，顯示有進行檢測; section_facts 未提及「未再檢測」此過失事實，屬重要醫療過失指控遺漏",
+     "reason": "section_reasoning 明確記載「7月26日...當日PRA值CLASS I 10.69%、CLASS II 71.90%」，顯示有進行檢測; section_facts 未提及「未再檢測」此過失事實，屬重要醫療過失指控遺漏"
+    },
+    {
+     "gt_claim_id": 42,
+     "source_section": "facts",
+     "severity": "important",
+     "text": "此為 gt_claim_id 13 之重複項目（病患於100年9月30日因呼吸急迫、低血氧及肺浸潤住進加護病房），同 gt_claim_id 13 判定",
+     "reason": "此為 gt_claim_id 13 之重複項目（病患於100年9月30日因呼吸急迫、低血氧及肺浸潤住進加護病房），同 gt_claim_id 13 判定"
+    },
+    {
+     "gt_claim_id": 43,
+     "source_section": "facts",
+     "severity": "minor",
+     "text": "section_reasoning 提及「9月14日檢驗出Yeast-like」與「10月6日才發現Yeast-like」之鑑定爭議，但未提及「9月30日痰液革蘭氏染色」之具體檢驗結果，屬較細節之檢驗時序遺漏",
+     "reason": "section_reasoning 提及「9月14日檢驗出Yeast-like」與「10月6日才發現Yeast-like」之鑑定爭議，但未提及「9月30日痰液革蘭氏染色」之具體檢驗結果，屬較細節之檢驗時序遺漏"
+    },
+    {
+     "gt_claim_id": 52,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 原文無被告甲對捐贈者身分知情狀況之辯稱，section_reasoning 雖有法院認定事實，但非被告主張",
+     "reason": "section_defense 原文無被告甲對捐贈者身分知情狀況之辯稱，section_reasoning 雖有法院認定事實，但非被告主張"
+    },
+    {
+     "gt_claim_id": 54,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 無被告主張排斥原因在於病患體質之辯詞，section_reasoning 提及PRA值等為法院事實認定",
+     "reason": "section_defense 無被告主張排斥原因在於病患體質之辯詞，section_reasoning 提及PRA值等為法院事實認定"
+    },
+    {
+     "gt_claim_id": 62,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "所有 section 均未找到「施以黴菌治療藥之時，病患之痰液細菌培養均正常」之陳述",
+     "reason": "所有 section 均未找到「施以黴菌治療藥之時，病患之痰液細菌培養均正常」之陳述"
+    },
+    {
+     "gt_claim_id": 66,
+     "source_section": "defense",
+     "severity": "important",
+     "text": "section_defense 無此辯詞，涉及術前肺部感染與否之關鍵事實判斷，影響案情理解",
+     "reason": "section_defense 無此辯詞，涉及術前肺部感染與否之關鍵事實判斷，影響案情理解"
+    },
+    {
+     "gt_claim_id": 73,
+     "source_section": "defense",
+     "severity": "minor",
+     "text": "section_defense 林醫師辯稱未具體列舉藥物清單，section_reasoning 有法院認定之藥物但非被告主張",
+     "reason": "section_defense 林醫師辯稱未具體列舉藥物清單，section_reasoning 有法院認定之藥物但非被告主張"
+    },
+    {
+     "gt_claim_id": 80,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt [CH_10] 雖有病歷記載捐贈意願相關內容，但 section_03_opinions.txt 過於簡略未提及，摘要確實遺漏此細節",
+     "reason": "section_05_reasoning.txt [CH_10] 雖有病歷記載捐贈意願相關內容，但 section_03_opinions.txt 過於簡略未提及，摘要確實遺漏此細節"
+    },
+    {
+     "gt_claim_id": 81,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "事實記載存在數值差異：GT claim 為 PRA 8.61%，但 section_01_facts.txt 與 section_05_reasoning.txt [CH_08]/[CH_13] 記載之 PRA 值為 CLASS I 13.06%/10.69%、CLASS II 92.07%/71.90%，無 8.61% 之數值",
+     "reason": "事實記載存在數值差異：GT claim 為 PRA 8.61%，但 section_01_facts.txt 與 section_05_reasoning.txt [CH_08]/[CH_13] 記載之 PRA 值為 CLASS I 13.06%/10.69%、CLASS II 92.07%/71.90%，無 8.61% 之數值"
+    },
+    {
+     "gt_claim_id": 82,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "PRA 數值 8.61% 與原文不符（原文為 CLASS I 13.06%/10.69%、CLASS II 92.07%/71.90%），且「易排斥體質」之具體表述未在 section_03_opinions.txt 出現",
+     "reason": "PRA 數值 8.61% 與原文不符（原文為 CLASS I 13.06%/10.69%、CLASS II 92.07%/71.90%），且「易排斥體質」之具體表述未在 section_03_opinions.txt 出現"
+    },
+    {
+     "gt_claim_id": 84,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt [CH_08] 雖有記載血漿置換術等治療，但 section_03_opinions.txt 未詳述 3次血漿置換術、3次免疫球蛋白注射等具體次數",
+     "reason": "section_05_reasoning.txt [CH_08] 雖有記載血漿置換術等治療，但 section_03_opinions.txt 未詳述 3次血漿置換術、3次免疫球蛋白注射等具體次數"
+    },
+    {
+     "gt_claim_id": 85,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt [CH_08] 記載相關治療但未明確提及「去除受贈者體內預存之抗體」之目的說明，section_03_opinions.txt 確實遺漏",
+     "reason": "section_05_reasoning.txt [CH_08] 記載相關治療但未明確提及「去除受贈者體內預存之抗體」之目的說明，section_03_opinions.txt 確實遺漏"
+    },
+    {
+     "gt_claim_id": 86,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "pred_claim_9 雖提及「本案醫師之醫療行為並未違背醫療常規」，但未明確區分「移植團隊之醫療處置」與其他醫療行為，section_03_opinions.txt 過於簡略",
+     "reason": "pred_claim_9 雖提及「本案醫師之醫療行為並未違背醫療常規」，但未明確區分「移植團隊之醫療處置」與其他醫療行為，section_03_opinions.txt 過於簡略"
+    },
+    {
+     "gt_claim_id": 87,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt [CH_08] 雖有治療記載，但未明確提及抑制免疫治療主要針對「血型不相容之捐贈者及受贈者」，section_03_opinions.txt 確實遺漏",
+     "reason": "section_05_reasoning.txt [CH_08] 雖有治療記載，但未明確提及抑制免疫治療主要針對「血型不相容之捐贈者及受贈者」，section_03_opinions.txt 確實遺漏"
+    },
+    {
+     "gt_claim_id": 88,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未明確記載「移植前會再檢測受贈者體內之血型抗體」之具體程序，section_03_opinions.txt 確實遺漏",
+     "reason": "section_05_reasoning.txt 未明確記載「移植前會再檢測受贈者體內之血型抗體」之具體程序，section_03_opinions.txt 確實遺漏"
+    },
+    {
+     "gt_claim_id": 89,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "此為醫療審議委員會對於治療選項之臨床判斷，section_05_reasoning.txt 未記載此具體觀點，section_03_opinions.txt 確實遺漏",
+     "reason": "此為醫療審議委員會對於治療選項之臨床判斷，section_05_reasoning.txt 未記載此具體觀點，section_03_opinions.txt 確實遺漏"
+    },
+    {
+     "gt_claim_id": 94,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt [CH_08] 雖有詳細記載，但 section_03_opinions.txt 過於簡略未提及術後 7月29日 X光檢查結果",
+     "reason": "section_05_reasoning.txt [CH_08] 雖有詳細記載，但 section_03_opinions.txt 過於簡略未提及術後 7月29日 X光檢查結果"
+    },
+    {
+     "gt_claim_id": 95,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt [CH_08] 雖有詳細時間軸，但 section_03_opinions.txt 未提及 8月7日 X光檢查結果",
+     "reason": "section_05_reasoning.txt [CH_08] 雖有詳細時間軸，但 section_03_opinions.txt 未提及 8月7日 X光檢查結果"
+    },
+    {
+     "gt_claim_id": 96,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt [CH_08] 雖有詳細記載，但 section_03_opinions.txt 未提及 9月29日 X光檢查之具體結果",
+     "reason": "section_05_reasoning.txt [CH_08] 雖有詳細記載，但 section_03_opinions.txt 未提及 9月29日 X光檢查之具體結果"
+    },
+    {
+     "gt_claim_id": 97,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_03_opinions.txt 雖有「醫療行為符合醫療常規」之結論，但未明確區分「術後治療」與其他階段之處置",
+     "reason": "section_03_opinions.txt 雖有「醫療行為符合醫療常規」之結論，但未明確區分「術後治療」與其他階段之處置"
+    },
+    {
+     "gt_claim_id": 98,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt [CH_08] 記載 9月2日至9月9日施以抗生素，但未明確提及「以電話而非會診單」溝通之具體方式",
+     "reason": "section_05_reasoning.txt [CH_08] 記載 9月2日至9月9日施以抗生素，但未明確提及「以電話而非會診單」溝通之具體方式"
+    },
+    {
+     "gt_claim_id": 99,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未明確記載「電話溝通未違反醫療常規」之具體判斷，section_03_opinions.txt 確實遺漏",
+     "reason": "section_05_reasoning.txt 未明確記載「電話溝通未違反醫療常規」之具體判斷，section_03_opinions.txt 確實遺漏"
+    },
+    {
+     "gt_claim_id": 108,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 雖有相關治療記載，但未明確提及「無需再次接受上述抑制免疫治療」之判斷，section_03_opinions.txt 確實遺漏",
+     "reason": "section_05_reasoning.txt 雖有相關治療記載，但未明確提及「無需再次接受上述抑制免疫治療」之判斷，section_03_opinions.txt 確實遺漏"
+    },
+    {
+     "gt_claim_id": 109,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "section_05_reasoning.txt 未明確記載「抑制免疫治療時程及次數目前醫學上並無定論」之觀點，section_03_opinions.txt 確實遺漏",
+     "reason": "section_05_reasoning.txt 未明確記載「抑制免疫治療時程及次數目前醫學上並無定論」之觀點，section_03_opinions.txt 確實遺漏"
+    },
+    {
+     "gt_claim_id": 120,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "跨 section 檢查（facts、defense、reasoning）均未見「移植術後服用抗免疫抑制劑導致免疫能力低下，增加感染風險」之因果說明，僅 defense 提及類似概念但非精確對應",
+     "reason": "跨 section 檢查（facts、defense、reasoning）均未見「移植術後服用抗免疫抑制劑導致免疫能力低下，增加感染風險」之因果說明，僅 defense 提及類似概念但非精確對應"
+    },
+    {
+     "gt_claim_id": 121,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "跨 section 檢查未見「病菌種類繁多難以全預防」之鑑定說明，defense 雖提及黴菌預防非常規，但非精確對應",
+     "reason": "跨 section 檢查未見「病菌種類繁多難以全預防」之鑑定說明，defense 雖提及黴菌預防非常規，但非精確對應"
+    },
+    {
+     "gt_claim_id": 122,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "跨 section 檢查未見「依病程時序及臨床症狀進行鑑別診斷時，黴菌感染非首要考量」之鑑定意見，defense 提及黴菌感染不會在早期發生，角度不同",
+     "reason": "跨 section 檢查未見「依病程時序及臨床症狀進行鑑別診斷時，黴菌感染非首要考量」之鑑定意見，defense 提及黴菌感染不會在早期發生，角度不同"
+    },
+    {
+     "gt_claim_id": 123,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "reasoning 雖提及術後給予多種抗菌藥物治療，但未明確使用「預防性抗生素」一詞，且 summary_opinions 未涵蓋此項",
+     "reason": "reasoning 雖提及術後給予多種抗菌藥物治療，但未明確使用「預防性抗生素」一詞，且 summary_opinions 未涵蓋此項"
+    },
+    {
+     "gt_claim_id": 124,
+     "source_section": "opinions",
+     "severity": "important",
+     "text": "跨 section 檢查未見「預防PCP、黴菌感染為較後期之考量」之時機說明，defense 雖提及黴菌非必要預防項目，但未明確對應「較後期之考量」",
+     "reason": "跨 section 檢查未見「預防PCP、黴菌感染為較後期之考量」之時機說明，defense 雖提及黴菌非必要預防項目，但未明確對應「較後期之考量」"
+    },
+    {
+     "gt_claim_id": 125,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "reasoning 雖提及依檢驗結果調整用藥，但未明確陳述「究要使用何種藥物治療需由醫師依臨床症狀及檢驗結果而定」之醫療原則",
+     "reason": "reasoning 雖提及依檢驗結果調整用藥，但未明確陳述「究要使用何種藥物治療需由醫師依臨床症狀及檢驗結果而定」之醫療原則"
+    },
+    {
+     "gt_claim_id": 126,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "跨 section 檢查未見「何時使用何種藥物治療屬醫師臨床專業裁量權」之原則性陳述",
+     "reason": "跨 section 檢查未見「何時使用何種藥物治療屬醫師臨床專業裁量權」之原則性陳述"
+    },
+    {
+     "gt_claim_id": 128,
+     "source_section": "opinions",
+     "severity": "minor",
+     "text": "跨 section 檢查未見「嘉義縣新港鄉衛生所於100年10月8日所出具之死亡證明書」之相關記載，屬程序性證據事實",
+     "reason": "跨 section 檢查未見「嘉義縣新港鄉衛生所於100年10月8日所出具之死亡證明書」之相關記載，屬程序性證據事實"
+    },
+    {
+     "gt_claim_id": 129,
+     "source_section": "opinions",
+     "severity": "critical",
+     "text": "雖 facts、reasoning 提及病患死亡及敗血性休克，但未精確涵蓋「因尿毒症腎臟移植術後，引起肺炎併敗血性休克死亡」之完整死因認定，opinions section 未涵蓋死因細節，影響案情完整理解",
+     "reason": "雖 facts、reasoning 提及病患死亡及敗血性休克，但未精確涵蓋「因尿毒症腎臟移植術後，引起肺炎併敗血性休克死亡」之完整死因認定，opinions section 未涵蓋死因細節，影響案情完整理解"
+    },
+    {
+     "gt_claim_id": 133,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「100年2月26日向被告乙為相同之表示」指捐贈意願表示，section_05_reasoning.txt 僅提及當日門診記載PRA值相關內容，未明確提及自訴人向被告乙表示捐贈意願，屬背景性事實",
+     "reason": "「100年2月26日向被告乙為相同之表示」指捐贈意願表示，section_05_reasoning.txt 僅提及當日門診記載PRA值相關內容，未明確提及自訴人向被告乙表示捐贈意願，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 146,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「自訴人亦無法提出證據證明」屬法院舉證責任分配之程序性論述，非核心事實認定，對案情理解影響較小",
+     "reason": "「自訴人亦無法提出證據證明」屬法院舉證責任分配之程序性論述，非核心事實認定，對案情理解影響較小"
+    },
+    {
+     "gt_claim_id": 149,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「病患仍可移植自訴人所捐贈之腎臟」為法院對移植可行性的關鍵事實認定，雖 section_05_reasoning.txt 有相關論述，但 pred claims 未明確萃取此項結論性陳述",
+     "reason": "「病患仍可移植自訴人所捐贈之腎臟」為法院對移植可行性的關鍵事實認定，雖 section_05_reasoning.txt 有相關論述，但 pred claims 未明確萃取此項結論性陳述"
+    },
+    {
+     "gt_claim_id": 150,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「病患之抗體水準已因血漿置換術之施行，而有降低、產生效果」為法院認定血漿置換術有效性的關鍵醫療事實，影響後續過失判斷",
+     "reason": "「病患之抗體水準已因血漿置換術之施行，而有降低、產生效果」為法院認定血漿置換術有效性的關鍵醫療事實，影響後續過失判斷"
+    },
+    {
+     "gt_claim_id": 152,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「自訴人主張...殊難採信」為法院對自訴人主張的明確駁斥，屬重要論證環節",
+     "reason": "「自訴人主張...殊難採信」為法院對自訴人主張的明確駁斥，屬重要論證環節"
+    },
+    {
+     "gt_claim_id": 154,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「3次血漿透析」及「開刀前打抗T型細胞抗體」為被告甲陳述之細節性醫療處置描述，pred claims 雖提及ATG但未詳載被告甲原話",
+     "reason": "「3次血漿透析」及「開刀前打抗T型細胞抗體」為被告甲陳述之細節性醫療處置描述，pred claims 雖提及ATG但未詳載被告甲原話"
+    },
+    {
+     "gt_claim_id": 155,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「開刀兩週後...只剩ATG可以用」為被告甲陳述之病程細節，屬背景性事實",
+     "reason": "「開刀兩週後...只剩ATG可以用」為被告甲陳述之病程細節，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 156,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「用ATG確實有降低排斥現象...這是ATG的併發症」為被告甲陳述之治療細節，屬背景性事實",
+     "reason": "「用ATG確實有降低排斥現象...這是ATG的併發症」為被告甲陳述之治療細節，屬背景性事實"
+    },
+    {
+     "gt_claim_id": 161,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「依護理紀錄記載」之資料來源標示雖缺失，但核心事實「無任何不適主訴」已於 pred claim 74 呈現，來源標示屬次要資訊",
+     "reason": "「依護理紀錄記載」之資料來源標示雖缺失，但核心事實「無任何不適主訴」已於 pred claim 74 呈現，來源標示屬次要資訊"
+    },
+    {
+     "gt_claim_id": 164,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "耳溫變化具體日期與溫度數值為詳細醫療數據，pred claims 僅概括性提及體溫超過37.5℃，未完整萃取具體日期範圍",
+     "reason": "耳溫變化具體日期與溫度數值為詳細醫療數據，pred claims 僅概括性提及體溫超過37.5℃，未完整萃取具體日期範圍"
+    },
+    {
+     "gt_claim_id": 166,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「斯時」之時間脈絡標示雖缺失，但藥物治療內容已於 pred claims 提及，時間副詞屬次要修飾",
+     "reason": "「斯時」之時間脈絡標示雖缺失，但藥物治療內容已於 pred claims 提及，時間副詞屬次要修飾"
+    },
+    {
+     "gt_claim_id": 167,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「病患之體溫亦因此曾有多日回復正常，足證病患前開症狀之病因，並非起緣於黴菌感染」為法院對感染來源的重要論證推論，影響過失認定",
+     "reason": "「病患之體溫亦因此曾有多日回復正常，足證病患前開症狀之病因，並非起緣於黴菌感染」為法院對感染來源的重要論證推論，影響過失認定"
+    },
+    {
+     "gt_claim_id": 168,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「用以治療病患可能因革蘭氏陽性菌及陰性菌所引起之呼吸道感染症」之詳細藥物用途說明雖未完整呈現，但Sevatrim用藥事實已提及",
+     "reason": "「用以治療病患可能因革蘭氏陽性菌及陰性菌所引起之呼吸道感染症」之詳細藥物用途說明雖未完整呈現，但Sevatrim用藥事實已提及"
+    },
+    {
+     "gt_claim_id": 169,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「9月29日再次提高Tienam劑量」之具體日期與 pred claim 38 記載之「9月11日」不一致，經查 section_05_reasoning.txt 記載為「9月11日調整Tienam劑量」，故 pred claim 38 日期正確，GT claim 日期可能有誤",
+     "reason": "「9月29日再次提高Tienam劑量」之具體日期與 pred claim 38 記載之「9月11日」不一致，經查 section_05_reasoning.txt 記載為「9月11日調整Tienam劑量」，故 pred claim 38 日期正確，GT claim 日期可能有誤"
+    },
+    {
+     "gt_claim_id": 171,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「被告2人已就病患之黴菌感染為預防性及積極性之治療」為法院對醫療行為合規性的重要論證結論",
+     "reason": "「被告2人已就病患之黴菌感染為預防性及積極性之治療」為法院對醫療行為合規性的重要論證結論"
+    },
+    {
+     "gt_claim_id": 172,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「尚無法據此即認病患於9月10日至12日之期間內，即已感染黴菌」為法院對感染時間點的關鍵事實認定",
+     "reason": "「尚無法據此即認病患於9月10日至12日之期間內，即已感染黴菌」為法院對感染時間點的關鍵事實認定"
+    },
+    {
+     "gt_claim_id": 174,
+     "source_section": "reasoning",
+     "severity": "critical",
+     "text": "「被告2人對病患所為之醫療行為，均符合醫療常規」為法院核心判斷，直接影響無罪判決結論",
+     "reason": "「被告2人對病患所為之醫療行為，均符合醫療常規」為法院核心判斷，直接影響無罪判決結論"
+    },
+    {
+     "gt_claim_id": 175,
+     "source_section": "reasoning",
+     "severity": "important",
+     "text": "「經查亦無輕率疏忽之處」為法院對被告注意義務的重要補充論述",
+     "reason": "「經查亦無輕率疏忽之處」為法院對被告注意義務的重要補充論述"
+    },
+    {
+     "gt_claim_id": 179,
+     "source_section": "reasoning",
+     "severity": "minor",
+     "text": "「並未有任何一方以不悅之語氣要求他方必須有所作為」為對話語氣細節描述，屬恐嚇取財未遂論證的背景性事實",
+     "reason": "「並未有任何一方以不悅之語氣要求他方必須有所作為」為對話語氣細節描述，屬恐嚇取財未遂論證的背景性事實"
+    }
+   ]
+  },
+  "fact_detail": {
+   "gt_total": 189,
+   "pred_total": 161,
+   "matched": 120,
+   "partial": 9,
+   "missing": 60,
+   "hallucinated": 0
+  },
+  "compression_ratio": 0.6179,
+  "compression_afg_chars": 8067,
+  "compression_source_chars": 21112,
+  "gt_length_ratio": 0.9713,
+  "gt_length_afg_chars": 8067,
+  "gt_length_gt_chars": 8305,
+  "section_balance": 0.5
  }
 }
