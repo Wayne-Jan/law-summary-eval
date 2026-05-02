@@ -1378,11 +1378,11 @@
             .elo-rank-badge { width: 40px; height: 40px; }
         }
 
-        /* ─── Leaderboard (legacy — hidden; admin uses Elo list in admin panel) ─── */
+        /* ─── Leaderboard ─── */
         .leaderboard-toggle {
             position: fixed; bottom: var(--votebar-h); right: 24px;
             z-index: 101;
-            display: none;
+            display: block;
         }
         .leaderboard-toggle button {
             padding: 6px 14px; border-radius: 8px 8px 0 0;
@@ -3013,9 +3013,38 @@
     }
 
     function conditionLabel(cond) {
-        // In admin inspect mode, reveal the real condition key (model name)
-        if (document.body.classList.contains('admin-inspect')) return cond;
-        return (config && config.condition_labels && config.condition_labels[cond]) || cond;
+        const profile = getAuthProfile();
+        // Admin inspect mode reveals raw keys; admin dashboard uses configured model labels.
+        if (profile && profile.role === 'admin' && document.body.classList.contains('admin-inspect')) return cond;
+        if (profile && profile.role === 'admin') {
+            return (config && config.condition_labels && config.condition_labels[cond]) || cond;
+        }
+        // Evaluator-facing UI should never expose configured model labels.
+        return blindConditionLabel(cond);
+    }
+
+    function blindConditionLabel(cond) {
+        const idx = config && Array.isArray(config.conditions) ? config.conditions.indexOf(cond) : -1;
+        return idx >= 0 ? `處理組 ${idx + 1}` : '處理組 ?';
+    }
+
+    function getPairDisplayIndex(condA, condB) {
+        const pairs = getEffectivePairs();
+        for (let i = 0; i < pairs.length; i++) {
+            const p = pairs[i];
+            if ((p.condA === condA && p.condB === condB) ||
+                (p.condA === condB && p.condB === condA)) {
+                return i + 1;
+            }
+        }
+        return 0;
+    }
+
+    function reviewPairLabel(vote) {
+        const total = getPairsPerCase();
+        const idx = getPairDisplayIndex(vote.condition_a, vote.condition_b);
+        const prefix = idx ? `配對 ${idx}/${total}` : `配對 ?/${total}`;
+        return `${prefix}：摘要 A vs 摘要 B`;
     }
 
     function winnerLabel(winner) {
@@ -3077,7 +3106,7 @@
                 const wCls = v.winner === 'a' ? 'winner-a' : v.winner === 'b' ? 'winner-b' : 'winner-tie';
                 html += '<div class="review-vote-row">';
                 html += '<div class="review-vote-pair">';
-                html += `<div class="review-vote-conds"><span>${escapeHtml(conditionLabel(v.condition_a))}</span><span class="vs">vs</span><span>${escapeHtml(conditionLabel(v.condition_b))}</span></div>`;
+                html += `<div class="review-vote-conds"><span>${escapeHtml(reviewPairLabel(v))}</span></div>`;
                 if (v.reason) html += `<div class="review-vote-reason">${escapeHtml(v.reason)}</div>`;
                 html += '</div>';
                 html += `<div class="review-vote-result ${wCls}">${escapeHtml(winnerLabel(v.winner))}</div>`;
@@ -3181,8 +3210,29 @@
         }, 600);
     }
 
-    function calcElo() {
-        const votes = getVotes(currentEvaluator);
+    async function fetchLeaderboardVotes() {
+        const profile = getAuthProfile();
+        if (profile && profile.role === 'admin') {
+            const dataset = await fetchAdminDataset();
+            return dataset.allVotes;
+        }
+
+        const names = Object.keys(ARENA_USERS).filter(name => name !== 'admin');
+        const rows = await Promise.all(names.map(async (name) => {
+            const uid = await lookupArenaUidByName(name);
+            const votes = [];
+            if (!uid) return votes;
+            const snapshot = await db.collection('arena_evals').doc(uid).collection('records').get();
+            snapshot.forEach(doc => {
+                const payload = doc.data() || {};
+                if (payload.data && isCurrentCampaignVote(payload.data)) votes.push(payload.data);
+            });
+            return votes;
+        }));
+        return rows.flat();
+    }
+
+    function calcElo(votes) {
         const elo = {};
         for (const c of config.conditions) elo[c] = { rating: 1000, wins: 0, draws: 0, losses: 0 };
 
@@ -3206,17 +3256,26 @@
         return Object.entries(elo)
             .map(([cond, d]) => ({
                 condition: cond,
-                label: config.condition_labels[cond] || cond,
+                label: blindConditionLabel(cond),
                 rating: Math.round(d.rating),
                 wins: d.wins, draws: d.draws, losses: d.losses
             }))
             .sort((x, y) => y.rating - x.rating);
     }
 
-    function renderLeaderboard() {
+    async function renderLeaderboard() {
         const body = document.getElementById('lbBody');
-        const rankings = calcElo();
-        const votes = getVotes(currentEvaluator);
+        body.innerHTML = '<div class="lb-empty">載入排行榜中...</div>';
+
+        let votes;
+        try {
+            votes = await fetchLeaderboardVotes();
+        } catch (e) {
+            console.error('Leaderboard fetch failed:', e);
+            body.innerHTML = '<div class="lb-empty">無法載入全體排行榜，請稍後再試。</div>';
+            return;
+        }
+        const rankings = calcElo(votes);
 
         if (votes.length === 0) {
             body.innerHTML = '<div class="lb-empty">尚無投票紀錄</div>';
@@ -3224,7 +3283,7 @@
         }
 
         let html = '<table class="lb-table"><thead><tr>';
-        html += '<th>#</th><th>Condition</th><th>Elo</th><th>戰績</th>';
+        html += '<th>#</th><th>處理組</th><th>Elo</th><th>戰績</th>';
         html += '</tr></thead><tbody>';
 
         rankings.forEach((r, i) => {
