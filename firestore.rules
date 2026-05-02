@@ -27,7 +27,7 @@ service cloud.firestore {
     }
 
     match /arena_evals/{evaluator}/records/{recordId} {
-      allow read: if canAccessArenaEvaluator(evaluator);
+      allow read: if isSignedInArenaUser();
       allow create, update: if canAccessArenaEvaluator(evaluator) && isValidArenaRecord();
       allow delete: if canAccessArenaEvaluator(evaluator);
     }
@@ -48,12 +48,6 @@ service cloud.firestore {
     match /arena_backups_daily/{snapshotId}/evaluators/{evaluator} {
       allow read: if isArenaAdmin();
       allow write: if false;
-    }
-
-    match /arena_public/{docId} {
-      allow read: if isSignedInArenaUser();
-      allow create, update: if isArenaAdmin();
-      allow delete: if isArenaAdmin();
     }
 
     match /{document=**} {

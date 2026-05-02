@@ -2385,26 +2385,6 @@
         })).sort((x, y) => y.rating - x.rating);
     }
 
-    async function publishPublicLeaderboard(votes) {
-        const profile = getAuthProfile();
-        if (!profile || profile.role !== 'admin') return;
-        const rows = calcAggregateElo(votes).map(row => ({
-            label: blindConditionLabel(row.condition),
-            rating: row.rating,
-            wins: row.wins,
-            draws: row.draws,
-            losses: row.losses,
-            matches: row.matches
-        }));
-        await db.collection('arena_public').doc('leaderboard').set({
-            campaign_id: ARENA_CAMPAIGN_ID,
-            storage_version: ARENA_STORAGE_VERSION,
-            vote_count: votes.length,
-            rows,
-            updated: firebase.firestore.FieldValue.serverTimestamp()
-        }, { merge: true });
-    }
-
     function getBackboneKey(cond) {
         const bb = (config.backbone_map && config.backbone_map[cond]) || '';
         return bb.toLowerCase();
@@ -2692,9 +2672,6 @@
             html += renderEloLeaderboard(dataset.allVotes);
             html += renderAdminSummaryTable(rows);
             html += renderProgressMatrix(rows);
-            publishPublicLeaderboard(dataset.allVotes).catch(e => {
-                console.error('Publish public leaderboard failed:', e);
-            });
         }
         html += renderArenaBackupHistory(backups);
         container.innerHTML = html;
@@ -3237,24 +3214,23 @@
         const body = document.getElementById('lbBody');
         body.innerHTML = '<div class="lb-empty">載入排行榜中...</div>';
 
-        let data;
+        let dataset;
         try {
-            const doc = await db.collection('arena_public').doc('leaderboard').get();
-            data = doc.exists ? (doc.data() || {}) : null;
+            dataset = await fetchAdminDataset();
         } catch (e) {
             console.error('Leaderboard fetch failed:', e);
             body.innerHTML = '<div class="lb-empty">無法載入全體排行榜，請稍後再試。</div>';
             return;
         }
-        const rankings = data && Array.isArray(data.rows) ? data.rows : [];
+        const rankings = calcAggregateElo(dataset.allVotes);
 
-        if (!rankings.length) {
-            body.innerHTML = '<div class="lb-empty">排行榜尚未發布，請稍後再試。</div>';
+        if (!dataset.allVotes.length) {
+            body.innerHTML = '<div class="lb-empty">尚無投票紀錄</div>';
             return;
         }
 
         let html = '<table class="lb-table"><thead><tr>';
-        html += '<th>#</th><th>處理組</th><th>Elo</th><th>戰績</th>';
+        html += '<th>#</th><th>模型</th><th>Elo</th><th>戰績</th>';
         html += '</tr></thead><tbody>';
 
         rankings.forEach((r, i) => {
