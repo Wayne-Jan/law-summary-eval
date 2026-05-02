@@ -26,6 +26,36 @@ service cloud.firestore {
       allow write: if false;
     }
 
+    match /arena_evals/{evaluator}/records/{recordId} {
+      allow read: if canAccessArenaEvaluator(evaluator);
+      allow create, update: if canAccessArenaEvaluator(evaluator) && isValidArenaRecord();
+      allow delete: if canAccessArenaEvaluator(evaluator);
+    }
+
+    match /arena_users/{uid} {
+      allow read: if isSignedInArenaUser();
+      allow create, update: if isSignedInArenaUser()
+        && (uid == request.auth.uid || isArenaAdmin())
+        && isValidArenaUserIndex();
+      allow delete: if isArenaAdmin();
+    }
+
+    match /arena_backups_daily/{snapshotId} {
+      allow read: if isArenaAdmin();
+      allow write: if false;
+    }
+
+    match /arena_backups_daily/{snapshotId}/evaluators/{evaluator} {
+      allow read: if isArenaAdmin();
+      allow write: if false;
+    }
+
+    match /arena_public/{docId} {
+      allow read: if isSignedInArenaUser();
+      allow create, update: if isArenaAdmin();
+      allow delete: if isArenaAdmin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }
@@ -63,6 +93,47 @@ service cloud.firestore {
     }
 
     function isValidUserIndex() {
+      return request.resource != null
+        && request.resource.data.keys().hasOnly(['uid', 'email', 'name', 'role', 'updated'])
+        && request.resource.data.uid is string
+        && request.resource.data.email is string
+        && request.resource.data.name is string
+        && request.resource.data.role is string;
+    }
+
+    function isSignedInArenaUser() {
+      return request.auth != null
+        && request.auth.token.email in [
+          'arena-a@law-eval.local',
+          'arena-b@law-eval.local',
+          'arena-c@law-eval.local',
+          'arena-d@law-eval.local',
+          'arena-e@law-eval.local',
+          'arena-admin@law-eval.local'
+        ];
+    }
+
+    function isArenaAdmin() {
+      return request.auth != null
+        && request.auth.token.email == 'arena-admin@law-eval.local';
+    }
+
+    function canAccessArenaEvaluator(evaluator) {
+      return isSignedInArenaUser()
+        && (evaluator == request.auth.uid || isArenaAdmin());
+    }
+
+    function isValidArenaRecord() {
+      return request.resource != null
+        && request.resource.data.keys().hasOnly(['key', 'data', 'updated'])
+        && request.resource.data.key is string
+        && request.resource.data.key.size() > 0
+        && request.resource.data.key.size() <= 1500
+        && request.resource.data.key.matches('^arena_v1_.*')
+        && request.resource.data.data != null;
+    }
+
+    function isValidArenaUserIndex() {
       return request.resource != null
         && request.resource.data.keys().hasOnly(['uid', 'email', 'name', 'role', 'updated'])
         && request.resource.data.uid is string
