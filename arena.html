@@ -1729,16 +1729,20 @@
     const ARENA_AUTH_USER_KEY = 'arena_v1_auth_user';
     const ARENA_AUTH_ROLE_KEY = 'arena_v1_auth_role';
     const ARENA_USERS = {
-        'A': { role: 'evaluator', email: 'arena-a@law-eval.local' },
-        'B': { role: 'evaluator', email: 'arena-b@law-eval.local' },
-        'C': { role: 'evaluator', email: 'arena-c@law-eval.local' },
-        'D': { role: 'evaluator', email: 'arena-d@law-eval.local' },
-        'E': { role: 'evaluator', email: 'arena-e@law-eval.local' },
+        'A': { role: 'evaluator', email: 'arena-a@law-eval.local', displayName: '實務專家 CYR' },
+        'B': { role: 'evaluator', email: 'arena-b@law-eval.local', displayName: '實務專家 CKC' },
+        'C': { role: 'evaluator', email: 'arena-c@law-eval.local', displayName: '實務專家 LLY' },
+        'D': { role: 'evaluator', email: 'arena-d@law-eval.local', displayName: '實務專家 HCJ' },
+        'E': { role: 'evaluator', email: 'arena-e@law-eval.local', displayName: '實務專家 TCY' },
         'admin': { role: 'admin', email: 'arena-admin@law-eval.local' }
     };
     const ARENA_USER_BY_EMAIL = Object.fromEntries(
         Object.entries(ARENA_USERS).map(([name, info]) => [info.email, { name, role: info.role, email: info.email }])
     );
+
+    function evaluatorDisplayName(name) {
+        return (ARENA_USERS[name] && ARENA_USERS[name].displayName) || name;
+    }
 
     let config = null;
     let currentEvaluator = null;
@@ -1997,7 +2001,7 @@
             Object.keys(ARENA_USERS).filter(name => name !== 'admin').forEach(name => {
                 const opt = document.createElement('option');
                 opt.value = name;
-                opt.textContent = '評審 ' + name;
+                opt.textContent = evaluatorDisplayName(name);
                 sel.appendChild(opt);
             });
         }
@@ -2063,7 +2067,7 @@
         document.body.classList.toggle('admin-inspect', !!enabled);
         if (enabled) {
             const banner = document.getElementById('adminInspectBanner');
-            if (banner) banner.textContent = '唯讀檢視 · 評審 ' + (currentEvaluator || '');
+            if (banner) banner.textContent = '唯讀檢視 · ' + evaluatorDisplayName(currentEvaluator || '');
         }
         // Re-sync vote-bar visibility for the current pair UI state
         const allDoneShown = document.getElementById('allDone').style.display === 'flex';
@@ -2461,8 +2465,9 @@
                 statusCls = 'partial';
                 statusLabel = '進行中';
             }
+            const displayName = evaluatorDisplayName(row.name);
             html += '<tr>';
-            html += `<td><strong>${escapeHtml(row.name)}</strong></td>`;
+            html += `<td><strong>${escapeHtml(displayName)}</strong></td>`;
             html += `<td><span class="admin-status-pill ${statusCls}">${statusLabel}</span></td>`;
             html += `<td class="num">${row.voteCount}</td>`;
             html += `<td class="num">${row.caseCount} / ${config.cases.length}</td>`;
@@ -2485,12 +2490,13 @@
         html += `<span class="section-desc">每格 ${totalPairs} 顆圈對應本案的 ${totalPairs} 個配對；綠色＝已投票，灰色＝未投票。點擊可進入唯讀檢視。</span></div>`;
         html += '<div class="admin-table-wrap"><table class="admin-table admin-matrix"><thead><tr>';
         html += '<th>案件</th>';
-        rows.forEach(row => { html += `<th>${escapeHtml(row.name)}</th>`; });
+        rows.forEach(row => { html += `<th>${escapeHtml(evaluatorDisplayName(row.name))}</th>`; });
         html += '</tr></thead><tbody>';
         config.cases.forEach(item => {
             html += '<tr>';
             html += `<td class="case-name">${escapeHtml(item.short_name || item.case_id)}</td>`;
             rows.forEach(row => {
+                const displayName = evaluatorDisplayName(row.name);
                 const caseVotes = row.votes.filter(v => v.case_id === item.case_id);
                 const done = caseVotes.length;
                 let stateCls = 'empty';
@@ -2518,7 +2524,7 @@
                 chips += '</div>';
 
                 const del = done > 0
-                    ? `<button class="admin-version-delete" onclick='adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})' title="刪除 ${escapeHtml(row.name)} 在此案的全部紀錄">×</button>`
+                    ? `<button class="admin-version-delete" onclick='adminDeleteEvaluatorCase(${JSON.stringify(row.name)}, ${JSON.stringify(item.case_id)})' title="刪除 ${escapeHtml(displayName)} 在此案的全部紀錄">×</button>`
                     : '';
                 html += `<td class="state-cell ${stateCls}"><div class="state-inner">${chips}${del}</div></td>`;
             });
@@ -2635,6 +2641,7 @@
             detail += '</tr></thead><tbody>';
             for (const ev of evRows) {
                 const name = ev.evaluator || ev.id;
+                const displayName = evaluatorDisplayName(name);
                 const votes = ev.vote_count ?? '—';
                 const cases = ev.case_count ?? '—';
                 const completed = ev.completed_case_count ?? '—';
@@ -2644,7 +2651,7 @@
                         : ev.last_timestamp.toDate ? ev.last_timestamp.toDate() : new Date(ev.last_timestamp);
                     lastTs = d.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit', hour12: false });
                 }
-                detail += `<tr><td>${escapeHtml(name)}</td><td>${votes}</td><td>${cases}</td><td>${completed}</td><td>${lastTs}</td></tr>`;
+                detail += `<tr><td>${escapeHtml(displayName)}</td><td>${votes}</td><td>${cases}</td><td>${completed}</td><td>${lastTs}</td></tr>`;
             }
             detail += '</tbody></table>';
         }
@@ -2678,7 +2685,7 @@
     }
 
     async function adminDeleteEvaluator(name) {
-        if (!confirm(`刪除 ${name} 的全部 arena 投票資料？此操作無法復原。`)) return;
+        if (!confirm(`刪除 ${evaluatorDisplayName(name)} 的全部 arena 投票資料？此操作無法復原。`)) return;
         try {
             await deleteArenaVotesForEvaluator(name);
             if (currentEvaluator === name) {
@@ -2696,7 +2703,7 @@
     async function adminDeleteEvaluatorCase(name, caseId) {
         const caseInfo = config.cases.find(item => item.case_id === caseId);
         const label = caseInfo ? (caseInfo.short_name || caseId) : caseId;
-        if (!confirm(`刪除 ${name} 在「${label}」的全部配對投票？此操作無法復原。`)) return;
+        if (!confirm(`刪除 ${evaluatorDisplayName(name)} 在「${label}」的全部配對投票？此操作無法復原。`)) return;
         try {
             await deleteArenaCaseVotesForEvaluator(name, caseId);
             if (currentEvaluator === name) {
@@ -2992,7 +2999,7 @@
         const profile = getAuthProfile();
         if (!profile || profile.role !== 'admin') return;
         setEvaluator(name);
-        document.getElementById('userBadge').textContent = '管理員檢視 ' + name;
+        document.getElementById('userBadge').textContent = '管理員檢視 ' + evaluatorDisplayName(name);
         const uid = await lookupArenaUidByName(name);
         if (uid) await restoreArenaVotes(name, uid);
         else saveVotesForEvaluator(name, []);
@@ -3305,7 +3312,7 @@
             setAdminMode(true);
         } else {
             currentEvaluator = profile.name;
-            document.getElementById('userBadge').textContent = '評審 ' + profile.name;
+            document.getElementById('userBadge').textContent = evaluatorDisplayName(profile.name);
             applyReadOnlyMode(false);
             setAdminMode(false);
         }
