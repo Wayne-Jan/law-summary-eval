@@ -1729,11 +1729,11 @@
     const ARENA_AUTH_USER_KEY = 'arena_v1_auth_user';
     const ARENA_AUTH_ROLE_KEY = 'arena_v1_auth_role';
     const ARENA_USERS = {
-        'A': { role: 'evaluator', email: 'arena-a@law-eval.local', displayName: '實務專家 CYR' },
-        'B': { role: 'evaluator', email: 'arena-b@law-eval.local', displayName: '實務專家 CKC' },
-        'C': { role: 'evaluator', email: 'arena-c@law-eval.local', displayName: '實務專家 LLY' },
-        'D': { role: 'evaluator', email: 'arena-d@law-eval.local', displayName: '實務專家 HCJ' },
-        'E': { role: 'evaluator', email: 'arena-e@law-eval.local', displayName: '實務專家 TCY' },
+        'A': { role: 'evaluator', email: 'arena-a@law-eval.local', displayName: '實務專家 CYR', fullName: '陳盈如' },
+        'B': { role: 'evaluator', email: 'arena-b@law-eval.local', displayName: '實務專家 CKC', fullName: '陳國璋' },
+        'C': { role: 'evaluator', email: 'arena-c@law-eval.local', displayName: '實務專家 LLY', fullName: '賴麗羽' },
+        'D': { role: 'evaluator', email: 'arena-d@law-eval.local', displayName: '實務專家 HCJ', fullName: '謝佳容' },
+        'E': { role: 'evaluator', email: 'arena-e@law-eval.local', displayName: '實務專家 TCY', fullName: '蔡鈞亦' },
         'admin': { role: 'admin', email: 'arena-admin@law-eval.local' }
     };
     const ARENA_USER_BY_EMAIL = Object.fromEntries(
@@ -1742,6 +1742,10 @@
 
     function evaluatorDisplayName(name) {
         return (ARENA_USERS[name] && ARENA_USERS[name].displayName) || name;
+    }
+
+    function evaluatorFullName(name) {
+        return (ARENA_USERS[name] && ARENA_USERS[name].fullName) || evaluatorDisplayName(name);
     }
 
     let config = null;
@@ -2067,7 +2071,7 @@
         document.body.classList.toggle('admin-inspect', !!enabled);
         if (enabled) {
             const banner = document.getElementById('adminInspectBanner');
-            if (banner) banner.textContent = '唯讀檢視 · ' + evaluatorDisplayName(currentEvaluator || '');
+            if (banner) banner.textContent = '唯讀檢視 · ' + evaluatorFullName(currentEvaluator || '');
         }
         // Re-sync vote-bar visibility for the current pair UI state
         const allDoneShown = document.getElementById('allDone').style.display === 'flex';
@@ -2999,7 +3003,7 @@
         const profile = getAuthProfile();
         if (!profile || profile.role !== 'admin') return;
         setEvaluator(name);
-        document.getElementById('userBadge').textContent = '管理員檢視 ' + evaluatorDisplayName(name);
+        document.getElementById('userBadge').textContent = '管理員檢視 ' + evaluatorFullName(name);
         const uid = await lookupArenaUidByName(name);
         if (uid) await restoreArenaVotes(name, uid);
         else saveVotesForEvaluator(name, []);
@@ -3312,7 +3316,7 @@
             setAdminMode(true);
         } else {
             currentEvaluator = profile.name;
-            document.getElementById('userBadge').textContent = evaluatorDisplayName(profile.name);
+            document.getElementById('userBadge').textContent = evaluatorFullName(profile.name);
             applyReadOnlyMode(false);
             setAdminMode(false);
         }
