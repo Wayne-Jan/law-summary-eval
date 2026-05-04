@@ -1729,11 +1729,12 @@
     const ARENA_AUTH_USER_KEY = 'arena_v1_auth_user';
     const ARENA_AUTH_ROLE_KEY = 'arena_v1_auth_role';
     const ARENA_USERS = {
-        'A': { role: 'evaluator', email: 'arena-a@law-eval.local', displayName: '實務專家 LYH', fullName: '呂盈慧' },
-        'B': { role: 'evaluator', email: 'arena-b@law-eval.local', displayName: '實務專家 CKC', fullName: '陳國璋' },
-        'C': { role: 'evaluator', email: 'arena-c@law-eval.local', displayName: '實務專家 LLY', fullName: '賴麗羽' },
-        'D': { role: 'evaluator', email: 'arena-d@law-eval.local', displayName: '實務專家 HCJ', fullName: '謝佳容' },
-        'E': { role: 'evaluator', email: 'arena-e@law-eval.local', displayName: '實務專家 TCY', fullName: '蔡鈞亦' },
+        'A': { role: 'evaluator', email: 'arena-a@law-eval.local', displayName: '實務專家 LYH', fullName: '呂盈慧', includeInAdmin: true },
+        'B': { role: 'evaluator', email: 'arena-b@law-eval.local', displayName: '實務專家 CKC', fullName: '陳國璋', includeInAdmin: true },
+        'C': { role: 'evaluator', email: 'arena-c@law-eval.local', displayName: '實務專家 LLY', fullName: '賴麗羽', includeInAdmin: true },
+        'D': { role: 'evaluator', email: 'arena-d@law-eval.local', displayName: '實務專家 HCJ', fullName: '謝佳容', includeInAdmin: true },
+        'E': { role: 'evaluator', email: 'arena-e@law-eval.local', displayName: '實務專家 TCY', fullName: '蔡鈞亦', includeInAdmin: true },
+        'demo': { role: 'evaluator', email: 'arena-demo@law-eval.local', displayName: 'Demo 測試', fullName: 'Demo 測試', includeInAdmin: false },
         'admin': { role: 'admin', email: 'arena-admin@law-eval.local' }
     };
     const ARENA_USER_BY_EMAIL = Object.fromEntries(
@@ -1746,6 +1747,10 @@
 
     function evaluatorFullName(name) {
         return (ARENA_USERS[name] && ARENA_USERS[name].fullName) || evaluatorDisplayName(name);
+    }
+
+    function adminEvaluatorNames() {
+        return Object.keys(ARENA_USERS).filter(name => ARENA_USERS[name].role === 'evaluator' && ARENA_USERS[name].includeInAdmin !== false);
     }
 
     let config = null;
@@ -2320,7 +2325,7 @@
     }
 
     async function fetchAdminDataset() {
-        const names = Object.keys(ARENA_USERS).filter(name => name !== 'admin');
+        const names = adminEvaluatorNames();
         const evaluators = await Promise.all(names.map(async (name) => {
             const uid = await lookupArenaUidByName(name);
             const votes = [];
@@ -2407,7 +2412,7 @@
         const rows = calcAggregateElo(votes);
         let html = '<div class="admin-section">';
         html += '<div class="admin-section-head"><h3>全體合併 Elo 排行</h3>';
-        html += `<span class="section-desc">彙總 ${Object.keys(ARENA_USERS).filter(n => n !== 'admin').length} 位評審者的全部投票</span></div>`;
+        html += `<span class="section-desc">彙總 ${adminEvaluatorNames().length} 位評審者的全部投票</span></div>`;
 
         const hasVotes = rows.some(r => r.matches > 0);
         if (!hasVotes) {
