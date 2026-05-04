@@ -1734,7 +1734,7 @@
         'C': { role: 'evaluator', email: 'arena-c@law-eval.local', displayName: '實務專家 LLY', fullName: '賴麗羽', includeInAdmin: true },
         'D': { role: 'evaluator', email: 'arena-d@law-eval.local', displayName: '實務專家 HCJ', fullName: '謝佳容', includeInAdmin: true },
         'E': { role: 'evaluator', email: 'arena-e@law-eval.local', displayName: '實務專家 TCY', fullName: '蔡鈞亦', includeInAdmin: true },
-        'demo': { role: 'evaluator', email: 'arena-demo@law-eval.local', displayName: 'Demo 測試', fullName: 'Demo 測試', includeInAdmin: false },
+        'demo': { role: 'evaluator', email: 'arena-demo@law-eval.local', displayName: 'Demo 測試', fullName: 'Demo 測試', includeInAdmin: false, demoOnly: true },
         'admin': { role: 'admin', email: 'arena-admin@law-eval.local' }
     };
     const ARENA_USER_BY_EMAIL = Object.fromEntries(
@@ -1753,6 +1753,10 @@
         return Object.keys(ARENA_USERS).filter(name => ARENA_USERS[name].role === 'evaluator' && ARENA_USERS[name].includeInAdmin !== false);
     }
 
+    function isDemoEvaluator(name) {
+        return !!(ARENA_USERS[name] && ARENA_USERS[name].demoOnly);
+    }
+
     let config = null;
     let currentEvaluator = null;
     let currentPair = null;
@@ -1765,6 +1769,7 @@
     let currentDataUid = '';
     let adminPanelLoaded = false;
     let pendingCaseOverride = '';
+    const demoVotesByEvaluator = {};
 
     function getArenaVotesStorageKey(evaluator) {
         return `arena_v1_votes_${evaluator}`;
@@ -1782,6 +1787,7 @@
 
     function loadVotesForEvaluator(evaluator) {
         if (!evaluator) return [];
+        if (isDemoEvaluator(evaluator)) return demoVotesByEvaluator[evaluator] || [];
         try {
             const raw = localStorage.getItem(getArenaVotesStorageKey(evaluator));
             return raw ? JSON.parse(raw) : [];
@@ -1792,6 +1798,10 @@
 
     function saveVotesForEvaluator(evaluator, votes) {
         if (!evaluator) return;
+        if (isDemoEvaluator(evaluator)) {
+            demoVotesByEvaluator[evaluator] = votes;
+            return;
+        }
         localStorage.setItem(getArenaVotesStorageKey(evaluator), JSON.stringify(votes));
     }
 
@@ -1848,6 +1858,10 @@
     }
 
     async function writeCloudRecord(vote) {
+        if (isDemoEvaluator(vote.evaluator)) {
+            setCloudStatus('Demo 不同步', '');
+            return;
+        }
         const uid = getCloudEvaluatorId();
         if (!uid) return;
         const key = makeArenaRecordKey(vote);
@@ -1864,6 +1878,7 @@
 
     async function syncArenaUserIndex(user, profile) {
         if (!user || !profile) return;
+        if (isDemoEvaluator(profile.name)) return;
         await db.collection('arena_users').doc(user.uid).set({
             uid: user.uid,
             email: user.email || '',
@@ -1880,6 +1895,11 @@
     }
 
     async function restoreArenaVotes(evaluator, uidOverride) {
+        if (isDemoEvaluator(evaluator)) {
+            currentDataUid = '';
+            setCloudStatus('Demo 模式', '');
+            return;
+        }
         const uid = uidOverride || getCloudEvaluatorId();
         if (!uid || !evaluator) return;
         currentDataUid = uid;
