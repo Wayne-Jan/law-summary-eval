@@ -2566,7 +2566,7 @@
     // ─── Backup History ───────────────────────────────────────
     const arenaBackupCache = new Map();
 
-    async function fetchArenaBackupSnapshots(limit = 30) {
+    async function fetchArenaBackupSnapshots(limit = 10) {
         if (!document.body.classList.contains('is-admin') || !auth.currentUser) return [];
         const snap = await db.collection('arena_backups_daily')
             .orderBy('snapshot_date', 'desc').limit(limit).get();
@@ -2599,7 +2599,7 @@
     function renderArenaBackupHistory(backups) {
         let html = '<div class="admin-section">';
         html += '<div class="admin-section-head"><h3>備份歷史</h3>';
-        html += `<span class="section-desc">共 ${backups.length} 筆快照</span>`;
+        html += `<span class="section-desc">最近 ${backups.length} 筆快照</span>`;
         html += '</div>';
         if (!backups.length) {
             html += '<div class="admin-empty">尚無備份快照</div>';
@@ -2696,7 +2696,7 @@
         container.innerHTML = '<div class="admin-empty">載入中...</div>';
         const [dataset, backups] = await Promise.all([
             fetchAdminDataset(),
-            fetchArenaBackupSnapshots(30)
+            fetchArenaBackupSnapshots(10)
         ]);
         const rows = dataset.evaluators;
         if (!rows.length && !backups.length) {
