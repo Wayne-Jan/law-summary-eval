@@ -600,6 +600,12 @@
   <script>
     if (new URLSearchParams(location.search).has('embed')) {
       document.documentElement.classList.add('embed-mode');
+      window.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && window.parent && window.parent !== window) {
+          e.preventDefault();
+          window.parent.postMessage({ type: 'close-tl-modal' }, '*');
+        }
+      });
     }
   </script>
   <style>

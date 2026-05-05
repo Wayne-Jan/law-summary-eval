@@ -3440,6 +3440,17 @@
     function initKeyboardShortcuts() {
         document.addEventListener('keydown', (e) => {
             if (e.repeat) return;
+
+            // ESC closes timeline modal regardless of focus state
+            if (e.key === 'Escape') {
+                const tlModal = document.getElementById('tlModal');
+                if (tlModal && !tlModal.classList.contains('hidden')) {
+                    e.preventDefault();
+                    window.closeTlModal();
+                    return;
+                }
+            }
+
             // Don't trigger while typing in form fields
             const target = e.target;
             if (target) {
@@ -3506,10 +3517,30 @@
         document.getElementById('tlIframe').src = '';
     };
 
+    window.addEventListener('message', (e) => {
+        if (e && e.data && e.data.type === 'close-tl-modal') {
+            window.closeTlModal();
+        }
+    });
+
     function openTlModal() {
         if (!currentCaseName) return;
+        const iframe = document.getElementById('tlIframe');
         document.getElementById('tlModalTitle').textContent = '案件時間軸 — ' + currentCaseName;
-        document.getElementById('tlIframe').src = 'timeline.html?case=' + encodeURIComponent(currentCaseName) + '&embed=1';
+        iframe.onload = () => {
+            try {
+                const w = iframe.contentWindow;
+                if (w) {
+                    w.addEventListener('keydown', (e) => {
+                        if (e.key === 'Escape') {
+                            e.preventDefault();
+                            window.closeTlModal();
+                        }
+                    });
+                }
+            } catch (_) {}
+        };
+        iframe.src = 'timeline.html?case=' + encodeURIComponent(currentCaseName) + '&embed=1';
         document.getElementById('tlModal').classList.remove('hidden');
     }
 
