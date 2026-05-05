@@ -154,16 +154,184 @@
             overflow: hidden;
         }
 
-        /* ─── Dual Panels ─── */
-        .panel {
-            flex: 1; min-width: 0;
+        /* ─── Arena Reader ─── */
+        .arena-pane {
             background: #fff;
             border: 1px solid #e5e7eb;
             border-radius: 12px;
             box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
-            display: flex; flex-direction: column;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
+            min-width: 0;
+            min-height: 0;
         }
+
+        .source-panel {
+            flex: 0 0 43%;
+        }
+
+        .summary-panel {
+            flex: 1 1 57%;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 78px;
+            background:
+                linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
+        }
+
+        .summary-content-wrap {
+            min-width: 0;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-tabs {
+            border-left: 1px solid #e5e7eb;
+            background:
+                linear-gradient(180deg, #f8fafc 0%, #eef2ff 50%, #fff7ed 100%);
+            padding: 12px 10px;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .summary-tab {
+            border: 1px solid rgba(148, 163, 184, 0.55);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.72);
+            color: #64748b;
+            font-family: inherit;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 10px 6px;
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+            transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease;
+        }
+
+        .summary-tab:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+            border-color: #94a3b8;
+        }
+
+        .summary-tab.active-a {
+            background: linear-gradient(180deg, #eef2ff 0%, #ffffff 100%);
+            border-color: #818cf8;
+            color: #4338ca;
+            box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.12), 0 8px 18px rgba(79, 70, 229, 0.12);
+        }
+
+        .summary-tab.active-b {
+            background: linear-gradient(180deg, #fff7ed 0%, #ffffff 100%);
+            border-color: #fb923c;
+            color: #c2410c;
+            box-shadow: inset 0 0 0 1px rgba(234, 88, 12, 0.12), 0 8px 18px rgba(234, 88, 12, 0.12);
+        }
+
+        .summary-tab-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            letter-spacing: 0.08em;
+            font-size: 13px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .summary-tab-meta {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: currentColor;
+            opacity: 0.7;
+        }
+
+        .source-panel-header {
+            min-height: 44px;
+            padding: 10px 16px;
+            border-bottom: 1px solid #f3f4f6;
+            background: #fafafa;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .source-panel-header .icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 8px;
+            background: #eef2ff;
+            color: #4f46e5;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+        }
+
+        .source-panel-header .chunk-count {
+            margin-left: auto;
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .source-list {
+            flex: 1;
+            min-height: 0;
+            overflow-y: auto;
+            padding: 16px 18px 40px;
+            font-size: 14px;
+            line-height: 1.85;
+            color: #475569;
+            white-space: pre-wrap;
+            word-break: break-word;
+            background: #fff;
+        }
+
+        .chunk-region {
+            border-radius: 4px;
+            transition: background 0.22s ease, border-color 0.22s ease, margin 0.22s ease, padding 0.22s ease;
+        }
+
+        .chunk-region mark {
+            background: transparent;
+            color: inherit;
+            padding: 1px 0;
+            border-radius: 2px;
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+            transition: background 0.22s ease;
+        }
+
+        .chunk-region.active {
+            border-left: 3px solid #eab308;
+            padding-left: 12px;
+            margin-left: -15px;
+        }
+
+        .chunk-region.active mark {
+            background: #fef9c3;
+        }
+
+        .chunk-label {
+            display: none;
+            font-size: 9px;
+            font-weight: 800;
+            color: #92400e;
+            background: #fef3c7;
+            padding: 1px 5px;
+            border-radius: 3px;
+            vertical-align: middle;
+            margin-right: 3px;
+        }
+        .chunk-region.active .chunk-label { display: inline; }
 
         .panel-head {
             min-height: 44px; padding: 10px 16px;
@@ -176,8 +344,8 @@
         .panel-title {
             font-size: 14px; font-weight: 600;
         }
-        #panelA .panel-kicker, #panelA .panel-title { color: #4f46e5; }
-        #panelB .panel-kicker, #panelB .panel-title { color: #ea580c; }
+        .summary-panel.is-a .panel-kicker, .summary-panel.is-a .panel-title { color: #4f46e5; }
+        .summary-panel.is-b .panel-kicker, .summary-panel.is-b .panel-title { color: #ea580c; }
         .panel-meta {
             margin-left: auto; font-size: 12px; color: #9ca3af; font-weight: 400;
             white-space: nowrap;
@@ -208,6 +376,14 @@
             display: inline; background: #ede9fe; color: #6d28d9;
             padding: 1px 6px; border-radius: 3px; font-size: 12px;
             font-weight: 500; margin: 0 2px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+        }
+        .section-content .citation:hover { background: #ddd6fe; }
+        .section-content .citation.active {
+            background: #fef9c3;
+            color: #92400e;
+            box-shadow: 0 0 0 2px #eab308;
         }
 
         .empty-content {
@@ -1459,7 +1635,32 @@
                 gap: 8px;
                 padding: 10px 12px;
             }
-            .panel { flex: none; height: 50%; }
+            .source-panel {
+                flex: 0 0 34%;
+                min-height: 180px;
+            }
+            .summary-panel {
+                flex: 1 1 auto;
+                min-height: 360px;
+                grid-template-columns: minmax(0, 1fr) 64px;
+            }
+            .summary-tabs {
+                padding: 8px;
+                gap: 8px;
+            }
+            .summary-tab {
+                border-radius: 12px;
+                padding: 8px 4px;
+            }
+            .summary-tab-label {
+                font-size: 12px;
+                letter-spacing: 0.05em;
+            }
+            .source-list {
+                padding: 12px 14px 28px;
+                font-size: 13px;
+                line-height: 1.7;
+            }
             .vote-bar {
                 height: auto; flex-wrap: wrap; justify-content: center;
                 padding: 8px 12px; gap: 6px;
@@ -1606,24 +1807,38 @@
     <div class="pair-indicators" id="pairIndicators"></div>
 </div>
 
-<!-- Dual panels -->
+<!-- Arena reader -->
 <div class="main" id="mainArea">
-    <div class="panel" id="panelA">
-        <div class="panel-head">
-            <span class="panel-kicker">SUMMARY</span>
-            <span class="panel-title">摘要 A</span>
-            <span class="panel-meta" id="metaA"></span>
+    <section class="arena-pane source-panel" id="sourcePanel">
+        <div class="source-panel-header">
+            <span class="icon" aria-hidden="true">文</span>
+            <span>原始判決書</span>
+            <span class="chunk-count" id="sourceChunkCount"></span>
         </div>
-        <div class="panel-body" id="bodyA"></div>
-    </div>
-    <div class="panel" id="panelB">
-        <div class="panel-head">
-            <span class="panel-kicker">SUMMARY</span>
-            <span class="panel-title">摘要 B</span>
-            <span class="panel-meta" id="metaB"></span>
+        <div class="source-list" id="sourceList">
+            <div class="empty-content">載入原文中</div>
         </div>
-        <div class="panel-body" id="bodyB"></div>
-    </div>
+    </section>
+    <section class="arena-pane summary-panel is-a" id="summaryPanel">
+        <div class="summary-content-wrap">
+            <div class="panel-head">
+                <span class="panel-kicker">SUMMARY</span>
+                <span class="panel-title" id="summaryTitle">摘要 A</span>
+                <span class="panel-meta" id="summaryMeta"></span>
+            </div>
+            <div class="panel-body" id="summaryBody"></div>
+        </div>
+        <div class="summary-tabs" role="tablist" aria-label="摘要切換">
+            <button class="summary-tab active-a" id="summaryTabA" type="button" role="tab" aria-selected="true" data-summary="a">
+                <span class="summary-tab-label">摘要 A</span>
+                <span class="summary-tab-meta" aria-hidden="true"></span>
+            </button>
+            <button class="summary-tab" id="summaryTabB" type="button" role="tab" aria-selected="false" data-summary="b">
+                <span class="summary-tab-label">摘要 B</span>
+                <span class="summary-tab-meta" aria-hidden="true"></span>
+            </button>
+        </div>
+    </section>
     <div class="all-done" id="allDone">
         <h2>所有配對已完成投票</h2>
         <p>感謝你的評估！可開啟排行榜查看目前結果。</p>
@@ -1762,6 +1977,8 @@
     let currentPair = null;
     let selectedVote = null;
     let dataA = null, dataB = null;
+    let activeSummary = 'a';
+    let activeChunkAlias = null;
     let currentCaseName = '';
     let cloudStatusTimer = null;
     let appReady = false;
@@ -2109,15 +2326,32 @@
         return div.innerHTML;
     }
 
+    function normAlias(alias) {
+        return String(alias || '').replace(/CH_(\d+)/, (_, n) => 'CH_' + n.padStart(2, '0'));
+    }
+
+    function sanitizeSourceText(content) {
+        return String(content || '')
+            .replace(/\n{3,}/g, '\n\n')
+            .trim();
+    }
+
+    function sanitizeSummaryText(content) {
+        return String(content || '')
+            .replace(/\n?\s*\[Image of[^\]]*\]\s*\n?/gi, '\n')
+            .replace(/\n{3,}/g, '\n\n')
+            .trim();
+    }
+
     function renderContent(text) {
         if (!text) return '<div class="empty-content">此版本無此章節內容</div>';
-        const escaped = escapeHtml(text);
+        const escaped = escapeHtml(sanitizeSummaryText(text));
         // Match [CH_NN] and multi-citation forms: [CH_01, CH_02], [CH_01，CH_02], [CH_01、CH_02]
         // (ASCII comma, fullwidth comma, and 頓號 are all used across model outputs.)
-        // Each CH_NN becomes its own pill.
         return escaped.replace(/\[(CH_\d+(?:\s*[,，、]\s*CH_\d+)*)\]/g, (match, inner) => {
             const ids = inner.match(/CH_\d+/g) || [];
-            return ids.map(id => `<span class="citation">[${id}]</span>`).join('');
+            const normalized = ids.map(normAlias);
+            return `<span class="citation" data-aliases="${normalized.join(',')}" onclick="highlightArenaCitation(this)">${match}</span>`;
         });
     }
 
@@ -2312,6 +2546,30 @@
         }).join('');
     }
 
+    function renderSourcePanel(data) {
+        const listEl = document.getElementById('sourceList');
+        const countEl = document.getElementById('sourceChunkCount');
+        if (!listEl || !countEl) return;
+        const chunks = (data && data.chunks) || {};
+        const aliases = Object.keys(chunks).sort((a, b) =>
+            parseInt(a.replace('CH_', ''), 10) - parseInt(b.replace('CH_', ''), 10)
+        );
+        const totalChars = aliases.reduce((sum, alias) => sum + String(chunks[alias] || '').length, 0);
+        countEl.textContent = totalChars > 0 ? `${totalChars.toLocaleString()} 字` : '';
+        if (!aliases.length) {
+            listEl.innerHTML = '<div class="empty-content">無原文資料</div>';
+            return;
+        }
+        listEl.innerHTML = aliases.map(alias => {
+            const normalized = normAlias(alias);
+            const content = sanitizeSourceText(chunks[alias] || '');
+            return `<div class="chunk-region" id="src_${normalized}" data-alias="${normalized}">` +
+                `<span class="chunk-label">${escapeHtml(normalized)}</span>` +
+                `<mark>${escapeHtml(content)}</mark>` +
+                `</div>`;
+        }).join('');
+    }
+
     function calcCompressionMeta(data) {
         const chunks = data.chunks || {};
         const origChars = Object.values(chunks).reduce((s, t) => s + t.length, 0);
@@ -2322,23 +2580,100 @@
             '<span class="compress-pct">縮減 ' + pct + '%</span>';
     }
 
+    function getSummaryData(which) {
+        return which === 'b' ? dataB : dataA;
+    }
+
+    function getSummaryCondition(which) {
+        if (!currentPair) return '';
+        return which === 'b' ? currentPair.condB : currentPair.condA;
+    }
+
+    function summaryTabLabel(which) {
+        return which === 'b' ? '摘要 B' : '摘要 A';
+    }
+
+    function summaryTitleLabel(which) {
+        const profile = getAuthProfile();
+        if (profile && profile.role === 'admin' && document.body.classList.contains('admin-inspect')) {
+            return getSummaryCondition(which) || summaryTabLabel(which);
+        }
+        return summaryTabLabel(which);
+    }
+
+    function clearCitationHighlight() {
+        activeChunkAlias = null;
+        document.querySelectorAll('.citation.active').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
+    }
+
+    function renderSummaryTabs() {
+        const tabA = document.getElementById('summaryTabA');
+        const tabB = document.getElementById('summaryTabB');
+        if (!tabA || !tabB) return;
+        [
+            { el: tabA, key: 'a' },
+            { el: tabB, key: 'b' }
+        ].forEach(({ el, key }) => {
+            const active = activeSummary === key;
+            el.classList.toggle('active-a', active && key === 'a');
+            el.classList.toggle('active-b', active && key === 'b');
+            el.setAttribute('aria-selected', active ? 'true' : 'false');
+            const label = el.querySelector('.summary-tab-label');
+            if (label) label.textContent = summaryTabLabel(key);
+        });
+    }
+
+    function renderActiveSummary() {
+        const data = getSummaryData(activeSummary);
+        const panel = document.getElementById('summaryPanel');
+        const title = document.getElementById('summaryTitle');
+        const meta = document.getElementById('summaryMeta');
+        const body = document.getElementById('summaryBody');
+        if (!panel || !title || !meta || !body) return;
+        panel.classList.toggle('is-a', activeSummary === 'a');
+        panel.classList.toggle('is-b', activeSummary === 'b');
+        title.textContent = summaryTitleLabel(activeSummary);
+        meta.innerHTML = data ? calcCompressionMeta(data) : '';
+        body.innerHTML = data ? renderAllSections(data.sections) : '<div class="empty-content">無摘要內容</div>';
+        renderSummaryTabs();
+        clearCitationHighlight();
+    }
+
     function renderPanels() {
         if (!dataA || !dataB) return;
-        document.getElementById('bodyA').innerHTML = renderAllSections(dataA.sections);
-        document.getElementById('bodyB').innerHTML = renderAllSections(dataB.sections);
-        document.getElementById('metaA').innerHTML = calcCompressionMeta(dataA);
-        document.getElementById('metaB').innerHTML = calcCompressionMeta(dataB);
-        // In admin inspect mode, reveal real model names in panel headers
-        const titleA = document.querySelector('#panelA .panel-title');
-        const titleB = document.querySelector('#panelB .panel-title');
-        if (document.body.classList.contains('admin-inspect') && currentPair) {
-            titleA.textContent = currentPair.condA;
-            titleB.textContent = currentPair.condB;
-        } else {
-            titleA.textContent = '摘要 A';
-            titleB.textContent = '摘要 B';
-        }
+        activeSummary = 'a';
+        renderSourcePanel(dataA || dataB);
+        renderActiveSummary();
     }
+
+    function setActiveSummary(which) {
+        if (which !== 'a' && which !== 'b') return;
+        if (activeSummary === which) return;
+        activeSummary = which;
+        renderActiveSummary();
+    }
+
+    function highlightArenaCitation(element) {
+        if (!element || !element.dataset.aliases) return;
+        const aliases = element.dataset.aliases.split(',').filter(Boolean);
+        document.querySelectorAll('.citation.active').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.chunk-region.active').forEach(el => el.classList.remove('active'));
+        if (aliases.length === 1 && activeChunkAlias === aliases[0]) {
+            activeChunkAlias = null;
+            return;
+        }
+        element.classList.add('active');
+        activeChunkAlias = aliases[0] || null;
+        aliases.forEach(alias => {
+            const srcEl = document.getElementById(`src_${alias}`);
+            if (srcEl) {
+                srcEl.classList.add('active');
+                srcEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        });
+    }
+    window.highlightArenaCitation = highlightArenaCitation;
 
     function getPairsPerCase() {
         return config ? getEffectivePairs().length : 0;
@@ -2882,13 +3217,13 @@
     }
 
     function showAllDone() {
-        document.getElementById('mainArea').querySelectorAll('.panel').forEach(p => p.style.display = 'none');
+        document.getElementById('mainArea').querySelectorAll('.arena-pane').forEach(p => p.style.display = 'none');
         document.getElementById('allDone').style.display = 'flex';
         document.getElementById('voteBar').style.display = 'none';
     }
 
     function showPairUI() {
-        document.getElementById('mainArea').querySelectorAll('.panel').forEach(p => p.style.display = 'flex');
+        document.getElementById('mainArea').querySelectorAll('.arena-pane').forEach(p => p.style.display = '');
         document.getElementById('allDone').style.display = 'none';
         const profile = getAuthProfile();
         const isAdmin = profile && profile.role === 'admin';
@@ -2925,8 +3260,8 @@
             renderPanels();
         } catch(e) {
             console.error('Failed to load pair data:', e);
-            document.getElementById('bodyA').innerHTML = '<div class="empty-content">載入失敗</div>';
-            document.getElementById('bodyB').innerHTML = '<div class="empty-content">載入失敗</div>';
+            document.getElementById('summaryBody').innerHTML = '<div class="empty-content">載入失敗</div>';
+            document.getElementById('sourceList').innerHTML = '<div class="empty-content">載入失敗</div>';
         }
 
         currentCaseName = (dataA && dataA.case_name) || (caseInfo && caseInfo.short_name) || pair.case_id;
@@ -3000,8 +3335,8 @@
             renderPanels();
         } catch (e) {
             console.error('Failed to load pair data for edit:', e);
-            document.getElementById('bodyA').innerHTML = '<div class="empty-content">載入失敗</div>';
-            document.getElementById('bodyB').innerHTML = '<div class="empty-content">載入失敗</div>';
+            document.getElementById('summaryBody').innerHTML = '<div class="empty-content">載入失敗</div>';
+            document.getElementById('sourceList').innerHTML = '<div class="empty-content">載入失敗</div>';
         }
         currentCaseName = (dataA && dataA.case_name) || (caseInfo && caseInfo.short_name) || caseId;
 
@@ -3193,6 +3528,12 @@
         });
 
         document.getElementById('submitBtn').addEventListener('click', submitVote);
+    }
+
+    function initSummaryTabs() {
+        document.querySelectorAll('.summary-tab').forEach(btn => {
+            btn.addEventListener('click', () => setActiveSummary(btn.dataset.summary));
+        });
     }
 
     async function submitVote() {
@@ -3393,6 +3734,7 @@
         }
 
         initVoteButtons();
+        initSummaryTabs();
         initLeaderboard();
         initExportClear();
         initEvalSelector();
