@@ -173,104 +173,98 @@
 
         .summary-panel {
             flex: 1 1 57%;
-            position: relative;
-            margin-right: 44px;
-            overflow: visible;
             background:
                 linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
         }
 
         .summary-content-wrap {
+            flex: 1;
             min-width: 0;
             min-height: 0;
             display: flex;
             flex-direction: column;
         }
 
-        .summary-tabs {
-            position: absolute;
-            top: 56px;
-            right: -39px;
-            width: 40px;
+        .summary-panel .panel-head {
+            min-height: 48px;
+            padding: 0 16px;
+            background: #fafafa;
+            border-bottom: 1px solid #f0f0f0;
             display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-            z-index: 4;
-            pointer-events: none;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .summary-tabs {
+            display: inline-flex;
+            align-items: stretch;
+            padding: 3px;
+            border: 1px solid #e5e7eb;
+            border-radius: 999px;
+            background: #f3f4f6;
+            box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03);
+            gap: 0;
+            flex: 0 0 auto;
         }
 
         .summary-tabs .summary-tab {
             position: relative;
             margin: 0;
-            width: 40px;
-            min-height: 76px;
-            border: 1px solid #e2e8f0;
-            border-left: none;
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 0 12px 12px 0;
-            box-shadow: 5px 7px 18px rgba(15, 23, 42, 0.08);
-            padding: 9px 6px;
+            min-width: 0;
+            height: 28px;
+            border: none;
+            background: transparent;
+            border-radius: 999px;
+            box-shadow: none;
+            padding: 0 12px;
             color: #94a3b8;
             font-family: inherit;
             cursor: pointer;
-            display: flex;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            transition: transform 0.22s ease, color 0.22s ease, background 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
-            pointer-events: auto;
+            gap: 6px;
+            transition: color 0.22s ease, background-color 0.22s ease, box-shadow 0.22s ease;
         }
 
-        .summary-tabs .summary-tab::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 10px;
-            bottom: 10px;
-            width: 3px;
-            border-radius: 0 999px 999px 0;
-            background: #e2e8f0;
-            transition: background 0.22s ease, box-shadow 0.22s ease;
-            pointer-events: none;
+        .summary-tab-icon {
+            width: 13px;
+            height: 13px;
+            flex-shrink: 0;
+            opacity: 0.9;
         }
 
         .summary-tabs .summary-tab:hover {
             color: #475569;
-            transform: translateX(2px);
-            box-shadow: 7px 9px 20px rgba(15, 23, 42, 0.11);
+            background: transparent;
         }
 
         .summary-tabs[data-active="a"] #summaryTabA {
-            color: #4338ca;
-            background: linear-gradient(180deg, #eef2ff 0%, #ffffff 100%);
-            border-color: #a5b4fc;
-            transform: translateX(-3px);
-            box-shadow: 6px 9px 22px rgba(79, 70, 229, 0.15);
-        }
-        .summary-tabs[data-active="a"] #summaryTabA::before {
-            background: #4f46e5;
-            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+            color: #6366f1;
+            background: #ffffff;
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.06),
+                0 1px 1px rgba(15, 23, 42, 0.04);
         }
 
         .summary-tabs[data-active="b"] #summaryTabB {
-            color: #c2410c;
-            background: linear-gradient(180deg, #fff7ed 0%, #ffffff 100%);
-            border-color: #fdba74;
-            transform: translateX(-3px);
-            box-shadow: 6px 9px 22px rgba(234, 88, 12, 0.14);
-        }
-        .summary-tabs[data-active="b"] #summaryTabB::before {
-            background: #ea580c;
-            box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.12);
+            color: #f97316;
+            background: #ffffff;
+            box-shadow:
+                0 1px 2px rgba(15, 23, 42, 0.06),
+                0 1px 1px rgba(15, 23, 42, 0.04);
         }
 
         .summary-tab-label {
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
             font-size: 12px;
-            font-weight: 800;
+            font-weight: 600;
             line-height: 1;
-            letter-spacing: 0.08em;
+            letter-spacing: 0.06em;
+        }
+
+        .summary-tabs[data-active="a"] #summaryTabA .summary-tab-label,
+        .summary-tabs[data-active="b"] #summaryTabB .summary-tab-label {
+            font-weight: 700;
         }
 
         .source-panel-header {
@@ -361,14 +355,17 @@
             border-bottom: 1px solid #f3f4f6; background: #fafafa;
             display: flex; align-items: center; gap: 8px;
         }
-        .panel-kicker {
-            font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-        }
         .panel-title {
-            font-size: 14px; font-weight: 600;
+            font-size: 12px;
+            font-weight: 500;
+            color: #94a3b8;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 240px;
         }
-        .summary-panel.is-a .panel-kicker, .summary-panel.is-a .panel-title { color: #4f46e5; }
-        .summary-panel.is-b .panel-kicker, .summary-panel.is-b .panel-title { color: #ea580c; }
+        .panel-title:empty { display: none; }
         .panel-meta {
             margin-left: auto; font-size: 12px; color: #9ca3af; font-weight: 400;
             white-space: nowrap;
@@ -1665,23 +1662,18 @@
             .summary-panel {
                 flex: 1 1 auto;
                 min-height: 360px;
-                margin-right: 38px;
             }
             .summary-tabs {
-                top: 48px;
-                right: -34px;
-                width: 36px;
-                gap: 6px;
+                padding: 2px;
             }
             .summary-tabs .summary-tab {
-                width: 36px;
-                min-height: 68px;
-                padding: 8px 5px;
+                height: 26px;
+                padding: 0 10px;
+                gap: 5px;
             }
-            .summary-tabs .summary-tab::before {
-                top: 9px;
-                bottom: 9px;
-                width: 3px;
+            .summary-tab-icon {
+                width: 12px;
+                height: 12px;
             }
             .summary-tab-label {
                 font-size: 11px;
@@ -1811,11 +1803,11 @@
                     <div class="toolbar-shortcut-desc">切換摘要 A / B</div>
                 </div>
                 <div class="toolbar-shortcut-row">
-                    <div class="toolbar-shortcut-keys"><span class="kbd-key">↑</span></div>
+                    <div class="toolbar-shortcut-keys"><span class="kbd-key">←</span></div>
                     <div class="toolbar-shortcut-desc">選擇 A 較好</div>
                 </div>
                 <div class="toolbar-shortcut-row">
-                    <div class="toolbar-shortcut-keys"><span class="kbd-key">↓</span></div>
+                    <div class="toolbar-shortcut-keys"><span class="kbd-key">→</span></div>
                     <div class="toolbar-shortcut-desc">選擇 B 較好</div>
                 </div>
                 <div class="toolbar-shortcut-row">
@@ -1856,19 +1848,30 @@
     <section class="arena-pane summary-panel is-a" id="summaryPanel">
         <div class="summary-content-wrap">
             <div class="panel-head">
-                <span class="panel-kicker">SUMMARY</span>
-                <span class="panel-title" id="summaryTitle">摘要 A</span>
+                <div class="summary-tabs" role="tablist" aria-label="摘要切換" data-active="a">
+                    <button class="summary-tab" id="summaryTabA" type="button" role="tab" aria-selected="true" data-summary="a" title="摘要 A（快捷鍵：Tab）">
+                        <svg class="summary-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="9" y1="13" x2="15" y2="13"/>
+                            <line x1="9" y1="17" x2="15" y2="17"/>
+                        </svg>
+                        <span class="summary-tab-label">摘要 A</span>
+                    </button>
+                    <button class="summary-tab" id="summaryTabB" type="button" role="tab" aria-selected="false" data-summary="b" title="摘要 B（快捷鍵：Tab）">
+                        <svg class="summary-tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="9" y1="13" x2="15" y2="13"/>
+                            <line x1="9" y1="17" x2="15" y2="17"/>
+                        </svg>
+                        <span class="summary-tab-label">摘要 B</span>
+                    </button>
+                </div>
+                <span class="panel-title" id="summaryTitle"></span>
                 <span class="panel-meta" id="summaryMeta"></span>
             </div>
             <div class="panel-body" id="summaryBody"></div>
-        </div>
-        <div class="summary-tabs" role="tablist" aria-label="摘要切換" data-active="a">
-            <button class="summary-tab" id="summaryTabA" type="button" role="tab" aria-selected="true" data-summary="a" title="摘要 A（快捷鍵：Tab）">
-                <span class="summary-tab-label">摘要 A</span>
-            </button>
-            <button class="summary-tab" id="summaryTabB" type="button" role="tab" aria-selected="false" data-summary="b" title="摘要 B（快捷鍵：Tab）">
-                <span class="summary-tab-label">摘要 B</span>
-            </button>
         </div>
     </section>
     <div class="all-done" id="allDone">
@@ -1919,9 +1922,9 @@
         <textarea id="reasonText" placeholder="選擇理由 (選填)"></textarea>
     </div>
     <div class="vote-actions">
-        <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：↑">A 較好<span class="kbd-key">↑</span></button>
+        <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：←">A 較好<span class="kbd-key">←</span></button>
         <button class="vote-btn" data-vote="tie" title="快捷鍵：Space">難分高下<span class="kbd-key">Space</span></button>
-        <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：↓">B 較好<span class="kbd-key">↓</span></button>
+        <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：→">B 較好<span class="kbd-key">→</span></button>
         <button class="submit-btn" id="submitBtn" disabled title="快捷鍵：S">送出<span class="kbd-key">S</span></button>
     </div>
 </div>
@@ -2665,7 +2668,9 @@
         if (!panel || !title || !meta || !body) return;
         panel.classList.toggle('is-a', activeSummary === 'a');
         panel.classList.toggle('is-b', activeSummary === 'b');
-        title.textContent = summaryTitleLabel(activeSummary);
+        const tabLabelText = summaryTabLabel(activeSummary);
+        const titleLabelText = summaryTitleLabel(activeSummary);
+        title.textContent = (titleLabelText && titleLabelText !== tabLabelText) ? titleLabelText : '';
         meta.innerHTML = data ? calcCompressionMeta(data) : '';
         body.innerHTML = data ? renderAllSections(data.sections) : '<div class="empty-content">無摘要內容</div>';
         renderSummaryTabs();
@@ -3200,10 +3205,10 @@
                 setActiveSummary(activeSummary === 'a' ? 'b' : 'a');
                 return;
             }
-            if (e.key === 'ArrowUp') {
+            if (e.key === 'ArrowLeft') {
                 const btn = document.querySelector('.vote-btn[data-vote="a"]');
                 if (btn) { e.preventDefault(); btn.click(); }
-            } else if (e.key === 'ArrowDown') {
+            } else if (e.key === 'ArrowRight') {
                 const btn = document.querySelector('.vote-btn[data-vote="b"]');
                 if (btn) { e.preventDefault(); btn.click(); }
             } else if (e.key === ' ' || e.code === 'Space') {
