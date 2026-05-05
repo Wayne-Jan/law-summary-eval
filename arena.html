@@ -197,9 +197,9 @@
         }
 
         .summary-tab {
-            border: 1px solid rgba(148, 163, 184, 0.55);
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.72);
+            border: 1px solid rgba(148, 163, 184, 0.45);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.78);
             color: #64748b;
             font-family: inherit;
             cursor: pointer;
@@ -207,47 +207,87 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 7px;
-            padding: 10px 6px;
+            gap: 10px;
+            padding: 14px 6px;
             box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
             transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease;
         }
 
         .summary-tab:hover {
             transform: translateY(-1px);
-            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 10px 22px rgba(15, 23, 42, 0.09);
             border-color: #94a3b8;
+        }
+
+        .summary-tab:active {
+            transform: scale(0.98);
         }
 
         .summary-tab.active-a {
             background: linear-gradient(180deg, #eef2ff 0%, #ffffff 100%);
             border-color: #818cf8;
             color: #4338ca;
-            box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.12), 0 8px 18px rgba(79, 70, 229, 0.12);
+            box-shadow: inset 0 0 0 1px rgba(79, 70, 229, 0.18), 0 10px 22px rgba(79, 70, 229, 0.16);
         }
 
         .summary-tab.active-b {
             background: linear-gradient(180deg, #fff7ed 0%, #ffffff 100%);
             border-color: #fb923c;
             color: #c2410c;
-            box-shadow: inset 0 0 0 1px rgba(234, 88, 12, 0.12), 0 8px 18px rgba(234, 88, 12, 0.12);
+            box-shadow: inset 0 0 0 1px rgba(234, 88, 12, 0.18), 0 10px 22px rgba(234, 88, 12, 0.16);
+        }
+
+        .summary-tab-badge {
+            width: 34px;
+            height: 34px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            font-weight: 800;
+            line-height: 1;
+            background: #f1f5f9;
+            color: #94a3b8;
+            border: 1px solid #e2e8f0;
+            transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+        }
+
+        #summaryTabA .summary-tab-badge {
+            background: rgba(99, 102, 241, 0.12);
+            color: #6366f1;
+            border-color: rgba(99, 102, 241, 0.32);
+        }
+
+        #summaryTabB .summary-tab-badge {
+            background: rgba(249, 115, 22, 0.12);
+            color: #f97316;
+            border-color: rgba(249, 115, 22, 0.32);
+        }
+
+        .summary-tab.active-a .summary-tab-badge {
+            background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
+            color: #fff;
+            border-color: #4338ca;
+            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.35);
+            transform: scale(1.06);
+        }
+
+        .summary-tab.active-b .summary-tab-badge {
+            background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+            color: #fff;
+            border-color: #c2410c;
+            box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35);
+            transform: scale(1.06);
         }
 
         .summary-tab-label {
             writing-mode: vertical-rl;
-            text-orientation: mixed;
-            letter-spacing: 0.08em;
+            text-orientation: upright;
+            letter-spacing: 0.18em;
             font-size: 13px;
-            font-weight: 800;
+            font-weight: 700;
             line-height: 1.1;
-        }
-
-        .summary-tab-meta {
-            width: 8px;
-            height: 8px;
-            border-radius: 999px;
-            background: currentColor;
-            opacity: 0.7;
         }
 
         .source-panel-header {
@@ -1650,11 +1690,17 @@
             }
             .summary-tab {
                 border-radius: 12px;
-                padding: 8px 4px;
+                padding: 10px 4px;
+                gap: 8px;
+            }
+            .summary-tab-badge {
+                width: 28px;
+                height: 28px;
+                font-size: 14px;
             }
             .summary-tab-label {
                 font-size: 12px;
-                letter-spacing: 0.05em;
+                letter-spacing: 0.14em;
             }
             .source-list {
                 padding: 12px 14px 28px;
@@ -1777,11 +1823,11 @@
             <div class="toolbar-shortcut-title">投票快捷鍵</div>
             <div class="toolbar-shortcut-list">
                 <div class="toolbar-shortcut-row">
-                    <div class="toolbar-shortcut-keys"><span class="kbd-key">←</span></div>
+                    <div class="toolbar-shortcut-keys"><span class="kbd-key">↑</span></div>
                     <div class="toolbar-shortcut-desc">選擇 A 較好</div>
                 </div>
                 <div class="toolbar-shortcut-row">
-                    <div class="toolbar-shortcut-keys"><span class="kbd-key">→</span></div>
+                    <div class="toolbar-shortcut-keys"><span class="kbd-key">↓</span></div>
                     <div class="toolbar-shortcut-desc">選擇 B 較好</div>
                 </div>
                 <div class="toolbar-shortcut-row">
@@ -1811,7 +1857,7 @@
 <div class="main" id="mainArea">
     <section class="arena-pane source-panel" id="sourcePanel">
         <div class="source-panel-header">
-            <span class="icon" aria-hidden="true">文</span>
+            <span class="icon" aria-hidden="true">&#128196;</span>
             <span>原始判決書</span>
             <span class="chunk-count" id="sourceChunkCount"></span>
         </div>
@@ -1830,12 +1876,12 @@
         </div>
         <div class="summary-tabs" role="tablist" aria-label="摘要切換">
             <button class="summary-tab active-a" id="summaryTabA" type="button" role="tab" aria-selected="true" data-summary="a">
-                <span class="summary-tab-label">摘要 A</span>
-                <span class="summary-tab-meta" aria-hidden="true"></span>
+                <span class="summary-tab-badge" aria-hidden="true">A</span>
+                <span class="summary-tab-label">摘要</span>
             </button>
             <button class="summary-tab" id="summaryTabB" type="button" role="tab" aria-selected="false" data-summary="b">
-                <span class="summary-tab-label">摘要 B</span>
-                <span class="summary-tab-meta" aria-hidden="true"></span>
+                <span class="summary-tab-badge" aria-hidden="true">B</span>
+                <span class="summary-tab-label">摘要</span>
             </button>
         </div>
     </section>
@@ -1887,9 +1933,9 @@
         <textarea id="reasonText" placeholder="選擇理由 (選填)"></textarea>
     </div>
     <div class="vote-actions">
-        <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：←">A 較好<span class="kbd-key">←</span></button>
+        <button class="vote-btn vote-a" data-vote="a" title="快捷鍵：↑">A 較好<span class="kbd-key">↑</span></button>
         <button class="vote-btn" data-vote="tie" title="快捷鍵：Space">難分高下<span class="kbd-key">Space</span></button>
-        <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：→">B 較好<span class="kbd-key">→</span></button>
+        <button class="vote-btn vote-b" data-vote="b" title="快捷鍵：↓">B 較好<span class="kbd-key">↓</span></button>
         <button class="submit-btn" id="submitBtn" disabled title="快捷鍵：S">送出<span class="kbd-key">S</span></button>
     </div>
 </div>
@@ -2620,7 +2666,7 @@
             el.classList.toggle('active-b', active && key === 'b');
             el.setAttribute('aria-selected', active ? 'true' : 'false');
             const label = el.querySelector('.summary-tab-label');
-            if (label) label.textContent = summaryTabLabel(key);
+            if (label) label.textContent = '摘要';
         });
     }
 
@@ -3163,10 +3209,10 @@
             // Skip if vote bar is not visible (e.g., all-done screen)
             if (!isVoteBarVisible()) return;
 
-            if (e.key === 'ArrowLeft') {
+            if (e.key === 'ArrowUp') {
                 const btn = document.querySelector('.vote-btn[data-vote="a"]');
                 if (btn) { e.preventDefault(); btn.click(); }
-            } else if (e.key === 'ArrowRight') {
+            } else if (e.key === 'ArrowDown') {
                 const btn = document.querySelector('.vote-btn[data-vote="b"]');
                 if (btn) { e.preventDefault(); btn.click(); }
             } else if (e.key === ' ' || e.code === 'Space') {
