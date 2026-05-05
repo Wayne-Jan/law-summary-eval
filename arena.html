@@ -177,6 +177,51 @@
                 linear-gradient(180deg, #ffffff 0%, #fbfbff 100%);
         }
 
+        .panel-resizer {
+            flex: 0 0 6px;
+            align-self: stretch;
+            background: transparent;
+            cursor: col-resize;
+            position: relative;
+            border-radius: 3px;
+            transition: background-color 0.18s ease;
+            user-select: none;
+        }
+        .panel-resizer::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 2px;
+            height: 32px;
+            background: #d1d5db;
+            border-radius: 1px;
+            transition: background-color 0.18s ease, height 0.18s ease;
+            pointer-events: none;
+        }
+        .panel-resizer:hover {
+            background: rgba(99, 102, 241, 0.06);
+        }
+        .panel-resizer:hover::before {
+            background: #6366f1;
+            height: 44px;
+        }
+        .panel-resizer.dragging {
+            background: rgba(99, 102, 241, 0.10);
+        }
+        .panel-resizer.dragging::before {
+            background: #4f46e5;
+            height: 52px;
+        }
+        body.panel-resizing {
+            user-select: none;
+            cursor: col-resize;
+        }
+        body.panel-resizing iframe {
+            pointer-events: none;
+        }
+
         .summary-content-wrap {
             flex: 1;
             min-width: 0;
@@ -1655,6 +1700,7 @@
                 gap: 8px;
                 padding: 10px 12px;
             }
+            .panel-resizer { display: none; }
             .source-panel {
                 flex: 0 0 34%;
                 min-height: 180px;
@@ -1849,6 +1895,7 @@
             <div class="empty-content">載入原文中</div>
         </div>
     </section>
+    <div class="panel-resizer" id="panelResizer" role="separator" aria-orientation="vertical" aria-label="調整面板寬度"></div>
     <section class="arena-pane summary-panel is-a" id="summaryPanel">
         <div class="summary-content-wrap">
             <div class="panel-head">
@@ -3184,6 +3231,54 @@
         return cs.display !== 'none' && cs.visibility !== 'hidden';
     }
 
+    function initPanelResizer() {
+        const resizer = document.getElementById('panelResizer');
+        const main = document.getElementById('mainArea');
+        const source = document.getElementById('sourcePanel');
+        if (!resizer || !main || !source) return;
+
+        const MIN_PCT = 25;
+        const MAX_PCT = 70;
+
+        let dragging = false;
+        let containerWidth = 0;
+
+        function startDrag(e) {
+            if (window.innerWidth < 769) return;
+            dragging = true;
+            const cs = getComputedStyle(main);
+            containerWidth = main.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+            resizer.classList.add('dragging');
+            document.body.classList.add('panel-resizing');
+            e.preventDefault();
+        }
+
+        function onMove(e) {
+            if (!dragging || containerWidth <= 0) return;
+            const cs = getComputedStyle(main);
+            const padL = parseFloat(cs.paddingLeft);
+            const x = e.clientX - main.getBoundingClientRect().left - padL;
+            let pct = (x / containerWidth) * 100;
+            pct = Math.max(MIN_PCT, Math.min(MAX_PCT, pct));
+            source.style.flex = `0 0 ${pct}%`;
+        }
+
+        function endDrag() {
+            if (!dragging) return;
+            dragging = false;
+            resizer.classList.remove('dragging');
+            document.body.classList.remove('panel-resizing');
+        }
+
+        resizer.addEventListener('mousedown', startDrag);
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', endDrag);
+
+        resizer.addEventListener('dblclick', () => {
+            source.style.flex = '';
+        });
+    }
+
     function initKeyboardShortcuts() {
         document.addEventListener('keydown', (e) => {
             if (e.repeat) return;
@@ -3795,6 +3890,7 @@
         initAdminPanel();
         initReviewPage();
         initKeyboardShortcuts();
+        initPanelResizer();
         showLoginOverlay();
         appReady = true;
         auth.onAuthStateChanged((user) => {
