@@ -190,35 +190,22 @@
             position: relative;
             border-left: 1px solid #e5e7eb;
             background: #fff;
-            padding: 24px 0;
-            display: grid;
-            grid-template-rows: 1fr 1fr;
-        }
-
-        .summary-rail-indicator {
-            position: absolute;
-            left: 0;
-            width: 2px;
-            height: 28px;
-            border-radius: 0 1px 1px 0;
-            background: #0f172a;
-            top: calc(25% - 14px);
-            transition: top 0.42s cubic-bezier(0.32, 0.72, 0, 1);
-            pointer-events: none;
-        }
-
-        .summary-tabs[data-active="b"] .summary-rail-indicator {
-            top: calc(75% - 14px);
+            padding: 18px 0 0 0;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 4px;
         }
 
         .summary-tabs .summary-tab {
+            position: relative;
             margin: 0;
             border: none;
             background: transparent;
             border-radius: 0;
             box-shadow: none;
-            padding: 0;
-            color: #cbd5e1;
+            padding: 8px 0;
+            color: #94a3b8;
             font-family: inherit;
             cursor: pointer;
             display: flex;
@@ -227,20 +214,45 @@
             transition: color 0.28s ease;
         }
 
+        .summary-tabs .summary-tab::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 7px;
+            height: 24px;
+            border-radius: 3px 0 0 3px;
+            background: #e2e8f0;
+            transition: background 0.28s ease, box-shadow 0.28s ease;
+            pointer-events: none;
+        }
+
         .summary-tabs .summary-tab:hover {
-            color: #64748b;
+            color: #475569;
             transform: none;
             box-shadow: none;
         }
 
-        .summary-tabs[data-active="a"] #summaryTabA,
+        .summary-tabs[data-active="a"] #summaryTabA {
+            color: #818cf8;
+        }
+        .summary-tabs[data-active="a"] #summaryTabA::before {
+            background: #c7d2fe;
+            box-shadow: 0 2px 6px rgba(165, 180, 252, 0.35);
+        }
+
         .summary-tabs[data-active="b"] #summaryTabB {
-            color: #0f172a;
+            color: #fb923c;
+        }
+        .summary-tabs[data-active="b"] #summaryTabB::before {
+            background: #fed7aa;
+            box-shadow: 0 2px 6px rgba(253, 186, 116, 0.35);
         }
 
         .summary-switch-letter {
-            font-size: 22px;
-            font-weight: 600;
+            font-size: 20px;
+            font-weight: 700;
             line-height: 1;
             letter-spacing: 0.02em;
         }
@@ -1640,17 +1652,19 @@
                 grid-template-columns: minmax(0, 1fr) 64px;
             }
             .summary-tabs {
-                padding: 16px 0;
+                padding: 12px 0 0 0;
+                gap: 2px;
             }
-            .summary-rail-indicator {
-                height: 22px;
-                top: calc(25% - 11px);
+            .summary-tabs .summary-tab {
+                padding: 6px 0;
             }
-            .summary-tabs[data-active="b"] .summary-rail-indicator {
-                top: calc(75% - 11px);
+            .summary-tabs .summary-tab::before {
+                left: -4px;
+                width: 6px;
+                height: 20px;
             }
             .summary-switch-letter {
-                font-size: 18px;
+                font-size: 17px;
             }
             .source-list {
                 padding: 12px 14px 28px;
@@ -1829,7 +1843,6 @@
             <div class="panel-body" id="summaryBody"></div>
         </div>
         <div class="summary-tabs" role="tablist" aria-label="摘要切換" data-active="a">
-            <span class="summary-rail-indicator" aria-hidden="true"></span>
             <button class="summary-tab" id="summaryTabA" type="button" role="tab" aria-selected="true" data-summary="a" title="摘要 A（快捷鍵：Tab）">
                 <span class="summary-switch-letter">A</span>
             </button>
