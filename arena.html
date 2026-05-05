@@ -187,124 +187,62 @@
         }
 
         .summary-tabs {
-            border-left: 1px solid #e5e7eb;
-            background:
-                radial-gradient(120% 60% at 50% 0%, rgba(99, 102, 241, 0.10) 0%, transparent 65%),
-                radial-gradient(120% 60% at 50% 100%, rgba(249, 115, 22, 0.10) 0%, transparent 65%),
-                linear-gradient(180deg, #fafbff 0%, #fff8f1 100%);
-            padding: 18px 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-        }
-
-        .summary-switch-kicker {
-            font-size: 9px;
-            letter-spacing: 0.32em;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-            line-height: 1;
-        }
-
-        .summary-switch-pill {
             position: relative;
-            width: 50px;
-            height: 134px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.72);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(148, 163, 184, 0.32);
-            box-shadow:
-                inset 0 1px 2px rgba(15, 23, 42, 0.05),
-                0 6px 14px rgba(15, 23, 42, 0.06);
+            border-left: 1px solid #e5e7eb;
+            background: #fff;
+            padding: 24px 0;
             display: grid;
             grid-template-rows: 1fr 1fr;
-            padding: 4px;
-            box-sizing: border-box;
-            overflow: hidden;
         }
 
-        .summary-switch-thumb {
+        .summary-rail-indicator {
             position: absolute;
-            left: 4px;
-            right: 4px;
-            top: 4px;
-            height: calc(50% - 4px);
-            border-radius: 999px;
+            left: 0;
+            width: 2px;
+            height: 28px;
+            border-radius: 0 1px 1px 0;
+            background: #0f172a;
+            top: calc(25% - 14px);
+            transition: top 0.42s cubic-bezier(0.32, 0.72, 0, 1);
             pointer-events: none;
-            transition:
-                transform 0.42s cubic-bezier(0.32, 0.72, 0, 1),
-                background 0.32s ease,
-                box-shadow 0.32s ease;
-            background: linear-gradient(180deg, #6366f1 0%, #4f46e5 100%);
-            box-shadow:
-                0 6px 14px rgba(79, 70, 229, 0.35),
-                inset 0 1px 0 rgba(255, 255, 255, 0.28),
-                inset 0 -1px 0 rgba(15, 23, 42, 0.10);
         }
 
-        .summary-tabs[data-active="b"] .summary-switch-thumb {
-            transform: translateY(100%);
-            background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
-            box-shadow:
-                0 6px 14px rgba(234, 88, 12, 0.35),
-                inset 0 1px 0 rgba(255, 255, 255, 0.28),
-                inset 0 -1px 0 rgba(15, 23, 42, 0.10);
+        .summary-tabs[data-active="b"] .summary-rail-indicator {
+            top: calc(75% - 14px);
         }
 
-        .summary-switch-pill .summary-tab {
-            position: relative;
-            z-index: 1;
+        .summary-tabs .summary-tab {
             margin: 0;
             border: none;
             background: transparent;
-            border-radius: 999px;
+            border-radius: 0;
             box-shadow: none;
             padding: 0;
-            color: #94a3b8;
+            color: #cbd5e1;
             font-family: inherit;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: color 0.32s ease, transform 0.16s ease;
+            transition: color 0.28s ease;
         }
 
-        .summary-switch-pill .summary-tab:hover {
-            color: #475569;
+        .summary-tabs .summary-tab:hover {
+            color: #64748b;
             transform: none;
             box-shadow: none;
         }
 
-        .summary-switch-pill .summary-tab:active {
-            transform: scale(0.96);
-        }
-
         .summary-tabs[data-active="a"] #summaryTabA,
         .summary-tabs[data-active="b"] #summaryTabB {
-            color: #fff;
-            text-shadow: 0 1px 1px rgba(15, 23, 42, 0.18);
+            color: #0f172a;
         }
 
         .summary-switch-letter {
-            font-size: 19px;
-            font-weight: 800;
-            line-height: 1;
-            letter-spacing: 0;
-        }
-
-        .summary-switch-caption {
-            writing-mode: vertical-rl;
-            text-orientation: upright;
-            font-size: 11px;
-            letter-spacing: 0.32em;
+            font-size: 22px;
             font-weight: 600;
-            color: #94a3b8;
             line-height: 1;
+            letter-spacing: 0.02em;
         }
 
         .source-panel-header {
@@ -1702,29 +1640,17 @@
                 grid-template-columns: minmax(0, 1fr) 64px;
             }
             .summary-tabs {
-                padding: 12px 6px;
-                gap: 10px;
+                padding: 16px 0;
             }
-            .summary-switch-kicker {
-                display: none;
+            .summary-rail-indicator {
+                height: 22px;
+                top: calc(25% - 11px);
             }
-            .summary-switch-pill {
-                width: 42px;
-                height: 108px;
-                padding: 3px;
-            }
-            .summary-switch-thumb {
-                left: 3px;
-                right: 3px;
-                top: 3px;
-                height: calc(50% - 3px);
+            .summary-tabs[data-active="b"] .summary-rail-indicator {
+                top: calc(75% - 11px);
             }
             .summary-switch-letter {
-                font-size: 16px;
-            }
-            .summary-switch-caption {
-                font-size: 10px;
-                letter-spacing: 0.22em;
+                font-size: 18px;
             }
             .source-list {
                 padding: 12px 14px 28px;
@@ -1903,17 +1829,13 @@
             <div class="panel-body" id="summaryBody"></div>
         </div>
         <div class="summary-tabs" role="tablist" aria-label="摘要切換" data-active="a">
-            <span class="summary-switch-kicker" aria-hidden="true">VERSION</span>
-            <div class="summary-switch-pill">
-                <span class="summary-switch-thumb" aria-hidden="true"></span>
-                <button class="summary-tab" id="summaryTabA" type="button" role="tab" aria-selected="true" data-summary="a" title="摘要 A（快捷鍵：Tab）">
-                    <span class="summary-switch-letter">A</span>
-                </button>
-                <button class="summary-tab" id="summaryTabB" type="button" role="tab" aria-selected="false" data-summary="b" title="摘要 B（快捷鍵：Tab）">
-                    <span class="summary-switch-letter">B</span>
-                </button>
-            </div>
-            <span class="summary-switch-caption" aria-hidden="true">摘要</span>
+            <span class="summary-rail-indicator" aria-hidden="true"></span>
+            <button class="summary-tab" id="summaryTabA" type="button" role="tab" aria-selected="true" data-summary="a" title="摘要 A（快捷鍵：Tab）">
+                <span class="summary-switch-letter">A</span>
+            </button>
+            <button class="summary-tab" id="summaryTabB" type="button" role="tab" aria-selected="false" data-summary="b" title="摘要 B（快捷鍵：Tab）">
+                <span class="summary-switch-letter">B</span>
+            </button>
         </div>
     </section>
     <div class="all-done" id="allDone">
