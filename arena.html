@@ -2482,6 +2482,12 @@
 
     function sanitizeSourceText(content) {
         return String(content || '')
+            .replace(/\r\n/g, '\n')
+            .replace(/\r/g, '\n')
+            // Fix high-confidence hard wraps inside numbers, case numbers, statute
+            // references, docket numbers, and masked identifiers in source text.
+            .replace(/([第字號年度醫訴偵相卷台上上訴調訴簡易醫簡\d０-９A-Za-z])\n\s*([\d０-９A-Za-z])/g, '$1$2')
+            .replace(/([\d０-９A-Za-z])\n\s*([號年月日卷頁條款項目％%．.])/g, '$1$2')
             .replace(/\n{3,}/g, '\n\n')
             .trim();
     }
