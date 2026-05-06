@@ -157,6 +157,8 @@ def iter_evaluator_records(db) -> Iterable[Tuple[str, Dict[str, Dict[str, Any]]]
             continue
         # Resolve display name from keys (UID → name mapping)
         evaluator = resolve_evaluator_name(uid, records)
+        if evaluator not in USER_ROLES or USER_ROLES[evaluator] == "admin":
+            continue
         yield evaluator, records
 
 
@@ -185,6 +187,7 @@ def build_case_export(
     case_name: str,
     cond_order: list[str],
     phase_records: Dict[Tuple[str, str, str], Dict[str, Any]],
+    timeline_record: Dict[str, Any] | None,
     phase3_record: Dict[str, Any] | None,
     snapshot_timestamp: str,
 ) -> Dict[str, Any]:
@@ -228,6 +231,17 @@ def build_case_export(
             "_complete": bool(ptl.get("_complete")),
         }
 
+    if timeline_record is not None:
+        result["phaseTL"] = {
+            "TL": {
+                "real_condition": "timeline",
+                "scores": timeline_record.get("scores") or {},
+                "comment": timeline_record.get("comment") or "",
+                "comments": timeline_record.get("comments") or {},
+                "_complete": bool(timeline_record.get("_complete")),
+            }
+        }
+
     if phase3_record is not None:
         result["phase3"] = {
             "ranking": phase3_record.get("ranking") or [],
@@ -243,6 +257,7 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
     for evaluator, records in iter_evaluator_records(db):
         role = USER_ROLES.get(evaluator, "unknown")
         cond_orders: Dict[str, list[str]] = {}
+        timeline_by_case: Dict[str, Dict[str, Any]] = {}
         phase3_by_case: Dict[str, Dict[str, Any]] = {}
         phase_records: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
         case_names: set[str] = set()
@@ -265,6 +280,13 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
                 case_names.add(case_name)
                 continue
 
+            if key.startswith(base_prefix) and key.endswith("_phaseTL"):
+                case_name = key[len(base_prefix): -len("_phaseTL")]
+                if isinstance(data, dict) and data.get("_campaign_id") == EVAL_CAMPAIGN_ID:
+                    timeline_by_case[case_name] = data
+                    case_names.add(case_name)
+                continue
+
             split = split_phase_key(evaluator, key)
             if split:
                 case_name, cond, phase_name = split
@@ -284,6 +306,7 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
                 case_name=case_name,
                 cond_order=cond_order[: len(EVAL_CONDITIONS)],
                 phase_records=phase_records,
+                timeline_record=timeline_by_case.get(case_name),
                 phase3_record=phase3_by_case.get(case_name),
                 snapshot_timestamp=snapshot_timestamp,
             )
