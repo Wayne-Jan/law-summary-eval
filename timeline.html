@@ -1073,6 +1073,77 @@
       return String(text || '').replace(/\s+/g, '');
     }
 
+    function shouldJoinTimelineSourceLineBreak(text, breakIndex) {
+      if (text[breakIndex + 1] === '\n') return false;
+
+      const lineStart = text.lastIndexOf('\n', breakIndex - 1) + 1;
+      const nextBreak = text.indexOf('\n', breakIndex + 1);
+      const lineEnd = nextBreak === -1 ? text.length : nextBreak;
+      const left = text.slice(lineStart, breakIndex).replace(/[ \t　]+$/g, '');
+      const right = text.slice(breakIndex + 1, lineEnd).replace(/^[ \t　]+/g, '');
+      if (!left || !right || left.length < 18) return false;
+
+      const prev = left[left.length - 1];
+      const next = right[0];
+      if ('。．.，,、；;：:！!？?」』）)】〕〉》”’'.includes(prev)) return false;
+
+      const compactRight = right.replace(/\s+/g, '');
+      const sourceLabels = [
+        '裁判日期', '裁判案由', '臺灣',
+        '公訴人', '自訴人', '告訴人', '選任辯護人',
+        '辯護人', '代理人', '上列', '中華民國', '刑事第',
+        '法官', '審判長', '書記官'
+      ];
+      if (sourceLabels.some(label => compactRight.startsWith(label))) return false;
+      if (/^(?:公\s+訴\s+人|自\s+訴\s+人|告\s+訴\s+人|被\s+告|辯\s+護\s+人|代\s+理\s+人)/.test(right)) return false;
+      if (/^(?:[一二三四五六七八九十壹貳參肆伍陸柒捌玖拾]+[、.．]|[㈠㈡㈢㈣㈤㈥㈦㈧㈨㈩]|[⒈⒉⒊⒋⒌⒍⒎⒏⒐⒑]|[⑴⑵⑶⑷⑸⑹⑺⑻⑼⑽])/.test(right)) return false;
+      const leftTail = left.slice(-40);
+      const rightLead = right.slice(0, 40);
+      if (/(被\s+告|選任辯護人|辯\s+護\s+人|自\s+訴|公\s+訴|檢察署檢察官|律師|代\s+理\s+人)/.test(leftTail) &&
+          /(律師|被\s+告|上列|共同選任|選任辯護人)/.test(rightLead)) return false;
+
+      const isCjk = ch => /[\u4e00-\u9fff]/.test(ch);
+      const isAlphaNum = ch => /[A-Za-z0-9０-９]/.test(ch);
+      return (isCjk(prev) && isCjk(next)) || (isAlphaNum(prev) && isAlphaNum(next));
+    }
+
+    function sanitizeTimelineSourceText(content) {
+      const raw = String(content || '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      const shouldSkip = new Array(raw.length).fill(false);
+      const markJoin = (pattern) => {
+        raw.replace(pattern, (match, _left, _right, offset) => {
+          const breakOffset = offset + match.indexOf('\n');
+          shouldSkip[breakOffset] = true;
+          for (let i = breakOffset + 1; i < raw.length && /[ \t　]/.test(raw[i]); i += 1) {
+            shouldSkip[i] = true;
+          }
+          return match;
+        });
+      };
+
+      markJoin(/([縣市鄉鎮區村里路街段巷弄號○])\n[ \t　]*(○+[縣市鄉鎮區村里路街段巷弄號])/g);
+      markJoin(/([第字號年度醫訴偵相卷台上上訴調訴簡易醫簡\d０-９A-Za-z])\n[ \t　]*([\d０-９A-Za-z])/g);
+      markJoin(/([\d０-９A-Za-z])\n[ \t　]*([號年月日卷頁條款項目％%．.])/g);
+      markJoin(/([第卷頁][一二三四五六七八九十百千零〇○]*)\n[ \t　]*([一二三四五六七八九十百千零〇○]+(?=[、頁卷號]))/g);
+      markJoin(/([一二三四五六七八九十百千零〇○])\n[ \t　]*([一二三四五六七八九十百千零〇○]+(?=、[一二三四五六七八九十百千零〇○]+頁))/g);
+
+      const chars = [];
+      const indexMap = new Array(raw.length + 1);
+      for (let i = 0; i < raw.length; i += 1) {
+        indexMap[i] = chars.length;
+        if (shouldSkip[i]) continue;
+        if (raw[i] === '\n' && shouldJoinTimelineSourceLineBreak(raw, i)) {
+          for (let j = i + 1; j < raw.length && /[ \t　]/.test(raw[j]); j += 1) {
+            shouldSkip[j] = true;
+          }
+          continue;
+        }
+        chars.push(raw[i]);
+      }
+      indexMap[raw.length] = chars.length;
+      return { text: chars.join(''), indexMap };
+    }
+
     function refineSpanRangeInChunk(chunkContent, relStart, relEnd, quote) {
       const rawQuote = String(quote || '');
       if (!rawQuote) return null;
@@ -1391,6 +1462,13 @@
         const emittedAnchors = new Set();
         sorted.forEach(chunk => {
           const cid = chunk.chunk_id || '';
+          const rawContent = String(chunk.content || '');
+          const sanitized = sanitizeTimelineSourceText(rawContent);
+          const content = sanitized.text;
+          const mapOffset = (offset) => {
+            const clamped = Math.max(0, Math.min(rawContent.length, offset));
+            return sanitized.indexMap[clamped] == null ? content.length : sanitized.indexMap[clamped];
+          };
           const evtSpans = [];
           events.forEach((evt, evtIdx) => {
             getEventSpans(evt).forEach(sp => {
@@ -1402,7 +1480,7 @@
                 const status = sp.alignment_status || evt.alignment_status || 'UNRESOLVED';
                 if (status === 'MATCH_FUZZY' || status === 'PARTIAL_UNRESOLVED') {
                   const refined = refineSpanRangeInChunk(
-                    chunk.content || '',
+                    rawContent,
                     relStart,
                     relEnd,
                     sp.quote || ''
@@ -1412,9 +1490,12 @@
                     relEnd = refined.relEnd;
                   }
                 }
+                const mappedStart = mapOffset(relStart);
+                const mappedEnd = mapOffset(relEnd);
+                if (mappedEnd <= mappedStart) return;
                 evtSpans.push({
-                  relStart,
-                  relEnd,
+                  relStart: mappedStart,
+                  relEnd: mappedEnd,
                   evtIdx: evtIdx,
                   role: sp.role || 'supporting',
                   status,
@@ -1435,7 +1516,6 @@
               last.sources.push(sp);
             }
           });
-          const content = chunk.content || '';
           let chunkHtml = '';
           let cursor = 0;
           merged.forEach(m => {
