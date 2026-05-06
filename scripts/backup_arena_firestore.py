@@ -201,12 +201,15 @@ def iter_evaluator_votes(
     users_by_uid: Dict[str, Dict[str, str]],
 ) -> Iterable[Tuple[str, Dict[str, Any]]]:
     expected_names = list(config.get("evaluators") or [])
+    expected_name_set = set(expected_names)
     seen_names: set[str] = set()
 
     for evaluator_ref in db.collection("arena_evals").list_documents():
         uid = evaluator_ref.id
         user = users_by_uid.get(uid, {"uid": uid, "name": uid, "email": "", "role": ""})
         name = str(user.get("name") or uid)
+        if name not in expected_name_set:
+            continue
         votes = []
         for rec_doc in evaluator_ref.collection("records").stream():
             payload = rec_doc.to_dict() or {}

@@ -2122,6 +2122,11 @@
         return !!(ARENA_USERS[name] && ARENA_USERS[name].demoOnly);
     }
 
+    function isPublicArenaEvaluator(name) {
+        const user = ARENA_USERS[name];
+        return !!(user && user.role === 'evaluator' && user.includeInAdmin !== false && !user.demoOnly);
+    }
+
     let config = null;
     let currentEvaluator = null;
     let currentPair = null;
@@ -3120,7 +3125,19 @@
         if (!document.body.classList.contains('is-admin') || !auth.currentUser) return [];
         const snap = await db.collection('arena_backups_daily')
             .orderBy('snapshot_date', 'desc').limit(limit).get();
-        return snap.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }));
+        const rows = snap.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }));
+        await Promise.all(rows.map(async row => {
+            const evRows = await fetchArenaBackupEvaluators(row.id);
+            const votes = evRows.flatMap(ev => {
+                const data = ev.data || {};
+                return Array.isArray(data.votes) ? data.votes : [];
+            });
+            row.public_evaluator_count = evRows.length;
+            row.public_vote_count = votes.length || evRows.reduce((sum, ev) => sum + Number(ev.vote_count || 0), 0);
+            row.public_case_count = new Set(votes.map(v => v.case_id).filter(Boolean)).size ||
+                evRows.reduce((max, ev) => Math.max(max, Number(ev.case_count || 0)), 0);
+        }));
+        return rows;
     }
 
     async function fetchArenaBackupEvaluators(snapshotId) {
@@ -3129,6 +3146,7 @@
         const snap = await db.collection('arena_backups_daily')
             .doc(snapshotId).collection('evaluators').get();
         const rows = snap.docs.map(doc => ({ id: doc.id, ...(doc.data() || {}) }))
+            .filter(row => isPublicArenaEvaluator(row.evaluator || row.id))
             .sort((a, b) => String(a.evaluator || a.id).localeCompare(String(b.evaluator || b.id), 'zh-Hant'));
         arenaBackupCache.set(snapshotId, rows);
         return rows;
@@ -3159,9 +3177,9 @@
         for (const b of backups) {
             const date = b.snapshot_date || b.id;
             const status = b.status || 'ok';
-            const evCount = b.evaluator_count ?? '—';
-            const voteCount = b.vote_count ?? '—';
-            const caseCount = b.case_count ?? '—';
+            const evCount = b.public_evaluator_count ?? b.evaluator_count ?? '—';
+            const voteCount = b.public_vote_count ?? b.vote_count ?? '—';
+            const caseCount = b.public_case_count ?? b.case_count ?? '—';
             html += `<div class="backup-card">`;
             html += `<div class="backup-card-head" onclick="toggleArenaBackupDetail('${escapeHtml(b.id)}')">`;
             html += `<div><div class="backup-card-date">${escapeHtml(date)}</div>`;
@@ -3198,8 +3216,11 @@
         let detail = '';
 
         // Elo snapshot
-        const elo = backups.elo_snapshot;
-        const eloArr = Array.isArray(elo) ? elo : (elo && typeof elo === 'object' ? Object.values(elo) : []);
+        const backupVotes = evRows.flatMap(ev => {
+            const data = ev.data || {};
+            return Array.isArray(data.votes) ? data.votes : [];
+        });
+        const eloArr = backupVotes.length ? calcAggregateElo(backupVotes) : [];
         if (eloArr.length) {
             detail += '<div style="font-size:12px;font-weight:600;color:var(--a-slate-600);margin-bottom:6px">Elo Snapshot</div>';
             detail += '<div class="backup-elo-grid">';
