@@ -2887,9 +2887,11 @@ let caseList = [];
 let currentCase = '';
 let currentCondIdx = 0; // index into randomized condition order
 let currentPhase = 1;
-let aiDataCache = {}; // { conditionKey: data }
+let aiDataCache = {}; // { `${caseName}::${conditionKey}`: data }
 let gtDataCache = null;
 let tlDataCache = null; // timeline data for current case
+let tlDataCacheCase = '';
+let activeViewLoadToken = 0;
 let activeChunk = null;
 let activeTLEventIdx = -1;
 let activeTLSpanId = null;
@@ -2904,6 +2906,29 @@ let adminInspect = {
   role: '',
   records: new Map(),
 };
+
+function getAIDataCacheKey(caseName, cond) {
+  return `${caseName}::${cond}`;
+}
+
+function withDataVersion(path) {
+  const version = (window.SiteVersion && window.SiteVersion.version) || Date.now();
+  const joiner = path.includes('?') ? '&' : '?';
+  return `${path}${joiner}v=${encodeURIComponent(version)}`;
+}
+
+async function fetchJSONNoStore(path) {
+  const resp = await fetch(withDataVersion(path), { cache: 'no-store' });
+  if (!resp.ok) return null;
+  return resp.json();
+}
+
+function isCurrentViewLoad(token, caseName, condIdx, phase) {
+  return token === activeViewLoadToken
+    && currentCase === caseName
+    && currentCondIdx === condIdx
+    && currentPhase === phase;
+}
 
 // ═══════════════════════════════════════════════════════════════
 // INIT
@@ -2931,8 +2956,8 @@ async function initApp() {
 
   // Load manifest
   try {
-    const resp = await fetch('./data/manifest.json');
-    manifest = await resp.json();
+    manifest = await fetchJSONNoStore('./data/manifest.json');
+    if (!manifest) throw new Error('manifest load failed');
     caseSlugs = manifest.case_slugs || {};
     // Use eval whitelist (30 cases) if available, otherwise fall back to all cases
     const evalCaseSet = new Set(manifest.eval_cases || []);
@@ -3166,6 +3191,7 @@ async function onCaseChange() {
   aiDataCache = {};
   gtDataCache = null;
   tlDataCache = null;
+  tlDataCacheCase = '';
   tlEventSourceGroupsCache = null;
   activeChunk = null;
 
@@ -3273,21 +3299,22 @@ function switchPhase(phase) {
 // ═══════════════════════════════════════════════════════════════
 
 async function loadCurrentView() {
+  const token = ++activeViewLoadToken;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
 
   if (currentPhase === 1) {
     document.getElementById('phase1View').classList.add('active');
-    await loadPhase1();
+    await loadPhase1(token);
   } else if (currentPhase === 'tl') {
     document.getElementById('phaseTLView').classList.add('active');
-    await loadPhaseTL();
+    await loadPhaseTL(token);
   } else if (currentPhase === 3 && SHOW_PHASE3_UI) {
     document.getElementById('phase3View').classList.add('active');
-    await loadPhase3();
+    await loadPhase3(token);
   } else if (currentPhase === 3 && !SHOW_PHASE3_UI) {
     currentPhase = 'tl';
     document.getElementById('phaseTLView').classList.add('active');
-    await loadPhaseTL();
+    await loadPhaseTL(token);
   }
 
   syncKeyboardFocus(true);
@@ -3370,18 +3397,23 @@ function isTextEntryTarget(target) {
 // PHASE 1: Blind Scoring
 // ═══════════════════════════════════════════════════════════════
 
-async function loadPhase1() {
-  const cond = getRealCondition(currentCase, currentCondIdx);
-  const slug = getSlug(currentCase);
+async function loadPhase1(token) {
+  const caseName = currentCase;
+  const condIdx = currentCondIdx;
+  const cond = getRealCondition(caseName, condIdx);
+  const slug = getSlug(caseName);
+  const cacheKey = getAIDataCacheKey(caseName, cond);
 
   // Load AI data if not cached
-  if (!aiDataCache[cond]) {
+  if (!aiDataCache[cacheKey]) {
     try {
-      const resp = await fetch(`./data/${cond}/${slug}.json`);
-      if (resp.ok) aiDataCache[cond] = await resp.json();
+      const data = await fetchJSONNoStore(`./data/${encodeURIComponent(cond)}/${slug}.json`);
+      if (!isCurrentViewLoad(token, caseName, condIdx, 1)) return;
+      if (data) aiDataCache[cacheKey] = data;
     } catch {}
   }
-  const aiData = aiDataCache[cond];
+  if (!isCurrentViewLoad(token, caseName, condIdx, 1)) return;
+  const aiData = aiDataCache[cacheKey];
 
   // Render source
   renderSourcePanel('p1SourceBody', 'p1ChunkCount', aiData);
@@ -3554,26 +3586,35 @@ function completePhase1() {
 // PHASE TL: Timeline Evaluation
 // ═══════════════════════════════════════════════════════════════
 
-async function loadPhaseTL() {
-  const cond = getRealCondition(currentCase, currentCondIdx);
-  const slug = getSlug(currentCase);
+async function loadPhaseTL(token) {
+  const caseName = currentCase;
+  const condIdx = currentCondIdx;
+  const cond = getRealCondition(caseName, condIdx);
+  const slug = getSlug(caseName);
   const label = getAnonLabel(currentCondIdx);
+  const cacheKey = getAIDataCacheKey(caseName, cond);
 
   // Load AI summary
-  if (!aiDataCache[cond]) {
+  if (!aiDataCache[cacheKey]) {
     try {
-      const resp = await fetch(`./data/${cond}/${slug}.json`);
-      if (resp.ok) aiDataCache[cond] = await resp.json();
+      const data = await fetchJSONNoStore(`./data/${encodeURIComponent(cond)}/${slug}.json`);
+      if (!isCurrentViewLoad(token, caseName, condIdx, 'tl')) return;
+      if (data) aiDataCache[cacheKey] = data;
     } catch {}
   }
 
   // Load timeline data
-  if (!tlDataCache) {
+  if (!tlDataCache || tlDataCacheCase !== caseName) {
     try {
-      const resp = await fetch(`./data/timeline_v310/${slug}.json`);
-      if (resp.ok) tlDataCache = await resp.json();
+      const data = await fetchJSONNoStore(`./data/timeline_v310/${slug}.json`);
+      if (!isCurrentViewLoad(token, caseName, condIdx, 'tl')) return;
+      if (data) {
+        tlDataCache = data;
+        tlDataCacheCase = caseName;
+      }
     } catch {}
   }
+  if (!isCurrentViewLoad(token, caseName, condIdx, 'tl')) return;
 
   tlEventSourceGroupsCache = null;
   activeTLEventIdx = -1;
@@ -4609,23 +4650,27 @@ function completePhaseTL() {
 // PHASE 3: Preference Ranking
 // ═══════════════════════════════════════════════════════════════
 
-async function loadPhase3() {
-  const slug = getSlug(currentCase);
-  const condOrder = getConditionOrder(currentCase);
+async function loadPhase3(token) {
+  const caseName = currentCase;
+  const slug = getSlug(caseName);
+  const condOrder = getConditionOrder(caseName);
 
   // Load all 4 conditions
   for (let i = 0; i < 4; i++) {
     const cond = condOrder[i];
-    if (!aiDataCache[cond]) {
+    const cacheKey = getAIDataCacheKey(caseName, cond);
+    if (!aiDataCache[cacheKey]) {
       try {
-        const resp = await fetch(`./data/${cond}/${slug}.json`);
-        if (resp.ok) aiDataCache[cond] = await resp.json();
+        const data = await fetchJSONNoStore(`./data/${encodeURIComponent(cond)}/${slug}.json`);
+        if (!isCurrentViewLoad(token, caseName, currentCondIdx, 3)) return;
+        if (data) aiDataCache[cacheKey] = data;
       } catch {}
     }
   }
+  if (!isCurrentViewLoad(token, caseName, currentCondIdx, 3)) return;
 
   // Render source (collapsible)
-  const firstAI = aiDataCache[condOrder[0]];
+  const firstAI = aiDataCache[getAIDataCacheKey(caseName, condOrder[0])];
   renderSourcePanel('p3SourceBody', null, firstAI);
 
   // Render 4 columns
@@ -4634,7 +4679,7 @@ async function loadPhase3() {
   for (let i = 0; i < 4; i++) {
     const label = getAnonLabel(i);
     const cond = condOrder[i];
-    const aiData = aiDataCache[cond];
+    const aiData = aiDataCache[getAIDataCacheKey(caseName, cond)];
     colsHtml += `<div class="phase3-col">`;
     colsHtml += `<div class="phase3-col-header">${esc(label)}</div>`;
     colsHtml += `<div class="phase3-col-body">`;
