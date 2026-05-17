@@ -2399,7 +2399,7 @@
         overlay.classList.remove('hidden');
         sel.disabled = false;
         if (sel.options.length <= 1) {
-            Object.keys(ARENA_USERS).filter(name => name !== 'admin').forEach(name => {
+            Object.keys(ARENA_USERS).filter(name => name !== 'admin' && !isDemoEvaluator(name)).forEach(name => {
                 const opt = document.createElement('option');
                 opt.value = name;
                 opt.textContent = evaluatorDisplayName(name);
