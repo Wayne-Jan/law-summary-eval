@@ -1295,7 +1295,7 @@
             color: var(--a-slate-500);
         }
 
-        /* ─── Elo Leaderboard Card List (minimal) ─── */
+        /* ─── Preference Leaderboard Card List (minimal) ─── */
         .elo-list {
             display: grid;
             gap: 6px;
@@ -2019,7 +2019,7 @@
             <div class="admin-panel-head">
                 <div>
                     <h2>Arena 管理總覽</h2>
-                    <p>合併全部評審者的投票，顯示整體 Elo 排行、每位評審完成度，以及案件 × 評審的進度格子。</p>
+                    <p>合併全部評審者的投票，顯示整體偏好排行、每位評審完成度，以及案件 × 評審的進度格子。</p>
                 </div>
                 <div class="admin-panel-actions">
                     <button class="admin-mini-btn" id="adminRefreshBtn">重新整理</button>
@@ -2052,7 +2052,7 @@
 <!-- Leaderboard panel -->
 <div class="leaderboard-panel" id="lbPanel">
     <div class="leaderboard-header">
-        <h3>Elo 排行榜</h3>
+        <h3>偏好排行榜</h3>
         <button id="lbClose">&times;</button>
     </div>
     <div class="leaderboard-body" id="lbBody"></div>
@@ -2933,44 +2933,52 @@
         } catch { return ts; }
     }
 
-    function calcAggregateElo(votes) {
-        const elo = {};
+    function calcPreferenceRanking(votes) {
+        const pref = {};
         for (const cond of config.conditions) {
-            elo[cond] = { rating: 1000, wins: 0, draws: 0, losses: 0, matches: 0, cases: new Set() };
+            pref[cond] = { wins: 0, draws: 0, losses: 0, matches: 0, cases: new Set() };
         }
         for (const v of votes) {
             const a = v.condition_a;
             const b = v.condition_b;
-            if (!elo[a] || !elo[b]) continue;
-            elo[a].matches++;
-            elo[b].matches++;
-            elo[a].cases.add(v.case_id);
-            elo[b].cases.add(v.case_id);
-            const ea = 1 / (1 + Math.pow(10, (elo[b].rating - elo[a].rating) / 400));
-            const eb = 1 - ea;
-            const K = 32;
-            let sa;
-            let sb;
+            if (!pref[a] || !pref[b]) continue;
+            pref[a].matches++;
+            pref[b].matches++;
+            pref[a].cases.add(v.case_id);
+            pref[b].cases.add(v.case_id);
             if (v.winner === 'a') {
-                sa = 1; sb = 0; elo[a].wins++; elo[b].losses++;
+                pref[a].wins++;
+                pref[b].losses++;
             } else if (v.winner === 'b') {
-                sa = 0; sb = 1; elo[b].wins++; elo[a].losses++;
+                pref[b].wins++;
+                pref[a].losses++;
             } else {
-                sa = 0.5; sb = 0.5; elo[a].draws++; elo[b].draws++;
+                pref[a].draws++;
+                pref[b].draws++;
             }
-            elo[a].rating += K * (sa - ea);
-            elo[b].rating += K * (sb - eb);
         }
-        return Object.entries(elo).map(([cond, data]) => ({
-            condition: cond,
-            label: config.condition_labels[cond] || cond,
-            rating: Math.round(data.rating),
-            wins: data.wins,
-            draws: data.draws,
-            losses: data.losses,
-            matches: data.matches,
-            caseCount: data.cases.size
-        })).sort((x, y) => y.rating - x.rating);
+        return Object.entries(pref).map(([cond, data]) => {
+            const score = data.wins + data.draws * 0.5;
+            const scoreRate = data.matches ? score / data.matches : 0;
+            return {
+                condition: cond,
+                label: config.condition_labels[cond] || cond,
+                rating: Math.round(scoreRate * 1000),
+                score,
+                scoreRate,
+                scorePercent: scoreRate * 100,
+                wins: data.wins,
+                draws: data.draws,
+                losses: data.losses,
+                matches: data.matches,
+                caseCount: data.cases.size
+            };
+        }).sort((x, y) =>
+            y.scoreRate - x.scoreRate ||
+            y.score - x.score ||
+            y.wins - x.wins ||
+            x.label.localeCompare(y.label)
+        );
     }
 
     function getBackboneKey(cond) {
@@ -2983,10 +2991,10 @@
         return role.toLowerCase();
     }
 
-    function renderEloLeaderboard(votes) {
-        const rows = calcAggregateElo(votes);
+    function renderPreferenceLeaderboard(votes) {
+        const rows = calcPreferenceRanking(votes);
         let html = '<div class="admin-section">';
-        html += '<div class="admin-section-head"><h3>全體合併 Elo 排行</h3>';
+        html += '<div class="admin-section-head"><h3>全體合併偏好排行</h3>';
         html += `<span class="section-desc">彙總 ${adminEvaluatorNames().length} 位評審者的全部投票</span></div>`;
 
         const hasVotes = rows.some(r => r.matches > 0);
@@ -3023,7 +3031,7 @@
             html += '</div>';
             html += '</div>';
             html += '<div class="elo-score">';
-            html += `<div class="elo-rating">${row.rating}</div>`;
+            html += `<div class="elo-rating">${row.scorePercent.toFixed(1)}%</div>`;
             html += `<div class="elo-wdl"><span class="wdl-w">${row.wins}</span> · ${row.draws} · <span class="wdl-l">${row.losses}</span></div>`;
             html += '</div>';
             html += '</div>';
@@ -3204,7 +3212,7 @@
         el.classList.add('open');
         if (el.dataset.loaded) return;
 
-        // Lazy load: snapshot doc for elo + evaluator subdocs
+        // Lazy load: snapshot doc for preference ranking + evaluator subdocs
         const [backups, evRows] = await Promise.all([
             (async () => {
                 const doc = await db.collection('arena_backups_daily').doc(snapshotId).get();
@@ -3215,20 +3223,20 @@
 
         let detail = '';
 
-        // Elo snapshot
+        // Preference snapshot
         const backupVotes = evRows.flatMap(ev => {
             const data = ev.data || {};
             return Array.isArray(data.votes) ? data.votes : [];
         });
-        const eloArr = backupVotes.length ? calcAggregateElo(backupVotes) : [];
-        if (eloArr.length) {
-            detail += '<div style="font-size:12px;font-weight:600;color:var(--a-slate-600);margin-bottom:6px">Elo Snapshot</div>';
+        const prefArr = backupVotes.length ? calcPreferenceRanking(backupVotes) : [];
+        if (prefArr.length) {
+            detail += '<div style="font-size:12px;font-weight:600;color:var(--a-slate-600);margin-bottom:6px">偏好得分率 Snapshot</div>';
             detail += '<div class="backup-elo-grid">';
-            const sorted = eloArr.slice().sort((a, b) => (b.rating || 0) - (a.rating || 0));
+            const sorted = prefArr.slice().sort((a, b) => (b.scoreRate || 0) - (a.scoreRate || 0));
             for (const item of sorted) {
                 const name = item.label || item.condition || '—';
-                const rating = item.rating ?? 0;
-                detail += `<div class="backup-elo-item"><span class="elo-name">${escapeHtml(name)}</span><span class="elo-val">${Math.round(rating)}</span></div>`;
+                const percent = item.scorePercent ?? 0;
+                detail += `<div class="backup-elo-item"><span class="elo-name">${escapeHtml(name)}</span><span class="elo-val">${percent.toFixed(1)}%</span></div>`;
             }
             detail += '</div>';
         }
@@ -3276,7 +3284,7 @@
         }
         let html = '';
         if (rows.length) {
-            html += renderEloLeaderboard(dataset.allVotes);
+            html += renderPreferenceLeaderboard(dataset.allVotes);
             html += renderAdminSummaryTable(rows);
             html += renderProgressMatrix(rows);
         }
@@ -4014,7 +4022,7 @@
             body.innerHTML = '<div class="lb-empty">無法載入全體排行榜，請稍後再試。</div>';
             return;
         }
-        const rankings = calcAggregateElo(dataset.allVotes);
+        const rankings = calcPreferenceRanking(dataset.allVotes);
 
         if (!dataset.allVotes.length) {
             body.innerHTML = '<div class="lb-empty">尚無投票紀錄</div>';
@@ -4022,14 +4030,14 @@
         }
 
         let html = '<table class="lb-table"><thead><tr>';
-        html += '<th>#</th><th>模型</th><th>Elo</th><th>戰績</th>';
+        html += '<th>#</th><th>模型</th><th>偏好得分率</th><th>戰績</th>';
         html += '</tr></thead><tbody>';
 
         rankings.forEach((r, i) => {
             html += '<tr>';
             html += '<td class="lb-rank">' + (i + 1) + '</td>';
             html += '<td>' + escapeHtml(r.label) + '</td>';
-            html += '<td class="lb-elo">' + r.rating + '</td>';
+            html += '<td class="lb-elo">' + r.scorePercent.toFixed(1) + '%</td>';
             html += '<td class="lb-record">' + r.wins + 'W / ' + r.draws + 'D / ' + r.losses + 'L</td>';
             html += '</tr>';
         });
