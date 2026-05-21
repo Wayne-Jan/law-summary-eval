@@ -3237,7 +3237,7 @@ async function onCaseChange() {
 function renderCondPills() {
   const el = document.getElementById('condPills');
   let html = '';
-  const locked = isCaseLocked(currentCase);
+  const locked = isCaseLocked(currentCase) && !isAdminInspectMode();
   const timelineLocked = currentPhase === 'tl' && !isAdminInspectMode();
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAdminInspectConditionLabel(currentCase, i);
@@ -3255,7 +3255,7 @@ function renderCondPills() {
 }
 
 function switchCondition(idx) {
-  if (isCaseLocked(currentCase) || (currentPhase === 'tl' && !isAdminInspectMode())) return;
+  if ((isCaseLocked(currentCase) && !isAdminInspectMode()) || (currentPhase === 'tl' && !isAdminInspectMode())) return;
   saveCurrentState();
   currentCondIdx = idx;
   // Stay on the current phase — don't auto-jump
