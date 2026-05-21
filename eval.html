@@ -259,89 +259,6 @@
     }
     .vol-modal-name:hover { text-decoration: underline; }
     .progress-subbar .sep-dot { color: var(--slate-300); }
-    /* ─── PHASE 3: Four-column ─── */
-    #phase3View { flex-direction: column; }
-    .phase3-source-toggle {
-      padding: 6px 14px; background: var(--slate-100); border-bottom: 1px solid #e2e8f0;
-      cursor: pointer; font-size: 13px; color: var(--slate-500); user-select: none;
-      display: flex; align-items: center; gap: 6px;
-    }
-    .phase3-source-toggle:hover { background: var(--slate-50); }
-    .phase3-source-panel {
-      max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
-      background: white; border-bottom: 1px solid #e2e8f0;
-    }
-    .phase3-source-panel.open { max-height: 250px; overflow-y: auto; }
-    .phase3-columns { display: flex; flex: 1; min-height: 0; overflow: hidden; }
-    .phase3-col {
-      flex: 1; border-right: 1px solid #e2e8f0; overflow-y: auto; background: white;
-      display: flex; flex-direction: column;
-    }
-    .phase3-col:last-child { border-right: none; }
-    .phase3-col-header {
-      position: sticky; top: 0; z-index: 5; padding: 10px 14px;
-      background: var(--slate-50); border-bottom: 1px solid #e2e8f0;
-      font-size: 14px; font-weight: 600; color: var(--slate-900); text-align: center;
-    }
-    .phase3-col-body { padding: 12px 14px; font-size: 14px; line-height: 1.8; flex: 1; }
-
-    .phase3-ranking-area {
-      flex-shrink: 0; padding: 16px 20px; background: var(--slate-50);
-      border-top: 1px solid #e2e8f0;
-    }
-    /* Sequential selection UI */
-    .p3-step-title {
-      font-size: 16px; font-weight: 600; color: var(--slate-900);
-      text-align: center; margin-bottom: 6px;
-    }
-    .p3-step-subtitle {
-      font-size: 13px; color: var(--slate-500); text-align: center; margin-bottom: 14px;
-    }
-    .p3-step-progress {
-      display: flex; gap: 6px; justify-content: center; margin-bottom: 14px;
-    }
-    .p3-step-dot {
-      width: 10px; height: 10px; border-radius: 50%;
-      background: var(--slate-300); transition: background 0.2s;
-    }
-    .p3-step-dot.done { background: var(--emerald); }
-    .p3-step-dot.current { background: var(--indigo); box-shadow: 0 0 0 3px rgba(79,70,229,0.2); }
-    .p3-choices {
-      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
-    }
-    .p3-choice-card {
-      width: 220px; border: 2px solid var(--slate-300); border-radius: 10px;
-      background: white; cursor: pointer; transition: all 0.2s; overflow: hidden;
-    }
-    .p3-choice-card:hover { border-color: var(--indigo); box-shadow: 0 4px 12px rgba(79,70,229,0.15); transform: translateY(-2px); }
-    .p3-choice-card.disabled { opacity: 0.35; pointer-events: none; cursor: default; }
-    .p3-choice-card.selected { border-color: var(--emerald); background: var(--emerald-light); }
-    .p3-choice-label {
-      padding: 14px 10px; text-align: center; font-size: 16px; font-weight: 600;
-      color: var(--slate-900);
-    }
-    .p3-choice-medal { font-size: 20px; margin-right: 4px; }
-    /* Summary */
-    .p3-summary-title {
-      font-size: 16px; font-weight: 600; color: var(--slate-900);
-      text-align: center; margin-bottom: 12px;
-    }
-    .p3-summary-list {
-      display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 14px;
-    }
-    .p3-summary-item {
-      display: flex; align-items: center; gap: 8px; padding: 8px 16px;
-      border-radius: 8px; background: white; border: 1px solid var(--slate-300);
-      font-size: 14px; font-weight: 500;
-    }
-    .p3-summary-rank { font-size: 18px; }
-    .ranking-reason-area { text-align: center; }
-    .ranking-reason-area textarea {
-      width: 100%; max-width: 500px; font-size: 14px; padding: 8px 12px;
-      border: 1px solid var(--slate-300); border-radius: 6px; font-family: var(--sans);
-      resize: vertical; min-height: 36px;
-    }
-
     /* ─── SHARED PANEL STYLES ─── */
     .panel-header {
       position: sticky; top: 0; z-index: 10; background: white;
@@ -403,17 +320,14 @@
       box-decoration-break: clone; -webkit-box-decoration-break: clone;
       transition: background 0.3s;
     }
-    #phase1View .chunk-region.active mark,
-    #phase3View .chunk-region.active mark { background: #fef9c3; }
+    #phase1View .chunk-region.active mark { background: #fef9c3; }
     .chunk-label {
       display: none; font-size: 11px; font-weight: 700; color: var(--amber);
       background: #fef3c7; padding: 2px 6px; border-radius: 3px;
       vertical-align: middle; margin-right: 4px; letter-spacing: 0.3px;
     }
-    #phase1View .chunk-region.active .chunk-label,
-    #phase3View .chunk-region.active .chunk-label { display: inline; }
-    #phase1View .chunk-region.active,
-    #phase3View .chunk-region.active { border-left: 3px solid var(--amber); padding-left: 12px; margin-left: -15px; }
+    #phase1View .chunk-region.active .chunk-label { display: inline; }
+    #phase1View .chunk-region.active { border-left: 3px solid var(--amber); padding-left: 12px; margin-left: -15px; }
 
     /* Section blocks */
     .section-block { margin-bottom: 16px; }
@@ -556,9 +470,6 @@
       .fb-section-textarea { min-height: 112px; font-size: 14px; }
       #phase1View { flex-direction: column; }
       .panel-source, .panel-summary, .panel-eval { flex: none !important; width: 100% !important; height: auto; max-height: 40vh; }
-      .phase3-columns { flex-direction: column; }
-      .phase3-col { flex: none; max-height: 30vh; }
-      .p3-choices { flex-direction: column; align-items: center; }
       .toolbar-shortcut-panel, .toolbar-menu { right: 0; left: auto; max-width: calc(100vw - 24px); }
       .toolbar-shortcut-btn { min-width: 40px; justify-content: center; padding-left: 10px; padding-right: 10px; }
       .toolbar-shortcut-label { display: none; }
@@ -1922,34 +1833,6 @@
     </div>
   </div>
 
-  <!-- ─── PHASE 3 VIEW ─── -->
-  <div class="view" id="phase3View">
-    <div class="phase3-source-toggle" onclick="togglePhase3Source()">
-      <span id="p3SourceArrow">&#x25B6;</span> 原文（點擊展開）
-    </div>
-    <div class="phase3-source-panel" id="p3SourcePanel">
-      <div class="panel-body" id="p3SourceBody"></div>
-    </div>
-    <div class="phase3-columns" id="phase3Columns"></div>
-    <div class="phase3-ranking-area" id="phase3RankingArea">
-      <!-- Sequential selection steps -->
-      <div id="p3SelectionUI"></div>
-      <!-- Final summary (shown after all 3 steps) -->
-      <div id="p3Summary" style="display:none;">
-        <div class="p3-summary-title">排序結果</div>
-        <div id="p3SummaryList" class="p3-summary-list"></div>
-        <div class="ranking-reason-area">
-          <label style="font-size:13px;color:var(--slate-500);">排序理由（選填，限 100 字）</label>
-          <textarea id="p3RankingReason" maxlength="100" placeholder="排序理由..." oninput="debounceSave()"></textarea>
-        </div>
-        <div style="display:flex;gap:10px;justify-content:center;margin-top:12px;">
-          <button class="btn btn-ghost" onclick="resetPhase3Selection()">重新排序</button>
-          <button class="btn btn-success" id="p3CompleteBtn" onclick="completePhase3()">完成此案 &#x2192;</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════ -->
@@ -2014,10 +1897,6 @@ function getPhaseStorageKey(evaluator, caseName, cond, phase) {
 
 function getPhaseTLStorageKey(evaluator, caseName) {
   return `${getEvalDataPrefix(evaluator)}${caseName}_phaseTL`;
-}
-
-function getPhase3StorageKey(evaluator, caseName) {
-  return `${getEvalDataPrefix(evaluator)}${caseName}_phase3`;
 }
 
 function cloneJSON(value) {
@@ -2332,10 +2211,6 @@ function diffCasePhases(curCase, prevCase) {
       }
     });
   });
-  if (curCase && curCase.phase3 && curCase.phase3._complete) {
-    const prevP3 = prevCase && prevCase.phase3;
-    if (!prevP3 || !prevP3._complete) actions.push('整體排序完成');
-  }
   return actions;
 }
 
@@ -2620,13 +2495,6 @@ function getTLExpectedCountForRole(role) {
 // CONSTANTS
 // ═══════════════════════════════════════════════════════════════
 
-// ⚠️ NOTE FOR HUMANS & AI ASSISTANTS:
-// Phase 3 ranking (A/B/C/D 排名) has been DEPRECATED and removed from the
-// current human eval workflow. The current eval only uses Phase 1 + Phase 2
-// (per-dimension Likert scoring + comments). Do NOT suggest restoring or
-// extending ranking features. SHOW_PHASE3_UI=false permanently hides it.
-// The PHASE3_COND_COUNT constant is kept only to avoid breaking dead-code
-// references; it is NOT used by any active code path.
 const EVAL_CONDITIONS = [
   'claude_afg_v5.1',
   'ablation_no_afg',
@@ -2634,8 +2502,6 @@ const EVAL_CONDITIONS = [
   'baseline_claude-haiku',
   'LENS-Full-DeepSeek_v31'
 ];
-const PHASE3_COND_COUNT = 4; // DEPRECATED — Phase 3 ranking is no longer used
-const SHOW_PHASE3_UI = false; // DEPRECATED — do not re-enable
 
 const ANON_LABELS = ['版本 A', '版本 B', '版本 C', '版本 D', '版本 E'];
 
@@ -3179,16 +3045,8 @@ function areAllCondsComplete(caseName) {
   return areAllPhase1Complete(caseName) && isPhaseTLComplete(caseName);
 }
 
-function isPhase3Complete(caseName) {
-  if (!SHOW_PHASE3_UI) return areAllCondsComplete(caseName);
-  const ev = getEvaluator();
-  const key = getPhase3StorageKey(ev, caseName);
-  const d = loadStoredJSON(key);
-  return !!(d && d._complete === true);
-}
-
 function isCaseLocked(caseName) {
-  return isPhase3Complete(caseName);
+  return areAllCondsComplete(caseName);
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -3292,7 +3150,6 @@ function renderPhaseIndicators() {
 }
 
 function switchPhase(phase) {
-  if (phase === 3 && !SHOW_PHASE3_UI) return;
   // TODO: re-enable locking before production deployment
   // Phase locking temporarily disabled for preview/testing
   saveCurrentState();
@@ -3317,10 +3174,7 @@ async function loadCurrentView() {
   } else if (currentPhase === 'tl') {
     document.getElementById('phaseTLView').classList.add('active');
     await loadPhaseTL(token);
-  } else if (currentPhase === 3 && SHOW_PHASE3_UI) {
-    document.getElementById('phase3View').classList.add('active');
-    await loadPhase3(token);
-  } else if (currentPhase === 3 && !SHOW_PHASE3_UI) {
+  } else if (currentPhase === 3) {
     currentPhase = 'tl';
     document.getElementById('phaseTLView').classList.add('active');
     await loadPhaseTL(token);
@@ -3392,7 +3246,7 @@ function applyKeyboardScore(score) {
 }
 
 function cycleCondition(direction) {
-  if ((!SHOW_PHASE3_UI && currentPhase === 3) || isCaseLocked(currentCase)) return;
+  if (currentPhase === 3 || isCaseLocked(currentCase)) return;
   const total = EVAL_CONDITIONS.length;
   const nextIdx = (currentCondIdx + direction + total) % total;
   switchCondition(nextIdx);
@@ -4656,287 +4510,6 @@ function completePhaseTL() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// PHASE 3: Preference Ranking
-// ═══════════════════════════════════════════════════════════════
-
-async function loadPhase3(token) {
-  const caseName = currentCase;
-  const slug = getSlug(caseName);
-  const condOrder = getConditionOrder(caseName);
-
-  // Load all 4 conditions
-  for (let i = 0; i < 4; i++) {
-    const cond = condOrder[i];
-    const cacheKey = getAIDataCacheKey(caseName, cond);
-    if (!aiDataCache[cacheKey]) {
-      try {
-        const data = await fetchJSONNoStore(`./data/${encodeURIComponent(cond)}/${slug}.json`);
-        if (!isCurrentViewLoad(token, caseName, currentCondIdx, 3)) return;
-        if (data) aiDataCache[cacheKey] = data;
-      } catch {}
-    }
-  }
-  if (!isCurrentViewLoad(token, caseName, currentCondIdx, 3)) return;
-
-  // Render source (collapsible)
-  const firstAI = aiDataCache[getAIDataCacheKey(caseName, condOrder[0])];
-  renderSourcePanel('p3SourceBody', null, firstAI);
-
-  // Render 4 columns
-  const colsEl = document.getElementById('phase3Columns');
-  let colsHtml = '';
-  for (let i = 0; i < 4; i++) {
-    const label = getAnonLabel(i);
-    const cond = condOrder[i];
-    const aiData = aiDataCache[getAIDataCacheKey(caseName, cond)];
-    colsHtml += `<div class="phase3-col">`;
-    colsHtml += `<div class="phase3-col-header">${esc(label)}</div>`;
-    colsHtml += `<div class="phase3-col-body">`;
-    if (aiData && aiData.sections) {
-      colsHtml += aiData.sections.map(s =>
-        `<div class="section-block"><div class="section-title section-title-ai" style="font-size:12px;padding:4px 8px;">${esc(SECTION_NAMES[s.id] || s.title)}</div><div class="section-body" style="font-size:13px;line-height:1.7;">${esc(s.content || '')}</div></div>`
-      ).join('');
-    } else {
-      colsHtml += '<span class="empty-text">無法載入</span>';
-    }
-    colsHtml += `</div></div>`;
-  }
-  colsEl.innerHTML = colsHtml;
-
-  // Sequential selection state
-  p3Ranking = [];
-  renderPhase3Selection();
-
-  // Restore
-  restorePhase3();
-
-  const locked = isCaseLocked(currentCase);
-  if (locked) {
-    document.getElementById('p3CompleteBtn').disabled = true;
-    document.getElementById('p3CompleteBtn').textContent = '此案已完成';
-  }
-}
-
-// ── Phase 3: Sequential Selection ──
-
-let p3Ranking = []; // array of condIdx in preference order
-const P3_STEPS = [
-  { question: '哪個版本最好？', subtitle: '從 4 個版本中選出整體品質最佳的' },
-  { question: '剩下的哪個次好？', subtitle: '從剩餘 3 個版本中選出第 2 名' },
-  { question: '最後兩個，哪個較好？', subtitle: '從剩餘 2 個版本中選出第 3 名' },
-  { question: '確認最後一名', subtitle: '剩餘版本自動成為第 4 名' },
-];
-const P3_MEDALS = ['🥇', '🥈', '🥉', '🎖️'];
-
-function renderPhase3Selection() {
-  const ui = document.getElementById('p3SelectionUI');
-  const summary = document.getElementById('p3Summary');
-  const step = p3Ranking.length; // 0, 1, 2, 3, or 4 (done)
-
-  if (step >= 4) {
-    // All selected → show summary
-    ui.style.display = 'none';
-    summary.style.display = 'block';
-    renderPhase3Summary();
-    return;
-  }
-
-  ui.style.display = 'block';
-  summary.style.display = 'none';
-
-  const stepInfo = P3_STEPS[step];
-  const condOrder = getConditionOrder(currentCase);
-  const remaining = [0, 1, 2, 3].filter(i => !p3Ranking.includes(i));
-
-  let html = '';
-  // Progress dots
-  html += '<div class="p3-step-progress">';
-  for (let s = 0; s < 4; s++) {
-    let cls = 'p3-step-dot';
-    if (s < step) cls += ' done';
-    else if (s === step) cls += ' current';
-    html += `<div class="${cls}"></div>`;
-  }
-  html += '</div>';
-
-  html += `<div class="p3-step-title">${stepInfo.question}</div>`;
-  html += `<div class="p3-step-subtitle">${stepInfo.subtitle}</div>`;
-
-  // Choice cards (all 4 shown, selected ones show medal, remaining are clickable)
-  html += '<div class="p3-choices">';
-  for (const i of [0, 1, 2, 3]) {
-    const isRemaining = remaining.includes(i);
-    const isSelected = p3Ranking.includes(i);
-    const label = getAnonLabel(i);
-
-    const cardCls = isSelected ? 'p3-choice-card selected disabled' : (isRemaining ? 'p3-choice-card' : 'p3-choice-card disabled');
-    html += `<div class="${cardCls}" ${isRemaining ? `onclick="selectPhase3Choice(${i})"` : ''}>`;
-    html += `<div class="p3-choice-label">`;
-    if (isSelected) {
-      const rank = p3Ranking.indexOf(i);
-      html += `<span class="p3-choice-medal">${P3_MEDALS[rank]}</span>`;
-    }
-    html += `${esc(label)}</div>`;
-    html += `</div>`;
-  }
-  html += '</div>';
-
-  // Undo button
-  if (p3Ranking.length > 0) {
-    html += '<div style="text-align:center;margin-top:12px;">';
-    html += '<button class="btn btn-ghost" onclick="undoPhase3Selection()">&#x21A9; 上一步</button>';
-    html += '</div>';
-  }
-
-  ui.innerHTML = html;
-}
-
-function selectPhase3Choice(idx) {
-  if (isAdminInspectMode()) return;
-  p3Ranking.push(idx);
-
-  renderPhase3Selection();
-  savePhase3State();
-
-  // Highlight the selected column
-  document.querySelectorAll('.phase3-col').forEach((col, i) => {
-    const rank = p3Ranking.indexOf(i);
-    if (rank >= 0) {
-      col.querySelector('.phase3-col-header').innerHTML = `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`;
-    }
-  });
-}
-
-function undoPhase3Selection() {
-  if (isAdminInspectMode()) return;
-  p3Ranking.pop();
-  renderPhase3Selection();
-  savePhase3State();
-
-  // Reset column headers
-  document.querySelectorAll('.phase3-col').forEach((col, i) => {
-    const rank = p3Ranking.indexOf(i);
-    col.querySelector('.phase3-col-header').innerHTML = rank >= 0
-      ? `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`
-      : esc(getAnonLabel(i));
-  });
-}
-
-function resetPhase3Selection() {
-  if (isAdminInspectMode()) return;
-  p3Ranking = [];
-  renderPhase3Selection();
-  savePhase3State();
-  document.querySelectorAll('.phase3-col').forEach((col, i) => {
-    col.querySelector('.phase3-col-header').innerHTML = esc(getAnonLabel(i));
-  });
-}
-
-function renderPhase3Summary() {
-  const list = document.getElementById('p3SummaryList');
-  let html = '';
-  p3Ranking.forEach((idx, rank) => {
-    html += `<div class="p3-summary-item">`;
-    html += `<span class="p3-summary-rank">${P3_MEDALS[rank]}</span>`;
-    html += `<span>${esc(getAnonLabel(idx))}</span>`;
-    html += `</div>`;
-  });
-  list.innerHTML = html;
-}
-
-function savePhase3State() {
-  if (isAdminInspectMode()) return;
-  const ev = getEvaluator();
-  const key = getPhase3StorageKey(ev, currentCase);
-  let existing = loadStoredJSON(key) || {};
-  const ranking = p3Ranking.map(idx => getAnonLabel(idx));
-  const reason = document.getElementById('p3RankingReason');
-  existing.ranking = ranking;
-  if (reason) existing.ranking_reason = reason.value.trim();
-  existing = stampEvalData(existing);
-  localStorage.setItem(key, JSON.stringify(existing));
-  writeCloudRecord(key, existing).catch(e => console.warn('Firestore phase3 write failed:', e));
-}
-
-function collectPhase3Data() {
-  const ev = getEvaluator();
-  const key = getPhase3StorageKey(ev, currentCase);
-  let existing = loadStoredJSON(key) || {};
-  return {
-    ...existing,
-    ranking: p3Ranking.map(idx => getAnonLabel(idx)),
-    ranking_reason: document.getElementById('p3RankingReason').value.trim(),
-    revision_count: existing.revision_count || 0
-  };
-}
-
-function restorePhase3() {
-  const ev = getEvaluator();
-  const key = getPhase3StorageKey(ev, currentCase);
-  let data = loadStoredJSON(key);
-  if (!data || !data.ranking || !Array.isArray(data.ranking)) return;
-
-  // Convert labels back to indices
-  p3Ranking = [];
-  data.ranking.forEach(label => {
-    const idx = ANON_LABELS.indexOf(label);
-    if (idx >= 0 && !p3Ranking.includes(idx)) p3Ranking.push(idx);
-  });
-
-  // Auto-assign 4th if only 3 were saved
-  if (p3Ranking.length === 3) {
-    const last = [0, 1, 2, 3].find(i => !p3Ranking.includes(i));
-    if (last !== undefined) p3Ranking.push(last);
-  }
-
-  if (data.ranking_reason) {
-    document.getElementById('p3RankingReason').value = data.ranking_reason;
-  }
-
-  renderPhase3Selection();
-
-  // Update column headers
-  document.querySelectorAll('.phase3-col').forEach((col, i) => {
-    const rank = p3Ranking.indexOf(i);
-    if (rank >= 0) {
-      col.querySelector('.phase3-col-header').innerHTML = `${P3_MEDALS[rank]} ${esc(getAnonLabel(i))}`;
-    }
-  });
-}
-
-function completePhase3() {
-  if (isAdminInspectMode()) return;
-  if (p3Ranking.length !== 4) {
-    showToast('請完成所有排序步驟', 'error');
-    return;
-  }
-
-  const data = collectPhase3Data();
-  data._complete = true;
-  data._saved = new Date().toISOString();
-  const stamped = stampEvalData(data);
-  const ev = getEvaluator();
-  const key = getPhase3StorageKey(ev, currentCase);
-  localStorage.setItem(key, JSON.stringify(stamped));
-  writeCloudRecord(key, stamped).catch(e => console.warn('Firestore phase3 write failed:', e));
-
-  showToast('此案評估完成！', 'success');
-  renderCondPills();
-  renderPhaseIndicators();
-  updateFooter();
-  document.getElementById('p3CompleteBtn').disabled = true;
-  document.getElementById('p3CompleteBtn').textContent = '此案已完成';
-  // setPhaseData above already wrote to Firestore
-}
-
-function togglePhase3Source() {
-  const panel = document.getElementById('p3SourcePanel');
-  const arrow = document.getElementById('p3SourceArrow');
-  panel.classList.toggle('open');
-  arrow.innerHTML = panel.classList.contains('open') ? '&#x25BC;' : '&#x25B6;';
-}
-
-// ═══════════════════════════════════════════════════════════════
 // SHARED RENDER FUNCTIONS
 // ═══════════════════════════════════════════════════════════════
 
@@ -5037,14 +4610,6 @@ function saveCurrentState() {
     if (Object.keys(data.scores).length > 0 || data.comment) {
       setPhaseData(currentCase, currentCondIdx, 'TL', data);
     }
-  } else if (currentPhase === 3 && SHOW_PHASE3_UI) {
-    const data = collectPhase3Data();
-    const ev = getEvaluator();
-    const key = getPhase3StorageKey(ev, currentCase);
-    const stamped = stampEvalData(data);
-    stamped._saved = new Date().toISOString();
-    localStorage.setItem(key, JSON.stringify(stamped));
-    writeCloudRecord(key, stamped).catch(e => console.warn('Firestore phase3 write failed:', e));
   }
 }
 
@@ -5061,7 +4626,7 @@ document.addEventListener('change', (e) => {
   }
 });
 document.addEventListener('input', (e) => {
-  if ((e.target.name && e.target.name.startsWith('tl_comment_')) || (SHOW_PHASE3_UI && e.target.id === 'p3RankingReason')) {
+  if (e.target.name && e.target.name.startsWith('tl_comment_')) {
     debounceSave();
   }
 });
@@ -5088,7 +4653,6 @@ document.addEventListener('keydown', (e) => {
     e.preventDefault();
     if (currentPhase === 1) completePhase1();
     else if (currentPhase === 'tl') completePhaseTL();
-    else if (currentPhase === 3 && SHOW_PHASE3_UI) completePhase3();
     return;
   }
 
@@ -5149,8 +4713,7 @@ function exportJSON() {
     },
     phase1: {},
     phaseFB: {},
-    phaseTL: null,
-    phase3: null
+    phaseTL: null
   };
 
   // Collect all conditions
@@ -5186,21 +4749,6 @@ function exportJSON() {
     _complete: ptl ? !!ptl._complete : false
   };
 
-  // Phase 3
-  const ev = evaluator;
-  const p3Key = getPhase3StorageKey(ev, currentCase);
-  try {
-    const p3 = JSON.parse(localStorage.getItem(p3Key));
-    if (p3) {
-      result.phase3 = {
-        ranking: p3.ranking || [],
-        ranking_reason: p3.ranking_reason || '',
-        revision_count: p3.revision_count || 0,
-        _complete: !!p3._complete
-      };
-    }
-  } catch {}
-
   const blob = new Blob([JSON.stringify(result, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -5225,7 +4773,7 @@ function buildCaseExportData(caseName) {
       storage_version: EVAL_STORAGE_VERSION,
       campaign_id: EVAL_CAMPAIGN_ID
     },
-    phase1: {}, phaseFB: {}, phaseTL: null, phase3: null
+    phase1: {}, phaseFB: {}, phaseTL: null
   };
   for (let i = 0; i < EVAL_CONDITIONS.length; i++) {
     const label = getAnonLabel(i);
@@ -5252,10 +4800,6 @@ function buildCaseExportData(caseName) {
     comment: ptl ? ptl.comment || '' : '',
     _complete: ptl ? !!ptl._complete : false
   };
-  try {
-    const p3 = JSON.parse(localStorage.getItem(getPhase3StorageKey(evaluator, caseName)));
-    if (p3) result.phase3 = { ranking: p3.ranking || [], ranking_reason: p3.ranking_reason || '', revision_count: p3.revision_count || 0, _complete: !!p3._complete };
-  } catch {}
   return result;
 }
 
@@ -5369,14 +4913,6 @@ function importSingleCase(data) {
       getPhaseTLStorageKey(evaluator, caseName),
       JSON.stringify(stampEvalData(normalizedTL))
     );
-  }
-  if (data.phase3) {
-    localStorage.setItem(getPhase3StorageKey(evaluator, caseName), JSON.stringify(stampEvalData({
-      ranking: data.phase3.ranking || [],
-      ranking_reason: data.phase3.ranking_reason || '',
-      revision_count: data.phase3.revision_count || 0,
-      _complete: !!data.phase3._complete
-    })));
   }
 }
 
@@ -5874,7 +5410,7 @@ async function initAdminInspectFromURL() {
   const phase = params.get('phase');
   if (phase === 'tl') currentPhase = phase;
   else if (phase === '1') currentPhase = 1;
-  else if (phase === '3') currentPhase = SHOW_PHASE3_UI ? 3 : 'tl';
+  else if (phase === '3') currentPhase = 'tl';
 
   setAdminInspectBanner();
 }
@@ -5897,7 +5433,7 @@ async function applyAdminInspectRouteFromURL() {
   const phase = params.get('phase');
   if (phase === 'tl') currentPhase = phase;
   else if (phase === '1') currentPhase = 1;
-  else if (phase === '3') currentPhase = SHOW_PHASE3_UI ? 3 : 'tl';
+  else if (phase === '3') currentPhase = 'tl';
   else if (/^[A-E]$/.test(version)) currentPhase = getDefaultPhaseForCondition(currentCase, currentCondIdx);
 
   renderCondPills();
@@ -6090,10 +5626,8 @@ function buildAdminCaseActions(ev, caseName, overall, mobile = false) {
   const deleteBtn = (adminDeleteMode && overall !== 'empty')
     ? `<button class="admin-mini-btn danger" onclick='adminDeleteCaseData(${JSON.stringify(ev)}, ${JSON.stringify(caseName)})'>刪整案</button>`
     : '';
-  const p3 = loadLocalJSON(getPhase3StorageKey(ev, caseName));
-  const p3badge = p3 && p3._complete ? `<span style="font-size:11px;font-weight:700;color:var(--indigo);">★ 已排序</span>` : '';
   const extraCls = mobile ? ' admin-mobile-actions' : '';
-  return `<div class="admin-case-actions${extraCls}"><div class="admin-case-actions-main"><a class="admin-mini-btn jump-link" href="${inspectHref}">檢視整案</a>${p3badge}</div>${deleteBtn ? `<div class="admin-case-actions-delete">${deleteBtn}</div>` : ''}</div>`;
+  return `<div class="admin-case-actions${extraCls}"><div class="admin-case-actions-main"><a class="admin-mini-btn jump-link" href="${inspectHref}">檢視整案</a></div>${deleteBtn ? `<div class="admin-case-actions-delete">${deleteBtn}</div>` : ''}</div>`;
 }
 
 function buildAdminProgressDesktop(cases, evaluators) {
@@ -6364,8 +5898,6 @@ function getEvaluatorVersionKeys(evaluator, caseName, condIdx) {
     const key = getPhaseStorageKey(evaluator, caseName, cond, phase);
     if (loadAdminEvaluatorJSON(evaluator, key)) keys.push(key);
   });
-  const phase3Key = getPhase3StorageKey(evaluator, caseName);
-  if (loadAdminEvaluatorJSON(evaluator, phase3Key)) keys.push(phase3Key);
   return keys;
 }
 

@@ -189,7 +189,6 @@ def build_case_export(
     cond_order: list[str],
     phase_records: Dict[Tuple[str, str, str], Dict[str, Any]],
     timeline_record: Dict[str, Any] | None,
-    phase3_record: Dict[str, Any] | None,
     snapshot_timestamp: str,
 ) -> Dict[str, Any]:
     result: Dict[str, Any] = {
@@ -206,7 +205,6 @@ def build_case_export(
         "phase1": {},
         "phaseFB": {},
         "phaseTL": {},
-        "phase3": None,
     }
 
     for idx, cond in enumerate(cond_order):
@@ -243,13 +241,6 @@ def build_case_export(
             }
         }
 
-    if phase3_record is not None:
-        result["phase3"] = {
-            "ranking": phase3_record.get("ranking") or [],
-            "ranking_reason": phase3_record.get("ranking_reason") or "",
-            "revision_count": phase3_record.get("revision_count") or 0,
-            "_complete": bool(phase3_record.get("_complete")),
-        }
     return result
 
 
@@ -259,7 +250,6 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
         role = USER_ROLES.get(evaluator, "unknown")
         cond_orders: Dict[str, list[str]] = {}
         timeline_by_case: Dict[str, Dict[str, Any]] = {}
-        phase3_by_case: Dict[str, Dict[str, Any]] = {}
         phase_records: Dict[Tuple[str, str, str], Dict[str, Any]] = {}
         case_names: set[str] = set()
 
@@ -272,13 +262,6 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
                 order = extract_cond_order(data)
                 cond_orders[case_name] = order or list(EVAL_CONDITIONS)
                 # Don't add to case_names — condorder alone doesn't count as eval data
-                continue
-
-            if key.startswith(base_prefix) and key.endswith("_phase3"):
-                case_name = key[len(base_prefix): -len("_phase3")]
-                if isinstance(data, dict) and data.get("_campaign_id") == EVAL_CAMPAIGN_ID:
-                    phase3_by_case[case_name] = data
-                case_names.add(case_name)
                 continue
 
             if key.startswith(base_prefix) and key.endswith("_phaseTL"):
@@ -308,7 +291,6 @@ def build_export_payload(db, snapshot_timestamp: str) -> Dict[str, Any]:
                 cond_order=cond_order[: len(EVAL_CONDITIONS)],
                 phase_records=phase_records,
                 timeline_record=timeline_by_case.get(case_name),
-                phase3_record=phase3_by_case.get(case_name),
                 snapshot_timestamp=snapshot_timestamp,
             )
 
@@ -352,12 +334,10 @@ def write_snapshot(
             phase1 = case_data.get("phase1") or {}
             phase_fb = case_data.get("phaseFB") or {}
             phase_tl = case_data.get("phaseTL") or {}
-            phase3 = case_data.get("phase3")
             record_count += 1 if meta else 0
             record_count += len(phase1)
             record_count += len(phase_fb)
             record_count += len(phase_tl)
-            record_count += 1 if phase3 is not None else 0
     is_empty = evaluator_count == 0 or case_count == 0
     previous_snapshot_id = previous_snapshot.get("_id") if previous_snapshot else ""
     previous_content_hash = previous_snapshot.get("content_hash") if previous_snapshot else ""
@@ -399,7 +379,6 @@ def write_snapshot(
                     1 + len((case_data.get("phase1") or {}))
                     + len((case_data.get("phaseFB") or {}))
                     + len((case_data.get("phaseTL") or {}))
-                    + (1 if case_data.get("phase3") is not None else 0)
                     for case_data in (data.get("cases") or {}).values()
                 ),
                 "content_hash": content_hash(data),
@@ -448,7 +427,6 @@ def write_local_snapshot(local_dir: str, snapshot_id: str, payload: Dict[str, An
             1 + len((case_data.get("phase1") or {}))
             + len((case_data.get("phaseFB") or {}))
             + len((case_data.get("phaseTL") or {}))
-            + (1 if case_data.get("phase3") is not None else 0)
             for item in payload.values()
             for case_data in (item.get("cases") or {}).values()
         ),
