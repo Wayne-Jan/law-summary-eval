@@ -51,6 +51,7 @@ EVAL_CONDITIONS = [
 USER_ROLES = {
     "王敏銓": "legal",
     "李惠宗": "legal",
+    "蔡蕙芳": "legal",
     "丁鴻志": "medical",
     "施朝仁": "medical",
     "admin": "admin",

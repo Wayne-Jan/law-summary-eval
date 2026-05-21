@@ -2128,7 +2128,8 @@ async function writeCloudRecord(key, data) {
 const USERS = {
   '王敏銓': { role: 'legal', email: 'wmq@law-eval.local' },
   '李惠宗': { role: 'legal', email: 'lhz@law-eval.local' },
-  '游明得': { role: 'legal', email: 'ymd@law-eval.local' },
+  '蔡蕙芳': { role: 'legal', email: 'chf@law-eval.local' },
+  '游明得': { role: 'legal', email: 'ymd@law-eval.local', hidden: true },
   '丁鴻志': { role: 'medical', email: 'dhz@law-eval.local' },
   '施朝仁': { role: 'medical', email: 'scr@law-eval.local' },
   'admin':  { role: 'admin', email: 'admin@law-eval.local' },
@@ -2137,6 +2138,7 @@ const USERS = {
 const USER_DISPLAY_NAMES = {
   '王敏銓': '法學專家 WMC',
   '李惠宗': '法學專家 LHZ',
+  '蔡蕙芳': '法學專家 CHF',
   '游明得': '法學專家 YMD',
   '丁鴻志': '醫學專家 DHZ',
   '施朝仁': '醫學專家 SCR',
@@ -2145,6 +2147,13 @@ const USER_DISPLAY_NAMES = {
 
 function getUserDisplayName(name) {
   return USER_DISPLAY_NAMES[name] || name;
+}
+
+function getEvaluatorNames({ includeHidden = false } = {}) {
+  return Object.keys(USERS).filter(name => {
+    if (name === 'admin') return false;
+    return includeHidden || !USERS[name].hidden;
+  });
 }
 
 const USER_BY_EMAIL = Object.fromEntries(
@@ -2380,7 +2389,7 @@ async function adminToggleBackupDetails(snapshotId) {
 async function loadBackupRow(snapshotId) {
   const cells = document.querySelectorAll(`.backup-ev-cell[data-snapshot="${snapshotId}"]`);
   if (!cells.length) return;
-  const evNames = Object.keys(USERS).filter(u => u !== 'admin');
+  const evNames = getEvaluatorNames();
   cells.forEach(c => { c.textContent = '…'; c.style.color = 'var(--slate-400)'; });
   try {
     const currentRows = await fetchBackupEvaluatorSummaries(snapshotId);
@@ -2490,7 +2499,7 @@ function showLoginOverlay() {
   // Populate user select (exclude admin — admin uses separate entry)
   const sel = document.getElementById('loginUser');
   if (sel.options.length <= 1) {
-    Object.keys(USERS).filter(n => n !== 'admin').forEach(name => {
+    getEvaluatorNames().forEach(name => {
       const opt = document.createElement('option');
       opt.value = name;
       opt.textContent = getUserDisplayName(name);
@@ -6195,7 +6204,7 @@ function buildAdminBackupHistory(backups, mobile = false) {
     return `<div class="admin-mobile-backups">${cards}</div>`;
   }
 
-  const evNames = Object.keys(USERS).filter(u => u !== 'admin');
+  const evNames = getEvaluatorNames();
   let html = `<div style="overflow-x:auto;"><table>`;
   html += `<thead><tr><th>日期</th><th>狀態</th>`;
   evNames.forEach(name => {
@@ -6222,7 +6231,7 @@ function buildAdminBackupHistory(backups, mobile = false) {
 
 async function renderAdminContent() {
   const container = document.getElementById('adminContent');
-  const evaluators = Object.keys(USERS).filter(u => u !== 'admin');
+  const evaluators = getEvaluatorNames();
   const cases = caseList.length > 0 ? caseList : [];
   updateAdminDeleteModeButton();
 
@@ -6467,7 +6476,7 @@ async function adminDeleteVersionData(evaluator, caseName, condIdx) {
 }
 
 function adminExportAll() {
-  const evaluators = Object.keys(USERS).filter(u => u !== 'admin');
+  const evaluators = getEvaluatorNames();
   const allData = {};
 
   evaluators.forEach(ev => {
