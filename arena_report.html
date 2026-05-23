@@ -848,24 +848,52 @@ async function loadLiveReportData() {
   const config = await fetchJson('./data/arena_config.json');
   const { auth, db } = initFirebase();
   const user = await waitForAuthUser(auth);
-  if (!user) throw new Error('尚未登入 Arena，使用離線快照');
+  if (!user) throw new Error('尚未登入 Arena');
   const evaluatorRows = await Promise.all(reportEvaluatorNames().map(name => fetchLiveEvaluatorVotes(db, config, name)));
   const liveData = buildLiveReportData(config, evaluatorRows);
-  if (!liveData.meta.total_votes) throw new Error('Firestore 未讀到有效票數，使用離線快照');
+  if (!liveData.meta.total_votes) throw new Error('Firestore 未讀到有效票數');
   return liveData;
 }
 
+function showReportGate(message) {
+  const kicker = document.getElementById('panelKicker');
+  const desc = document.getElementById('panelDesc');
+  const lbList = document.getElementById('lbList');
+  const evalDesc = document.getElementById('evalSectionDesc');
+  const evalGrid = document.getElementById('evalGrid');
+  const figure = document.querySelector('.figure-card');
+
+  if (kicker) kicker.textContent = 'LENS Arena Report · 登入後檢視';
+  if (desc) {
+    desc.innerHTML = '此報告直接讀取 Arena 線上評測資料。請先以評審者或管理員身分登入 Arena，再開啟評測報告。';
+  }
+  if (figure) figure.style.display = 'none';
+  if (evalDesc) evalDesc.textContent = '';
+  if (evalGrid) evalGrid.innerHTML = '';
+  if (lbList) {
+    lbList.innerHTML = `
+      <div class="lb-card">
+        <div class="lb-row1">
+          <div class="lb-rank">!</div>
+          <div class="lb-main">
+            <div class="lb-label">需要 Arena 登入</div>
+            <div class="lb-tags">${message || '尚未取得登入狀態'}</div>
+          </div>
+          <a class="lb-toggle-btn" href="arena.html" style="text-decoration:none">前往登入</a>
+        </div>
+      </div>`;
+  }
+}
+
 async function initReportData() {
-  refreshDataGlobals();
-  updateReportHero('離線快照');
-  renderAll();
   try {
     DATA = await loadLiveReportData();
     refreshDataGlobals();
     updateReportHero('Firestore 即時資料');
     renderAll();
   } catch (err) {
-    console.warn('Arena report live data fallback:', err);
+    console.warn('Arena report auth/data gate:', err);
+    showReportGate(err && err.message ? err.message : '無法讀取線上評測資料');
   }
 }
 // === §1 Leaderboard ===
