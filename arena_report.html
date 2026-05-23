@@ -23,47 +23,45 @@
 
   /* ─── TOOLBAR ─── */
   .toolbar {
-    position: fixed; top: 0; left: 0; right: 0; height: 56px;
-    background: white; border-bottom: 1px solid var(--slate-200);
-    display: flex; align-items: center; padding: 0 20px; gap: 14px; z-index: 100;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    position: fixed; top: 0; left: 0; right: 0; height: 52px;
+    background: white; border-bottom: 1px solid #e0e0e0;
+    display: flex; align-items: center; padding: 0 20px; gap: 12px; z-index: 100;
   }
-  .toolbar h1 { font-size: 18px; font-weight: 700; color: var(--slate-900); white-space: nowrap; }
+  .toolbar h1 { font-size: 18px; font-weight: 700; color: #333; white-space: nowrap; }
   .toolbar .spacer { flex: 1; }
-  .nav-links { display: flex; gap: 4px; align-items: center; }
-  .nav-links a {
-    font-size: 13px; color: var(--slate-500); text-decoration: none; font-weight: 500;
-    padding: 6px 12px; border-radius: 6px; transition: all 0.15s;
+  .toolbar .progress-badge {
+    font-size: 13px; color: #6b7280; background: #f3f4f6;
+    padding: 4px 12px; border-radius: 10px; font-weight: 500;
+    white-space: nowrap;
   }
-  .nav-links a:hover { background: var(--slate-100); color: var(--indigo); }
-  .nav-links a.active { background: var(--indigo); color: white; }
-
-  .hamburger {
-    display: none; background: none; border: none; cursor: pointer;
-    width: 36px; height: 36px; flex-shrink: 0;
+  .toolbar .btn-sm {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; color: #64748b; background: #fff;
+    border: 1px solid #cbd5e1; border-radius: 10px;
+    padding: 7px 12px; cursor: pointer; font-family: inherit;
+    transition: all 0.15s; text-decoration: none;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    white-space: nowrap;
   }
-  .hamburger svg { width: 22px; height: 22px; stroke: var(--slate-700); }
-  .mobile-menu {
-    display: none; position: fixed; top: 56px; left: 0; right: 0;
-    background: white; border-bottom: 1px solid var(--slate-200);
-    padding: 8px 16px; z-index: 99; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  .toolbar .btn-sm svg { flex-shrink: 0; }
+  .toolbar .btn-sm:hover { background: #f8fafc; color: #334155; border-color: #94a3b8; }
+  .toolbar .btn-primary {
+    background: #1e40af; color: #ffffff; border-color: #1e40af;
+    font-weight: 700;
+    box-shadow: 0 2px 6px rgba(30, 64, 175, 0.25);
   }
-  .mobile-menu.open { display: block; }
-  .mobile-menu a {
-    display: block; padding: 10px 12px; font-size: 15px; color: var(--slate-700);
-    text-decoration: none; border-radius: 6px;
+  .toolbar .btn-primary:hover {
+    background: #1e3a8a; color: #ffffff; border-color: #1e3a8a;
+    box-shadow: 0 3px 10px rgba(30, 58, 138, 0.32);
   }
-  .mobile-menu a:hover { background: var(--slate-100); }
-  .mobile-menu a.active { background: var(--indigo-light); color: var(--indigo); font-weight: 600; }
-
   @media (max-width: 880px) {
-    .nav-links { display: none; }
-    .hamburger { display: flex; align-items: center; justify-content: center; }
+    .toolbar { padding: 0 12px; gap: 8px; flex-wrap: nowrap; overflow-x: auto; }
     .toolbar h1 { font-size: 15px; }
+    .toolbar .spacer { flex: 1 0 12px; }
   }
 
   /* ─── CONTENT ─── */
-  .content { margin-top: 56px; padding: 28px 20px 72px; max-width: 1080px; margin-left: auto; margin-right: auto; }
+  .content { margin-top: 52px; padding: 28px 20px 72px; max-width: 1080px; margin-left: auto; margin-right: auto; }
 
   /* ─── PANEL HERO ─── */
   .panel-hero {
@@ -464,36 +462,23 @@
 <!-- ─── TOOLBAR ─── -->
 <div class="toolbar">
   <h1>Arena 實務偏好報告</h1>
+  <span class="progress-badge" id="reportStatusBadge">登入後檢視</span>
   <span class="spacer"></span>
-  <div class="nav-links">
-    <a href="view.html">摘要檢視</a>
-    <a href="timeline.html">時間軸檢視</a>
-    <a href="metrics-guide.html">評估指標說明</a>
-    <a href="metrics.html">AI 評估指標</a>
-    <a href="eval.html">專家評估</a>
-    <a href="arena.html">競技場</a>
-    <a href="arena_report.html" class="active">Arena 報告</a>
-    <a href="index.html">首頁</a>
-  </div>
-  <button class="hamburger" id="hamburgerBtn" aria-label="選單">
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round">
-      <line x1="3" y1="6" x2="21" y2="6"/>
-      <line x1="3" y1="12" x2="21" y2="12"/>
-      <line x1="3" y1="18" x2="21" y2="18"/>
+  <a class="btn-sm btn-primary" href="arena.html" title="返回 Arena 評測頁">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M2.5 8h9"/>
+      <path d="M8.5 4.5 12 8l-3.5 3.5"/>
     </svg>
-  </button>
-</div>
-
-<!-- Mobile menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="view.html">摘要檢視</a>
-  <a href="timeline.html">時間軸檢視</a>
-  <a href="metrics-guide.html">評估指標說明</a>
-  <a href="metrics.html">AI 評估指標</a>
-  <a href="eval.html">專家評估</a>
-  <a href="arena.html">競技場</a>
-  <a href="arena_report.html" class="active">Arena 報告</a>
-  <a href="index.html">首頁</a>
+    競技場
+  </a>
+  <a class="btn-sm" href="index.html" title="回到首頁">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M2.5 7.5 8 3l5.5 4.5"/>
+      <path d="M4.25 6.75V13h7.5V6.75"/>
+      <path d="M6.75 13V9.5h2.5V13"/>
+    </svg>
+    首頁
+  </a>
 </div>
 
 <!-- ─── CONTENT ─── -->
@@ -506,7 +491,6 @@
   </div>
 
   <h2 class="section-header">系統排名</h2>
-  <p class="section-desc">4 個系統依 Arena 偏好分數排序。<strong>Arena 偏好 = (W + 0.5 × T) / matches</strong>；點擊卡片底部可展開逐案 × 評審勝負矩陣。Fact Recall 與 Quality 對照請見下方 Quality × Arena Preference 散點圖。</p>
   <div class="lb-list" id="lbList"></div>
 
   <div class="figure-card">
@@ -838,7 +822,9 @@ function updateReportHero(sourceLabel) {
   const meta = DATA.meta;
   const kicker = document.getElementById('panelKicker');
   const desc = document.getElementById('panelDesc');
+  const status = document.getElementById('reportStatusBadge');
   if (kicker) kicker.textContent = `LENS Arena Report · ${sourceLabel} · ${DATA.snapshot}`;
+  if (status) status.textContent = sourceLabel === 'Firestore 即時資料' ? '即時資料' : sourceLabel;
   if (desc) {
     desc.innerHTML = `${meta.evaluators_total} 位實務專家、${meta.cases_total} 案、${meta.conditions.length} 個系統、共 <strong>${meta.total_votes} 次盲測比較</strong>。本頁將 Arena 偏好排名、Quality × Fact Recall 對照、個別評測者偏好放在同一張版面，協助讀者對照三條線判讀。請搭配「個別評測者偏好」一節判讀 pooled 排名背後的異質性。`;
   }
@@ -862,8 +848,10 @@ function showReportGate(message) {
   const evalDesc = document.getElementById('evalSectionDesc');
   const evalGrid = document.getElementById('evalGrid');
   const figure = document.querySelector('.figure-card');
+  const status = document.getElementById('reportStatusBadge');
 
   if (kicker) kicker.textContent = 'LENS Arena Report · 登入後檢視';
+  if (status) status.textContent = '登入後檢視';
   if (desc) {
     desc.innerHTML = '此報告直接讀取 Arena 線上評測資料。請先以評審者或管理員身分登入 Arena，再開啟評測報告。';
   }
@@ -1109,16 +1097,6 @@ function renderAll() {
   renderLeaderboard();
   renderEvaluators();
 }
-
-// === Mobile menu ===
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-document.addEventListener('click', (e) => {
-  if (!hamburgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
-    mobileMenu.classList.remove('open');
-  }
-});
 
 initReportData();
 </script>
