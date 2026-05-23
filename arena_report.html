@@ -1026,19 +1026,7 @@ function renderModelMatrix(cond) {
 function renderEvaluators() {
   const evs = DATA.per_evaluator;
   const order = ['A','B','C','D','E'];
-
-  // Compute heterogeneity headline
-  const evalRecs = order.map(e => evs[e]).filter(Boolean);
-  let gptHigh = -Infinity, gptLow = Infinity, gptHighEval = '', gptLowEval = '';
-  evalRecs.forEach(ev => {
-    const g = ev.pref[GPT54];
-    if (!g || ev.votes === 0) return;
-    if (g.score > gptHigh) { gptHigh = g.score; gptHighEval = ev.display; }
-    if (g.score < gptLow) { gptLow = g.score; gptLowEval = ev.display; }
-  });
-  const gap = (gptHigh - gptLow) * 100;
-  const headline = `5 位評測者對 <strong>${LABEL_MAP[GPT54]}</strong> 的偏好分布跨度 <strong>${gap.toFixed(1)} 個百分點</strong>（${gptHighEval} ${pct(gptHigh,1)} ↔ ${gptLowEval} ${pct(gptLow,1)}）。Pooled 排名隱去這項差異，請依下方個別卡片判讀自己的傾向落點。`;
-  document.getElementById('evalSectionDesc').innerHTML = headline;
+  document.getElementById('evalSectionDesc').innerHTML = '';
 
   const html = order.map(e => {
     const ev = evs[e];
