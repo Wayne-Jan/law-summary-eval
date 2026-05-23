@@ -486,9 +486,9 @@
 <div class="content">
 
   <div class="panel-hero">
-    <div class="panel-kicker" id="panelKicker">LENS Arena Report · snapshot 2026-05-22</div>
-    <div class="panel-title">Arena 盲測偏好與 LLM-as-Judge 指標對照</div>
-    <div class="panel-desc" id="panelDesc">5 位實務專家、20 案、4 個系統、共 <strong>600 次盲測比較</strong> 已全部完成。本頁將 Arena 偏好排名、Quality × Fact Recall 對照、個別評測者偏好放在同一張版面，協助讀者對照三條線判讀。請搭配「個別評測者偏好」一節判讀 pooled 排名背後的異質性。</div>
+    <div class="panel-kicker" id="panelKicker">LENS Arena Report</div>
+    <div class="panel-title">Arena 盲測偏好與評測指標對照</div>
+    <div class="panel-desc" id="panelDesc">本頁彙整 5 位實務專家對 4 個系統、20 件案例的 600 次盲測比較，並對照 LLM-as-Judge Quality 與 Fact Recall，呈現各系統在實務偏好、寫作品質與事實涵蓋能力之間的取捨。</div>
   </div>
 
   <h2 class="section-header">系統排名</h2>
@@ -815,10 +815,10 @@ function updateReportHero(sourceLabel) {
   const kicker = document.getElementById('panelKicker');
   const desc = document.getElementById('panelDesc');
   const status = document.getElementById('reportStatusBadge');
-  if (kicker) kicker.textContent = `LENS Arena Report · ${sourceLabel} · ${DATA.snapshot}`;
-  if (status) status.textContent = sourceLabel === 'Firestore 即時資料' ? '即時資料' : sourceLabel;
+  if (kicker) kicker.textContent = 'LENS Arena Report';
+  if (status) status.textContent = sourceLabel === 'Firestore 即時資料' ? '已載入' : sourceLabel;
   if (desc) {
-    desc.innerHTML = `${meta.evaluators_total} 位實務專家、${meta.cases_total} 案、${meta.conditions.length} 個系統、共 <strong>${meta.total_votes} 次盲測比較</strong>。本頁將 Arena 偏好排名、Quality × Fact Recall 對照、個別評測者偏好放在同一張版面，協助讀者對照三條線判讀。請搭配「個別評測者偏好」一節判讀 pooled 排名背後的異質性。`;
+    desc.innerHTML = `本頁彙整 ${meta.evaluators_total} 位實務專家對 ${meta.conditions.length} 個系統、${meta.cases_total} 件案例的 ${meta.total_votes} 次盲測比較，並對照 LLM-as-Judge Quality 與 Fact Recall，呈現各系統在實務偏好、寫作品質與事實涵蓋能力之間的取捨。`;
   }
 }
 
