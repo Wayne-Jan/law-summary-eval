@@ -189,6 +189,9 @@
     .overview-case-volume.vol-lower {
       color: #d97706; background: #fff7ed; border-color: #fdba74;
     }
+    .overview-case-volume.vol-all {
+      color: #334155; background: #f8fafc; border-color: #cbd5e1;
+    }
     .overview-case-action {
       display: inline-flex; align-items: center; justify-content: center;
       padding: 4px 10px; border-radius: 999px;
@@ -1095,7 +1098,8 @@
   <h2 class="section-header">評估總覽</h2>
   <div class="filter-bar">
     <span class="filter-bar-label">冊別：</span>
-    <button class="filter-btn active" data-volume="上冊" onclick="setVolume('上冊')">上冊</button>
+    <button class="filter-btn active" data-volume="全部" onclick="setVolume('全部')">全部</button>
+    <button class="filter-btn" data-volume="上冊" onclick="setVolume('上冊')">上冊</button>
     <button class="filter-btn" data-volume="中冊" onclick="setVolume('中冊')">中冊</button>
     <button class="filter-btn" data-volume="下冊" onclick="setVolume('下冊')">下冊</button>
     <span class="filter-bar-label" style="margin-left:12px;">篩選：</span>
@@ -1114,8 +1118,8 @@
   <div id="pagePanel_overview" class="page-panel active">
     <div class="panel-hero">
     <div class="panel-kicker">整體比較</div>
-    <div class="panel-title">同一冊別下的整體表現比較</div>
-    <div class="panel-desc">比較目前冊別下各模型的整體表現。</div>
+    <div class="panel-title" id="overviewPanelTitle">全部案件的整體表現比較</div>
+    <div class="panel-desc" id="overviewPanelDesc">比較完整 100 案資料集中各模型的整體表現。</div>
     </div>
     <div class="mobile-metrics-overview" id="mobileMetricsOverview"></div>
     <button class="mobile-table-toggle" id="mobileTableToggle" type="button" onclick="toggleMobileMetricsTable()">完整表格</button>
@@ -1163,7 +1167,7 @@
     <div class="panel-hero">
       <div class="panel-kicker">模型輪廓</div>
       <div class="panel-title">用相對位置看各模型的能力輪廓</div>
-      <div class="panel-desc">雷達圖以同冊內的百分位（P0–P100）呈現各模型的相對強弱。</div>
+      <div class="panel-desc" id="relativePanelDesc">雷達圖以完整資料集內的百分位（P0-P100）呈現各模型的相對強弱。</div>
       <div class="mobile-relative-note">手機版聚焦模型輪廓比較，只保留最直觀的相對位置視圖。完整表格與逐案比較請改用電腦版查看。</div>
     </div>
     <div id="relativeCardGrid" class="model-card-grid"></div>
@@ -1475,6 +1479,7 @@
   }
 
   function volumePillClassByValue(vol) {
+    if (vol === '全部') return 'vol-all';
     if (vol === '上冊') return 'vol-upper';
     if (vol === '中冊') return 'vol-middle';
     if (vol === '下冊') return 'vol-lower';
@@ -1550,7 +1555,7 @@
       if (seen.has(caseId)) continue;
       const caseName = DATA?.case_display_by_slug?.[caseId] || caseId;
       const meta = getCaseMeta(caseName);
-      if (meta.volume && meta.volume !== currentVolume) continue;
+      if (currentVolume !== '全部' && meta.volume && meta.volume !== currentVolume) continue;
       rows.push({ caseId, caseName, caseData });
     }
     rows.sort((a, b) => {
@@ -1907,7 +1912,7 @@
   let DATA = null;
   let CASE_INFO = {};
   let currentFilter = 'all';
-  let currentVolume = '上冊';
+  let currentVolume = '全部';
   let currentMainTab = 'overview';
   let currentMobileMetric = 'rule';
   let mobileTableOpen = false;
@@ -1976,6 +1981,7 @@
     'LENS-Full-GPT-OSS_writer_gpt_oss': 'LENS-GPT-OSS'
   };
   const VOLUME_DATA_FILES = {
+    '全部': 'data/eval_metrics_all.json',
     '上冊': 'data/eval_metrics_upper.json',
     '中冊': 'data/eval_metrics_middle.json',
     '下冊': 'data/eval_metrics_lower.json',
@@ -2017,6 +2023,32 @@
       };
     }
     return data;
+  }
+
+  function scopeLabel() {
+    return currentVolume === '全部' ? '完整資料集' : currentVolume;
+  }
+
+  function updateScopeCopy() {
+    const caseCount = DATA?.case_list?.length;
+    const overviewTitle = document.getElementById('overviewPanelTitle');
+    const overviewDesc = document.getElementById('overviewPanelDesc');
+    const relativeDesc = document.getElementById('relativePanelDesc');
+    if (overviewTitle) {
+      overviewTitle.textContent = currentVolume === '全部'
+        ? '全部案件的整體表現比較'
+        : `${currentVolume}案件的整體表現比較`;
+    }
+    if (overviewDesc) {
+      overviewDesc.textContent = currentVolume === '全部'
+        ? `比較完整 ${caseCount ?? '--'} 案資料集中各模型的整體表現。`
+        : `比較${currentVolume} ${caseCount ?? '--'} 案中各模型的整體表現。`;
+    }
+    if (relativeDesc) {
+      relativeDesc.textContent = currentVolume === '全部'
+        ? '雷達圖以完整資料集內的百分位（P0-P100）呈現各模型的相對強弱。'
+        : `雷達圖以${currentVolume}內的百分位（P0-P100）呈現各模型的相對強弱。`;
+    }
   }
 
   function formatModelLabel(label, condKey) {
@@ -2859,14 +2891,14 @@
       { label: '文字貼合', value: (a.rouge_bertscore || {}).rougeL, scale: 'rouge' },
       { label: '語義對齊', value: (a.rouge_bertscore || {}).bertscore_f1, scale: 'bert' },
     ].filter(x => x.value != null);
-    if (!traits.length) return `${currentVolume} 目前只有部分可用指標，適合先當參考卡看整體輪廓。`;
+    if (!traits.length) return `${scopeLabel()}目前只有部分可用指標，適合先當參考卡看整體輪廓。`;
     const sorted = [...traits].sort((x, y) => y.value - x.value);
     const strongest = sorted[0]?.label;
     const weakest = sorted[sorted.length - 1]?.label;
     if (strongest && weakest && strongest !== weakest) {
-      return `這個模型在 ${currentVolume} 的第一眼輪廓，是以 ${strongest} 相對突出、${weakest} 相對偏弱。先看下面六個能力面向，再視需要展開細項。`;
+      return `這個模型在${scopeLabel()}的第一眼輪廓，是以 ${strongest} 相對突出、${weakest} 相對偏弱。先看下面六個能力面向，再視需要展開細項。`;
     }
-    return `這個模型在 ${currentVolume} 的表現較平均，建議先看六個能力面向，再展開細項確認差異。`;
+    return `這個模型在${scopeLabel()}的表現較平均，建議先看六個能力面向，再展開細項確認差異。`;
   }
 
   function renderModelDetail(entries) {
@@ -2906,7 +2938,7 @@
       <div class="model-detail-head">
         <div>
           <div class="model-detail-title">${formatModelLabel(cond.label, condKey)} 能力檔案</div>
-          <div class="model-detail-desc">${currentVolume} · ${cond.eval_count ?? '--'} 案 · 先看能力輪廓，再展開細項</div>
+          <div class="model-detail-desc">${scopeLabel()} · ${cond.eval_count ?? '--'} 案 · 先看能力輪廓，再展開細項</div>
         </div>
         <button class="detail-close-btn" type="button" onclick="closeModelDetail()">收起</button>
       </div>
@@ -3320,7 +3352,7 @@
     tabPanels.innerHTML = '';
   }
 
-  const VOLUME_FIG_KEY = { '上冊': 'upper', '中冊': 'middle', '下冊': 'lower' };
+  const VOLUME_FIG_KEY = { '全部': 'all', '上冊': 'upper', '中冊': 'middle', '下冊': 'lower' };
   function updateAnalysisFigures() {
     const vol = VOLUME_FIG_KEY[currentVolume] || 'upper';
     const base = 'figures/metric_heatmaps/';
@@ -3352,6 +3384,7 @@
         for (const [caseName, slug] of Object.entries(DATA.case_slugs || {})) {
           DATA.case_display_by_slug[slug] = caseName;
         }
+        updateScopeCopy();
         buildOverview();
         buildCaseSelector();
         resetCaseDetail();

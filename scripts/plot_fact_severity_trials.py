@@ -31,7 +31,7 @@ plt.rcParams.update({
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = REPO_ROOT / "data"
 OUT_DIR = REPO_ROOT / "figures" / "weighted_recall_trials"
-VOLUME_MAP = {"upper": "上冊", "middle": "中冊", "lower": "下冊"}
+VOLUME_MAP = {"all": "全部", "upper": "上冊", "middle": "中冊", "lower": "下冊"}
 
 DISPLAY_LABELS = {
     "claude_afg_v5.1": "LENS-Haiku 4.5-A",
@@ -163,7 +163,7 @@ def load_rows(volume: str) -> pd.DataFrame:
         weighted = []
         for case_path in cond_dir.glob("case_*.json"):
             obj = json.loads(case_path.read_text(encoding="utf-8"))
-            if obj.get("volume") != target_volume:
+            if target_volume != "全部" and obj.get("volume") != target_volume:
                 continue
             ev = obj.get("eval") or {}
             detail = ev.get("fact_detail") or {}

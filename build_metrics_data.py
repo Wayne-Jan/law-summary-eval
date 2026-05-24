@@ -2,12 +2,14 @@
 """Build volume-specific metrics JSON for the static metrics page.
 
 This keeps the existing frontend schema intact and emits:
+  - data/eval_metrics_all.json
   - data/eval_metrics_upper.json
   - data/eval_metrics_middle.json
   - data/eval_metrics_lower.json
 
-All three volumes are rebuilt from the source evaluation artifacts in
-lens-opensource.
+All volume snapshots are rebuilt from the source evaluation artifacts in
+lens-opensource. The all-volume snapshot is merged from the same per-case
+records and recomputes condition medians over the full 100-case set.
 """
 
 from __future__ import annotations
@@ -33,6 +35,7 @@ VOLUME_TO_FILE = {
     "中冊": "eval_metrics_middle.json",
     "下冊": "eval_metrics_lower.json",
 }
+ALL_METRICS = DATA_DIR / "eval_metrics_all.json"
 # Import shared exclusion list from build.py to keep them in sync
 from build import EXCLUDED_CONDITIONS
 
@@ -395,34 +398,42 @@ def build_condition_volume(cond: str, label: str, group: str, volume: str):
     if not raw_cases and not rouge_medians:
         return None
 
-    avg_rule = median_or_none(case["rule_based"].get("avg") for _, case in raw_cases if case["rule_based"])
-    avg_fact = median_or_none(case["fact_recall"].get("avg") for _, case in raw_cases if case["fact_recall"])
-    avg_weighted_fact = median_or_none(
-        case["fact_recall"].get("weighted_recall") for _, case in raw_cases if case["fact_recall"]
-    )
-    avg_quality = median_or_none(case["quality"].get("avg") for _, case in raw_cases if case["quality"])
-    avg_faithfulness = median_or_none(
-        case.get("faithfulness") for _, case in raw_cases if case.get("faithfulness") is not None
-    )
-
     payload = OrderedDict()
     payload["label"] = label
     payload["group"] = group
     payload["cases"] = raw_cases
+    attach_condition_stats(payload, rouge_medians=rouge_medians, rouge_n=rouge_n)
+    return payload
+
+
+def attach_condition_stats(payload: OrderedDict, rouge_medians=None, rouge_n=None):
+    raw_cases = payload.get("cases") or []
     payload["medians"] = {
-        "rule_based_median": avg_rule,
-        "fact_recall_median": avg_fact,
-        "fact_weighted_recall_median": avg_weighted_fact,
-        "quality_median": avg_quality,
-        "faithfulness_median": avg_faithfulness,
+        "rule_based_median": median_or_none(case["rule_based"].get("avg") for _, case in raw_cases if case["rule_based"]),
+        "fact_recall_median": median_or_none(case["fact_recall"].get("avg") for _, case in raw_cases if case["fact_recall"]),
+        "fact_weighted_recall_median": median_or_none(
+            case["fact_recall"].get("weighted_recall") for _, case in raw_cases if case["fact_recall"]
+        ),
+        "quality_median": median_or_none(case["quality"].get("avg") for _, case in raw_cases if case["quality"]),
+        "faithfulness_median": median_or_none(
+            case.get("faithfulness") for _, case in raw_cases if case.get("faithfulness") is not None
+        ),
     }
+    if rouge_medians is None:
+        rouge_cases = [
+            case.get("rouge_bertscore") or {}
+            for _, case in raw_cases
+            if case.get("rouge_bertscore")
+        ]
+        if rouge_cases:
+            keys = ("rouge1", "rouge2", "rougeL", "bertscore_p", "bertscore_r", "bertscore_f1")
+            rouge_medians = {k: median_or_none(v.get(k) for v in rouge_cases) for k in keys}
+            rouge_n = len(rouge_cases)
     if rouge_medians:
         payload["medians"]["rouge_bertscore"] = rouge_medians
         payload["medians"]["rouge_bertscore_n"] = rouge_n
-    llm_count = sum(1 for _, c in raw_cases if c["quality"].get("avg") is not None)
-    payload["eval_count"] = llm_count
+    payload["eval_count"] = sum(1 for _, c in raw_cases if c["quality"].get("avg") is not None)
     payload["total_cases"] = len(raw_cases)
-    return payload
 
 
 def build_volume_json(volume: str, condition_templates):
@@ -465,6 +476,68 @@ def build_volume_json(volume: str, condition_templates):
     }
 
 
+def build_all_json_from_volume_snapshots(volume_snapshots):
+    conditions = OrderedDict()
+    all_case_names = []
+    cond_keys = []
+    for snapshot in volume_snapshots:
+        for cond_key in snapshot["conditions"].keys():
+            if cond_key not in cond_keys:
+                cond_keys.append(cond_key)
+
+    for cond_key in cond_keys:
+        combined_cases = []
+        label = None
+        group = None
+        for snapshot in volume_snapshots:
+            cond_payload = snapshot["conditions"].get(cond_key)
+            if not cond_payload:
+                continue
+            label = label or cond_payload.get("label")
+            group = group or cond_payload.get("group")
+            case_slugs = snapshot.get("case_slugs") or {}
+            for case_name in snapshot.get("case_list") or []:
+                slug = case_slugs.get(case_name)
+                case_payload = (cond_payload.get("cases") or {}).get(slug)
+                if case_payload:
+                    combined_cases.append((case_name, case_payload))
+        if not combined_cases:
+            continue
+        payload = OrderedDict()
+        payload["label"] = label or cond_key
+        payload["group"] = group or ""
+        payload["cases"] = combined_cases
+        attach_condition_stats(payload)
+        conditions[cond_key] = payload
+        all_case_names.extend(name for name, _ in combined_cases)
+
+    if not conditions:
+        return None
+
+    preferred_case_list = []
+    if "claude_afg_v5.1" in conditions:
+        preferred_case_list = [name for name, _ in conditions["claude_afg_v5.1"]["cases"]]
+    else:
+        preferred_case_list = sorted(set(all_case_names))
+
+    case_list = list(preferred_case_list)
+    for name in sorted(set(all_case_names)):
+        if name not in case_list:
+            case_list.append(name)
+
+    case_slugs = {case_name: f"case_{idx:03d}" for idx, case_name in enumerate(case_list, start=1)}
+    for cond_payload in conditions.values():
+        cond_payload["cases"] = OrderedDict(
+            (case_slugs[name], case_payload) for name, case_payload in cond_payload["cases"]
+        )
+
+    return {
+        "conditions": conditions,
+        "case_slugs": case_slugs,
+        "case_list": case_list,
+    }
+
+
 def write_json(path: Path, obj):
     with path.open("w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=2)
@@ -473,17 +546,28 @@ def write_json(path: Path, obj):
 
 def main():
     _, condition_templates = load_existing_template()
+    volume_snapshots = []
 
     for volume in VOLUMES:
         built = build_volume_json(volume, condition_templates)
         if not built:
             raise RuntimeError(f"No data built for {volume}")
+        volume_snapshots.append(built)
         out_path = DATA_DIR / VOLUME_TO_FILE[volume]
         write_json(out_path, built)
         print(
             f"built   {out_path}  "
             f"({len(built['conditions'])} conditions, {len(built['case_list'])} cases)"
         )
+
+    built_all = build_all_json_from_volume_snapshots(volume_snapshots)
+    if not built_all:
+        raise RuntimeError("No data built for all volumes")
+    write_json(ALL_METRICS, built_all)
+    print(
+        f"built   {ALL_METRICS}  "
+        f"({len(built_all['conditions'])} conditions, {len(built_all['case_list'])} cases)"
+    )
 
     # Keep the current default file intact. Only create volume-specific files.
     print(f"kept    {CURRENT_METRICS} as-is")

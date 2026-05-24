@@ -45,6 +45,7 @@ DATA_DIR = REPO_ROOT / "data"
 DEFAULT_OUTPUT_DIR = REPO_ROOT / "figures" / "metric_heatmaps"
 
 VOLUME_FILES = {
+    "all": DATA_DIR / "eval_metrics_all.json",
     "upper": DATA_DIR / "eval_metrics_upper.json",
     "middle": DATA_DIR / "eval_metrics_middle.json",
     "lower": DATA_DIR / "eval_metrics_lower.json",
