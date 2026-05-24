@@ -847,7 +847,7 @@
             const enabled = !isMobileSummaryLayout();
             document.body.classList.toggle('full-summary-layout', enabled);
             if (!enabled) return;
-            const useSavedWidths = !!localStorage.getItem('viewPanelWidths_full_summary');
+            const useSavedWidths = hasSavedPanelLayout(panelStorageKey());
             ['contentPanel', 'sourcePanel'].forEach((id) => {
                 const el = document.getElementById(id);
                 if (!el) return;
@@ -1204,20 +1204,136 @@
         window.closeMobileDrawer = closeMobileDrawer;
 
         // ─── Resizable panels ───
+        const PANEL_LAYOUT_VERSION = 2;
+        const MIN_SUMMARY_PANEL_WIDTH = 320;
+        const MIN_NAV_PANEL_WIDTH = 160;
+        const MIN_SOURCE_PANEL_WIDTH = 300;
+
+        function panelStorageKey() {
+            return document.body.classList.contains('full-summary-layout')
+                ? 'viewPanelWidths_full_summary'
+                : 'viewPanelWidths';
+        }
+
+        function readSavedPanelLayout(key) {
+            try {
+                const saved = JSON.parse(localStorage.getItem(key));
+                if (!saved || saved.version !== PANEL_LAYOUT_VERSION || !saved.pairs) {
+                    localStorage.removeItem(key);
+                    return null;
+                }
+                return saved;
+            } catch {
+                try { localStorage.removeItem(key); } catch {}
+                return null;
+            }
+        }
+
+        function hasSavedPanelLayout(key) {
+            return !!readSavedPanelLayout(key);
+        }
+
+        function minPanelWidth(el) {
+            if (!el) return 120;
+            if (el.id === 'navPanel') return MIN_NAV_PANEL_WIDTH;
+            if (el.id === 'sourcePanel') return MIN_SOURCE_PANEL_WIDTH;
+            if (document.body.classList.contains('full-summary-layout')) return MIN_SUMMARY_PANEL_WIDTH;
+            return MIN_SUMMARY_PANEL_WIDTH;
+        }
+
+        function visibleFlexItems(parent) {
+            return Array.from(parent.children).filter((el) => getComputedStyle(el).display !== 'none');
+        }
+
+        function pairAvailableWidth(resizer, leftEl, rightEl) {
+            const parent = resizer.parentElement;
+            const items = visibleFlexItems(parent);
+            const occupied = items.reduce((sum, el) => {
+                if (el === leftEl || el === rightEl || el === resizer) return sum;
+                return sum + el.offsetWidth;
+            }, 0);
+            return Math.max(0, parent.clientWidth - occupied - resizer.offsetWidth);
+        }
+
+        function clampPairPercent(resizer, leftEl, rightEl, leftPct) {
+            const pairW = pairAvailableWidth(resizer, leftEl, rightEl);
+            const minLeft = minPanelWidth(leftEl);
+            const minRight = minPanelWidth(rightEl);
+            if (!pairW || pairW <= minLeft + minRight) return 50;
+            const minPct = (minLeft / pairW) * 100;
+            const maxPct = 100 - (minRight / pairW) * 100;
+            return Math.min(maxPct, Math.max(minPct, leftPct));
+        }
+
+        function applyPairPercent(resizer, leftEl, rightEl, leftPct) {
+            const pct = clampPairPercent(resizer, leftEl, rightEl, leftPct);
+            const rightPct = 100 - pct;
+            const resizerW = resizer.offsetWidth || 0;
+            const leftComp = resizerW * pct / 100;
+            const rightComp = resizerW * rightPct / 100;
+            leftEl.style.width = '';
+            rightEl.style.width = '';
+            leftEl.style.flex = `0 0 calc(${pct.toFixed(4)}% - ${leftComp.toFixed(2)}px)`;
+            rightEl.style.flex = `0 0 calc(${rightPct.toFixed(4)}% - ${rightComp.toFixed(2)}px)`;
+            return pct;
+        }
+
+        function adjacentPanelsForResizer(resizer) {
+            const visualChildren = Array.from(resizer.parentElement.children)
+                .map((el, idx) => ({ el, idx, order: Number(getComputedStyle(el).order || 0) }))
+                .filter((item) => getComputedStyle(item.el).display !== 'none')
+                .sort((a, b) => (a.order - b.order) || (a.idx - b.idx));
+            const visualIdx = visualChildren.findIndex((item) => item.el === resizer);
+            return {
+                leftEl: visualChildren[visualIdx - 1]?.el,
+                rightEl: visualChildren[visualIdx + 1]?.el,
+            };
+        }
+
+        function savePanelLayout() {
+            try {
+                const pairs = {};
+                document.querySelectorAll('.resizer').forEach((resizer) => {
+                    if (getComputedStyle(resizer).display === 'none') return;
+                    const { leftEl, rightEl } = adjacentPanelsForResizer(resizer);
+                    if (!leftEl || !rightEl || !leftEl.id || !rightEl.id) return;
+                    const pairW = leftEl.offsetWidth + rightEl.offsetWidth;
+                    if (!pairW) return;
+                    pairs[resizer.id] = {
+                        leftId: leftEl.id,
+                        rightId: rightEl.id,
+                        leftPct: (leftEl.offsetWidth / pairW) * 100,
+                    };
+                });
+                localStorage.setItem(panelStorageKey(), JSON.stringify({
+                    version: PANEL_LAYOUT_VERSION,
+                    pairs,
+                }));
+            } catch {}
+        }
+
+        function restorePanelLayout() {
+            const saved = readSavedPanelLayout(panelStorageKey());
+            if (!saved) return;
+            Object.entries(saved.pairs).forEach(([resizerId, pair]) => {
+                const resizer = document.getElementById(resizerId);
+                const leftEl = document.getElementById(pair.leftId);
+                const rightEl = document.getElementById(pair.rightId);
+                if (!resizer || !leftEl || !rightEl || getComputedStyle(resizer).display === 'none') return;
+                applyPairPercent(resizer, leftEl, rightEl, Number(pair.leftPct) || 50);
+            });
+        }
+
         function initResizers() {
             document.querySelectorAll('.resizer').forEach(resizer => {
                 const onPointerDown = (startEvt) => {
                     startEvt.preventDefault();
-                    const visualChildren = Array.from(resizer.parentElement.children)
-                        .map((el, idx) => ({ el, idx, order: Number(getComputedStyle(el).order || 0) }))
-                        .sort((a, b) => (a.order - b.order) || (a.idx - b.idx));
-                    const visualIdx = visualChildren.findIndex((item) => item.el === resizer);
-                    const leftEl = visualChildren[visualIdx - 1]?.el;
-                    const rightEl = visualChildren[visualIdx + 1]?.el;
+                    const { leftEl, rightEl } = adjacentPanelsForResizer(resizer);
                     if (!leftEl || !rightEl) return;
                     const startX = startEvt.clientX ?? startEvt.touches[0].clientX;
                     const startLeftW = leftEl.offsetWidth;
                     const startRightW = rightEl.offsetWidth;
+                    const startPairW = startLeftW + startRightW;
                     resizer.classList.add('active');
                     document.body.style.cursor = 'col-resize';
                     document.body.style.userSelect = 'none';
@@ -1225,12 +1341,11 @@
                     const onMove = (e) => {
                         const x = e.clientX ?? e.touches[0].clientX;
                         const dx = x - startX;
-                        const newLeft = Math.max(60, startLeftW + dx);
-                        const newRight = Math.max(60, startRightW - dx);
-                        leftEl.style.width = newLeft + 'px';
-                        leftEl.style.flex = 'none';
-                        rightEl.style.width = newRight + 'px';
-                        rightEl.style.flex = 'none';
+                        const minLeft = minPanelWidth(leftEl);
+                        const minRight = minPanelWidth(rightEl);
+                        const newLeft = Math.min(startPairW - minRight, Math.max(minLeft, startLeftW + dx));
+                        const leftPct = startPairW > 0 ? (newLeft / startPairW) * 100 : 50;
+                        applyPairPercent(resizer, leftEl, rightEl, leftPct);
                     };
 
                     const onUp = () => {
@@ -1241,16 +1356,7 @@
                         document.removeEventListener('mouseup', onUp);
                         document.removeEventListener('touchmove', onMove);
                         document.removeEventListener('touchend', onUp);
-                        try {
-                            const widths = {};
-                            document.querySelectorAll('.main > *:not(.resizer)').forEach(el => {
-                                if (el.id) widths[el.id] = el.style.width;
-                            });
-                            const key = document.body.classList.contains('full-summary-layout')
-                                ? 'viewPanelWidths_full_summary'
-                                : 'viewPanelWidths';
-                            localStorage.setItem(key, JSON.stringify(widths));
-                        } catch {}
+                        savePanelLayout();
                     };
 
                     document.addEventListener('mousemove', onMove);
@@ -1263,18 +1369,7 @@
                 resizer.addEventListener('touchstart', onPointerDown, { passive: false });
             });
 
-            try {
-                const key = document.body.classList.contains('full-summary-layout')
-                    ? 'viewPanelWidths_full_summary'
-                    : 'viewPanelWidths';
-                const saved = JSON.parse(localStorage.getItem(key));
-                if (saved) {
-                    Object.entries(saved).forEach(([id, w]) => {
-                        const el = document.getElementById(id);
-                        if (el && w) { el.style.width = w; el.style.flex = 'none'; }
-                    });
-                }
-            } catch {}
+            restorePanelLayout();
         }
 
         // Init resizers
@@ -1288,6 +1383,7 @@
             const wasMobile = document.body.classList.contains('mobile-full-mode');
             syncMobileSummaryMode();
             syncDesktopSummaryLayout();
+            restorePanelLayout();
             if (!viewData) return;
             const isMobile = isMobileSummaryLayout();
             if (isMobile) renderFullSummaryContent();
