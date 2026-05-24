@@ -436,41 +436,50 @@
       </div>
     </div>
 
-    <!-- Quality 10 dims -->
+    <!-- Quality 14 dims -->
     <div class="reveal" style="margin-top:48px;">
-      <h3 class="section-title" style="font-size:20px;">寫作品質 10 維度 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Quality · 1-5 分</span></h3>
-      <p class="section-desc" style="text-align:left;max-width:none;">從基礎寫作、內容正確性、法律專業三個層面，以 10 個維度評估摘要的寫作品質。每個維度採用 CheckEval checklist 先逐項檢查 PASS/FAIL，再由通過率推導 1-5 分，降低評分主觀性。每個維度由多個獨立模型各自評分，取中位數作為最終分數。</p>
+      <h3 class="section-title" style="font-size:20px;">寫作品質 14 維度 <span style="font-weight:400;font-size:14px;color:var(--slate-500);">Quality · 1-5 分</span></h3>
+      <p class="section-desc" style="text-align:left;max-width:none;">從語言與可讀性、事實與範圍控制、法律醫療推理、結構與合規四個層面，以 14 個維度評估摘要的寫作品質。每個維度採用錨定量表與檢核清單輔助判斷，降低評分主觀性；多個獨立模型各自評分後，取中位數作為最終分數。</p>
     </div>
     <div class="reveal">
       <div class="quality-groups">
         <div class="quality-group">
-          <div class="quality-group-title">基礎寫作品質</div>
+          <div class="quality-group-title">語言與可讀性</div>
           <ul class="quality-list">
-            <li><div class="q-name">語句通順度</div><div class="q-desc">繁體中文、全形標點、數字格式一致、句長適中</div></li>
-            <li><div class="q-name">冗餘度</div><div class="q-desc">有無重複陳述，段落間是否出現同一事實多次</div></li>
-            <li><div class="q-name">邏輯連貫性</div><div class="q-desc">段落內銜接自然、段落間邏輯過渡流暢、無前後矛盾</div></li>
-            <li><div class="q-name">可理解性</div><div class="q-desc">醫學、法律術語是否有上下文可理解，讀者能否掌握案件脈絡</div></li>
+            <li><div class="q-name">流暢度</div><div class="q-desc">語句通順、語法自然，符合繁體中文法律摘要的閱讀習慣</div></li>
+            <li><div class="q-name">精簡度</div><div class="q-desc">避免重複與贅述，在保留關鍵資訊的前提下控制篇幅</div></li>
+            <li><div class="q-name">連貫性</div><div class="q-desc">段落內外銜接自然，事件、爭點與法院理由之間無突兀跳接</div></li>
+            <li><div class="q-name">可讀性</div><div class="q-desc">非法律專業讀者仍能掌握案件背景、醫療情境與判決重點</div></li>
           </ul>
         </div>
         <div class="quality-group">
-          <div class="quality-group-title">內容正確性</div>
+          <div class="quality-group-title">事實與範圍控制</div>
           <ul class="quality-list">
-            <li><div class="q-name">要點涵蓋率</div><div class="q-desc">標準答案中的關鍵要點是否被涵蓋，以標準答案為基準計算涵蓋率</div></li>
-            <li><div class="q-name">資訊精確度</div><div class="q-desc">日期、數字、人名、醫學數據、法律術語等細節是否正確</div></li>
-            <li><div class="q-name">不確定性標示</div><div class="q-desc">法院認定、鑑定意見、被告辯稱、推論四種來源是否清楚區分</div></li>
+            <li><div class="q-name">涵蓋度</div><div class="q-desc">是否涵蓋標準答案中的主要事實、爭點、抗辯與法院判斷</div></li>
+            <li><div class="q-name">精確度</div><div class="q-desc">日期、數字、人名、醫療數據與判決結果等細節是否正確</div></li>
+            <li><div class="q-name">範圍控制</div><div class="q-desc">各段內容是否只涵蓋該段應有範圍，避免事實、主張與理由互相混入</div></li>
+            <li><div class="q-name">不確定校準</div><div class="q-desc">對爭議事實、鑑定意見與推論保持適當語氣，不把不確定內容寫成定論</div></li>
           </ul>
         </div>
       </div>
       <div class="quality-group" style="margin-top:24px;">
-        <div class="quality-group-title">法律專業</div>
         <div class="quality-groups">
-          <ul class="quality-list">
-            <li><div class="q-name">術語一致性</div><div class="q-desc">人物代號、機構名稱、醫學與法律術語在全文保持一致</div></li>
-            <li><div class="q-name">段落範疇合規</div><div class="q-desc">每段只包含該段應有的內容（facts 不混入判決、reasoning 不複製 facts）</div></li>
-          </ul>
-          <ul class="quality-list">
-            <li><div class="q-name">風格規範合規</div><div class="q-desc">引用格式、數字格式、繁簡體、全形標點、個資匿名化等 5 項檢核</div></li>
-          </ul>
+          <div class="quality-group">
+            <div class="quality-group-title">法律醫療推理</div>
+            <ul class="quality-list">
+              <li><div class="q-name">術語正確</div><div class="q-desc">法律與醫療專業術語使用準確，人物代號與機構名稱前後一致</div></li>
+              <li><div class="q-name">推理完整</div><div class="q-desc">法院理由、鑑定意見與攻防主張的論證結構完整呈現</div></li>
+              <li><div class="q-name">時間線清晰</div><div class="q-desc">就醫、檢查、手術、轉診、死亡等事件順序清楚，不造成時序誤解</div></li>
+              <li><div class="q-name">推理充分</div><div class="q-desc">注意義務、違反、因果關係與可預見性等關鍵推理鏈交代充分</div></li>
+            </ul>
+          </div>
+          <div class="quality-group">
+            <div class="quality-group-title">結構與合規</div>
+            <ul class="quality-list">
+              <li><div class="q-name">格式合規</div><div class="q-desc">符合五段式摘要、引用標記、匿名化、數字格式與繁體中文規範</div></li>
+              <li><div class="q-name">結構清晰</div><div class="q-desc">段落配置清楚，讀者能快速辨識案件事實、主張、理由與結論</div></li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
