@@ -3149,9 +3149,13 @@
     }
 
     // ─── Backup History ───────────────────────────────────────
+    // Arena evaluation is complete; keep the historical rendering code available
+    // but disable backup reads from the admin dashboard.
+    const ARENA_BACKUP_HISTORY_ENABLED = false;
     const arenaBackupCache = new Map();
 
     async function fetchArenaBackupSnapshots(limit = 10) {
+        if (!ARENA_BACKUP_HISTORY_ENABLED) return [];
         if (!document.body.classList.contains('is-admin') || !auth.currentUser) return [];
         const snap = await db.collection('arena_backups_daily')
             .orderBy('snapshot_date', 'desc').limit(limit).get();
@@ -3310,7 +3314,7 @@
             html += renderAdminSummaryTable(rows);
             html += renderProgressMatrix(rows);
         }
-        html += renderArenaBackupHistory(backups);
+        if (ARENA_BACKUP_HISTORY_ENABLED) html += renderArenaBackupHistory(backups);
         container.innerHTML = html;
     }
 
